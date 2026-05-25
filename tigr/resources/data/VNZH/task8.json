@@ -1,0 +1,699 @@
+[
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/7F8F64.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Фестиваль «Московское лето. Цветочный джем» пройдёт"
+      }
+    ],
+    "fipi_number": "9203D1",
+    "group_number": "7F8F64",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в конце июля – начале августа"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в конце июня – начале июля"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в августе"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/A629FB.mp3"
+      },
+      {
+        "type": "text",
+        "value": "«Сырные дни» начнутся в рамках фестиваля"
+      }
+    ],
+    "fipi_number": "55553D",
+    "group_number": "A629FB",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "«Золотая осень»"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "«Московское лето»"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "«Московская весна»"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/58C775.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Город Архангельск знакомит нас"
+      }
+    ],
+    "fipi_number": "C2CF1B",
+    "group_number": "58C775",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "с культурой восточной Сибири"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "с настоящей северной культурой"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "с культурой современного города"
+          }
+        ]
+      }
+    ]
+  },
+  
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/556439.mp3"
+      },
+      {
+        "type": "text",
+        "value": "В Казани День города празднуют"
+      }
+    ],
+    "fipi_number": "FD7670",
+    "group_number": "556439",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в апреле"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в июне"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в августе"
+          }
+        ]
+      }
+    ]
+  },
+  
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/F93C87.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Открытие торгового центра проходит"
+      }
+    ],
+    "fipi_number": "3D2041",
+    "group_number": "F93C87",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в установленные сроки"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "раньше срока"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "позже установленного срока"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/4B744B.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Музей янтаря находится"
+      }
+    ],
+    "fipi_number": "F2BA51",
+    "group_number": "4B744B",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в Москве"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в Калининграде"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в Петербурге"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/656880.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Северный Кавказ предлагает для туристов"
+      }
+    ],
+    "fipi_number": "E0FA3A",
+    "group_number": "656880",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "все виды отдыха"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "только активный отдых"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "только отдых для пожилых людей"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/DCE27E.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Праздник «Библионочь» проходит"
+      }
+    ],
+    "fipi_number": "9EDA64",
+    "group_number": "DCE27E",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "во многих городах России"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "только в Москве и Петербурге"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "только в маленьких городах России"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/C46C13.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Во время акции «Ночь в музее» в Москве все музеи работали"
+      }
+    ],
+    "fipi_number": "B8E793",
+    "group_number": "C46C13",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "до двух часов ночи"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "до самого утра"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "до семи часов вечера"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/82C062.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Туристы ездят в Плёс, чтобы"
+      }
+    ],
+    "fipi_number": "A1D578",
+    "group_number": "82C062",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "познакомиться с обычной жизнью города"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "посмотреть современные здания"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "увидеть старые памятники архитектуры"
+          }
+        ]
+      }
+    ]
+  },
+  
+  
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/5F61FA.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Это объявление будет интересно для тех, кто ищет"
+      }
+    ],
+    "fipi_number": "1BB861",
+    "group_number": "5F61FA",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "постоянную работу"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "хорошую компанию по уборке"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "сотрудников для компании"
+          }
+        ]
+      }
+    ]
+  },
+  
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/3C8FC6.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Отель «Горный приют» находится"
+      }
+    ],
+    "fipi_number": "EB23CD",
+    "group_number": "3C8FC6",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в 50 километрах от города"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в 50 километрах от аэропорта"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в центре города"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/AF42C6.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Ярмарка будет работать"
+      }
+    ],
+    "fipi_number": "46086A",
+    "group_number": "AF42C6",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "весь ноябрь и в начале декабря"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "весь январь и в начале февраля"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "весь  декабрь и в начале января"
+          }
+        ]
+      }
+    ]
+  },
+  
+  
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/3DEC47.mp3"
+      },
+      {
+        "type": "text",
+        "value": "В музее Вам расскажут об истории"
+      }
+    ],
+    "fipi_number": "3326A1",
+    "group_number": "3DEC47",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "строительства музея"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "молока"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "появления коров в России"
+          }
+        ]
+      }
+    ]
+  },
+  
+  
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/0EEE71.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Правила здорового образа жизни можно будет узнать"
+      }
+    ],
+    "fipi_number": "3F7CA1",
+    "group_number": "0EEE71",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в парке «Сокольники»"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "на веломаршруте"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в парке Горького"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/A82C07.mp3"
+      },
+      {
+        "type": "text",
+        "value": "На третьем этаже досугового центра «Космос» будет работать"
+      }
+    ],
+    "fipi_number": "3DD42F",
+    "group_number": "A82C07",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "кинотеатр"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "боулинг"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "бассейн"
+          }
+        ]
+      }
+    ]
+  }
+]

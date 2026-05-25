@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Http\Requests\Exam;
+
+use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Foundation\Http\FormRequest;
+
+class ExamIndexRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'cancelled' => $this->boolean('cancelled'),
+            'finished' => $this->boolean('finished'),
+        ]);
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'finished' => ['nullable', 'boolean'],
+            'cancelled' => ['nullable', 'boolean'],
+            'examTypeId' => ['nullable', 'integer', 'min:1'],
+            'dateFrom' => ['nullable', 'date'],
+            'dateTo' => ['nullable', 'date'],
+            'addressId' => ['nullable', 'integer', 'min:1'],
+            'id' => ['nullable', 'integer', 'min:1'],
+        ];
+    }
+}

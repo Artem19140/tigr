@@ -1,0 +1,34 @@
+<script setup lang="ts">
+import { useHttp } from '@inertiajs/vue3';
+import { useConfirmationOptionsDialog } from '@/composables/useConfirmationOptionsDialog';
+import { Enrollment } from '@/interfaces/Enrollment';
+import BaseListItem from '../BaseComponents/BaseList/BaseListItem.vue';
+
+const props = defineProps<{
+    enrollment: Enrollment
+}>()
+
+const changePayment = async () => {
+    const {open} = useConfirmationOptionsDialog()
+    const action = props.enrollment.hasPayment ?  'Отменить' : 'Подтвердить'
+    const ok = await open(`${action} оплату ${props.enrollment.foreignNational?.fullName ?? ''}`)
+    if(!ok) return
+    const http = useHttp()
+    props.enrollment.isLoading = true
+    http.put(`/enrollments/${props.enrollment.id}/payment`,{
+        onSuccess:() => {
+            props.enrollment.hasPayment = !props.enrollment.hasPayment
+        },
+        onFinish:() => {
+            props.enrollment.isLoading = false
+        }
+    })
+}
+</script>
+
+<template>
+    <BaseListItem 
+        @click="changePayment"
+        :title="enrollment.hasPayment ? 'Отменить оплату' : 'Подтвердить оплату'"
+    />
+</template>

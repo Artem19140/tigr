@@ -1,0 +1,815 @@
+[
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Уважаемые граждане!",
+            "align":"center"
+          },
+          {
+            "type": "text",
+            "value": "Оплачивайте свой проезд вовремя",
+            "align":"center"
+          }
+        ],
+        "margin":"bottom"
+      },
+      {
+        "type": "text",
+        "value": "Такое объявление можно прочитать"
+      }
+    ],
+    "fipi_number": "16B2E6",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в парке"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в автобусе"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в самолёте"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "text",
+        "value": "Прочитайте киноафишу и выберите правильный ответ."
+      },
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "С 3 марта смотрите фильм о победах российских спортсменов!",
+            "align":"center"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Новый фильм снят"
+      }
+    ],
+    "fipi_number": "FC6C86",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "о политике"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "о спорте"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "о музыке"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Осторожно: опасная зона!",
+            "align":"center"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Вы можете увидеть это объявление"
+      }
+    ],
+    "fipi_number": "4394C5",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в ресторане"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "на стройке"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в автобусе"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Места для инвалидов, лиц пожилого возраста и пассажиров с детьми",
+            "align":"center"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Вы можете увидеть это объявление"
+      }
+    ],
+    "fipi_number": "971D57",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в транспорте"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в театре"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в парке"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Уважаемые пассажиры!",
+            "align":"center"
+          },
+          {
+            "type": "text",
+            "value": "ВЫХОД К ПОЕЗДАМ в конце зала № 1.",
+            "align":"center"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Такое объявление можно прочитать"
+      }
+    ],
+    "fipi_number": "54821D",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "на рынке"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "на вокзале"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "на почте"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Уважаемые гости!",
+            "align":"center"
+          },
+          {
+            "type": "text",
+            "value": "Завтрак для вас будет в ресторане на 15-м этаже.",
+            "align":"center"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Такое объявление можно прочитать"
+      }
+    ],
+    "fipi_number": "492BF2",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в аптеке"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в гостинице"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в банке"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Уважаемые родители!",
+            "align":"center"
+          },
+          {
+            "type": "text",
+            "value": "При входе в здание надевайте, пожалуйста, бахилы!",
+            "align":"center"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Такое объявление можно прочитать"
+      }
+    ],
+    "fipi_number": "470369",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в супермаркете"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в детском саду"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в метро"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Уважаемые пассажиры!",
+            "align":"center"
+          },
+          {
+            "type": "text",
+            "value": "В связи с ремонтом выход в город через центральный вход",
+            "align":"center"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Такое объявление можно прочитать"
+      }
+    ],
+    "fipi_number": "58E1F3",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "на рынке"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "на вокзале"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "на почте"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Уважаемые пассажиры!",
+            "align":"center"
+          },
+          {
+            "type": "text",
+            "value": "Провоз мелких домашних животных в общественном транспорте возможен только в переноске!",
+            "align":"center"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Такое объявление можно прочитать"
+      }
+    ],
+    "fipi_number": "8688B9",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в кафе"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в автобусе"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в школе"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "15 апреля в 18 часов в классе № 2 пройдёт собрание родителей будущих первоклассников!",
+            "align":"center"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Такое объявление можно прочитать"
+      }
+    ],
+    "fipi_number": "DE6915",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в банке"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в школе"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в магазине"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Уважаемые пациенты!",
+            "align":"center"
+          },
+          {
+            "type": "text",
+            "value": "Вы можете сделать прививку только после осмотра врача",
+            "align":"center"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Такое объявление можно прочитать"
+      }
+    ],
+    "fipi_number": "FBA771",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в аптеке"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в поликлинике"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в музее"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "text",
+        "value": "Акция! При покупке чашки кофе вторая – в подарок!"
+      },
+      {
+        "type": "text",
+        "value": "Такое объявление можно прочитать"
+      }
+    ],
+    "fipi_number": "F0B87B",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "на почте"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в кафе"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в метро"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Уважаемые граждане!",
+            "align":"center"
+          },
+          {
+            "type": "text",
+            "value": "Врач Иванова принимает в кабинете № 7."
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Такое объявление можно прочитать"
+      }
+    ],
+    "fipi_number": "C28EB0",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в метро"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в поликлинике"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в торговом центре"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Уважаемые пассажиры!",
+            "align":"center"
+          },
+          {
+            "type": "text",
+            "value": "Платформа № 3 закрыта на ремонт."
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Такое объявление можно прочитать"
+      }
+    ],
+    "fipi_number": "6C50CA",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в магазине"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "на вокзале"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "на стройке"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Уважаемые гости!",
+            "align":"center"
+          },
+          {
+            "type": "text",
+            "value": "У нас работает бесплатный WI - FI . Пароль можно получить у администратора."
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Такое объявление можно прочитать"
+      }
+    ],
+    "fipi_number": "81476B",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в гостинице"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в метро"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "на стройке"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Осторожно! Опасная зона! Сход снега!"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Такое объявление можно прочитать"
+      }
+    ],
+    "fipi_number": "59708B",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в банке"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "на улице"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в автобусе"
+          }
+        ]
+      }
+    ]
+  }
+]

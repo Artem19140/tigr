@@ -1,0 +1,2655 @@
+[
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "ТРОЛЛЕЙБУСНЫЙ ПАРК № 3 ПРИГЛАШАЕТ ЖЕЛАЮЩИХ НА КУРСЫ ПОДГОТОВКИ УЧЕНИКОВ ВОДИТЕЛЕЙ ТРОЛЛЕЙБУСА."
+          },
+          {
+            "type": "text",
+            "value": "– Возраст кандидатов – от 21 года."
+          },
+          {
+            "type": "text",
+            "value": "– Образование – не ниже среднего."
+          },
+          {
+            "type": "text",
+            "value": "– Форма обучения – дневная."
+          },
+          {
+            "type": "text",
+            "value": "На период обучения предоставляется общежитие, льготное питание и выплачивается стипендия."
+          },
+          {
+            "type": "text",
+            "value": "После обучения – трудоустройство."
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Чтобы записаться на курсы, Вам необходимо написать заявление на имя директора Учебного комбината троллейбусного парка № 3 Г.Ф. Ермишина. "
+      },
+      {
+        "type": "text",
+        "value": "В заявлении Вы должны указать:"
+      },
+      {
+        "type": "text",
+        "value": "- должность, фамилию и инициалы руководителя организации;"
+      },
+      {
+        "type": "text",
+        "value": "- название организации;"
+      },
+      {
+        "type": "text",
+        "value": "- свои фамилию, имя и отчество;"
+      },
+      {
+        "type": "text",
+        "value": "- название курсов;"
+      },
+      {
+        "type": "text",
+        "value": "- нуждаетесь ли Вы в предоставлении общежития;"
+      },
+      {
+        "type": "text",
+        "value": "- дату заполнения заявления и поставить подпись."
+      },
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type":"row",
+            "direction": "column",
+            "align": "end",
+            "gap":2,
+            "children":[
+              {
+                "type": "input",
+                "prepend": "Кому",
+                "field_id": "input_1",
+                "width":450,
+                "hint":"(должность руководителя)"
+              },
+             
+              {
+                "type": "input",
+                "field_id": "input_2",
+                "width":450,
+                "hint":"(название организации)"
+
+              }, 
+              {
+                "type": "input",
+                "field_id": "input_3",
+                "width":450,
+                "hint":"(фамилия и инициалы руководителя)"
+              },
+              {
+                "type": "input",
+                "field_id": "input_4",
+                "prepend": "От кого",
+                "width":450,
+                "hint":"(фамилия, имя, отчество кандидата)"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Заявление",
+            "align":"center",
+            "font":"bold",
+            "margin":"bottom"
+          },
+          {
+            "type":"row",
+            "children":[
+              {
+                "type": "input",
+                "prepend":"Прошу зачислить меня на курсы",
+                "field_id": "input_5"
+              }
+            ]
+          },
+          {
+            "type": "input",
+            "field_id": "input_6",
+            "hint":"(нуждаетесь ли Вы в общежитии)",
+            "width":450
+          },
+          {
+            "type":"row",
+            "justify": "between",
+            "children":[
+              {
+                "type":"row",
+                "children":[
+                  {
+                    "type": "input",
+                    "field_id": "input_7",
+                    "prepend":"«",
+                    "append":"»",
+                    "width":120
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_8",
+                    "width":180,
+                    "hint":"(дата)"
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_9",
+                    "prepend":"20",
+                    "append":"года",
+                    "width":180
+                  }
+                ]
+              },
+              {
+                "type": "input",
+                "field_id": "input_10",
+                "hint":"(подпись)",
+                "width":150
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "fipi_number": "49DBF6",
+    "answers": [
+      {
+        "content": {
+          "input_1": "",
+          "input_2": "",
+          "input_3": "",
+          "input_4": "",
+          "input_5": "",
+          "input_6": "",
+          "input_7": "",
+          "input_8": "",
+          "input_9": "",
+          "input_10": ""
+        },
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+            {
+              "type": "text",
+              "value": "ТРЕБУЕТСЯ ВОДИТЕЛЬ АВТОБУСА В АВТОБУСНЫЙ ПАРК № 8."
+            },
+            {
+              "type": "text",
+              "value": "Требования:",
+              "align":"center"
+            },
+            {
+              "type": "text",
+              "value": "- Опыт работы: от 1 до 3 лет."
+            },
+            {
+              "type": "text",
+              "value": "- Образование: среднее специальное."
+            },
+            {
+              "type": "text",
+              "value": "- Категория вождения: А, В."
+            },
+            {
+              "type": "text",
+              "value": "Условия работы:",
+              "align":"center"
+            },
+            {
+              "type": "text",
+              "value": "- График работы: 3/2 (три дня – рабочие, два – выходные) c 6.00 до 18.00."
+            },
+            {
+              "type": "text",
+              "value": "- Испытательный срок: 2 месяца."
+            }
+        ]
+    },
+    {
+      "type": "text",
+      "value": "Вы пришли устраиваться на работу по этому объявлению. Напишите заявление по образцу на имя директора И.А. Савочкина."
+    },
+    {
+      "type": "text",
+      "value": "В заявлении Вы должны указать:"
+    },
+    {
+      "type": "text",
+      "value": "- должность, фамилию и инициалы руководителя организации;"
+    },
+    {
+      "type": "text",
+      "value": "- название организации;"
+    },
+    {
+      "type": "text",
+      "value": "- свои фамилию, имя и отчество;"
+    },
+    {
+      "type": "text",
+      "value": "- должность, на которую Вы претендуете;"
+    },
+    {
+      "type": "text",
+      "value": "- нуждаетесь ли Вы в предоставлении общежития;"
+    },
+    {
+      "type": "text",
+      "value": "- дату заполнения заявления и поставить подпись."
+    },
+    {
+        "type": "frame",
+        "value": [
+          {
+            "type":"row",
+            "direction": "column",
+            "align": "end",
+            "gap":2,
+            "children":[
+              {
+                "type": "input",
+                "prepend": "Кому",
+                "field_id": "input_1",
+                "width":450,
+                "hint":"(должность руководителя)"
+              },
+             
+              {
+                "type": "input",
+                "field_id": "input_2",
+                "width":450,
+                "hint":"(название организации)"
+
+              }, 
+              {
+                "type": "input",
+                "field_id": "input_3",
+                "width":450,
+                "hint":"(фамилия и инициалы руководителя)"
+              },
+              {
+                "type": "input",
+                "field_id": "input_4",
+                "prepend": "От кого",
+                "width":450,
+                "hint":"(фамилия, имя, отчество кандидата)"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Заявление",
+            "align":"center",
+            "font":"bold",
+            "margin":"bottom"
+          },
+          {
+            "type":"row",
+            "children":[
+              {
+                "type": "input",
+                "prepend":"Прошу принять меня на должность",
+                "field_id": "input_5",
+                "hint":"(наименование должности)"
+              }
+            ]
+          },
+          {
+            "type": "input",
+            "field_id": "input_6",
+            "hint":"(нуждаетесь ли Вы в общежитии)",
+            "width":450
+          },
+          {
+            "type":"row",
+            "justify": "between",
+            "children":[
+              {
+                "type":"row",
+                "children":[
+                  {
+                    "type": "input",
+                    "field_id": "input_7",
+                    "prepend":"«",
+                    "append":"»",
+                    "width":120
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_8",
+                    "width":180,
+                    "hint":"(дата)"
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_9",
+                    "prepend":"20",
+                    "append":"года",
+                    "width":180
+                  }
+                ]
+              },
+              {
+                "type": "input",
+                "field_id": "input_10",
+                "hint":"(подпись)",
+                "width":150
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "fipi_number": "9D8FE0",
+   "answers": [
+      {
+        "content": {
+          "input_1": "",
+          "input_2": "",
+          "input_3": "",
+          "input_4": "",
+          "input_5": "",
+          "input_6": "",
+          "input_7": "",
+          "input_8": "",
+          "input_9": "",
+          "input_10": ""
+        },
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "text",
+        "value": "Вы работаете продавцом в магазине «Одежда». Вы хотите уволиться. Напишите заявление об увольнении на имя директора магазина И.А. Михайлова."
+      },
+      {
+        "type": "text",
+        "value": "В заявлении Вы должны указать:"
+      },
+      {
+        "type": "text",
+        "value": "- должность, фамилию и инициалы руководителя организации;"
+      },
+      {
+        "type": "text",
+        "value": "- название организации;"
+      },
+      {
+        "type": "text",
+        "value": "- свои фамилию, имя и отчество;"
+      },
+      {
+        "type": "text",
+        "value": "- причину увольнения;"
+      },
+      {
+        "type": "text",
+        "value": "- дату увольнения;"
+      },
+      {
+        "type": "text",
+        "value": "- дату заполнения заявления и поставить подпись."
+      },
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type":"row",
+            "direction": "column",
+            "align": "end",
+            "gap":2,
+            "children":[
+              {
+                "type": "input",
+                "prepend": "Кому",
+                "field_id": "input_1",
+                "width":450,
+                "hint":"(должность руководителя)"
+              },
+             
+              {
+                "type": "input",
+                "field_id": "input_2",
+                "width":450,
+                "hint":"(название организации)"
+
+              }, 
+              {
+                "type": "input",
+                "field_id": "input_3",
+                "width":450,
+                "hint":"(фамилия и инициалы руководителя)"
+              },
+              {
+                "type": "input",
+                "field_id": "input_4",
+                "prepend": "От кого",
+                "width":450,
+                "hint":"(фамилия, имя, отчество кандидата)"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Заявление",
+            "align":"center",
+            "font":"bold",
+            "margin":"bottom"
+          },
+          {
+            "type":"row",
+            "children":[
+              {
+                "type": "input",
+                "prepend":"Прошу уволить меня ",
+                "field_id": "input_5",
+                "hint":"(причина увольнения)"
+              }
+            ]
+          },
+          {
+            "type":"row",
+            "children":[
+              {
+                "type":"row",
+                "children":[
+                  {
+                    "type": "input",
+                    "field_id": "input_6",
+                    "prepend":"c «",
+                    "append":"»",
+                    "width":120
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_7",
+                    "width":180,
+                    "hint":"(дата)"
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_8",
+                    "prepend":"20",
+                    "append":"года",
+                    "width":180
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type":"row",
+            "justify": "between",
+            "children":[
+              {
+                "type":"row",
+                "children":[
+                  {
+                    "type": "input",
+                    "field_id": "input_9",
+                    "prepend":"«",
+                    "append":"»",
+                    "width":120
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_10",
+                    "width":180,
+                    "hint":"(дата)"
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_11",
+                    "prepend":"20",
+                    "append":"года",
+                    "width":180
+                  }
+                ]
+              },
+              {
+                "type": "input",
+                "field_id": "input_12",
+                "hint":"(подпись)",
+                "width":140
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "fipi_number": "A83C24",
+    "answers": [
+      {
+        "content": {
+          "input_1": "",
+          "input_2": "",
+          "input_3": "",
+          "input_4": "",
+          "input_5": "",
+          "input_6": "",
+          "input_7": "",
+          "input_8": "",
+          "input_9": "",
+          "input_10": "",
+          "input_11": "",
+          "input_12": ""
+        },
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "image",
+        "value": "/storage/images/RVP/350984.jpg"
+      },
+      {
+        "type": "text",
+        "value": "Вы пришли устраиваться на работу поваром по этому объявлению. Напишите заявление о приёме на работу на имя директора кафе С.И. Петрова."
+      },
+      {
+        "type": "text",
+        "value": "В заявлении Вы должны указать:"
+      },
+      {
+        "type": "text",
+        "value": "- должность руководителя, его фамилию и инициалы;"
+      },
+      {
+        "type": "text",
+        "value": "- название организации;"
+      },
+      {
+        "type": "text",
+        "value": "- свои фамилию, имя, отчество;"
+      },
+      {
+        "type": "text",
+        "value": "- должность, на которую Вы претендуете;"
+      },
+      { 
+        "type": "text",
+        "value": "- опыт работы;"
+      },
+      {
+        "type": "text",
+        "value": "- дату заполнения заявления и поставить подпись или фамилию."
+      },
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type":"row",
+            "direction": "column",
+            "align": "end",
+            "gap":2,
+            "children":[
+              {
+                "type": "input",
+                "prepend": "Кому",
+                "field_id": "input_1",
+                "width":450,
+                "hint":"(должность руководителя)"
+              },
+             
+              {
+                "type": "input",
+                "field_id": "input_2",
+                "width":450,
+                "hint":"(название организации)"
+
+              }, 
+              {
+                "type": "input",
+                "field_id": "input_3",
+                "width":450,
+                "hint":"(фамилия и инициалы руководителя)"
+              },
+              {
+                "type": "input",
+                "field_id": "input_4",
+                "prepend": "От кого",
+                "width":450,
+                "hint":"(фамилия, имя, отчество кандидата)"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Заявление",
+            "align":"center",
+            "font":"bold",
+            "margin":"bottom"
+          },
+          {
+            "type":"row",
+            "children":[
+              {
+                "type": "input",
+                "prepend":"Прошу принять меня на работу в",
+                "field_id": "input_5",
+                "hint":"(наименование организации)"
+              }
+            ]
+          },
+          {
+            "type": "input",
+            "prepend":"на должность",
+            "field_id": "input_6",
+            "hint":"(наименование должности)",
+            "width":450
+          },
+          {
+            "type": "input",
+            "field_id": "input_7",
+            "hint":"(имеете ли Вы опыт работы)"
+          },
+          {
+            "type":"row",
+            "justify": "between",
+            "children":[
+              {
+                "type":"row",
+                "children":[
+                  {
+                    "type": "input",
+                    "field_id": "input_8",
+                    "prepend":"«",
+                    "append":"»",
+                    "width":120
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_9",
+                    "width":180,
+                    "hint":"(дата)"
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_10",
+                    "prepend":"20",
+                    "append":"года",
+                    "width":180
+                  }
+                ]
+              },
+              {
+                "type": "input",
+                "field_id": "input_11",
+                "hint":"(подпись)",
+                "width":150
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "fipi_number": "350984",
+    "answers": [
+      {
+        "content": {
+          "input_1": "",
+          "input_2": "",
+          "input_3": "",
+          "input_4": "",
+          "input_5": "",
+          "input_6": "",
+          "input_7": "",
+          "input_8": "",
+          "input_9": "",
+          "input_10": "",
+          "input_11": ""
+        },
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "image",
+        "value": "/storage/images/RVP/80E494.jpg"
+      },
+      {
+        "type": "text",
+        "value": "Вы пришли устраиваться на работу по этому объявлению. Напишите заявление о приёме на работу на имя директора компании «Строительные материалы» Иванова Д.П."
+      },
+      {
+        "type": "text",
+        "value": "В заявлении Вы должны указать:"
+      },
+      {
+        "type": "text",
+        "value": "- должность руководителя, его фамилию и инициалы;"
+      },
+      {
+        "type": "text",
+        "value": "- название организации;"
+      },
+      {
+        "type": "text",
+        "value": "- свои фамилию, имя, отчество;"
+      },
+      {
+        "type": "text",
+        "value": "- должность, на которую Вы претендуете;"
+      },
+      { 
+        "type": "text",
+        "value": "- нуждаетесь ли Вы в общежитии;"
+      },
+      {
+        "type": "text",
+        "value": "- дату заполнения заявления и поставить подпись или фамилию."
+      },
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type":"row",
+            "direction": "column",
+            "align": "end",
+            "gap":2,
+            "children":[
+              {
+                "type": "input",
+                "prepend": "Кому",
+                "field_id": "input_1",
+                "width":450,
+                "hint":"(должность руководителя)"
+              },
+             
+              {
+                "type": "input",
+                "field_id": "input_2",
+                "width":450,
+                "hint":"(название организации)"
+
+              }, 
+              {
+                "type": "input",
+                "field_id": "input_3",
+                "width":450,
+                "hint":"(фамилия и инициалы руководителя)"
+              },
+              {
+                "type": "input",
+                "field_id": "input_4",
+                "prepend": "От кого",
+                "width":450,
+                "hint":"(фамилия, имя, отчество кандидата)"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Заявление",
+            "align":"center",
+            "font":"bold",
+            "margin":"bottom"
+          },
+          {
+            "type":"row",
+            "children":[
+              {
+                "type": "input",
+                "prepend":"Прошу принять меня на должность",
+                "field_id": "input_5",
+                "hint":"(наименование должности)"
+              }
+            ]
+          },
+          {
+            "type": "input",
+            "field_id": "input_6",
+            "hint":"(нуждаетесь ли Вы в общежитии)",
+            "width":450
+          },
+          {
+            "type":"row",
+            "justify": "between",
+            "children":[
+              {
+                "type":"row",
+                "children":[
+                  {
+                    "type": "input",
+                    "field_id": "input_7",
+                    "prepend":"«",
+                    "append":"»",
+                    "width":120
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_8",
+                    "width":180,
+                    "hint":"(дата)"
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_9",
+                    "prepend":"20",
+                    "append":"года",
+                    "width":180
+                  }
+                ]
+              },
+              {
+                "type": "input",
+                "field_id": "input_10",
+                "hint":"(подпись)",
+                "width":150
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "fipi_number": "80E494",
+     "answers": [
+      {
+        "content": {
+          "input_1": "",
+          "input_2": "",
+          "input_3": "",
+          "input_4": "",
+          "input_5": "",
+          "input_6": "",
+          "input_7": "",
+          "input_8": "",
+          "input_9": "",
+          "input_10": ""
+        },
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "image",
+        "value": "/storage/images/RVP/038603.jpg"
+      },
+      {
+        "type": "text",
+        "value": "Чтобы учиться на этих курсах, Вам необходимо написать заявление на имя директора образовательного центра «Мир» Белова О.Н."
+      },
+      {
+        "type": "text",
+        "value": "В заявлении Вы должны указать:"
+      },
+      {
+        "type": "text",
+        "value": "- должность руководителя, его фамилию и инициалы;"
+      },
+      {
+        "type": "text",
+        "value": "- название организации;"
+      },
+      {
+        "type": "text",
+        "value": "- свои фамилию, имя, отчество;"
+      },
+      {
+        "type": "text",
+        "value": "- название курсов;"
+      },
+      { 
+        "type": "text",
+        "value": "- цель изучения русского языка;"
+      },
+      {
+        "type": "text",
+        "value": "- дату заполнения заявления и поставить подпись или фамилию."
+      },
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type":"row",
+            "direction": "column",
+            "align": "end",
+            "gap":2,
+            "children":[
+              {
+                "type": "input",
+                "prepend": "Кому",
+                "field_id": "input_1",
+                "width":450,
+                "hint":"(должность руководителя)"
+              },
+             
+              {
+                "type": "input",
+                "field_id": "input_2",
+                "width":450,
+                "hint":"(название организации)"
+
+              }, 
+              {
+                "type": "input",
+                "field_id": "input_3",
+                "width":450,
+                "hint":"(фамилия и инициалы руководителя)"
+              },
+              {
+                "type": "input",
+                "field_id": "input_4",
+                "prepend": "От кого",
+                "width":450,
+                "hint":"(фамилия, имя, отчество кандидата)"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Заявление",
+            "align":"center",
+            "font":"bold",
+            "margin":"bottom"
+          },
+          {
+            "type":"row",
+            "children":[
+              {
+                "type": "input",
+                "prepend":"Прошу зачислить меня на курсы",
+                "field_id": "input_5",
+                "hint":"(название курсов)"
+              }
+            ]
+          },
+          {
+            "type": "input",
+            "field_id": "input_6",
+            "hint":"(цель занятий)"
+          },
+          {
+            "type":"row",
+            "justify": "between",
+            "children":[
+              {
+                "type":"row",
+                "children":[
+                  {
+                    "type": "input",
+                    "field_id": "input_7",
+                    "prepend":"«",
+                    "append":"»",
+                    "width":120
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_8",
+                    "width":180,
+                    "hint":"(дата)"
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_9",
+                    "prepend":"20",
+                    "append":"года",
+                    "width":180
+                  }
+                ]
+              },
+              {
+                "type": "input",
+                "field_id": "input_10",
+                "hint":"(подпись)",
+                "width":150
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "fipi_number": "038603",
+    "answers": [
+      {
+        "content": {
+          "input_1": "",
+          "input_2": "",
+          "input_3": "",
+          "input_4": "",
+          "input_5": "",
+          "input_6": "",
+          "input_7": "",
+          "input_8": "",
+          "input_9": "",
+          "input_10": ""
+        },
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "image",
+        "value": "/storage/images/RVP/CE4282.jpg"
+      },
+      {
+        "type": "text",
+        "value": "Вы пришли устраиваться на работу кассиром по этому объявлению. Напишите заявление о приёме на работу на имя директора магазина «Ромашка» Михайловой Е.В."
+      },
+      {
+        "type": "text",
+        "value": "В заявлении Вы должны указать:"
+      },
+      {
+        "type": "text",
+        "value": "- должность руководителя, его фамилию и инициалы;"
+      },
+      {
+        "type": "text",
+        "value": "- название организации;"
+      },
+      {
+        "type": "text",
+        "value": "- свои фамилию, имя, отчество;"
+      },
+      {
+        "type": "text",
+        "value": "- должность, на которую Вы претендуете;"
+      },
+      { 
+        "type": "text",
+        "value": "-  имеется ли опыт работы;"
+      },
+      {
+        "type": "text",
+        "value": "- дату заполнения заявления и поставить подпись или фамилию."
+      },
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type":"row",
+            "direction": "column",
+            "align": "end",
+            "gap":2,
+            "children":[
+              {
+                "type": "input",
+                "prepend": "Кому",
+                "field_id": "input_1",
+                "width":450,
+                "hint":"(должность руководителя)"
+              },
+             
+              {
+                "type": "input",
+                "field_id": "input_2",
+                "width":450,
+                "hint":"(название организации)"
+
+              }, 
+              {
+                "type": "input",
+                "field_id": "input_3",
+                "width":450,
+                "hint":"(фамилия и инициалы руководителя)"
+              },
+              {
+                "type": "input",
+                "field_id": "input_4",
+                "prepend": "От кого",
+                "width":450,
+                "hint":"(фамилия, имя, отчество кандидата)"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Заявление",
+            "align":"center",
+            "font":"bold",
+            "margin":"bottom"
+          },
+          {
+            "type":"row",
+            "children":[
+              {
+                "type": "input",
+                "prepend":"Прошу принять меня на работу в",
+                "field_id": "input_5",
+                "hint":"(наименование организации)"
+              }
+            ]
+          },
+          {
+            "type": "input",
+            "prepend":"на должность",
+            "field_id": "input_6",
+            "hint":"(наименование должности)",
+            "width":450
+          },
+          {
+            "type": "input",
+            "field_id": "input_7",
+            "hint":"(имеете ли Вы опыт работы)"
+          },
+          {
+            "type":"row",
+            "justify": "between",
+            "children":[
+              {
+                "type":"row",
+                "children":[
+                  {
+                    "type": "input",
+                    "field_id": "input_8",
+                    "prepend":"«",
+                    "append":"»",
+                    "width":120
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_9",
+                    "width":180,
+                    "hint":"(дата)"
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_10",
+                    "prepend":"20",
+                    "append":"года",
+                    "width":180
+                  }
+                ]
+              },
+              {
+                "type": "input",
+                "field_id": "input_11",
+                "hint":"(подпись)",
+                "width":150
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "fipi_number": "CE4282",
+    "answers": [
+      {
+        "content": {
+          "input_1": "",
+          "input_2": "",
+          "input_3": "",
+          "input_4": "",
+          "input_5": "",
+          "input_6": "",
+          "input_7": "",
+          "input_8": "",
+          "input_9": "",
+          "input_10": "",
+          "input_11": ""
+        },
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "image",
+        "value": "/storage/images/RVP/4ED908.jpg"
+      },
+      {
+        "type": "text",
+        "value": "Вы пришли устраиваться на работу по этому объявлению. Напишите заявление о приёме на работу на имя директора ООО «Мечта» Власова О.В."
+      },
+      {
+        "type": "text",
+        "value": "В заявлении Вы должны указать:"
+      },
+      {
+        "type": "text",
+        "value": "- должность руководителя, его фамилию и инициалы;"
+      },
+      {
+        "type": "text",
+        "value": "- название организации;"
+      },
+      {
+        "type": "text",
+        "value": "- свои фамилию, имя, отчество;"
+      },
+      {
+        "type": "text",
+        "value": "- должность, на которую Вы претендуете;"
+      },
+      { 
+        "type": "text",
+        "value": "-  опыт работы;"
+      },
+      {
+        "type": "text",
+        "value": "- дату заполнения заявления и поставить подпись или фамилию."
+      },
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type":"row",
+            "direction": "column",
+            "align": "end",
+            "gap":2,
+            "children":[
+              {
+                "type": "input",
+                "prepend": "Кому",
+                "field_id": "input_1",
+                "width":450,
+                "hint":"(должность руководителя)"
+              },
+             
+              {
+                "type": "input",
+                "field_id": "input_2",
+                "width":450,
+                "hint":"(название организации)"
+
+              }, 
+              {
+                "type": "input",
+                "field_id": "input_3",
+                "width":450,
+                "hint":"(фамилия и инициалы руководителя)"
+              },
+              {
+                "type": "input",
+                "field_id": "input_4",
+                "prepend": "От кого",
+                "width":450,
+                "hint":"(фамилия, имя, отчество кандидата)"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Заявление",
+            "align":"center",
+            "font":"bold",
+            "margin":"bottom"
+          },
+          {
+            "type":"row",
+            "children":[
+              {
+                "type": "input",
+                "prepend":"Прошу принять меня на должность",
+                "field_id": "input_5",
+                "hint":"(наименование должности)"
+              }
+            ]
+          },
+          {
+            "type": "input",
+            "field_id": "input_6",
+            "hint":"(имеется ли опыт работы)"
+          },
+          {
+            "type":"row",
+            "justify": "between",
+            "children":[
+              {
+                "type":"row",
+                "children":[
+                  {
+                    "type": "input",
+                    "field_id": "input_7",
+                    "prepend":"«",
+                    "append":"»",
+                    "width":120
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_8",
+                    "width":180,
+                    "hint":"(дата)"
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_9",
+                    "prepend":"20",
+                    "append":"года",
+                    "width":180
+                  }
+                ]
+              },
+              {
+                "type": "input",
+                "field_id": "input_10",
+                "hint":"(подпись)",
+                "width":150
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "fipi_number": "4ED908",
+    "answers": [
+      {
+        "content": {
+          "input_1": "",
+          "input_2": "",
+          "input_3": "",
+          "input_4": "",
+          "input_5": "",
+          "input_6": "",
+          "input_7": "",
+          "input_8": "",
+          "input_9": "",
+          "input_10": ""
+        },
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "image",
+        "value": "/storage/images/RVP/B98A38.jpg"
+      },
+      {
+        "type": "text",
+        "value": "Чтобы учиться в центре «Рокси» и получить профессию бухгалтера, Вам необходимо написать заявление на имя директора Сергеевой М.П."
+      },
+      {
+        "type": "text",
+        "value": "В заявлении Вы должны указать:"
+      },
+      {
+        "type": "text",
+        "value": "- должность руководителя, его фамилию и инициалы;"
+      },
+      {
+        "type": "text",
+        "value": "- название организации;"
+      },
+      {
+        "type": "text",
+        "value": "- свои фамилию, имя, отчество;"
+      },
+      {
+        "type": "text",
+        "value": "- название курса;"
+      },
+      { 
+        "type": "text",
+        "value": "-  имеется ли опыт работы по данной специальности;"
+      },
+      {
+        "type": "text",
+        "value": "- дату заполнения заявления и поставить подпись или фамилию."
+      },
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type":"row",
+            "direction": "column",
+            "align": "end",
+            "gap":2,
+            "children":[
+              {
+                "type": "input",
+                "prepend": "Кому",
+                "field_id": "input_1",
+                "width":450,
+                "hint":"(должность руководителя)"
+              },
+             
+              {
+                "type": "input",
+                "field_id": "input_2",
+                "width":450,
+                "hint":"(название организации)"
+
+              }, 
+              {
+                "type": "input",
+                "field_id": "input_3",
+                "width":450,
+                "hint":"(фамилия и инициалы руководителя)"
+              },
+              {
+                "type": "input",
+                "field_id": "input_4",
+                "prepend": "От кого",
+                "width":450,
+                "hint":"(фамилия, имя, отчество кандидата)"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Заявление",
+            "align":"center",
+            "font":"bold",
+            "margin":"bottom"
+          },
+          {
+            "type":"row",
+            "children":[
+              {
+                "type": "input",
+                "prepend":"Прошу зачислить меня на учебный курс",
+                "field_id": "input_5",
+                "hint":"(название курса)"
+              }
+            ]
+          },
+          {
+            "type": "input",
+            "field_id": "input_6",
+            "hint":"(имеется ли опыт работы)",
+            "width":450
+          },
+          {
+            "type":"row",
+            "justify": "between",
+            "children":[
+              {
+                "type":"row",
+                "children":[
+                  {
+                    "type": "input",
+                    "field_id": "input_7",
+                    "prepend":"«",
+                    "append":"»",
+                    "width":120
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_8",
+                    "width":180,
+                    "hint":"(дата)"
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_9",
+                    "prepend":"20",
+                    "append":"года",
+                    "width":180
+                  }
+                ]
+              },
+              {
+                "type": "input",
+                "field_id": "input_10",
+                "hint":"(подпись)",
+                "width":150
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "fipi_number": "B98A38",
+    "answers": [
+      {
+        "content": {
+          "input_1": "",
+          "input_2": "",
+          "input_3": "",
+          "input_4": "",
+          "input_5": "",
+          "input_6": "",
+          "input_7": "",
+          "input_8": "",
+          "input_9": "",
+          "input_10": ""
+        },
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "image",
+        "value": "/storage/images/RVP/022424.jpg"
+      },
+      {
+        "type": "text",
+        "value": "Вы пришли устраиваться на работу по этому объявлению. Напишите заявление о приёме на работу на имя директора ОАО «Жилищник» Кузнецова К.А."
+      },
+      {
+        "type": "text",
+        "value": "В заявлении Вы должны указать:"
+      },
+      {
+        "type": "text",
+        "value": "- должность руководителя, его фамилию и инициалы;"
+      },
+      {
+        "type": "text",
+        "value": "- название организации;"
+      },
+      {
+        "type": "text",
+        "value": "- свои фамилию, имя, отчество;"
+      },
+      {
+        "type": "text",
+        "value": "- должность, на которую Вы претендуете;"
+      },
+      { 
+        "type": "text",
+        "value": "-  имеется ли опыт работы;"
+      },
+      {
+        "type": "text",
+        "value": "- дату заполнения заявления и поставить подпись или фамилию."
+      },
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type":"row",
+            "direction": "column",
+            "align": "end",
+            "gap":2,
+            "children":[
+              {
+                "type": "input",
+                "prepend": "Кому",
+                "field_id": "input_1",
+                "width":450,
+                "hint":"(должность руководителя)"
+              },
+             
+              {
+                "type": "input",
+                "field_id": "input_2",
+                "width":450,
+                "hint":"(название организации)"
+
+              }, 
+              {
+                "type": "input",
+                "field_id": "input_3",
+                "width":450,
+                "hint":"(фамилия и инициалы руководителя)"
+              },
+              {
+                "type": "input",
+                "field_id": "input_4",
+                "prepend": "От кого",
+                "width":450,
+                "hint":"(фамилия, имя, отчество кандидата)"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Заявление",
+            "align":"center",
+            "font":"bold",
+            "margin":"bottom"
+          },
+          {
+            "type":"row",
+            "children":[
+              {
+                "type": "input",
+                "prepend":"Прошу принять меня на должность",
+                "field_id": "input_5",
+                "hint":"(наименование должности)"
+              }
+            ]
+          },
+          {
+            "type": "input",
+            "field_id": "input_6",
+            "hint":"(имеется ли опыт работы)",
+            "width":450
+          },
+          {
+            "type":"row",
+            "justify": "between",
+            "children":[
+              {
+                "type":"row",
+                "children":[
+                  {
+                    "type": "input",
+                    "field_id": "input_7",
+                    "prepend":"«",
+                    "append":"»",
+                    "width":120
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_8",
+                    "width":180,
+                    "hint":"(дата)"
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_9",
+                    "prepend":"20",
+                    "append":"года",
+                    "width":180
+                  }
+                ]
+              },
+              {
+                "type": "input",
+                "field_id": "input_10",
+                "hint":"(подпись)",
+                "width":150
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "fipi_number": "022424",
+    "answers": [
+      {
+        "content": {
+          "input_1": "",
+          "input_2": "",
+          "input_3": "",
+          "input_4": "",
+          "input_5": "",
+          "input_6": "",
+          "input_7": "",
+          "input_8": "",
+          "input_9": "",
+          "input_10": ""
+        },
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "image",
+        "value": "/storage/images/RVP/E5591D.jpg"
+      },
+      {
+        "type": "text",
+        "value": "Вы пришли устраиваться на завод рабочим по этому объявлению. Напишите заявление о приёме на работу на имя директора завода «Серп и молот» Степанова И.А."
+      },
+      {
+        "type": "text",
+        "value": "В заявлении Вы должны указать:"
+      },
+      {
+        "type": "text",
+        "value": "- должность руководителя, его фамилию и инициалы;"
+      },
+      {
+        "type": "text",
+        "value": "- название организации;"
+      },
+      {
+        "type": "text",
+        "value": "- свои фамилию, имя, отчество;"
+      },
+      {
+        "type": "text",
+        "value": "- должность, на которую Вы претендуете;"
+      },
+      { 
+        "type": "text",
+        "value": "-  необходимо ли Вам обучение;"
+      },
+      {
+        "type": "text",
+        "value": "- дату заполнения заявления и поставить подпись или фамилию."
+      },
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type":"row",
+            "direction": "column",
+            "align": "end",
+            "gap":2,
+            "children":[
+              {
+                "type": "input",
+                "prepend": "Кому",
+                "field_id": "input_1",
+                "width":450,
+                "hint":"(должность руководителя)"
+              },
+             
+              {
+                "type": "input",
+                "field_id": "input_2",
+                "width":450,
+                "hint":"(название организации)"
+
+              }, 
+              {
+                "type": "input",
+                "field_id": "input_3",
+                "width":450,
+                "hint":"(фамилия и инициалы руководителя)"
+              },
+              {
+                "type": "input",
+                "field_id": "input_4",
+                "prepend": "От кого",
+                "width":450,
+                "hint":"(фамилия, имя, отчество кандидата)"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Заявление",
+            "align":"center",
+            "font":"bold",
+            "margin":"bottom"
+          },
+          {
+            "type":"row",
+            "children":[
+              {
+                "type": "input",
+                "prepend":"Прошу принять меня на должность",
+                "field_id": "input_5",
+                "hint":"(наименование должности)"
+              }
+            ]
+          },
+          {
+            "type": "input",
+            "field_id": "input_6",
+            "hint":"(необходимо ли обучение)",
+            "width":450
+          },
+          {
+            "type":"row",
+            "justify": "between",
+            "children":[
+              {
+                "type":"row",
+                "children":[
+                  {
+                    "type": "input",
+                    "field_id": "input_7",
+                    "prepend":"«",
+                    "append":"»",
+                    "width":120
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_8",
+                    "width":180,
+                    "hint":"(дата)"
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_9",
+                    "prepend":"20",
+                    "append":"года",
+                    "width":180
+                  }
+                ]
+              },
+              {
+                "type": "input",
+                "field_id": "input_10",
+                "hint":"(подпись)",
+                "width":150
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "fipi_number": "E5591D",
+    "answers": [
+      {
+        "content": {
+          "input_1": "",
+          "input_2": "",
+          "input_3": "",
+          "input_4": "",
+          "input_5": "",
+          "input_6": "",
+          "input_7": "",
+          "input_8": "",
+          "input_9": "",
+          "input_10": ""
+        },
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "image",
+        "value": "/storage/images/RVP/036D1E.jpg"
+      },
+      {
+        "type": "text",
+        "value": "Вы пришли устраиваться на работу водителем автобуса по этому объявлению. Напишите заявление о приёме на работу на имя директора автобусного парка «Комфорт-Автопарк» Кирюхина И.А."
+      },
+      {
+        "type": "text",
+        "value": "В заявлении Вы должны указать:"
+      },
+      {
+        "type": "text",
+        "value": "- должность руководителя, его фамилию и инициалы;"
+      },
+      {
+        "type": "text",
+        "value": "- название организации;"
+      },
+      {
+        "type": "text",
+        "value": "- свои фамилию, имя, отчество;"
+      },
+      {
+        "type": "text",
+        "value": "- должность, на которую Вы претендуете;"
+      },
+      { 
+        "type": "text",
+        "value": "-  необходимо ли Вам обучение;"
+      },
+      {
+        "type": "text",
+        "value": "- дату заполнения заявления и поставить подпись или фамилию."
+      },
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type":"row",
+            "direction": "column",
+            "align": "end",
+            "gap":2,
+            "children":[
+              {
+                "type": "input",
+                "prepend": "Кому",
+                "field_id": "input_1",
+                "width":450,
+                "hint":"(должность руководителя)"
+              },
+             
+              {
+                "type": "input",
+                "field_id": "input_2",
+                "width":450,
+                "hint":"(название организации)"
+
+              }, 
+              {
+                "type": "input",
+                "field_id": "input_3",
+                "width":450,
+                "hint":"(фамилия и инициалы руководителя)"
+              },
+              {
+                "type": "input",
+                "field_id": "input_4",
+                "prepend": "От кого",
+                "width":450,
+                "hint":"(фамилия, имя, отчество кандидата)"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Заявление",
+            "align":"center",
+            "font":"bold",
+            "margin":"bottom"
+          },
+          {
+            "type":"row",
+            "children":[
+              {
+                "type": "input",
+                "prepend":"Прошу принять меня на должность",
+                "field_id": "input_5",
+                "hint":"(наименование должности)"
+              }
+            ]
+          },
+          {
+            "type": "input",
+            "field_id": "input_6",
+            "hint":"(необходимо ли обучение)",
+            "width":450
+          },
+          {
+            "type":"row",
+            "justify": "between",
+            "children":[
+              {
+                "type":"row",
+                "children":[
+                  {
+                    "type": "input",
+                    "field_id": "input_7",
+                    "prepend":"«",
+                    "append":"»",
+                    "width":120
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_8",
+                    "width":180,
+                    "hint":"(дата)"
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_9",
+                    "prepend":"20",
+                    "append":"года",
+                    "width":180
+                  }
+                ]
+              },
+              {
+                "type": "input",
+                "field_id": "input_10",
+                "hint":"(подпись)",
+                "width":150
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "fipi_number": "036D1E",
+    "answers": [
+      {
+        "content": {
+          "input_1": "",
+          "input_2": "",
+          "input_3": "",
+          "input_4": "",
+          "input_5": "",
+          "input_6": "",
+          "input_7": "",
+          "input_8": "",
+          "input_9": "",
+          "input_10": ""
+        },
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "image",
+        "value": "/storage/images/RVP/867217.jpg"
+      },
+      {
+        "type": "text",
+        "value": "Вы пришли устраиваться на работу по этому объявлению. Напишите заявление о приёме на работу на имя директора компании «Аргон» Корякина А.В."
+      },
+      {
+        "type": "text",
+        "value": "В заявлении Вы должны указать:"
+      },
+      {
+        "type": "text",
+        "value": "- должность руководителя, его фамилию и инициалы;"
+      },
+      {
+        "type": "text",
+        "value": "- название организации;"
+      },
+      {
+        "type": "text",
+        "value": "- свои фамилию, имя, отчество;"
+      },
+      {
+        "type": "text",
+        "value": "- должность, на которую Вы претендуете;"
+      },
+      { 
+        "type": "text",
+        "value": "- нуждаетесь ли Вы в общежитии;"
+      },
+      {
+        "type": "text",
+        "value": "- дату заполнения заявления и поставить подпись или фамилию."
+      },
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type":"row",
+            "direction": "column",
+            "align": "end",
+            "gap":2,
+            "children":[
+              {
+                "type": "input",
+                "prepend": "Кому",
+                "field_id": "input_1",
+                "width":450,
+                "hint":"(должность руководителя)"
+              },
+             
+              {
+                "type": "input",
+                "field_id": "input_2",
+                "width":450,
+                "hint":"(название организации)"
+
+              }, 
+              {
+                "type": "input",
+                "field_id": "input_3",
+                "width":450,
+                "hint":"(фамилия и инициалы руководителя)"
+              },
+              {
+                "type": "input",
+                "field_id": "input_4",
+                "prepend": "От кого",
+                "width":450,
+                "hint":"(фамилия, имя, отчество кандидата)"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Заявление",
+            "align":"center",
+            "font":"bold",
+            "margin":"bottom"
+          },
+          {
+            "type":"row",
+            "children":[
+              {
+                "type": "input",
+                "prepend":"Прошу принять меня на должность",
+                "field_id": "input_5",
+                "hint":"(наименование должности)"
+              }
+            ]
+          },
+          {
+            "type": "input",
+            "field_id": "input_6",
+            "hint":"(нуждаетесь ли Вы в общежитии)",
+            "width":450
+          },
+          {
+            "type":"row",
+            "justify": "between",
+            "children":[
+              {
+                "type":"row",
+                "children":[
+                  {
+                    "type": "input",
+                    "field_id": "input_7",
+                    "prepend":"«",
+                    "append":"»",
+                    "width":120
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_8",
+                    "width":180,
+                    "hint":"(дата)"
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_9",
+                    "prepend":"20",
+                    "append":"года",
+                    "width":180
+                  }
+                ]
+              },
+              {
+                "type": "input",
+                "field_id": "input_10",
+                "hint":"(подпись)",
+                "width":150
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "fipi_number": "867217",
+    "answers": [
+      {
+        "content": {
+          "input_1": "",
+          "input_2": "",
+          "input_3": "",
+          "input_4": "",
+          "input_5": "",
+          "input_6": "",
+          "input_7": "",
+          "input_8": "",
+          "input_9": "",
+          "input_10": ""
+        },
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "image",
+        "value": "/storage/images/RVP/F79DC6.jpg"
+      },
+      {
+        "type": "text",
+        "value": "Вы пришли устраиваться на работу кассиром по этому объявлению. Напишите заявление о приёме на работу на имя директора продуктового магазина «Рядом с вами» Малковой Е.В."
+      },
+      {
+        "type": "text",
+        "value": "В заявлении Вы должны указать:"
+      },
+      {
+        "type": "text",
+        "value": "- должность руководителя, его фамилию и инициалы;"
+      },
+      {
+        "type": "text",
+        "value": "- название организации;"
+      },
+      {
+        "type": "text",
+        "value": "- свои фамилию, имя, отчество;"
+      },
+      {
+        "type": "text",
+        "value": "- должность, на которую Вы претендуете;"
+      },
+      { 
+        "type": "text",
+        "value": "- имеется ли знание ПК;"
+      },
+      {
+        "type": "text",
+        "value": "- дату заполнения заявления и поставить подпись или фамилию."
+      },
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type":"row",
+            "direction": "column",
+            "align": "end",
+            "gap":2,
+            "children":[
+              {
+                "type": "input",
+                "prepend": "Кому",
+                "field_id": "input_1",
+                "width":450,
+                "hint":"(должность руководителя)"
+              },
+             
+              {
+                "type": "input",
+                "field_id": "input_2",
+                "width":450,
+                "hint":"(название организации)"
+
+              }, 
+              {
+                "type": "input",
+                "field_id": "input_3",
+                "width":450,
+                "hint":"(фамилия и инициалы руководителя)"
+              },
+              {
+                "type": "input",
+                "field_id": "input_4",
+                "prepend": "От кого",
+                "width":450,
+                "hint":"(фамилия, имя, отчество кандидата)"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Заявление",
+            "align":"center",
+            "font":"bold",
+            "margin":"bottom"
+          },
+          {
+            "type":"row",
+            "children":[
+              {
+                "type": "input",
+                "prepend":"Прошу принять меня на должность",
+                "field_id": "input_5",
+                "hint":"(наименование должности)"
+              }
+            ]
+          },
+          {
+            "type": "input",
+            "field_id": "input_6",
+            "hint":"(имеется ли знание ПК)",
+            "width":450
+          },
+          {
+            "type":"row",
+            "justify": "between",
+            "children":[
+              {
+                "type":"row",
+                "children":[
+                  {
+                    "type": "input",
+                    "field_id": "input_7",
+                    "prepend":"«",
+                    "append":"»",
+                    "width":120
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_8",
+                    "width":180,
+                    "hint":"(дата)"
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_9",
+                    "prepend":"20",
+                    "append":"года",
+                    "width":180
+                  }
+                ]
+              },
+              {
+                "type": "input",
+                "field_id": "input_10",
+                "hint":"(подпись)",
+                "width":150
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "fipi_number": "F79DC6",
+    "answers": [
+      {
+        "content": {
+          "input_1": "",
+          "input_2": "",
+          "input_3": "",
+          "input_4": "",
+          "input_5": "",
+          "input_6": "",
+          "input_7": "",
+          "input_8": "",
+          "input_9": "",
+          "input_10": ""
+        },
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "image",
+        "value": "/storage/images/RVP/575BCE.jpg"
+      },
+      {
+        "type": "text",
+        "value": "Вы пришли устраиваться на работу по этому объявлению. Напишите заявление о приёме на работу на имя директора строительной фирмы «Стройкомплекс» Тимофеева Д.Н."
+      },
+      {
+        "type": "text",
+        "value": "В заявлении Вы должны указать:"
+      },
+      {
+        "type": "text",
+        "value": "- должность руководителя, его фамилию и инициалы;"
+      },
+      {
+        "type": "text",
+        "value": "- название организации;"
+      },
+      {
+        "type": "text",
+        "value": "- свои фамилию, имя, отчество;"
+      },
+      {
+        "type": "text",
+        "value": "- должность, на которую Вы претендуете;"
+      },
+      { 
+        "type": "text",
+        "value": "- нуждаетесь ли Вы в общежитии;"
+      },
+      {
+        "type": "text",
+        "value": "- дату заполнения заявления и поставить подпись или фамилию."
+      },
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type":"row",
+            "direction": "column",
+            "align": "end",
+            "gap":2,
+            "children":[
+              {
+                "type": "input",
+                "prepend": "Кому",
+                "field_id": "input_1",
+                "width":450,
+                "hint":"(должность руководителя)"
+              },
+             
+              {
+                "type": "input",
+                "field_id": "input_2",
+                "width":450,
+                "hint":"(название организации)"
+
+              }, 
+              {
+                "type": "input",
+                "field_id": "input_3",
+                "width":450,
+                "hint":"(фамилия и инициалы руководителя)"
+              },
+              {
+                "type": "input",
+                "field_id": "input_4",
+                "prepend": "От кого",
+                "width":450,
+                "hint":"(фамилия, имя, отчество кандидата)"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Заявление",
+            "align":"center",
+            "font":"bold",
+            "margin":"bottom"
+          },
+          {
+            "type":"row",
+            "children":[
+              {
+                "type": "input",
+                "prepend":"Прошу принять меня на должность",
+                "field_id": "input_5",
+                "hint":"(наименование должности)"
+              }
+            ]
+          },
+          {
+            "type": "input",
+            "field_id": "input_6",
+            "hint":"(нуждаетесь ли Вы в общежитии)",
+            "width":450
+          },
+          {
+            "type":"row",
+            "justify": "between",
+            "children":[
+              {
+                "type":"row",
+                "children":[
+                  {
+                    "type": "input",
+                    "field_id": "input_7",
+                    "prepend":"«",
+                    "append":"»",
+                    "width":120
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_8",
+                    "width":180,
+                    "hint":"(дата)"
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_9",
+                    "prepend":"20",
+                    "append":"года",
+                    "width":180
+                  }
+                ]
+              },
+              {
+                "type": "input",
+                "field_id": "input_10",
+                "hint":"(подпись)",
+                "width":150
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "fipi_number": "575BCE",
+    "answers": [
+      {
+        "content": {
+          "input_1": "",
+          "input_2": "",
+          "input_3": "",
+          "input_4": "",
+          "input_5": "",
+          "input_6": "",
+          "input_7": "",
+          "input_8": "",
+          "input_9": "",
+          "input_10": ""
+        },
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "image",
+        "value": "/storage/images/RVP/57C932.jpg"
+      },
+      {
+        "type": "text",
+        "value": "Вы пришли устраиваться на работу по этому объявлению. Напишите заявление о приёме на работу на имя директора магазина «Сладкий дом» Кудряшовой Н.Г."
+      },
+      {
+        "type": "text",
+        "value": "В заявлении Вы должны указать:"
+      },
+      {
+        "type": "text",
+        "value": "- должность руководителя, его фамилию и инициалы;"
+      },
+      {
+        "type": "text",
+        "value": "- название организации;"
+      },
+      {
+        "type": "text",
+        "value": "- свои фамилию, имя, отчество;"
+      },
+      {
+        "type": "text",
+        "value": "- должность, на которую Вы претендуете;"
+      },
+      { 
+        "type": "text",
+        "value": "- имеется ли медицинская книжка;"
+      },
+      {
+        "type": "text",
+        "value": "- дату заполнения заявления и поставить подпись или фамилию."
+      },
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type":"row",
+            "direction": "column",
+            "align": "end",
+            "gap":2,
+            "children":[
+              {
+                "type": "input",
+                "prepend": "Кому",
+                "field_id": "input_1",
+                "width":450,
+                "hint":"(должность руководителя)"
+              },
+             
+              {
+                "type": "input",
+                "field_id": "input_2",
+                "width":450,
+                "hint":"(название организации)"
+
+              }, 
+              {
+                "type": "input",
+                "field_id": "input_3",
+                "width":450,
+                "hint":"(фамилия и инициалы руководителя)"
+              },
+              {
+                "type": "input",
+                "field_id": "input_4",
+                "prepend": "От кого",
+                "width":450,
+                "hint":"(фамилия, имя, отчество кандидата)"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Заявление",
+            "align":"center",
+            "font":"bold",
+            "margin":"bottom"
+          },
+          {
+            "type":"row",
+            "children":[
+              {
+                "type": "input",
+                "prepend":"Прошу принять меня на должность",
+                "field_id": "input_5",
+                "hint":"(наименование должности)"
+              }
+            ]
+          },
+          {
+            "type": "input",
+            "field_id": "input_6",
+            "hint":"(имеется ли медицинская книжка)",
+            "width":450
+          },
+          {
+            "type":"row",
+            "justify": "between",
+            "children":[
+              {
+                "type":"row",
+                "children":[
+                  {
+                    "type": "input",
+                    "field_id": "input_7",
+                    "prepend":"«",
+                    "append":"»",
+                    "width":120
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_8",
+                    "width":180,
+                    "hint":"(дата)"
+                  },
+                  {
+                    "type": "input",
+                    "field_id": "input_9",
+                    "prepend":"20",
+                    "append":"года",
+                    "width":180
+                  }
+                ]
+              },
+              {
+                "type": "input",
+                "field_id": "input_10",
+                "hint":"(подпись)",
+                "width":150
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "fipi_number": "57C932",
+    "answers": [
+      {
+        "content": {
+          "input_1": "",
+          "input_2": "",
+          "input_3": "",
+          "input_4": "",
+          "input_5": "",
+          "input_6": "",
+          "input_7": "",
+          "input_8": "",
+          "input_9": "",
+          "input_10": ""
+        },
+        "is_correct": true
+      }
+    ]
+  }
+]

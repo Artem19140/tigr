@@ -1,0 +1,94 @@
+<?php
+
+namespace App\Http\Requests\Exam;
+
+use App\Http\Dto\ExamDto;
+use App\Models\Employee;
+use App\Models\Exam;
+use Carbon\Carbon;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class ExamPostRequest extends FormRequest
+{
+    public function authorize(Employee $employee): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'time' => [
+                'required',
+                'date_format:H:i',
+            ],
+            'date' => [
+                'required',
+                'date',
+                Rule::date()->afterOrEqual(Carbon::now()->addHours(Exam::CREATE_AVAILABLE_BEFORE_HOURS)),
+            ],
+            'addressId' => [
+                'required',
+                'integer',
+                'min:1',
+                'exists:addresses,id',
+            ],
+
+            'examTypeId' => [
+                'required',
+                'integer',
+                'min:1',
+                'exists:exam_types,id',
+            ],
+
+            'comment' => [
+                'nullable',
+                'string',
+                'max:256',
+            ],
+            'capacity' => [
+                'required',
+                'integer',
+                'min:1',
+            ],
+
+            'examiners' => [
+                'required',
+                'array',
+            ],
+
+            'examiners.*' => [
+                'required',
+                'integer',
+                'min:1',
+                'exists:employees,id',
+            ],
+        ];
+    }
+
+    /**
+     * Получить сообщения об ошибках для определенных правил валидации.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'date.after_or_equal' => 'Нельзя создать экзамен на прошедшую дату.',
+            'time.date_format' => 'Время должно быть в формате чч:мм',
+        ];
+    }
+
+    public function getDto(): ExamDto
+    {
+        return new ExamDto(
+            Carbon::createFromFormat('Y-m-d H:i', $this->input('date').' '.$this->input('time'), request()->user()->time_zone)->utc(),
+            \intval($this->input('addressId')),
+            \intval($this->input('examTypeId')),
+            \strval($this->input('comment')),
+            $this->input('examiners'),
+            \intval($this->input('capacity')),
+        );
+    }
+}

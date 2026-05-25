@@ -1,0 +1,703 @@
+[
+  {
+    "content": [
+      {
+        "type": "text",
+        "value": "Уважаемые гости!",
+        "align":"center"
+      },
+      {
+        "type": "text",
+        "value": "Приглашаем Вас на автобусную экскурсию по городу."
+      },
+      {
+        "type": "text",
+        "value": "Экскурсия будет 12 мая (во вторник) с 10 до 14 часов."
+      },
+      {
+        "type": "text",
+        "value": "Экскурсия будет 12 мая (во вторник) с 10 до 14 часов. Ждём Вас около торгового центра «Мир».",
+        "margin":"bottom"
+      },
+      {
+        "type": "text",
+        "value": "Экскурсия начинается"
+      }
+    ],
+    "fipi_number": "EC2172",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в 10 часов"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в 12 часов"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в 14 часов"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "text",
+        "value": "Меня зовут Дамир. Вчера у меня был выходной. Я со своей семьёй хорошо отдохнул. Днём мы были в парке. А вечером решили поужинать дома.",
+        "margin":"bottom"
+      },
+      {
+        "type": "text",
+        "value": "Вчера днём Дамир и его семья были"
+      }
+    ],
+    "fipi_number": "3CED9A",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в парке"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в ресторане"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в театре"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "text",
+        "value": "Меня зовут Лейла. Сегодня утром мы с сыном ходили на экскурсию по городу. Весь день была хорошая погода. Мы гуляли до самого вечера. Пришли домой поздно.",
+        "margin":"bottom"
+      },
+      {
+        "type": "text",
+        "value": "Лейла вернулась домой"
+      }
+    ],
+    "fipi_number": "721F84",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "вечером"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "днём"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "утром"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "text",
+        "value": "Анвару двадцать лет. Он приехал из Узбекистана. Дома он учился и помогал отцу продавать фрукты на базаре. Его брат работает дворником. Анвар планирует работать на стройке. Он хочет строить дома и школы.",
+        "margin":"bottom"
+      },
+      {
+        "type": "text",
+        "value": "Кем будет работать Анвар?"
+      }
+    ],
+    "fipi_number": "552002",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "продавцом"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "строителем"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "дворником"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "text",
+        "value": "Меня зовут Юлия. Я работаю в аптеке несколько месяцев. Это трудная, но интересная работа, часто я помогаю выбрать лекарство. Каждому  покупателю я говорю: «Будьте здоровы!»",
+        "margin":"bottom"
+      },
+      {
+        "type": "text",
+        "value": "Юлия работает в аптеке"
+      }
+    ],
+    "fipi_number": "F46ECE",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "недавно"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "много лет"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "всю жизнь"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "text",
+        "value": "С 1 августа музыкальная школа принимает детей в первый класс. Прослушивание детей строго по записи по вторникам и четвергамс 13 до 16 часов.",
+        "margin":"bottom"
+      },
+      {
+        "type": "text",
+        "value": "Прослушивание будет"
+      }
+    ],
+    "fipi_number": "2FFBCF",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "днём"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "утром"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "вечером"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "text",
+        "value": "Меня зовут Татьяна. Я работаю воспитателем в детском саду. Вчера мы вместе с моей группой готовились к концерту для родителей. Дети учили песню о маме.",
+        "margin":"bottom"
+      },
+       {
+        "type": "text",
+        "value": "На концерте дети будут"
+      }
+    ],
+    "fipi_number": "EE82CF",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "петь"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "танцевать"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "читать  стихи"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "text",
+        "value": "Меня зовут Светлана. Я много лет работаю в школьной столовой. Мне нравится готовить для детей вкусную еду. Дети всегда говорят нам: «Спасибо!»",
+        "margin":"bottom"
+      },
+      {
+        "type": "text",
+        "value": "Светлана работает"
+      }
+    ],
+    "fipi_number": "CDB2B3",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "поваром"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "воспитателем"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "охранником"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "text",
+        "value": "Меня зовут Анастасия Сергеевна. Я стоматолог. Часто люди боятся зубных врачей. Я всегда спокойно спрашиваю о проблеме и только потом начинаю лечение.",
+        "margin":"bottom"
+      },
+      {
+        "type": "text",
+        "value": "Анастасия Сергеевна работает"
+      }
+    ],
+    "fipi_number": "9F9A90",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в поликлинике"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в магазине"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в банке"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "text",
+        "value": "Меня зовут Булат. Моя работа – это доставка продуктов. Думаете,это просто – без машины? Нужно быть очень организованным, быстро ездить на велосипеде, а ещё хорошо знать город.",
+        "margin":"bottom"
+      },
+      {
+        "type": "text",
+        "value": "Булат возит продукты"
+      }
+    ],
+    "fipi_number": "F054F7",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "на велосипеде"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "на мотоцикле"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "на машине"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "text",
+        "value": "Меня зовут Анна. Я работаю в школе учителем. Вчера вместе со своим классом я ходила в зоопарк. Детям всё понравилось. Мы вернулись в школу к обеду",
+        "margin":"bottom"
+      },
+      {
+        "type": "text",
+        "value": "Вчера утром Анна"
+      }
+    ],
+    "fipi_number": "29D4B7",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "была в зоопарке"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "читала книгу"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "готовила обед"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "text",
+        "value": "Меня зовут Ясмина.  Мне 45 лет. Каждый день я работаю по 8 часов на кухне, потому что я повар. По выходным я не люблю готовить, я хожу гулять с моими детьми и мужем.",
+        "margin":"bottom"
+      },
+      {
+        "type": "text",
+        "value": "Ясмина работает"
+      }
+    ],
+    "fipi_number": "125772",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в кафе"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "на почте"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в парикмахерской"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "text",
+        "value": "Меня зовут Света. После работы я ходила получать посылку и письмо от моей бабушки из Красноярска. В посылке были свитер и вкусные конфеты.",
+        "margin":"bottom"
+      },
+      {
+        "type": "text",
+        "value": "После работы Света была"
+      }
+    ],
+    "fipi_number": "A74C2B",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "на почте"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в магазине"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в кафе"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "text",
+        "value": "У Амира самая популярная работа – он курьер. Каждый день он привозит товары из магазина людям. Он работает с понедельника по субботу, а в воскресенье он отдыхает.",
+        "margin":"bottom"
+      },
+      {
+        "type": "text",
+        "value": "У Амира выходной"
+      }
+    ],
+    "fipi_number": "2FFBD8",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в понедельник"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в субботу"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в воскресенье"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "text",
+        "value": "Олегу тридцать лет. В детстве он очень любил машины. Его папа работал механиком и часто брал сына на работу. Сегодня Олег машинист, и каждый день тысячи пассажиров едут в его поезде.",
+        "margin":"bottom"
+      },
+      {
+        "type": "text",
+        "value": "Олег работает"
+      }
+    ],
+    "fipi_number": "3E3A67",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "на автовокзале"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в метро"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "на стройке"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "text",
+        "value": "Меня зовут Лена. На прошлой неделе у меня был отпуск. Мы с друзьями были в Туле. На улице было холодно, и мы ходили в музей.",
+        "margin":"bottom"
+      },
+      {
+        "type": "text",
+        "value": "На прошлой неделе Лена была"
+      }
+    ],
+    "fipi_number": "ABC331",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в музее"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в ресторане"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в кинотеатре"
+          }
+        ]
+      }
+    ]
+  }
+]

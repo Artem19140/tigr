@@ -1,0 +1,690 @@
+[
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/FAD648.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Детскую одежду можно купить"
+      }
+    ],
+    "fipi_number": "2C754F",
+    "group_number": "FAD648",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "на первом этаже"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "на втором этаже"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "на третьем этаже"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/C29DB1.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Россияне называют Волгу"
+      }
+    ],
+    "fipi_number": "EBA5FA",
+    "group_number": "C29DB1",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "Волга-батюшка"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "Волга-матушка"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "Волга-сестрица"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/548193.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Официальная часть праздника начнётся"
+      }
+    ],
+    "fipi_number": "B027CD",
+    "group_number": "548193",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "утром"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "днём"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "вечером"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/20B508.mp3"
+      },
+      {
+        "type": "text",
+        "value": "В это году всероссийская ярмарка мёда будет"
+      }
+    ],
+    "fipi_number": "4AF2AA",
+    "group_number": "20B508",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в Сибири"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в Казани"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в Москве"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/9FF6CD.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Из озера вытекает"
+      }
+    ],
+    "fipi_number": "C5E746",
+    "group_number": "9FF6CD",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "336 рек"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "1 река"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "40 рек"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/7087E9.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Город Мышкин находится"
+      }
+    ],
+    "fipi_number": "A16C9B",
+    "group_number": "7087E9",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "на берегу озера"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "на берегу реки"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "рядом с лесом"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/AB7819.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Город Псков появился"
+      }
+    ],
+    "fipi_number": "EE9629",
+    "group_number": "AB7819",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "несколько лет назад"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в одиннадцатом веке"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "раньше, чем Москва"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/36453D.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Москвичи называют парк Сокольники"
+      }
+    ],
+    "fipi_number": "E00AE7",
+    "group_number": "36453D",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "парком Петра Первого"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "спортивным парком"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "самым европейским парком"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/7CE60C.mp3"
+      },
+      {
+        "type": "text",
+        "value": "В воскресенье в Нижнем Новгороде пройдёт"
+      }
+    ],
+    "fipi_number": "9D82A5",
+    "group_number": "7CE60C",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "чемпионат России по футболу"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "большой спортивный праздник"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "ежегодная городская ярмарка"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/7B5D08.mp3"
+      },
+      {
+        "type": "text",
+        "value": "В парке-музее «этномир» можно интересно провести"
+      }
+    ],
+    "fipi_number": "9AF961",
+    "group_number": "7B5D08",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "выходные"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "лето"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "отпуск"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/045DE2.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Озеро Байкал находится"
+      }
+    ],
+    "fipi_number": "5A77A4",
+    "group_number": "045DE2",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "на Дальнем Востоке"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "на юге России"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в Сибири"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/9532FA.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Фестиваль пряников будет проходить"
+      }
+    ],
+    "fipi_number": "634BAA",
+    "group_number": "9532FA",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "неделю"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "месяц"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "всю осень"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/66A3EB.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Музей янтаря находится"
+      }
+    ],
+    "fipi_number": "428DF8",
+    "group_number": "66A3EB",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в Калининграде"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в Москве"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в Санкт-Петербурге"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/A485C5.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Чёрная лисица Симона приехала"
+      }
+    ],
+    "fipi_number": "7E8261",
+    "group_number": "A485C5",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "из Колумбии"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "из Китая"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "из Эфиопии"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/694155.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Ладожское озеро находится"
+      }
+    ],
+    "fipi_number": "3DEF2D",
+    "group_number": "694155",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "на северо-западе России"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "на северо-востоке России"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "на юго-западе России"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/storage/audios/39B3EA.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Развлекательный центр «Искра» откроется"
+      }
+    ],
+    "fipi_number": "988BC8",
+    "group_number": "39B3EA",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в Саратове"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в Самаре"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в Сочи"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,875 @@
+[
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Уважаемые жители!",
+            "align":"center"
+          },
+          {
+            "type": "text",
+            "value": "В вашем доме 5 января с 10 до 14 часов будет отключена горячая вода в связи с заменой труб в подвале. Приносим свои извинения за доставленные неудобства."
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "В доме не будет"
+      }
+    ],
+    "fipi_number": "821CF1",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "холодной воды"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "горячей воды"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "отопления"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Если у вас есть свободное время, приходите в наш молодёжный клуб! Мы приглашаем вас на занятия в группах: "
+          },
+          {
+            "type": "text",
+            "value": "«Компьютерные курсы»"
+          },{
+            "type": "text",
+            "value": "Учимся играть на гитаре»" 
+          },
+          {
+            "type": "text",
+            "value": "«Говорим по-английски»"
+          },
+          {
+            "type": "text",
+            "value": "Мы работаем каждый день, кроме понедельника."
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "В клубе можно научиться"
+      }
+    ],
+    "fipi_number": "6311E9",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "работать на компьютере"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "фотографировать"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "танцевать танго"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "text",
+        "value": "На территорию России холода придут уже в ноябре. Но погода будет часто меняться, иногда будут идти дожди. Декабрь будет немного холоднее, чем обычно. Настоящая русская зима со снегом и морозами придёт только в январе.",
+        "margin":"bottom"
+      },
+      {
+        "type": "text",
+        "value": "Эта заметка о погоде в России"
+      }
+    ],
+    "fipi_number": "37BAD4",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "весной"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "зимой"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "летом"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Уважаемые жители!",
+            "align":"center"
+          },
+          {
+            "type": "text",
+            "value": "В вашем доме 10 и 11 марта будет производиться установка новых лифтов. В этот период лифты работать не будут."
+          },
+          {
+            "type": "text",
+            "value": "Приносим свои извинения за доставленные неудобства."
+          },
+          {
+            "type": "text",
+            "value": "Справки по указанному ниже телефону."
+          }
+          
+        ]
+      },
+      {
+        "type": "text",
+        "value": "В доме будут"
+      }
+    ],
+    "fipi_number": "2E69B8",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "устанавливать новые лифты"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "ремонтировать старые лифты"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "мыть лифты"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "text",
+        "value": "Омар приехал в Москву и решил посмотреть Кремль."
+      },
+      {
+        "type": "text",
+        "value": "На трамвайной остановке он спросил прохожего:"
+      },
+      {
+        "type": "text",
+        "value": "– Скажите, пожалуйста, как мне добраться до Красной площади?"
+      },
+      {
+        "type": "text",
+        "value": "– Вам нужно на метро доехать до станции «Китай-город», потом по улице Никольской дойти до Красной площади"
+      },
+      {
+        "type": "text",
+        "value": "– Спасибо.",
+        "margin": "bottom"
+      },
+      {
+        "type": "text",
+        "value": "Омар спросил прохожего, как доехать"
+      }
+    ],
+    "fipi_number": "E48716",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "до метро «Китай-город»"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "до улицы Никольская"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "до Красной площади"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Уважаемые соседи!",
+            "align": "center"
+          },
+          {
+            "type": "text",
+            "value": "Просьба аккуратно пользоваться мусоропроводом в нашем подъезде. Не выкидывайте в него объёмный мусор: бутылки, коробки и упаковку из картона и пенопласта. Это наш с вами общий дом!"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Это объявление для"
+      }
+    ],
+    "fipi_number": "FAB728",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "жителей дома"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "дворников"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "лифтёров"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Уважаемые жители нашего дома!",
+            "align": "center"
+          },
+          {
+            "type": "text",
+            "value": "Давайте поддержим акцию «Ёлочный круговорот»: сдавайте хвойные деревья после Нового года в специальные пункты для переработки. Ближайший к нам пункт находится по адресу: ул. Профсоюзная, дом 11."
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "После Нового года ёлки можно"
+      }
+    ],
+    "fipi_number": "BB3F2E",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "переработать"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "купить"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "продать"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Уважаемые жители нашего дома!",
+            "align": "center"
+          },
+          {
+            "type": "text",
+            "value": "Доводим до вашего сведения, что весь мусор после ремонтно-строительных работ необходимо вывозить на специальном транспорте за собственный счёт. Правление ЖСК «Небо»."
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "За вывоз строительного мусора после ремонта платит"
+      }
+    ],
+    "fipi_number": "EEF2F6",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "строительная компания"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "собственник квартиры"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "правление ЖСК"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Уважаемые жители дома по адресу: улица Волкова, дом 24!",
+            "align": "center"
+          },
+          {
+            "type": "text",
+            "value": "Информируем вас, что в связи с ремонтом электроснабжения дома будут производиться кратковременные отключения электроэнергии в дневное время. Правление ЖСК «Яблоко»"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "В доме не будет"
+      }
+    ],
+    "fipi_number": "1030AB",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "газа"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "света"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "воды"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Уважаемые жители!",
+            "align": "center"
+          }, 
+          {
+            "type": "text",
+            "value": " С 1 декабря в вашем многоквартирном доме начнутся работы по замене лифтового оборудования в рамках программы капитального ремонта"
+          },
+          {
+            "type": "text",
+            "value": " Приносим свои извинения за временные неудобства."
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "В доме скоро будет ремонт"
+      }
+    ],
+    "fipi_number": "4623E5",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "квартир"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "лифта"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "мусоропровода"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Внимание!",
+            "align":"center"
+          },
+          {
+            "type": "text",
+            "value": "Требуются сотрудники для работы в кафе: кассиры, повара, уборщики. Заработная плата 2 раза в месяц и премии по итогам года, бесплатные рабочая одежда и питание. Требуется медицинская книжка."
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Сотрудники кафе получают"
+      }
+    ],
+    "fipi_number": "A4E56A",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "медицинскую книжку"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "рабочую одежду и питание"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "премии 2 раза в месяц"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Уважаемые жители!",
+            "align":"center"
+          },
+          {
+            "type": "text",
+            "value": "В вашем доме 13 ноября будет производиться замена электрощитов на 3-м и 5-м этажах. С 9:00 до 13:00 будет отключено электричество."
+          },
+          {
+            "type": "text",
+            "value": "Приносим свои извинения за доставленные неудобства!"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "В доме не будет"
+      }
+    ],
+    "fipi_number": "86A5F9",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "электричества"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "воды"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "отопления"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Уважаемые пассажиры!",
+            "align":"center"
+          },
+          {
+            "type": "text",
+            "value": "С 1 декабря вводится новый автобусный маршрут № 88 от автовокзала «Тучково» до посёлка Салтыковки. Автобус ходит каждые 15 минут с 6:00 до 23:00. Билеты можно купить в кассе автовокзала или у водителя."
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Автобус № 88 едет"
+      }
+    ],
+    "fipi_number": "785D0C",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "до посёлка Салтыковки"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "до метро Тучково"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "до аэропорта"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Уважаемые жители домов 15 и 17!",
+            "align":"center"
+          },
+          {
+            "type": "text",
+            "value": "В связи с работами по замене асфальта с 10 по 25 июня будет закрыт проезд по улице Шипилова. Просим учитывать это при планировании маршрутов. Благодарим за понимание!"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Проезд будет закрыт, потому что ведутся работы"
+      }
+    ],
+    "fipi_number": "3D92A0",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "по замене асфальта"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "по строительству школы"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "по замене уличных фонарей"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Внимание!",
+            "align":"center"
+          },
+          {
+            "type": "text",
+            "value": "В кафе «Ингрид» на постоянную работу"
+          },
+          {
+            "type": "text",
+            "value": "требуются повар и кондитер."
+          },
+          {
+            "type": "text",
+            "value": "Зарплата от 80 000 рублей. График работы 2/2, отпуск 28 дней."
+          },
+          {
+            "type": "text",
+            "value": "Кафе «Ингрид» находится по адресу: ул. Макарова, д. 14."
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "В кафе « Ингрид » приглашается"
+      }
+    ],
+    "fipi_number": "4BC965",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "кондитер"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "кассир"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "уборщик"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "frame",
+        "value": [
+          {
+            "type": "text",
+            "value": "Внимание!",
+            "align":"center"
+          },
+          {
+            "type": "text",
+            "value": "В супермаркет «Дива» на постоянную работу требуются продавцы."
+          },
+          {
+            "type": "text",
+            "value": "Зарплата от 70 000 рублей. График 2/2, обучение на месте, униформа – за счёт компании. Медицинская книжка обязательна."
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Продавцы должны иметь"
+      }
+    ],
+    "fipi_number": "972E3F",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "опыт работы"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "медицинскую книжку"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "собственную униформу"
+          }
+        ]
+      }
+    ]
+  }
+]

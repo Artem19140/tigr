@@ -1,0 +1,59 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('foreign_nationals', function (Blueprint $table) {
+            $table->id()->index();
+            $table->string('surname');
+            $table->string('name');
+            $table->string('patronymic')->nullable()->default(null);
+            $table->date('date_birth');
+            $table->string('surname_latin');
+            $table->string('name_latin');
+            $table->string('document_type')->default('Паспорт');
+            $table->string('patronymic_latin')->nullable()->default(null);
+            $table->string('passport_number')->nullable()->default(null);
+            $table->string('passport_series')->nullable()->default(null);
+            $table->unique(['passport_series', 'passport_number']);
+            $table->index(['passport_series', 'passport_number'], 'foreign_national_passport_idx');
+            $table->string('issued_by');
+            $table->date('issued_date');
+            $table->char('citizenship', 2);
+            $table->string('phone', 12);
+            $table->char('gender', 1);
+            $table->string('comment')->nullable()->default(null);
+            $table->string('address_reg');
+
+            $table->string('passport_scan')->nullable()->default(null);
+            $table->string('passport_translate_scan')->nullable()->default(null);
+
+            $table->foreignId('creator_id')
+                ->constrained('employees');
+
+            $table->foreignId('center_id')
+                ->constrained('centers')
+                ->cascadeOnDelete();
+
+            $table->string('surname_normalized');
+            $table->string('name_normalized');
+            $table->string('patronymic_normalized')->nullable()->default(null);
+            $table->string('passport_number_normalized')->nullable()->default(null);
+            $table->string('passport_series_normalized')->nullable()->default(null);
+
+            $table->timestamps();
+
+        });
+
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('foreign_nationals');
+    }
+};

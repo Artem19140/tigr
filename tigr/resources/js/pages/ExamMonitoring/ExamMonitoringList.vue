@@ -1,0 +1,87 @@
+<script setup lang="ts">
+import { Head, router } from '@inertiajs/vue3';
+import EmployeeLayout from '@layouts/EmployeeLayout.vue';
+import BasePaginatedTable from '@components/BaseComponents/BasePaginatedTable/BasePaginatedTable.vue';
+import { DateFormatter } from '@helpers/DateFormatter';
+import { ref } from 'vue';
+import ExamCapacityChip from '@/components/Exam/ExamCapacityChip.vue';
+import { Paginated } from '@/interfaces/Interfaces';
+import BaseContainer from '@/components/BaseComponents/BaseContainer/BaseContainer.vue';
+import AppBorderedButton from '@/components/UI/AppBorderedButton/AppBorderedButton.vue';
+import { ExamIndex } from '@/interfaces/Exam';
+import AppTooltip from '@/components/UI/AppTooltip/AppTooltip.vue';
+
+defineOptions({
+  layout: [EmployeeLayout]
+})
+
+const props = defineProps<{
+    exams:Paginated<ExamIndex>,
+    past:boolean
+}>()
+
+const past = ref<boolean>(props.past)
+
+const headers = [
+    {title:'Название', key:"shortName",sortable:false, align:'center'},
+    {title:'Дата', key:"beginTime",sortable:false, align:'start'},
+    {title:'Запись', key:"capacity", sortable:false, align:'start'},
+]
+
+const open = (event:Event, {item} : any) => {
+    router.visit(`/exams/${item.id}/monitoring`,{})
+}
+
+const loading=ref<boolean>(false)
+
+const getPastExams = () =>{
+    loading.value = true
+    past.value = !past.value
+    router.reload({
+        data:{
+            past:past.value
+        },
+        onFinish:() => {
+            loading.value = false
+        }
+    })
+}
+</script>
+
+<template>
+    <Head>
+        <title>Мониторинг список</title>
+    </Head>
+    <BaseContainer>
+        <BasePaginatedTable
+            :elements="exams"
+            :headers="headers"
+            @click:row="open"
+            title="Мониторинг"
+            :loading="loading"
+        >
+            <template #toolbar-left>
+                <AppTooltip
+                    text="Здесь будут экзамены, где вы являетесь экзаменатором"
+                />
+            </template>
+            <template #toolbar-actions>
+                <AppBorderedButton
+                    :loading="loading"
+                    :disabled="loading"
+                    @click="getPastExams"
+                    :text="past ? 'Текущие' : 'Прошедшие'"
+                />
+            </template>
+
+            <template #item.capacity="{ item }">
+                <ExamCapacityChip :exam="item" />
+            </template>
+            
+
+            <template #item.beginTime="{ item }">
+                {{ new DateFormatter(item.beginTime).format('d M Y,  H:i') }}
+            </template>
+        </BasePaginatedTable>
+    </BaseContainer>
+</template>

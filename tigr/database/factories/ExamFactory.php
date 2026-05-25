@@ -1,0 +1,94 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Address;
+use App\Models\Center;
+use App\Models\Employee;
+use App\Models\Exam;
+use App\Models\ExamType;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends Factory<Exam>
+ */
+class ExamFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+
+        return [
+            'begin_time' => fake()->dateTimeBetween('-30 days', '+30 days')->format('Y-m-d'),
+            'end_time' => fake()->dateTimeBetween('-30 days', '+30 days')->format('Y-m-d'),
+            'exam_type_id' => ExamType::factory(),
+            'creator_id' => Employee::factory(),
+            'capacity' => fake()->numberBetween(5, 20),
+            'address_id' => Address::factory(),
+            'center_id' => Center::factory(),
+        ];
+    }
+
+    public function inFuture()
+    {
+        return $this->state(function () {
+            return [
+                'begin_time' => Carbon::now()->addDay(),
+                'end_time' => Carbon::now()->addMinutes(100),
+            ];
+        });
+    }
+
+    public function now()
+    {
+        return $this->state(function () {
+            return [
+                'begin_time' => Carbon::now()->subMinutes(10),
+                'end_time' => Carbon::now()->addMinutes(100),
+            ];
+        });
+    }
+
+    public function inPast(int $duration = 90)
+    {
+        return $this->state(function () use ($duration) {
+            return [
+                'begin_time' => Carbon::now()->subMinutes(
+                    $duration + 10
+                ),
+                'end_time' => Carbon::now()->subMinutes($duration),
+            ];
+        });
+    }
+
+    public function cancelled()
+    {
+        return $this->state(function () {
+            return [
+                'cancelled_at' => Carbon::now()->subDay(),
+            ];
+        });
+    }
+
+    public function withCapacity(int $count = 3)
+    {
+        return $this
+            ->state([
+                'capacity' => $count,
+            ]);
+    }
+
+    public function withRandomCreator(): ExamFactory
+    {
+        return $this->state(function () {
+            return [
+                'creator_id' => Employee::inRandomOrder()->first()->id,
+            ];
+        });
+    }
+}
