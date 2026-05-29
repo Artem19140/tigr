@@ -49,7 +49,7 @@ class ExamController
         return Inertia::render('Exam/Exam', [
             'permissions' => [
                 'create' => $employee->can('create', Exam::class),
-                'flatTable' => $employee->hasRole(EmployeeRole::Director->value),
+                'flatTable' => $employee->hasAnyRole(EmployeeRole::Director, EmployeeRole::SuperAdmin),
                 'frdo' => $employee->can('frdo', Exam::class),
             ],
             'exams' => ExamIndexResource::collection($exams),
@@ -103,7 +103,7 @@ class ExamController
                 ],
                 'enrollments' => [
                     'view' => $employee->can('viewAny', Enrollment::class),
-                    'statement' => $employee->hasAnyRole(EmployeeRole::Operator),
+                    'statement' => $employee->hasAnyRole(EmployeeRole::Operator, EmployeeRole::SuperAdmin),
                     'payment' => $employee->hasAnyRole(EmployeeRole::Operator) || $employee->can('examiner', $exam),
                 ],
 

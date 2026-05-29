@@ -13,9 +13,13 @@ const items = [
         label:'Статистика', 
         url:'admin/home',
     },
+    // {
+    //     label:'Поиск', 
+    //     url:'foreign-nationals',
+    // },
     {
-        label:'Поиск', 
-        url:'foreign-nationals',
+        label:'Логи ', 
+        url:'admin/logs',
     },
 
 ]

@@ -39,8 +39,8 @@ class ForeignNationalController
             'permissions' => [
                 'create' => $employee->can('create', ForeignNational::class),
                 'export' => $employee->can('export', ForeignNational::class),
-                'statistics' => $employee->hasAnyRole(EmployeeRole::Director),
-                'ministryEducation' => $employee->hasAnyRole(EmployeeRole::Director),
+                'statistics' => $employee->hasAnyRole(EmployeeRole::Director, EmployeeRole::SuperAdmin),
+                'ministryEducation' => $employee->hasAnyRole(EmployeeRole::Director, EmployeeRole::SuperAdmin),
             ],
         ]);
     }

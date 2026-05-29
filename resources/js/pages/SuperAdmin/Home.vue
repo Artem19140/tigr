@@ -6,7 +6,7 @@ import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.
 import { PeriodDate } from '@/interfaces/Interfaces';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import SuperAdminLayout from '@/layouts/SuperAdminLayout.vue';
-import { router, useHttp } from '@inertiajs/vue3';
+import { useHttp } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 
 defineOptions({
@@ -62,6 +62,8 @@ const get = () => {
                 />
                 <AppPrimaryButton 
                     @click="get"
+                    :loading="http.processing"
+                    :disabled="http.processing"
                     text="Получить"
                 />
             </v-card-text>

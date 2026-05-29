@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web\Statistics;
+namespace App\Http\Controllers\Web\SuperAdmin;
 
 use App\Models\Attempt;
 use App\Models\Enrollment;
