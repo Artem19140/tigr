@@ -86,6 +86,7 @@ class DatabaseSeeder extends Seeder
                 'job_title' => 'Админ',
                 'center_id' => $center->id,
                 'has_to_change_password' => false,
+                'email_verified_at' => now()
             ]);
             
         $superAdminRole = Role::findByEnum(EmployeeRole::SuperAdmin);
