@@ -58,9 +58,9 @@ class FRDOReportsGenerator
     ): Spreadsheet {
         $attempts = $this->attemptsForReport($examDate, $success);
         if ($success) {
-            $templatePath = storage_path('app/templates/certificates_frdo.xlsx');
+            $templatePath = storage_path('app/public/templates/certificates_frdo.xlsx');
         } else {
-            $templatePath = storage_path('app/templates/references_frdo.xlsx');
+            $templatePath = storage_path('app/public/templates/references_frdo.xlsx');
         }
 
         $spreadsheet = IOFactory::load($templatePath);

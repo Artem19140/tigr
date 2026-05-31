@@ -94,10 +94,6 @@ Route::middleware([
             Route::inertia('/foreign-nationals', 'Instruction/ForeignNationalsInstruction')
                 ->name('instruction.foreign-nationals');
 
-            Route::inertia('/centers', 'Instruction/CentersInstruction')
-                ->name('instruction.foreign-nationals')
-                ->middleware([AppMiddleware::EMPLOYEE_HAS_ANY_ROLE.':'.EmployeeRole::CenterAdmin->value]);
-
             Route::inertia('/exams/monitoring', 'Instruction/ExamMonitoringInstruction')
                 ->name('instruction.exams.monitoring')
                 ->middleware([AppMiddleware::EMPLOYEE_HAS_ANY_ROLE.':'.EmployeeRole::Examiner->value]);
@@ -129,7 +125,8 @@ Route::middleware([AppMiddleware::REQUEST_TIME_MEASURE, AppMiddleware::LOG_CONTE
         Route::inertia('login', 'Auth/Login')->name('login');
         Route::post('login', [LoginController::class, 'login'])->middleware(['throttle:5']);
         Route::post('exam-codes/verify', [ExamController::class, 'verifyCode'])->middleware(['throttle:5']);
-        Route::inertia('attempts/finish', 'Attempt/AfterAttempt')->name('attempts.finish');
+        Route::inertia('attempts/finish', 'Attempt/AfterAttempt')
+            ->name('attempts.finish.after');
     });
 
 Route::middleware([

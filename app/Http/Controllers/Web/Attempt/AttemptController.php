@@ -84,7 +84,7 @@ class AttemptController
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('attempts.finish');
+        return redirect()->route('attempts.finish.after');
     }
 
     public function preparing(Attempt $attempt): \Inertia\Response
