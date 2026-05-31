@@ -6,7 +6,8 @@ use App\Domain\ForeignNational\Guard\ForeignNationalGuard;
 use App\Http\Resources\ForeignNational\ForeignNationalResource;
 use App\Models\ForeignNational;
 use Illuminate\Support\Facades\Log;
-use Storage;
+use Illuminate\Support\Facades\Storage;
+
 
 final class UpdateForeignNationalAction
 {

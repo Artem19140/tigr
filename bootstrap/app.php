@@ -41,4 +41,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectUsersTo('/me');
     })
 
-    ->withExceptions(function (Exceptions $exceptions): void {})->create();
+    ->withExceptions(function (Exceptions $exceptions): void {
+        
+    })->create();

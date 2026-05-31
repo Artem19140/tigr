@@ -30,14 +30,6 @@ const finish = async () => {
         preserveScroll:true
     })
 }
-// const show = () => {
-//     const clientNow = Math.floor(Date.now() / 1000)
-//     const serverNow =  new Date(examAttempt.value?.serverNow ?? '').getTime();
-//     console.log(clientNow)
-//     console.log(serverNow)
-//     console.log(examAttempt.value?.serverNow)
-//     console.log('Смещение ', serverNow - clientNow)
-// }
 </script>
 
 <template>

@@ -41,10 +41,9 @@ class CloseAbandonedAttemptsAction
 
     protected function log(Attempt $attempt): void
     {
-        Log::info('', [
+        Log::info('attempt_closed_by_cron', [
             'attempt_id' => $attempt->id,
-            'status' => $attempt->status,
-            'cron',
+            'status' => $attempt->status
         ]);
     }
 }
