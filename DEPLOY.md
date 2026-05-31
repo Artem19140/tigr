@@ -29,6 +29,11 @@ DB_PASSWORD=
 ```
 APP_URL=
 ```
+Заполнить данные для входа админа
+```
+SUPER_ADMIN_LOGIN=
+SUPER_ADMIN_PASSWORD=
+```
 
 #### Установка зависимостей
 ```bash
