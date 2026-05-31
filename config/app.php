@@ -123,4 +123,18 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | custom
+    |--------------------------------------------------------------------------
+    |
+    | super_admin entry data
+    | 
+    */
+    'super_admin' => [
+        'login' => env('SUPER_ADMIN_LOGIN'),
+        'password' => env('SUPER_ADMIN_PASSWORD'),
+    ],
+
 ];

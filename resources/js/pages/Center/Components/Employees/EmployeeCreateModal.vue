@@ -11,14 +11,14 @@ import { EmployeeFormI } from '@/interfaces/Employee';
 const isOpen = defineModel<boolean>({default:false})
 
 const http = useHttp<EmployeeFormI & {password:string, password_confirmation:string}>({
-    surname:'Иванов',
-    name:'Иван',
-    patronymic:'Иванович',
-    jobTitle:'Слесарь',
+    surname:'',
+    name:'',
+    patronymic:'',
+    jobTitle:'',
     roles:[],
-    email:'1@udsu.ru',
-    password:'123456789',
-    password_confirmation:'123456789'
+    email:'',
+    password:'',
+    password_confirmation:''
 })
 
 const canClose = async (fn: () => void) => {

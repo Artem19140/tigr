@@ -32,16 +32,16 @@ APP_URL=
 
 #### Установка зависимостей
 ```bash
-composer install --no-dev
+composer install --no-dev --optimize-autoloader
+npm install
+npm run build
 ```
 
 #### Инициализация приложения
 ```bash
 php artisan key:generate
 
-php artisan migrate --force
-
-php artisan db:seed
+php artisan migrate:fresh --seed --force
 
 php artisan storage:link 
 
@@ -53,7 +53,8 @@ php artisan optimize
 Добавить в crontab:
 
 ```bash
-* * * * * cd /var/www/tigr && php artisan schedule:run >> /dev/null 2>&1
+* * * * * cd /path-to-project && php artisan schedule:run >> /dev/null 2>&1
+
 ```
 #### Apache
 DocumentRoot должен указывать на директорию:
@@ -61,7 +62,7 @@ DocumentRoot должен указывать на директорию:
 /public
 ```
 #### Дополнительно
-Необходимо разархивировать в папку
+Необходимо разархивировать в папку(из корня проекта)
 ```
 storage/app/public/
 ```
@@ -69,17 +70,55 @@ storage/app/public/
 
 ### Обновление проекта(вытягивание с GitHub)
 ```bash
-php artisan down 
 
-git pull 
+cd /path-to-project
 
-composer install --no-dev
+php artisan down || true
+
+
+
+//pull или push 
+//Если возможно, то только при наличии изменений
+// в GitHub выполнить блок кода:
+------
+composer install --no-dev --optimize-autoloader
+
+npm ci
+npm run build
 
 php artisan migrate --force 
 
 php artisan optimize:clear 
 php artisan optimize 
+-----
 
 php artisan up
 ```
 
+### Обновление проекта пример
+```bash
+
+cd /path-to-project
+
+php artisan down || true
+
+git fetch origin main
+
+LOCAL=$(git rev-parse HEAD)
+REMOTE=$(git rev-parse origin/main)
+
+if [ "$LOCAL" != "$REMOTE" ]; then
+    git reset --hard origin/main
+    composer install --no-dev --optimize-autoloader
+
+    npm ci
+    npm run build
+
+    php artisan migrate --force 
+
+    php artisan optimize:clear 
+    php artisan optimize 
+fi
+
+php artisan up
+```

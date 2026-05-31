@@ -3,9 +3,11 @@
 namespace Database\Seeders;
 
 use App\Enums\CounterKey;
+use App\Enums\EmployeeRole;
 use App\Models\Center;
 use App\Models\Counter;
 use App\Models\Employee;
+use App\Models\Role;
 use Carbon\Carbon;
 use Database\Seeders\ExamTypes\PATENT\PatentSeeder;
 use Database\Seeders\ExamTypes\RVP\RvpSeeder;
@@ -29,43 +31,66 @@ class DatabaseSeeder extends Seeder
             VnzhSeeder::class,
         ]);
 
-        $center = Center::create([
-            'name' => 'Федеральное государственное бюджетное образовательное учреждение высшего образования «Удмуртский государственный университет»',
-            'time_zone' => 'Europe/Samara',
-            'director_fio' => 'Рязанова Анна Юрьевна',
-            'certificates_issue_address' => 'Удмуртская республика, г. Ижевск, ул. Университетская, д.1',
-            'ogrn' => '1021801503382',
-            'inn' => '1833010750',
-            'short_name' => 'ФГБОУ ВО «УдГУ»',
-            'address' => 'Удмуртская Республика, г. Ижевск, улица Университетская',
-            'name_genitive' => 'федеральному государственному бюджетному образовательному учреждению высшего образования «Удмуртский государственный университет»',
-            'commission_chairman' => 'Иванов Иван Иванович',
-        ]);
+        $center = Center::firstOrCreate(
+            [
+                'ogrn' => '1021801503382',
+                'inn' => '1833010750',
+            ], 
+            [
+                'name' => 'Федеральное государственное бюджетное образовательное учреждение высшего образования «Удмуртский государственный университет»',
+                'time_zone' => 'Europe/Samara',
+                'director_fio' => 'Рязанова Анна Юрьевна',
+                'certificates_issue_address' => 'Удмуртская республика, г. Ижевск, ул. Университетская, д.1',
+                'ogrn' => '1021801503382',
+                'inn' => '1833010750',
+                'short_name' => 'ФГБОУ ВО «УдГУ»',
+                'address' => 'Удмуртская Республика, г. Ижевск, улица Университетская',
+                'name_genitive' => 'федеральному государственному бюджетному образовательному учреждению высшего образования «Удмуртский государственный университет»',
+                'commission_chairman' => 'Иванов Иван Иванович',
+            ]);
 
-        Counter::create([
-            'key' => CounterKey::RegNum,
-            'value' => Carbon::now()->format('y').'0000',
-            'center_id' => $center->id,
-        ]);
+        Counter::firstOrCreate(
+            [
+                'key' => CounterKey::RegNum,
+                'center_id' => $center->id
+            ],
+            [
+                'key' => CounterKey::RegNum,
+                'value' => Carbon::now()->format('y').'0000',
+                'center_id' => $center->id,
+            ]);
 
-        Counter::create([
-            'key' => CounterKey::Group,
-            'value' => 0,
-            'center_id' => $center->id,
-        ]);
+        Counter::firstOrCreate(
+            [
+                'key' => CounterKey::Group,
+                'center_id' => $center->id
+            ],
+            [
+                'key' => CounterKey::Group,
+                'value' => 0,
+                'center_id' => $center->id,
+            ]);
 
-        Employee::factory()
-            ->superAdmin()
-            ->create([
+        $email = config('app.super_admin.login');
+
+        $superAdmin = Employee::firstOrCreate(
+            [
+                'email' => $email
+            ],
+            [
                 'surname' => 'Петров',
                 'name' => 'Николай',
                 'patronymic' => 'Дмитрович',
-                'email' => env('SUPER_ADMIN_LOGIN'),
-                'password' => Hash::make(env('SUPER_ADMIN_PASSWORD')),
+                'email' => $email,
+                'password' => Hash::make(config('app.super_admin.password')),
                 'job_title' => 'Админ',
-                'center_id' => 1,
+                'center_id' => $center->id,
                 'has_to_change_password' => false,
             ]);
+            
+        $superAdminRole = Role::findByEnum(EmployeeRole::SuperAdmin);
+
+        $superAdmin->roles()->syncWithoutDetaching([$superAdminRole->id]);
 
         if (! app()->isProduction()) {
             $this->call([

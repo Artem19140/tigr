@@ -12,8 +12,8 @@ interface LoginEntryForm{
 }
 
 const form = useForm<LoginEntryForm>({
-  email: 'qwerty@bk.com',
-  password: '123456789',
+  email: null,
+  password: null,
   rememberMe:false
 });
 

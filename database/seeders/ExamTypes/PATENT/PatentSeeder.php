@@ -59,7 +59,12 @@ class PatentSeeder extends Seeder
                         'description' => $task['description'] ?? null,
                     ]);
                     foreach ($task['variants'] as $variant) {
-                        $taskVariantCreated = TaskVariant::create([
+                        $taskVariantCreated = TaskVariant::firstOrCreate(
+                        [
+                            'fipi_number' => $variant['fipi_number'],
+                            'group_number' => $variant['group_number'] ?? null,
+                        ],
+                        [
                             'content' => $variant['content'],
                             'fipi_number' => $variant['fipi_number'],
                             'group_number' => $variant['group_number'] ?? null,
