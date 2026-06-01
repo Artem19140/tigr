@@ -127,12 +127,17 @@ Route::middleware([AppMiddleware::REQUEST_TIME_MEASURE, AppMiddleware::LOG_CONTE
         Route::post('exam-codes/verify', [ExamController::class, 'verifyCode'])->middleware(['throttle:5']);
         Route::inertia('attempts/finish', 'Attempt/AfterAttempt')
             ->name('attempts.finish.after');
+        
     });
+Route::get('/', function(){
+    return redirect('login');
+});
 
 Route::middleware([
     'auth:web,foreignNationals',
     AppMiddleware::REQUEST_TIME_MEASURE,
     AppMiddleware::LOG_CONTEXT,
+    
 ])
     ->get('me', function (RedirectResolver $resolver) {
         return redirect($resolver->execute());

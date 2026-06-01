@@ -38,10 +38,10 @@ class ExamBeforeSaveValidator
 
         $this->ensureBeginTimeNotPassed($beginTime);
 
-        $this->ensureMinAllowedTimeNotPassed(
-            $beginTime,
-            $examId
-        );
+        // $this->ensureMinAllowedTimeNotPassed(
+        //     $beginTime,
+        //     $examId
+        // );
 
         $this->ensureNotMoreCapacity(
             $examDto->capacity,

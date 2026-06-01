@@ -48,7 +48,7 @@ final class CreateEnrollmentAction
     ): void {
         $this->examGuard->ensureNotCancelled($exam);
         $this->examGuard->ensurePending($exam, 'Записать на экзамен возможна только до его начала');
-        $this->ensureEnrollementWindowNotClosed($exam);
+        //$this->ensureEnrollementWindowNotClosed($exam);
         $this->ensureEnrollmentNotExists($exam, $foreignNational);
         $this->ensureParallellEnrollmentsNotExists($exam, $foreignNational);
         $this->ensureNotFullEnrollment($exam);
