@@ -87,7 +87,7 @@ class ForeignNationalController
             'permissions' => [
                 'enroll' => $employee->can('create', Enrollment::class),
                 'edit' => $employee->can('update', $foreignNational),
-                'files' => $employee->hasAnyRole(EmployeeRole::Operator),
+                'files' => $employee->can('files', ForeignNational::class),
             ],
         ]);
     }
