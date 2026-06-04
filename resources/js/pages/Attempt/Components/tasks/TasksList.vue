@@ -10,6 +10,7 @@ import { useAttempt } from '@/composables/useAttempt';
 import { useHttp } from '@inertiajs/vue3';
 import BaseEmptyState from '@/components/BaseComponents/BaseEmptyState/BaseEmptyState.vue';
 import MultynputTask from './MultyInputTask.vue';
+import { provide } from 'vue';
 
 const props = defineProps<{
     attempt:Attempt | AttemptMonitoring
@@ -51,6 +52,7 @@ const update = (value:any) => {
         },
     })
 }
+//provide<boolean>('checking', props.checking)
 </script>
 
 <template>

@@ -48,8 +48,10 @@ watch(attemptAnswer, () => {
                         :value="answer?.id"
                     >
                         <template #label>
-                            <div class="">
-                                <render-blocks :content="answer?.content" />
+                            <div>
+                                <render-blocks 
+                                    :content="answer?.content" 
+                                />
                             </div>
                         </template>
                     </v-radio>

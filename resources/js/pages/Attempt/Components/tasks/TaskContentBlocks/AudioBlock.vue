@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import { Task } from '@/interfaces/Task';
-import { computed, ref } from 'vue'
+import { computed, inject, ref } from 'vue'
 import { useAttempt } from '@/composables/useAttempt';
 import { useSnackbarQueue } from '@/composables/useSnackbarQueue';
 import { useHttp } from '@inertiajs/vue3';
 
 const props = defineProps<{ 
     value: string 
-    task:Task
 }>()
 
 const emit = defineEmits<{ 
     (e:'audio-played'):void
 }>()
+
+const task = inject<Task>('task')
 
 const audioRef = ref<HTMLAudioElement | null>(null)
 
@@ -23,7 +24,7 @@ const playedTime = computed(() => {
     return (currentTime.value / duration.value) * 100
 })
 
-const audioPlayed = ref<boolean>(props.task.attemptAnswer?.audioPlayed ?? false)
+const audioPlayed = ref<boolean>(task?.attemptAnswer?.audioPlayed ?? false)
 
 const {audioPlaying, audioStartPlaying, audioStopPlaying, examAttempt} = useAttempt()
 const http = useHttp()
@@ -41,7 +42,7 @@ const togglePlay = () => {
     audioRef.value.play()
     
     if(!examAttempt.value) return
-    http.put(`/attempts/${examAttempt.value?.id}/answers/${props.task.attemptAnswer.id}/audio`,{
+    http.put(`/attempts/${examAttempt.value?.id}/answers/${task?.attemptAnswer.id}/audio`,{
     })
 }
 

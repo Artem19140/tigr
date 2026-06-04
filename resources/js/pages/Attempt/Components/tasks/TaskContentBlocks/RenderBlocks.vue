@@ -4,13 +4,11 @@ import ImageBlock from './ImageBlock.vue';
 import TextBlock from  './TextBlock.vue';
 import TableBlock from './TableBlock.vue';
 import FrameBlock from './FrameBlock.vue';
-import { Task } from '@/interfaces/Task';
 import InputBlock from './InputBlock.vue';
 import RowBlock from './RowBlock.vue';
 
 const props = defineProps<{
-    content?:any,
-    task?:Task
+    content?:any
 }>()
 
 const taskBlocks = (type: string) => {
@@ -41,7 +39,6 @@ const taskBlocks = (type: string) => {
         :key="index"
         :is="taskBlocks(block.type)"
         v-bind="block"
-        :task="task"
         :class="block.margin ? 'mb-8' : ''"
     />
     <div 

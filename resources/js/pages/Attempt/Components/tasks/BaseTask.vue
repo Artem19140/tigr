@@ -7,6 +7,7 @@ import AppStatusChip from '@/components/UI/AppStatusChip/AppStatusChip.vue';
 import AppRetryAlert from '@/components/UI/AppRetryAlert/AppRetryAlert.vue';
 import { useAttempt } from '@/composables/useAttempt';
 import AppProgressCircular from '@/components/UI/AppProgressCircular/AppProgressCircular.vue';
+import { provide } from 'vue';
 
 const props = defineProps<{
   task:Task
@@ -27,6 +28,7 @@ const getDefaultDescription = (type:string) => {
 
 const {errors, saving} = useAttempt()
 
+provide<Task>('task', props.task)
 </script>
 
 <template>
@@ -71,7 +73,6 @@ const {errors, saving} = useAttempt()
           class="pa-3"
         >
           <RenderBlocks 
-            :task="task"
             :content="task.content" 
         />
         </v-sheet>
