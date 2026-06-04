@@ -6,6 +6,7 @@ import EnrollmentDropDown from '@/components/Enrollment/EnrollmentDropDown.vue';
 import ExamResultStatusChip from '@/components/Exam/ExamResultStatusChip.vue';
 import PaymentIcon from '@/components/Enrollment/PaymentIcon.vue';
 import { Exam, ExamActionsPermissions } from '@/interfaces/Exam';
+import AppInput from '@/components/UI/AppInput/AppInput.vue';
 
 const props = defineProps<{
     exam: Exam,
@@ -30,9 +31,19 @@ const headers = [
 props.exam.enrollments.forEach(fn => {
     if (fn.isLoading === undefined) fn.isLoading = false
 })
+const search = ref('')
 </script>
 
 <template>
+    <AppInput
+        v-model="search"
+        density="compact"
+        label="Поиск"
+        prepend-inner-icon="mdi-magnify"
+        variant="outlined"
+        hide-details
+        single-line
+    />
     <v-data-table 
         :items="exam.enrollments"
         hide-default-footer
@@ -41,7 +52,9 @@ props.exam.enrollments.forEach(fn => {
         @click:row="foreignNationalShowModal"
         v-if="permissions.enrollments.view"
         :items-per-page="-1"
+        :search="search"
     >
+        
         <template #item.hasPayment="{ item }" >
             <PaymentIcon :enrollment="item" />
         </template>

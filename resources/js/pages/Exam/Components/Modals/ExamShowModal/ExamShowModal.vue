@@ -13,8 +13,7 @@ const props = defineProps<{
     examId:number
 }>()
 
-const http = useHttp<
-    {}, 
+const http = useHttp<{}, 
     {
         exam:Exam, 
         permissions:ExamActionsPermissions
