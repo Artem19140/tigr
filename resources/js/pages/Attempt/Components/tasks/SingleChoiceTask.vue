@@ -25,7 +25,7 @@ const send = debounce(() => {
         task:props.task,
         answer: attemptAnswer.value
     })
-}, 1500)
+}, 1000)
 
 watch(attemptAnswer, () => {
     send()

@@ -2,6 +2,7 @@
 import { Task } from '@/interfaces/Task';
 import BaseTask from './BaseTask.vue';
 import { provide, ref, watch } from 'vue';
+import { autosave } from '@/helpers/debounce.js';
 
 const props = defineProps<{
     task:Task
@@ -23,22 +24,15 @@ const form = ref<Record<string, any>>({})
 
 Object.assign(form.value, answers)
 
-
-let timeoutSet: boolean = false
-
-watch(form.value, () => {
-    if (timeoutSet) {
-        return 
-    }
-    timeoutSet = true
-
-    setTimeout(async () => {
-        timeoutSet = false
-        emit('updateAnswer', {
+const send = autosave(() => {
+    emit('updateAnswer', {
             task:props.task,
             answer:form.value ?? ''
         })
-    }, 5000)
+}, 5000)
+
+watch(form.value, () => {
+    send()
 })
 provide('form', form)
 </script>
@@ -47,10 +41,7 @@ provide('form', form)
     <BaseTask
         :task="task"
         :loading="false"
-    >
-        <template #answers>
-            
-        </template>
-    </BaseTask>
+        @retry="send"
+    />
 
 </template>

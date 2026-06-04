@@ -10,3 +10,20 @@ export const debounce = (func:Function, delay:number) => {
         }, delay)
     }
 }
+
+export const autosave = (func:Function, period:number) => {
+    let timeoutSet: boolean = false
+    return (...args: any) => {
+
+    
+        if (timeoutSet) {
+            return 
+        }
+        timeoutSet = true
+
+        setTimeout(async () => {
+            timeoutSet = false
+            func(...args)
+        }, period)
+    }
+}

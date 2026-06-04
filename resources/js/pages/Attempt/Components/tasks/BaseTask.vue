@@ -28,10 +28,8 @@ const getDefaultDescription = (type:string) => {
 }
 
 const {errors, saving} = useAttempt()
-
 provide<Task>('task', props.task)
 const checking = inject<boolean>('checking')
-//:readonly="Boolean(attempt.checkedAt)"
 </script>
 
 <template>
