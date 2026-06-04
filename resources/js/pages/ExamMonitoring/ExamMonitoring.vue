@@ -4,7 +4,7 @@ import { Head, usePoll } from '@inertiajs/vue3'
 import ExamStatusChip from '@components/Exam/ExamStatusChip.vue';
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { useModals } from '@composables/useModals';
-import { computed, onMounted, onUnmounted} from 'vue';
+import { computed, onMounted, onUnmounted, ref} from 'vue';
 import { DateFormatter } from '@helpers/DateFormatter';
 import { useExamStatus } from '@/composables/useExamStatus';
 import BaseContainer from '@/components/BaseComponents/BaseContainer/BaseContainer.vue';
@@ -12,6 +12,7 @@ import PaymentIcon from '@/components/Enrollment/PaymentIcon.vue';
 import ExamMonitoringDropdown from './ExamMonitoringDropdown.vue';
 import { ExamMonitoring } from '@/interfaces/Exam';
 import AppTooltip from '@/components/UI/AppTooltip/AppTooltip.vue';
+import AppInput from '@/components/UI/AppInput/AppInput.vue';
 
 defineOptions({
   layout: [EmployeeLayout]
@@ -74,6 +75,7 @@ const openForeignNational = (event : Event, {item} :any) => {
 const back = () => {
     window.history.go(-1)
 }
+const search = ref<string>('')
 </script>
 
 
@@ -118,14 +120,24 @@ const back = () => {
 
                 </div>
             </v-card-subtitle>
-
+           
             <v-card-text>
+                <AppInput
+                    v-model="search"
+                    density="compact"
+                    label="Поиск"
+                    prepend-inner-icon="mdi-magnify"
+                    variant="outlined"
+                    hide-details
+                    single-line
+                />
                 <v-data-table
                     :items="props.exam.data.enrollments"
                     :headers="headers"
                     hover
                     hide-default-footer
                     :items-per-page="-1"
+                    :search="search"
                     @click:row="openForeignNational"
                 >
                     <template  #item.actions="{ item }">
