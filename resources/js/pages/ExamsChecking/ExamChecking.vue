@@ -36,6 +36,7 @@ const openAttempt =  (item : Enrollment) => {
     <Head>
         <title>Проверка {{ exam.data.shortName }}</title>
     </Head>
+
     <BaseContainer>
         <BaseTable
             :headers="headers"
@@ -49,9 +50,10 @@ const openAttempt =  (item : Enrollment) => {
         <template #item.name="{ item }">
            {{ item.regNum }}
         </template>
+
         <template #item.status="{ item }">
             <AppStatusChip 
-                v-if="item.attempt?.isPassed !== null"
+                v-if="item.attempt?.checkedAt"
                 color="green"
                 text="Проверено"
             />

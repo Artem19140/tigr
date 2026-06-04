@@ -3,6 +3,7 @@ import AppInput from '@components/UI/AppInput/AppInput.vue';
 import BaseTask from './BaseTask.vue';
 import { ref, watch } from 'vue';
 import { Task } from '@/interfaces/Task';
+import { debounce } from '@/helpers/debounce.js';
 
 const props = defineProps<{
     task:Task
@@ -17,19 +18,15 @@ const emit = defineEmits<{
 
 const answer = ref<string | null>(props.task?.attemptAnswer?.answer)
 
-let timeout: number | undefined
+const send = debounce(() => {
+    emit('updateAnswer', {
+        task:props.task,
+        answer: answer.value
+    })
+}, 3000)
 
-watch(answer, (text) => {
-    if (timeout !== undefined) {
-        clearTimeout(timeout)
-    }
-
-    timeout = setTimeout(async () => {
-        emit('updateAnswer', {
-            task:props.task,
-            answer:text
-        })
-    }, 3000)
+watch(answer, () => {
+    send()
 })
 
 </script>

@@ -3,6 +3,7 @@ import { ref, watch } from 'vue';
 import BaseTask from './BaseTask.vue';
 import RenderBlocks from './TaskContentBlocks/RenderBlocks.vue';
 import { Task } from '@/interfaces/Task';
+import { debounce } from '@/helpers/debounce.js';
 
 const props = defineProps<{
     task:Task
@@ -19,12 +20,12 @@ const attemptAnswer = ref<number | null>(
   props.task.attemptAnswer?.answer?.id
 )
 
-const send = async () => {
+const send = debounce(() => {
     emit('updateAnswer', {
         task:props.task,
         answer: attemptAnswer.value
     })
-}
+}, 1500)
 
 watch(attemptAnswer, () => {
     send()

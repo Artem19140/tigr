@@ -19,8 +19,7 @@ class EnrollmentCheckingResource extends JsonResource
             'regNum' => $this->reg_number,
             'attempt' => $this->whenLoaded('attempt', fn () => [
                 'id' => $this->attempt->id,
-                'checked_at' => $this->attempt->checked_at,
-                'isPassed' => $this->attempt->is_passed,
+                'checkedAt' => $this->attempt->checked_at
             ]),
         ];
     }
