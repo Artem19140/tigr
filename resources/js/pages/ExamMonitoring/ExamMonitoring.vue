@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import EnrollmentMonitoringDropdown from './EnrollmentMonitoringDropdown.vue';
 import { Head, usePoll } from '@inertiajs/vue3'
-import { attemptStatus } from '@helpers/heplers';
 import ExamStatusChip from '@components/Exam/ExamStatusChip.vue';
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { useModals } from '@composables/useModals';
 import { computed, onMounted, onUnmounted} from 'vue';
-import AppStatusChip from '@components/UI/AppStatusChip/AppStatusChip.vue';
 import { DateFormatter } from '@helpers/DateFormatter';
 import { useExamStatus } from '@/composables/useExamStatus';
 import BaseContainer from '@/components/BaseComponents/BaseContainer/BaseContainer.vue';
@@ -38,7 +36,6 @@ const headers = [
     {title:'ФИО', key:"foreignNational.fullName",sortable: false},
     {title:'Паспорт', key:"foreignNational.fullPassport",sortable: false},
     {title:'Оплата', key:"hasPayment",sortable: false,align: 'center'},
-    {title:'Попытка', key:"status",sortable: false, align:'center'},
     {
         title:'Время',
         align:'center',
@@ -136,14 +133,6 @@ const back = () => {
                             :enrollment="item" 
                             :exam="exam.data" 
                         />
-                    </template>
-                    <template #item.status="{ item }">
-                        <AppStatusChip
-                            v-if="item.attempt"
-                            :color="attemptStatus(item.attempt?.status).color.replace('text-', '')"
-                            :text="attemptStatus(item.attempt?.status).text"
-                        />
-                        <span v-else></span>
                     </template>
                     <template  #item.startedAt="{ item }">
                         {{new DateFormatter(item.attempt?.startedAt ?? '').format('H:i')}}

@@ -25,7 +25,7 @@ class AttemptResource extends JsonResource
             'startedAt' => $this->started_at_local?->toIso8601String(),
             'finishedAt' => $this->finished_at_local?->toIso8601String(),
             'isPassed' => $this->is_passed,
-            'status' => $this->status,
+            //'status' => $this->status,
             'tasks' => TaskVariantResource::collection($this->whenLoaded('taskVariants', fn () => $this->taskVariants)),
             'checkedAt' => $this->checked_at,
             'speakingFinishedAt' => $this->resource->speaking_finished_at,
