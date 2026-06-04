@@ -46,11 +46,6 @@ onMounted( async () => {
     getExam()
 })
 
-
-const rechedule = (value: Enrollment) => {
-    if(!exam.value) return
-    exam.value.enrollments =exam.value.enrollments.filter(e => e.id !== value.id)
-}
 const cancel =(reason : string) => {
     if(!exam.value) return
     router.reload()
@@ -150,7 +145,6 @@ const edit =(value :Exam) => {
                     <EnrollmentsTable 
                         :permissions="permissions"
                         v-if="permissions"
-                        @reschedule="rechedule" 
                         :exam="exam" 
                     />
                 </v-list-item>
