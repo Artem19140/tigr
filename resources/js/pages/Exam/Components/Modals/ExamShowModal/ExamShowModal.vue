@@ -6,11 +6,8 @@ import { computed, onMounted, ref } from 'vue';
 import { router, useHttp } from '@inertiajs/vue3';
 import ExamStatusChip from '@components/Exam/ExamStatusChip.vue';
 import { DateFormatter } from '@helpers/DateFormatter';
-import { ExamStatus } from '@/constants/ExamStatus';
 import ExamCapacityChip from '@/components/Exam/ExamCapacityChip.vue';
 import { Exam, ExamActionsPermissions } from '@/interfaces/Exam';
-import { Enrollment } from '@/interfaces/Enrollment';
-
 
 const props = defineProps<{
     examId:number
@@ -46,10 +43,10 @@ onMounted( async () => {
     getExam()
 })
 
-const cancel =(reason : string) => {
+const cancel = (reason : string) => {
     if(!exam.value) return
     router.reload()
-    exam.value.status = ExamStatus.CANCELLED
+    exam.value.status= 'cancelled'
     exam.value.cancelledReason = reason
 }
 
@@ -94,7 +91,7 @@ const edit =(value :Exam) => {
         </template> 
         <v-card-text class="pt-0">
         <v-list>
-            <v-list-item v-if="exam?.status === ExamStatus.CANCELLED && exam?.cancelledReason">
+            <v-list-item v-if="exam?.cancelledAt || exam?.cancelledReason">
                 <v-list-item-subtitle class="text-red">Причина отмены</v-list-item-subtitle>
                 <v-list-item-title class="text-red" style="white-space: normal; word-break: break-word;">{{exam?.cancelledReason ?? '-'}}</v-list-item-title>
             </v-list-item>

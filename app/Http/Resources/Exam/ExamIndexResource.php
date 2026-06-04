@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Exam;
 
-use App\Domain\Exam\Resolver\ExamStatusResolver;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

@@ -21,6 +21,7 @@ class ExamResource extends JsonResource
         return [
             'id' => $this->id,
             'cancelledReason' => $this->when($this->isCancelled(), $this->cancelled_reason),
+            'cancelledAt' => $this->resource->cancelled_at,
             'beginTime' => $this->begin_time_local->copy()->toIso8601String(),
             'endTime' => $this->begin_time_local->copy()->addMinutes($this->duration)->toIso8601String(),
             'enrollments' => EnrollmentExamShowResource::collection($this->whenLoaded('enrollments')),

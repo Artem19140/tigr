@@ -25,7 +25,8 @@ export interface Exam{
     enrollmentsCount:number,
     codesAvailable:boolean,
     addressId:number,
-    documentsAvailable:ExamDocumentAvailble
+    documentsAvailable:ExamDocumentAvailble,
+    cancelledAt:string
 }
 
 export interface ExamIndex{
