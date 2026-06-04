@@ -17,6 +17,10 @@ const props = defineProps<{
     checking?:boolean
 }>()
 
+const emit = defineEmits<{
+    (e:'rated', value:AttemptAnswer):void
+}>()
+
 const taskComponent = (type: string) => {
     switch (type) {
         case TaskTypes.SINGLE_CHOICE:
@@ -68,6 +72,7 @@ provide<boolean>('checking', props.checking)
                 :is="taskComponent(task.type)"
                 :task="task"
                 @update-answer="update"
+                @rated="(value :AttemptAnswer) => emit('rated', value)"
             />
         </div>
     </div>

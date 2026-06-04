@@ -35,9 +35,9 @@ const http = useHttp<Omit<ForeignNationalFormI, 'hasPayment' | 'examId'>, {forei
     passportScan:null,
     addressReg: props.foreignNational.addressReg ?? '',
     noPatronymic: props.foreignNational?.patronymic ? false  : true,
-    noPassportNumber:false,
-    noPassportSeries:false,
-    noPatronymicLatin:false,
+    noPassportNumber:props.foreignNational?.passportNumber ? false : true,
+    noPassportSeries:props.foreignNational?.passportSeries ? false : true,
+    noPatronymicLatin:props.foreignNational?.patronymicLatin ? false  : true,
 })
 
 const edit = () => {

@@ -9,11 +9,11 @@ use App\Http\Resources\AttemptAnswer\AttemptAnswerResource;
 use App\Models\Attempt;
 use App\Models\AttemptAnswer;
 use Carbon\Carbon;
-use DB;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class AttemptAnswerController

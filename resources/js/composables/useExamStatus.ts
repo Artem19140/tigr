@@ -1,5 +1,5 @@
 import { ExamStatus } from "@/constants/ExamStatus";
-import { Exam } from "@/interfaces/Interfaces";
+import { Exam } from "@/interfaces/Exam";
 import { computed } from "vue";
 
 export const useExamStatus = (exam : Exam | null) => {

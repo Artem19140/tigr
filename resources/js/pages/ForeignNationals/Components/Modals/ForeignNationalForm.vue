@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import AppAutocomplete from '@components/UI/AppAutocomplete/AppAutocomplete.vue';
 import AppInput from '@components/UI/AppInput/AppInput.vue';
-import AppFileInput from '@components/UI/AppFileInput/AppFileInput.vue';
 import AppTextarea from '@components/UI/AppTextarea/AppTextarea.vue';
 import { computed } from 'vue';
 import countries from '@data/countries.json'
@@ -241,27 +240,31 @@ function required (v:any) {
         <v-card-text>
             <v-container fluid>
                 <v-row class="mb-2">
+                    
                     <v-col cols="12" md="6">
-                        <AppFileInput
-                        label="Скан паспорта PDF"
-                        :rules="[required]"
-                        clearable
-                        v-model="form.passportScan"
-                        :readonly="readonly"
-                        accept=".pdf,application/pdf"
-                        :error-messages="errors.passportScan"
+                        <v-file-upload
+                            density="comfortable"
+                            clearable
+                            v-model="form.passportScan"
+                            :readonly="readonly"
+                            accept=".pdf,application/pdf"
+                            :error-messages="errors.passportScan"
+                            variant="comfortable"
+                            :rules="[required]"
+                            title="Скан паспорта PDF"
                         />
                     </v-col>
 
                     <v-col cols="12" md="6">
-                        <AppFileInput
-                        label="Скан перевода паспорта PDF"
-                        :rules="[required]"
-                        clearable
-                        v-model="form.passportTranslateScan"
-                        :readonly="readonly"
-                        accept=".pdf,application/pdf"
-                        :error-messages="errors.passportTranslateScan"
+                        <v-file-upload 
+                        density="comfortable"
+                            title="Скан перевода паспорта PDF"
+                            :rules="[required]"
+                            clearable
+                            v-model="form.passportTranslateScan"
+                            :readonly="readonly"
+                            accept=".pdf,application/pdf"
+                            :error-messages="errors.passportTranslateScan"
                         />
                     </v-col>
                 </v-row>

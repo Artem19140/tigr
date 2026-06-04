@@ -14,7 +14,6 @@ const emit = defineEmits<{
 const update = (value:AttemptAnswer) => {
     emit('rated', value)
 }
-
 </script>
 
 <template>
@@ -23,6 +22,7 @@ const update = (value:AttemptAnswer) => {
             <AttemptCheckingSidePanel
                 v-if="attempt"
                 :attempt="attempt" 
+                
             />
         </div>
         <div class="mx-auto">

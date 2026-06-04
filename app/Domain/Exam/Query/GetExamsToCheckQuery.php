@@ -12,7 +12,7 @@ class GetExamsToCheckQuery
     public function execute(Employee $employee): Collection
     {
         return Exam::query()
-            ->with(['type'])
+            ->with(['type', 'center'])
             ->visibleFor($employee)
             ->whereHas('type', function (Builder $query) {
                 $query->where('need_human_check', true);
