@@ -18,8 +18,21 @@ const submit = () => {
     <v-otp-input
       v-model="form.code"
       type="number"
-      length="6"
-    ></v-otp-input>
+    >
+    <template v-slot:fields>
+        <v-otp-group merged>
+          <v-otp-field :index="0"></v-otp-field>
+          <v-otp-field :index="1"></v-otp-field>
+          <v-otp-field :index="2"></v-otp-field>
+        </v-otp-group>
+        <v-otp-separator>-</v-otp-separator>
+        <v-otp-group merged>
+          <v-otp-field :index="3"></v-otp-field>
+          <v-otp-field :index="4"></v-otp-field>
+          <v-otp-field :index="5"></v-otp-field>
+        </v-otp-group>
+      </template>
+  </v-otp-input>
     <div class="text-red mb-4">{{ form.errors.code }}</div>
     <AppPrimaryButton
       text=" Войти"
