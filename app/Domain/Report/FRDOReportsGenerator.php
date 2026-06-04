@@ -8,6 +8,7 @@ use App\Events\ReportGenerated;
 use App\Models\Attempt;
 use App\Models\Center;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -44,6 +45,9 @@ class FRDOReportsGenerator
                 $examDate->copy()->startOfDay(),
                 $examDate->copy()->endOfDay(),
             ])
+            ->when($success, function(Builder $query){
+                $query->whereNull('banned_at');
+            })
             ->where('is_passed', $success)
             ->whereNotNull('checked_at')
             ->get();

@@ -72,6 +72,7 @@ class Attempt extends Model
 
     public function ban(): void
     {
+        $this->is_passed = false;
         $this->banned_at = Carbon::now();
     }
 
