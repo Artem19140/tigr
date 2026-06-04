@@ -2,12 +2,10 @@
 import AppInput from '@components/UI/AppInput/AppInput.vue';
 import BaseTask from './BaseTask.vue';
 import { ref, watch } from 'vue';
-import { Attempt } from '@/interfaces/Attempt';
 import { Task } from '@/interfaces/Task';
 
 const props = defineProps<{
-    task:Task,
-    attempt:Attempt
+    task:Task
 }>()
 
 const emit = defineEmits<{

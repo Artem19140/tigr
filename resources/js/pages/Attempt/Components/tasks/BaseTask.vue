@@ -1,20 +1,21 @@
 <script setup lang="ts">
 import RenderBlocks from './TaskContentBlocks/RenderBlocks.vue';
-import { Task } from '@/interfaces/Task';
+import { AttemptAnswer, Task } from '@/interfaces/Task';
 import { TaskTypes } from '@/constants/TaskTypes';
 import AppStatusChip from '@/components/UI/AppStatusChip/AppStatusChip.vue';
-
 import AppRetryAlert from '@/components/UI/AppRetryAlert/AppRetryAlert.vue';
 import { useAttempt } from '@/composables/useAttempt';
 import AppProgressCircular from '@/components/UI/AppProgressCircular/AppProgressCircular.vue';
-import { provide } from 'vue';
+import { inject, provide } from 'vue';
+import TaskRatingBlock from './TaskRatingBlock.vue';
 
 const props = defineProps<{
   task:Task
 }>()
 
 const emit = defineEmits<{
-  (e:'retry'):void
+  (e:'retry'):void,
+  (e:'rated', value:AttemptAnswer):void
 }>() 
 
 const getDefaultDescription = (type:string) => {
@@ -29,6 +30,8 @@ const getDefaultDescription = (type:string) => {
 const {errors, saving} = useAttempt()
 
 provide<Task>('task', props.task)
+const checking = inject<boolean>('checking')
+//:readonly="Boolean(attempt.checkedAt)"
 </script>
 
 <template>
@@ -78,16 +81,22 @@ provide<Task>('task', props.task)
         </v-sheet>
       </v-card-text>
 
-      
         <div class=" pl-6 " v-if="task.postscriptum">
           {{ task.postscriptum }}
         </div>
-      
-
+  
       <v-card-actions class="px-4">
         <slot name="answers" /> 
       </v-card-actions>
     </v-card>
+
+    <TaskRatingBlock
+      class="mt-4"
+      @rated="(value :AttemptAnswer) => emit('rated', value)"
+      :task="task"
+      v-if="checking"
+      :readonly="false"
+    />
 
     <AppRetryAlert 
       v-if="errors.has(task.id)"

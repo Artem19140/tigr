@@ -2,11 +2,10 @@
 import { Task } from '@/interfaces/Task';
 import BaseTask from './BaseTask.vue';
 import AppTextarea from '@/components/UI/AppTextarea/AppTextarea.vue';
-import { ref, watch } from 'vue';
+import { inject, ref, watch } from 'vue';
 
 const props = defineProps<{
-    task:Task,
-    checking:boolean
+    task:Task
 }>()
 
 const emit = defineEmits<{
@@ -34,7 +33,7 @@ watch(answer, () => {
         })
     }, 5000)
 })
-
+const checking = <boolean>inject('checking')
 </script>
 
 <template>

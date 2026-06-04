@@ -29,7 +29,7 @@ Route::prefix('exams')->group(function () {
         return ExamType::select(['id', 'name'])->get();
     });
 
-    Route::middleware(AppMiddleware::EMPLOYEE_HAS_ANY_ROLE.':'.EmployeeRole::implode(EmployeeRole::Examiner))
+    Route::middleware('can:examiner,exam')
         ->group(function () {
             Route::get('monitoring', [ExamMonitoringController::class, 'index'])->name('exams.monitoring');
             Route::get('checking', [ExamCheckingController::class, 'index']);

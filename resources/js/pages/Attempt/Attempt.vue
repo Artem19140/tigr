@@ -51,6 +51,7 @@ const finish = async () => {
             <TasksList 
                 v-if="examAttempt" 
                 :attempt="examAttempt"
+                
             />
             <AppPrimaryButton
                 text="Завершить"

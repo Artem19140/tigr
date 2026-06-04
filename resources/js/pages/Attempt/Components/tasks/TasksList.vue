@@ -10,9 +10,11 @@ import { useHttp } from '@inertiajs/vue3';
 import BaseEmptyState from '@/components/BaseComponents/BaseEmptyState/BaseEmptyState.vue';
 import MultynputTask from './MultyInputTask.vue';
 import BaseTask from './BaseTask.vue';
+import { provide } from 'vue';
 
 const props = defineProps<{
-    attempt:Attempt | AttemptMonitoring
+    attempt: any // Attempt | AttemptMonitoring,
+    checking?:boolean
 }>()
 
 const taskComponent = (type: string) => {
@@ -51,6 +53,7 @@ const update = (value:any) => {
         },
     })
 }
+provide<boolean>('checking', props.checking)
 </script>
 
 <template>
@@ -64,7 +67,6 @@ const update = (value:any) => {
                 :key="task.id"
                 :is="taskComponent(task.type)"
                 :task="task"
-                :attempt="attempt"
                 @update-answer="update"
             />
         </div>

@@ -4,8 +4,7 @@ import BaseTask from './BaseTask.vue';
 import { provide, ref, watch } from 'vue';
 
 const props = defineProps<{
-    task:Task,
-    checking:boolean
+    task:Task
 }>()
 
 const emit = defineEmits<{
@@ -41,8 +40,7 @@ watch(form.value, () => {
         })
     }, 5000)
 })
-provide('form', form),
-provide('checking', props.checking)
+provide('form', form)
 </script>
 
 <template>
