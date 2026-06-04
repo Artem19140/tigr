@@ -24,15 +24,17 @@ const form = ref<Record<string, any>>({})
 
 Object.assign(form.value, answers)
 
-const send = autosave(() => {
+const send = () => {
     emit('updateAnswer', {
             task:props.task,
             answer:form.value ?? ''
         })
-}, 5000)
+}
+
+const autosaveSend = autosave(() => { send() }, 5000)
 
 watch(form.value, () => {
-    send()
+    autosaveSend()
 })
 provide('form', form)
 </script>

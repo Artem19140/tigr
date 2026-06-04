@@ -20,15 +20,17 @@ const attemptAnswer = ref<number | null>(
   props.task.attemptAnswer?.answer?.id
 )
 
-const send = debounce(() => {
+const send = () => {
     emit('updateAnswer', {
         task:props.task,
         answer: attemptAnswer.value
     })
-}, 1000)
+}
+
+const debouncedSend = debounce(() => { send() }, 1000)
 
 watch(attemptAnswer, () => {
-    send()
+    debouncedSend()
 })
 </script>
 

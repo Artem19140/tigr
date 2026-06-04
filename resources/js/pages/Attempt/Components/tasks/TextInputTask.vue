@@ -18,15 +18,17 @@ const emit = defineEmits<{
 
 const answer = ref<string | null>(props.task?.attemptAnswer?.answer)
 
-const send = debounce(() => {
+const send = () => {
     emit('updateAnswer', {
         task:props.task,
         answer: answer.value
     })
-}, 3000)
+}
+
+const debouncedSend = debounce(() => { send() }, 3000)
 
 watch(answer, () => {
-    send()
+    debouncedSend()
 })
 
 </script>

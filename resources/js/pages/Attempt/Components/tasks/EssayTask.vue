@@ -17,16 +17,18 @@ const emit = defineEmits<{
 }>()
 
 const answer = ref<string | null>(props.task?.attemptAnswer?.answer)
-    
-const send = autosave(() => {
+
+const send = () => {
     emit('updateAnswer', {
-            task:props.task,
-            answer: answer.value ?? ''
-        })
-}, 5000)
+        task:props.task,
+        answer: answer.value ?? ''
+    })
+}
+
+const autosaveSend = autosave(() => { send() }, 5000)
 
 watch(answer, () => {
-    send()
+    autosaveSend()
 })
 const checking = <boolean>inject('checking')
 </script>
