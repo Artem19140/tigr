@@ -27,7 +27,7 @@ class ReportController
             $request->user()->center
         );
         $stringDate = $examDate->format('d.m.Y');
-        $fileName = $success ? "cerftificates_frdo_$stringDate.xlsx" : "references_frdo_$stringDate.xlsx";
+        $fileName = $success ? "Сертификаты_ФРДО_$stringDate.xlsx" : "Справки_ФРДО_$stringDate.xlsx";
 
         $headers = [
             'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
