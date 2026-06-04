@@ -34,6 +34,7 @@ watch(answer, () => {
 <template>
     <BaseTask 
         :task="task"
+        @retry="send"
     >   
         <template #answers>
             <v-card-text>
