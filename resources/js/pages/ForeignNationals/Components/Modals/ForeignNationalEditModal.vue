@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useHttp } from '@inertiajs/vue3';
 import BaseDialog from '@components/BaseComponents/BaseDialog/BaseDialog.vue';
-
 import ForeignNationalForm from './ForeignNationalForm.vue';
 import { useConfirmDialog } from '@composables/useConfirmDialog';
 import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.vue';

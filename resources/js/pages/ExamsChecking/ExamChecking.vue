@@ -7,7 +7,7 @@ import { useModals } from '@composables/useModals';
 import AppStatusChip from '@/components/UI/AppStatusChip/AppStatusChip.vue';
 import { Enrollment } from '@/interfaces/Enrollment';
 import { ExamChecking } from '@/interfaces/Exam';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 
 defineOptions({
   layout: [EmployeeLayout],
@@ -36,6 +36,10 @@ const openAttempt =  (item : Enrollment) => {
     <Head>
         <title>Проверка {{ exam.data.shortName }}</title>
     </Head>
+
+    <v-btn class="mt-2 ml-2" @click="router.visit('/exams/checking')">
+        Назад
+    </v-btn>
 
     <BaseContainer>
         <BaseTable
