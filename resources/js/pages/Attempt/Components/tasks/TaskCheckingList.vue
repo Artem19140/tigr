@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import SingleChoiceTask from './SingleChoiceTask.vue';
-import SpeakingTask from './SpeakingTask.vue';
 import EssayTask from './EssayTask.vue';
 import TextInputTask from './TextInputTask.vue';
 import { TaskTypes } from '@/constants/TaskTypes';
@@ -9,6 +8,7 @@ import TaskRatingBlock from './TaskRatingBlock.vue';
 import BaseEmptyState from '@/components/BaseComponents/BaseEmptyState/BaseEmptyState.vue';
 import { AttemptAnswer } from '@/interfaces/Task';
 import MultynputTask from './MultyInputTask.vue';
+import BaseTask from './BaseTask.vue';
 
 const props = defineProps<{
     attempt:AttemptChecking | AttemptMonitoring,
@@ -25,7 +25,7 @@ const taskComponent = (type: string) => {
         case TaskTypes.SINGLE_CHOICE:
             return SingleChoiceTask
         case TaskTypes.SPEAKING:
-            return SpeakingTask
+            return BaseTask
         case TaskTypes.ESSAY:
             return EssayTask
         case TaskTypes.TEXT_INPUT:

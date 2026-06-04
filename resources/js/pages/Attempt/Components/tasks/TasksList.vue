@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import SingleChoiceTask from './SingleChoiceTask.vue';
-import SpeakingTask from './SpeakingTask.vue';
 import EssayTask from './EssayTask.vue';
 import TextInputTask from './TextInputTask.vue';
 import { TaskTypes } from '@/constants/TaskTypes';
@@ -10,7 +9,7 @@ import { useAttempt } from '@/composables/useAttempt';
 import { useHttp } from '@inertiajs/vue3';
 import BaseEmptyState from '@/components/BaseComponents/BaseEmptyState/BaseEmptyState.vue';
 import MultynputTask from './MultyInputTask.vue';
-import { provide } from 'vue';
+import BaseTask from './BaseTask.vue';
 
 const props = defineProps<{
     attempt:Attempt | AttemptMonitoring
@@ -21,7 +20,7 @@ const taskComponent = (type: string) => {
         case TaskTypes.SINGLE_CHOICE:
             return SingleChoiceTask
         case TaskTypes.SPEAKING:
-            return SpeakingTask
+            return BaseTask
         case TaskTypes.ESSAY:
             return EssayTask
         case TaskTypes.TEXT_INPUT:
@@ -52,7 +51,6 @@ const update = (value:any) => {
         },
     })
 }
-//provide<boolean>('checking', props.checking)
 </script>
 
 <template>
