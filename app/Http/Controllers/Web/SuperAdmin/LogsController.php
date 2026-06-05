@@ -6,6 +6,7 @@ use App\Exceptions\BusinessException;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class LogsController
 {
@@ -17,7 +18,7 @@ class LogsController
         ]);
         
         $this->getPathOrFail($request->input('date'));
-
+        
         return response()->json([
             'redirectUrl' => route('logs.download', [
                 'date' => $request->input('date')
@@ -33,6 +34,10 @@ class LogsController
             'date' => ['required', 'date']
         ]);
         $path = $this->getPathOrFail($request->input('date'));
+
+        Log::info('log downloaded', [
+            'date' => $request->input('date')
+        ]);
         return response()->download($path);
     }
 

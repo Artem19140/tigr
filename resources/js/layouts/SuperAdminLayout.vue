@@ -13,10 +13,10 @@ const items = [
         label:'Статистика', 
         url:'admin/home',
     },
-    // {
-    //     label:'Поиск', 
-    //     url:'foreign-nationals',
-    // },
+    {
+        label:'Команды', 
+        url:'admin/commands',
+    },
     {
         label:'Логи ', 
         url:'admin/logs',
