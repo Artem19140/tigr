@@ -61,6 +61,13 @@ const execute = async (number: number) => {
                         :loading="http.processing"
                         :disabled="http.processing"
                     />
+
+                    <AppPrimaryButton
+                        text="deploy (5)"
+                        @click="() => execute(5)"
+                        :loading="http.processing"
+                        :disabled="http.processing"
+                    />
                 </div>
             </v-card-text>
         </v-card>
