@@ -89,7 +89,7 @@ class ForeignNationalFactory extends Factory
 
             'citizenship' => $country,
 
-            'phone' => '79'.fake()->numerify('#########'),
+            'phone' => '9'.fake()->numerify('#########'),
 
             'creator_id' => Employee::factory(),
 

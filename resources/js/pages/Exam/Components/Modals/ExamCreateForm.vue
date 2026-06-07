@@ -90,7 +90,6 @@ function required (v:any) {
         <AppNumberInput 
             v-model="form.capacity"
             :error-messages="form.errors.capacity"
-            control-variant="hidden"
             label="Вместимость"
             :rules="[required]"
             :min="0"

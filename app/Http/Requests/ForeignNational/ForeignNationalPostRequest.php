@@ -109,8 +109,8 @@ class ForeignNationalPostRequest extends FormRequest
             ],
             'phone' => [
                 'required',
-                'string',
-                'size:11',
+                'integer',
+                'size:10',
             ],
             'comment' => [
                 'nullable',
@@ -134,11 +134,11 @@ class ForeignNationalPostRequest extends FormRequest
             ],
             'passportTranslateScan' => [
                 'required',
-                File::types(['pdf'])->max(4096),
+                File::types(['pdf'])->max(10000),
             ],
             'passportScan' => [
                 'required',
-                File::types(['pdf'])->max(4096),
+                File::types(['pdf'])->max(10000),
             ],
         ];
     }

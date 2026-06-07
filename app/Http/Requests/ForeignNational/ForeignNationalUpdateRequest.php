@@ -115,7 +115,7 @@ class ForeignNationalUpdateRequest extends FormRequest
             'phone' => [
                 'required',
                 'string',
-                'size:11',
+                'size:10',
             ],
             'gender' => [
                 'required',
@@ -133,11 +133,11 @@ class ForeignNationalUpdateRequest extends FormRequest
             ],
             'passportTranslateScan' => [
                 'nullable',
-                File::types(['pdf'])->max(4096),
+                File::types(['pdf'])->max(10000),
             ],
             'passportScan' => [
                 'nullable',
-                File::types(['pdf'])->max(4096),
+                File::types(['pdf'])->max(10000),
             ],
         ];
     }

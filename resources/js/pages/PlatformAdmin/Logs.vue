@@ -22,7 +22,7 @@ const getLog = () => {
 }
 
 const gitLog = () => {
-window.open('/admin/logs/git')    
+    window.open('/admin/logs/git')    
 }
 </script>
 

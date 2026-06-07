@@ -31,7 +31,7 @@ const http = useHttp<ForeignNationalFormI & {hasPayment:boolean, examId: number 
     issuedBy:'',
     issuedDate:'',
     citizenship:null,
-    phone:'',
+    phone:null,
     dateBirth:'',
     passportScan:null,
     passportTranslateScan:null,

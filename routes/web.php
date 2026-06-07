@@ -122,8 +122,10 @@ Route::middleware([
 Route::middleware([AppMiddleware::REQUEST_TIME_MEASURE, AppMiddleware::LOG_CONTEXT, 'guest:web,foreignNationals'])
     ->group(function () {
         Route::inertia('login', 'Auth/Login')->name('login');
-        Route::post('login', [LoginController::class, 'login'])->middleware(['throttle:5']);
-        Route::post('exam-codes/verify', [ExamController::class, 'verifyCode'])->middleware(['throttle:5']);
+        Route::post('login', [LoginController::class, 'login'])
+            ->middleware(['throttle:5']);
+        Route::post('exam-codes/verify', [ExamController::class, 'verifyCode'])
+            ->middleware(['throttle:5']);
         Route::inertia('attempts/finish', 'Attempt/AfterAttempt')
             ->name('attempts.finish.after');
         

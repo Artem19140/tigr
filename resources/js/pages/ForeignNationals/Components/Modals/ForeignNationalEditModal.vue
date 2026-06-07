@@ -26,7 +26,7 @@ const http = useHttp<Omit<ForeignNationalFormI, 'hasPayment' | 'examId'>, {forei
     issuedBy: props.foreignNational?.issuedBy,
     issuedDate: new DateFormatter(props.foreignNational?.issuedDate).format('Y-m-d') ?? '',
     citizenship: props.foreignNational?.citizenship ,
-    phone: props.foreignNational?.phone,
+    phone: Number(props.foreignNational?.phone),
     dateBirth: new DateFormatter(props.foreignNational?.dateBirth).format('Y-m-d') ?? '',
     gender: props.foreignNational?.gender,
     comment: props.foreignNational?.comment,

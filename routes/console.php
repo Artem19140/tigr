@@ -4,6 +4,7 @@ use App\Domain\Attempt\Action\CloseAbandonedAttemptsAction;
 use App\Domain\Exam\Action\ClearExpiredExamCodesAction;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Process;
 
 Artisan::command('inspire', function () {
@@ -19,6 +20,5 @@ Schedule::call(function () {
 })->everyFifteenMinutes();
 
 Artisan::command('deploy', function(){
-    $process = new Process('cd /var/www/tigr && /var/www/tigr/up.bash >> /var/www/tigr/git.log 2>&1');
-    $process->run();
+    $result = Process::run('cd /var/www/tigr && /var/www/tigr/up.bash >> /var/www/tigr/git.log 2>&1');
 })->purpose('deploy project:git pull, update dependences, recache');

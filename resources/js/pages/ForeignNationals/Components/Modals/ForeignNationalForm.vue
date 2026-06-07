@@ -8,6 +8,7 @@ import AppOptionalInput from '@/components/UI/AppOptionalInput/AppOptionalInput.
 import AppDateInput from '@/components/UI/AppDateInput/AppDateInput.vue';
 import { ForeignNationalFormI } from '@/interfaces/ForeignNational';
 import AppTooltip from '@/components/UI/AppTooltip/AppTooltip.vue';
+import AppNumberInput from '@/components/UI/AppNumberInput/AppNumberInput.vue';
 
 const props = defineProps<{
     errors:any,
@@ -221,12 +222,16 @@ function required (v:any) {
                     </v-col>
 
                     <v-col cols="12" md="6">
-                        <AppInput 
-                            label="Номер телефона"
+                        <AppNumberInput 
+                            label="Номер телефона (10 цифр без +7)"
+                            placeholder="0123456789"
                             :rules="[required]"
                             :readonly="readonly"
                             v-model="form.phone"
+                            control-variant="hidden"
+                            prefix="+7"
                             :error-messages="errors.phone"
+                            maxlength="10"
                         /> 
                     </v-col>
                 </v-row>
@@ -252,12 +257,13 @@ function required (v:any) {
                             variant="comfortable"
                             :rules="[required]"
                             title="Скан паспорта PDF"
+                            
                         />
                     </v-col>
 
                     <v-col cols="12" md="6">
                         <v-file-upload 
-                        density="comfortable"
+                            density="comfortable"
                             title="Скан перевода паспорта PDF"
                             :rules="[required]"
                             clearable

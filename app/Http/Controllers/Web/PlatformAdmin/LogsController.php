@@ -54,9 +54,7 @@ class LogsController
         return  $path;
     }
 
-    public function downloadGitLog(
-        Request $request
-    )
+    public function downloadGitLog()
     {
         $logPath = '/var/www/project/git.log';
 
