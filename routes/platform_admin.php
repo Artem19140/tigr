@@ -1,7 +1,6 @@
 <?php
 
 use App\Enums\EmployeeRole;
-use App\Http\Controllers\Web\Center\CenterController;
 use App\Http\Controllers\Web\Center\CenterPlatformAdminController;
 use App\Http\Controllers\Web\PlatformAdmin\CommandsController;
 use App\Http\Controllers\Web\PlatformAdmin\LogsController;
@@ -31,4 +30,6 @@ Route::prefix('/admin')
 
         Route::get('logs/download', [LogsController::class, 'download'])->name('logs.download');
         Route::get('logs/available', [LogsController::class, 'available']);
+
+        Route::get('logs/git', [LogsController::class, 'downloadGitLog']);
     });

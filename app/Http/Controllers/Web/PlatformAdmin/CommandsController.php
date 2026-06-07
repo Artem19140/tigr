@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Web\PlatformAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Process;
 
 class CommandsController
 {
@@ -22,8 +21,11 @@ class CommandsController
             2 => Artisan::call('optimize:clear'),
             3 => Artisan::call('optimize'),
             4 => Artisan::call('migrate:fresh --seed'),
-            5 => $this->deploy(),
-            default => Log::critical('command not found', ['command' => $commandNumber])
+            5 => Artisan::call('deploy'),
+            
+            default => Log::critical('command not found', [
+                'command' => $commandNumber
+            ])
         };
 
         Log::info('command executed', [
@@ -31,11 +33,5 @@ class CommandsController
         ]);
 
         return response()->noContent();
-    }
-
-    protected function deploy():void
-    {
-        $process = new Process('cd /var/www/project && /var/www/project/up.bash >> /var/www/project/git.log 2>&1');
-        $process->run();
     }
 }

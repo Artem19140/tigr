@@ -53,4 +53,18 @@ class LogsController
 
         return  $path;
     }
+
+    public function downloadGitLog(
+        Request $request
+    )
+    {
+        $logPath = '/var/www/project/git.log';
+
+        if (!file_exists($logPath)) {
+            Log::critical('Git log file not found');
+            throw new BusinessException('Файл не найден');
+        }
+
+        return response()->download($logPath, 'git_log_' . now()->format('Y-m-d_His') . '.txt');
+    }
 }

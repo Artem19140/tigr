@@ -20,6 +20,10 @@ const getLog = () => {
     },
    })
 }
+
+const gitLog = () => {
+window.open('/admin/logs/git')    
+}
 </script>
 
 <template>
@@ -42,6 +46,13 @@ const getLog = () => {
                     :disabled="!http.date || http.processing"
                     :loading="http.processing"
                     text="Выгрузить"
+                />
+            </v-card-text>
+
+            <v-card-text>
+                <AppPrimaryButton 
+                    text="гит лог"
+                    @click="gitLog"
                 />
             </v-card-text>
         </v-card>
