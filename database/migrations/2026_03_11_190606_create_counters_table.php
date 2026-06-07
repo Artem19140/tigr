@@ -20,7 +20,8 @@ return new class extends Migration
             $table->foreignId('center_id')
                 ->constrained('centers')
                 ->cascadeOnDelete();
-
+                
+            $table->unique(['center_id', 'id']);
             $table->timestamps();
         });
     }

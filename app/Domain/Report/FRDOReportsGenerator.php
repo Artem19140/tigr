@@ -7,6 +7,7 @@ use App\Enums\ReportType;
 use App\Events\ReportGenerated;
 use App\Models\Attempt;
 use App\Models\Center;
+use App\Support\CenterIsolationCheck;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -46,12 +47,14 @@ class FRDOReportsGenerator
                 $examDate->copy()->endOfDay(),
             ])
             ->when($success, function(Builder $query){
-                $query->whereNull('banned_at');
+                $query->passed();
             })
-            ->where('is_passed', $success)
+            ->when(!$success, function(Builder $query){
+                $query->failed();
+            })
             ->whereNotNull('checked_at')
             ->get();
-
+        CenterIsolationCheck::check($attempts);
         return $attempts;
     }
 

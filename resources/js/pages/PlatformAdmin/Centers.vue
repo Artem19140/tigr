@@ -5,7 +5,7 @@ import AppAddButton from '@/components/UI/AppAddButton/AppAddButton.vue';
 import { useModals } from '@/composables/useModals';
 import { Center } from '@/interfaces/Center';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
-import SuperAdminLayout from '@/layouts/SuperAdminLayout.vue';
+import PlatformAdminLayout from '@/layouts/PlatformAdminLayout.vue';
 import { router } from '@inertiajs/vue3';
 
 const props = defineProps<{
@@ -15,7 +15,7 @@ const props = defineProps<{
 }>()
 
 defineOptions({
-  layout: [EmployeeLayout, SuperAdminLayout],
+  layout: [EmployeeLayout, PlatformAdminLayout],
 })
 const headers = [
     {title : "ID",sortable: false, key: 'id', align: 'center' }, 
@@ -24,7 +24,7 @@ const headers = [
 ]
 
 const openCenter = (item :any) => {
-    router.visit(`/admin/centers/${item.id}`)
+    router.visit(`/centers/${item.id}`)
 }
 
 const {open} = useModals()

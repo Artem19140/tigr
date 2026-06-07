@@ -32,7 +32,7 @@ const canClose = async (fn: () => void) => {
 }
 
 const create = () => {
-    http.post('/employees',{
+    http.post(`employees`,{
         onSuccess:() => {
             router.reload()
             isOpen.value=false

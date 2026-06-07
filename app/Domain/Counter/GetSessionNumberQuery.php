@@ -17,7 +17,7 @@ class GetSessionNumberQuery
                 $beginTime->copy()->subDay()->endOfDay(),
             ])
             ->notCancelled()
-            ->hasAttempts()
+            ->whereHas('attempts')
             ->get()
             ->groupBy(function ($exam) {
                 return $exam->begin_time->copy()->toDateString();

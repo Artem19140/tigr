@@ -5,12 +5,12 @@ import AppPeriodDate from '@/components/UI/AppPeriodDate/AppPeriodDate.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { PeriodDate } from '@/interfaces/Interfaces';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
-import SuperAdminLayout from '@/layouts/SuperAdminLayout.vue';
+import PlatformAdminLayout from '@/layouts/PlatformAdminLayout.vue';
 import { useHttp } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 
 defineOptions({
-  layout: [EmployeeLayout, SuperAdminLayout],
+  layout: [EmployeeLayout, PlatformAdminLayout],
 })
 
 interface Stats {

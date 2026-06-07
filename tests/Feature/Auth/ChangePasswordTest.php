@@ -111,12 +111,12 @@ class ChangePasswordTest extends TestCase
         $this->assertTrue(Hash::check($newPassword, $employee->password));
     }
 
-    public function test_fail_super_admin(): void
+    public function test_fail_platform_admin(): void
     {
         $newPassword = '123456789';
 
         $employee = Employee::factory()
-            ->superAdmin()
+            ->platformAdmin()
             ->create([
                 'has_to_change_password' => true,
                 'password' => Hash::make($newPassword),

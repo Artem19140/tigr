@@ -17,7 +17,7 @@ class EmployeeCreateTest extends TestCase
 
     protected $seeder = RolesSeeder::class;
 
-    protected Role $superAdminRole;
+    protected Role $platformAdminRole;
 
     protected Role $orgAdminRole;
 
@@ -30,9 +30,13 @@ class EmployeeCreateTest extends TestCase
         parent::setUp();
         $this->seed(RolesSeeder::class);
         $this->center = Center::factory()->create();
-        $this->actor = Employee::factory()->orgAdmin()->create(['center_id' => $this->center->id]);
+        $this->actor = Employee::factory()
+            ->orgAdmin()
+            ->create([
+                'center_id' => $this->center->id
+            ]);
 
-        $this->superAdminRole = Role::findByEnum(EmployeeRole::SuperAdmin);
+        $this->platformAdminRole = Role::findByEnum(EmployeeRole::PlatformAdmin);
 
         $this->orgAdminRole = Role::findByEnum(EmployeeRole::CenterAdmin);
         Carbon::setTestNow(now());
@@ -53,15 +57,16 @@ class EmployeeCreateTest extends TestCase
             'jobTitle' => 'Сотрудник ЦТИГ',
             'password' => '12345678',
             'password_confirmation' => '12345678',
-            'roles' => [Role::findByEnum(EmployeeRole::Operator)->id],
+            'roles' => [ Role::findByEnum(EmployeeRole::Operator)->id ],
             'email' => 'unique@bk.ru',
         ], $overrrides);
     }
 
     protected function postEmployee(Employee $actingAs, array $overrrides = [])
     {
+        $centerId = $this->center->id;
         return $this->actingAs($actingAs)
-            ->postJson('/employees', $this->employeeBody($overrrides));
+            ->postJson("centers/$centerId/employees", $this->employeeBody($overrrides));
     }
 
     public function test_success(): void
@@ -77,10 +82,15 @@ class EmployeeCreateTest extends TestCase
 
     public function test_success_org_admin_creating(): void
     {
-        $superAdmin = Employee::factory()
-            ->superAdmin()
-            ->create(['center_id' => $this->center->id]);
-        $response = $this->postEmployee($superAdmin, ['roles' => [$this->orgAdminRole->id]]);
+        $platformAdmin = Employee::factory()
+            ->platformAdmin()
+            ->create([
+                'center_id' => $this->center->id
+            ]);
+
+        $response = $this->postEmployee($platformAdmin, [
+            'roles' => [ $this->orgAdminRole->id ]
+        ]);
         $response->assertOk();
     }
 
@@ -88,14 +98,20 @@ class EmployeeCreateTest extends TestCase
     {
         $operator = Employee::factory()
             ->operator()
-            ->create(['center_id' => $this->center->id]);
-        $response = $this->postEmployee($operator, ['roles' => [$this->orgAdminRole->id]]);
-        $response->assertForbidden();
+            ->create([
+                'center_id' => $this->center->id
+            ]);
+        $response = $this->postEmployee($operator,[
+            'roles' => [$this->orgAdminRole->id]
+        ]);
+        $response->assertNotFound();
     }
 
-    public function test_fail_403_super_admin_creating(): void
+    public function test_fail_403_platform_admin_creating(): void
     {
-        $response = $this->postEmployee($this->actor, ['roles' => [$this->superAdminRole->id]]);
-        $response->assertForbidden();
+        $response = $this->postEmployee($this->actor, [
+            'roles' => [$this->platformAdminRole->id]
+        ]);
+        $response->assertNotFound();
     }
 }

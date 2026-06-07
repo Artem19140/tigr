@@ -29,7 +29,9 @@ Route::prefix('exams')->group(function () {
         return ExamType::select(['id', 'name'])->get();
     });
 
-    Route::middleware('can:examiner,exam')
+    Route::middleware([
+        AppMiddleware::EMPLOYEE_HAS_ANY_ROLE. ':' . EmployeeRole::implode(EmployeeRole::PlatformAdmin, EmployeeRole::Examiner)
+    ])
         ->group(function () {
             Route::get('monitoring', [ExamMonitoringController::class, 'index'])->name('exams.monitoring');
             Route::get('checking', [ExamCheckingController::class, 'index']);
@@ -57,7 +59,8 @@ Route::prefix('exams')->group(function () {
                 ->name('exam.documents.codes.available');
         });
 
-    Route::get('{exam}/documents/list', [ExamDocumentController::class, 'list'])->name('exam.documents.list')
+    Route::get('{exam}/documents/list', [ExamDocumentController::class, 'list'])
+        ->name('exam.documents.list')
         ->can('list', 'exam');
 
     Route::get('{exam}/documents/list/available', [ExamDocumentController::class, 'listAvailable'])

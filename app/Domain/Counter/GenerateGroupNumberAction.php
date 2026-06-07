@@ -6,6 +6,7 @@ use App\Domain\Center\CenterContext;
 use App\Enums\CounterKey;
 use App\Exceptions\Counter\CounterNotFoundException;
 use App\Models\Counter;
+use App\Support\CenterIsolationCheck;
 use Carbon\Carbon;
 use DB;
 
@@ -24,7 +25,7 @@ class GenerateGroupNumberAction
                 ->forCenter($this->centerContext->id())
                 ->lockForUpdate()
                 ->first();
-
+            CenterIsolationCheck::centerBelongs($groupNumber, app(CenterContext::class)->id());
             if (! $groupNumber) {
                 throw new CounterNotFoundException(CounterKey::Group);
             }

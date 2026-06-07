@@ -50,7 +50,7 @@ return new class extends Migration
             $table->timestamps();
             $table->unsignedTinyInteger('solved')->default(0);
 
-            $table->unique(['exam_id', 'foreign_national_id']);
+            $table->unique(['enrollment_id']);
         });
     }
 

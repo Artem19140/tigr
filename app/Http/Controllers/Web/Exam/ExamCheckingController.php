@@ -6,6 +6,7 @@ use App\Domain\Exam\Query\GetExamsToCheckQuery;
 use App\Http\Resources\Exam\ExamCheckingResource;
 use App\Http\Resources\Exam\ExamIndexResource;
 use App\Models\Exam;
+use App\Support\CenterIsolationCheck;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -19,7 +20,7 @@ class ExamCheckingController
         GetExamsToCheckQuery $getExamsToCheckQuery
     ): Response {
         $exams = $getExamsToCheckQuery->execute($request->user());
-
+        CenterIsolationCheck::check($exams);
         return Inertia::render('ExamsChecking/ExamsChecking', [
             'exams' => ExamIndexResource::collection($exams),
         ]);

@@ -7,8 +7,7 @@ class CenterContext
     public function id(): ?int
     {
         $employee = auth()->user();
-
-        if (! $employee || $employee->isSuperAdmin()) {
+        if (! $employee || $employee->isPlatformAdmin()) {
             return null;
         }
 

@@ -15,17 +15,18 @@ class CenterController
 {
     public function show(Request $request, Center $center): Response
     {
-        if (
-            $center->id != $request->user()->center_id
-        ) {
-            abort(404);
-        }
+        // if (
+        //     $center->id != $request->user()->center_id
+        // ) {
+        //     abort(404);
+        // }
 
         Log::info('center_data_view', ['center_id' => $center->id]);
 
         return Inertia::render('Center/Center', [
             'data' => new CenterResource($center),
             'tab' => 'data',
+            'centerId' => $center->id
         ]);
 
     }
@@ -34,9 +35,9 @@ class CenterController
         CenterUpdateRequest $request,
         Center $center
     ): JsonResponse {
-        if ($center->id != $request->user()->center_id) {
-            abort(404);
-        }
+        // if ($center->id != $request->user()->center_id) {
+        //     abort(404);
+        // }
         $data = $request->validated();
 
         $payload = [

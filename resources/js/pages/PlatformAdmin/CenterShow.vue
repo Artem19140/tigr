@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
-import SuperAdminLayout from '@/layouts/SuperAdminLayout.vue';
+import PlatformAdminLayout from '@/layouts/PlatformAdminLayout.vue';
 import EmployeesTable from '../Center/Components/Employees/EmployeesTable.vue';
 import { Center } from '@/interfaces/Center';
 import BaseContainer from '@/components/BaseComponents/BaseContainer/BaseContainer.vue';
@@ -12,7 +12,7 @@ const props = defineProps<{
 }>()
 
 defineOptions({
-  layout: [EmployeeLayout, SuperAdminLayout],
+  layout: [EmployeeLayout, PlatformAdminLayout],
 })
 
 const headers = [

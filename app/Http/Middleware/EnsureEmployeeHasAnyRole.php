@@ -21,7 +21,7 @@ class EnsureEmployeeHasAnyRole
 
             return redirect('login');
         }
-        if ($request->user()->isSuperAdmin()) {
+        if ($request->user()->isPlatformAdmin()) {
             return $next($request);
         }
 

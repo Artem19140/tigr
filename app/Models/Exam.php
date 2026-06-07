@@ -53,7 +53,7 @@ class Exam extends Model
         Builder $query,
         Employee $employee
     ): Builder {
-        if (! $employee->hasAnyRole(EmployeeRole::Examiner) || $employee->isSuperAdmin()) {
+        if (! $employee->hasAnyRole(EmployeeRole::Examiner) || $employee->isPlatformAdmin()) {
             return $query;
         }
 
@@ -160,11 +160,6 @@ class Exam extends Model
         return Attribute::get(function () {
             return TimePresenter::forCenter($this->end_time, $this->center);
         });
-    }
-
-    public function scopeHasAttempts(Builder $query): Builder
-    {
-        return $query->whereHas('attempts');
     }
 
     public function scopeNotCancelled(Builder $query): Builder

@@ -3,12 +3,12 @@ import BaseContainer from '@/components/BaseComponents/BaseContainer/BaseContain
 import AppDateInput from '@/components/UI/AppDateInput/AppDateInput.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
-import SuperAdminLayout from '@/layouts/SuperAdminLayout.vue';
+import PlatformAdminLayout from '@/layouts/PlatformAdminLayout.vue';
 import { useHttp } from '@inertiajs/vue3';
 import { RedirectUrl } from '@/interfaces/Interfaces';
 
 defineOptions({
-  layout: [EmployeeLayout, SuperAdminLayout],
+  layout: [EmployeeLayout, PlatformAdminLayout],
 })
 const http = useHttp<{date:string | null}, RedirectUrl>({
     date:null

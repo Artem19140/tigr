@@ -19,9 +19,11 @@ return new class extends Migration
 
         Schema::create('role_employee', function (Blueprint $table) {
             $table->id();
+
             $table->foreignId('employee_id')
                 ->constrained('employees')
                 ->cascadeOnDelete();
+                
             $table->foreignId('role_id')
                 ->constrained('roles')
                 ->cascadeOnDelete();

@@ -6,6 +6,7 @@ use App\Domain\Exam\Action\Monitoring\UpdateProtocolCommentAction;
 use App\Http\Resources\Exam\ExamIndexResource;
 use App\Http\Resources\Exam\ExamMonitoringResource;
 use App\Models\Exam;
+use App\Support\CenterIsolationCheck;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -34,7 +35,7 @@ class ExamMonitoringController
             ->notCancelled()
             ->sorting(Carbon::now())
             ->paginate(10);
-
+        CenterIsolationCheck::check($exams);
         return Inertia::render('ExamMonitoring/ExamMonitoringList', [
             'exams' => ExamIndexResource::collection($exams),
             'past' => $past,

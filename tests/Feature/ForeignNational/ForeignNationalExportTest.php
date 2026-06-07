@@ -65,7 +65,7 @@ class ForeignNationalExportTest extends TestCase
     public function test_no_access_roles_foreign_national_export()
     {
         $allowedRoles = EmployeeRole::except(
-            EmployeeRole::SuperAdmin,
+            EmployeeRole::PlatformAdmin,
             EmployeeRole::Director
         );
         foreach ($allowedRoles as $role) {

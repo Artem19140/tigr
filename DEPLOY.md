@@ -31,8 +31,8 @@ APP_URL=
 ```
 Заполнить данные для входа админа
 ```
-SUPER_ADMIN_LOGIN=
-SUPER_ADMIN_PASSWORD=
+PLATFORM_ADMIN_LOGIN=
+PLATFORM_ADMIN_PASSWORD=
 ```
 
 #### Установка зависимостей

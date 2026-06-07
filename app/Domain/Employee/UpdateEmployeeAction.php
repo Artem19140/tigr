@@ -14,7 +14,7 @@ class UpdateEmployeeAction
 {
     public function execute(array $data, Employee $employeeToUpdate)
     {
-        $this->ensureHasNoRoleSuperAdmin($data);
+        $this->ensureHasNoRolePlatformAdmin($data);
         $this->ensureCenterAdminValidCreation($data);
         $before = new EmployeeResource($employeeToUpdate)->resolve();
         DB::transaction(function () use ($employeeToUpdate, $data) {
@@ -37,23 +37,24 @@ class UpdateEmployeeAction
         }
     }
 
-    protected function ensureHasNoRoleSuperAdmin(array $data): void
+    protected function ensureHasNoRolePlatformAdmin(array $data): void
     {
-        $superAdminRole = Role::findByEnum(EmployeeRole::SuperAdmin);
-        if (\in_array($superAdminRole->id, $data['roles'])) {
-            abort(403);
+        $platformAdminRole = Role::findByEnum(EmployeeRole::PlatformAdmin);
+        $hasRolePlatformAdmin = \in_array($platformAdminRole->id, $data['roles']);
+        if ($hasRolePlatformAdmin) {
+            abort(404);
         }
     }
 
     protected function ensureCenterAdminValidCreation(array $data): void
     {
         $centerAdminRole = Role::findByEnum(EmployeeRole::CenterAdmin);
-        if (
-            \in_array($centerAdminRole->id, $data['roles'])
-            &&
-            ! request()->user()->isSuperAdmin()
-        ) {
-            abort(403);
+
+        $centerAdminCreating = \in_array($centerAdminRole->id, $data['roles']);
+        $creatorIsNotPlatformAdmin = ! auth()->user()->isPlatformAdmin();
+
+        if($centerAdminCreating && $creatorIsNotPlatformAdmin){
+            abort(404);
         }
     }
 

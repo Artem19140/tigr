@@ -22,7 +22,7 @@ import ViolationModal from '@/pages/ExamMonitoring/Violations/ViolationModal.vue
 import PasswordResetModal from '@/pages/Center/Components/Employees/PasswordResetModal.vue';
 import EmployeeEditModal from '@/pages/Center/Components/Employees/EmployeeEditModal.vue';
 import LogoutAllDevicesModal from './LogoutAllDevicesModal.vue';
-import CenterCreateModal from '@/pages/SuperAdmin/Components/CenterCreateModal.vue';
+import CenterCreateModal from '@/pages/PlatformAdmin/Components/CenterCreateModal.vue';
 
 const {modals, close} = useModals()
 

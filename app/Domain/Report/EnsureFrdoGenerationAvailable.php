@@ -65,10 +65,11 @@ class EnsureFrdoGenerationAvailable
         Carbon $examDate,
         bool $success
     ): void {
-        $attemptsForReportExists = $this->query($examDate)
-            ->where('is_passed', $success)
-            ->whereNotNull('checked_at')
-            ->exists();
+        $query = $this->query($examDate)
+            ->whereNotNull('checked_at');
+        $success ? $query->passed() : $query->failed();
+        
+        $attemptsForReportExists = $query->exists();
 
         if (! $attemptsForReportExists) {
             $reportName = $success ? 'сертификатов' : 'справок';

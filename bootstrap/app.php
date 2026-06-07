@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Middleware\CenterContext;
 use App\Http\Middleware\EnsureCenterActive;
 use App\Http\Middleware\EnsureEmployeeActive;
 use App\Http\Middleware\EnsureEmployeeHasAnyRole;
@@ -34,7 +33,6 @@ return Application::configure(basePath: dirname(__DIR__))
             AppMiddleware::EMPLOYEE_HAS_ANY_ROLE => EnsureEmployeeHasAnyRole::class,
             AppMiddleware::LOG_CONTEXT => LogContext::class,
             AppMiddleware::REQUEST_TIME_MEASURE => RequestTimeMeasure::class,
-            AppMiddleware::CENTER_CONTEXT => CenterContext::class,
             AppMiddleware::ENSURE_ATTEMPT_VALID_STATUS => EnsureValidAttemptStatus::class,
         ]);
 

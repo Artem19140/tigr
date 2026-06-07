@@ -6,6 +6,7 @@ use App\Enums\ExamDocument;
 use App\Events\ExamDocumentGenerated;
 use App\Models\Attempt;
 use App\Models\Exam;
+use App\Support\CenterIsolationCheck;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
@@ -19,18 +20,19 @@ class ExamProtocolGenerator
         $beginTimeReal = $this->getBeginTimeReal($exam);
         $endTimeReal = $this->getEndTimeReal($exam);
 
-        $attemptWithViolations = $exam->attempts()
+        $attemptsWithViolations = $exam->attempts()
             ->whereHas('violations')
             ->with(['foreignNational', 'center', 'violations'])
             ->get();
-
+        CenterIsolationCheck::check($attemptsWithViolations);
+        CenterIsolationCheck::check($bannedAttempts);
         $pdf = Pdf::loadView('pdf.exam.exam-protocol', [
             'exam' => $exam,
             'center' => $exam->center,
             'bannedAttempts' => $bannedAttempts,
             'beginTimeReal' => $beginTimeReal,
             'endTimeReal' => $endTimeReal,
-            'attemptWithViolations' => $attemptWithViolations,
+            'attemptWithViolations' => $attemptsWithViolations,
         ]);
         event(new ExamDocumentGenerated($exam, ExamDocument::Protocol));
 

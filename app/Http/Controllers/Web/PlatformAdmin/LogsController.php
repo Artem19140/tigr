@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web\SuperAdmin;
+namespace App\Http\Controllers\Web\PlatformAdmin;
 
 use App\Exceptions\BusinessException;
 use Carbon\Carbon;

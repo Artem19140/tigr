@@ -72,7 +72,6 @@ class Attempt extends Model
 
     public function ban(): void
     {
-        $this->is_passed = false;
         $this->banned_at = Carbon::now();
     }
 
@@ -174,6 +173,24 @@ class Attempt extends Model
             ->whereNull('finished_at')
             ->whereNull('checked_at');
     }
+
+    public function scopePassed(Builder $query):Builder
+    {
+        return $query
+            ->where('is_passed', true)
+            ->whereNull('banned_at');
+    }
+
+    public function scopeFailed(Builder $query):Builder
+    {
+        return $query
+            ->where('is_passed', false)
+            ->orWhere(function(Builder $q){
+                $q->where('is_passed', true)
+                    ->whereNotNull('banned_at');
+            });
+    }
+
 
     protected function timeZone(): Attribute
     {

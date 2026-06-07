@@ -23,7 +23,7 @@ class ForeignNationalShowAuthorizeTest extends TestCase
 
     protected ForeignNationalPolicy $policy;
 
-    protected array $allowedRoles = [EmployeeRole::SuperAdmin, EmployeeRole::Operator, EmployeeRole::Director];
+    protected array $allowedRoles = [EmployeeRole::PlatformAdmin, EmployeeRole::Operator, EmployeeRole::Director];
 
     protected function setUp(): void
     {

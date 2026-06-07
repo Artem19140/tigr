@@ -9,6 +9,9 @@ use Illuminate\Pagination\Paginator;
 
 class GetForeignNationalsQuery
 {
+    public function __construct(
+        protected CenterContext $centerContext
+    ){}
     public function execute(array $data = []): Paginator
     {
 
@@ -21,7 +24,7 @@ class GetForeignNationalsQuery
         $perPage = $data['perPage'] ?? 10;
 
         return ForeignNational::query()
-            ->forCenter(app(CenterContext::class)->id())
+            ->forCenter($this->centerContext->id())
             ->when($surname, function (Builder $query) use ($surname) {
                 $surname = mb_strtolower(trim($surname), 'UTF-8');
                 $query->where('surname_normalized', 'LIKE', $surname.'%');

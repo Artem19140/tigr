@@ -84,9 +84,9 @@ class EmployeeFactory extends Factory
         });
     }
 
-    public function superAdmin()
+    public function platformAdmin()
     {
-        return $this->withRole(EmployeeRole::SuperAdmin);
+        return $this->withRole(EmployeeRole::PlatformAdmin);
     }
 
     public function orgAdmin()

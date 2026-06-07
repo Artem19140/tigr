@@ -129,12 +129,12 @@ return [
     | custom
     |--------------------------------------------------------------------------
     |
-    | super_admin entry data
+    | platform_admin entry data
     | 
     */
-    'super_admin' => [
-        'login' => env('SUPER_ADMIN_LOGIN'),
-        'password' => env('SUPER_ADMIN_PASSWORD'),
+    'platform_admin' => [
+        'login' => env('PLATFORM_ADMIN_LOGIN'),
+        'password' => env('PLATFORM_ADMIN_PASSWORD'),
     ],
 
 ];

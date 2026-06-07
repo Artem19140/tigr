@@ -25,7 +25,7 @@ class AuthorizationServiceProvider extends ServiceProvider
             if ($user instanceof ForeignNational) {
                 return null;
             }
-            if ($user->isSuperAdmin()) {
+            if ($user->isPlatformAdmin()) {
                 return true;
             }
 

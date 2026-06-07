@@ -16,7 +16,5 @@ final readonly class AppMiddleware
 
     public const string EMPLOYEE_HAS_ANY_ROLE = 'employee.has.any.role';
 
-    public const string CENTER_CONTEXT = 'center.context';
-
     public const string ENSURE_ATTEMPT_VALID_STATUS = 'ensure.attempt.valid.status';
 }

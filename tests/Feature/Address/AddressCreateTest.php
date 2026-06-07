@@ -22,7 +22,11 @@ class AddressCreateTest extends TestCase
         parent::setUp();
         $this->seed(RolesSeeder::class);
         $this->center = Center::factory()->create();
-        $this->actor = Employee::factory()->orgAdmin()->create(['center_id' => $this->center->id]);
+        $this->actor = Employee::factory()
+            ->orgAdmin()
+            ->create([
+                'center_id' => $this->center->id
+            ]);
 
         Carbon::setTestNow(
             Carbon::now()

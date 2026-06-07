@@ -23,7 +23,6 @@ Route::middleware([
 
     'auth',
 
-    AppMiddleware::CENTER_CONTEXT,
     AppMiddleware::EMPLOYEE_ACTIVE,
     AppMiddleware::CENTER_ACTIVE,
     AppMiddleware::HAS_CHANGE_PASSWORD,
@@ -153,4 +152,4 @@ Route::middleware([
         require __DIR__.'/foreign_national.php';
     });
 
-require __DIR__.'/super_admin.php';
+require __DIR__.'/platform_admin.php';

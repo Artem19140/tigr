@@ -46,7 +46,7 @@ class HandleInertiaRequests extends Middleware
             ],
             'auth.user' => fn () => $request->user() instanceof Employee ?
                 array_merge(
-                    $request->user()->only('id', 'surname', 'name', 'email', 'center_id', 'job_title'),
+                    $request->user()->only('id', 'surname', 'name', 'email', 'job_title', 'center_id'),
                     [
                         'roles' => $request->user()->roles->pluck('name'),
                     ]
@@ -63,11 +63,11 @@ class HandleInertiaRequests extends Middleware
         return [
             'foreignNationals' => $employee->can('viewAny', ForeignNational::class),
             'exams' => $employee->can('viewAny', Exam::class),
-            'monitoring' => $employee->hasAnyRole(EmployeeRole::Examiner, EmployeeRole::SuperAdmin),
-            'checking' => $employee->hasAnyRole(EmployeeRole::Examiner, EmployeeRole::SuperAdmin),
+            'monitoring' => $employee->hasAnyRole(EmployeeRole::Examiner, EmployeeRole::PlatformAdmin),
+            'checking' => $employee->hasAnyRole(EmployeeRole::Examiner, EmployeeRole::PlatformAdmin),
             'schedule' => $employee->can('viewAny', Exam::class),
-            'center' => $employee->hasAnyRole(EmployeeRole::CenterAdmin, EmployeeRole::SuperAdmin),
-            'adminPanel' => $employee->hasAnyRole(EmployeeRole::SuperAdmin),
+            'center' => $employee->hasAnyRole(EmployeeRole::CenterAdmin),
+            'adminPanel' => $employee->hasAnyRole(EmployeeRole::PlatformAdmin),
         ];
     }
 }

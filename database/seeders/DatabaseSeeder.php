@@ -55,8 +55,8 @@ class DatabaseSeeder extends Seeder
                 'center_id' => $center->id
             ],
             [
-                'key' => CounterKey::RegNum,
-                'value' => Carbon::now()->format('y').'0000',
+                'key' => CounterKey::RegNum, 
+                'value' => CounterKey::defaultValue(CounterKey::RegNum), 
                 'center_id' => $center->id,
             ]);
 
@@ -67,13 +67,13 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'key' => CounterKey::Group,
-                'value' => 0,
+                'value' => CounterKey::defaultValue(CounterKey::Group),
                 'center_id' => $center->id,
             ]);
 
-        $email = config('app.super_admin.login');
+        $email = config('app.platform_admin.login');
 
-        $superAdmin = Employee::firstOrCreate(
+        $platformAdmin = Employee::firstOrCreate(
             [
                 'email' => $email
             ],
@@ -82,16 +82,16 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Николай',
                 'patronymic' => 'Дмитрович',
                 'email' => $email,
-                'password' => Hash::make(config('app.super_admin.password')),
+                'password' => Hash::make(config('app.platform_admin.password')),
                 'job_title' => 'Админ',
-                'center_id' => $center->id,
+                'center_id' => null,// $center->id,
                 'has_to_change_password' => false,
                 'email_verified_at' => now()
             ]);
             
-        $superAdminRole = Role::findByEnum(EmployeeRole::SuperAdmin);
+        $platformAdminRole = Role::findByEnum(EmployeeRole::PlatformAdmin);
 
-        $superAdmin->roles()->syncWithoutDetaching([$superAdminRole->id]);
+        $platformAdmin->roles()->syncWithoutDetaching([$platformAdminRole->id]);
 
         if (! app()->isProduction()) {
             $this->call([

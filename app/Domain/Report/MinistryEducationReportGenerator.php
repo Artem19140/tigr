@@ -6,6 +6,7 @@ use App\Domain\Center\CenterContext;
 use App\Enums\ReportType;
 use App\Events\ReportGenerated;
 use App\Models\Attempt;
+use App\Support\CenterIsolationCheck;
 use App\Support\Export\CsvWriter;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
@@ -41,7 +42,7 @@ class MinistryEducationReportGenerator
         Carbon $dateTo
     ): void {
         Attempt::query()
-            ->select(['id', 'foreign_national_id', 'exam_id', 'is_passed', 'banned_at'])
+            ->select(['id', 'foreign_national_id', 'exam_id', 'is_passed', 'banned_at','center_id'])
             ->forCenter($this->centerContext->id())
             ->whereBetween('created_at', [
                 $dateFrom,
@@ -50,13 +51,13 @@ class MinistryEducationReportGenerator
             ->with(['foreignNational', 'exam.type'])
             ->chunkById(200, function ($attempts) {
                 foreach ($attempts as $attempt) {
-                    Log::info('', [$attempt->banned_at]);
+                    CenterIsolationCheck::centerBelongs($attempt, $this->centerContext->id());
                     $foreignNational = $attempt->foreignNational;
                     $exam = $attempt->exam;
                     $this->csvWriter->writeRow([
                         ($foreignNational->passport_series ?? '').($foreignNational->passport_number ?? ''),
                         $exam->begin_time->format('d.m.Y'),
-                        $attempt->isPassed ? 'Сдал' : 'Не сдал',
+                        $attempt->isPassed() ? 'Сдал' : 'Не сдал',
                         $exam->type->certificate_name,
                     ]);
                 }

@@ -22,6 +22,7 @@ use App\Http\Resources\Exam\ExamResource;
 use App\Http\Resources\ExamType\ExamTypeResource;
 use App\Models\Enrollment;
 use App\Models\Exam;
+use App\Support\CenterIsolationCheck;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -43,13 +44,13 @@ class ExamController
         Gate::authorize('viewAny', Exam::class);
         $exams = $getExamQuery->execute($request->validated() ?? []);
         Inertia::flash('filters', request()->all());
-
+        CenterIsolationCheck::check($exams);
         $employee = $request->user();
-
+        
         return Inertia::render('Exam/Exam', [
             'permissions' => [
                 'create' => $employee->can('create', Exam::class),
-                'flatTable' => $employee->hasAnyRole(EmployeeRole::Director, EmployeeRole::SuperAdmin),
+                'flatTable' => $employee->hasAnyRole(EmployeeRole::Director, EmployeeRole::PlatformAdmin),
                 'frdo' => $employee->can('frdo', Exam::class),
             ],
             'exams' => ExamIndexResource::collection($exams),
@@ -73,6 +74,8 @@ class ExamController
     {
         Gate::authorize('create', Exam::class);
         $createData = $query->execute();
+        CenterIsolationCheck::check($createData['addresses']);
+        CenterIsolationCheck::check($createData['examiners']);
         return response()->json([
             'addresses' => AddressResource::collection($createData['addresses']),
             'examTypes' => ExamTypeResource::collection($createData['examTypes']),
@@ -103,7 +106,7 @@ class ExamController
                 ],
                 'enrollments' => [
                     'view' => $employee->can('viewAny', Enrollment::class),
-                    'statement' => $employee->hasAnyRole(EmployeeRole::Operator, EmployeeRole::SuperAdmin),
+                    'statement' => $employee->hasAnyRole(EmployeeRole::Operator, EmployeeRole::PlatformAdmin),
                     'payment' => $employee->hasAnyRole(EmployeeRole::Operator) || $employee->can('examiner', $exam),
                 ],
 
@@ -177,7 +180,7 @@ class ExamController
             ->where('begin_time', '>=', $dateFrom)
             ->where('begin_time', '<', $dateTo)
             ->get();
-
+        CenterIsolationCheck::check($exams);
         return Inertia::render('Schedule/Schedule', [
             'exams' => ExamCalendarResource::collection($exams),
             'permissions' => [

@@ -11,8 +11,10 @@ use App\Http\Requests\Employee\EmployeePostRequest;
 use App\Http\Requests\Employee\EmployeeUpdateRequest;
 use App\Http\Resources\Employee\EmployeeResource;
 use App\Http\Resources\Role\RoleResource;
+use App\Models\Center;
 use App\Models\Employee;
 use App\Models\Role;
+use App\Support\CenterIsolationCheck;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -23,33 +25,41 @@ use Inertia\Inertia;
 
 class EmployeeController
 {
-    public function index(Request $request): \Inertia\Response
+    public function index(Request $request, Center $center): \Inertia\Response
     {
-        $notSuperAdmin = ! $request->user()->isSuperAdmin();
+        $notPlatformAdmin = !$request->user()->isPlatformAdmin();
+
         $employees = Employee::active()
             ->forCenter(app(CenterContext::class)->id())
             ->with(['roles'])
-            ->when($notSuperAdmin, function (Builder $query) {
+            ->when($notPlatformAdmin, function (Builder $query) {
                 $query->whereDoesntHave('roles', function (Builder $q) {
-                    $q->where('name', EmployeeRole::SuperAdmin);
+                    $q->where('name', EmployeeRole::PlatformAdmin);
                 });
             })
             ->orderBy('surname')
             ->get();
         Log::info('employees_view', []);
 
+        CenterIsolationCheck::check($employees);
+        
         return Inertia::render('Center/Center', [
             'employees' => EmployeeResource::collection($employees),
             'tab' => 'employees',
+            'centerId' => $center->id
         ]);
     }
 
     public function store(
         EmployeePostRequest $request,
-        CreateEmployeeAction $createEmployee
+        CreateEmployeeAction $createEmployee,
+        Center $center
     ): JsonResponse {
-        $createEmployee->execute($request->validated(), $request->user());
-
+        $createEmployee->execute(
+            $request->validated(),
+            $center,
+            $request->user()
+        );
         return response()->json();
     }
 
@@ -58,7 +68,7 @@ class EmployeeController
         Employee $employee,
         UpdateEmployeeAction $updateEmployeeAction
     ): JsonResponse {
-        if ($employee->isSuperAdmin()) {
+        if ($employee->isPlatformAdmin()) {
             abort(403);
         }
         $updateEmployeeAction->execute($request->validated(), $employee);
@@ -70,15 +80,15 @@ class EmployeeController
         Employee $employee,
         Request $request
     ): Response {
-        if ($request->user()->center_id !== $employee->center_id && ! $request->user()->isSuperAdmin()) {
+        if ($request->user()->center_id !== $employee->center_id && ! $request->user()->isPlatformAdmin()) {
             abort(403);
         }
 
-        if ($employee->isSuperAdmin()) {
+        if ($employee->isPlatformAdmin()) {
             abort(403);
         }
 
-        if ($employee->hasRole(EmployeeRole::CenterAdmin->value) && ! $request->user()->isSuperAdmin()) {
+        if ($employee->hasRole(EmployeeRole::CenterAdmin->value) && ! $request->user()->isPlatformAdmin()) {
             abort(403);
         }
 
@@ -97,8 +107,8 @@ class EmployeeController
     {
         return RoleResource::collection(
             Role::select(['id', 'name'])
-                ->when(! $request->user()->isSuperAdmin(), function (Builder $query) {
-                    $query->where('name', '<>', EmployeeRole::SuperAdmin)
+                ->when(! $request->user()->isPlatformAdmin(), function (Builder $query) {
+                    $query->where('name', '<>', EmployeeRole::PlatformAdmin)
                         ->where('name', '<>', EmployeeRole::CenterAdmin);
                 })
                 ->get()

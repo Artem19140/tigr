@@ -3,7 +3,6 @@ import Dropdown from './Dropdown.vue';
 import { useModals } from '@composables/useModals';
 import AppAddButton from '@components/UI/AppAddButton/AppAddButton.vue';
 import BaseTable from '@/components/BaseComponents/BaseTable/BaseTable.vue';
-import AppBorderedButton from '@/components/UI/AppBorderedButton/AppBorderedButton.vue';
 import { Employee } from '@/interfaces/Employee';
 import { Head } from '@inertiajs/vue3';
 import DetailsDropdown from '@/components/UI/DetailsDropdown/DetailsDropdown.vue';
@@ -33,13 +32,11 @@ const headers = [
         :headers="headers"
         :items="employees"
         toolbarColor="white"
+        :items-per-page="-1"
         class="p-2"
     >
         <template #toolbar-actions>
             <div class="flex gap-4">
-                <!-- <AppBorderedButton 
-                    text="Уволенные"
-                /> -->
                 <AppAddButton text="Добавить" 
                     @click="open('employeeCreate')" 
                 />

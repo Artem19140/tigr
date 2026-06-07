@@ -8,6 +8,7 @@ use App\Http\Resources\Address\AddressResource;
 use App\Models\Address;
 use App\Models\Center;
 use App\Models\Employee;
+use App\Support\CenterIsolationCheck;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -20,17 +21,18 @@ class AddressController
         Request $request,
         Center $center
     ): \Inertia\Response {
-        $this->authorize($request->user(), $center);
+        //$this->authorize($request->user(), $center);
         $addresses = Address::forCenter(app(CenterContext::class)->id())
             ->withExists('exams as examsExists')
             ->orderByDesc('id')
             ->where('is_active', true)
             ->get();
         Log::info('address_view_index', []);
-
+        CenterIsolationCheck::check($addresses);
         return Inertia::render('Center/Center', [
             'addresses' => AddressResource::collection($addresses),
             'tab' => 'addresses',
+            'centerId' => $center->id
         ]);
     }
 
@@ -38,13 +40,12 @@ class AddressController
         AddressPostRequest $request,
         Center $center
     ): JsonResponse {
-        $employee = $request->user();
-        $this->authorize($request->user(), $center);
+        //$this->authorize($request->user(), $center);
         $address = Address::create([
             'address' => $request->validated('address'),
             'max_capacity' => $request->validated('capacity'),
-            'center_id' => $employee->center_id,
-            'creator_id' => $employee->id,
+            'center_id' => app(CenterContext::class)->id(),
+            'creator_id' => $center->id,
         ]);
 
         return response()->json([
@@ -58,8 +59,8 @@ class AddressController
         Center $center,
         Address $address
     ): JsonResponse {
-        $this->authorize($request->user(), $center);
-        abort_if($address->center_id !== $center->id, 403);
+        //$this->authorize($request->user(), $center);
+        //abort_if($address->center_id !== $center->id, 403);
         $request->validate([
             'address' => ['required', 'string'],
             'maxCapacity' => ['required', 'integer', 'min:1'],

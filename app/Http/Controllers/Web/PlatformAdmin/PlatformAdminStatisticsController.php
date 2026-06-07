@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web\SuperAdmin;
+namespace App\Http\Controllers\Web\PlatformAdmin;
 
 use App\Models\Attempt;
 use App\Models\Enrollment;
@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class SuperAdminStatisticsController
+class PlatformAdminStatisticsController
 {
     public function index(
         Request $request

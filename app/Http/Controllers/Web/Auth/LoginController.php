@@ -22,13 +22,14 @@ class LoginController
         $employee = Auth::user();
 
         $employee->loadMissing('center');
-        if (! $employee->isActive() || ! $employee->center->isActive()) {
-            Auth::logout();
-            throw ValidationException::withMessages([
-                'email' => 'Неверные учетные данные.',
-                'password' => '',
-            ]);
-        }
+        
+        // if (! $employee->isActive() || ! $employee->center?->isActive()) {
+        //     Auth::logout();
+        //     throw ValidationException::withMessages([
+        //         'email' => 'Неверные учетные данные.',
+        //         'password' => '',
+        //     ]);
+        // }
 
         $request->session()->regenerate();
 

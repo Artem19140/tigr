@@ -13,6 +13,7 @@ use App\Http\Resources\ForeignNational\ForeignNationalIndexResource;
 use App\Http\Resources\ForeignNational\ForeignNationalProfileResource;
 use App\Models\Enrollment;
 use App\Models\ForeignNational;
+use App\Support\CenterIsolationCheck;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -33,14 +34,14 @@ class ForeignNationalController
         Inertia::flash(['filters' => request()->all()]);
 
         $employee = $request->user();
-
+        CenterIsolationCheck::check($foreignNationals);
         return Inertia::render('ForeignNationals/ForeignNationals', [
             'foreignNationals' => ForeignNationalIndexResource::collection($foreignNationals),
             'permissions' => [
                 'create' => $employee->can('create', ForeignNational::class),
                 'export' => $employee->can('export', ForeignNational::class),
-                'statistics' => $employee->hasAnyRole(EmployeeRole::Director, EmployeeRole::SuperAdmin),
-                'ministryEducation' => $employee->hasAnyRole(EmployeeRole::Director, EmployeeRole::SuperAdmin),
+                'statistics' => $employee->hasAnyRole(EmployeeRole::Director, EmployeeRole::PlatformAdmin),
+                'ministryEducation' => $employee->hasAnyRole(EmployeeRole::Director, EmployeeRole::PlatformAdmin),
             ],
         ]);
     }

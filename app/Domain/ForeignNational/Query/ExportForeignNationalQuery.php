@@ -4,12 +4,17 @@ namespace App\Domain\ForeignNational\Query;
 
 use App\Domain\Center\CenterContext;
 use App\Models\ForeignNational;
+use App\Support\CenterIsolationCheck;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Log;
 
 class ExportForeignNationalQuery
 {
+    public function __construct(
+        protected CenterIsolationCheck $centerIsolationCheck,
+        protected CenterContext $centerContext
+    ){}
     public function execute(
         Carbon $dateFrom,
         Carbon $dateTo,
@@ -20,8 +25,8 @@ class ExportForeignNationalQuery
         fputcsv($handle, $this->headers());
         $count = 0;
         ForeignNational::query()
-            ->forCenter(app(CenterContext::class)->id())
-            ->select(['id', 'surname', 'name', 'patronymic', 'citizenship', 'passport_series', 'passport_number'])
+            ->forCenter($this->centerContext->id())
+            ->select(['id', 'surname', 'name', 'patronymic', 'citizenship', 'passport_series', 'passport_number', 'center_id'])
             ->when($citizenship, function (Builder $query) use ($citizenship) {
                 $query->where('citizenship', $citizenship);
             })
@@ -30,6 +35,7 @@ class ExportForeignNationalQuery
             ->orderBy('id')
             ->lazyById(1000)
             ->each(function ($i) use ($handle, &$count) {
+                
                 fputcsv($handle, [
                     $i->surname,
                     $i->name,
@@ -39,6 +45,7 @@ class ExportForeignNationalQuery
                     $i->passport_number,
                 ]);
                 $count++;
+                $this->centerIsolationCheck::centerBelongs($i, $this->centerContext->id());
             });
 
         fclose($handle);

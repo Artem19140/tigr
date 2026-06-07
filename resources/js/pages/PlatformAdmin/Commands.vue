@@ -2,12 +2,12 @@
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { useConfirmationOptionsDialog } from '@/composables/useConfirmationOptionsDialog';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
-import SuperAdminLayout from '@/layouts/SuperAdminLayout.vue';
+import PlatformAdminLayout from '@/layouts/PlatformAdminLayout.vue';
 import { useHttp } from '@inertiajs/vue3';
 
 
 defineOptions({
-  layout: [EmployeeLayout, SuperAdminLayout],
+  layout: [EmployeeLayout, PlatformAdminLayout],
 })
 
 const http = useHttp<{command :number | null}>({

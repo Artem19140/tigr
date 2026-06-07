@@ -16,7 +16,7 @@ defineOptions({
 
 const {user} = useAuth()
 
-const centerId = computed(() => user.center_id)
+const centerId = computed(() => user.centerId)
 
 const props = defineProps<{
     tab: Tab
@@ -28,7 +28,8 @@ const props = defineProps<{
     } 
     addresses?:{
         data:Address[]
-    }
+    },
+    centerId:number
 }>()
 
 type Tab = 'data' | 'employees' | 'addresses'
@@ -36,7 +37,7 @@ type Tab = 'data' | 'employees' | 'addresses'
 const tab = ref<Tab>(props.tab ?? 'data')
 
 const visit = (route : string) => {
-    router.visit(`/centers/${centerId.value}${route}`)
+    router.visit(`/centers/${props.centerId}${route}`)
 } 
 </script>
 
@@ -56,12 +57,13 @@ const visit = (route : string) => {
             </v-tabs-window-item>
 
             <v-tabs-window-item value="employees" v-if="employees?.data">
-                <EmployeesTable :employees="employees.data" />
+                <EmployeesTable 
+                    :employees="employees.data" 
+                />
             </v-tabs-window-item>
 
             <v-tabs-window-item value="addresses" v-if="addresses">
                 <AddressesList 
-                    :center-id="centerId"
                     :addresses="addresses.data"
                  />
             </v-tabs-window-item>

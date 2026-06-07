@@ -35,7 +35,7 @@ class BanAttemptAction
     protected function ensureNotBanned(Attempt $attempt): void
     {
         if ($attempt->isBanned()) {
-            Log::warning(' repeated cancellation of attempt ', [
+            Log::warning('repeated attempt ban', [
                 'attempt_id' => $attempt->id,
             ]);
             throw new BusinessException('Попытка аннулирована');
@@ -47,6 +47,7 @@ class BanAttemptAction
         if ($attempt->isFinished()) {
             return;
         }
+        
         $attempt->finish();
 
         if ($attempt->canBeAutomaticallyFinalized()) {

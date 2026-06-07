@@ -7,6 +7,7 @@ use App\Enums\ReportType;
 use App\Enums\TaskType;
 use App\Events\ReportGenerated;
 use App\Models\Attempt;
+use App\Support\CenterIsolationCheck;
 use Carbon\Carbon;
 
 class FlatTableGenerator
@@ -39,6 +40,7 @@ class FlatTableGenerator
 
             ->chunkById(300, function ($attempts) use ($handle, &$strNumber) {
                 foreach ($attempts as $attempt) {
+                    CenterIsolationCheck::centerBelongs($attempt, $this->centerContext->id());
                     $answers = $attempt->answers->sortBy(fn ($a) => $a->taskVariant->task->order);
                     foreach ($answers as $answer) {
                         $taskVariant = $answer->taskVariant;

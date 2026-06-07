@@ -17,7 +17,7 @@ class EmployeeSeeder extends Seeder
         $roles = EmployeeRole::cases();
 
         foreach ($roles as $role) {
-            if ($role === EmployeeRole::SuperAdmin) {
+            if ($role === EmployeeRole::PlatformAdmin) {
                 continue;
             }
             Employee::factory()

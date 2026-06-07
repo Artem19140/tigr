@@ -47,9 +47,18 @@ class Employee extends Authenticatable
         ];
     }
 
-    public function isSuperAdmin(): bool
+    protected static function booted()
     {
-        return $this->hasRole(EmployeeRole::SuperAdmin->value);
+        static::creating(function ($model) {
+            if (!$model->center_id) {
+                throw new \Exception("Platform admin must specify a center.");
+            }
+        });
+    }
+
+    public function isPlatformAdmin(): bool
+    {
+        return $this->hasRole(EmployeeRole::PlatformAdmin->value);
     }
 
     public function isActive(): bool
@@ -137,7 +146,7 @@ class Employee extends Authenticatable
             $this->hasRole(EmployeeRole::Director->value) => route('foreign-nationals.index'),
             $this->hasRole(EmployeeRole::Examiner->value) => route('exams.index'),
             $this->hasRole(EmployeeRole::CenterAdmin->value) => route('centers.show', ['center' => $this->center]),
-            $this->hasRole(EmployeeRole::SuperAdmin->value) => route('centers.show', ['center' => $this->center]),
+            $this->hasRole(EmployeeRole::PlatformAdmin->value) => route('platform-admin.home'),
             default => abort(403)
         };
     }

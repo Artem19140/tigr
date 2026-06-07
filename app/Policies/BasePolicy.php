@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Employee;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 trait BasePolicy
 {
@@ -12,7 +13,14 @@ trait BasePolicy
         if ($employee->center_id === $model->center_id) {
             return true;
         }
-
+        Log::warning('UNAUTHORIZED: center access',[
+            'employee_center_id' => $employee->center_id,
+            'employee_id' => $employee->id,
+            'model_center_id' => $model->center_id,
+            'model_id' => $model->id,
+            'model_type' => class_basename($model),
+            'url' => request()->url(),
+        ]);
         return false;
     }
 }

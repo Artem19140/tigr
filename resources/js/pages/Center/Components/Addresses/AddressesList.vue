@@ -8,8 +8,7 @@ import BaseEmptyState from '@/components/BaseComponents/BaseEmptyState/BaseEmpty
 import { Head } from '@inertiajs/vue3';
 
 const props = defineProps<{
-    addresses:Address[],
-    centerId:number
+    addresses:Address[]
 }>()
 watch(() => props.addresses, (value) => {
     addresses.value = value
@@ -25,7 +24,7 @@ addresses.value.map(v => v.loading = false)
 
 const add = () => {
     const {open} = useModals()
-    open('addressCreate', {centerId:props.centerId})
+    open('addressCreate')
 }
 
 </script>
@@ -46,7 +45,6 @@ const add = () => {
     
     <div class="mt-4 p-4" v-if="addresses.length > 0">
         <AddressCard 
-            :centerId="centerId"
             v-for="address in addresses" 
             :key="address.id"
             :address="address"

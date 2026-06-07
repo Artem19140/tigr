@@ -61,7 +61,7 @@ class ExamShowAuthorizeTest extends TestCase
         $allowedRoles = [
             EmployeeRole::Operator,
             EmployeeRole::Director,
-            EmployeeRole::SuperAdmin,
+            EmployeeRole::PlatformAdmin,
             EmployeeRole::Scheduler,
         ];
         foreach ($allowedRoles as $role) {

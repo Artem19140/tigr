@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers\Web\Center;
 
+use App\Enums\CounterKey;
 use App\Http\Requests\Center\CenterStoreRequest;
 use App\Http\Resources\Center\CenterIndexResource;
 use App\Http\Resources\Center\CenterResource;
 use App\Models\Center;
+use App\Models\Counter;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
-class CenterSuperAdminController
+class CenterPlatformAdminController
 {
     public function show(Center $center): \Inertia\Response
     {
@@ -19,7 +22,7 @@ class CenterSuperAdminController
             'employees.roles',
         ]);
 
-        return Inertia::render('SuperAdmin/CenterShow', [
+        return Inertia::render('PlatformAdmin/CenterShow', [
             'center' => new CenterResource($center),
         ]);
     }
@@ -28,15 +31,25 @@ class CenterSuperAdminController
     {
         $wrongPassword = ! Hash::check($request->validated('password'), $request->user()->password);
         if ($wrongPassword) {
-            Log::warning('wrong sa password', [
-
-            ]);
+            Log::warning('wrong platform admin password, center creating');
             abort(404);
         }
-        Center::create([
-            'short_name' => $request->validated('shortName'),
-            'time_zone' => $request->validated('timeZone'),
-        ]);
+        DB::transaction(function() use($request){
+            $center = Center::create([
+                'short_name' => $request->validated('shortName'),
+                'time_zone' => $request->validated('timeZone'),
+            ]);
+
+            $counters = CounterKey::cases();
+
+            foreach($counters as $counter){
+                Counter::create([
+                    'center_id' => $center->id,
+                    'key' => $counter,
+                    'value' => CounterKey::defaultValue($counter)
+                ]);
+            }
+        });
 
         return response()->noContent();
     }
@@ -45,9 +58,10 @@ class CenterSuperAdminController
     {
         $centers = Center::query()
             ->withCount('employees')
+            ->orderBy('id')
             ->get();
 
-        return Inertia::render('SuperAdmin/Centers', [
+        return Inertia::render('PlatformAdmin/Centers', [
             'centers' => CenterIndexResource::collection($centers),
         ]);
     }

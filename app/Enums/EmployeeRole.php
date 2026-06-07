@@ -10,7 +10,7 @@ enum EmployeeRole: string
     case VideoRecordOperator = 'video_record_operator';
     case Director = 'director';
     case CenterAdmin = 'center_admin';
-    case SuperAdmin = 'super_admin';
+    case PlatformAdmin = 'super_admin';
 
     public static function implode(self ...$roles)
     {
@@ -23,7 +23,7 @@ enum EmployeeRole: string
     {
         return array_filter(
             self::cases(),
-            fn (self $role) => ! in_array($role, $roles, true)
+            fn (self $role) => ! \in_array($role, $roles, true)
         );
     }
 }

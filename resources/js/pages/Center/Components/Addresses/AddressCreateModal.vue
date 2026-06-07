@@ -8,17 +8,13 @@ import { router, useHttp } from '@inertiajs/vue3';
 
 const isOpen = defineModel<boolean>({default:false})
 
-const props = defineProps<{
-    centerId:number
-}>()
-
 const http = useHttp({
     address:null,
     capacity:null
 })
 
 const add = () => {
-    http.post(`/centers/${props.centerId}/addresses`,{
+    http.post(`addresses`,{
         onSuccess:() => {
             isOpen.value = false
             router.reload()

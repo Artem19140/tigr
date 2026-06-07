@@ -39,15 +39,18 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->boolean('audio_played')->default(false);
+            $table->datetime('audio_played_at')->nullable()->default(null);
 
             $table->foreignId('checked_by_id')
                 ->nullable()
                 ->default(null)
                 ->constrained('employees')
                 ->cascadeOnDelete();
+
             $table->datetime('checked_at')->nullable()->default(null);
             $table->unsignedTinyInteger('mark')->nullable()->default(null);
             $table->jsonb('answer')->nullable()->default(null);
+
             $table->timestamps();
         });
     }

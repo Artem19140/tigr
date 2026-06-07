@@ -13,7 +13,7 @@ const emit = defineEmits<{
     (e:'modeShow'):void
 }>()
 
-const http = useHttp<Omit<Center, 'id'>>({
+const http = useHttp<Omit<Center, 'id' | 'employees'>>({
   name: props.center.name ?? '',
   ogrn: props.center.ogrn ?? '',
   inn: props.center.inn ?? '',
@@ -25,7 +25,7 @@ const http = useHttp<Omit<Center, 'id'>>({
 })
 
 const edit = () => {
-    http.put(`/centers/${props.center.id}`,{
+    http.put(``,{ ///centers/${props.center.id}
         onSuccess(response, httpResponse) {
             router.reload()
             emit('modeShow')

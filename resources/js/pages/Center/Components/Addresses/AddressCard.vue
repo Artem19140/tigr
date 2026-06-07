@@ -10,8 +10,7 @@ import { router, useHttp } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const props = defineProps<{
-    address:Address,
-    centerId:number
+    address:Address
 }>()
 
 const editMode = ref<boolean>(false)
@@ -24,7 +23,7 @@ const deleteAddress = async () => {
     const ok = await open('Деактивировать адрес')
     if(!ok) return
 
-    http.delete(`/centers/${props.centerId}/addresses/${props.address.id}`,{
+    http.delete(`addresses/${props.address.id}`,{
         onSuccess:() => {
             router.reload()
         },
@@ -38,7 +37,7 @@ const editHttp = useHttp({
 
 
 const edit = () => {
-    editHttp.patch(`/centers/${props.centerId}/addresses/${props.address.id}`,{
+    editHttp.patch(`addresses/${props.address.id}`,{
         onSuccess:() => {
             router.reload({
                 onSuccess:() => {

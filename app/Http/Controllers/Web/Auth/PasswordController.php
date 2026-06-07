@@ -18,7 +18,7 @@ class PasswordController
         PasswordResetRequest $request,
         Employee $employee
     ): JsonResponse {
-        if ($employee->isSuperAdmin()) {
+        if ($employee->isPlatformAdmin()) {
             abort(403);
         }
 
@@ -48,7 +48,7 @@ class PasswordController
     {
         $employee = $request->user();
 
-        if ($employee->isSuperAdmin()) {
+        if ($employee->isPlatformAdmin()) {
             abort(403);
         }
         $plainPassword = $request->validated('password');

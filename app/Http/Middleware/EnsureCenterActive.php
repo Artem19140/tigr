@@ -16,7 +16,11 @@ class EnsureCenterActive
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! $request->user()->center->isActive()) {
+        if($request->user()->isPlatformAdmin()){
+            return $next($request);
+        }
+        
+        if (! $request->user()->center?->isActive()) {
             Auth::guard('web')->logout();
 
             return redirect()->route('login');

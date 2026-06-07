@@ -7,9 +7,6 @@ use Carbon\Carbon;
 
 class TimePresenter
 {
-    /**
-     * Create a new class instance.
-     */
     public static function forCenter(
         ?Carbon $date,
         ?Center $center
