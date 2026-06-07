@@ -16,7 +16,7 @@ class CommandsController
         ]);
 
         $commandNumber = $request->input('command');
-
+        Log::info('123');
         match($commandNumber){
             1 => Artisan::call('migrate --force'),
             2 => Artisan::call('optimize:clear'),
