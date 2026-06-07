@@ -133,6 +133,10 @@ class ForeignNational extends Authenticatable
     {
         $cleaned = preg_replace('/[^0-9]/', '', $phone);
 
+        // if (\strlen($cleaned) !== 10) {
+        //     throw new \InvalidArgumentException("Некорректный формат телефона. Должно быть 10 цифр.");
+        // }
+        
         return '+7 (' . substr($cleaned, 0, 3) . ') ' . substr($cleaned, 3, 3) . '-' . substr($cleaned, 6, 2) . '-' . substr($cleaned, 8, 2);
     }
 }

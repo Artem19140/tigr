@@ -109,8 +109,9 @@ class ForeignNationalPostRequest extends FormRequest
             ],
             'phone' => [
                 'required',
-                'integer',
-                'size:10',
+                'string',
+                'regex:/^\d+$/',  
+                'digits:10',   
             ],
             'comment' => [
                 'nullable',

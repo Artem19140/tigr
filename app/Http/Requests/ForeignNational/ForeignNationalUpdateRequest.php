@@ -115,7 +115,8 @@ class ForeignNationalUpdateRequest extends FormRequest
             'phone' => [
                 'required',
                 'string',
-                'size:10',
+                'regex:/^\d+$/',  
+                'digits:10',   
             ],
             'gender' => [
                 'required',
