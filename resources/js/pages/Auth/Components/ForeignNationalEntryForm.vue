@@ -40,7 +40,7 @@ const submit = () => {
       large
       block
       :loading="form.processing"
-      :disabled="form.processing"
+      :disabled="form.processing || ( (form.code?.length ?? 0) < 6 )"
     />
   </v-form>
 </template>

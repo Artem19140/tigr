@@ -27,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
             if (\in_array($response->statusCode(), [403, 404, 500, 503])) {
                 return $response->render('ErrorPage', [
                     'status' => $response->statusCode(),
+                    'message' => $response->exception->getMessage()
                 ])->withSharedData();
             }
         });

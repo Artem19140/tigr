@@ -63,7 +63,7 @@ const get = () => {
                 <AppPrimaryButton 
                     @click="get"
                     :loading="http.processing"
-                    :disabled="http.processing"
+                    :disabled="http.processing || ! http.dateFrom || ! http.dateTo"
                     text="Получить"
                 />
             </v-card-text>

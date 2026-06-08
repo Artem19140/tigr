@@ -62,6 +62,7 @@ class ExamController
         ExamPostRequest $request,
         CreateExamAction $createExamAction
     ): JsonResponse {
+        
         Gate::authorize('create', Exam::class);
         $createExamAction->execute($request->getDto(), $request->user());
 

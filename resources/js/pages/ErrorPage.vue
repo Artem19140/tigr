@@ -3,7 +3,8 @@ import { computed, ref } from 'vue'
 import { router } from '@inertiajs/vue3';
 
 const props = defineProps<{
-  status: number
+  status: number,
+  message: string
 }>()
 
 const title = computed(() => {
@@ -19,7 +20,7 @@ const description = computed(() => {
   return {
     503: 'Извините, сейчас проводятся технические работы. Попробуйте позже.',
     500: 'Упс! Что-то пошло не так на сервере.',
-    404: 'Извините, страница, которую вы ищете, не найдена.',
+    404: props.message ? props.message  : 'Извините, страница, которую вы ищете, не найдена.',
     403: 'Извините, у вас нет доступа к этой странице.',
   }[props.status] || 'Произошла неизвестная ошибка.'
 })

@@ -1,14 +1,14 @@
-import { ref, } from "vue";
+import { ref } from "vue";
 
 const messages = ref<SnackBar[]>([])
 const queue = ref()
 export const useSnackbarQueue = () => {
     const add = (
-                    text:string, 
-                    color:string,  
-                    prependIcon?:string,
-                    timeout = 5000,
-                ) => {
+        text:string, 
+        color:string,  
+        prependIcon?:string,
+        timeout = 5000,
+    ) => {
 
         if(queue.value?.clear){
             queue.value?.clear()

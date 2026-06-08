@@ -11,8 +11,8 @@ export const useHttpErrorHandler = () => {
                 addSnackBar(message)
                 break;
             case 401:
-                router.visit('/login')
                 addSnackBar('Вы не авторизованы')
+                router.visit('/login')
                 break;
             case 403:
                 addSnackBar('Нет доступа')
@@ -22,6 +22,9 @@ export const useHttpErrorHandler = () => {
                 break;
             case 422:
                 break;
+            case 429:
+                addSnackBar('Слишком много попыток')
+                break;
             case 500:
                 addSnackBar('Ошибка сервер')
                 break;
@@ -30,7 +33,6 @@ export const useHttpErrorHandler = () => {
                 break;
 
             default:
-                
                 addSnackBar('Неизвестная ошибка')
     }
 }

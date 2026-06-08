@@ -245,4 +245,10 @@ class Attempt extends Model
             },
         );
     }
+
+    public function canBeBanned():bool
+    {
+        return !$this->isBanned() || $this->started_at->isToday();
+    }
+
 }

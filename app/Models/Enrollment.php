@@ -42,7 +42,7 @@ class Enrollment extends Model
 
     public function canChangePayment(): bool
     {
-        return ! $this->attempt;
+        return ! $this->attempt || $this->exam->isFinished();
     }
 
     public function hasPayment(): bool
