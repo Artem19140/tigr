@@ -22,7 +22,7 @@ class BanAttemptAction
         DB::transaction(function () use ($attempt, $banReason, $employee) {
 
             $this->ensureNotBanned($attempt);
-
+            $this->ensureAttemptWasToday($attempt);
             $this->finishAndIfNeededFinilize($attempt);
 
             $attempt->ban_reason = $banReason;
@@ -39,6 +39,13 @@ class BanAttemptAction
                 'attempt_id' => $attempt->id,
             ]);
             throw new BusinessException('Попытка аннулирована');
+        }
+    }
+
+    protected function ensureAttemptWasToday(Attempt $attempt): void
+    {
+        if(! $attempt->started_at->isToday()){
+            throw new BusinessException('Попытку возможно аннулировать в день её прохождения');
         }
     }
 
