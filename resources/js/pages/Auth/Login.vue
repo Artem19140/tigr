@@ -8,10 +8,12 @@ import BaseListItem from '@/components/BaseComponents/BaseList/BaseListItem.vue'
 
 const isForeignNationalEntry = ref<boolean>(true)
 
+defineOptions({
+  layout: [BaseLayout]
+})
 </script>
 
 <template>
-    <BaseLayout>
         <BaseEntryCard
             :subtitle="isForeignNationalEntry ? 'Введите код из 6 цифр' : 'Войдите в свой аккаунт'"
         >
@@ -38,5 +40,4 @@ const isForeignNationalEntry = ref<boolean>(true)
             />
         </v-list>
         </v-menu>
-    </BaseLayout>
 </template>
