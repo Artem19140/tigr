@@ -55,6 +55,19 @@ const dropDownAccess = computed(() =>
 
     (permissions.value?.edit || permissions.value?.enroll) && permissions.value
 )
+
+function formatPhoneNumber(cleaned: string ) {
+  if (!cleaned || cleaned.length !== 10 || !/^\d+$/.test(cleaned)) {
+    return "+7 (___) ___-__-__"; 
+  }
+  return (
+    "+7 (" +
+    cleaned.substring(0, 3) + ") " +
+    cleaned.substring(3, 6) + "-" +
+    cleaned.substring(6, 8) + "-" +
+    cleaned.substring(8, 10)
+  );
+}
 </script>
 
 <template>
@@ -100,7 +113,7 @@ const dropDownAccess = computed(() =>
                 </v-list-item>
                 <v-list-item>
                     <v-list-item-subtitle>Номер телефона</v-list-item-subtitle>
-                    <v-list-item-title>{{foreignNational?.phone ?? ''}}</v-list-item-title>
+                    <v-list-item-title>{{formatPhoneNumber(foreignNational?.phone ?? '')}}</v-list-item-title>
                 </v-list-item>
                 <v-list-item>
                     <v-list-item-subtitle>Ответственный</v-list-item-subtitle>

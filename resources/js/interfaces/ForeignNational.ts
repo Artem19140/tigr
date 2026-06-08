@@ -14,7 +14,7 @@ export interface ForeignNational{
   passportSeries:string | undefined,
   issuedBy:string,
   issuedDate:string,
-  phone:number | null,
+  phone:string | null,
   creator?:Employee | null,
   passportScan?:string | null,
   citizenship:string | null,

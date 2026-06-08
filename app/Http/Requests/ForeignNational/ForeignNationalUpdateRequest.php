@@ -134,11 +134,15 @@ class ForeignNationalUpdateRequest extends FormRequest
             ],
             'passportTranslateScan' => [
                 'nullable',
-                File::types(['pdf'])->max(10000),
+                'mimes:pdf',
+                File::types(['pdf'])
+                    ->max('10mb'),
             ],
             'passportScan' => [
                 'nullable',
-                File::types(['pdf'])->max(10000),
+                'mimes:pdf',
+                File::types(['pdf'])
+                    ->max('10mb'),
             ],
         ];
     }

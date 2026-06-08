@@ -135,10 +135,13 @@ class ForeignNationalPostRequest extends FormRequest
             ],
             'passportTranslateScan' => [
                 'required',
-                File::types(['pdf'])->max('10mb'),
+                'mimes:pdf',
+                File::types(['pdf'])
+                    ->max('10mb'),
             ],
             'passportScan' => [
                 'required',
+                'mimes:pdf',
                 File::types(['pdf'])->max('10mb'),
             ],
         ];

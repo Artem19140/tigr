@@ -31,7 +31,7 @@ class ForeignNationalProfileResource extends JsonResource
             'issuedBy' => $this->resource->issued_by,
             'issuedDate' => $this->issued_date,
             'citizenship' => $this->resource->citizenship,
-            'phone' => $this->resource->formatted_phone,
+            'phone' => $this->resource->phone,
             'gender' => $this->resource->gender,
             'creator' => new EmployeeResource($this->whenLoaded('creator')),
             'enrollments' => EnrollmentResource::collection($this->whenLoaded('enrollments')),
