@@ -26,7 +26,7 @@ Route::prefix('exams')->group(function () {
         ->can('create', Exam::class);
 
     Route::get('types', function () {
-        return ExamType::select(['id', 'name'])->get();
+        return ExamType::cached();
     });
 
     Route::middleware([

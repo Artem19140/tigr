@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { useForm, usePage } from '@inertiajs/vue3';
+import { useForm, useHttp, usePage } from '@inertiajs/vue3';
 import AppAutocomplete from '@components/UI/AppAutocomplete/AppAutocomplete.vue';
 import AppCheckbox from '@components/UI/AppCheckbox/AppCheckbox.vue';
 import BaseFilter from '@components/BaseComponents/BaseFilter/BaseFilter.vue';
 import AppPeriodDate from '@components/UI/AppPeriodDate/AppPeriodDate.vue';
-import { computed} from 'vue';
-import { ExamFilters } from '@/interfaces/Exam';
+import { computed, onMounted, ref} from 'vue';
+import { ExamFilters, ExamType } from '@/interfaces/Exam';
 import AppNumberInput from '@/components/UI/AppNumberInput/AppNumberInput.vue';
 
 const page = usePage<{
@@ -36,6 +36,17 @@ const form = useForm<ExamFilters>({
 
 
 const loading = defineModel<boolean>({default:false})
+
+
+const http = useHttp<{}, ExamType[]>()
+const examTypes = ref<ExamType[] | []>([])
+onMounted(() => {
+  http.get('/exams/types', {
+    onSuccess(response) {
+      examTypes.value = response
+    },
+  })
+})
 </script>
 
 <template>
@@ -48,7 +59,7 @@ const loading = defineModel<boolean>({default:false})
 
         <AppAutocomplete
             label="Тип экзамена"
-            :items="page.props.examTypes"
+            :items="examTypes"
             item-title="name"
             item-value="id"
             v-model="form.examTypeId"

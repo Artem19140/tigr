@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Cache;
 
 class ExamType extends Model
 {
@@ -35,5 +36,12 @@ class ExamType extends Model
     public function blocks(): HasMany
     {
         return $this->hasMany(Block::class, 'exam_type_id');
+    }
+
+    public static function cached()
+    {
+        return Cache::rememberForever('exam_types', function () {
+            return self::all();
+        });
     }
 }

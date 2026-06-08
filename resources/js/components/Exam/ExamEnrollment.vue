@@ -9,7 +9,7 @@ import { ExamIndex, ExamType } from '@/interfaces/Exam';
 const examId = defineModel<number | null>('examId', {default:null})
 const hasPayment = defineModel<boolean>('hasPayment', {default:false})
 
-const examsTypes = ref<ExamType[] | []>([])
+const examTypes = ref<ExamType[] | []>([])
 const examDates = ref<ExamIndex[]>([])
 
 const props = defineProps<{
@@ -41,7 +41,7 @@ const examTypesHttp = useHttp<{}, ExamType[]>()
 onMounted(() => {
   examTypesHttp.get('/exams/types', {
     onSuccess(response) {
-      examsTypes.value = response
+      examTypes.value = response
     },
   })
 })
@@ -56,7 +56,7 @@ onMounted(() => {
   </div>
   <AppAutocomplete
     v-model="http.examTypeId"
-    :items="examsTypes"
+    :items="examTypes"
     item-title="name"
     item-value="id"
     :error-messages="http.errors.examTypeId"

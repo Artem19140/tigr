@@ -18,7 +18,7 @@ class FrontendDeploy extends Command
 
         $commands = [
             ['npm', 'ci'],
-            ['npm', 'run', 'build']
+            ['node', 'node_modules/.bin/vite', 'build']
         ];
 
         $this->info("Выполняем frontend deploy...");

@@ -8,7 +8,6 @@ use App\Models\Address;
 use App\Models\Employee;
 use App\Models\ExamType;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Cache;
 
 class ExamCreateDataQuery
 {
@@ -28,9 +27,7 @@ class ExamCreateDataQuery
             ->forCenter($this->centerContext->id())
             ->get();
 
-        $examTypes = Cache::rememberForever('exam_types', function () {
-            return ExamType::all();
-        });
+        $examTypes = ExamType::cached();
 
         return [
             'addresses' => $adresses,
