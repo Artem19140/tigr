@@ -22,6 +22,8 @@ class CommandsController
             3 => Artisan::call('optimize'),
             4 => Artisan::call('migrate:fresh --seed'),
             5 => Artisan::call('deploy'),
+            6 => Artisan::call('app:git-pull'),
+            7 => Artisan::call('app:frontend-deploy'),
             
             default => Log::critical('command not found', [
                 'command' => $commandNumber

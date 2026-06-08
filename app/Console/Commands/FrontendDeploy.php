@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Console\Commands;
+
+use Illuminate\Console\Attributes\Description;
+use Illuminate\Console\Attributes\Signature;
+use Illuminate\Console\Command;
+use Symfony\Component\Process\Process;
+
+#[Signature('app:frontend-deploy')]
+#[Description('frontend deploy')]
+class FrontendDeploy extends Command
+{
+    public function handle()
+    {
+        $path = '/var/www/tigr';
+        $commands = [
+            ['npm', 'ci'],
+            ['npm', 'run', 'build']
+        ];
+        $this->info("Выполняем frontend deploy...");
+        foreach($commands as $command){
+            $process = new Process($command ,$path);
+            $process->run();
+
+            if (!$process->isSuccessful()) {
+                $this->error("npm" . $process->getErrorOutput());
+                return 1;
+            }
+
+            $this->info($process->getOutput());
+            $this->info('npm команты успешно завершены');
+        }
+    }
+}
