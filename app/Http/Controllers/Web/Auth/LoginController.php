@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Auth;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class LoginController
@@ -22,7 +23,7 @@ class LoginController
         $employee = Auth::user();
 
         $employee->loadMissing('center');
-        
+        Log::info('ok');
         // if (! $employee->isActive() || ! $employee->center?->isActive()) {
         //     Auth::logout();
         //     throw ValidationException::withMessages([
