@@ -56,7 +56,7 @@ class LogsController
 
     public function downloadGitLog()
     {
-        $logPath = '/var/www/project/git.log';
+        $logPath = '/var/www/tigr/git.log';
 
         if (!file_exists($logPath)) {
             Log::critical('Git log file not found');
