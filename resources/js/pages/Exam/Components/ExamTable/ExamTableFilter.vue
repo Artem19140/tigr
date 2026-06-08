@@ -16,13 +16,6 @@ const page = usePage<{
 
 const filters = computed<ExamFilters>(() =>
     page.flash.filters 
-    // ?? {
-    //     dateFrom: null,
-    //     cancelled: null,
-    //     examTypeId: null,
-    //     dateTo: null,
-    //     finished: null,
-    // }
 )
 
 const form = useForm<ExamFilters>({

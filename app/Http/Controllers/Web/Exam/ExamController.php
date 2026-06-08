@@ -97,8 +97,8 @@ class ExamController
             'permissions' => [
                 'documents' => [
                     'codes' => $employee->can('examiner', $exam),
-                    'protocol' => $employee->can('examiner', $exam),
-                    'results' => $employee->can('examiner', $exam),
+                    'protocol' => $employee->can('protocol', $exam),
+                    'results' => $employee->can('results', $exam),
                     'list' => $employee->can('list', $exam),
                 ],
                 'actions' => [

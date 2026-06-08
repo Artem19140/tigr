@@ -10,6 +10,7 @@ use App\Support\CenterIsolationCheck;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -31,6 +32,9 @@ class ExamCheckingController
         Gate::authorize('examiner', $exam);
 
         if (! $exam->type->need_human_check) {
+            Log::warning('trying to get to checking exam with no human check',[
+                'exam_id' => $exam->id
+            ]);
             abort(403);
         }
 

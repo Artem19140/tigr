@@ -103,4 +103,32 @@ class ExamPolicy
             ->wherePivot('exam_id', $exam->id)
             ->exists();
     }
+
+    public function results(Employee $employee, Exam $exam): bool
+    {
+        if (! $this->sameCenter($employee, $exam)) {
+            return false;
+        }
+        if ($employee->hasAnyRole(
+            EmployeeRole::Director
+        )) {
+            return true;
+        }
+
+        return $this->examiner($employee, $exam);
+    }
+
+    public function protocol(Employee $employee, Exam $exam): bool
+    {
+        if (! $this->sameCenter($employee, $exam)) {
+            return false;
+        }
+        if ($employee->hasAnyRole(
+            EmployeeRole::Director
+        )) {
+            return true;
+        }
+
+        return $this->examiner($employee, $exam);
+    }
 }

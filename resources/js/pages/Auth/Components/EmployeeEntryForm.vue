@@ -23,37 +23,37 @@ const submit = () => {
 </script>
 
 <template>
-      <form @submit.prevent="submit">
-        <AppInput 
-          label="email"
-          name="email"
-          v-model="form.email"
-          :invalid="!!form.errors.email"
-          :error-messages="form.errors.email"
-          placeholder="Введите email"
-        />
-        <AppPasswordInput
-          v-model="form.password"
-          :invalid="!!form.errors.password"
-          :error-messages="form.errors.password"
-          class="mb-6"
-        />
-        <AppCheckbox
-          label="Запомнить меня" 
-          v-model="form.rememberMe"
-          :error-messages="form.errors.rememberMe"
-        />
+  <form @submit.prevent="submit">
+    <AppInput 
+      label="email"
+      name="email"
+      v-model="form.email"
+      :invalid="!!form.errors.email"
+      :error-messages="form.errors.email"
+      placeholder="Введите email"
+    />
+    <AppPasswordInput
+      v-model="form.password"
+      :invalid="!!form.errors.password"
+      :error-messages="form.errors.password"
+      class="mb-6"
+    />
+    <AppCheckbox
+      label="Запомнить меня" 
+      v-model="form.rememberMe"
+      :error-messages="form.errors.rememberMe"
+    />
 
-        <AppPrimaryButton
-          type="submit"
-          color="primary"
-          large
-          block
-          text="Войти"
-          :loading="form.processing"
-          :disabled="!form.email || !form.password || form.processing"
-      />
-      </form>
+    <AppPrimaryButton
+      type="submit"
+      color="primary"
+      large
+      block
+      text="Войти"
+      :loading="form.processing"
+      :disabled="!form.email || !form.password || form.processing"
+  />
+  </form>
 </template>
 
 <style scoped>

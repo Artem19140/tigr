@@ -39,14 +39,6 @@ Route::prefix('exams')->group(function () {
 
     Route::middleware('can:examiner,exam')
         ->group(function () {
-            Route::get('{exam}/documents/protocol', [ExamDocumentController::class, 'protocol'])
-                ->name('exam.documents.protocol');
-            Route::get('{exam}/documents/protocol/available', [ExamDocumentController::class, 'protocolAvailable']);
-
-            Route::get('{exam}/documents/results', [ExamDocumentController::class, 'results'])
-                ->name('exam.documents.results');
-            Route::get('{exam}/documents/results/available', [ExamDocumentController::class, 'resultsAvailable']);
-
             Route::get('{exam}/checking', [ExamCheckingController::class, 'show']);
 
             Route::get('{exam}/monitoring', [ExamMonitoringController::class, 'show']);
@@ -58,6 +50,18 @@ Route::prefix('exams')->group(function () {
             Route::get('{exam}/documents/codes/available', [ExamDocumentController::class, 'codesAvailable'])
                 ->name('exam.documents.codes.available');
         });
+
+    Route::get('{exam}/documents/results', [ExamDocumentController::class, 'results'])
+        ->middleware('can:results,exam')
+        ->name('exam.documents.results');
+    Route::get('{exam}/documents/results/available', [ExamDocumentController::class, 'resultsAvailable'])
+        ->middleware('can:results,exam');
+
+    Route::get('{exam}/documents/protocol', [ExamDocumentController::class, 'protocol'])
+        ->middleware('can:protocol,exam')
+        ->name('exam.documents.protocol');
+    Route::get('{exam}/documents/protocol/available', [ExamDocumentController::class, 'protocolAvailable'])
+        ->middleware('can:protocol,exam');
 
     Route::get('{exam}/documents/list', [ExamDocumentController::class, 'list'])
         ->name('exam.documents.list')
