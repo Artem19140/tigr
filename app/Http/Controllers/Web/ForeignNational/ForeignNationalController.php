@@ -89,6 +89,10 @@ class ForeignNationalController
                 'enroll' => $employee->can('create', Enrollment::class),
                 'edit' => $employee->can('update', $foreignNational),
                 'files' => $employee->can('files', ForeignNational::class),
+                'enrollments' => [
+                    'statement' => $employee->hasAnyRole(EmployeeRole::Operator, EmployeeRole::PlatformAdmin),
+                    'payment' => $employee->hasAnyRole(EmployeeRole::Operator, EmployeeRole::PlatformAdmin),
+                ],
             ],
         ]);
     }

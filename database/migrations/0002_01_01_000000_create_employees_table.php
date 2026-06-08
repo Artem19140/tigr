@@ -10,21 +10,28 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
+
             $table->string('surname');
             $table->string('name');
             $table->string('patronymic')->nullable()->default(null);
+
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+
             $table->string('password');
             $table->boolean('has_to_change_password')->default(true);
+
             $table->string('job_title');
+
             $table->boolean('is_active')->default(true);
+
             $table->foreignId('center_id')
                 ->nullable()
                 ->constrained('centers')
                 ->cascadeOnDelete();
 
             $table->rememberToken();
+            
             $table->timestamps();
         });
 

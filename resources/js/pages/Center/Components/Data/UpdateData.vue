@@ -25,10 +25,10 @@ const http = useHttp<Omit<Center, 'id' | 'employees'>>({
 })
 
 const edit = () => {
-    http.put(``,{ ///centers/${props.center.id}
+    http.put('',{ 
         onSuccess(response, httpResponse) {
-            router.reload()
             emit('modeShow')
+            router.reload()
         },
     })
 }

@@ -8,7 +8,7 @@ import { ExamActionsPermissions } from '@/interfaces/Exam';
 
 const props = defineProps<{
     enrollment:Enrollment,
-    permissions:ExamActionsPermissions
+    permissions?:ExamActionsPermissions
 }>()
 
 const download = (document : string) => {
@@ -20,16 +20,15 @@ const isPaymentChangeDisabled  = isFinished.value || isCancelled.value
 </script>
 
 <template>
-    
-    <BaseThreeDotDropdown ">
+    <BaseThreeDotDropdown  v-if="permissions?.enrollments.payment || permissions?.enrollments.statement">
         <PaymentChange 
             :enrollment="enrollment"
-            v-if="permissions.enrollments.payment"
+            v-if="permissions?.enrollments.payment"
             :disabled="isPaymentChangeDisabled"
         />
         <BaseListItem 
             title="Заявление" 
-            v-if="permissions.enrollments.statement"
+            v-if="permissions?.enrollments.statement"
             @click="() => download('statements')"
         />
     </BaseThreeDotDropdown>

@@ -17,6 +17,7 @@ return new class extends Migration
 
             $table->string('name')->nullable()->default(null);
             $table->string('short_name');
+
             $table->string('director_fio')->nullable()->default(null);
             $table->string('certificates_issue_address')->nullable()->default(null);
             $table->boolean('is_active')->default(true);
@@ -26,6 +27,7 @@ return new class extends Migration
             $table->string('name_genitive')->nullable()->default(null);
             $table->string('time_zone')->nullable()->default(null);
             $table->string('commission_chairman')->nullable()->default(null);
+            
             $table->timestamps();
         });
     }

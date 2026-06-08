@@ -9,7 +9,6 @@
         <div class="d-flex flex-column fill-height">
           <BaseList>
             <BaseListItem
-              
               :subtitle="user?.job_title"
               :title="employeeName"
             />

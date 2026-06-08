@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('issued_by');
             $table->date('issued_date');
             $table->char('citizenship', 2);
-            $table->string('phone', 12);
+            $table->string('phone')->nullable()->default(null);
             $table->char('gender', 1);
             $table->string('comment')->nullable()->default(null);
             $table->string('address_reg');

@@ -8,9 +8,11 @@ import AppStatusChip from '@/components/UI/AppStatusChip/AppStatusChip.vue';
 import { ForeignNational } from '@/interfaces/ForeignNational';
 import { Enrollment } from '@/interfaces/Enrollment';
 import AppProgressCircular from '@/components/UI/AppProgressCircular/AppProgressCircular.vue';
+import EnrollmentDropDown from '@/components/Enrollment/EnrollmentDropDown.vue';
 
 const props = defineProps<{
-  foreignNational: ForeignNational
+  foreignNational: ForeignNational,
+  permissions:any
 }>();
 
 const enrollments = ref<Enrollment[]>(props.foreignNational.enrollments)
@@ -65,7 +67,9 @@ const modals = useModals()
               :status="enrollment.exam.status"
               v-if="enrollment.exam.status === 'cancelled'"
             />
-            <!-- <EnrollmentDropDown :enrollment="enrollment"/> -->
+            <EnrollmentDropDown 
+              :permissions="permissions"
+              :enrollment="enrollment"/>
           </div>
         </v-card-text>
       </v-card>

@@ -156,7 +156,8 @@ function formatPhoneNumber(cleaned: string ) {
         <v-card-text>
             <ForeignNationalEnrollmentsList 
                 v-if="foreignNational" 
-                :foreignNational="foreignNational" 
+                :foreignNational="foreignNational"
+                :permissions="permissions" 
             />
         </v-card-text>
     </BaseDialog>
