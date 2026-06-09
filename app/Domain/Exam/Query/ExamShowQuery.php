@@ -22,14 +22,16 @@ class ExamShowQuery
             'attempts as has_active_attempts' => function ($query) {
                 $query->active();
             },
-            'attempts as has_attempts',
+            'attempts as has_attempts'
         ]);
 
         $exam->enrollments->each(function ($enrollment) use ($exam) {
             $enrollment->setRelation('exam', $exam);
         });
-        $exam->loadCount('enrollments');
 
+        $exam->loadCount('enrollments');
+        $exam->enrollments->loadExists('attempt');
+        
         return $exam;
     }
 }

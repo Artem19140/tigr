@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Enrollment;
 
+use App\Domain\Enrollment\Rules\EnrollmentPaymentRules;
 use App\Domain\Exam\Resolver\ExamResultResolver;
 use App\Http\Resources\ForeignNational\ForeignNationalResource;
 use Illuminate\Http\Request;
@@ -25,7 +26,9 @@ class EnrollmentExamShowResource extends JsonResource
                 $this->relationLoaded('attempt'),
                 fn () => app(ExamResultResolver::class)->execute($this->resource),
             ),
-
+            'availability' => [
+                'payment' => app(EnrollmentPaymentRules::class)->check($this->resource)->available
+            ]
         ];
     }
 }

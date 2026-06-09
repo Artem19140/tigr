@@ -38,7 +38,6 @@ class ExamResource extends JsonResource
             'createdAt' => $this->created_at,
             'enrollmentsCount' => $this->whenCounted('enrollments_count'),
             'status' => app(ExamStatusResolver::class)->execute($this->resource),
-            'codesAvailable' => $this->canGenerateCodes(),
             'documentsAvailable' => app(ExamDocumentAvailableResolver::class)->resolve($this->resource),
         ];
     }

@@ -81,6 +81,7 @@ class ForeignNationalController
         ]);
 
         $foreignNational->enrollments = $foreignNational->enrollments->sortByDesc('exam.begin_time');
+        $foreignNational->enrollments->loadExists('attempt');
         $employee = $request->user();
 
         return response()->json([

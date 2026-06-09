@@ -53,7 +53,9 @@ class ExamMonitoringController
         
         $exam->enrollments->loadExists('attempt');
         $exam->enrollments = $exam->enrollments->sortBy('foreignNational.surname');
-
+        $exam->enrollments->each(function($e)use($exam){
+            $e->setRelation('exam', $exam);
+        });
         return Inertia::render('ExamMonitoring/ExamMonitoring', [
             'exam' => new ExamMonitoringResource($exam),
             'available' => [
