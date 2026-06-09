@@ -27,14 +27,6 @@ class AttemptSpeakingController
         if(! $result->available){
             throw new BusinessException($result->reason);
         }
-        // $this->ensureTodayIsExamDay($attempt);
-        // $this->ensureAttemptHasSpeaking($attempt);
-
-        // if (! $attempt->speaking_started_at) {
-        //     throw new BusinessException('Говорение еще не начато');
-        // }
-
-        //$this->ensureSpeakingNotFinished($attempt);
 
         $attempt = $getAttemptSpeakingQuery->execute($attempt);
 
@@ -48,12 +40,6 @@ class AttemptSpeakingController
         if(! $result->available){
             throw new BusinessException($result->reason);
         }
-        // $this->ensureTodayIsExamDay($attempt);
-        // $this->ensureAttemptHasSpeaking($attempt);
-
-        // if ($attempt->speaking_started_at) {
-        //     throw new BusinessException('Говорение уже началось');
-        // }
         $attempt->speaking_started_at = Carbon::now();
         $attempt->save();
 
@@ -63,9 +49,6 @@ class AttemptSpeakingController
     public function finish(Attempt $attempt): Response
     {
         $this->authorize($attempt);
-        // $this->ensureTodayIsExamDay($attempt);
-        // $this->ensureAttemptHasSpeaking($attempt);
-        // $this->ensureSpeakingNotFinished($attempt);
 
         $result = $this->attemptSpeakingRules->finish($attempt);
         if(! $result->available){
@@ -83,24 +66,4 @@ class AttemptSpeakingController
         Gate::authorize('examiner', $attempt->exam);
     }
 
-    protected function ensureSpeakingNotFinished(Attempt $attempt): void
-    {
-        if ($attempt->speaking_finished_at) {
-            throw new BusinessException('Говорение уже завершено');
-        }
-    }
-
-    protected function ensureAttemptHasSpeaking(Attempt $attempt): void
-    {
-        if (! $attempt->exam->hasSpeaking()) {
-            throw new BusinessException('У данной попытки нет заданий на говорение');
-        }
-    }
-
-    protected function ensureTodayIsExamDay(Attempt $attempt): void
-    {
-        if (! $attempt->exam->begin_time->isToday()) {
-            throw new BusinessException('Говорение доступно в день экзамена');
-        }
-    }
 }

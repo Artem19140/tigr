@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources\Attempt;
 
-use App\Domain\Attempt\Rules\AttemptBanRules;
-use App\Domain\Attempt\Rules\AttemptSpeakingRules;
 use App\Http\Resources\AttemptAnswer\AttemptAnswerResource;
 use App\Http\Resources\ForeignNational\ForeignNationalResource;
 use App\Http\Resources\TaskVariant\TaskVariantResource;
@@ -31,11 +29,6 @@ class AttemptResource extends JsonResource
             'checkedAt' => $this->checked_at,
             'speakingFinishedAt' => $this->resource->speaking_finished_at,
             'speakingStartedAt' => $this->resource->speaking_started_at,
-            'availability' => [
-                'ban' =>  app(AttemptBanRules::class)->check($this->resource)->available,
-                'violations' => $this->resource->canEditViolation(),
-                'speaking' => app(AttemptSpeakingRules::class)->get($this->resource)->available
-            ],
         ];
     }
 }
