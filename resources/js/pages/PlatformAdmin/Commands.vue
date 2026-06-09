@@ -35,7 +35,7 @@ const execute = async (number: number) => {
             <v-card-text >
                 <div class="flex flex-column gap-4">
                     <AppPrimaryButton
-                        text="php artisan migrate --force (1)W"
+                        text="php artisan migrate --force (1)"
                         @click="() => execute(1)"
                         :loading="http.processing"
                         :disabled="http.processing"

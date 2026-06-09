@@ -15,15 +15,12 @@ class CommandsController
         ]);
 
         $commandNumber = $request->input('command');
-        Log::info('123');
         match($commandNumber){
             1 => Artisan::call('migrate --force'),
             2 => Artisan::call('optimize:clear'),
             3 => Artisan::call('optimize'),
             4 => Artisan::call('migrate:fresh --seed'),
             5 => Artisan::call('deploy'),
-            6 => Artisan::call('app:git-pull'),
-            7 => Artisan::call('app:frontend-deploy'),
             
             default => Log::critical('command not found', [
                 'command' => $commandNumber
