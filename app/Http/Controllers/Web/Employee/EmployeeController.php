@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Web\Employee;
 
-use App\Domain\Center\CenterContext;
 use App\Domain\Employee\CreateEmployeeAction;
 use App\Domain\Employee\UpdateEmployeeAction;
 use App\Enums\EmployeeRole;
@@ -25,12 +24,14 @@ use Inertia\Inertia;
 
 class EmployeeController
 {
-    public function index(Request $request, Center $center): \Inertia\Response
-    {
+    public function index(
+        Request $request, 
+        Center $center
+    ): \Inertia\Response {
         $notPlatformAdmin = !$request->user()->isPlatformAdmin();
 
         $employees = Employee::active()
-            ->forCenter(app(CenterContext::class)->id())
+            ->forCenter($center->id)
             ->with(['roles'])
             ->when($notPlatformAdmin, function (Builder $query) {
                 $query->whereDoesntHave('roles', function (Builder $q) {
@@ -39,6 +40,7 @@ class EmployeeController
             })
             ->orderBy('surname')
             ->get();
+            
         Log::info('employees_view', []);
 
         CenterIsolationCheck::check($employees);
