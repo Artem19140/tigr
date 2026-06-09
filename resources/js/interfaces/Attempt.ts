@@ -15,10 +15,7 @@ export interface Attempt{
     foreignNational: ForeignNational,
     examName:string,
     endsAt:number,
-    serverNow:number,
-    speakingFinishedAt: string | null,
-    speakingStartedAt: string | null,
-    violations:Array<Violation>
+    serverNow:number
 }
 
 export interface AttemptChecking{
@@ -30,7 +27,7 @@ export interface AttemptChecking{
 }
 
 export interface AttemptMonitoring{
-    id:number,
+    id:number, 
     startedAt:string,
     finishedAt:string | null,
     status:string,
@@ -40,5 +37,11 @@ export interface AttemptMonitoring{
     speakingFinishedAt: string | null,
     speakingStartedAt: string | null,
     tasks: Task[],
-    checkedAt:string
+    checkedAt:string,
+    availability:{
+        ban:boolean,
+        violations:boolean,
+        speaking:boolean
+    },
+    violations:Array<Violation>
 }

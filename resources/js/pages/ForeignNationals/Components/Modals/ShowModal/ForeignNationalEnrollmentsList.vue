@@ -16,6 +16,7 @@ const props = defineProps<{
 }>();
 
 const enrollments = ref<Enrollment[]>(props.foreignNational.enrollments)
+
 watch(()=> props.foreignNational.enrollments, () => {
   enrollments.value = props.foreignNational.enrollments
 })
@@ -23,13 +24,9 @@ const modals = useModals()
 </script>
 
 <template>
-    <div class="text-h6 mb-4">Записи на экзамены</div>
-    <div v-if="!foreignNational?.enrollments || foreignNational?.enrollments.length === 0" class="text-center text-medium-emphasis">
-      Записей на экзамены не было
-    </div>
+    <div class="text-h6 mb-4">Записи на экзамены ({{ enrollments.length }})</div>
 
     <v-sheet
-      v-else
       max-height="400"
       class="overflow-y-auto pr-2"
       rounded="lg"
@@ -51,7 +48,7 @@ const modals = useModals()
             <div class="text-caption text-medium-emphasis">
               {{ new DateFormatter(enrollment.exam.beginTime).format('H:i, d.m.Y') }}
               <AppStatusChip 
-                v-if="!enrollment.hasPayment"
+                v-if="! enrollment.hasPayment"
                 text="Нет оплаты"
                 color="red"
                 size="x-small"

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import EnrollmentMonitoringDropdown from './EnrollmentMonitoringDropdown.vue';
-import { Head, usePoll } from '@inertiajs/vue3'
+import { Head, router, usePoll } from '@inertiajs/vue3'
 import ExamStatusChip from '@components/Exam/ExamStatusChip.vue';
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { useModals } from '@composables/useModals';
@@ -73,7 +73,7 @@ const openForeignNational = (event : Event, {item} :any) => {
 }
 
 const back = () => {
-    window.history.go(-1)
+    router.visit('/exams/monitoring')
 }
 const search = ref<string>('')
 </script>
@@ -151,6 +151,7 @@ const search = ref<string>('')
                     </template>
                     <template  #item.finishedAt="{ item }">
                         {{new DateFormatter(item.attempt?.finishedAt ?? '').format('H:i')}}
+                        <span class="text-red" v-if="item.attempt?.bannedAt">(Анн.)</span>
                     </template>
                     <template #item.hasPayment="{ item }">
                         <PaymentIcon :enrollment="item" />

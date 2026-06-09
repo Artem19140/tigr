@@ -83,15 +83,15 @@ class EmployeeController
         Request $request
     ): Response {
         if ($request->user()->center_id !== $employee->center_id && ! $request->user()->isPlatformAdmin()) {
-            abort(403);
+            abort(404);
         }
 
         if ($employee->isPlatformAdmin()) {
-            abort(403);
+            abort(404);
         }
 
         if ($employee->hasRole(EmployeeRole::CenterAdmin->value) && ! $request->user()->isPlatformAdmin()) {
-            abort(403);
+            abort(404);
         }
 
         if (! $employee->isActive()) {

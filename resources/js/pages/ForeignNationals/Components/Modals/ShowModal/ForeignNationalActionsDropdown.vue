@@ -29,7 +29,10 @@ const emit = defineEmits<{
         <BaseListItem
             title="Редактировать"
             v-if="permissions.edit"
-            @click="open('foreignNationalEdit', {foreignNational, onEdit:(foreignNational : ForeignNational)=>emit('edit', foreignNational)})"
+            @click="open('foreignNationalEdit', {
+                foreignNational, 
+                onEdit:(foreignNational : ForeignNational)=>emit('edit', foreignNational)
+            })"
         />
     </ThreeDotDropdown>
 </template>

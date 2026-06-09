@@ -16,6 +16,6 @@ class AttemptAnswerValidationException extends BaseException
 
     public function report(): void
     {
-        Log::channel('single')->critical('UNEXPECTED: attempt answer validation failed', $this->context);
+        Log::critical('UNEXPECTED: attempt answer validation failed', $this->context);
     }
 }

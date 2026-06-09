@@ -13,9 +13,11 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ExamProtocolGenerator
 {
+    public function __construct(
+        protected ExamDocumentAvailableResolver $examDocumentAvailableResolver
+    ){}
     public function execute(Exam $exam)
     {
-
         $bannedAttempts = $this->getBannedAttempts($exam);
         $beginTimeReal = $this->getBeginTimeReal($exam);
         $endTimeReal = $this->getEndTimeReal($exam);

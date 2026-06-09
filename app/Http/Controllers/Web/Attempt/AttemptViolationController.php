@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Attempt;
 
+use App\Exceptions\BusinessException;
 use App\Http\Resources\Violation\ViolationResource;
 use App\Models\Attempt;
 use App\Models\Violation;
@@ -26,8 +27,11 @@ class AttemptViolationController
         Attempt $attempt
     ): JsonResource {
         $this->authorize($attempt);
+        if(! $attempt->canEditViolation()){
+            throw new BusinessException('Нарушение возможно добавить только в день сдачи попытки');
+        }
         $request->validate(['comment' => ['required', 'string']]);
-
+        
         $violation = $attempt->violations()->create([
             'comment' => $request->input('comment'),
         ]);
@@ -42,6 +46,11 @@ class AttemptViolationController
     ): JsonResource {
         $this->authorize($attempt);
         abort_if($attempt->id !== $violation->attempt_id, 403);
+
+        if(! $attempt->canEditViolation()){
+            throw new BusinessException('Нарушение возможно редактировать только в день сдачи попытки');
+        }
+
         $request->validate(['comment' => ['required', 'string']]);
         $violation->comment = $request->input('comment');
         $violation->save();
@@ -55,6 +64,11 @@ class AttemptViolationController
     ): Response {
         $this->authorize($attempt);
         abort_if($attempt->id !== $violation->attempt_id, 403);
+
+        if(! $attempt->canEditViolation()){
+            throw new BusinessException('Нарушение возможно удалить только в день сдачи попытки');
+        }
+
         $attempt->violations()->where('id', $violation->id)->delete();
 
         return response()->noContent();

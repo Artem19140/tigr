@@ -40,16 +40,6 @@ class Enrollment extends Model
         'exam_code_used_at' => 'datetime',
     ];
 
-    public function canChangePayment(): bool
-    {
-        return ! $this->attempt || $this->exam->isFinished();
-    }
-
-    public function hasPayment(): bool
-    {
-        return $this->has_payment;
-    }
-
     public function exam(): BelongsTo
     {
         return $this->belongsTo(Exam::class);

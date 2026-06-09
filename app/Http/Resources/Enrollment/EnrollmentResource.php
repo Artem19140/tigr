@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\Enrollment;
 
+use App\Domain\Attempt\Rules\AttemptBanRules;
+use App\Domain\Enrollment\Rules\EnrollmentPaymentRules;
 use App\Domain\Exam\Resolver\ExamResultResolver;
 use App\Http\Resources\Attempt\AttemptResource;
 use App\Http\Resources\Exam\ExamShortResource;
@@ -20,21 +22,20 @@ class EnrollmentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'foreignNational' => new ForeignNationalResource($this->whenLoaded('foreignNational')),
+            //'foreignNational' => new ForeignNationalResource($this->whenLoaded('foreignNational')),
             'hasPayment' => $this->has_payment,
             'exam' => new ExamShortResource($this->whenLoaded('exam')),
-            'attempt' => new AttemptResource($this->whenLoaded('attempt')),
-            'regNum' => $this->reg_number,
+            //'attempt' => new AttemptResource($this->whenLoaded('attempt')),
+            //'regNum' => $this->reg_number,
             'examResult' => $this->when(
                 $this->relationLoaded('exam') &&
                 $this->relationLoaded('attempt'),
                 fn () => app(ExamResultResolver::class)->execute($this->resource)
             ),
             'availability' => [
-                'ban' => $this->attempt ? ! $this->attempt->isBanned() : false,
-                'payment' => $this->canChangePayment(),
+                'ban' => $this->attempt ?  app(AttemptBanRules::class)->check($this->attempt)->available : false,
+                'payment' => app(EnrollmentPaymentRules::class)->check($this->resource)->available,
                 'violations' => 1,
-                // 'speaking' => !$this->attempt->speaking_finished_at
             ],
         ];
     }

@@ -8,33 +8,35 @@ use App\Http\Controllers\Web\Attempt\AttemptSpeakingController;
 use App\Http\Controllers\Web\Attempt\AttemptViolationController;
 use App\Support\AppMiddleware;
 
-Route::prefix('attempts')->middleware([AppMiddleware::EMPLOYEE_HAS_ANY_ROLE.':'.EmployeeRole::implode(EmployeeRole::Examiner)])
-    ->group(function () {
-        Route::put('{attempt}/ban', [AttemptController::class, 'ban'])->name('attempts.ban');
+Route::prefix('attempts')->middleware([
+    AppMiddleware::EMPLOYEE_HAS_ANY_ROLE.':'.EmployeeRole::implode(EmployeeRole::Examiner)
+])
+->group(function () {
+    Route::put('{attempt}/ban', [AttemptController::class, 'ban'])->name('attempts.ban');
 
-        Route::get('{attempt}/checking', [AttemptCheckingController::class, 'show'])
-            ->name('attempts.checking');
-        Route::post('{attempt}/checking/finish', [AttemptCheckingController::class, 'finish'])
-            ->name('attempts.checking.finish');
+    Route::get('{attempt}/checking', [AttemptCheckingController::class, 'show'])
+        ->name('attempts.checking');
+    Route::post('{attempt}/checking/finish', [AttemptCheckingController::class, 'finish'])
+        ->name('attempts.checking.finish');
 
-        Route::get('{attempt}/speaking', [AttemptSpeakingController::class, 'show'])
-            ->name('attempts.speaking');
-        Route::post('{attempt}/speaking/finish', [AttemptSpeakingController::class, 'finish'])
-            ->name('attempts.speaking.finish');
-        Route::post('{attempt}/speaking/start', [AttemptSpeakingController::class, 'start'])
-            ->name('attempts.speaking.start');
+    Route::get('{attempt}/speaking', [AttemptSpeakingController::class, 'show'])
+        ->name('attempts.speaking');
+    Route::post('{attempt}/speaking/finish', [AttemptSpeakingController::class, 'finish'])
+        ->name('attempts.speaking.finish');
+    Route::post('{attempt}/speaking/start', [AttemptSpeakingController::class, 'start'])
+        ->name('attempts.speaking.start');
 
-        Route::get('{attempt}/violations', [AttemptViolationController::class, 'index'])
-            ->name('attempts.violations.index');
+    Route::get('{attempt}/violations', [AttemptViolationController::class, 'index'])
+        ->name('attempts.violations.index');
 
-        Route::post('{attempt}/violations', [AttemptViolationController::class, 'store'])
-            ->name('attempts.violations.store');
+    Route::post('{attempt}/violations', [AttemptViolationController::class, 'store'])
+        ->name('attempts.violations.store');
 
-        Route::delete('{attempt}/violations/{violation}', [AttemptViolationController::class, 'destroy'])
-            ->name('attempts.violations.destroy');
+    Route::delete('{attempt}/violations/{violation}', [AttemptViolationController::class, 'destroy'])
+        ->name('attempts.violations.destroy');
 
-        Route::patch('{attempt}/violations/{violation}', [AttemptViolationController::class, 'update'])
-            ->name('attempts.violations.update');
-    });
+    Route::patch('{attempt}/violations/{violation}', [AttemptViolationController::class, 'update'])
+        ->name('attempts.violations.update');
+});
 
 Route::put('answers/{attemptAnswer}/rate', [AttemptAnswerController::class, 'rate']);

@@ -74,7 +74,7 @@ class ForeignNationalCreateTest extends TestCase
             'passportSeries' => 'AB',
             'patronymic' => fake()->name,
             'patronymicLatin' => 'Ivanovich',
-            'phone' => '89346573385',
+            'phone' => '8934657338',
             'surname' => fake()->name,
             'surnameLatin' => 'Ivanov',
             'noPatronymicLatin' => false,

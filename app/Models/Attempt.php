@@ -246,9 +246,9 @@ class Attempt extends Model
         );
     }
 
-    public function canBeBanned():bool
+    public function canEditViolation():bool
     {
-        return !$this->isBanned() || $this->started_at->isToday();
+        return $this->started_at->isToday();
     }
 
 }

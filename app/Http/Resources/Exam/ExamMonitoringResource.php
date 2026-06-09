@@ -3,7 +3,7 @@
 namespace App\Http\Resources\Exam;
 
 use App\Domain\Exam\Resolver\ExamStatusResolver;
-use App\Http\Resources\Enrollment\EnrollmentResource;
+use App\Http\Resources\Enrollment\EnrollmentMonitoringResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,7 +19,7 @@ class ExamMonitoringResource extends JsonResource
         return [
             'id' => $this->id,
             'beginTime' => $this->begin_time_local->copy()->toIso8601String(),
-            'enrollments' => EnrollmentResource::collection($this->whenLoaded('enrollments')),
+            'enrollments' => EnrollmentMonitoringResource::collection($this->whenLoaded('enrollments')),
             'endTime' => $this->begin_time_local->copy()->addMinutes($this->duration)->toIso8601String(),
             'enrollmentsCount' => $this->whenCounted('enrollments_count'),
             'protocolComment' => $this->protocol_comment,

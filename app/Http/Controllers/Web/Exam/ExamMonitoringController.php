@@ -50,12 +50,14 @@ class ExamMonitoringController
             'enrollments' => ['foreignNational', 'attempt.center'],
             'type',
         ]);
+        
+        $exam->enrollments->loadExists('attempt');
         $exam->enrollments = $exam->enrollments->sortBy('foreignNational.surname');
 
         return Inertia::render('ExamMonitoring/ExamMonitoring', [
             'exam' => new ExamMonitoringResource($exam),
             'available' => [
-                'protocolComment' => $exam->begin_time->isToday() && $exam->begin_time->isPast(),
+                'protocolComment' => $exam->canEditProtocolComment(),
             ],
         ]);
     }

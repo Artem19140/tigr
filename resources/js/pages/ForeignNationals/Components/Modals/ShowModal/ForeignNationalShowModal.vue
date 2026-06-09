@@ -100,7 +100,10 @@ function formatPhoneNumber(cleaned: string ) {
         <v-card-text class="ml-4">
             <div class="text-headline-small">{{foreignNational?.fullName }}</div>
             <div class="text-subtitle-1">{{foreignNational?.fullNameLatin}}</div>
-            <div class="text-subtitle-2">{{new DateFormatter(foreignNational?.dateBirth ?? '').format('d.m.Y')}} ({{getCountryTitle(foreignNational?.citizenship ?? null) }})</div> 
+            <div class="text-subtitle-2">
+                {{new DateFormatter(foreignNational?.dateBirth ?? '').format('d.m.Y')}} 
+                ({{getCountryTitle(foreignNational?.citizenship ?? null) }})
+            </div> 
         </v-card-text>
 
         <v-divider></v-divider>
@@ -109,7 +112,11 @@ function formatPhoneNumber(cleaned: string ) {
             <v-list>
                 <v-list-item>
                     <v-list-item-subtitle>Паспорт</v-list-item-subtitle>
-                    <v-list-item-title>{{`${foreignNational?.fullPassport ?? ''}, выдан ${new DateFormatter(foreignNational?.issuedDate ?? '').format('d.m.Y')} (${foreignNational?.issuedBy ?? ''})`}}</v-list-item-title>
+                    <v-list-item-title>
+                        {{`${foreignNational?.fullPassport ?? ''}, 
+                        выдан ${new DateFormatter(foreignNational?.issuedDate ?? '').format('d.m.Y')}
+                        (${foreignNational?.issuedBy ?? ''})`}}
+                    </v-list-item-title>
                 </v-list-item>
                 <v-list-item>
                     <v-list-item-subtitle>Номер телефона</v-list-item-subtitle>

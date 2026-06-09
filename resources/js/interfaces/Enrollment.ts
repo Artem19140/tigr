@@ -1,4 +1,4 @@
-import { Attempt } from "./Attempt";
+import { Attempt, AttemptMonitoring } from "./Attempt";
 import { Exam } from "./Exam";
 import { ForeignNationalEnrollment } from "./ForeignNational";
 
@@ -18,4 +18,15 @@ export interface EnrollmentAvailability{
     ban:boolean,
     violations:boolean,
     speaking:boolean
+}
+
+export interface EnrollmentMonitoring{
+    id:number,
+    foreignNational:ForeignNationalEnrollment,
+    hasPayment:boolean,
+    isLoading?: boolean,
+    attempt:AttemptMonitoring | null,
+    availability:{
+        payment:boolean
+    }
 }

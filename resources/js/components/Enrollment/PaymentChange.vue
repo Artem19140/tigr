@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useHttp } from '@inertiajs/vue3';
 import { useConfirmationOptionsDialog } from '@/composables/useConfirmationOptionsDialog';
-import { Enrollment } from '@/interfaces/Enrollment';
+import { Enrollment, EnrollmentMonitoring } from '@/interfaces/Enrollment';
 import BaseListItem from '../BaseComponents/BaseList/BaseListItem.vue';
 
 const props = defineProps<{
-    enrollment: Enrollment
+    enrollment: Enrollment | EnrollmentMonitoring
 }>()
 
 const changePayment = async () => {

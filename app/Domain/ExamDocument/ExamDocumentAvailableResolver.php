@@ -2,28 +2,30 @@
 
 namespace App\Domain\ExamDocument;
 
+use App\Domain\Shared\RuleResult;
 use App\Models\Exam;
 
 class ExamDocumentAvailableResolver
 {
-    protected function available(): array
+
+    protected function available():RuleResult
     {
-        return [
-            'available' => true,
-            'reason' => null,
-            'label' => null,
-        ];
+        return new RuleResult(
+            available:true,
+            code:null,
+            reason:null
+        );
     }
 
     protected function blocked(
-        string $reason,
-        ?string $label = null
-    ): array {
-        return [
-            'available' => false,
-            'reason' => $reason,
-            'label' => $label,
-        ];
+        string $code,
+        ?string $reason = null
+    ) :RuleResult {
+        return new RuleResult(
+            available:false,
+            code:$code,
+            reason:$reason
+        );
     }
 
     public function resolve(Exam $exam): array
@@ -36,7 +38,7 @@ class ExamDocumentAvailableResolver
         ];
     }
 
-    protected function list(Exam $exam): array
+    protected function list(Exam $exam)
     {
 
         if ($this->hasNoEnrollment($exam)) {
@@ -46,7 +48,7 @@ class ExamDocumentAvailableResolver
         return $this->available();
     }
 
-    protected function codes(Exam $exam): array
+    protected function codes(Exam $exam)
     {
         return match (true) {
             $exam->isCancelled() => $this->blocked('cancelled'),
@@ -56,7 +58,7 @@ class ExamDocumentAvailableResolver
         };
     }
 
-    protected function protocol(Exam $exam): array
+    protected function protocol(Exam $exam)
     {
         return match (true) {
             $exam->isCancelled() => $this->blocked('cancelled'),
@@ -68,7 +70,7 @@ class ExamDocumentAvailableResolver
         };
     }
 
-    protected function results(Exam $exam): array
+    protected function results(Exam $exam)
     {
         return match (true) {
             $exam->isCancelled() => $this->blocked('cancelled'),

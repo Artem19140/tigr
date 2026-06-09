@@ -14,7 +14,7 @@ class VerifyCodeService
         $enrollment = $this->findOrFailEnrollmentByCode($code);
         $this->ensureCodeNotExpired($enrollment->exam_code_expired_at);
         $this->ensureCodeNotUsed($enrollment);
-        $this->ensureHasPayment($enrollment->hasPayment());
+        $this->ensureHasPayment($enrollment->has_payment);
         $this->makeCodeUsed($enrollment);
 
         return $enrollment;

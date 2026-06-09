@@ -199,6 +199,11 @@ class Exam extends Model
         return now()->lte($deadline);
     }
 
+    public function canEditProtocolComment():bool
+    {
+        return $this->begin_time->isToday() && $this->begin_time->isPast();
+    }
+
     public function scopeSorting(Builder $query, Carbon $now): Builder
     {
         return $query->orderByRaw('

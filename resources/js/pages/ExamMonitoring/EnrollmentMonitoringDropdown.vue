@@ -3,16 +3,15 @@ import { usePromptDialog } from '@composables/usePromptDialog';
 import BaseThreeDotDropdown from '@components/BaseComponents/BaseThreeDotDropdown/BaseThreeDotDropdown.vue';
 import { useLoadingSnackbar } from '@composables/useLoadingSnackBar';
 import { router, useHttp } from '@inertiajs/vue3';
-import { useExamStatus } from '@/composables/useExamStatus';
 import { computed } from 'vue';
 import PaymentChange from '@/components/Enrollment/PaymentChange.vue';
 import { useModals } from '@/composables/useModals';
-import { Enrollment } from '@/interfaces/Enrollment';
+import {  EnrollmentMonitoring } from '@/interfaces/Enrollment';
 import { ExamMonitoring } from '@/interfaces/Exam';
 import BaseListItem from '@/components/BaseComponents/BaseList/BaseListItem.vue';
 
 const props = defineProps<{ 
-    enrollment:Enrollment,
+    enrollment:EnrollmentMonitoring,
     exam : ExamMonitoring
 }>()
 
@@ -41,15 +40,10 @@ const ban = async () => {
 
 const modals = useModals()
 
-const isBanned = computed(() => props.enrollment.attempt?.status === 'banned')
-
-const { isCancelled, isFinished } = useExamStatus(props.exam)
-
-const hasAttempt = computed(() => props.enrollment.attempt !== null)
-
-const speakingFinished = computed(() => props.enrollment.attempt?.speakingFinishedAt !== null)
-
-const changePaymentDisabled = computed(() => isCancelled.value || isFinished.value || hasAttempt.value)
+const changePaymentDisabled = computed(() => !props.enrollment.availability.payment )
+const speakingDisabled = computed(() => !props.enrollment.attempt?.availability?.speaking )
+const editViolationDisabled = computed(() => !props.enrollment.attempt?.availability?.violations)
+const banAttemptDisabled = computed(() => !props.enrollment.attempt?.availability?.ban)
 </script>
 
 <template>
@@ -59,20 +53,20 @@ const changePaymentDisabled = computed(() => isCancelled.value || isFinished.val
             :enrollment="enrollment"
         />
         <BaseListItem 
-            :disabled="!hasAttempt || speakingFinished"
+            :disabled="speakingDisabled"
             v-if="exam?.hasSpeakingTasks"
             title="Говорение" 
             @click="modals.open('speaking', {enrollment:props.enrollment})"
         />
         <BaseListItem 
             title="Нарушения" 
-            :disabled = "!hasAttempt"
+            :disabled = "editViolationDisabled"
             @click="modals.open('violation', {enrollment:props.enrollment})"
         />
         <v-divider></v-divider>
         <BaseListItem    
             base-color="red" 
-            :disabled="!hasAttempt || isBanned"
+            :disabled="banAttemptDisabled"
             title="Аннулировать" 
             @click="ban"
         />

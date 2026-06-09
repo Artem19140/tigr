@@ -94,7 +94,7 @@ class EmployeeCreateTest extends TestCase
         $response->assertOk();
     }
 
-    public function test_fail_403_center_admin_creating(): void
+    public function test_fail_center_admin_creating_with_no_role_platform_admin(): void
     {
         $operator = Employee::factory()
             ->operator()
@@ -104,7 +104,7 @@ class EmployeeCreateTest extends TestCase
         $response = $this->postEmployee($operator,[
             'roles' => [$this->orgAdminRole->id]
         ]);
-        $response->assertNotFound();
+        $response->assertStatus(403);
     }
 
     public function test_fail_403_platform_admin_creating(): void
