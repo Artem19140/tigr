@@ -25,8 +25,8 @@ final class CreateEnrollmentAction
         Employee $creator,
         bool $hasPayment
     ): Enrollment {
-        $exam = Exam::find($examId);
-        $foreignNational = ForeignNational::find($foreignNationalId);
+        $exam = Exam::findOrFail($examId);
+        $foreignNational = ForeignNational::findOrFail($foreignNationalId);
 
         $this->ensureCreatingAvailable($exam, $foreignNational);
 

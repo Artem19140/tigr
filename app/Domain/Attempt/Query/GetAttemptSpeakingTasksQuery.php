@@ -12,7 +12,7 @@ class GetAttemptSpeakingTasksQuery
 {
     public function execute(Attempt $attempt): Attempt
     {
-        $this->ensureNotBanned($attempt);
+        //$this->ensureNotBanned($attempt);
 
         $attempt->loadMissing([
             'taskVariants' => function (BelongsToMany $query) use ($attempt) {

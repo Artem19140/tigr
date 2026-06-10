@@ -9,7 +9,6 @@ use App\Models\Attempt;
 use App\Support\CenterIsolationCheck;
 use App\Support\Export\CsvWriter;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
 
 class MinistryEducationReportGenerator
 {

@@ -31,45 +31,45 @@ class DatabaseSeeder extends Seeder
             VnzhSeeder::class,
         ]);
 
-        // $center = Center::firstOrCreate(
-        //     [
-        //         'ogrn' => '1021801503382',
-        //         'inn' => '1833010750',
-        //     ], 
-        //     [
-        //         'name' => 'Федеральное государственное бюджетное образовательное учреждение высшего образования «Удмуртский государственный университет»',
-        //         'time_zone' => 'Europe/Samara',
-        //         'director_fio' => 'Рязанова Анна Юрьевна',
-        //         'certificates_issue_address' => 'Удмуртская республика, г. Ижевск, ул. Университетская, д.1',
-        //         'ogrn' => '1021801503382',
-        //         'inn' => '1833010750',
-        //         'short_name' => 'ФГБОУ ВО «УдГУ»',
-        //         'address' => 'Удмуртская Республика, г. Ижевск, улица Университетская',
-        //         'name_genitive' => 'федеральному государственному бюджетному образовательному учреждению высшего образования «Удмуртский государственный университет»',
-        //         'commission_chairman' => 'Иванов Иван Иванович',
-        //     ]);
+        $center = Center::firstOrCreate(
+            [
+                'ogrn' => '1021801503382',
+                'inn' => '1833010750',
+            ], 
+            [
+                'name' => 'Федеральное государственное бюджетное образовательное учреждение высшего образования «Удмуртский государственный университет»',
+                'time_zone' => 'Europe/Samara',
+                'director_fio' => 'Рязанова Анна Юрьевна',
+                'certificates_issue_address' => 'Удмуртская республика, г. Ижевск, ул. Университетская, д.1',
+                'ogrn' => '1021801503382',
+                'inn' => '1833010750',
+                'short_name' => 'ФГБОУ ВО «УдГУ»',
+                'address' => 'Удмуртская Республика, г. Ижевск, улица Университетская',
+                'name_genitive' => 'федеральному государственному бюджетному образовательному учреждению высшего образования «Удмуртский государственный университет»',
+                'commission_chairman' => 'Иванов Иван Иванович',
+            ]);
 
-        // Counter::firstOrCreate(
-        //     [
-        //         'key' => CounterKey::RegNum,
-        //         'center_id' => $center->id
-        //     ],
-        //     [
-        //         'key' => CounterKey::RegNum, 
-        //         'value' => CounterKey::defaultValue(CounterKey::RegNum), 
-        //         'center_id' => $center->id,
-        //     ]);
+        Counter::firstOrCreate(
+            [
+                'key' => CounterKey::RegNum,
+                'center_id' => $center->id
+            ],
+            [
+                'key' => CounterKey::RegNum, 
+                'value' => CounterKey::defaultValue(CounterKey::RegNum), 
+                'center_id' => $center->id,
+            ]);
 
-        // Counter::firstOrCreate(
-        //     [
-        //         'key' => CounterKey::Group,
-        //         'center_id' => $center->id
-        //     ],
-        //     [
-        //         'key' => CounterKey::Group,
-        //         'value' => CounterKey::defaultValue(CounterKey::Group),
-        //         'center_id' => $center->id,
-        //     ]);
+        Counter::firstOrCreate(
+            [
+                'key' => CounterKey::Group,
+                'center_id' => $center->id
+            ],
+            [
+                'key' => CounterKey::Group,
+                'value' => CounterKey::defaultValue(CounterKey::Group),
+                'center_id' => $center->id,
+            ]);
 
         $email = config('app.platform_admin.login');
 

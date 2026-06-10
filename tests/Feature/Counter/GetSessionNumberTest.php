@@ -29,7 +29,7 @@ class GetSessionNumberTest extends TestCase
     protected function tearDown(): void
     {
         parent::tearDown();
-        Carbon::setTestNow(); // сброс фиксации
+        Carbon::setTestNow(); 
     }
 
     public function test_success(): void
@@ -89,8 +89,13 @@ class GetSessionNumberTest extends TestCase
             'begin_time' => Carbon::now()->addDays($count + 2),
         ]);
 
-        $enrollment = Enrollment::factory()->create(['exam_id' => $exam->id]);
-        Attempt::factory()->create(['enrollment_id' => $enrollment->id, 'exam_id' => $exam->id]);
+        $enrollment = Enrollment::factory()
+            ->create(['exam_id' => $exam->id]);
+
+        Attempt::factory()->create([
+            'enrollment_id' => $enrollment->id, 
+            'exam_id' => $exam->id
+        ]);
 
         $sessionNumber = $this->action->execute($exam->begin_time);
         $this->assertEquals($sessionNumber, $count);
@@ -110,7 +115,10 @@ class GetSessionNumberTest extends TestCase
         ]);
 
         $enrollment = Enrollment::factory()->create(['exam_id' => $exam->id]);
-        Attempt::factory()->create(['enrollment_id' => $enrollment->id, 'exam_id' => $exam->id]);
+        Attempt::factory()->create([
+            'enrollment_id' => $enrollment->id, 
+            'exam_id' => $exam->id
+        ]);
 
         $sessionNumber = $this->action->execute($exam->begin_time);
         $this->assertEquals($sessionNumber, $count);
@@ -123,7 +131,10 @@ class GetSessionNumberTest extends TestCase
                 'begin_time' => Carbon::now()->addDays($i),
             ]);
             $enrollment = Enrollment::factory()->create(['exam_id' => $exam->id]);
-            Attempt::factory()->create(['enrollment_id' => $enrollment->id, 'exam_id' => $exam->id]);
+            Attempt::factory()->create([
+                'enrollment_id' => $enrollment->id, 
+                'exam_id' => $exam->id
+            ]);
         }
     }
 }

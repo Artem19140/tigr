@@ -27,7 +27,7 @@
         <td>Имя (латиница): <span class="data">{{ $enrollment->foreignNational->name_latin }}</span></td>
     </tr>
     <tr>
-        <td >Отчество (при наличии, кириллица): <span class="data">{{ $enrollment->foreignNational->patronymic }}</span></td>
+        <td>Отчество (при наличии, кириллица): <span class="data">{{ $enrollment->foreignNational->patronymic }}</span></td>
         <td>Отчество (при наличии,латиница): <span class="data">{{ $enrollment->foreignNational->patronymic_latin }}</span></td>
     </tr>
 

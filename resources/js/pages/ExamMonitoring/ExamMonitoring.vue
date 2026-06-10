@@ -34,9 +34,9 @@ const { start, stop } = usePoll(pollFrequency, {}, {
 })
 
 const headers = [
-    {title:'ФИО', key:"foreignNational.fullName",sortable: false},
+    {title:'ФИО', key:"foreignNational.fullName",sortable: true},
     {title:'Паспорт', key:"foreignNational.fullPassport",sortable: false},
-    {title:'Оплата', key:"hasPayment",sortable: false,align: 'center'},
+    {title:'Оплата', key:"hasPayment",sortable: true,align: 'center'},
     {
         title:'Время',
         align:'center',
@@ -146,12 +146,21 @@ const search = ref<string>('')
                             :exam="exam.data" 
                         />
                     </template>
+                    <template  #item.foreignNational.fullName="{ item }">
+                        {{ item.foreignNational.fullName }}
+                        <v-chip
+                            v-if="item.attempt?.bannedAt"
+                            color="red"
+                            text="Анн."
+                            size="x-small"
+                        ></v-chip>
+                    </template>
                     <template  #item.startedAt="{ item }">
                         {{new DateFormatter(item.attempt?.startedAt ?? '').format('H:i')}}
                     </template>
                     <template  #item.finishedAt="{ item }">
                         {{new DateFormatter(item.attempt?.finishedAt ?? '').format('H:i')}}
-                        <span class="text-red" v-if="item.attempt?.bannedAt">(Анн.)</span>
+                        
                     </template>
                     <template #item.hasPayment="{ item }">
                         <PaymentIcon :enrollment="item" />

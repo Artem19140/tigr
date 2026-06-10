@@ -2,7 +2,7 @@
 
 namespace App\Domain\Shared;
 
-class RuleResult
+final readonly class RuleResult
 {
     public function __construct(
         public bool $available,

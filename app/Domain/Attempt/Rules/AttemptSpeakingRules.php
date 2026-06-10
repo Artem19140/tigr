@@ -72,13 +72,13 @@ class AttemptSpeakingRules
 
     protected function baseCheck(Attempt $attempt): RuleResult | null
     {
-        if($this->hasNoSpeaking($attempt)){
-            return new RuleResult(
-                available: false,
-                code: 'attempt_has_no_speaking',
-                reason: 'У данной попытки нет заданий на говорение'
-            );
-        }
+        // if($this->hasNoSpeaking($attempt)){
+        //     return new RuleResult(
+        //         available: false,
+        //         code: 'attempt_has_no_speaking',
+        //         reason: 'У данной попытки нет заданий на говорение'
+        //     );
+        // }
 
         if($this->isNotToday($attempt)){
             return new RuleResult(
@@ -92,12 +92,12 @@ class AttemptSpeakingRules
 
     protected function hasNoSpeaking(Attempt $attempt): bool
     {
-        return !$attempt->exam->hasSpeaking();
+        return ! $attempt->exam->hasSpeaking();
     }
 
     protected function isNotToday(Attempt $attempt): bool
     {
-        return ! $attempt->exam->begin_time->isToday();
+        return ! $attempt->created_at->isToday();
     }
 
     protected function speakingStarted(Attempt $attempt): bool

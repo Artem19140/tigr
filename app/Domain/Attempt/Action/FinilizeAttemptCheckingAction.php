@@ -15,7 +15,7 @@ class FinilizeAttemptCheckingAction
     {
         $attempt->total_mark = $attempt->answers()->sum('mark');
 
-        $attempt->loadMissing(['answers.taskVariant.task', 'exam.type.blocks.subblocks']);
+        $attempt->loadMissing(['answers.taskVariant.task.subblock', 'exam.type.blocks.subblocks']);
         $attempt->is_passed = $this->checkPassingThresholdsService->execute($attempt);
         $attempt->markAsChecked();
         $attempt->save();

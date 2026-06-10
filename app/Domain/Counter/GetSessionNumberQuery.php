@@ -24,6 +24,6 @@ class GetSessionNumberQuery
             })
             ->count();
 
-        return max(1, $sessionNumber);
+        return $sessionNumber + 1;
     }
 }

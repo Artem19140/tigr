@@ -40,8 +40,8 @@ class FinishAttemptAction
         $attemptCanBeFinished = $attempt->started_at->copy()->addMinutes($minTimeMinutes);
 
         $tooEarlyToFinish = $now->lte($attemptCanBeFinished);
-        if ($tooEarlyToFinish) {
-            throw new BusinessException("Попытку возможно завершить минимум через  $minTimeMinutes минут после начала");
-        }
+        // if ($tooEarlyToFinish) {
+        //     throw new BusinessException("Попытку возможно завершить минимум через  $minTimeMinutes минут после начала");
+        // }
     }
 }

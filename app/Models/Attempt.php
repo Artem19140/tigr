@@ -248,7 +248,7 @@ class Attempt extends Model
 
     public function canEditViolation():bool
     {
-        return $this->started_at->isToday();
+        return $this->started_at?->isToday() ?? false;
     }
 
 }

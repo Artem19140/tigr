@@ -15,7 +15,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 
-class Exam extends Model
+class 
+Exam extends Model
 {
     use BelongsToCenter;
     use HasFactory, Notifiable;
@@ -53,7 +54,12 @@ class Exam extends Model
         Builder $query,
         Employee $employee
     ): Builder {
-        if (! $employee->hasAnyRole(EmployeeRole::Examiner) || $employee->isPlatformAdmin()) {
+        if($employee->hasAnyRole(
+            EmployeeRole::Operator,
+            EmployeeRole::Director,
+            EmployeeRole::Scheduler,
+            EmployeeRole::PlatformAdmin
+        )){
             return $query;
         }
 

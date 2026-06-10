@@ -45,7 +45,7 @@ class GetGroupNumberTest extends TestCase
     protected function tearDown(): void
     {
         parent::tearDown();
-        Carbon::setTestNow(); // сброс фиксации
+        Carbon::setTestNow();
     }
 
     public function test_success(): void

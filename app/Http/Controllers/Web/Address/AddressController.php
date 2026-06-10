@@ -44,10 +44,9 @@ class AddressController
         $address = Address::create([
             'address' => $request->validated('address'),
             'max_capacity' => $request->validated('capacity'),
-            'center_id' => app(CenterContext::class)->id(),
-            'creator_id' => $center->id,
+            'center_id' => $center->id,
+            'creator_id' => $request->user()->id,
         ]);
-
         return response()->json([
             'address' => new AddressResource($address),
         ],
@@ -80,7 +79,6 @@ class AddressController
                 'after' => new AddressResource($address)->resolve(),
             ],
         ]);
-
         return response()->json(new AddressResource($address));
     }
 
@@ -97,7 +95,6 @@ class AddressController
         Log::info('address_destroy', [
             'address_id' => $address->id,
         ]);
-
         return response()->noContent();
     }
 
@@ -105,4 +102,5 @@ class AddressController
     {
         abort_if($employee->center_id !== $center->id, 403);
     }
+
 }

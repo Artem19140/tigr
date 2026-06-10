@@ -6,6 +6,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\File;
+use Illuminate\Support\Facades\Cache;
 
 class ForeignNationalUpdateRequest extends FormRequest
 {
@@ -31,9 +32,12 @@ class ForeignNationalUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $countries = collect(json_decode(file_get_contents(storage_path('app/public/countries.json')), true))
-            ->pluck('value')
-            ->toArray();
+        $countries = Cache::rememberForever('countries_list', function () {
+            return collect(json_decode(file_get_contents(storage_path('app/public/countries.json')), true))
+                    ->pluck('value')
+                    ->toArray();
+        });
+
 
         return [
             'noPatronymic' => [
