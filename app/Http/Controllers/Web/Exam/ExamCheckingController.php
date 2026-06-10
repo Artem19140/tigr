@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Exam;
 
 use App\Domain\Exam\Query\GetExamsToCheckQuery;
+use App\Exceptions\BusinessException;
 use App\Http\Resources\Exam\ExamCheckingResource;
 use App\Http\Resources\Exam\ExamIndexResource;
 use App\Models\Exam;
@@ -35,13 +36,15 @@ class ExamCheckingController
             Log::warning('trying to get to checking exam with no human check',[
                 'exam_id' => $exam->id
             ]);
-            abort(403);
+            throw new BusinessException('Данная попытка проверяется автоматически');
         }
 
         $exam->load([
             'type',
             'enrollments' => function (HasMany $query) {
-                $query->whereHas('attempt')
+                $query->whereHas('attempt', function($q){
+                    return $q->whereNotNull('finished_at');
+                })
                     ->with('attempt.center');
             },
         ]);

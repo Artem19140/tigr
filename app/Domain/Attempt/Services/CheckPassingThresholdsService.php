@@ -2,10 +2,12 @@
 
 namespace App\Domain\Attempt\Services;
 
+use App\Exceptions\BusinessException;
 use App\Exceptions\Subblock\SubblockNotFoundException;
 use App\Models\Attempt;
 use App\Models\AttemptAnswer;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class CheckPassingThresholdsService
 {
@@ -59,10 +61,12 @@ class CheckPassingThresholdsService
         foreach ($answersByItems as $itemId => $answers) {
             $item = $items->firstWhere('id', $itemId);
             if (! $item) {
-                throw new SubblockNotFoundException([
-                    'block_id' => $itemId,
+                Log::critical('not found item during tresholds passing counting',[
+                    'item_id' => $itemId,
                     'attempt_id' => $attempt->id,
+                    'items' => $items
                 ]);
+                throw new BusinessException('Произошла ошибка во время подсчета результатов');
             }
             $answersSumMark = $answers->sum('mark');
             if ($item->min_mark > $answersSumMark) {
