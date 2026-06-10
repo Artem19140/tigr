@@ -38,7 +38,7 @@ class ExamProtocolGenerator
         ]);
         event(new ExamDocumentGenerated($exam, ExamDocument::Protocol));
 
-        return $pdf->stream('codes.pdf');
+        return $pdf;
     }
 
     protected function getBannedAttempts(Exam $exam): Collection

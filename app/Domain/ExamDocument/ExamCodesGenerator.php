@@ -21,11 +21,9 @@ final class ExamCodesGenerator
             'exam' => $exam,
         ]);
 
-        $fileName = $this->getFileName($exam);
-
         event(new ExamDocumentGenerated($exam, ExamDocument::Codes));
 
-        return $pdf->stream($fileName);
+        return $pdf;
     }
 
     protected function generateCodesForExam(Exam $exam): void
@@ -77,10 +75,5 @@ final class ExamCodesGenerator
         $enrollment->exam_code = $code;
         $enrollment->exam_code_expired_at = $exam->begin_time->copy()->addMinutes(Exam::CODES_TTL_AFTER_BEGIN_MINUTES);
         $enrollment->save();
-    }
-
-    protected function getFileName(Exam $exam): string
-    {
-        return 'Кода_'.$exam->short_name.'_'.$exam->begin_time->format('H-i_d.m.y').'.pdf';
     }
 }

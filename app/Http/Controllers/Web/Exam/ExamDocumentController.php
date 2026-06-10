@@ -32,11 +32,10 @@ class ExamDocumentController
             'exam' => $exam,
         ]);
 
-        $stringDate = $exam->begin_time->copy()->format('_H:i_d.m.Y_');
-        $name = $exam->type->short_name;
         event(new ExamDocumentGenerated($exam, ExamDocument::List));
-
-        return $pdf->stream("список_$name _ $stringDate.pdf");
+        $fileName = "Список_{$exam->short_name}_{$exam->begin_time_local->format('H-i_d.m.Y')}.pdf";
+        
+        return $pdf->stream($fileName);
     }
 
     public function listAvailable(Exam $exam): JsonResponse
@@ -56,8 +55,9 @@ class ExamDocumentController
     ): Response {
         $this->authorize($exam);
         $this->examDocumentAvailable->codes($exam);
-
-        return $examCodesGenerator->execute($exam);
+        $fileName = "Кода_{$exam->short_name}_{$exam->begin_time_local->format('H-i_d.m.Y')}.pdf";
+        $pdf = $examCodesGenerator->execute($exam);
+        return $pdf->stream($fileName);
     }
 
     public function codesAvailable(Exam $exam): JsonResponse
@@ -77,8 +77,9 @@ class ExamDocumentController
         ExamProtocolGenerator $examProtocolGenerator
     ): Response {
         $this->examDocumentAvailable->protocol($exam);
-
-        return $examProtocolGenerator->execute($exam);
+        $fileName= "Протокол_{$exam->short_name}_{$exam->begin_time_local->format('H-i_d.m.Y')}.pdf";
+        $pdf =  $examProtocolGenerator->execute($exam);
+        return $pdf->stream($fileName);
     }
 
     public function protocolAvailable(Exam $exam): JsonResponse
@@ -98,7 +99,7 @@ class ExamDocumentController
     ): Response {
         $this->examDocumentAvailable->results($exam);
         $resultsPdf = $examResultsGenerator->execute($exam);
-        $fileName = 'Результаты_'.$exam->short_name.'_'.$exam->begin_time->format('H-i_d.m.Y').'.pdf';
+        $fileName = "Результаты_{$exam->short_name}_{$exam->begin_time->format('H-i_d.m.Y')}.pdf";
 
         return $resultsPdf->stream($fileName);
     }

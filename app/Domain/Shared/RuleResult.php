@@ -10,22 +10,17 @@ class RuleResult
         public string | null $reason = null
     ){}
 
-    // public static function access()
-    // {
-    //     return self::__construct(
-    //         true
-    //     ) ;
-    // }
+    public static function access()
+    {
+        self::$available = true;
+    }
 
-    // public static function deny(
-    //     string | null $code = null,
-    //     string | null $reason = null
-    // )
-    // {
-    //     return self::(
-    //         false,
-    //         $code,
-    //         $reason
-    //     ) ;
-    // }
+    public static function deny(
+        string | null $code = null,
+        string | null $reason = null
+    )
+    {
+        self::$code = $code;
+        self::$reason = $reason;
+    }
 }
