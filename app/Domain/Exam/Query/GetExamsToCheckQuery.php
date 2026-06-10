@@ -13,7 +13,7 @@ class GetExamsToCheckQuery
     {
         return Exam::query()
             ->with(['type', 'center'])
-            ->visibleFor($employee)
+            ->examiner($employee)
             ->whereHas('type', function (Builder $query) {
                 $query->where('need_human_check', true);
             })

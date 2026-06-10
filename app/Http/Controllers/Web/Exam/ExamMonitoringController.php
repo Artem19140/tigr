@@ -24,7 +24,7 @@ class ExamMonitoringController
 
         $exams = Exam::query()
             ->with(['type', 'center'])
-            ->visibleFor($employee)
+            ->examiner($employee)
             ->withCount(['enrollments'])
             ->when($past, function (Builder $query) {
                 $query->where('end_time', '<', now());

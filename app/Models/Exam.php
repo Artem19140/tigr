@@ -53,7 +53,7 @@ Exam extends Model
     public function scopeVisibleFor(
         Builder $query,
         Employee $employee
-    ): Builder {
+    ): Builder { // если есть роль экзаменатора И оператора, то применяется фильтр мб EmployeeRole::exept и anyRole
         if($employee->hasAnyRole(
             EmployeeRole::Operator,
             EmployeeRole::Director,
@@ -62,6 +62,9 @@ Exam extends Model
         )){
             return $query;
         }
+        // if (! $employee->hasAnyRole(EmployeeRole::Examiner) || $employee->isPlatformAdmin()) {
+        //     return $query;
+        // }
 
         return $query->whereHas('examiners', function (Builder $q) use ($employee) {
             $q->where('examiner_id', $employee->id);
@@ -81,6 +84,13 @@ Exam extends Model
     public function examiners(): BelongsToMany
     {
         return $this->belongsToMany(Employee::class, 'exam_examiner', 'exam_id', 'examiner_id');
+    }
+
+    public function scopeExaminer(Builder $query, Employee $employee): Builder
+    {
+        return $query->whereHas('examiners', function (Builder $q) use ($employee) {
+            $q->where('examiner_id', $employee->id);
+        });
     }
 
     public function foreignNationals(): BelongsToMany
@@ -118,9 +128,9 @@ Exam extends Model
         return $this->begin_time->isFuture();
     }
 
-    public function isCancelled(): ?Carbon
+    public function isCancelled(): bool
     {
-        return $this->cancelled_at;
+        return $this->cancelled_at !== null;
     }
 
     public function center(): BelongsTo
