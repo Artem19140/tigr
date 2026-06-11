@@ -88,6 +88,9 @@ Exam extends Model
 
     public function scopeExaminer(Builder $query, Employee $employee): Builder
     {
+        if($employee->isPlatformAdmin()){
+            return $query;
+        }
         return $query->whereHas('examiners', function (Builder $q) use ($employee) {
             $q->where('examiner_id', $employee->id);
         });
