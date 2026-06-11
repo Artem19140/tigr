@@ -4,7 +4,6 @@ import AppAddButton from '@/components/UI/AppAddButton/AppAddButton.vue';
 import { useModals } from '@/composables/useModals';
 import AddressCard from './AddressCard.vue';
 import { Address } from '@/interfaces/Address';
-import BaseEmptyState from '@/components/BaseComponents/BaseEmptyState/BaseEmptyState.vue';
 import { Head } from '@inertiajs/vue3';
 
 const props = defineProps<{
@@ -50,7 +49,7 @@ const add = () => {
             :address="address"
         />
     </div>
-    <BaseEmptyState 
+    <v-empty-state 
         icon="mdi-clipboard-text-off-outline"
         title="Адресов пока нет"
         v-else
@@ -58,5 +57,5 @@ const add = () => {
         <AppAddButton 
             @click="add"
         />
-    </BaseEmptyState>
+    </v-empty-state>
 </template>

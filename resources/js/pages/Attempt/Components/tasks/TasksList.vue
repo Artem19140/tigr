@@ -4,16 +4,15 @@ import EssayTask from './EssayTask.vue';
 import TextInputTask from './TextInputTask.vue';
 import { TaskTypes } from '@/constants/TaskTypes';
 import { AttemptAnswer } from '@/interfaces/Task';
-import { Attempt, AttemptMonitoring } from '@/interfaces/Attempt';
+import { Attempt, AttemptChecking, AttemptMonitoring } from '@/interfaces/Attempt';
 import { useAttempt } from '@/composables/useAttempt';
 import { useHttp } from '@inertiajs/vue3';
-import BaseEmptyState from '@/components/BaseComponents/BaseEmptyState/BaseEmptyState.vue';
 import MultynputTask from './MultyInputTask.vue';
 import BaseTask from './BaseTask.vue';
 import { computed, provide } from 'vue';
 
 const props = defineProps<{
-    attempt:  Attempt | AttemptMonitoring,
+    attempt:  Attempt | AttemptMonitoring | AttemptChecking,
     checking?:boolean
 }>()
 
@@ -75,7 +74,7 @@ const groupedTasks =  computed(() =>{
 </script>
 
 <template>
-    <div class="flex flex-column gap-10"
+    <v-container class="flex flex-column gap-10"
         v-if="attempt.tasks.length > 0"
     >
         <div
@@ -101,9 +100,9 @@ const groupedTasks =  computed(() =>{
             </v-card>
         </div>
         
-    </div>
+    </v-container >
 
-    <BaseEmptyState
+    <v-empty-state
         v-else
         icon="mdi-clipboard-text-off-outline"
         title="Заданий нет"

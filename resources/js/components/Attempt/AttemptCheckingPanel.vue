@@ -25,13 +25,11 @@ const update = (value:AttemptAnswer) => {
                 
             />
         </div>
-        <div class="mx-auto">
-            <TasksList
-                v-if="attempt"
-                @rated="update"
-                :attempt="attempt"
-                :checking="true"
-            />
-        </div>
+        <TasksList
+            v-if="attempt"
+            @rated="update"
+            :attempt="attempt"
+            :checking="true"
+        />
     </div>
 </template>

@@ -3,7 +3,6 @@ import BaseDialog from '@/components/BaseComponents/BaseDialog/BaseDialog.vue';
 import { computed, onMounted, ref } from 'vue';
 import { router, useHttp } from '@inertiajs/vue3';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
-import BaseEmptyState from '@/components/BaseComponents/BaseEmptyState/BaseEmptyState.vue';
 import { Enrollment, EnrollmentMonitoring } from '@/interfaces/Enrollment';
 import { AttemptMonitoring } from '@/interfaces/Attempt';
 import { AttemptAnswer } from '@/interfaces/Task';
@@ -83,12 +82,12 @@ const update = (value: AttemptAnswer) => {
             @rated="update"
         />
 
-        <div v-else-if="attempt" class="flex justify-center">
-            <TasksList 
-                :attempt="attempt"
-            />
-        </div>
-        <BaseEmptyState 
+        <TasksList 
+            v-else-if="attempt" 
+            :attempt="attempt"
+        />
+
+        <v-empty-state 
             v-else
             action-text="Начать"
             icon="mdi-account-clock-outline"
