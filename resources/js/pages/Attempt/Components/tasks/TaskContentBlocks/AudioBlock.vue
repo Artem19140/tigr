@@ -67,11 +67,10 @@ function format(time: number) {
   const s = Math.floor(time % 60)
   return `${m}:${s.toString().padStart(2, '0')}`
 }
-
 </script>
 
 <template>
-    <div class="mb-4">
+    <div class="mb-2">
         <div v-if="value">
             <v-alert
                 type="info"

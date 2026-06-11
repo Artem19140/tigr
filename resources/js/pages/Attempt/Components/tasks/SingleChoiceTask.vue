@@ -41,7 +41,7 @@ watch(attemptAnswer, () => {
         :loading="false"
     >
         <template #answers>
-            <div class="mb-4 flex flex-column">
+            <!-- <div class="flex flex-column"> -->
                 <v-radio-group 
                     v-model="attemptAnswer"
                 >      
@@ -59,7 +59,7 @@ watch(attemptAnswer, () => {
                         </template>
                     </v-radio>
                 </v-radio-group>
-            </div>
+            <!-- </div> -->
         </template>
     </BaseTask>
     

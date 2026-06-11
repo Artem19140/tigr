@@ -33,15 +33,11 @@ const checking = inject<boolean>('checking')
 </script>
 
 <template>
-  <div class="flex flex-column justify-center">
-    <v-card
-      width="800"
-      elevation="6"
-      rounded="lg"
-      :id="`task-${task.id}`"
-    >
+  <div 
+    class="flex flex-column justify-center"
+  >
       <v-card-title class="d-flex flex-column align-start ga-1">
-        <div class="flex items-center gap-2 mt-2">
+        <div class="flex items-center gap-2">
           <AppStatusChip 
             size="small" 
             :text="`Задание ${task?.order}`"
@@ -58,49 +54,52 @@ const checking = inject<boolean>('checking')
         </div>
       </v-card-title>
       
-      <div class="text-subtitle-1 font-weight-medium mt-1 pl-6 pr-4 pre-like">
+      <div class="font-weight-bold  pl-6 pr-4">
         {{ 
           task?.description && task.description.trim() !== "" 
-            ? task.description 
-            : getDefaultDescription(task.type) 
+              ? task.description 
+              : getDefaultDescription(task.type) 
         }}
       </div>
-
-      <v-divider />
 
       <v-card-text>
         <v-sheet
           rounded="lg"
-          class="pa-3"
+          class="pa-2"
         >
           <RenderBlocks 
             :content="task.content" 
-        />
+          />
         </v-sheet>
       </v-card-text>
 
-        <div class=" pl-6 " v-if="task.postscriptum">
-          {{ task.postscriptum }}
-        </div>
+      <div class=" pl-6 " v-if="task.postscriptum">
+        {{ task.postscriptum }}
+      </div>
   
-      <v-card-actions class="px-4">
+      <div class="px-4">
         <slot name="answers" /> 
-      </v-card-actions>
-    </v-card>
-
-    <TaskRatingBlock
-      class="mt-4"
-      @rated="(value :AttemptAnswer) => emit('rated', value)"
-      :task="task"
-      v-if="checking"
-      :readonly="false"
-    />
-
-    <AppRetryAlert 
+      </div>
+      
+    <v-card-text v-if="checking">
+      <TaskRatingBlock
+        class="mt-4"
+        @rated="(value :AttemptAnswer) => emit('rated', value)"
+        :task="task"
+        
+        :readonly="false"
+      />
+      
+    </v-card-text>
+    <v-card-text
       v-if="errors.has(task.id)"
-      text="Ошибка сохранения, пожалуйста, повторите действие"
-      :onRetry="() => emit('retry')"
-    />
+    >
+      <AppRetryAlert 
+        
+        text="Ошибка сохранения, пожалуйста, повторите действие"
+        :onRetry="() => emit('retry')"
+      />
+    </v-card-text>
   </div>
 </template>
 

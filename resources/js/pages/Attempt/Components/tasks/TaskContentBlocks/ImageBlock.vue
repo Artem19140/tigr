@@ -10,7 +10,7 @@ const dialog = ref(false)
 </script>
 
 <template>
-    <div class="mb-8">
+    <div class="mb-5">
         <v-img
             :src="value"
             class="cursor-pointer"

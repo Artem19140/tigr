@@ -10,10 +10,10 @@ import { useHttp } from '@inertiajs/vue3';
 import BaseEmptyState from '@/components/BaseComponents/BaseEmptyState/BaseEmptyState.vue';
 import MultynputTask from './MultyInputTask.vue';
 import BaseTask from './BaseTask.vue';
-import { provide } from 'vue';
+import { computed, provide } from 'vue';
 
 const props = defineProps<{
-    attempt: any // Attempt | AttemptMonitoring,
+    attempt:  Attempt | AttemptMonitoring,
     checking?:boolean
 }>()
 
@@ -58,23 +58,49 @@ const update = (value:any) => {
     })
 }
 provide<boolean>('checking', props.checking)
+const groupedTasks =  computed(() =>{
+        const groups = new Map()
+        props.attempt.tasks.forEach(task => {
+            console.log(task)
+            const groupKey = task.groupNumber ?? task.fipiNumber
+            if(! groups.has(groupKey)){
+                groups.set(groupKey, [])
+            }
+            groups.get(groupKey).push(task)
+        })
+        console.log(groups)
+        return groups.values()
+})
+
 </script>
 
 <template>
-    <div class="flex flex-column gap-15"
+    <div class="flex flex-column gap-10"
         v-if="attempt.tasks.length > 0"
     >
         <div
-            v-for="task in attempt.tasks"
+            v-for="(tasks, index) in groupedTasks"
+            :key="index"
         >   
-            <component 
-                :key="task.id"
-                :is="taskComponent(task.type)"
-                :task="task"
-                @update-answer="update"
-                @rated="(value :AttemptAnswer) => emit('rated', value)"
-            />
+            <v-card  >
+                <div
+                    v-for="task in tasks"
+                    :key="task.id"
+                    :id="`task-${task.id}`"
+                >
+                    
+                    <component 
+                        :key="task.id"
+                        :is="taskComponent(task.type)"
+                        :task="task"
+                        @update-answer="update"
+                        @rated="(value :AttemptAnswer) => emit('rated', value)"
+                    />
+                    <v-divider/>
+                </div>
+            </v-card>
         </div>
+        
     </div>
 
     <BaseEmptyState

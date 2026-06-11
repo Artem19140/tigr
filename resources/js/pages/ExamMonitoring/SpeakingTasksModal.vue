@@ -4,7 +4,7 @@ import { computed, onMounted, ref } from 'vue';
 import { router, useHttp } from '@inertiajs/vue3';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import BaseEmptyState from '@/components/BaseComponents/BaseEmptyState/BaseEmptyState.vue';
-import { Enrollment } from '@/interfaces/Enrollment';
+import { Enrollment, EnrollmentMonitoring } from '@/interfaces/Enrollment';
 import { AttemptMonitoring } from '@/interfaces/Attempt';
 import { AttemptAnswer } from '@/interfaces/Task';
 import AppTooltip from '@/components/UI/AppTooltip/AppTooltip.vue';
@@ -13,7 +13,7 @@ import TasksList from '../Attempt/Components/tasks/TasksList.vue';
 import { useConfirmDialog } from '@/composables/useConfirmDialog';
 
 const props = defineProps<{
-    enrollment:Enrollment
+    enrollment:EnrollmentMonitoring
 }>()
 
 const isOpen = defineModel<boolean>({default:false})

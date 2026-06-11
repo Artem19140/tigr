@@ -39,7 +39,7 @@ const taskBlocks = (type: string) => {
         :key="index"
         :is="taskBlocks(block.type)"
         v-bind="block"
-        :class="block.margin ? 'mb-8' : ''"
+        :class="block.margin ? 'mb-5' : ''"
     />
     <div 
         v-for="(block, index) in content"

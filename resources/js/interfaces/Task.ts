@@ -7,7 +7,9 @@ export interface Task{
     mark:number,
     description:string,
     order:number,
-    postscriptum:string
+    postscriptum:string,
+    fipiNumber:string,
+    groupNumber:string | null
 }
 
 export interface AttemptAnswer{
