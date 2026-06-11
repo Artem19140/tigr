@@ -5,7 +5,6 @@ import { useConfirmDialog } from '@composables/useConfirmDialog';
 import { Head, useForm } from '@inertiajs/vue3';
 import { useAttempt } from '@/composables/useAttempt';
 import BaseLayout from '@/layouts/BaseLayout.vue';
-import BaseDrawer from '@/components/BaseComponents/BaseDrawer/BaseDrawer.vue';
 import { Attempt } from '@/interfaces/Attempt';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 
@@ -38,14 +37,14 @@ const finish = async () => {
     </Head>
     <BaseLayout>
         <template #drawer>
-            <BaseDrawer
+            <v-navigation-drawer 
                 location="right"
                 permanent
                 width="300"
                 
             >
                 <SidePanel v-if="examAttempt" :attempt="examAttempt"/>
-            </BaseDrawer>
+            </v-navigation-drawer >
         </template>
         <v-container class="flex flex-column items-center gap-10">
             <TasksList 

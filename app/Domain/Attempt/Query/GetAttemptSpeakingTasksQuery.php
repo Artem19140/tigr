@@ -12,8 +12,6 @@ class GetAttemptSpeakingTasksQuery
 {
     public function execute(Attempt $attempt): Attempt
     {
-        //$this->ensureNotBanned($attempt);
-
         $attempt->loadMissing([
             'taskVariants' => function (BelongsToMany $query) use ($attempt) {
                 $query->whereHas('task', function (Builder $q) {
@@ -30,12 +28,5 @@ class GetAttemptSpeakingTasksQuery
         $attempt->taskVariants = $attempt->taskVariants->sortBy('task.order');
 
         return $attempt;
-    }
-
-    protected function ensureNotBanned(Attempt $attempt): void
-    {
-        if ($attempt->isBanned()) {
-            throw new BusinessException('Попытка аннулирована');
-        }
     }
 }

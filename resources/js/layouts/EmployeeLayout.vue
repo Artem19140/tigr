@@ -1,7 +1,7 @@
 <template>
   <base-layout>
     <template #drawer>
-      <BaseDrawer
+      <v-navigation-drawer 
         expand-on-hover
         permanent
         rail
@@ -98,7 +98,7 @@
             </BaseListItem>
           </BaseList>
         </div>
-      </BaseDrawer>
+      </v-navigation-drawer >
     </template>
     <slot />
   </base-layout>
@@ -111,7 +111,6 @@ import BaseLayout from './BaseLayout.vue';
 import { useAuth } from '@composables/useAuth';
 import { router, usePage } from '@inertiajs/vue3'
 import { useConfirmDialog } from '@/composables/useConfirmDialog';
-import BaseDrawer from '@/components/BaseComponents/BaseDrawer/BaseDrawer.vue';
 import BaseList from '@/components/BaseComponents/BaseList/BaseList.vue';
 import BaseListItem from '@/components/BaseComponents/BaseList/BaseListItem.vue';
 import BaseThreeDotDropdown from '@/components/BaseComponents/BaseThreeDotDropdown/BaseThreeDotDropdown.vue';

@@ -72,19 +72,27 @@ class AttemptSpeakingRules
 
     protected function baseCheck(Attempt $attempt): RuleResult | null
     {
-        // if($this->hasNoSpeaking($attempt)){
-        //     return new RuleResult(
-        //         available: false,
-        //         code: 'attempt_has_no_speaking',
-        //         reason: 'У данной попытки нет заданий на говорение'
-        //     );
-        // }
+        if($this->hasNoSpeaking($attempt)){
+            return new RuleResult(
+                available: false,
+                code: 'attempt_has_no_speaking',
+                reason: 'У данной попытки нет заданий на говорение'
+            );
+        }
 
         if($this->isNotToday($attempt)){
             return new RuleResult(
                 available: false,
                 code: 'attempt_passing_is_not_today',
                 reason: 'Говорение доступно в день экзамена'
+            );
+        }
+
+        if($attempt->isBanned()){
+            return new RuleResult(
+                available: false,
+                code: 'attempt_is_banned',
+                reason: 'Попытка аннулирована'
             );
         }
         return null;

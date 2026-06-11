@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import BaseDrawer from '@/components/BaseComponents/BaseDrawer/BaseDrawer.vue';
 import BaseList from '@/components/BaseComponents/BaseList/BaseList.vue';
 import BaseListItem from '@/components/BaseComponents/BaseList/BaseListItem.vue';
 import { router } from '@inertiajs/vue3';
@@ -30,7 +29,7 @@ const go = (url:string) => {
 </script>
 
 <template>
-    <BaseDrawer
+    <v-navigation-drawer 
         location="right"
     >
         <BaseList nav>
@@ -42,6 +41,6 @@ const go = (url:string) => {
                 {{ item.label }}
             </BaseListItem>
         </BaseList>
-    </BaseDrawer>
+    </v-navigation-drawer >
     <slot />
 </template>

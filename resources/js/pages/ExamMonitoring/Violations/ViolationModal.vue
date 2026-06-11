@@ -26,7 +26,7 @@ const http = useHttp()
 onMounted(() => {
     if(!attemptId.value) return 
     http.get(`/attempts/${attemptId.value}/violations`, {
-        onSuccess(response :any, httpResponse) {
+        onSuccess(response :any) {
             violations.value = response.data
         },
     })
@@ -39,7 +39,7 @@ const addHttp = useHttp({
 const add = () => {
     if(!attemptId.value) return 
     addHttp.post(`/attempts/${attemptId.value}/violations`,{
-        onSuccess(response:any, httpResponse) {
+        onSuccess(response:any) {
             violations.value?.push(response.data)
             adding.value = false
             addHttp.resetAndClearErrors()

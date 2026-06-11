@@ -5,7 +5,6 @@ import { computed } from 'vue';
 import { router } from '@inertiajs/vue3';
 import BaseList from '@/components/BaseComponents/BaseList/BaseList.vue';
 import BaseListItem from '@/components/BaseComponents/BaseList/BaseListItem.vue';
-import BaseDrawer from '@/components/BaseComponents/BaseDrawer/BaseDrawer.vue';
 
 const auth = useAuth()
 
@@ -58,7 +57,7 @@ const visibleItems = computed(() =>
 </script>
 
 <template>
-        <BaseDrawer
+        <v-navigation-drawer 
             permanent
             location="right"
         >
@@ -71,7 +70,7 @@ const visibleItems = computed(() =>
                     {{ item.label }}
                 </BaseListItem>
             </BaseList>
-        </BaseDrawer>
+        </v-navigation-drawer >
         <slot />
 
     

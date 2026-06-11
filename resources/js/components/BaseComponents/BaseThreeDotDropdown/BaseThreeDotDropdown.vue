@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import BaseList from '../BaseList/BaseList.vue';
-
-
 </script>
 
 <template>
