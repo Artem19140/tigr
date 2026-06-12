@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -17,7 +18,7 @@ class RequestTimeMeasure
     public function handle(Request $request, Closure $next): Response
     {
         $start = hrtime(true);
-
+        //DB::enableQueryLog();
         $response = $next($request);
 
         $durationMs = (hrtime(true) - $start) / 1_000_000;
@@ -29,6 +30,15 @@ class RequestTimeMeasure
                 'url' => request()->url(),
             ]);
         }
+
+        // $queries = DB::getQueryLog();
+        // foreach ($queries as $query) {
+        //     Log::debug('SQL Query', [
+        //         'query' => $query['query'],
+        //         'bindings' => $query['bindings'],
+        //         'time' => $query['time'] * 1000, // в миллисекундах
+        //     ]);
+        // }
 
         return $response;
     }

@@ -7,10 +7,10 @@ use App\Http\Resources\Exam\ExamIndexResource;
 use App\Http\Resources\Exam\ExamMonitoringResource;
 use App\Models\Exam;
 use App\Support\CenterIsolationCheck;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
@@ -18,27 +18,36 @@ class ExamMonitoringController
 {
     public function index(Request $request): \Inertia\Response
     {
-        $employee = $request->user();
 
         $past = $request->boolean('past');
-
+        $now = Carbon::parse($request->input('date')) ?? Carbon::now();
+        $start = $now->copy()->startOfDay();
+        $end = $now->copy()->endOfDay();
         $exams = Exam::query()
             ->with(['type', 'center'])
-            ->examiner($employee)
+            ->examiner($request->user())
             ->withCount(['enrollments'])
-            ->when($past, function (Builder $query) {
-                $query->where('end_time', '<', now());
-            })
-            ->when(! $past, function (Builder $query) {
-                $query->where('end_time', '>', now()->subMinutes(30));
-            })
+            ->whereBetween('begin_time',[
+                $start,
+                $end
+            ])
             ->notCancelled()
-            ->sorting(Carbon::now())
-            ->paginate(10);
+            ->get();
+
         CenterIsolationCheck::check($exams);
+        
         return Inertia::render('ExamMonitoring/ExamMonitoringList', [
             'exams' => ExamIndexResource::collection($exams),
             'past' => $past,
+            'current' => $now->copy()->format('d.m.Y'),
+            'links' => [
+                // 'prev' => [
+                //     'route' => route('exams.monitoring.index', ['date' => $now->copy()->subDay()->format('Y-m-d')]) ,
+                //     'label' => $now->copy()->subDay()->format('d.m.Y')]
+                // ],
+                'prev' => route('exams.monitoring.index', ['date' => $now->copy()->subDay()->format('Y-m-d')]),
+                'next' => route('exams.monitoring.index', ['date' => $now->copy()->addDay()->format('Y-m-d')]) 
+            ]
         ]);
     }
 

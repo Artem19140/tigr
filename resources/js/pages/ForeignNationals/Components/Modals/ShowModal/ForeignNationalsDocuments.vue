@@ -84,6 +84,7 @@ const clear = () => {
                 </template>
                 
             </v-list-item>
+            
             <div v-if="updatedId === doc.id">
                 <v-file-upload
                     density="compact" 

@@ -33,7 +33,8 @@ Route::prefix('exams')->group(function () {
         AppMiddleware::EMPLOYEE_HAS_ANY_ROLE. ':' . EmployeeRole::implode(EmployeeRole::PlatformAdmin, EmployeeRole::Examiner)
     ])
         ->group(function () {
-            Route::get('monitoring', [ExamMonitoringController::class, 'index'])->name('exams.monitoring');
+            Route::get('monitoring', [ExamMonitoringController::class, 'index']
+                )->name('exams.monitoring.index');
             Route::get('checking', [ExamCheckingController::class, 'index']);
         });
 

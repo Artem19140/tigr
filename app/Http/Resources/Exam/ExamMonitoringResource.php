@@ -4,6 +4,7 @@ namespace App\Http\Resources\Exam;
 
 use App\Domain\Exam\Resolver\ExamStatusResolver;
 use App\Http\Resources\Enrollment\EnrollmentMonitoringResource;
+use App\Models\Exam;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -26,6 +27,12 @@ class ExamMonitoringResource extends JsonResource
             'hasSpeakingTasks' => $this->whenLoaded('type', fn () => $this->type->has_speaking_tasks),
             'status' => app(ExamStatusResolver::class)->execute($this->resource),
             'shortName' => $this->whenLoaded('type', fn () => $this->type->short_name),
+            'polling' => $this->pollingStart($this->resource) 
         ];
+    }
+
+    protected function pollingStart(Exam $exam){
+        
+        return $exam->isGoing() && $exam->enrollments_count > 0 ;
     }
 }

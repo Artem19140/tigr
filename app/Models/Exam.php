@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Enums\EmployeeRole;
 use App\Models\Scopes\BelongsToCenter;
 use App\Support\TimePresenter;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -226,29 +225,5 @@ Exam extends Model
     public function canEditProtocolComment():bool
     {
         return $this->begin_time->isToday() && $this->begin_time->isPast();
-    }
-
-    public function scopeSorting(Builder $query, Carbon $now): Builder
-    {
-        return $query->orderByRaw('
-                CASE
-                    WHEN begin_time <= ? AND end_time > ? THEN 0
-                    WHEN begin_time > ? THEN 1
-                    ELSE 2
-                END
-            ', [$now, $now, $now])
-
-            ->orderByRaw('
-                CASE
-                    WHEN begin_time <= ? AND end_time > ? THEN begin_time
-                    WHEN begin_time > ? THEN begin_time
-                END ASC
-            ', [$now, $now, $now])
-
-            ->orderByRaw('
-                CASE
-                    WHEN end_time <= ? THEN begin_time
-                END DESC
-            ', [$now]);
     }
 }

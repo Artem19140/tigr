@@ -44,8 +44,21 @@ class EnrollmentPolicy
         )) {
             return true;
         }
-
         return $employee->can('examiner', $enrollment->exam);
+
+    }
+
+    public function paymentAny(Employee $employee): bool
+    {
+
+        if ($employee->hasAnyRole(
+            EmployeeRole::Operator,
+            EmployeeRole::Examiner
+        )) {
+            return true;
+        }
+
+        return false;
 
     }
 
@@ -56,6 +69,11 @@ class EnrollmentPolicy
             return false;
         }
 
+        return $employee->hasAnyRole(EmployeeRole::Operator);
+    }
+
+     public function statementAny(Employee $employee): bool
+    {
         return $employee->hasAnyRole(EmployeeRole::Operator);
     }
 }

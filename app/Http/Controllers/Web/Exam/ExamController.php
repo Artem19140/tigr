@@ -89,6 +89,7 @@ class ExamController
         Exam $exam,
         ExamShowQuery $examShowQuery
     ): JsonResponse {
+        
         Gate::authorize('view', $exam);
         $employee = $request->user();
         $exam = $examShowQuery->execute($exam);
@@ -107,8 +108,8 @@ class ExamController
                 ],
                 'enrollments' => [
                     'view' => $employee->can('viewAny', Enrollment::class),
-                    'statement' => $employee->hasAnyRole(EmployeeRole::Operator, EmployeeRole::PlatformAdmin),
-                    'payment' => $employee->hasAnyRole(EmployeeRole::Operator) || $employee->can('examiner', $exam),
+                    'statement' => $employee->can('statementAny', Enrollment::class),
+                    'payment' => $employee->can('paymentAny', Enrollment::class),
                 ],
                 'videos' => [
                     'view' => $employee->can('video', Exam::class)

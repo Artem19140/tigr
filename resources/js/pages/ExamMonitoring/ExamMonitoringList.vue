@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { Head, router } from '@inertiajs/vue3';
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
-import BasePaginatedTable from '@components/BaseComponents/BasePaginatedTable/BasePaginatedTable.vue';
 import { DateFormatter } from '@helpers/DateFormatter';
 import { ref } from 'vue';
 import ExamCapacityChip from '@/components/Exam/ExamCapacityChip.vue';
 import { Paginated } from '@/interfaces/Interfaces';
 import BaseContainer from '@/components/BaseComponents/BaseContainer/BaseContainer.vue';
-import AppBorderedButton from '@/components/UI/AppBorderedButton/AppBorderedButton.vue';
 import { ExamIndex } from '@/interfaces/Exam';
 import AppTooltip from '@/components/UI/AppTooltip/AppTooltip.vue';
 
@@ -17,10 +15,13 @@ defineOptions({
 
 const props = defineProps<{
     exams:Paginated<ExamIndex>,
-    past:boolean
+    links:{
+        prev:string,
+        next:string
+    },
+    current:string
 }>()
 
-const past = ref<boolean>(props.past)
 
 const headers = [
     {title:'Название', key:"shortName",sortable:false, align:'center'},
@@ -34,13 +35,9 @@ const open = (event:Event, {item} : any) => {
 
 const loading=ref<boolean>(false)
 
-const getPastExams = () =>{
+const visit = (url :string) => {
     loading.value = true
-    past.value = !past.value
-    router.reload({
-        data:{
-            past:past.value
-        },
+    router.visit(url, {
         onFinish:() => {
             loading.value = false
         }
@@ -53,25 +50,53 @@ const getPastExams = () =>{
         <title>Мониторинг список</title>
     </Head>
     <BaseContainer>
-        <BasePaginatedTable
-            :elements="exams"
+        <v-card variant="text">
+            <v-card-text
+                class="flex items-center justify-between pt-0"
+            >
+                <div class="flex items-center pt-0">
+                    <v-card-title>
+                        Мониторинг
+                    </v-card-title>
+                    <AppTooltip
+                        text="Здесь будут экзамены, где вы являетесь экзаменатором"
+                    />
+                </div>
+                <div>
+                    <v-btn
+                        class="ma-2"
+                        variant="text"
+                        icon
+                        :disabled="loading"
+                        @click="() => visit(props.links.prev)"
+                    >
+                        <v-icon>mdi-chevron-left</v-icon>
+                    </v-btn>
+
+                    <span>{{ current }}</span>
+
+                    <v-btn
+                        class="ma-2"
+                        variant="text"
+                        icon
+                        :disabled="loading"
+                        @click="() => visit(props.links.next)"
+                    >
+                        <v-icon>mdi-chevron-right</v-icon>
+                    </v-btn>
+              </div>
+            </v-card-text>
+        </v-card>
+        
+        <v-data-table
+            :items="exams.data"
             :headers="headers"
             @click:row="open"
-            title="Мониторинг"
             :loading="loading"
+            hide-default-footer
         >
             <template #toolbar-left>
-                <AppTooltip
-                    text="Здесь будут экзамены, где вы являетесь экзаменатором"
-                />
-            </template>
-            <template #toolbar-actions>
-                <AppBorderedButton
-                    :loading="loading"
-                    :disabled="loading"
-                    @click="getPastExams"
-                    :text="past ? 'Текущие' : 'Прошедшие'"
-                />
+                
             </template>
 
             <template #item.capacity="{ item }">
@@ -82,6 +107,6 @@ const getPastExams = () =>{
             <template #item.beginTime="{ item }">
                 {{ new DateFormatter(item.beginTime).format('d M Y,  H:i') }}
             </template>
-        </BasePaginatedTable>
+        </v-data-table>
     </BaseContainer>
 </template>
