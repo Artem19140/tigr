@@ -2,7 +2,7 @@
 import BaseDialog from '@components/BaseComponents/BaseDialog/BaseDialog.vue';
 import ForeignNationalEnrollments from './ForeignNationalEnrollments.vue';
 import ForeignNationalActionsDropdown from './ForeignNationalActionsDropdown.vue';
-import { computed, onMounted, provide, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useHttp } from '@inertiajs/vue3'
 import { DateFormatter } from '@helpers/DateFormatter';
 import countries from '@data/countries.json'
@@ -17,13 +17,11 @@ const http = useHttp<{}, {foreignNational:ForeignNational, permissions:ForeignNa
 
 const isOpen = defineModel<boolean>({default:false})
 const foreignNational = ref<ForeignNational | null>(null)
-const permissions = ref<ForeignNationalActionsPermissions|null>(null)
 
 const getForeignNational = async () => {
     http.get(`/foreign-nationals/${props.foreignNationalId}`,{
         onSuccess:(response)=>{
             foreignNational.value = response.foreignNational
-            permissions.value = response.permissions
         }
     })
 }
@@ -42,10 +40,12 @@ const getCountryTitle = (value:string | null) => {
     return result ? result.text : '-';
 }
 
-const dropDownAccess = computed(() =>
-
-    (permissions.value?.edit || permissions.value?.enroll) && permissions.value
-)
+const dropDownAccess = computed(() =>{
+    if(! foreignNational.value){
+        return false
+    }
+    return foreignNational.value.permissions.edit || foreignNational.value.permissions.enroll
+})
 
 function formatPhoneNumber(cleaned: string ) {
   if (!cleaned || cleaned.length !== 10 || !/^\d+$/.test(cleaned)) {
@@ -59,7 +59,6 @@ function formatPhoneNumber(cleaned: string ) {
     cleaned.substring(8, 10)
   );
 }
-provide('permissions', permissions)
 </script>
 
 <template>
@@ -83,7 +82,6 @@ provide('permissions', permissions)
             <ForeignNationalActionsDropdown 
                 :foreignNational="foreignNational"
                 @edit="edit"
-                :permissions="permissions"
                 v-if="dropDownAccess"
             />
         </template>
@@ -119,22 +117,24 @@ provide('permissions', permissions)
                 </v-list-item>
             </v-list>
         </v-card-text>
-
-        <v-divider></v-divider>
-
-        <v-card-text class="ml-4" v-if="permissions?.documents">
-            <ForeignNationalsDocuments
-                :documents="foreignNational?.documents"
-            />
+        
+        <div
+            v-if="foreignNational?.permissions.documents"
+        >
+            <v-divider />
+            <v-card-text class="ml-4">
+                <ForeignNationalsDocuments
+                    :documents="foreignNational?.documents"
+                />
             </v-card-text>
+        </div>
 
-        <v-divider></v-divider>
+        <v-divider />
 
         <v-card-text>
             <ForeignNationalEnrollments 
                 v-if="foreignNational" 
                 :enrollments="foreignNational?.enrollments"
-                :permissions="permissions" 
             />
         </v-card-text>
     </BaseDialog>

@@ -50,11 +50,7 @@ const clear = () => {
             v-for="doc in documents"
             :key="doc.id"
         >
-            <v-list-item
-            
-                variant="text"
-                
-            >
+            <v-list-item>
                 <template v-slot:prepend>
                     <v-img
                         width="35"
@@ -80,6 +76,7 @@ const clear = () => {
                         
                         <v-list-item
                             @click="updatedId = doc.id"
+                            v-if="doc.permissions.update"
                         >
                             Заменить
                         </v-list-item>
@@ -112,5 +109,4 @@ const clear = () => {
             </div>
         </div>
     </v-list>
-
 </template>

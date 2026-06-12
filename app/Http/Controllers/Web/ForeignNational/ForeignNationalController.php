@@ -73,29 +73,36 @@ class ForeignNationalController
     ): JsonResponse {
         Gate::authorize('view', $foreignNational);
 
-        $foreignNational->load([
-            'creator',
-            'enrollments' => function ($query) use ($request) {
-                $query->visibleFor($request->user())
-                    ->with([
-                        'exam' => ['type', 'center'],
-                        'attempt.center',
-                    ]);
-            }
-        ]);
+        $relations = [];
 
-        if($request->user()->can('viewAny', Document::class)){
-            $foreignNational->load([
+        $employee = $request->user();
+
+        if($employee->can('viewAny', Document::class)){
+            $relations = [...$relations, 
                 'documents' => function(MorphMany $query){
                     return $query->whereNull('deleted_at');
                 },
                 'documents.creator'
-            ]);
+            ];
         }
+
+        if($employee->can('viewAny', Enrollment::class)){
+            $relations = [...$relations,
+                'enrollments' => function ($query) use ($request) {
+                    $query->visibleFor($request->user())
+                        ->with([
+                            'exam' => ['type', 'center'],
+                            'attempt.center',
+                        ]);
+                }
+            ];
+        }
+
+        $foreignNational->load(['creator', ...$relations]);
 
         $foreignNational->enrollments = $foreignNational->enrollments->sortByDesc('exam.begin_time');
         $foreignNational->enrollments->loadExists('attempt');
-        $employee = $request->user();
+
 
         return response()->json([
             'foreignNational' => new ForeignNationalProfileResource($foreignNational),
@@ -103,10 +110,7 @@ class ForeignNationalController
                 'enroll' => $employee->can('create', Enrollment::class),
                 'edit' => $employee->can('update', $foreignNational),
                 'documents' => $employee->can('viewAny', Document::class),
-                'enrollments' => [
-                    'statement' => $employee->hasAnyRole(EmployeeRole::Operator, EmployeeRole::PlatformAdmin),
-                    'payment' => $employee->hasAnyRole(EmployeeRole::Operator, EmployeeRole::PlatformAdmin),
-                ],
+                'enrollments' => $employee->can('viewAny', Enrollment::class)
             ],
         ]);
     }

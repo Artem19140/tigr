@@ -4,11 +4,9 @@ import { useExamStatus } from '@/composables/useExamStatus';
 import PaymentChange from './PaymentChange.vue';
 import { Enrollment } from '@/interfaces/Enrollment';
 import BaseListItem from '../BaseComponents/BaseList/BaseListItem.vue';
-import { ExamActionsPermissions } from '@/interfaces/Exam';
 
 const props = defineProps<{
-    enrollment:Enrollment,
-    permissions?:ExamActionsPermissions
+    enrollment:Enrollment
 }>()
 
 const download = (document : string) => {
@@ -20,15 +18,15 @@ const isPaymentChangeDisabled  = isFinished.value || isCancelled.value
 </script>
 
 <template>
-    <BaseThreeDotDropdown  v-if="permissions?.enrollments.payment || permissions?.enrollments.statement">
+    <BaseThreeDotDropdown  v-if="enrollment.permissions.payment || enrollment.permissions.statement">
         <PaymentChange 
             :enrollment="enrollment"
-            v-if="permissions?.enrollments.payment"
+            v-if="enrollment.permissions.payment"
             :disabled="isPaymentChangeDisabled"
         />
         <BaseListItem 
             title="Заявление" 
-            v-if="permissions?.enrollments.statement"
+            v-if="enrollment.permissions.statement"
             @click="() => download('statements')"
         />
     </BaseThreeDotDropdown>

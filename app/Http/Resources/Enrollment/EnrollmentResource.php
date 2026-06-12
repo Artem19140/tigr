@@ -31,6 +31,10 @@ class EnrollmentResource extends JsonResource
             'availability' => [
                 'payment' => app(EnrollmentPaymentRules::class)->check($this->resource)->available,
             ],
+            'permissions' => [
+                'payment' => $request->user()->can('payment', $this->resource),
+                'statement' => $request->user()->can('statement', $this->resource),
+            ]
         ];
     }
 }

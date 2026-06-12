@@ -5,6 +5,8 @@ namespace App\Http\Resources\ForeignNational;
 use App\Http\Resources\Employee\EmployeeResource;
 use App\Http\Resources\Enrollment\EnrollmentResource;
 use App\Http\Resources\Document\DocumentResource;
+use App\Models\Document;
+use App\Models\Enrollment;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,6 +19,7 @@ class ForeignNationalProfileResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $employee = $request->user();
         return [
             'id' => $this->resource->id,
             'dateBirth' => $this->resource->date_birth,
@@ -44,7 +47,13 @@ class ForeignNationalProfileResource extends JsonResource
             'fullPassport' => $this->full_passport,
             'creatorFullName' => $this->whenLoaded('creator', fn () => $this->creator->full_name),
             'addressReg' => $this->address_reg,
-            'documents' =>  DocumentResource::collection($this->whenLoaded('documents'))
+            'documents' =>  DocumentResource::collection($this->whenLoaded('documents')),
+            'permissions' => [
+                'enroll' => $employee->can('create', Enrollment::class),
+                'edit' => $employee->can('update', $this->resource),
+                'documents' => $employee->can('viewAny', Document::class),
+                'enrollments' => $employee->can('viewAny', Enrollment::class)
+            ],
         ];
     }
 }

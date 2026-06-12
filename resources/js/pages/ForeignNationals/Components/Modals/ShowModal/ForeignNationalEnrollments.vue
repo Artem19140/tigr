@@ -9,8 +9,7 @@ import AppProgressCircular from '@/components/UI/AppProgressCircular/AppProgress
 import EnrollmentDropDown from '@/components/Enrollment/EnrollmentDropDown.vue';
 
 const props = defineProps<{
-  enrollments: Array<Enrollment>,
-  permissions:any
+  enrollments: Array<Enrollment>
 }>();
 const modals = useModals()
 </script>
@@ -57,7 +56,6 @@ const modals = useModals()
               v-if="enrollment.exam.status === 'cancelled'"
             />
             <EnrollmentDropDown 
-              :permissions="permissions"
               :enrollment="enrollment"/>
           </div>
         </v-card-text>

@@ -31,7 +31,8 @@ export interface ForeignNational{
   addressReg:string,
   documents: {
     id:number
-  }
+  },
+  permissions: ForeignNationalActionsPermissions
 }
 
 export interface ForeignNationalEnrollment{
@@ -50,7 +51,7 @@ export interface ForeignNationalIndex{
 export type ForeignNationalFormI = Omit<
   ForeignNational,
   'id' | 'creator' | 'exams' | 'createdAt' | 'attempts' | 'exam' | 'fullName' | 'fullPassport' | 
-  'passportTranslateScanPath' | 'passportScanPath' | 'creatorFullName' | 'enrollments'  | 'fullNameLatin' 
+  'passportTranslateScanPath' | 'passportScanPath' | 'creatorFullName' | 'enrollments'  | 'fullNameLatin' | 'permissions'
 > & {
   passport: File | null
   passportTranslate: File | null
