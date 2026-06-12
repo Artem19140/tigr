@@ -7,7 +7,7 @@ import { router, useHttp } from '@inertiajs/vue3';
 import ExamStatusChip from '@components/Exam/ExamStatusChip.vue';
 import { Exam, ExamActionsPermissions } from '@/interfaces/Exam';
 import ExamInfo from './ExamInfo.vue';
-import VideoUpload from './VideoUpload.vue';
+import ExamVideo from './ExamVideo.vue';
 
 const props = defineProps<{
     examId:number
@@ -113,7 +113,7 @@ const tab = ref()
                     
                 </v-tabs-window-item>
                 <v-tabs-window-item value="videos" >
-                    <VideoUpload 
+                    <ExamVideo 
                         :exam="exam"
                     />
                 </v-tabs-window-item>
