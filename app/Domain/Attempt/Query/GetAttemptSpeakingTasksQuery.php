@@ -3,7 +3,6 @@
 namespace App\Domain\Attempt\Query;
 
 use App\Enums\TaskType;
-use App\Exceptions\BusinessException;
 use App\Models\Attempt;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

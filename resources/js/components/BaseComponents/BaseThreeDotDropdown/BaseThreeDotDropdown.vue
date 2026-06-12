@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import BaseList from '../BaseList/BaseList.vue';
 </script>
 
 <template>
-    <v-menu >
+    <v-menu>
         <template  v-slot:activator="{ props }">
             <v-btn icon
                 variant="text"
@@ -12,8 +11,8 @@ import BaseList from '../BaseList/BaseList.vue';
                 <v-icon>mdi-dots-vertical</v-icon>
             </v-btn>
         </template>
-        <base-list nav width="250">
+        <v-list nav width="250">
             <slot />
-        </base-list>
+        </v-list>
     </v-menu>
 </template>

@@ -7,6 +7,7 @@ import ExamResultStatusChip from '@/components/Exam/ExamResultStatusChip.vue';
 import PaymentIcon from '@/components/Enrollment/PaymentIcon.vue';
 import { Exam, ExamActionsPermissions } from '@/interfaces/Exam';
 import AppInput from '@/components/UI/AppInput/AppInput.vue';
+import ExamCapacityChip from '@/components/Exam/ExamCapacityChip.vue';
 
 const props = defineProps<{
     exam: Exam,
@@ -35,15 +36,23 @@ const search = ref('')
 </script>
 
 <template>
-    <AppInput
-        v-model="search"
-        density="compact"
-        label="Поиск"
-        prepend-inner-icon="mdi-magnify"
-        variant="outlined"
-        hide-details
-        single-line
-    />
+    <div class="flex items-center gap-4 ">
+        <div class="flex items-center gap-2 mt-2" >
+            <span>Записано: </span> <ExamCapacityChip :exam="exam"/>
+        </div>
+    
+        <AppInput
+            v-model="search"
+            density="compact"
+            label="Поиск"
+            prepend-inner-icon="mdi-magnify"
+            variant="outlined"
+            hide-details
+            single-line
+        />
+    
+    </div>
+    
     <v-data-table 
         :items="exam.enrollments"
         hide-default-footer

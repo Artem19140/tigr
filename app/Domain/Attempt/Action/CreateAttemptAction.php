@@ -28,7 +28,7 @@ class CreateAttemptAction
         $attempt = DB::transaction(function () use ($code) {
             $enrollment = $this->verifyCodeService->execute($code);
 
-            $exam = Exam::find($enrollment->exam_id);
+            $exam = Exam::findOrFail($enrollment->exam_id);
 
             $this->examGuard->ensureNotCancelled($exam);
 

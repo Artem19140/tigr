@@ -131,4 +131,8 @@ class ExamPolicy
 
         return $this->examiner($employee, $exam);
     }
+
+    public function video(Employee $employee): bool{
+        return $employee->hasAnyRole(EmployeeRole::VideoRecordOperator);
+    }
 }

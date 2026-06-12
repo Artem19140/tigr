@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useHttp, usePage } from '@inertiajs/vue3'
+import { useHttp } from '@inertiajs/vue3'
 import { usePromptDialog } from '@composables/usePromptDialog';
 import BaseThreeDotDropdown from '@components/BaseComponents/BaseThreeDotDropdown/BaseThreeDotDropdown.vue';
 import { useModals } from '@composables/useModals';
@@ -7,17 +7,12 @@ import { useLoadingSnackbar } from '@composables/useLoadingSnackBar';
 import { useExamStatus } from '@/composables/useExamStatus';
 import { Exam, ExamActionsPermissions } from '@/interfaces/Exam';
 import { RedirectUrl } from '@/interfaces/Interfaces';
-import BaseListItem from '@/components/BaseComponents/BaseList/BaseListItem.vue';
-import { computed } from 'vue';
 
 const props = defineProps<{
   exam : Exam, 
   permissions:ExamActionsPermissions
 }>()
 
-// const page = usePage()
-
-// const permissions = computed(() => page)
 
 const emit = defineEmits<{
   (e:'cancel', value:string):void,
@@ -81,21 +76,21 @@ const downloadCodesDisabled  = !props.exam?.documentsAvailable.codes.available
 
 <template>
     <BaseThreeDotDropdown>
-      <BaseListItem 
+      <v-list-item
         title="Кода" 
         :disabled="downloadCodesDisabled"
         @click="() => download('codes')" 
         v-if="permissions.documents.codes"
       />
 
-      <BaseListItem 
+      <v-list-item 
         title="Список"
         v-if="permissions.documents.list"
         :disabled="downloadListDisabled"  
         @click="download('list')" 
       />
 
-      <BaseListItem 
+      <v-list-item 
         title="Результаты"
         :subtitle="props.exam?.documentsAvailable.results.label"
         :disabled="downloadResultslDisabled" 
@@ -103,21 +98,21 @@ const downloadCodesDisabled  = !props.exam?.documentsAvailable.codes.available
         @click="() => download('results')" 
       />
 
-      <BaseListItem 
+      <v-list-item
         title="Протокол" 
         v-if="permissions.documents.protocol"
         :disabled="downloadProtocolDisabled"
         @click="() => download('protocol')" 
       />
       <v-divider v-if="permissions.actions.edit || permissions.actions.delete"></v-divider>
-      <BaseListItem 
+      <v-list-item 
         title="Редактировать" 
         v-if="permissions.actions.edit"
         @click="modals.open('examEdit', {exam:exam, onEdit:(exam:Exam) => emit('edit', exam)})"
         :disabled="editDisabled"
       />
       
-      <BaseListItem 
+      <v-list-item 
         base-color="red"
         title="Отменить" 
         @click="cancelExam"

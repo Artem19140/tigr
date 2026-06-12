@@ -121,6 +121,10 @@ export interface ExamActionsPermissions {
     statement: boolean
     payment: boolean
   }
+
+  videos:{
+    view:boolean
+  }
 }
 
 export interface ExamPagePermissions{

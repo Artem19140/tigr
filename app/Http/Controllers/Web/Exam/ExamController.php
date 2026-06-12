@@ -110,6 +110,9 @@ class ExamController
                     'statement' => $employee->hasAnyRole(EmployeeRole::Operator, EmployeeRole::PlatformAdmin),
                     'payment' => $employee->hasAnyRole(EmployeeRole::Operator) || $employee->can('examiner', $exam),
                 ],
+                'videos' => [
+                    'view' => $employee->can('video', Exam::class)
+                ]
 
             ],
             'exam' => new ExamResource($exam),

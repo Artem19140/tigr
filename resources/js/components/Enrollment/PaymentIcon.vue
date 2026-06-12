@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Enrollment } from '@/interfaces/Interfaces';
+import { Enrollment } from '@/interfaces/Enrollment.js';
 import AppProgressCircular from '../UI/AppProgressCircular/AppProgressCircular.vue';
 
 const props = defineProps<{
