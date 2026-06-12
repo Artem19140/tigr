@@ -13,6 +13,7 @@ import AppNumberInput from '@/components/UI/AppNumberInput/AppNumberInput.vue';
 const props = defineProps<{
     errors:any,
     loading:boolean,
+    docs?:boolean
 }>()
 
 const form = defineModel<ForeignNationalFormI>('form',{
@@ -238,10 +239,7 @@ function required (v:any) {
             </v-container>
         </v-card-text>
     </v-card>
-
-    
-
-    <v-card title="Документы" class="mb-4" variant="flat">
+    <v-card title="Документы" class="mb-4" variant="flat" v-if="docs">
         <v-card-text>
             <v-container fluid>
                 <v-row class="mb-2">
@@ -250,10 +248,10 @@ function required (v:any) {
                         <v-file-upload
                             density="comfortable"
                             clearable
-                            v-model="form.passportScan"
+                            v-model="form.passport"
                             :readonly="readonly"
                             accept=".pdf,application/pdf"
-                            :error-messages="errors.passportScan"
+                            :error-messages="errors.passport"
                             variant="comfortable"
                             :rules="[required]"
                             title="Скан паспорта PDF"
@@ -267,10 +265,10 @@ function required (v:any) {
                             title="Скан перевода паспорта PDF"
                             :rules="[required]"
                             clearable
-                            v-model="form.passportTranslateScan"
+                            v-model="form.passportTranslate"
                             :readonly="readonly"
                             accept=".pdf,application/pdf"
-                            :error-messages="errors.passportTranslateScan"
+                            :error-messages="errors.passportTranslate"
                         />
                     </v-col>
                 </v-row>

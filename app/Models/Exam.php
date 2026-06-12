@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Notifications\Notifiable;
 
 class 
@@ -50,26 +51,7 @@ Exam extends Model
         'cancelled_at' => 'datetime',
     ];
 
-    public function scopeVisibleFor(
-        Builder $query,
-        Employee $employee
-    ): Builder { // если есть роль экзаменатора И оператора, то применяется фильтр мб EmployeeRole::exept и anyRole
-        if($employee->hasAnyRole(
-            EmployeeRole::Operator,
-            EmployeeRole::Director,
-            EmployeeRole::Scheduler,
-            EmployeeRole::PlatformAdmin
-        )){
-            return $query;
-        }
-        // if (! $employee->hasAnyRole(EmployeeRole::Examiner) || $employee->isPlatformAdmin()) {
-        //     return $query;
-        // }
-
-        return $query->whereHas('examiners', function (Builder $q) use ($employee) {
-            $q->where('examiner_id', $employee->id);
-        });
-    }
+    
 
     public function type(): BelongsTo
     {
@@ -84,6 +66,11 @@ Exam extends Model
     public function examiners(): BelongsToMany
     {
         return $this->belongsToMany(Employee::class, 'exam_examiner', 'exam_id', 'examiner_id');
+    }
+
+    public function documents(): MorphMany
+    {
+        return $this->morphMany(Document::class, 'documentable');
     }
 
     public function scopeExaminer(Builder $query, Employee $employee): Builder
@@ -216,6 +203,24 @@ Exam extends Model
             ->addMinutes(self::CODES_TTL_AFTER_BEGIN_MINUTES);
 
         return now()->lte($deadline);
+    }
+
+    public function scopeVisibleFor(
+        Builder $query,
+        Employee $employee
+    ): Builder {
+        if($employee->hasAnyRole(
+            EmployeeRole::Operator,
+            EmployeeRole::Director,
+            EmployeeRole::Scheduler,
+            EmployeeRole::PlatformAdmin
+        )){
+            return $query;
+        }
+
+        return $query->whereHas('examiners', function (Builder $q) use ($employee) {
+            $q->where('examiner_id', $employee->id);
+        });
     }
 
     public function canEditProtocolComment():bool

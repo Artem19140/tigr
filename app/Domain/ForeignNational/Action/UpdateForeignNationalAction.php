@@ -33,7 +33,7 @@ final class UpdateForeignNationalAction
 
     protected function attributes(array $data): array
     {
-        return array_merge([
+        return [
             'surname' => $data['surname'],
             'name' => $data['name'],
             'patronymic' => $data['patronymic'],
@@ -50,24 +50,9 @@ final class UpdateForeignNationalAction
             'gender' => $data['gender'],
             'address_reg' => $data['addressReg'],
             'comment' => $data['comment'] ?? '',
-        ],
-            $this->files($data));
+        ];
     }
 
-    protected function files(array $data): array
-    {
-        $files = [];
-        if ($data['passportScan'] ?? false) {
-            // удалить старые файлы
-            $files['passport_scan'] = Storage::putFile('avatars', $data['passportScan']);
-        }
-        if ($data['passportTranslateScan'] ?? false) {
-            // удалить старые файлы
-            $files['passport_translate_scan'] = Storage::putFile('avatars', $data['passportTranslateScan']);
-        }
-
-        return $files;
-    }
 
     protected function log(
         ForeignNational $foreignNational,

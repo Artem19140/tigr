@@ -16,30 +16,30 @@ const examTypeId = ref<number | null>(null)
 const exams = ref<Exam[]>()
 
 const http = useHttp<ForeignNationalFormI & {hasPayment:boolean, examId: number | null}, RedirectUrl>({
-    surname: '', 
-    name:'',
-    patronymic:"",
+    surname: 'sad', 
+    name:'ds',
+    patronymic:"sf",
     noPatronymic:false,
-    surnameLatin:'',
-    nameLatin:'',
-    patronymicLatin:"",
+    surnameLatin:'asd',
+    nameLatin:'s',
+    patronymicLatin:"sd",
     noPatronymicLatin:false,
-    passportNumber:"",
-    passportSeries:"",
+    passportNumber:"sd",
+    passportSeries:"sdf",
     noPassportNumber:false,
     noPassportSeries:false,
-    issuedBy:'',
-    issuedDate:'',
-    citizenship:null,
-    phone:null,
-    dateBirth:'',
-    passportScan:null,
-    passportTranslateScan:null,
+    issuedBy:'qwe',
+    issuedDate:'2025-12-12',
+    citizenship:'AU',
+    phone:'1234567890',
+    dateBirth:'2005-12-12',
+    passport:null,
+    passportTranslate:null,
     examId:null,
-    gender:null,
+    gender:"M",
     hasPayment:false,
     comment:'',
-    addressReg:''
+    addressReg:'123'
 })
 
 const form = ref()
@@ -109,8 +109,10 @@ const  reset = ()  =>  {
                     <ForeignNationalForm 
                         v-model:form="http"
                         :loading="http.processing"
-                        :errors="http.errors"    
+                        :errors="http.errors"   
+                        :docs=true
                     />
+                    
                 </v-form>
                   
             <template #actions>

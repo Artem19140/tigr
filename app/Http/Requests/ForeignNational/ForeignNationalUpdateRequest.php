@@ -5,7 +5,6 @@ namespace App\Http\Requests\ForeignNational;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\File;
 use Illuminate\Support\Facades\Cache;
 
 class ForeignNationalUpdateRequest extends FormRequest
@@ -135,19 +134,7 @@ class ForeignNationalUpdateRequest extends FormRequest
             'addressReg' => [
                 'required',
                 'string',
-            ],
-            'passportTranslateScan' => [
-                'nullable',
-                'mimes:pdf',
-                File::types(['pdf'])
-                    ->max('10mb'),
-            ],
-            'passportScan' => [
-                'nullable',
-                'mimes:pdf',
-                File::types(['pdf'])
-                    ->max('10mb'),
-            ],
+            ]
         ];
     }
 }

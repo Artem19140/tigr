@@ -7,7 +7,7 @@ use App\Http\Controllers\Web\Auth\PasswordController;
 use App\Http\Controllers\Web\Enrollment\EnrollmentController;
 use App\Http\Controllers\Web\Enrollment\EnrollmentDocumentController;
 use App\Http\Controllers\Web\Exam\ExamController;
-use App\Http\Controllers\Web\File\FileController;
+use App\Http\Controllers\Web\Document\DocumentController;
 use App\Http\Controllers\Web\ForeignNational\ForeignNationalController;
 use App\Http\Controllers\Web\ForeignNational\ForeignNationalExportController;
 use App\Http\Controllers\Web\Report\ReportController;
@@ -45,14 +45,15 @@ Route::middleware([
             ->middleware('can:statement,enrollment')
             ->name('enrollments.statements');
 
-        Route::middleware([AppMiddleware::EMPLOYEE_HAS_ANY_ROLE.':'.EmployeeRole::implode(EmployeeRole::Director)])->group(function () {
-            Route::get('foreign-nationals/export', [ForeignNationalExportController::class, 'export'])
-                ->name('foreign-nationals.export');
+        Route::get('foreign-nationals/export', [ForeignNationalExportController::class, 'export'])
+            ->can('export', ForeignNational::class)
+            ->name('foreign-nationals.export');
 
-            Route::get('foreign-nationals/export/available', [ForeignNationalExportController::class, 'exportAvailable']);
-
-            Route::get('statistics', [StatisticsController::class, 'index']);
-        });
+        Route::get('foreign-nationals/export/available', [ForeignNationalExportController::class, 'exportAvailable'])
+            ->can('export', ForeignNational::class);
+            
+        Route::get('statistics', [StatisticsController::class, 'index'])
+            ->can('statistics');
 
         Route::prefix('reports')->group(function () {
 
@@ -112,8 +113,11 @@ Route::middleware([
             ->name('password.change')
             ->withoutMiddleware([AppMiddleware::HAS_CHANGE_PASSWORD]);
 
-        Route::get('files', [FileController::class, 'show'])
-            ->can('files', ForeignNational::class);
+        Route::get('documents/{document}', [DocumentController::class, 'show'])
+            ->can('view','document');
+
+        Route::put('documents/{document}', [DocumentController::class, 'update'])
+            ->can('update','document');
 
         Route::post('logout', [LogoutController::class, 'logout'])->name('logout');
         Route::post('logout/all', [LogoutController::class, 'logoutAll'])->name('logout.all');

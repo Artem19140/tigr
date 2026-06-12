@@ -133,13 +133,13 @@ class ForeignNationalPostRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'passportTranslateScan' => [
+            'passportTranslate' => [
                 'required',
                 'mimes:pdf',
                 File::types(['pdf'])
                     ->max('10mb'),
             ],
-            'passportScan' => [
+            'passport' => [
                 'required',
                 'mimes:pdf',
                 File::types(['pdf'])
@@ -172,8 +172,8 @@ class ForeignNationalPostRequest extends FormRequest
             gender: $this->gender,
             comment: $this->comment,
 
-            passportScan: $this->file('passportScan'),
-            passportTranslateScan: $this->file('passportTranslateScan'),
+            passport: $this->file('passport'),
+            passportTranslate: $this->file('passportTranslate'),
         );
     }
 }

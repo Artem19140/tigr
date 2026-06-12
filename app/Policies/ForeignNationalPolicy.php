@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Enums\EmployeeRole;
 use App\Models\Employee;
 use App\Models\ForeignNational;
-use Illuminate\Database\Eloquent\Builder;
 
 class ForeignNationalPolicy
 {
@@ -13,19 +12,24 @@ class ForeignNationalPolicy
 
     public function view(Employee $employee, ForeignNational $foreignNational): bool
     {
-        if (! $this->sameCenter($employee, $foreignNational)) {
+        if (! $this->sameCenter($employee, $foreignNational)) 
+        {
             return false;
         }
+
         if ($employee->hasAnyRole(
             EmployeeRole::Operator,
             EmployeeRole::Director
-        )) {
+        )) 
+        {
             return true;
         }
-        if ($employee->hasRole(EmployeeRole::Examiner->value)) {
-            return $employee->exams()->whereHas('foreignNationals', function (Builder $query) use ($foreignNational) {
-                $query->where('foreign_national_id', $foreignNational->id);
-            })->exists();
+
+        if ($employee->hasRole(EmployeeRole::Examiner->value)) 
+        {
+            return $foreignNational->exams()
+                ->examiner($employee)
+                ->exists();
         }
 
         return false;
@@ -60,17 +64,5 @@ class ForeignNationalPolicy
     public function export(Employee $employee): bool
     {
         return $employee->hasAnyRole(EmployeeRole::Director);
-    }
-
-    public function files(Employee $employee): bool
-    {
-        if ($employee->hasAnyRole(
-            EmployeeRole::Operator,
-            EmployeeRole::Examiner
-        )) {
-            return true;
-        }
-
-        return false;
     }
 }

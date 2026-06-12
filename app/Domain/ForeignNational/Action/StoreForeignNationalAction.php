@@ -2,15 +2,18 @@
 
 namespace App\Domain\ForeignNational\Action;
 
+use App\Domain\Document\DocumentService;
 use App\Domain\ForeignNational\Guard\ForeignNationalGuard;
 use App\Models\Employee;
 use App\Models\ForeignNational;
-use Storage;
+use Illuminate\Support\Facades\Storage;
+
 
 final class StoreForeignNationalAction
 {
     public function __construct(
-        protected ForeignNationalGuard $foreignNationalGuard
+        protected ForeignNationalGuard $foreignNationalGuard,
+        protected DocumentService $documentService
     ) {}
 
     public function execute(
@@ -19,10 +22,22 @@ final class StoreForeignNationalAction
     ): ForeignNational {
         $this->foreignNationalGuard->ensureAge($data['dateBirth']);
         $this->foreignNationalGuard->ensureUniquePassport($data);
+        
         $foreignNational = ForeignNational::create(
             $this->attributes($data, $employee),
         );
 
+        $this->documentService->create(
+            $data['passportTranslate'],
+            $foreignNational,
+            'passport_translate'
+        );
+
+        $this->documentService->create(
+            $data['passport'],
+            $foreignNational,
+            'passport'
+        );
         return $foreignNational;
     }
 
@@ -49,8 +64,6 @@ final class StoreForeignNationalAction
             'center_id' => $creator->center_id,
             'gender' => $data['gender'],
             'comment' => $data['comment'],
-            'passport_translate_scan' => Storage::putFile('documents', $data['passportTranslateScan']),
-            'passport_scan' => Storage::putFile('documents', $data['passportScan']),
             'surname_normalized' => $this->normalize($data['surname']),
             'name_normalized' => $this->normalize($data['name']),
             'patronymic_normalized' => $this->normalize($data['patronymic']),

@@ -16,19 +16,22 @@ export interface ForeignNational{
   issuedDate:string,
   phone:string | null,
   creator?:Employee | null,
-  passportScan?:string | null,
+  passport?:string | null,
   citizenship:string | null,
   dateBirth:string,
   attempts?:Array<Attempt> | null,
   fullName:string,
   fullNameLatin:string,
   fullPassport:string,
-  passportTranslateScan?:string | null,
+  passportTranslate?:string | null,
   comment:''
   gender:string | null,
   enrollments:Array<Enrollment>,
   creatorFullName:string,
-  addressReg:string
+  addressReg:string,
+  documents: {
+    id:number
+  }
 }
 
 export interface ForeignNationalEnrollment{
@@ -46,11 +49,11 @@ export interface ForeignNationalIndex{
 
 export type ForeignNationalFormI = Omit<
   ForeignNational,
-  'id' | 'creator' | 'exams' | 'createdAt' | 'passportScan'  | 'attempts' | 'exam' | 'fullName' | 'fullPassport' | 
+  'id' | 'creator' | 'exams' | 'createdAt' | 'attempts' | 'exam' | 'fullName' | 'fullPassport' | 
   'passportTranslateScanPath' | 'passportScanPath' | 'creatorFullName' | 'enrollments'  | 'fullNameLatin' 
 > & {
-  passportScan: File | null
-  passportTranslateScan: File | null
+  passport: File | null
+  passportTranslate: File | null
   noPassportNumber: boolean
   noPassportSeries: boolean
   noPatronymic: boolean
@@ -76,6 +79,6 @@ export interface ForeignNationalPagePermissions{
 export interface ForeignNationalActionsPermissions{
   edit: boolean,
   enroll: boolean,
-  files:boolean,
+  documents:boolean,
   enrollmentStatement:boolean
 }

@@ -23,7 +23,7 @@ class ForeignNationalStoreDTO
         public string $addressReg,
         public string $gender,
         public ?string $comment,
-        public UploadedFile $passportScan,
-        public UploadedFile $passportTranslateScan,
+        public UploadedFile $passport,
+        public UploadedFile $passportTranslate,
     ) {}
 }

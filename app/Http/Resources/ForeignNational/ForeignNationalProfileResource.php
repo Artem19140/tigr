@@ -4,6 +4,7 @@ namespace App\Http\Resources\ForeignNational;
 
 use App\Http\Resources\Employee\EmployeeResource;
 use App\Http\Resources\Enrollment\EnrollmentResource;
+use App\Http\Resources\Document\DocumentResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -35,14 +36,15 @@ class ForeignNationalProfileResource extends JsonResource
             'gender' => $this->resource->gender,
             'creator' => new EmployeeResource($this->whenLoaded('creator')),
             'enrollments' => EnrollmentResource::collection($this->whenLoaded('enrollments')),
-            'passportScan' => $this->passport_scan,
-            'passportTranslateScan' => $this->passport_translate_scan,
+            'passport' => $this->passport,
+            'passportTranslate' => $this->passport_translate,
             'createdAt' => $this->created_at,
             'fullName' => $this->full_name,
             'fullNameLatin' => $this->full_name_latin,
             'fullPassport' => $this->full_passport,
             'creatorFullName' => $this->whenLoaded('creator', fn () => $this->creator->full_name),
             'addressReg' => $this->address_reg,
+            'documents' =>  DocumentResource::collection($this->whenLoaded('documents'))
         ];
     }
 }

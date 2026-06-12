@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Enums\EmployeeRole;
 use App\Models\Attempt;
 use App\Models\Employee;
 use App\Models\ForeignNational;
@@ -19,6 +20,10 @@ class AuthorizationServiceProvider extends ServiceProvider
     {
         Gate::define('attempt-access', function (ForeignNational $foreignNational, Attempt $attempt) {
             return $foreignNational->id === $attempt->foreign_national_id;
+        });
+
+        Gate::define('statistics', function (Employee $employee) {
+            return $employee->hasAnyRole(EmployeeRole::Director);
         });
 
         Gate::before(function (Employee|ForeignNational $user, string $ability) {

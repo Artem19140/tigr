@@ -11,9 +11,11 @@ use App\Http\Requests\ForeignNational\ForeignNationalPostRequest;
 use App\Http\Requests\ForeignNational\ForeignNationalUpdateRequest;
 use App\Http\Resources\ForeignNational\ForeignNationalIndexResource;
 use App\Http\Resources\ForeignNational\ForeignNationalProfileResource;
+use App\Models\Document;
 use App\Models\Enrollment;
 use App\Models\ForeignNational;
 use App\Support\CenterIsolationCheck;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -40,7 +42,7 @@ class ForeignNationalController
             'permissions' => [
                 'create' => $employee->can('create', ForeignNational::class),
                 'export' => $employee->can('export', ForeignNational::class),
-                'statistics' => $employee->hasAnyRole(EmployeeRole::Director, EmployeeRole::PlatformAdmin),
+                'statistics' => $employee->can('statistics'),
                 'ministryEducation' => $employee->hasAnyRole(EmployeeRole::Director, EmployeeRole::PlatformAdmin),
             ],
         ]);
@@ -59,7 +61,9 @@ class ForeignNationalController
             );
 
         return response()->json([
-            'redirectUrl' => route('enrollments.statements', ['enrollment' => $enrollement]),
+            'redirectUrl' => route('enrollments.statements', [
+                'enrollment' => $enrollement
+            ]),
         ]);
     }
 
@@ -77,8 +81,17 @@ class ForeignNationalController
                         'exam' => ['type', 'center'],
                         'attempt.center',
                     ]);
-            },
+            }
         ]);
+
+        if($request->user()->can('viewAny', Document::class)){
+            $foreignNational->load([
+                'documents' => function(MorphMany $query){
+                    return $query->whereNull('deleted_at');
+                },
+                'documents.creator'
+            ]);
+        }
 
         $foreignNational->enrollments = $foreignNational->enrollments->sortByDesc('exam.begin_time');
         $foreignNational->enrollments->loadExists('attempt');
@@ -89,7 +102,7 @@ class ForeignNationalController
             'permissions' => [
                 'enroll' => $employee->can('create', Enrollment::class),
                 'edit' => $employee->can('update', $foreignNational),
-                'files' => $employee->can('files', ForeignNational::class),
+                'documents' => $employee->can('viewAny', Document::class),
                 'enrollments' => [
                     'statement' => $employee->hasAnyRole(EmployeeRole::Operator, EmployeeRole::PlatformAdmin),
                     'payment' => $employee->hasAnyRole(EmployeeRole::Operator, EmployeeRole::PlatformAdmin),

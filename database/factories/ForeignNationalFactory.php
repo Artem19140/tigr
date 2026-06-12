@@ -84,8 +84,9 @@ class ForeignNationalFactory extends Factory
             'issued_by' => 'МВД '.fake()->numerify('####'),
 
             'issued_date' => fake()->dateTimeBetween('-10 years'),
-            'passport_scan' => 'documents/passport.pdf',
-            'passport_translate_scan' => 'documents/passport.pdf',
+            
+            'passport' => 'documents/passport.pdf',
+            'passport_translate' => 'documents/passport.pdf',
 
             'citizenship' => $country,
 

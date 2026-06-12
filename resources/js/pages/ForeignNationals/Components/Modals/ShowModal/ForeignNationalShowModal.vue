@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import BaseDialog from '@components/BaseComponents/BaseDialog/BaseDialog.vue';
-import ForeignNationalEnrollmentsList from './ForeignNationalEnrollmentsList.vue';
+import ForeignNationalEnrollments from './ForeignNationalEnrollments.vue';
 import ForeignNationalActionsDropdown from './ForeignNationalActionsDropdown.vue';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, provide, ref } from 'vue';
 import { useHttp } from '@inertiajs/vue3'
 import { DateFormatter } from '@helpers/DateFormatter';
 import countries from '@data/countries.json'
 import { ForeignNational, ForeignNationalActionsPermissions } from '@/interfaces/ForeignNational';
-import { Enrollment } from '@/interfaces/Enrollment';
+import ForeignNationalsDocuments from './ForeignNationalsDocuments.vue';
 
 const props = defineProps<{
     foreignNationalId?:number
@@ -33,19 +33,10 @@ onMounted(async() => {
     getForeignNational()
 })
 
-const showDocument = (url :string) => {
-    if(!url) return
-    window.open(`/files?path=${url}`)
-}
-
 const edit = (value:ForeignNational) => {
     foreignNational.value = value
 }
 
-const enroll = (value:Enrollment) => {
-    if (!foreignNational.value) return
-    foreignNational.value.enrollments = [value, ... foreignNational.value.enrollments]
-}
 const getCountryTitle = (value:string | null) => {
     const result = countries.find(item => item.value === value);
     return result ? result.text : '-';
@@ -68,6 +59,7 @@ function formatPhoneNumber(cleaned: string ) {
     cleaned.substring(8, 10)
   );
 }
+provide('permissions', permissions)
 </script>
 
 <template>
@@ -90,7 +82,6 @@ function formatPhoneNumber(cleaned: string ) {
         <template #titleActions>
             <ForeignNationalActionsDropdown 
                 :foreignNational="foreignNational"
-                @enroll="enroll"
                 @edit="edit"
                 :permissions="permissions"
                 v-if="dropDownAccess"
@@ -131,39 +122,18 @@ function formatPhoneNumber(cleaned: string ) {
 
         <v-divider></v-divider>
 
-        <v-card-text class="ml-4" v-if="permissions?.files">
-            <v-row comfortable>
-                <v-col cols="6" class="">
-                    <v-list-item-subtitle>Паспорт</v-list-item-subtitle>
-                    <div v-if="!foreignNational?.passportScan">-</div>
-                    <v-img
-                        v-else
-                        width="50"
-                        src="https://cdn-icons-png.flaticon.com/512/9034/9034536.png"
-                        class="mt-2 cursor-pointer hover:opacity-80 transition-opacity"
-                        @click="showDocument(foreignNational?.passportScan)"
-                    />
-                </v-col>
-                <v-col cols="6" class="">
-                    <v-list-item-subtitle>Перевод паспорта</v-list-item-subtitle>
-                    <div v-if="!foreignNational?.passportTranslateScan">-</div>
-                    <v-img
-                        v-else
-                        width="50"
-                        src="https://cdn-icons-png.flaticon.com/512/9034/9034536.png"
-                        class="mt-2 cursor-pointer hover:opacity-80 transition-opacity"
-                        @click="showDocument(foreignNational?.passportTranslateScan)"
-                    />
-                </v-col>
-            </v-row>
+        <v-card-text class="ml-4" v-if="permissions?.documents">
+            <ForeignNationalsDocuments
+                :documents="foreignNational?.documents"
+            />
             </v-card-text>
 
         <v-divider></v-divider>
 
         <v-card-text>
-            <ForeignNationalEnrollmentsList 
+            <ForeignNationalEnrollments 
                 v-if="foreignNational" 
-                :foreignNational="foreignNational"
+                :enrollments="foreignNational?.enrollments"
                 :permissions="permissions" 
             />
         </v-card-text>

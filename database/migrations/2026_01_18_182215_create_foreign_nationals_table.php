@@ -32,8 +32,8 @@ return new class extends Migration
             $table->string('comment')->nullable()->default(null);
             $table->string('address_reg');
 
-            $table->string('passport_scan')->nullable()->default(null);
-            $table->string('passport_translate_scan')->nullable()->default(null);
+            $table->string('passport')->nullable()->default(null);
+            $table->string('passport_translate')->nullable()->default(null);
 
             $table->foreignId('creator_id')
                 ->constrained('employees');
