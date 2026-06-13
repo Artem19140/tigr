@@ -36,7 +36,8 @@ const visit = (url: string) => {
     onFinish:() => {
       loading.value = false
     },
-    preserveState:true
+    preserveState:true,
+    preserveScroll:true,
   })
 }
 const addExam = (nativeEvent : Event, { date } : any) => {

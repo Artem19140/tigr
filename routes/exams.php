@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\EmployeeRole;
 use App\Http\Controllers\Web\Exam\ExamCheckingController;
 use App\Http\Controllers\Web\Exam\ExamController;
 use App\Http\Controllers\Web\Exam\ExamDocumentController;
@@ -10,7 +9,6 @@ use App\Http\Controllers\Web\Exam\ExamScheduleController;
 use App\Models\Enrollment;
 use App\Models\Exam;
 use App\Models\ExamType;
-use App\Support\AppMiddleware;
 
 Route::apiResource('exams', ExamController::class)->where(['exam' => '[0-9]+']);
 
@@ -30,14 +28,13 @@ Route::prefix('exams')->group(function () {
         return ExamType::cached();
     });
 
-    Route::middleware([
-        AppMiddleware::EMPLOYEE_HAS_ANY_ROLE. ':' . EmployeeRole::implode(EmployeeRole::PlatformAdmin, EmployeeRole::Examiner)
-    ])
-        ->group(function () {
-            Route::get('monitoring', [ExamMonitoringController::class, 'index']
-                )->name('exams.monitoring.index');
-            Route::get('checking', [ExamCheckingController::class, 'index']);
-        });
+    Route::get('monitoring', [ExamMonitoringController::class, 'index'])
+        ->can('monitoringAny', Exam::class)
+        ->name('exams.monitoring.index');
+        
+    Route::get('checking', [ExamCheckingController::class, 'index'])
+        ->can('checkingAny', Exam::class);
+
 
     Route::middleware('can:examiner,exam')
         ->group(function () {
@@ -56,6 +53,7 @@ Route::prefix('exams')->group(function () {
     Route::get('{exam}/documents/results', [ExamDocumentController::class, 'results'])
         ->middleware('can:results,exam')
         ->name('exam.documents.results');
+        
     Route::get('{exam}/documents/results/available', [ExamDocumentController::class, 'resultsAvailable'])
         ->middleware('can:results,exam');
 

@@ -48,7 +48,7 @@ class HandleInertiaRequests extends Middleware
                 array_merge(
                     $request->user()->only('id', 'surname', 'name', 'email', 'job_title', 'center_id'),
                     [
-                        'roles' => $request->user()->roles->pluck('name'),
+                        //'roles' => $request->user()->roles->pluck('name'),
                     ]
                 )
                 : null,
@@ -63,11 +63,11 @@ class HandleInertiaRequests extends Middleware
         return [
             'foreignNationals' => $employee->can('viewAny', ForeignNational::class),
             'exams' => $employee->can('viewAny', Exam::class),
-            'monitoring' => $employee->hasAnyRole(EmployeeRole::Examiner, EmployeeRole::PlatformAdmin),
-            'checking' => $employee->hasAnyRole(EmployeeRole::Examiner, EmployeeRole::PlatformAdmin),
+            'monitoring' => $employee->can('monitoringAny', Exam::class),
+            'checking' => $employee->can('checkingAny', Exam::class),
             'schedule' => $employee->can('viewAny', Exam::class),
-            'center' => $employee->hasAnyRole(EmployeeRole::CenterAdmin),
-            'adminPanel' => $employee->hasAnyRole(EmployeeRole::PlatformAdmin),
+            'center' => $employee->can('center-manage'),
+            'adminPanel' => $employee->can('platform-manage'),
         ];
     }
 }

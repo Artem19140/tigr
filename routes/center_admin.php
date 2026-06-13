@@ -1,17 +1,13 @@
 <?php
 
-use App\Enums\EmployeeRole;
 use App\Http\Controllers\Web\Address\AddressController;
 use App\Http\Controllers\Web\Auth\PasswordController;
 use App\Http\Controllers\Web\Center\CenterController;
 use App\Http\Controllers\Web\Employee\EmployeeController;
-use App\Support\AppMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([
-
-    AppMiddleware::EMPLOYEE_HAS_ANY_ROLE.':'.EmployeeRole::implode(EmployeeRole::CenterAdmin)
-
+    'can:center-manage'
 ])->group(function () {
 
     Route::get('centers/{center}', [CenterController::class, 'show'])

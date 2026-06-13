@@ -31,8 +31,9 @@ class ExamMonitoringResource extends JsonResource
         ];
     }
 
-    protected function pollingStart(Exam $exam){
+    protected function pollingStart(Exam $exam):bool
+    {
         
-        return $exam->isGoing() && $exam->enrollments_count > 0 ;
+        return $exam->isGoing() && $exam->enrollments_count > 0 && ! $exam->isCancelled();
     }
 }

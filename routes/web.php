@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\EmployeeRole;
 use App\Http\Controllers\Web\Auth\LoginController;
 use App\Http\Controllers\Web\Auth\LogoutController;
 use App\Http\Controllers\Web\Auth\PasswordController;
@@ -13,14 +12,13 @@ use App\Http\Controllers\Web\ForeignNational\ForeignNationalExportController;
 use App\Http\Controllers\Web\Report\ReportController;
 use App\Http\Controllers\Web\Statistics\StatisticsController;
 use App\Http\RedirectResolver;
+use App\Models\Enrollment;
+use App\Models\Exam;
 use App\Models\ForeignNational;
 use App\Support\AppMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([
-    AppMiddleware::REQUEST_TIME_MEASURE,
-    AppMiddleware::LOG_CONTEXT,
-
     'auth',
 
     AppMiddleware::EMPLOYEE_ACTIVE,
@@ -34,8 +32,7 @@ Route::middleware([
             ->where(['foreign_national' => '[0-9]+']);
 
         Route::post('/enrollments', [EnrollmentController::class, 'store'])
-            ->where(['enrollment' => '[0-9]+'])
-            ->middleware([AppMiddleware::EMPLOYEE_HAS_ANY_ROLE.':'.EmployeeRole::implode(EmployeeRole::Operator)]);
+            ->can('create', Enrollment::class);
 
         Route::put('enrollments/{enrollment}/payment', [EnrollmentController::class, 'changePayment'])
             ->middleware('can:payment,enrollment')
@@ -56,32 +53,29 @@ Route::middleware([
             ->can('statistics');
 
         Route::prefix('reports')->group(function () {
+            Route::get('frdo', [ReportController::class, 'frdo'])
+                ->can('reports.frdo')
+                ->name('reports.frdo');
 
-            Route::middleware(AppMiddleware::EMPLOYEE_HAS_ANY_ROLE.':'.EmployeeRole::implode(EmployeeRole::Director, EmployeeRole::Operator))
-                ->group(function () {
+            Route::get('frdo/available', [ReportController::class, 'availableFrdo'])
+                ->can('reports.frdo')
+                ->name('reports.frdo.available');
 
-                    Route::get('frdo', [ReportController::class, 'frdo'])
-                        ->name('reports.frdo');
+            Route::get('flat-table', [ReportController::class, 'flatTable'])
+                ->can('reports.flat-table')
+                ->name('reports.flat-table');
 
-                    Route::get('frdo/available', [ReportController::class, 'availableFrdo'])
-                        ->name('reports.frdo.available');
-                });
+            Route::get('ministry-education/available', [ReportController::class, 'availableMinistryEducationReport'])
+                ->can('reports.min-education')
+                ->name('reports.ministry-education.available');
 
-            Route::middleware([AppMiddleware::EMPLOYEE_HAS_ANY_ROLE.':'.EmployeeRole::implode(EmployeeRole::Director)])
-                ->group(function () {
-                    Route::get('flat-table', [ReportController::class, 'flatTable'])
-                        ->name('reports.flat-table');
-
-                    Route::get('ministry-education/available', [ReportController::class, 'availableMinistryEducationReport'])
-                        ->name('reports.ministry-education.available');
-
-                    Route::get('ministry-education', [ReportController::class, 'ministryEducationReport'])
-                        ->name('reports.ministry-education');
-                });
+            Route::get('ministry-education', [ReportController::class, 'ministryEducationReport'])
+                ->can('reports.min-education')
+                ->name('reports.ministry-education');
 
         });
 
-        require __DIR__.'/org_admin.php';
+        require __DIR__.'/center_admin.php';
 
         require __DIR__.'/exams.php';
 
@@ -89,20 +83,23 @@ Route::middleware([
 
         Route::prefix('instruction')->group(function () {
             Route::inertia('/exams', 'Instruction/ExamsInstruction')
+                ->can('viewAny', Exam::class)
                 ->name('instruction.exams');
 
             Route::inertia('/foreign-nationals', 'Instruction/ForeignNationalsInstruction')
-                ->name('instruction.foreign-nationals');
+                ->name('instruction.foreign-nationals')
+                ->can('viewAny', ForeignNational::class);
 
             Route::inertia('/exams/monitoring', 'Instruction/ExamMonitoringInstruction')
                 ->name('instruction.exams.monitoring')
-                ->middleware([AppMiddleware::EMPLOYEE_HAS_ANY_ROLE.':'.EmployeeRole::Examiner->value]);
+                ->can('monitoringAny', Exam::class);
 
             Route::inertia('/exams/checking', 'Instruction/ExamCheckingInstruction')
                 ->name('instruction.exams.checking')
-                ->middleware([AppMiddleware::EMPLOYEE_HAS_ANY_ROLE.':'.EmployeeRole::Examiner->value]);
+                ->can('checkingAny', Exam::class);
 
             Route::inertia('/exams/schedule', 'Instruction/ExamScheduleInstruction')
+                ->can('viewAny', Exam::class)
                 ->name('instruction.exams.schedule');
         });
 
@@ -123,7 +120,7 @@ Route::middleware([
         Route::post('logout/all', [LogoutController::class, 'logoutAll'])->name('logout.all');
     });
 
-Route::middleware([AppMiddleware::REQUEST_TIME_MEASURE, AppMiddleware::LOG_CONTEXT, 'guest:web,foreignNationals'])
+Route::middleware(['guest:web,foreignNationals'])
     ->group(function () {
         Route::inertia('login', 'Auth/Login')->name('login');
         Route::post('login', [LoginController::class, 'login'])
@@ -134,23 +131,19 @@ Route::middleware([AppMiddleware::REQUEST_TIME_MEASURE, AppMiddleware::LOG_CONTE
             ->name('attempts.finish.after');
         
     });
+
 Route::get('/', function(){
     return redirect('login');
 });
 
 Route::middleware([
-    'auth:web,foreignNationals',
-    AppMiddleware::REQUEST_TIME_MEASURE,
-    AppMiddleware::LOG_CONTEXT,
+    'auth:web,foreignNationals'
     
-])
-    ->get('me', function (RedirectResolver $resolver) {
-        return redirect($resolver->execute());
-    })->name('me');
+])->get('me', function (RedirectResolver $resolver) {
+    return redirect($resolver->execute());
+})->name('me');
 
 Route::middleware([
-    AppMiddleware::REQUEST_TIME_MEASURE,
-    AppMiddleware::LOG_CONTEXT,
     'auth:foreignNationals',
     AppMiddleware::ENSURE_ATTEMPT_VALID_STATUS,
 ])

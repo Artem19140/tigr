@@ -44,8 +44,8 @@ class ExamController
         return Inertia::render('Exam/Exam', [
             'permissions' => [
                 'create' => $employee->can('create', Exam::class),
-                'flatTable' => $employee->hasAnyRole(EmployeeRole::Director, EmployeeRole::PlatformAdmin),
-                'frdo' => $employee->can('frdo', Exam::class),
+                'flatTable' => $employee->can('reports.flat-table'),
+                'frdo' => $employee->can('reports.frdo'),
             ],
             'exams' => ExamIndexResource::collection($exams)
         ]);

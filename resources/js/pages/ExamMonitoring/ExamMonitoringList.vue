@@ -30,7 +30,7 @@ const headers = [
 ]
 
 const open = (event:Event, {item} : any) => {
-    router.visit(`/exams/${item.id}/monitoring`,{})
+    router.visit(`/exams/${item.id}/monitoring`)
 }
 
 const loading=ref<boolean>(false)
@@ -40,7 +40,9 @@ const visit = (url :string) => {
     router.visit(url, {
         onFinish:() => {
             loading.value = false
-        }
+        },
+        preserveScroll:true,
+        preserveState:true
     })
 }
 </script>

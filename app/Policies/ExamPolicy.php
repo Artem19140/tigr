@@ -40,6 +40,16 @@ class ExamPolicy
         return $this->examiner($employee, $exam);
     }
 
+    public function monitoringAny(Employee $employee):bool
+    {
+        return $employee->hasAnyRole(EmployeeRole::Examiner);
+    }
+
+    public function checkingAny(Employee $employee):bool
+    {
+        return $employee->hasAnyRole(EmployeeRole::Examiner);
+    }
+
     public function create(Employee $employee): bool
     {
         return $employee->hasAnyRole(EmployeeRole::Scheduler);
@@ -63,17 +73,20 @@ class ExamPolicy
         return $employee->hasAnyRole(EmployeeRole::Scheduler);
     }
 
-    public function frdo(Employee $employee): bool
+    public function examiner(Employee $employee, Exam $exam): bool
     {
-        if ($employee->hasAnyRole(
-            EmployeeRole::Operator,
-            EmployeeRole::Director
-        )) {
-            return true;
+        if (! $this->sameCenter($employee, $exam)) {
+            return false;
+        }
+        if (! $employee->hasRole(EmployeeRole::Examiner->value)) {
+            return false;
         }
 
-        return false;
+        return $employee->exams()
+            ->wherePivot('exam_id', $exam->id)
+            ->exists();
     }
+
 
     public function list(Employee $employee, Exam $exam): bool
     {
@@ -88,20 +101,6 @@ class ExamPolicy
         }
 
         return $this->examiner($employee, $exam);
-    }
-
-    public function examiner(Employee $employee, Exam $exam): bool
-    {
-        if (! $this->sameCenter($employee, $exam)) {
-            return false;
-        }
-        if (! $employee->hasRole(EmployeeRole::Examiner->value)) {
-            return false;
-        }
-
-        return $employee->exams()
-            ->wherePivot('exam_id', $exam->id)
-            ->exists();
     }
 
     public function results(Employee $employee, Exam $exam): bool

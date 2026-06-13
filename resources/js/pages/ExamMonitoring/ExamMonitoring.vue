@@ -6,7 +6,6 @@ import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { useModals } from '@composables/useModals';
 import { computed, onMounted, onUnmounted, ref} from 'vue';
 import { DateFormatter } from '@helpers/DateFormatter';
-import { useExamStatus } from '@/composables/useExamStatus';
 import BaseContainer from '@/components/BaseComponents/BaseContainer/BaseContainer.vue';
 import PaymentIcon from '@/components/Enrollment/PaymentIcon.vue';
 import ExamMonitoringDropdown from './ExamMonitoringDropdown.vue';
@@ -52,12 +51,9 @@ if(props.exam.data.hasSpeakingTasks){
     headers.splice(headers.length -1 , 0, {title:'Говор.', key:"speaking",sortable: false, align:'center'})
 }
 
-const {isGoing, isCancelled} = useExamStatus(props.exam.data)
-
-const pollingCanStart = computed(() => isGoing.value && !isCancelled.value && props.exam.data.enrollments.length > 0)
-
+const isPolling = computed(() => props.exam.data.polling)
 onMounted(()=>{
-    if(pollingCanStart.value){
+    if(isPolling.value){
         start()
     }
 })
@@ -93,7 +89,7 @@ const search = ref<string>('')
                             :status="exam.data.status" 
                         />
                         <AppTooltip 
-                            v-if="pollingCanStart"
+                            v-if="isPolling"
                         >
                             <div >
                                 <div>

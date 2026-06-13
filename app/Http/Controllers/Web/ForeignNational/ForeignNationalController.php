@@ -30,7 +30,6 @@ class ForeignNationalController
     ): Response {
 
         Gate::authorize('viewAny', ForeignNational::class);
-
         $foreignNationals = $getForeignNationalsQuery->execute($request->validated() ?? []);
 
         Inertia::flash(['filters' => request()->all()]);
@@ -43,7 +42,7 @@ class ForeignNationalController
                 'create' => $employee->can('create', ForeignNational::class),
                 'export' => $employee->can('export', ForeignNational::class),
                 'statistics' => $employee->can('statistics'),
-                'ministryEducation' => $employee->hasAnyRole(EmployeeRole::Director, EmployeeRole::PlatformAdmin),
+                'ministryEducation' => $employee->can('reports.min-education'),
             ],
         ]);
     }

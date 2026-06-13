@@ -1,28 +1,29 @@
 <?php
 
-use App\Enums\EmployeeRole;
 use App\Http\Controllers\Web\Attempt\AttemptAnswerController;
 use App\Http\Controllers\Web\Attempt\AttemptCheckingController;
 use App\Http\Controllers\Web\Attempt\AttemptController;
 use App\Http\Controllers\Web\Attempt\AttemptSpeakingController;
 use App\Http\Controllers\Web\Attempt\AttemptViolationController;
-use App\Support\AppMiddleware;
 
 Route::prefix('attempts')->middleware([
-    AppMiddleware::EMPLOYEE_HAS_ANY_ROLE.':'.EmployeeRole::implode(EmployeeRole::Examiner)
+   'can:attempts.employee-access'
 ])
 ->group(function () {
     Route::put('{attempt}/ban', [AttemptController::class, 'ban'])->name('attempts.ban');
 
     Route::get('{attempt}/checking', [AttemptCheckingController::class, 'show'])
         ->name('attempts.checking');
+        
     Route::post('{attempt}/checking/finish', [AttemptCheckingController::class, 'finish'])
         ->name('attempts.checking.finish');
 
     Route::get('{attempt}/speaking', [AttemptSpeakingController::class, 'show'])
         ->name('attempts.speaking');
+
     Route::post('{attempt}/speaking/finish', [AttemptSpeakingController::class, 'finish'])
         ->name('attempts.speaking.finish');
+
     Route::post('{attempt}/speaking/start', [AttemptSpeakingController::class, 'start'])
         ->name('attempts.speaking.start');
 

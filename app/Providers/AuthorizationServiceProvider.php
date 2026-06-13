@@ -18,12 +18,40 @@ class AuthorizationServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Gate::define('attempt-access', function (ForeignNational $foreignNational, Attempt $attempt) {
+        Gate::define('attempts.foreign-national-access', function (ForeignNational $foreignNational, Attempt $attempt) {
             return $foreignNational->id === $attempt->foreign_national_id;
         });
 
         Gate::define('statistics', function (Employee $employee) {
             return $employee->hasAnyRole(EmployeeRole::Director);
+        });
+
+        Gate::define('reports.frdo', function (Employee $employee) {
+            return $employee->hasAnyRole(EmployeeRole::Director, EmployeeRole::Operator);
+        });
+
+        Gate::define('reports.min-education', function (Employee $employee) {
+            return $employee->hasAnyRole(EmployeeRole::Director);
+        });
+
+        Gate::define('reports.flat-table', function (Employee $employee) {
+            return $employee->hasAnyRole(EmployeeRole::Director);
+        });
+
+        Gate::define('platform-manage', function (Employee $employee) {
+            return $employee->hasAnyRole(EmployeeRole::PlatformAdmin);
+        });
+
+        Gate::define('center-manage', function (Employee $employee) {
+            return $employee->hasAnyRole(EmployeeRole::CenterAdmin);
+        });
+
+        Gate::define('attempts.employee-access', function (Employee $employee) {
+            if(! $employee->hasAnyRole(EmployeeRole::Examiner)){
+                return false;
+            }
+
+            return $employee->hasAnyRole(EmployeeRole::PlatformAdmin);
         });
 
         Gate::before(function (Employee|ForeignNational $user, string $ability) {

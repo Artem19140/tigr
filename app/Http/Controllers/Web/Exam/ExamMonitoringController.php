@@ -47,8 +47,6 @@ class ExamMonitoringController
 
     public function show(Exam $exam): \Inertia\Response
     {
-        $this->authorize($exam);
-
         $exam->load([
             'enrollments' => ['foreignNational', 'attempt.center'],
             'type',
@@ -74,7 +72,6 @@ class ExamMonitoringController
         Exam $exam,
         UpdateProtocolCommentAction $updateProtocolComment
     ): Response {
-        $this->authorize($exam);
 
         $request->validate([
             'protocolComment' => ['required', 'string'],
@@ -86,10 +83,5 @@ class ExamMonitoringController
         );
 
         return response()->noContent();
-    }
-
-    protected function authorize(Exam $exam): void
-    {
-        Gate::authorize('examiner', $exam);
     }
 }
