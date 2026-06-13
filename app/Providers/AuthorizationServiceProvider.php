@@ -46,12 +46,14 @@ class AuthorizationServiceProvider extends ServiceProvider
             return $employee->hasAnyRole(EmployeeRole::CenterAdmin);
         });
 
-        Gate::define('attempts.employee-access', function (Employee $employee) {
+        Gate::define('attempts.employee-access', function (Employee $employee, Attempt $attempt) {
             if(! $employee->hasAnyRole(EmployeeRole::Examiner)){
                 return false;
             }
 
-            return $employee->hasAnyRole(EmployeeRole::PlatformAdmin);
+            return $attempt->exam()
+                ->examiner($employee)
+                ->exists();
         });
 
         Gate::before(function (Employee|ForeignNational $user, string $ability) {

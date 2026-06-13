@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Web\ForeignNational;
 use App\Domain\ForeignNational\Action\CreateForeignNationalWithEnrollmentAction;
 use App\Domain\ForeignNational\Action\UpdateForeignNationalAction;
 use App\Domain\ForeignNational\Query\GetForeignNationalsQuery;
-use App\Enums\EmployeeRole;
 use App\Http\Requests\ForeignNational\ForeignNationalIndexRequest;
 use App\Http\Requests\ForeignNational\ForeignNationalPostRequest;
 use App\Http\Requests\ForeignNational\ForeignNationalUpdateRequest;
@@ -32,7 +31,7 @@ class ForeignNationalController
         Gate::authorize('viewAny', ForeignNational::class);
         $foreignNationals = $getForeignNationalsQuery->execute($request->validated() ?? []);
 
-        Inertia::flash(['filters' => request()->all()]);
+        Inertia::flash(['filters' => $request->validated()]);
 
         $employee = $request->user();
         CenterIsolationCheck::check($foreignNationals);

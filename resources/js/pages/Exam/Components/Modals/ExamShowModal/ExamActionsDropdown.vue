@@ -4,15 +4,16 @@ import { usePromptDialog } from '@composables/usePromptDialog';
 import BaseThreeDotDropdown from '@components/BaseComponents/BaseThreeDotDropdown/BaseThreeDotDropdown.vue';
 import { useModals } from '@composables/useModals';
 import { useLoadingSnackbar } from '@composables/useLoadingSnackBar';
-import { useExamStatus } from '@/composables/useExamStatus';
-import { Exam, ExamActionsPermissions } from '@/interfaces/Exam';
+import { Exam } from '@/interfaces/Exam';
 import { RedirectUrl } from '@/interfaces/Interfaces';
+import { computed } from 'vue';
 
 const props = defineProps<{
-  exam : Exam, 
-  permissions:ExamActionsPermissions
+  exam : Exam
 }>()
 
+const permissions = computed(() => props.exam.permissions)
+const availability = computed(() => props.exam.availability)
 
 const emit = defineEmits<{
   (e:'cancel', value:string):void,
@@ -62,16 +63,15 @@ const download = (document :string) => {
       }
     })
 }
-
+console.log(availability.value.documents.results)
 const modals = useModals()
-const {isCancelled, isPending} = useExamStatus(props.exam)
 
-const downloadResultslDisabled  = !props.exam?.documentsAvailable.results.available 
-const downloadProtocolDisabled = !props.exam?.documentsAvailable.protocol.available 
-const downloadListDisabled =  !props.exam?.documentsAvailable.list.available
-const editDisabled  = !isPending.value || isCancelled.value 
-const cancelDisabled = !isPending.value || isCancelled.value 
-const downloadCodesDisabled  = !props.exam?.documentsAvailable.codes.available
+const downloadResultslDisabled  = !availability.value.documents.results.available 
+const downloadProtocolDisabled = !availability.value.documents.protocol.available 
+const downloadListDisabled =  !availability.value.documents.list.available
+const editDisabled  =   ! availability.value.actions.edit
+const cancelDisabled = ! availability.value.actions.cancell
+const downloadCodesDisabled  = !availability.value.documents.codes.available
 </script>
 
 <template>
@@ -92,7 +92,7 @@ const downloadCodesDisabled  = !props.exam?.documentsAvailable.codes.available
 
       <v-list-item 
         title="Результаты"
-        :subtitle="props.exam?.documentsAvailable.results.label"
+        :subtitle="123"
         :disabled="downloadResultslDisabled" 
         v-if="permissions.documents.results"
         @click="() => download('results')" 
@@ -104,7 +104,9 @@ const downloadCodesDisabled  = !props.exam?.documentsAvailable.codes.available
         :disabled="downloadProtocolDisabled"
         @click="() => download('protocol')" 
       />
-      <v-divider v-if="permissions.actions.edit || permissions.actions.delete"></v-divider>
+
+      <v-divider v-if="permissions.actions.edit || permissions.actions.cancell"></v-divider>
+
       <v-list-item 
         title="Редактировать" 
         v-if="permissions.actions.edit"
@@ -117,7 +119,7 @@ const downloadCodesDisabled  = !props.exam?.documentsAvailable.codes.available
         title="Отменить" 
         @click="cancelExam"
         :disabled="cancelDisabled" 
-        v-if="permissions.actions.delete"
+        v-if="permissions.actions.cancell"
       />
     </BaseThreeDotDropdown>
 </template>

@@ -131,7 +131,10 @@ class ExamPolicy
         return $this->examiner($employee, $exam);
     }
 
-    public function video(Employee $employee): bool{
+    public function video(Employee $employee, Exam $exam): bool{
+        if (! $this->sameCenter($employee, $exam)) {
+            return false;
+        }
         return $employee->hasAnyRole(EmployeeRole::VideoRecordOperator);
     }
 }

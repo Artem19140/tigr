@@ -10,7 +10,7 @@ import AppNumberInput from '@/components/UI/AppNumberInput/AppNumberInput.vue';
 
 const page = usePage<{
     flash:{
-        filters:ExamFilters
+        filters: ExamFilters
     }
 }>()
 
@@ -19,20 +19,19 @@ const filters = computed<ExamFilters>(() =>
 )
 
 const form = useForm<ExamFilters>({
-    dateFrom: filters.value?.dateFrom ?? null,
+    dateFrom: filters.value?.dateFrom ?? undefined,
     cancelled: Boolean(filters.value?.cancelled) ?? null,
     examTypeId:filters.value?.examTypeId ? Number(filters.value?.examTypeId) : null,
     dateTo:filters.value?.dateTo ?? null,
-    finished: Boolean(filters.value?.finished) ?? null,
     id: filters.value.id ?  Number(filters.value.id) : null,
 })
 
-
 const loading = defineModel<boolean>({default:false})
 
-
 const http = useHttp<{}, ExamType[]>()
+
 const examTypes = ref<ExamType[] | []>([])
+
 onMounted(() => {
   http.get('/exams/types', {
     onSuccess(response) {
@@ -49,7 +48,6 @@ onMounted(() => {
         v-model="loading"
         :filters="filters"
     >
-
         <AppAutocomplete
             label="Тип экзамена"
             :items="examTypes"
@@ -76,12 +74,6 @@ onMounted(() => {
             v-model="form.cancelled"
             label="Отмененные"
             :error-messages="form.errors.cancelled"
-        />
-
-        <AppCheckbox 
-            v-model="form.finished"
-            label="Прошедшие"
-            :error-messages="form.errors.finished"
         />
     </BaseFilter>
 </template>

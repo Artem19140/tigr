@@ -3,20 +3,26 @@
 namespace App\Domain\Exam\Query;
 
 use App\Domain\Center\CenterContext;
+use App\Models\Employee;
 use App\Models\Exam;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\Paginator;
 
 class GetExamsQuery
 {
-    public function execute(array $data): Paginator
+    public function __construct(
+        protected CenterContext $centerContext
+    ){}
+    public function execute(
+        array $data,
+        Employee $employee
+    ): Paginator
     {
         $examTypeId = $data['examTypeId'] ?? false;
         $dateFrom = $data['dateFrom'] ?? false;
         $dateTo = $data['dateTo'] ?? false;
         $addressId = $data['addressId'] ?? false;
         $cancelled = $data['cancelled'] ?? false;
-        $finished = $data['finished'] ?? false;
         $perPage = $data['perPage'] ?? 10;
 
         $id = $data['id'] ?? false;
@@ -24,9 +30,9 @@ class GetExamsQuery
         $query = Exam::with(['type', 'center'])
             ->withCount(['enrollments']);
 
-        $query->forCenter(app(CenterContext::class)->id());
+        $query->forCenter($this->centerContext->id());
 
-        $query->visibleFor(auth()->user());
+        $query->visibleFor($employee);
 
         $query->when($id, fn ($q) => $q->where('id', $id)
         );
@@ -43,10 +49,8 @@ class GetExamsQuery
         $query->when($addressId, fn ($q) => $q->where('address_id', $addressId)
         );
 
-        $query->when($finished, fn ($q) => $q->where('end_time', '<=', Carbon::now())
-        );
+        $cancelled ? $query->cancelled() : $query->notCancelled();
 
-        $cancelled ? $query->Cancelled() : $query->notCancelled();
         $query->latest('begin_time');
 
         return $query->simplePaginate($perPage)

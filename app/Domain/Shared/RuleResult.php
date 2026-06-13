@@ -10,17 +10,25 @@ final readonly class RuleResult
         public string | null $reason = null
     ){}
 
-    public static function access()
+    public static function success():self
     {
-        self::$available = true;
+        return new self(true);
     }
 
-    public static function deny(
+    public static function fail(
         string | null $code = null,
         string | null $reason = null
-    )
+    ):self
     {
-        self::$code = $code;
-        self::$reason = $reason;
+        return new self(
+            false,
+            $code,
+            $reason
+        );
+    }
+
+    public function isNotAvailable():bool
+    {
+        return ! $this->available;
     }
 }

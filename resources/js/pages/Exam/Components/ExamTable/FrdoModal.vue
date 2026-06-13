@@ -17,7 +17,7 @@ const  download = async () => {
     http.get('/reports/frdo/available', {
         onSuccess:(response) => {
             if(response.redirectUrl){
-                window.location.href = response.redirectUrl
+                window.open(response.redirectUrl)
             }     
         }
     })

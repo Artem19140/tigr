@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import { useModals } from '@composables/useModals';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import EnrollmentDropDown from '@/components/Enrollment/EnrollmentDropDown.vue';
 import ExamResultStatusChip from '@/components/Exam/ExamResultStatusChip.vue';
 import PaymentIcon from '@/components/Enrollment/PaymentIcon.vue';
@@ -10,8 +10,7 @@ import AppInput from '@/components/UI/AppInput/AppInput.vue';
 import ExamCapacityChip from '@/components/Exam/ExamCapacityChip.vue';
 
 const props = defineProps<{
-    exam: Exam,
-    permissions:ExamActionsPermissions
+    exam: Exam
 }>()
 
 const exam = ref<Exam>(props.exam)
@@ -29,13 +28,17 @@ const headers = [
     {title : "Результаты",sortable: false, key: 'results', align: 'center' },
     {title : "",sortable: false, key: 'actions', align: 'end' },
 ]
-props.exam.enrollments.forEach(fn => {
+
+props.exam.enrollments?.forEach(fn => {
     if (fn.isLoading === undefined) fn.isLoading = false
 })
+
 const search = ref('')
+
+const permissions = computed(() => props.exam.permissions)
 </script>
 
-<template>
+<template v-if="permissions.enrollments.view">
     <div class="flex items-center gap-4 ">
         <div class="flex items-center gap-2 mt-2" >
             <span>Записано: </span> <ExamCapacityChip :exam="exam"/>
@@ -59,7 +62,7 @@ const search = ref('')
         :headers="headers"
         hover
         @click:row="foreignNationalShowModal"
-        v-if="permissions.enrollments.view"
+        
         :items-per-page="-1"
         :search="search"
     >

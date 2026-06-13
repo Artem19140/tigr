@@ -2,18 +2,33 @@
 
 namespace App\Domain\Exam\Query;
 
+use App\Models\Employee;
+use App\Models\Enrollment;
 use App\Models\Exam;
 
 class ExamShowQuery
 {
-    public function execute(Exam $exam): Exam
+    public function execute(Exam $exam, Employee $employee): Exam
     {
         $exam->load([
             'examiners',
             'address',
             'type',
-            'enrollments' => ['foreignNational', 'attempt.center'],
         ]);
+
+        if($employee->can('viewAny', Enrollment::class)){
+            $exam->load(['enrollments' => [
+                    'foreignNational', 
+                    'attempt.center'
+                ]
+            ]);
+
+            $exam->enrollments->each(function ($enrollment) use ($exam) {
+                $enrollment->setRelation('exam', $exam);
+            });
+
+            $exam->enrollments->loadExists('attempt');
+        }
 
         $exam->loadExists([
             'attempts as has_unchecked_attempts' => function ($query) {
@@ -25,12 +40,7 @@ class ExamShowQuery
             'attempts as has_attempts'
         ]);
 
-        $exam->enrollments->each(function ($enrollment) use ($exam) {
-            $enrollment->setRelation('exam', $exam);
-        });
-
         $exam->loadCount('enrollments');
-        $exam->enrollments->loadExists('attempt');
         
         return $exam;
     }

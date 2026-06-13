@@ -16,17 +16,16 @@ export interface Exam{
     address:string,
     creator:Employee | null,
     createdAt:string | null,
-    foreignNationalsCount:number,
     cancelledReason:string | null,
     status:string
     foreignNationals:Array<ForeignNational>,
     examTypeId:number,
-    enrollments:Array<Enrollment>,
+    enrollments?:Array<Enrollment>,
     enrollmentsCount:number,
-    codesAvailable:boolean,
     addressId:number,
-    documentsAvailable:ExamDocumentAvailble,
-    cancelledAt:string
+    cancelledAt:string,
+    permissions:ExamActionsPermissions,
+    availability:availability
 }
 
 export interface ExamIndex{
@@ -69,11 +68,10 @@ export interface ExamForm{
 }
 
 export interface ExamFilters  {
-    dateFrom: string | null,
+    dateFrom: string | undefined,
     cancelled: boolean | null,
     examTypeId: number | null,
     dateTo: string | null,
-    finished: boolean | null,
     id:number | null
 }
 
@@ -90,14 +88,6 @@ export interface ExamMonitoring  {
     editProtocolCommentAvailable:boolean,
     polling:boolean
 }
-
-interface ExamDocumentAvailble{
-    list:DocumentAvailble,
-    protocol:DocumentAvailble,
-    results:DocumentAvailble,
-    codes:DocumentAvailble
-}
-
 interface DocumentAvailble{
     available:boolean,
     reason:string | null,
@@ -114,7 +104,7 @@ export interface ExamActionsPermissions {
 
   actions: {
     edit: boolean
-    delete: boolean
+    cancell: boolean
   }
 
   enrollments: {
@@ -126,6 +116,19 @@ export interface ExamActionsPermissions {
   videos:{
     view:boolean
   }
+}
+
+interface availability{
+    actions: {
+        edit: boolean
+        cancell: boolean
+    }
+    documents: {
+        list:DocumentAvailble,
+        protocol:DocumentAvailble,
+        results:DocumentAvailble,
+        codes:DocumentAvailble
+    }
 }
 
 export interface ExamPagePermissions{

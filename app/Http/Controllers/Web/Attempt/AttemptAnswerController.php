@@ -46,9 +46,12 @@ class AttemptAnswerController
         $request->validate([
             'mark' => ['required', 'integer', 'min:0'],
         ]);
-        Gate::authorize('examiner', $attemptAnswer->attempt->exam);
+        Gate::authorize('attempts.employee-access', $attemptAnswer->attempt);
 
-        $attemptAnswer = $rateAttemptAnswerAction->execute($attemptAnswer, $request->input('mark'));
+        $attemptAnswer = $rateAttemptAnswerAction->execute(
+            $attemptAnswer, 
+            $request->input('mark')
+        );
 
         return response()->json([
             'attemptAnswer' => new AttemptAnswerResource($attemptAnswer),

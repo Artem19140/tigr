@@ -36,7 +36,7 @@ class GetAvailableExamsQuery
             ->whereHas('enrollments', function (Builder $q) {}, '<', DB::raw('exams.capacity')
             )
             ->orderBy('begin_time')
-            ->limit(15)
+            ->limit(10)
             ->get();
 
         return $exams;

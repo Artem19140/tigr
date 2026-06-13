@@ -12,26 +12,23 @@ const props = defineProps<{
 const isOpen = ref<boolean>(false)
 const loading = defineModel<boolean>({default:false})
     
-
-
 const filledCount = computed(() => {
-    const formData = props.form.data()
-    if(!props.filters) return 0
-
-    return Object.entries(props.filters)
-        .filter(([key, value]) => {
-        if (!(key in formData)) return false
-
-        if (typeof value === 'string') return value.trim() !== ''
-        return value != null
-        })
-    .length ?? 0
+    return Object.keys(props.filters).length 
 })
 
 const find = () => {
     loading.value = true
     props.form.transform((data:any) => cleanFilters(data))
         .get(props.url, {
+            preserveState: true,
+            preserveScroll: true,
+            replace: false,
+            onFinish:() => {
+                loading.value = false,
+                isOpen.value = false
+            }
+        })
+    props.form.get(props.url, {
             preserveState: true,
             preserveScroll: true,
             replace: false,
@@ -81,7 +78,10 @@ function cleanFilters(data: Record<string, any>) {
                 variant="text"
                 v-bind="props"
             >
-                <v-badge :content="filledCount" color="red" :model-value="filledCount > 0">  
+                <v-badge :content="filledCount" 
+                    color="red" 
+                    :model-value="filledCount > 0"
+                >  
                     <v-icon>mdi-filter-menu</v-icon>
                 </v-badge>
             </v-btn>
@@ -92,6 +92,7 @@ function cleanFilters(data: Record<string, any>) {
             <v-card-text>
                 <slot />
             </v-card-text>
+            
             <v-card-actions class="flex justify-center">
                 <AppPrimaryButton
                     prepend-icon="mdi-magnify"

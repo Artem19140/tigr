@@ -9,7 +9,6 @@ const props = defineProps<{
 }>()
 
 const modals = useModals()
-
 </script>
 
 <template>

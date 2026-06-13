@@ -9,7 +9,6 @@ use App\Domain\Exam\Action\UpdateExamAction;
 use App\Domain\Exam\Query\ExamCreateDataQuery;
 use App\Domain\Exam\Query\ExamShowQuery;
 use App\Domain\Exam\Query\GetExamsQuery;
-use App\Enums\EmployeeRole;
 use App\Http\Requests\Exam\ExamIndexRequest;
 use App\Http\Requests\Exam\ExamPostRequest;
 use App\Http\Requests\Exam\VerifyCodeRequest;
@@ -36,9 +35,18 @@ class ExamController
         GetExamsQuery $getExamQuery
     ): \Inertia\Response {
         Gate::authorize('viewAny', Exam::class);
-        $exams = $getExamQuery->execute($request->validated() ?? []);
-        Inertia::flash('filters', request()->all());
+
+        $params =  $request->validated() ?? [];
+        $employee = $request->user();
+
+        $exams = $getExamQuery->execute(
+            $params,
+            $employee
+        );
+
+        Inertia::flash('filters', $request->validated());
         CenterIsolationCheck::check($exams);
+
         $employee = $request->user();
         
         return Inertia::render('Exam/Exam', [
@@ -57,7 +65,10 @@ class ExamController
     ): JsonResponse {
         
         Gate::authorize('create', Exam::class);
-        $createExamAction->execute($request->getDto(), $request->user());
+        $createExamAction->execute(
+            $request->getDto(), 
+            $request->user()
+        );
 
         return response()->json();
     }
@@ -70,6 +81,7 @@ class ExamController
         $createData = $query->execute();
         CenterIsolationCheck::check($createData['addresses']);
         CenterIsolationCheck::check($createData['examiners']);
+
         return response()->json([
             'addresses' => AddressResource::collection($createData['addresses']),
             'examTypes' => ExamTypeResource::collection($createData['examTypes']),
@@ -85,30 +97,30 @@ class ExamController
         
         Gate::authorize('view', $exam);
         $employee = $request->user();
-        $exam = $examShowQuery->execute($exam);
+        $exam = $examShowQuery->execute($exam, $employee);
 
         return response()->json([
-            'permissions' => [
-                'documents' => [
-                    'codes' => $employee->can('examiner', $exam),
-                    'protocol' => $employee->can('protocol', $exam),
-                    'results' => $employee->can('results', $exam),
-                    'list' => $employee->can('list', $exam),
-                ],
-                'actions' => [
-                    'edit' => $employee->can('update', $exam),
-                    'delete' => $employee->can('delete', $exam),
-                ],
-                'enrollments' => [
-                    'view' => $employee->can('viewAny', Enrollment::class),
-                    'statement' => $employee->can('statementAny', Enrollment::class),
-                    'payment' => $employee->can('paymentAny', Enrollment::class),
-                ],
-                'videos' => [
-                    'view' => $employee->can('video', Exam::class)
-                ]
+            // 'permissions' => [
+            //     'documents' => [
+            //         'codes' => $employee->can('examiner', $exam),
+            //         'protocol' => $employee->can('protocol', $exam),
+            //         'results' => $employee->can('results', $exam),
+            //         'list' => $employee->can('list', $exam),
+            //     ],
+            //     'actions' => [
+            //         'edit' => $employee->can('update', $exam),
+            //         'delete' => $employee->can('delete', $exam),
+            //     ],
+            //     'enrollments' => [
+            //         'view' => $employee->can('viewAny', Enrollment::class),
+            //         'statement' => $employee->can('statementAny', Enrollment::class),
+            //         'payment' => $employee->can('paymentAny', Enrollment::class),
+            //     ],
+            //     'videos' => [
+            //         'view' => $employee->can('video', $exam)
+            //     ]
 
-            ],
+            // ],
             'exam' => new ExamResource($exam),
         ]);
     }

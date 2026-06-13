@@ -2,10 +2,10 @@
 import BaseDialog from '@components/BaseComponents/BaseDialog/BaseDialog.vue';
 import ExamActionsDropdown from '@/pages/Exam/Components/Modals/ExamShowModal/ExamActionsDropdown.vue';
 import EnrollmentsTable from './EnrollmentsTable.vue';
-import { onMounted, provide, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { router, useHttp } from '@inertiajs/vue3';
 import ExamStatusChip from '@components/Exam/ExamStatusChip.vue';
-import { Exam, ExamActionsPermissions } from '@/interfaces/Exam';
+import { Exam } from '@/interfaces/Exam';
 import ExamInfo from './ExamInfo.vue';
 import ExamVideo from './ExamVideo.vue';
 
@@ -13,15 +13,10 @@ const props = defineProps<{
     examId:number
 }>()
 
-const http = useHttp<{}, 
-    {
-        exam:Exam, 
-        permissions:ExamActionsPermissions
-    }
->()
+const http = useHttp<{}, { exam:Exam }>()
 
 const exam = ref<Exam |null>(null)
-const permissions = ref<ExamActionsPermissions | null>(null)
+const permissions = computed(() => exam.value?.permissions)
 
 const isOpen = defineModel<boolean>({default:false})
 
@@ -29,7 +24,6 @@ const getExam = async () => {
     await http.get(`/exams/${props.examId}`,{
         onSuccess:(response)=>{
             exam.value = response.exam
-            permissions.value = response.permissions
         },
     })
 }
@@ -49,8 +43,6 @@ const edit =(value :Exam) => {
     router.reload()
     exam.value = value
 }
-
-provide('permissions', permissions)
 
 const tab = ref()
 </script>
@@ -84,8 +76,7 @@ const tab = ref()
                 @cancel="cancel"
                 @edit="edit"
                 :exam="exam" 
-                v-if="permissions && exam"
-                :permissions="permissions"
+                v-if="exam"
             />
         </template> 
 
@@ -110,7 +101,6 @@ const tab = ref()
                         v-if="permissions && exam"
                         :exam="exam" 
                     />
-                    
                 </v-tabs-window-item>
                 <v-tabs-window-item value="videos" >
                     <ExamVideo 
