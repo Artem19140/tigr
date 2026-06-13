@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { router, useHttp } from '@inertiajs/vue3'
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import BaseDialog from '@components/BaseComponents/BaseDialog/BaseDialog.vue';
 import { useConfirmDialog } from '@composables/useConfirmDialog';
 import AppAddButton from '@components/UI/AppAddButton/AppAddButton.vue';
@@ -39,7 +39,8 @@ const http = useHttp<ForeignNationalFormI & {hasPayment:boolean, examId: number 
     gender:"M",
     hasPayment:false,
     comment:'',
-    addressReg:'123'
+    addressReg:'123',
+    noPhone:false
 })
 
 const form = ref()
@@ -76,6 +77,11 @@ const  reset = ()  =>  {
     http.resetAndClearErrors()
 }
 
+watch(() => http.noPhone, () => {
+    if(http.noPhone){
+        http.phone = null
+    }
+})
 </script>
 
 <template>  

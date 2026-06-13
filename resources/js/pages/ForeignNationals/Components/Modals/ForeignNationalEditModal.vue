@@ -5,7 +5,7 @@ import ForeignNationalForm from './ForeignNationalForm.vue';
 import { useConfirmDialog } from '@composables/useConfirmDialog';
 import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { DateFormatter } from '@helpers/DateFormatter';
-import { ForeignNational, ForeignNationalFormI} from '@/interfaces/ForeignNational';
+import { ForeignNational, ForeignNationalEditForm} from '@/interfaces/ForeignNational';
 
 const props = defineProps<{
     foreignNational: ForeignNational,
@@ -14,7 +14,7 @@ const props = defineProps<{
 
 const isOpen = defineModel<boolean>({default:false})
 
-const http = useHttp<Omit<ForeignNationalFormI, 'hasPayment' | 'examId'>, {foreignNational : ForeignNational}>({
+const http = useHttp<Omit<ForeignNationalEditForm, 'hasPayment' | 'examId'>, {foreignNational : ForeignNational}>({
     surname: props.foreignNational?.surname, 
     name: props.foreignNational?.name,
     patronymic: props.foreignNational?.patronymic ?? "",
@@ -26,24 +26,23 @@ const http = useHttp<Omit<ForeignNationalFormI, 'hasPayment' | 'examId'>, {forei
     issuedBy: props.foreignNational?.issuedBy,
     issuedDate: new DateFormatter(props.foreignNational?.issuedDate).format('Y-m-d') ?? '',
     citizenship: props.foreignNational?.citizenship ,
-    phone: props.foreignNational?.phone,
+    phone: props.foreignNational?.phone ?? null,
     dateBirth: new DateFormatter(props.foreignNational?.dateBirth).format('Y-m-d') ?? '',
     gender: props.foreignNational?.gender,
     comment: props.foreignNational?.comment,
-    passportTranslate:null,
-    passport:null,
     addressReg: props.foreignNational.addressReg ?? '',
     noPatronymic: props.foreignNational?.patronymic ? false  : true,
     noPassportNumber:props.foreignNational?.passportNumber ? false : true,
     noPassportSeries:props.foreignNational?.passportSeries ? false : true,
     noPatronymicLatin:props.foreignNational?.patronymicLatin ? false  : true,
+    noPhone: props.foreignNational?.phone ? false  : true,
 })
 
 const edit = () => {
     http.put(`/foreign-nationals/${props.foreignNational.id}`,{
         onSuccess:(response, HttpResponse) => {
             if(response.foreignNational){
-                props.onEdit(response.foreignNational)
+                //props.onEdit(response.foreignNational)
                 isOpen.value=false
             }
         }

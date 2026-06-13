@@ -23,14 +23,17 @@ watch(() => checkbox.value, () => {
 </script>
 
 <template>
-    <div class="flex items-center">
-        <div class="w-49/100">
-            <AppInput 
-                :disabled="disabled"
-                v-model="input"
-                v-bind="inputAttr"
-            />
-        </div>
+    <div class="flex flex-column">
+        <AppInput 
+            :disabled="disabled"
+            v-model="input"
+            v-bind="inputAttr"
+        />
+        <!-- <v-text-field>
+            <template v-slot:append-inner>
+                
+            </template>
+        </v-text-field> -->
         <AppCheckbox 
             v-model="checkbox"
             v-bind="checkboxAttr"

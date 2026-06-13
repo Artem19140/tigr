@@ -14,7 +14,7 @@ export interface ForeignNational{
   passportSeries:string | undefined,
   issuedBy:string,
   issuedDate:string,
-  phone:string | null,
+  phone: string | null,
   creator?:Employee | null,
   passport?:string | null,
   citizenship:string | null,
@@ -51,14 +51,27 @@ export interface ForeignNationalIndex{
 export type ForeignNationalFormI = Omit<
   ForeignNational,
   'id' | 'creator' | 'exams' | 'createdAt' | 'attempts' | 'exam' | 'fullName' | 'fullPassport' | 
-  'passportTranslateScanPath' | 'passportScanPath' | 'creatorFullName' | 'enrollments'  | 'fullNameLatin' | 'permissions'
+  'passportTranslate' | 'passport' | 'creatorFullName' | 'enrollments'  | 'fullNameLatin' | 'permissions' | 'documents'
 > & {
   passport: File | null
   passportTranslate: File | null
   noPassportNumber: boolean
   noPassportSeries: boolean
   noPatronymic: boolean
-  noPatronymicLatin:boolean
+  noPatronymicLatin:boolean,
+  noPhone:boolean
+}
+
+export type ForeignNationalEditForm = Omit<
+  ForeignNational,
+  'id' | 'creator' | 'exams' | 'createdAt' | 'attempts' | 'exam' | 'fullName' | 'fullPassport' | 
+  'passportTranslate' | 'passport' | 'creatorFullName' | 'enrollments'  | 'fullNameLatin' | 'permissions' | 'documents'
+> & {
+  noPassportNumber: boolean
+  noPassportSeries: boolean
+  noPatronymic: boolean
+  noPatronymicLatin:boolean,
+  noPhone:boolean
 }
 
 export type ForeignNationalFilters= {

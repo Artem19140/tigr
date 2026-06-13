@@ -6,9 +6,9 @@ import { computed } from 'vue';
 import countries from '@data/countries.json'
 import AppOptionalInput from '@/components/UI/AppOptionalInput/AppOptionalInput.vue';
 import AppDateInput from '@/components/UI/AppDateInput/AppDateInput.vue';
-import { ForeignNationalFormI } from '@/interfaces/ForeignNational';
+import { ForeignNationalEditForm, ForeignNationalFormI } from '@/interfaces/ForeignNational';
 import AppTooltip from '@/components/UI/AppTooltip/AppTooltip.vue';
-import AppNumberInput from '@/components/UI/AppNumberInput/AppNumberInput.vue';
+import AppCheckbox from '@/components/UI/AppCheckbox/AppCheckbox.vue';
 
 const props = defineProps<{
     errors:any,
@@ -16,7 +16,7 @@ const props = defineProps<{
     docs?:boolean
 }>()
 
-const form = defineModel<ForeignNationalFormI>('form',{
+const form = defineModel<ForeignNationalFormI | ForeignNationalEditForm>('form',{
   required: true
 })
 
@@ -41,7 +41,7 @@ function required (v:any) {
 
                     <v-col cols="12" md="6">
                         <AppInput
-                            label="Фамилия на русском"
+                            label="Фамилия на кириллице"
                             :rules="[required]"
                             v-model="form.surname"
                             :readonly="readonly"
@@ -52,20 +52,20 @@ function required (v:any) {
                     <v-col cols="12" md="6">
                         <AppInput 
                         :rules="[required]"
-                        label="Имя на русском"
+                        label="Имя на кириллице"
                         v-model="form.name"
                         :readonly="readonly"
                         :error-messages="errors.name"
                 />
                     </v-col>
 
-                    <v-col cols="6" md="12">
+                    <v-col cols="12" md="6">
                         <AppOptionalInput
                             :form="form"
                             v-model:input="form.patronymic"
                             v-model:checkbox="form.noPatronymic"
-                            :input-attr="{label:'Отчество кириллица', 'error-messages':errors.patronymic}"
-                            :checkbox-attr="{label:'Нет отчества кириллица', 'error-messages':errors.noPatronymic}"
+                            :input-attr="{label:'Отчество на кириллице', 'error-messages':errors.patronymic}"
+                            :checkbox-attr="{label:'Нет отчества на кириллице', 'error-messages':errors.noPatronymic}"
                         />
                     </v-col>
                     <v-divider class="my-4" />
@@ -97,7 +97,8 @@ function required (v:any) {
                             :error-messages="errors.nameLatin"
                         />
                     </v-col>
-                    <v-col cols="6" md="12">
+
+                    <v-col cols="12" md="6">
                         <AppOptionalInput
                             :form="form"
                             v-model:input="form.patronymicLatin"
@@ -117,8 +118,6 @@ function required (v:any) {
                         />
                     </v-col>
 
-                    
-                    <v-col cols="12" md="6"></v-col>
                     <v-col md="6" cols="12">
                         <AppAutocomplete
                             label="Гражданство"
@@ -153,7 +152,7 @@ function required (v:any) {
                         </v-radio-group>
                     </v-col>
 
-                    <v-col cols="6" md="12">
+                    <v-col cols="12" md="6">
                         <AppOptionalInput
                             :form="form"
                             v-model:input="form.passportSeries"
@@ -163,7 +162,7 @@ function required (v:any) {
                         />
                     </v-col>
 
-                    <v-col cols="6" md="12">
+                    <v-col cols="12" md="6">
                         <AppOptionalInput
                             :form="form"
                             :rules="[required]"
@@ -223,17 +222,27 @@ function required (v:any) {
                     </v-col>
 
                     <v-col cols="12" md="6">
-                        <AppNumberInput 
+                        <AppInput 
                             label="Номер телефона (10 цифр без +7)"
                             placeholder="0123456789"
-                            :rules="[required]"
                             :readonly="readonly"
                             v-model="form.phone"
-                            control-variant="hidden"
                             prefix="+7"
                             :error-messages="errors.phone"
                             maxlength="10"
+                            :disabled="form.noPhone"
                         /> 
+
+                        <AppCheckbox 
+                            label="Нет номера"
+                            v-model="form.noPhone"
+                            :error-messages="errors.noPhone"
+                            @click="() => {
+                                if(form.noPhone){
+                                    form.phone = null
+                                }
+                            }"
+                        />
                     </v-col>
                 </v-row>
             </v-container>

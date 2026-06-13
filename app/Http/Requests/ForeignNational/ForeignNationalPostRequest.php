@@ -107,8 +107,13 @@ class ForeignNationalPostRequest extends FormRequest
                 'min:2',
                 Rule::in($countries),
             ],
-            'phone' => [
+            'noPhone' => [
                 'required',
+                'boolean'  
+            ],
+            'phone' => [
+                'prohibited_if_accepted:noPhone',
+                'required_if_declined:noPhone',
                 'string',
                 'regex:/^\d+$/',  
                 'digits:10',   

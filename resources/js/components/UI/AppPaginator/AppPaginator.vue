@@ -2,40 +2,39 @@
 import { router } from '@inertiajs/vue3';
 
 const props = defineProps<{
-    meta:{
-        current_page:number,
-        from:number,
-        per_page:number,
-        to:number
-    },
-    links:{
-        first:string,
-        last:string | null,
-        prev:string | null,
-        next:string
-    },
-    loading:boolean
+  meta:{
+      current_page:number,
+      from:number,
+      per_page:number,
+      to:number
+  },
+  links:{
+      first:string,
+      last:string | null,
+      prev:string | null,
+      next:string
+  },
+  loading:boolean
 }>()
 
 const loading = defineModel<boolean>({default:false})
 
 const visit = (url:string | null) => {
-    if(!url) return
-    loading.value = true
-    router.visit(url,{
-        preserveScroll:true,
-        preserveState:true,
-        replace:true,
-        onFinish:() => {
-            loading.value = false
-        }
-    })
+  if(!url) return
+  loading.value = true
+  router.visit(url,{
+    preserveScroll:true,
+    preserveState:true,
+    replace:true,
+    onFinish:() => {
+        loading.value = false
+    }
+  })
 }
 </script>
 
 <template>
-    <div class="flex items-center justify-between px-4 py-2">
-  <!-- Пагинация -->
+  <div class="flex items-center justify-between px-4 py-2">
   <div class="flex items-center gap-2">
     <v-btn
       variant="text"
