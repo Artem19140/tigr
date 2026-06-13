@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Web\Exam;
 
 use App\Domain\Attempt\Action\CreateAttemptAction;
-use App\Domain\Center\CenterContext;
 use App\Domain\Exam\Action\CancelExamAction;
 use App\Domain\Exam\Action\CreateExamAction;
 use App\Domain\Exam\Action\UpdateExamAction;
@@ -16,14 +15,12 @@ use App\Http\Requests\Exam\ExamPostRequest;
 use App\Http\Requests\Exam\VerifyCodeRequest;
 use App\Http\Resources\Address\AddressResource;
 use App\Http\Resources\Employee\EmployeeResource;
-use App\Http\Resources\Exam\ExamCalendarResource;
 use App\Http\Resources\Exam\ExamIndexResource;
 use App\Http\Resources\Exam\ExamResource;
 use App\Http\Resources\ExamType\ExamTypeResource;
 use App\Models\Enrollment;
 use App\Models\Exam;
 use App\Support\CenterIsolationCheck;
-use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -34,9 +31,6 @@ use Inertia\Inertia;
 
 class ExamController
 {
-    public function __construct(
-        protected CenterContext $centerContext
-    ){}
     public function index(
         ExamIndexRequest $request,
         GetExamsQuery $getExamQuery
@@ -53,8 +47,7 @@ class ExamController
                 'flatTable' => $employee->hasAnyRole(EmployeeRole::Director, EmployeeRole::PlatformAdmin),
                 'frdo' => $employee->can('frdo', Exam::class),
             ],
-            'exams' => ExamIndexResource::collection($exams),
-
+            'exams' => ExamIndexResource::collection($exams)
         ]);
     }
 
@@ -163,34 +156,5 @@ class ExamController
         $cancelExam->execute($exam, request()->string('cancelledReason'));
 
         return response()->noContent();
-    }
-
-    public function schedule(Request $request): \Inertia\Response
-    {
-        $request->validate([
-            'dateFrom' => ['sometimes', 'date'],
-            'dateTo' => ['sometimes', 'date'],
-        ]);
-
-        $dateFrom = Carbon::parse($request->input('dateFrom'))
-            ->copy()->startOfDay();
-
-        $dateTo = Carbon::parse($request->input('dateTo'))
-            ->copy()->endOfDay();
-
-        $exams = Exam::query()
-            ->forCenter($this->centerContext->id())
-            ->visibleFor($request->user())
-            ->with(['type', 'center'])
-            ->where('begin_time', '>=', $dateFrom)
-            ->where('begin_time', '<', $dateTo)
-            ->get();
-        CenterIsolationCheck::check($exams);
-        return Inertia::render('Schedule/Schedule', [
-            'exams' => ExamCalendarResource::collection($exams),
-            'permissions' => [
-                'create' => $request->user()->can('create', Exam::class),
-            ],
-        ]);
     }
 }

@@ -18,7 +18,9 @@ class ExamEnrollmentController
             $request->validated('examTypeId'),
             $request->validated('foreignNationalId')
         );
+
         CenterIsolationCheck::check($exams);
+        
         return $exams->map(function (Exam $exam) {
             return [
                 'id' => $exam->id,

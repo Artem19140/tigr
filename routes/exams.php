@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\Exam\ExamController;
 use App\Http\Controllers\Web\Exam\ExamDocumentController;
 use App\Http\Controllers\Web\Exam\ExamEnrollmentController;
 use App\Http\Controllers\Web\Exam\ExamMonitoringController;
+use App\Http\Controllers\Web\Exam\ExamScheduleController;
 use App\Models\Enrollment;
 use App\Models\Exam;
 use App\Models\ExamType;
@@ -18,8 +19,8 @@ Route::prefix('exams')->group(function () {
     Route::get('available', [ExamEnrollmentController::class, 'available'])
         ->can('create', Enrollment::class);
 
-    Route::get('schedule', [ExamController::class, 'schedule'])
-        ->name('exams.schedule')
+    Route::get('schedule', [ExamScheduleController::class, 'index'])
+        ->name('exams.schedule.index')
         ->can('viewAny', Exam::class);
 
     Route::get('create/data', [ExamController::class, 'createData'])

@@ -16,50 +16,26 @@ const props = defineProps<{
   },
   permissions:{
     create:boolean
+  },
+  links: {
+    prev:string,
+    next:string,
+    current:string
   }
 }>()
 
 const {open} = useModals()
 
 const calendar = ref()
-const focus = ref<string>('')
+const focus = ref<string>(props.links.current)
 const loading = ref<boolean>(false)
 
-const type = ref<string>('month')
-
-const types = [
-  {value:'day', label:'День'},
-  {value:'week', label:'Неделя'},
-  {value:'month', label:'Месяц'}
-]
-
-const openExam = (nativeEvent : Event, { event } :any) => {
-  open('examShow', {examId:event.id})
-}
-
-const getColor = (event : ExamCalendar) => {
-  return examStatus(event.status).color
-}
-
 const prev = () => {
-  calendar.value?.prev()
+  router.visit(props.links.prev)
 }
 
 const next = () => {
-  calendar.value?.next()
-}
-
-function getEvents ({ start, end } :any) {
-  loading.value=true
-  router.reload({
-    data: {
-      dateFrom: start.date,
-      dateTo:end.date
-    },
-    onFinish:()=>{
-      loading.value=false
-    }
-  })
+  router.visit(props.links.next)
 }
 const addExam = (nativeEvent : Event, { date } : any) => {
   if(!props.permissions.create) return
@@ -84,18 +60,7 @@ const addExam = (nativeEvent : Event, { date } : any) => {
     <div class="flex items-center gap-8 mr-8">
       {{ calendar?.title }}
     </div>
-    <v-select
-      v-model="type"
-      :items="types"
-      class="ma-2"
-      density="comfortable"
-      label="Период"
-      items-value="value"
-      item-title="label"
-      variant="outlined"
-      hide-details
-      
-    ></v-select>
+
     <v-spacer></v-spacer>
     <div class="flex items-center gap-8 mr-8">
       <AppAddButton
@@ -120,11 +85,8 @@ const addExam = (nativeEvent : Event, { date } : any) => {
       color="primary"
       ref="calendar"
       :events="exams?.data"
-      :event-color="getColor"
-      @click:event="openExam"
-      @click:more="openExam"
-      :type="type"
-      @change="getEvents"
+      :event-color="(event : ExamCalendar) => examStatus(event.status).color"
+      @click:event="(nativeEvent : Event, { event } :any) => open('examShow', {examId:event.id})"
       @click:date="addExam"
     >
     </v-calendar>

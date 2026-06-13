@@ -52,9 +52,9 @@ const visit = (url :string) => {
     <BaseContainer>
         <v-card variant="text">
             <v-card-text
-                class="flex items-center justify-between pt-0"
+                class="flex items-center justify-between"
             >
-                <div class="flex items-center pt-0">
+                <div class="flex items-center">
                     <v-card-title>
                         Мониторинг
                     </v-card-title>
@@ -62,9 +62,8 @@ const visit = (url :string) => {
                         text="Здесь будут экзамены, где вы являетесь экзаменатором"
                     />
                 </div>
-                <div>
+                <div class="mr-4">
                     <v-btn
-                        class="ma-2"
                         variant="text"
                         icon
                         :disabled="loading"
@@ -73,10 +72,9 @@ const visit = (url :string) => {
                         <v-icon>mdi-chevron-left</v-icon>
                     </v-btn>
 
-                    <span>{{ current }}</span>
+                    <span class="border p-2 rounded-lg"> {{ current }} </span>
 
                     <v-btn
-                        class="ma-2"
                         variant="text"
                         icon
                         :disabled="loading"
