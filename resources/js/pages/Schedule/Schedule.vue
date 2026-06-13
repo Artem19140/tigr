@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useModals } from '@composables/useModals';
 import AppAddButton from '@components/UI/AppAddButton/AppAddButton.vue';
 import { examStatus } from '@helpers/heplers';
@@ -30,17 +30,23 @@ const calendar = ref()
 const focus = ref<string>(props.links.current)
 const loading = ref<boolean>(false)
 
-const prev = () => {
-  router.visit(props.links.prev)
-}
-
-const next = () => {
-  router.visit(props.links.next)
+const visit = (url: string) => {
+  loading.value = true
+  router.visit(url, {
+    onFinish:() => {
+      loading.value = false
+    },
+    preserveState:true
+  })
 }
 const addExam = (nativeEvent : Event, { date } : any) => {
   if(!props.permissions.create) return
   open('examCreate', {date})
 }
+
+watch(() => props.links.current, () => {
+  focus.value = props.links.current
+})
 </script>
 
 <template>
@@ -53,7 +59,7 @@ const addExam = (nativeEvent : Event, { date } : any) => {
       variant="text"
       icon
       :disabled="loading"
-      @click="prev"
+      @click="() => visit(links.prev)"
     >
       <v-icon>mdi-chevron-left</v-icon>
     </v-btn>
@@ -74,7 +80,7 @@ const addExam = (nativeEvent : Event, { date } : any) => {
       class="ma-2"
       variant="text"
       icon
-      @click="next"
+      @click="() => visit(links.next)"
       :disabled="loading"
     >
       <v-icon>mdi-chevron-right</v-icon>

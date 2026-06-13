@@ -35,11 +35,9 @@ class ExamScheduleController
             ->visibleFor($request->user())
             ->with(['type', 'center'])
             ->whereBetween('begin_time', [
-                $dateFrom->copy()->startOfDay(),
-                $dateTo->copy()->endOfDay()
+                $dateFrom->copy()->startOfMonth(),
+                $dateTo->copy()->endOfMonth()
             ])
-            ->where('begin_time', '>=', $dateFrom)
-            ->where('begin_time', '<', $dateTo)
             ->get();
 
         CenterIsolationCheck::check($exams);
