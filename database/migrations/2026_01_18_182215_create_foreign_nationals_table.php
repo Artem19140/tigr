@@ -17,23 +17,33 @@ return new class extends Migration
             $table->string('surname_latin');
             $table->string('name_latin');
             $table->string('document_type')->default('Паспорт');
+
             $table->string('patronymic_latin')->nullable()->default(null);
             $table->string('passport_number')->nullable()->default(null);
             $table->string('passport_series')->nullable()->default(null);
             
             $table->unique(['passport_series', 'passport_number']);
+
             $table->index(['passport_series', 'passport_number'], 'foreign_national_passport_idx');
 
             $table->string('issued_by');
             $table->date('issued_date');
             $table->char('citizenship', 2);
-            $table->string('phone')->nullable()->default(null);
+            $table->string('phone', 10)
+                ->nullable();
+
             $table->char('gender', 1);
+            
             $table->string('comment')->nullable()->default(null);
             $table->string('address_reg');
 
-            $table->string('passport')->nullable()->default(null);
-            $table->string('passport_translate')->nullable()->default(null);
+            $table->string('passport')
+                ->nullable()
+                ->default(null);
+
+            $table->string('passport_translate')
+                ->nullable()
+                ->default(null);
 
             $table->foreignId('creator_id')
                 ->constrained('employees');

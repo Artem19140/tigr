@@ -16,7 +16,7 @@ class UpdateProtocolCommentAction
     public function execute(
         Exam $exam,
         string $protocolComment
-    ) {
+    ){
         $this->examGuard->ensureNotCancelled($exam);
         $this->ensureCanUpdateProtocolComment($exam);
         $oldValue = $exam->protocol_comment ?? '';

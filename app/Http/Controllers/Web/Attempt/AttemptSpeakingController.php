@@ -24,8 +24,8 @@ class AttemptSpeakingController
     ): JsonResource {
         $this->authorize($attempt);
         $result = $this->attemptSpeakingRules->get($attempt);
-        if(! $result->available){
-            throw new BusinessException($result->reason);
+        if($result->isNotAvailable()){
+            throw new BusinessException($result->reason());
         }
 
         $attempt = $getAttemptSpeakingQuery->execute($attempt);
@@ -37,8 +37,8 @@ class AttemptSpeakingController
     {
         $this->authorize($attempt);
         $result = $this->attemptSpeakingRules->start($attempt);
-        if(! $result->available){
-            throw new BusinessException($result->reason);
+        if($result->isNotAvailable()){
+            throw new BusinessException($result->reason());
         }
         $attempt->speaking_started_at = Carbon::now();
         $attempt->save();
@@ -51,8 +51,8 @@ class AttemptSpeakingController
         $this->authorize($attempt);
 
         $result = $this->attemptSpeakingRules->finish($attempt);
-        if(! $result->available){
-            throw new BusinessException($result->reason);
+        if($result->isNotAvailable()){
+            throw new BusinessException($result->reason());
         }
         
         $attempt->speaking_finished_at = Carbon::now();

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Attempt;
 
-use App\Domain\Attempt\Action\BanAttemptAction;
+use App\Domain\Attempt\Action\AnnulledAttemptAction;
 use App\Domain\Attempt\Action\FinishAttemptAction;
 use App\Domain\Attempt\Action\StartAttemptAction;
 use App\Domain\Attempt\Query\GetCurrentAttemptQuery;
@@ -59,17 +59,17 @@ class AttemptController
         return redirect()->route('attempts.show', ['attempt' => $startedAttempt->id]);
     }
 
-    public function ban(
+    public function annul(
         Request $request,
         Attempt $attempt,
-        BanAttemptAction $banAttempt
+        AnnulledAttemptAction $annulledAttempt
     ): Response {
         Gate::authorize('examiner', $attempt->exam);
 
         $request->validate([
-            'banReason' => ['required', 'string'],
+            'annulledReason' => ['required', 'string'],
         ]);
-        $banAttempt->execute($attempt, $request->input('banReason'), $request->user());
+        $annulledAttempt->execute($attempt, $request->input('annulledReason'), $request->user());
 
         return response()->noContent();
     }

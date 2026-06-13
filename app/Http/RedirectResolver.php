@@ -3,7 +3,8 @@
 namespace App\Http;
 
 use Illuminate\Support\Facades\Auth;
-use Log;
+use Illuminate\Support\Facades\Log;
+
 
 class RedirectResolver
 {

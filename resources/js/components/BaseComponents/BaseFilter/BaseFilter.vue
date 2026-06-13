@@ -28,15 +28,15 @@ const find = () => {
                 isOpen.value = false
             }
         })
-    props.form.get(props.url, {
-            preserveState: true,
-            preserveScroll: true,
-            replace: false,
-            onFinish:() => {
-                loading.value = false,
-                isOpen.value = false
-            }
-        })
+    // props.form.get(props.url, {
+    //         preserveState: true,
+    //         preserveScroll: true,
+    //         replace: false,
+    //         onFinish:() => {
+    //             loading.value = false,
+    //             isOpen.value = false
+    //         }
+    //     })
 }
 
 const clean = () => {

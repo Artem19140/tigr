@@ -6,8 +6,8 @@ use App\Enums\EmployeeRole;
 use App\Models\Center;
 use App\Models\Employee;
 use App\Models\Role;
-use DB;
-use Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class CreateEmployeeAction

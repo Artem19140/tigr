@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import BaseList from '@/components/BaseComponents/BaseList/BaseList.vue';
 import BaseListItem from '@/components/BaseComponents/BaseList/BaseListItem.vue';
+import AppInput from '@/components/UI/AppInput/AppInput.vue';
 import AppPeriodDate from '@/components/UI/AppPeriodDate/AppPeriodDate.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { PeriodDate } from '@/interfaces/Interfaces';
@@ -48,6 +49,26 @@ const get = () => {
         },
     })
 }
+
+const centerIdHttp = useHttp({
+    centerId: null
+})
+
+const setCenter = () => {
+    centerIdHttp.put('centers/id',{
+        onSuccess() {
+            alert('ok')
+        },
+    })
+}
+
+const resetCenter = () => {
+    centerIdHttp.delete('centers/id',{
+        onSuccess() {
+            alert('ok')
+        },
+    })
+}
 </script>
 
 <template>
@@ -80,5 +101,27 @@ const get = () => {
             </BaseListItem>
         </BaseList>
     </v-card>
+    <v-card class="mt-4">
+        <v-card-text>
+            <AppInput
+                v-model="centerIdHttp.centerId"
+                :error-messages="centerIdHttp.errors.centerId"
+            />
+            <AppPrimaryButton 
+                @click="setCenter"
+                :disabled="centerIdHttp.processing || ! centerIdHttp.centerId"
+                :loading="centerIdHttp.processing"
+                text="Сменить"
+            />
+
+            <v-btn
+                class="ml-2"
+                @click="resetCenter"
+                :disabled="centerIdHttp.processing"
+                :loading="centerIdHttp.processing"
+            >Сброс</v-btn>
+        </v-card-text>
+    </v-card>
+    
   </v-container>
 </template>

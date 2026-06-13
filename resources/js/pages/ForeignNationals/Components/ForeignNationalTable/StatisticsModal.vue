@@ -18,7 +18,7 @@ interface StatisticsData{
   attemptsTakersCount: number | null,
   failedAttemptsCount: number | null,
   successfulAttemptsCount: number | null,
-  bannedAttemptsCount: number | null
+  annulledAttemptsCount: number | null
 }
 
 const http = useHttp<StatisticsHttp, StatisticsData>({
@@ -32,7 +32,7 @@ const statistics = ref<StatisticsData>({
   attemptsTakersCount:null,
   failedAttemptsCount:null,
   successfulAttemptsCount:null,
-  bannedAttemptsCount:null
+  annulledAttemptsCount:null
 })
 
 const getStatistics = () => {
@@ -102,7 +102,7 @@ const getStatistics = () => {
               <v-card class="pa-4" color="grey-lighten-3" elevation="0">
                 <div class="text-caption text-grey-darken-2">Снято</div>
                 <div class="text-h5 font-weight-medium text-grey-darken-2">
-                  {{ statistics.bannedAttemptsCount }}
+                  {{ statistics.annulledAttemptsCount }}
                 </div>
               </v-card>
             </v-col>

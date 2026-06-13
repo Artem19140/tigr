@@ -79,13 +79,13 @@ class EnsureAttemptValidStatusTest extends TestCase
             ->assertUnauthorized();
     }
 
-    public function test_redirect_banned_attempt(): void
+    public function test_redirect_annulled_attempt(): void
     {
         $attempt = Attempt::factory()
-            ->banned()
+            ->annulled()
             ->create([
                 'foreign_national_id' => $this->actor->id,
-                'banned_at' => '2026-01-01 09:50:00',
+                'annulled_at' => '2026-01-01 09:50:00',
             ]);
 
         $this->getAttempt($attempt)

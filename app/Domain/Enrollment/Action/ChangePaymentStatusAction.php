@@ -23,8 +23,8 @@ class ChangePaymentStatusAction
 
         $result = $this->enrollmentPaymentRules->check($enrollment);
 
-        if(! $result->available){
-            throw new BusinessException($result->reason);
+        if($result->isNotAvailable()){
+            throw new BusinessException($result->reason());
         }
 
         $enrollment->has_payment = ! $enrollment->has_payment;

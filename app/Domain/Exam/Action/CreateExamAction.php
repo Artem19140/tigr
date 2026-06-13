@@ -3,7 +3,6 @@
 namespace App\Domain\Exam\Action;
 
 use App\Domain\Exam\Validator\ExamBeforeSaveValidator;
-use App\Domain\Exam\Validator\ExaminersValidator;
 use App\Http\Dto\ExamDto;
 use App\Models\Employee;
 use App\Models\Exam;
@@ -12,8 +11,7 @@ use DB;
 final class CreateExamAction
 {
     public function __construct(
-        protected ExamBeforeSaveValidator $examBeforeSaveValidator,
-        protected ExaminersValidator $validateExaminers
+        protected ExamBeforeSaveValidator $examBeforeSaveValidator
     ) {}
 
     public function execute(

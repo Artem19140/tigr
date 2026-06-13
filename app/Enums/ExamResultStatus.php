@@ -4,7 +4,7 @@ namespace App\Enums;
 
 enum ExamResultStatus: string
 {
-    case Banned = 'banned';
+    case Annulled = 'annulled';
     case Absent = 'absent';
     case Failed = 'failed';
     case Passed = 'passed';

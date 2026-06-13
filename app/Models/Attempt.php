@@ -32,12 +32,12 @@ class Attempt extends Model
         'is_passed',
         'total_mark',
         'started_at',
-        'ban_reason',
-        'ban_by_id',
+        'annulled_reason',
+        'annulled_by_id',
         'center_id',
         'solved',
         'enrollment_id',
-        'banned_at',
+        'annulled_at',
         'checked_at',
         'last_activity_at',
         'speaking_finished_at',
@@ -49,7 +49,7 @@ class Attempt extends Model
         'finished_at' => 'datetime',
         'started_at' => 'datetime',
         'is_passed' => 'boolean',
-        'banned_at' => 'datetime',
+        'annulled_at' => 'datetime',
         'checked_at' => 'datetime',
         'last_activity_at' => 'datetime',
         'speaking_finished_at' => 'datetime',
@@ -70,9 +70,9 @@ class Attempt extends Model
         $this->finished_at = Carbon::now();
     }
 
-    public function ban(): void
+    public function annul(): void
     {
-        $this->banned_at = Carbon::now();
+        $this->annulled = Carbon::now();
     }
 
     public function start(): void
@@ -98,9 +98,9 @@ class Attempt extends Model
         return $this->checked_at !== null;
     }
 
-    public function isBanned(): bool
+    public function isAnnulled(): bool
     {
-        return $this->banned_at !== null;
+        return $this->annulled_at !== null;
     }
 
     public function isFinished(): bool
@@ -110,7 +110,7 @@ class Attempt extends Model
 
     public function isPassed(): bool
     {
-        if ($this->isBanned()) {
+        if ($this->isAnnulled()) {
             return false;
         }
 
@@ -169,7 +169,7 @@ class Attempt extends Model
     {
         return $query
             ->whereNotNull('started_at')
-            ->whereNull('banned_at')
+            ->whereNull('annulled_at')
             ->whereNull('finished_at')
             ->whereNull('checked_at');
     }
@@ -178,7 +178,7 @@ class Attempt extends Model
     {
         return $query
             ->where('is_passed', true)
-            ->whereNull('banned_at');
+            ->whereNull('annulled_at');
     }
 
     public function scopeFailed(Builder $query):Builder
@@ -187,7 +187,7 @@ class Attempt extends Model
             ->where('is_passed', false)
             ->orWhere(function(Builder $q){
                 $q->where('is_passed', true)
-                    ->whereNotNull('banned_at');
+                    ->whereNotNull('annulled_at');
             });
     }
 
@@ -227,10 +227,10 @@ class Attempt extends Model
         });
     }
 
-    protected function bannedAtLocal(): Attribute
+    protected function annulledAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return TimePresenter::forCenter($this->banned_at, $this->center);
+            return TimePresenter::forCenter($this->annulled, $this->center);
         });
     }
 
@@ -238,7 +238,7 @@ class Attempt extends Model
     {
         return Attribute::make(
             get: fn () => match (true) {
-                $this->isBanned() => AttemptStatus::Banned,
+                $this->isAnnulled() => AttemptStatus::Annulled,
                 $this->isFinished() => AttemptStatus::Finished,
                 $this->isStarted() => AttemptStatus::Active,
                 default => AttemptStatus::Pending,

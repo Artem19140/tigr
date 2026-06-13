@@ -20,8 +20,8 @@ class ExamResultResolver
             return ExamResultStatus::Absent;
         }
 
-        if ($attempt->isBanned()) {
-            return ExamResultStatus::Banned;
+        if ($attempt->isAnnulled()) {
+            return ExamResultStatus::Annulled;
         }
 
         if ($attempt->is_passed === true) {

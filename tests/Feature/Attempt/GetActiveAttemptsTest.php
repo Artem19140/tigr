@@ -32,10 +32,10 @@ class GetActiveAttemptsTest extends TestCase
         $this->assertEmpty($attempts);
     }
 
-    public function test_fail_banned_attempts(): void
+    public function test_fail_annulled_attempts(): void
     {
         Attempt::factory()
-            ->banned()
+            ->annulled()
             ->create();
         $attempts = Attempt::query()
             ->active()

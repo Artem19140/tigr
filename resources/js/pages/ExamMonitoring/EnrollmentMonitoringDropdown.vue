@@ -17,7 +17,7 @@ const props = defineProps<{
 
 const promptDialog = usePromptDialog()
 
-const ban = async () => {
+const annul = async () => {
     if(!props.enrollment.attempt?.id) return
     const res = await promptDialog.open(`Укажите причину аннулирования попытки ${props.enrollment.foreignNational.fullName}`)
     if(!res){
@@ -26,9 +26,9 @@ const ban = async () => {
     const loadingSnack = useLoadingSnackbar()
     loadingSnack.open('Идет аннулирование')
     const http = useHttp({
-        banReason : res
+        annulReason : res
     })
-    http.put(`/attempts/${props.enrollment.attempt?.id}/ban`, {
+    http.delete(`/attempts/${props.enrollment.attempt?.id}`, {
         onSuccess() {
             router.reload()
         },
@@ -43,7 +43,7 @@ const modals = useModals()
 const changePaymentDisabled = computed(() => !props.enrollment.availability.payment )
 const speakingDisabled = computed(() => !props.enrollment.attempt?.availability?.speaking )
 const editViolationDisabled = computed(() => !props.enrollment.attempt?.availability?.violations)
-const banAttemptDisabled = computed(() => !props.enrollment.attempt?.availability?.ban)
+const annulAttemptDisabled = computed(() => !props.enrollment.attempt?.availability?.annul)
 </script>
 
 <template>
@@ -66,9 +66,9 @@ const banAttemptDisabled = computed(() => !props.enrollment.attempt?.availabilit
         <v-divider></v-divider>
         <BaseListItem    
             base-color="red" 
-            :disabled="banAttemptDisabled"
+            :disabled="annulAttemptDisabled"
             title="Аннулировать" 
-            @click="ban"
+            @click="annul"
         />
     </BaseThreeDotDropdown>
 </template>

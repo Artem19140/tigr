@@ -3,6 +3,7 @@
 namespace App\Domain\Exam\Rules;
 
 use App\Domain\Shared\RuleResult;
+use App\Enums\AvailabilityCode;
 use App\Models\Exam;
 
 class ExamCancellRules{
@@ -10,15 +11,13 @@ class ExamCancellRules{
     {
         if($exam->isCancelled()){
             return RuleResult::fail(
-                code: "exam_has_been_already_cancelled",
-                reason: "Экзамен уже отменен"
+                AvailabilityCode::ExamCancelled
             );
         }
 
         if(! $exam->isPending()){
             return RuleResult::fail(
-                code: "exam_is_not_pending",
-                reason: "Экзамен уже начался"
+                AvailabilityCode::ExamStarted
             );
         }
 

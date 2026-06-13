@@ -104,12 +104,12 @@ class ForeignNationalController
 
         return response()->json([
             'foreignNational' => new ForeignNationalProfileResource($foreignNational),
-            'permissions' => [
-                'enroll' => $employee->can('create', Enrollment::class),
-                'edit' => $employee->can('update', $foreignNational),
-                'documents' => $employee->can('viewAny', Document::class),
-                'enrollments' => $employee->can('viewAny', Enrollment::class)
-            ],
+            // 'permissions' => [
+            //     'enroll' => $employee->can('create', Enrollment::class),
+            //     'edit' => $employee->can('update', $foreignNational),
+            //     'documents' => $employee->can('viewAny', Document::class),
+            //     'enrollments' => $employee->can('viewAny', Enrollment::class)
+            // ],
         ]);
     }
 

@@ -19,7 +19,7 @@ export interface Enrollment{
 
 export interface EnrollmentAvailability{
     payment:boolean,
-    ban:boolean,
+    annul:boolean,
     violations:boolean,
     speaking:boolean
 }

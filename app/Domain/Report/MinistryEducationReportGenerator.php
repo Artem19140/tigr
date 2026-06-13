@@ -41,7 +41,7 @@ class MinistryEducationReportGenerator
         Carbon $dateTo
     ): void {
         Attempt::query()
-            ->select(['id', 'foreign_national_id', 'exam_id', 'is_passed', 'banned_at','center_id'])
+            ->select(['id', 'foreign_national_id', 'exam_id', 'is_passed', 'annulled_at','center_id'])
             ->forCenter($this->centerContext->id())
             ->whereBetween('created_at', [
                 $dateFrom,

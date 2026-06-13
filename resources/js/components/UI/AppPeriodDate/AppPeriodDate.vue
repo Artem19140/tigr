@@ -16,18 +16,18 @@ const dateTo = defineModel<string | null>('dateTo', {default:null})
   <div class="d-flex flex-column ga-1">
     <span class="text-caption text-medium-emphasis">Период</span>
     <div class="flex ga-2">
-        <div class="flex-1">
-            <AppDateInput
-                v-model="dateFrom"
-                :error-messages="props.errors?.dateFrom"
-            />
-        </div>
-        <div class="flex-1">
-            <AppDateInput
-                v-model="dateTo"
-                :error-messages="props.errors?.dateTo"
-            />
-        </div>
+      <div class="flex-1">
+          <AppDateInput
+            v-model="dateFrom"
+            :error-messages="props.errors?.dateFrom"
+          />
+      </div>
+      <div class="flex-1">
+          <AppDateInput
+            v-model="dateTo"
+            :error-messages="props.errors?.dateTo"
+          />
+      </div>
     </div>
   </div>
 </template>

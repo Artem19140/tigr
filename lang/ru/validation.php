@@ -230,7 +230,7 @@ return [
         'mark' => 'балл',
         'address' => 'адрес',
         'sublockId' => 'подблока',
-        'banReason' => 'причина аннулирования',
+        'annulledReason' => 'причина аннулирования',
         'cancelledReason' => 'причина отмены',
         'date' => 'дата',
         'newPassword' => 'новый пароль',

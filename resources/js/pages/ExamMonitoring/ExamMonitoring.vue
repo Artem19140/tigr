@@ -145,7 +145,7 @@ const search = ref<string>('')
                     <template  #item.foreignNational.fullName="{ item }">
                         {{ item.foreignNational.fullName }}
                         <v-chip
-                            v-if="item.attempt?.bannedAt"
+                            v-if="item.attempt?.annulledAt"
                             color="red"
                             text="Анн."
                             size="x-small"

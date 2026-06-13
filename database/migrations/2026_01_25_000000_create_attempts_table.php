@@ -14,7 +14,7 @@ return new class extends Migration
                 ->constrained('foreign_nationals')
                 ->cascadeOnDelete();
 
-            $table->foreignId('ban_by_id')
+            $table->foreignId('annulled_by_id')
                 ->nullable()
                 ->constrained('employees')
                 ->cascadeOnDelete();
@@ -32,12 +32,12 @@ return new class extends Migration
                 ->constrained('centers')
                 ->cascadeOnDelete();
 
-            $table->string('ban_reason')->nullable()->default(null);
+            $table->string('annulled_reason')->nullable()->default(null);
 
             $table->unsignedTinyInteger('total_mark')->default(0);
             $table->boolean('is_passed')->nullable()->default(null);
 
-            $table->dateTime('banned_at')->nullable()->default(null)->index();
+            $table->dateTime('annulled_at')->nullable()->default(null)->index();
             $table->dateTime('last_activity_at')->nullable()->default(null);
             $table->dateTime('started_at')->nullable()->default(null)->index();
             $table->dateTime('finished_at')->nullable()->default(null)->index();

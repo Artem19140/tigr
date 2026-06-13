@@ -83,16 +83,16 @@
             </div>
         @endif
             <div>
-                @if($bannedAttempts->isNotEmpty())
+                @if($annulledAttempts->isNotEmpty())
                 <div class="underline violation-section-title">
                     Аннулированния:
                 </div>
                 <div class="violation-section-content">
-                    @foreach ( $bannedAttempts as $attempt )
+                    @foreach ( $annulledAttempts as $attempt )
                         <div>
                             Cдающий {{ $attempt->foreignNational->full_name_short }}
-                            (паспорт: {{ $attempt->foreignNational->full_passport }}) был снят с экзамена в {{ $attempt->banned_at_local->format('H:i') }} по причине: 
-                            "{{ $attempt->ban_reason }}";
+                            (паспорт: {{ $attempt->foreignNational->full_passport }}) был снят с экзамена в {{ $attempt->annulled_at_local->format('H:i') }} по причине: 
+                            "{{ $attempt->annulled_reason }}";
                         </div> 
                     @endforeach
                 </div>
@@ -124,7 +124,7 @@
                 @endif
             </div>
         </div>
-        <div>{{ !$exam->protocol_comment && $bannedAttempts->isEmpty() ?  'Нарушения не установлены' : '' }}</div>
+        <div>{{ !$exam->protocol_comment && $annulledAttempts->isEmpty() ?  'Нарушения отсутствуют' : '' }}</div>
     </div>
     
     

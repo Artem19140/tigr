@@ -2,13 +2,20 @@
 
 namespace App\Domain\Shared;
 
-final readonly class RuleResult
+use App\Enums\AvailabilityCode;
+use LogicException;
+
+final readonly  class RuleResult
 {
     public function __construct(
         public bool $available,
-        public string | null $code = null,
+        public AvailabilityCode | string | null $code = null,
         public string | null $reason = null
-    ){}
+    ){ 
+        if(! $available && ! $code){
+            throw new LogicException('UNEXPECTED: availalble = false, and no code');
+        }
+    }
 
     public static function success():self
     {
@@ -16,15 +23,19 @@ final readonly class RuleResult
     }
 
     public static function fail(
-        string | null $code = null,
-        string | null $reason = null
+        AvailabilityCode | string $code,
     ):self
     {
         return new self(
             false,
             $code,
-            $reason
+            app(CodeTranslator::class)->translate($code)
         );
+    }
+
+    public function reason(): ?string
+    {
+        return $this->reason; 
     }
 
     public function isNotAvailable():bool

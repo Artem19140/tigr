@@ -11,7 +11,7 @@ use Database\Seeders\RolesSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class AttemptBanTest extends TestCase
+class AttemptAnnulTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -42,7 +42,7 @@ class AttemptBanTest extends TestCase
         Carbon::setTestNow();
     }
 
-    public function test_success_attempt_ban(): void
+    public function test_success_attempt_annulled(): void
     {
         $this->withoutExceptionHandling();
 
@@ -60,18 +60,18 @@ class AttemptBanTest extends TestCase
             ]);
 
         $response = $this->actingAs($this->employee)
-            ->putJson(route('attempts.ban', ['attempt' => $attempt]), [
-                'banReason' => 'Есть',
+            ->putJson(route('attempts.annul', ['attempt' => $attempt]), [
+                'annulReason' => 'Есть',
             ]);
         $attempt->refresh();
 
         $this->assertNotNull($attempt->finished_at);
-        $this->assertNotNull($attempt->banned_at);
+        $this->assertNotNull($attempt->annulled_at);
 
         $response->assertNoContent();
     }
 
-    public function test_fail_ban_repeated(): void
+    public function test_fail_annul_repeated(): void
     {
         $exam = Exam::factory()
             ->inPast()
@@ -83,19 +83,19 @@ class AttemptBanTest extends TestCase
             ->attach($this->employee);
 
         $attempt = Attempt::factory()
-            ->banned()
+            ->annulled()
             ->create([
                 'exam_id' => $exam->id,
                 'center_id' => $this->center->id,
-                'banned_at' => Carbon::now(),
+                'annulled_at' => Carbon::now(),
             ]);
 
         $response = $this->actingAs($this->employee)
-            ->putJson(route('attempts.ban', [
+            ->putJson(route('attempts.annul', [
                 'attempt' => $attempt,
             ]),
                 [
-                    'banReason' => 'Есть',
+                    'annulledReason' => 'Есть',
                 ]);
 
         $response->assertBadRequest();

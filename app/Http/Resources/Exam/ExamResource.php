@@ -5,7 +5,7 @@ namespace App\Http\Resources\Exam;
 use App\Domain\Exam\Resolver\ExamStatusResolver;
 use App\Domain\Exam\Rules\ExamCancellRules;
 use App\Domain\Exam\Rules\ExamEditRules;
-use App\Domain\ExamDocument\ExamDocumentAvailableResolver;
+use App\Domain\ExamDocument\ExamDocumentRules;
 use App\Http\Resources\Employee\EmployeeResource;
 use App\Http\Resources\Enrollment\EnrollmentExamShowResource;
 use App\Models\Employee;
@@ -45,7 +45,6 @@ class ExamResource extends JsonResource
             'createdAt' => $this->created_at,
             'enrollmentsCount' => $this->whenCounted('enrollments_count'),
             'status' => app(ExamStatusResolver::class)->execute($exam),
-            'documentsAvailable' => app(ExamDocumentAvailableResolver::class)->resolve($exam),
             'availability' => $this->availability($exam),
             'permissions' => $this->permissions($employee, $exam)
         ];
@@ -86,7 +85,7 @@ class ExamResource extends JsonResource
                 'cancell' => app(ExamCancellRules::class)->check($exam)->available,
                 'edit' => app(ExamEditRules::class)->check($exam)->available,
             ],  
-            'documents' => app(ExamDocumentAvailableResolver::class)->resolve($this->resource)
+            'documents' => app(ExamDocumentRules::class)->resolve($this->resource)
         ];
     }
 }

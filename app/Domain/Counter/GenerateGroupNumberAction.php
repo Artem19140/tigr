@@ -25,7 +25,7 @@ class GenerateGroupNumberAction
                 ->forCenter($this->centerContext->id())
                 ->lockForUpdate()
                 ->first();
-            CenterIsolationCheck::centerBelongs($groupNumber, app(CenterContext::class)->id());
+            CenterIsolationCheck::centerBelongs($groupNumber, $this->centerContext->id());
             if (! $groupNumber) {
                 throw new CounterNotFoundException(CounterKey::Group);
             }

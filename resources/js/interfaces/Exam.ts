@@ -91,7 +91,7 @@ export interface ExamMonitoring  {
 interface DocumentAvailble{
     available:boolean,
     reason:string | null,
-    label:string | null
+    code:string | null
 }
 
 export interface ExamActionsPermissions {

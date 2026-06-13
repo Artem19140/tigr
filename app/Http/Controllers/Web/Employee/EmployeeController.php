@@ -28,6 +28,7 @@ class EmployeeController
         Request $request, 
         Center $center
     ): \Inertia\Response {
+        abort_if($center->id !== request()->user()->id, 404);
         $notPlatformAdmin = !$request->user()->isPlatformAdmin();
 
         $employees = Employee::active()
@@ -57,6 +58,7 @@ class EmployeeController
         CreateEmployeeAction $createEmployee,
         Center $center
     ): JsonResponse {
+        abort_if($center->id !== request()->user()->id, 404);
         $createEmployee->execute(
             $request->validated(),
             $center,
@@ -70,36 +72,18 @@ class EmployeeController
         Employee $employee,
         UpdateEmployeeAction $updateEmployeeAction
     ): JsonResponse {
-        if ($employee->isPlatformAdmin()) {
-            abort(403);
-        }
         $updateEmployeeAction->execute($request->validated(), $employee);
 
         return response()->json();
     }
 
     public function destroy(
-        Employee $employee,
-        Request $request
+        Employee $employee
     ): Response {
-        if ($request->user()->center_id !== $employee->center_id && ! $request->user()->isPlatformAdmin()) {
-            abort(404);
-        }
-
-        if ($employee->isPlatformAdmin()) {
-            abort(404);
-        }
-
-        if ($employee->hasRole(EmployeeRole::CenterAdmin->value) && ! $request->user()->isPlatformAdmin()) {
-            abort(404);
-        }
-
         if (! $employee->isActive()) {
             throw new BusinessException('Сотрудник уволен');
         }
-
         $employee->is_active = false;
-
         $employee->save();
 
         return response()->noContent();

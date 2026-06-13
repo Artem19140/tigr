@@ -100,27 +100,6 @@ class ExamController
         $exam = $examShowQuery->execute($exam, $employee);
 
         return response()->json([
-            // 'permissions' => [
-            //     'documents' => [
-            //         'codes' => $employee->can('examiner', $exam),
-            //         'protocol' => $employee->can('protocol', $exam),
-            //         'results' => $employee->can('results', $exam),
-            //         'list' => $employee->can('list', $exam),
-            //     ],
-            //     'actions' => [
-            //         'edit' => $employee->can('update', $exam),
-            //         'delete' => $employee->can('delete', $exam),
-            //     ],
-            //     'enrollments' => [
-            //         'view' => $employee->can('viewAny', Enrollment::class),
-            //         'statement' => $employee->can('statementAny', Enrollment::class),
-            //         'payment' => $employee->can('paymentAny', Enrollment::class),
-            //     ],
-            //     'videos' => [
-            //         'view' => $employee->can('video', $exam)
-            //     ]
-
-            // ],
             'exam' => new ExamResource($exam),
         ]);
     }

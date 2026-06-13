@@ -112,16 +112,16 @@ class CloseAbandonedAttemptsTest extends TestCase
         $this->assertNull($attempt->checked_at);
     }
 
-    public function test_does_not_close_banned_attempt(): void
+    public function test_does_not_close_annulled_attempt(): void
     {
         $attempt = Attempt::factory()
-            ->banned()
+            ->annulled()
             ->create([
                 'expired_at' => Carbon::now()->addMinute(),
                 'last_activity_at' => Carbon::now(),
             ]);
 
-        $oldBannedAt = $attempt->banned_at;
+        $oldAnnulledAt = $attempt->annulled_at;
         $oldFinidhedAt = $attempt->finished_at;
         $oldCheckedAt = $attempt->checked_at;
 
@@ -129,7 +129,7 @@ class CloseAbandonedAttemptsTest extends TestCase
 
         $attempt->refresh();
 
-        $this->assertEquals($oldBannedAt, $attempt->banned_at);
+        $this->assertEquals($oldAnnulledAt, $attempt->annulled_at);
         $this->assertEquals($oldFinidhedAt, $attempt->finished_at);
         $this->assertEquals($oldCheckedAt, $attempt->checked_at);
     }

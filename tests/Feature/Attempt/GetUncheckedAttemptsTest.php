@@ -21,12 +21,12 @@ class GetUncheckedAttemptsTest extends TestCase
         $this->assertNotEmpty($attempts);
     }
 
-    public function test_success_unchecked_banned_attempts(): void
+    public function test_success_unchecked_annulled_attempts(): void
     {
         Attempt::factory(2)
             ->finished()
             ->create([
-                'banned_at' => now(),
+                'annulled_at' => now(),
             ]);
         $attempts = Attempt::query()
             ->unchecked()
@@ -45,12 +45,12 @@ class GetUncheckedAttemptsTest extends TestCase
         $this->assertEmpty($attempts);
     }
 
-    public function test_fail_checked_banned_attempts(): void
+    public function test_fail_checked_annulled_attempts(): void
     {
         Attempt::factory(2)
             ->checked()
             ->create([
-                'banned_at' => now(),
+                'annulled_at' => now(),
             ]);
         $attempts = Attempt::query()
             ->unchecked()

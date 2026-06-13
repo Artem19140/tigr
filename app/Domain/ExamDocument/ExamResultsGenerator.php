@@ -102,7 +102,7 @@ class ExamResultsGenerator
             return 'н/я';
         }
 
-        if ($attempt->isBanned()) {
+        if ($attempt->isAnnulled()) {
             return 'Справка';
         }
 

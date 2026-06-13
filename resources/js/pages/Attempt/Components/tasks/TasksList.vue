@@ -60,14 +60,12 @@ provide<boolean>('checking', props.checking)
 const groupedTasks =  computed(() =>{
         const groups = new Map()
         props.attempt.tasks.forEach(task => {
-            console.log(task)
             const groupKey = task.groupNumber ?? task.fipiNumber
             if(! groups.has(groupKey)){
                 groups.set(groupKey, [])
             }
             groups.get(groupKey).push(task)
         })
-        console.log(groups)
         return groups.values()
 })
 

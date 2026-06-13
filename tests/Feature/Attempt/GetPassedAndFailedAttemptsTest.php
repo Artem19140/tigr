@@ -18,7 +18,7 @@ class GetPassedAndFailedAttemptsTest extends TestCase
 
         Attempt::factory()
             ->passed()
-            ->banned();
+            ->annulled();
 
         $attempts = Attempt::query()
             ->passed()
@@ -35,7 +35,7 @@ class GetPassedAndFailedAttemptsTest extends TestCase
             
         Attempt::factory()
             ->passed()
-            ->banned()
+            ->annulled()
             ->create();
 
         $attempts = Attempt::query()

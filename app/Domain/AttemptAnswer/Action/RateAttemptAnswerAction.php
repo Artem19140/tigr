@@ -89,7 +89,7 @@ class RateAttemptAnswerAction
 
     protected function ensureAttemptFinished(Attempt $attempt): void
     {
-        if (! $attempt->isFinished() && ! $attempt->isBanned()) {
+        if (! $attempt->isFinished() && ! $attempt->isAnnulled()) {
             $this->log([
                 'reason' => 'trying to rate answer with not finished attempt',
                 'attempt_status' => $attempt->status,

@@ -25,9 +25,12 @@ Route::middleware([
         ->name('centers.addresses.store');
 
     Route::delete('employees/{employee}', [EmployeeController::class, 'destroy'])
+        ->can('delete', 'employee')
         ->name('employees.destroy');
+
     Route::post('centers/{center}/employees', [EmployeeController::class, 'store']);
-    Route::put('employees/{employee}', [EmployeeController::class, 'update']);
+    Route::put('employees/{employee}', [EmployeeController::class, 'update'])
+        ->can('update', 'employee');
     Route::patch('employees/{employee}/password', [PasswordController::class, 'reset']);
 
     Route::get('roles', [EmployeeController::class, 'rolesShow']);

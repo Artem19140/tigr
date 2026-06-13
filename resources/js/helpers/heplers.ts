@@ -22,7 +22,7 @@ export const attemptStatus = (status: string | null) => {
       return { text: "Активна", color: "green" };
     case "finished":
       return { text: "Завершена", color: "grey" };
-    case "banned":
+    case "annulled":
       return { text: "Аннулирована", color: "red" };
     default:
       return { text: "-", color: "" };
@@ -45,7 +45,7 @@ export const examResultStatus = ( status:string | null ) => {
     return { text: "н/я", color: "text-gray" }; 
   }
 
-  if(status === 'banned'){
+  if(status === 'annulled'){
     return { text: "Снят", color: "text-orange" };
   }
 

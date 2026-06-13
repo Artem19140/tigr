@@ -39,7 +39,7 @@ export interface AttemptMonitoring{
     tasks: Task[],
     checkedAt:string,
     availability:{
-        ban:boolean,
+        annul:boolean,
         violations:boolean,
         speaking:boolean
     },

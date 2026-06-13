@@ -48,6 +48,7 @@ class ForeignNationalProfileResource extends JsonResource
             'creatorFullName' => $this->whenLoaded('creator', fn () => $this->creator->full_name),
             'addressReg' => $this->address_reg,
             'documents' =>  DocumentResource::collection($this->whenLoaded('documents')),
+            
             'permissions' => [
                 'enroll' => $employee->can('create', Enrollment::class),
                 'edit' => $employee->can('update', $this->resource),

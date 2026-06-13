@@ -52,11 +52,11 @@ class StatisticsController
 
         $failedAttemptsCount = (clone $attemptsQuery)
             ->where('is_passed', false)
-            ->whereNull('banned_at')
+            ->whereNull('annulled_at')
             ->count();
 
-        $bannedAttemptsCount = (clone $attemptsQuery)
-            ->whereNotNull('banned_at')
+        $annulledAttemptsCount = (clone $attemptsQuery)
+            ->whereNotNull('annulled_at')
             ->count();
 
         return response()->json([
@@ -65,7 +65,7 @@ class StatisticsController
             'attemptsTakersCount' => $attemptsTakersCount,
             'failedAttemptsCount' => $failedAttemptsCount,
             'successfulAttemptsCount' => $successfulAttemptsCount,
-            'bannedAttemptsCount' => $bannedAttemptsCount,
+            'annulledAttemptsCount' => $annulledAttemptsCount,
         ]);
     }
 }

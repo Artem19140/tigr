@@ -14,11 +14,12 @@ use Illuminate\Database\Eloquent\Collection;
 class ExamProtocolGenerator
 {
     public function __construct(
-        protected ExamDocumentAvailableResolver $examDocumentAvailableResolver
+        protected ExamDocumentRules $examDocumentRules
     ){}
     public function execute(Exam $exam)
     {
-        $bannedAttempts = $this->getBannedAttempts($exam);
+        
+        $annulledAttempts = $this->getAnnulledAttempts($exam);
         $beginTimeReal = $this->getBeginTimeReal($exam);
         $endTimeReal = $this->getEndTimeReal($exam);
 
@@ -26,12 +27,14 @@ class ExamProtocolGenerator
             ->whereHas('violations')
             ->with(['foreignNational', 'center', 'violations'])
             ->get();
+
         CenterIsolationCheck::check($attemptsWithViolations);
-        CenterIsolationCheck::check($bannedAttempts);
+        CenterIsolationCheck::check($annulledAttempts);
+
         $pdf = Pdf::loadView('pdf.exam.exam-protocol', [
             'exam' => $exam,
             'center' => $exam->center,
-            'bannedAttempts' => $bannedAttempts,
+            'annulledAttempts' => $annulledAttempts,
             'beginTimeReal' => $beginTimeReal,
             'endTimeReal' => $endTimeReal,
             'attemptWithViolations' => $attemptsWithViolations,
@@ -41,11 +44,11 @@ class ExamProtocolGenerator
         return $pdf;
     }
 
-    protected function getBannedAttempts(Exam $exam): Collection
+    protected function getAnnulledAttempts(Exam $exam): Collection
     {
         return Attempt::with('foreignNational')
             ->where('exam_id', $exam->id)
-            ->whereNotNull('banned_at')->get();
+            ->whereNotNull('annulled_at')->get();
     }
 
     protected function getBeginTimeReal(Exam $exam): ?Carbon

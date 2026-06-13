@@ -21,7 +21,7 @@ class EnsureValidAttemptStatus
     {
         $attempt = $request->route('attempt');
 
-        if ($attempt->isBanned()) {
+        if ($attempt->isAnnulled()) {
             return $this->deny('Попытка аннулирована', $request);
         }
         if ($attempt->isFinished()) {

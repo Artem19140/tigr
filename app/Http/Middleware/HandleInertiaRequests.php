@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Enums\EmployeeRole;
+use App\Domain\Center\CenterContext;
 use App\Models\Employee;
 use App\Models\Exam;
 use App\Models\ForeignNational;
@@ -49,6 +49,7 @@ class HandleInertiaRequests extends Middleware
                     $request->user()->only('id', 'surname', 'name', 'email', 'job_title', 'center_id'),
                     [
                         //'roles' => $request->user()->roles->pluck('name'),
+                        'centerId' => app(CenterContext::class)->id()
                     ]
                 )
                 : null,
@@ -66,7 +67,7 @@ class HandleInertiaRequests extends Middleware
             'monitoring' => $employee->can('monitoringAny', Exam::class),
             'checking' => $employee->can('checkingAny', Exam::class),
             'schedule' => $employee->can('viewAny', Exam::class),
-            'center' => $employee->can('center-manage'),
+            'center' => $employee->can('center-manage') &&  ! $employee->isPlatformAdmin(),
             'adminPanel' => $employee->can('platform-manage'),
         ];
     }

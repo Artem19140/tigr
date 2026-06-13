@@ -15,8 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Notifications\Notifiable;
 
-class 
-Exam extends Model
+class Exam extends Model
 {
     use BelongsToCenter;
     use HasFactory, Notifiable;
@@ -49,8 +48,6 @@ Exam extends Model
         'begin_time' => 'datetime',
         'cancelled_at' => 'datetime',
     ];
-
-    
 
     public function type(): BelongsTo
     {
@@ -189,19 +186,6 @@ Exam extends Model
         return Attribute::get(function () {
             return $this->type->short_name;
         });
-    }
-
-    public function canGenerateCodes(): bool
-    {
-        if (! $this->begin_time->isToday()) {
-            return false;
-        }
-
-        $deadline = $this->begin_time
-            ->copy()
-            ->addMinutes(self::CODES_TTL_AFTER_BEGIN_MINUTES);
-
-        return now()->lte($deadline);
     }
 
     public function scopeVisibleFor(

@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Web\Exam;
 
 use App\Domain\ExamDocument\ExamCodesGenerator;
-use App\Domain\ExamDocument\ExamDocumentAvailable;
+use App\Domain\ExamDocument\ExamDocumentRules;
 use App\Domain\ExamDocument\ExamProtocolGenerator;
 use App\Domain\ExamDocument\ExamResultsGenerator;
 use App\Enums\ExamDocument;
 use App\Events\ExamDocumentGenerated;
+use App\Exceptions\BusinessException;
 use App\Models\Exam;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
@@ -17,12 +18,18 @@ use Illuminate\Support\Facades\Gate;
 class ExamDocumentController
 {
     public function __construct(
-        protected ExamDocumentAvailable $examDocumentAvailable
+        protected ExamDocumentRules $examDocumentRules
     ) {}
 
     public function list(Exam $exam): Response
     {
-        $this->examDocumentAvailable->list($exam);
+        $exam->loadCount('enrollments');
+        $result = $this->examDocumentRules->list($exam);
+
+        if($result->isNotAvailable()){
+            throw new BusinessException($result->reason());
+        }
+
         Gate::authorize('list', $exam);
 
         $exam->load(['foreignNationals', 'type']);
@@ -40,7 +47,12 @@ class ExamDocumentController
 
     public function listAvailable(Exam $exam): JsonResponse
     {
-        $this->examDocumentAvailable->list($exam);
+        $exam->loadCount('enrollments');
+        $result = $this->examDocumentRules->list($exam);
+        
+        if($result->isNotAvailable()){
+            throw new BusinessException($result->reason());
+        }
 
         return response()->json([
             'redirectUrl' => route('exam.documents.list', [
@@ -54,7 +66,11 @@ class ExamDocumentController
         ExamCodesGenerator $examCodesGenerator
     ): Response {
         $this->authorize($exam);
-        $this->examDocumentAvailable->codes($exam);
+        $result = $this->examDocumentRules->codes($exam);
+        
+        if($result->isNotAvailable()){
+            throw new BusinessException($result->reason());
+        }
         $fileName = "Кода_{$exam->short_name}_{$exam->begin_time_local->format('H-i_d.m.Y')}.pdf";
         $pdf = $examCodesGenerator->execute($exam);
         return $pdf->stream($fileName);
@@ -63,7 +79,12 @@ class ExamDocumentController
     public function codesAvailable(Exam $exam): JsonResponse
     {
         $this->authorize($exam);
-        $this->examDocumentAvailable->codes($exam);
+        $exam->loadCount('enrollments');
+        $result = $this->examDocumentRules->codes($exam);
+        
+        if($result->isNotAvailable()){
+            throw new BusinessException($result->reason());
+        }
 
         return response()->json([
             'redirectUrl' => route('exam.documents.codes', [
@@ -76,7 +97,6 @@ class ExamDocumentController
         Exam $exam,
         ExamProtocolGenerator $examProtocolGenerator
     ): Response {
-        $this->examDocumentAvailable->protocol($exam);
         $fileName= "Протокол_{$exam->short_name}_{$exam->begin_time_local->format('H-i_d.m.Y')}.pdf";
         $pdf =  $examProtocolGenerator->execute($exam);
         return $pdf->stream($fileName);
@@ -84,8 +104,6 @@ class ExamDocumentController
 
     public function protocolAvailable(Exam $exam): JsonResponse
     {
-        $this->examDocumentAvailable->protocol($exam);
-
         return response()->json([
             'redirectUrl' => route('exam.documents.protocol', [
                 'exam' => $exam,
@@ -97,7 +115,6 @@ class ExamDocumentController
         Exam $exam,
         ExamResultsGenerator $examResultsGenerator
     ): Response {
-        $this->examDocumentAvailable->results($exam);
         $resultsPdf = $examResultsGenerator->execute($exam);
         $fileName = "Результаты_{$exam->short_name}_{$exam->begin_time->format('H-i_d.m.Y')}.pdf";
 
@@ -107,7 +124,6 @@ class ExamDocumentController
     public function resultsAvailable(
         Exam $exam
     ): JsonResponse {
-        $this->examDocumentAvailable->results($exam);
 
         return response()->json([
             'redirectUrl' => route('exam.documents.results', [

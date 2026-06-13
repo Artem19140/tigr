@@ -22,7 +22,7 @@ class DocumentResource extends JsonResource
             'type' => $this->document_type,
             'creatorFullName' => $this->whenLoaded('creator', fn () => $this->creator->full_name),
             'permissions' => [
-                'update' => $request->user()->can('update', $this->resource)
+                'update' => true //$request->user()->can('updateAny', Document::class)
             ],
             
         ];

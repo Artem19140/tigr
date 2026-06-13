@@ -3,6 +3,7 @@
 namespace App\Domain\Enrollment\Rules;
 
 use App\Domain\Shared\RuleResult;
+use App\Enums\AvailabilityCode;
 use App\Models\Enrollment;
 
 class EnrollmentPaymentRules
@@ -12,29 +13,23 @@ class EnrollmentPaymentRules
         $exam = $enrollment->exam;
 
         if($exam->isCancelled()){
-            return new RuleResult(
-                available:false,
-                code:'exam_cancelled',
-                reason:'Нельзя сменить оплату, если экзамен отменен'
+            return RuleResult::fail(
+                AvailabilityCode::ExamCancelled
             );
         }
 
         if($exam->isFinished()){
-            return new RuleResult(
-                available: false,
-                code:'exam_finished',
-                reason:'Нельзя сменить оплату, если экзамен завершен'
+            return RuleResult::fail(
+                AvailabilityCode::ExamFinished
             );
         }
 
         if($enrollment->attempt_exists){
-            return new RuleResult(
-                available:false,
-                code:'attempt_exists',
-                reason:'Нельзя сменить оплату, если существует попытка экзамена'
+            return RuleResult::fail(
+                AvailabilityCode::AttemptExists
             );
         }
 
-        return new RuleResult(available:true);
+        return RuleResult::success();
     }
 }

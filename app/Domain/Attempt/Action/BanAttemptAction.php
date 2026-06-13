@@ -2,37 +2,37 @@
 
 namespace App\Domain\Attempt\Action;
 
-use App\Domain\Attempt\Rules\AttemptBanRules;
+use App\Domain\Attempt\Rules\AttemptAnnulledRules;
 use App\Exceptions\BusinessException;
 use App\Models\Attempt;
 use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
 
-class BanAttemptAction
+class AnnulledAttemptAction
 {
     public function __construct(
         protected FinilizeAttemptCheckingAction $finilizeAttemptCheckingAction,
-        protected AttemptBanRules $attemptBanRules
+        protected AttemptAnnulledRules $attemptAnnulledRules
     ) {}
 
     public function execute(
         Attempt $attempt,
-        string $banReason,
+        string $annulledReason,
         Employee $employee
     ): void {
-        DB::transaction(function () use ($attempt, $banReason, $employee) {
+        DB::transaction(function () use ($attempt, $annulledReason, $employee) {
 
-            $result = $this->attemptBanRules->check($attempt);
+            $result = $this->attemptAnnulledRules->check($attempt);
 
             if(! $result->available){
-                throw new BusinessException($result->reason);
+                throw new BusinessException($result->reason());
             }
 
             $this->finishAndIfNeededFinilize($attempt);
 
-            $attempt->ban_reason = $banReason;
-            $attempt->ban_by_id = $employee->id;
-            $attempt->ban();
+            $attempt->annulled_reason = $annulledReason;
+            $attempt->annulled_by_id = $employee->id;
+            $attempt->annulled();
             $attempt->save();
         });
     }

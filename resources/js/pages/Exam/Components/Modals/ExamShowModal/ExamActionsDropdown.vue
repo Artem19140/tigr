@@ -46,32 +46,31 @@ const cancelExam = async () => {
 }
 
 const download = (document :string) => {
-    if(!props.exam?.id || !document){
-        return
-    }
-    const http = useHttp<{},RedirectUrl>()
-    loadingSnackbar.open('Скачивание')
-    http.get(`/exams/${props.exam.id}/documents/${document}/available`,{
-      onSuccess:(response) => {
-        if(response.redirectUrl){
-          //modals.open('pdf', {url:response.redirectUrl})
-          window.open(String(response.redirectUrl))
-        }
-      },
-      onFinish:()=>{
-        loadingSnackbar.close()
+  if(!props.exam?.id || !document){
+      return
+  }
+  const http = useHttp<{},RedirectUrl>()
+  loadingSnackbar.open('Скачивание')
+  http.get(`/exams/${props.exam.id}/documents/${document}/available`,{
+    onSuccess:(response) => {
+      if(response.redirectUrl){
+        //modals.open('pdf', {url:response.redirectUrl})
+        window.open(String(response.redirectUrl))
       }
-    })
+    },
+    onFinish:()=>{
+      loadingSnackbar.close()
+    }
+  })
 }
-console.log(availability.value.documents.results)
 const modals = useModals()
 
-const downloadResultslDisabled  = !availability.value.documents.results.available 
-const downloadProtocolDisabled = !availability.value.documents.protocol.available 
-const downloadListDisabled =  !availability.value.documents.list.available
-const editDisabled  =   ! availability.value.actions.edit
-const cancelDisabled = ! availability.value.actions.cancell
-const downloadCodesDisabled  = !availability.value.documents.codes.available
+const downloadResultslDisabled  =  computed(() => !availability.value.documents.results.available )
+const downloadProtocolDisabled = computed(() =>!availability.value.documents.protocol.available )
+const downloadListDisabled =  computed(() =>!availability.value.documents.list.available)
+const editDisabled  =   computed(() =>! availability.value.actions.edit)
+const cancelDisabled = computed(() =>! availability.value.actions.cancell)
+const downloadCodesDisabled  = computed(() =>!availability.value.documents.codes.available)
 </script>
 
 <template>
@@ -92,7 +91,7 @@ const downloadCodesDisabled  = !availability.value.documents.codes.available
 
       <v-list-item 
         title="Результаты"
-        :subtitle="123"
+        :subtitle="availability.documents.results.code === 'exam_on_checking' ? availability.documents.results.reason : ''"
         :disabled="downloadResultslDisabled" 
         v-if="permissions.documents.results"
         @click="() => download('results')" 

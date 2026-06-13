@@ -2,19 +2,27 @@
 
 namespace App\Http\Controllers\Web\Enrollment;
 
-use App\Domain\Enrollment\Action\GenerateEnrollmentStatementAction;
 use App\Models\Enrollment;
 use Illuminate\Http\Response;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class EnrollmentDocumentController
 {
     public function statement(
         Enrollment $enrollment,
-        GenerateEnrollmentStatementAction $generateEnrollmentStatement
     ): Response {
+        
+        $enrollment->load([
+            'foreignNational',
+            'exam.type',
+            'creator',
+            'center',
+        ]);
 
-        $statement = $generateEnrollmentStatement->execute($enrollment);
-
-        return $statement->stream('statement.pdf');
+        $statementPdf = Pdf::loadView('pdf.enrollment.enrollment-full', [
+            'enrollment' => $enrollment,
+        ]);
+        
+        return $statementPdf->stream('statement.pdf');
     }
 }
