@@ -16,7 +16,8 @@ class CloseAbandonedAttemptsAction
     {
         $now = Carbon::now();
 
-        Attempt::where('expired_at', '<=', $now)
+        Attempt::query()
+            ->where('expired_at', '<=', $now)
             ->with(['exam.type'])
             ->active()
             ->get()

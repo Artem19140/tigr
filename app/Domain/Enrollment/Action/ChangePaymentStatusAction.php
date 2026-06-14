@@ -3,7 +3,6 @@
 namespace App\Domain\Enrollment\Action;
 
 use App\Domain\Enrollment\Rules\EnrollmentPaymentRules;
-use App\Domain\Exam\Guard\ExamGuard;
 use App\Exceptions\BusinessException;
 use App\Models\Enrollment;
 use Illuminate\Support\Facades\Log;
@@ -11,7 +10,6 @@ use Illuminate\Support\Facades\Log;
 class ChangePaymentStatusAction
 {
     public function __construct(
-        protected ExamGuard $examGuard,
         protected EnrollmentPaymentRules $enrollmentPaymentRules
     ) {}
 

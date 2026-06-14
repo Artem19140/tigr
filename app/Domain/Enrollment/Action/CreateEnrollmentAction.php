@@ -3,7 +3,6 @@
 namespace App\Domain\Enrollment\Action;
 
 use App\Domain\Counter\GenerateRegNumberAction;
-use App\Domain\Exam\Guard\ExamGuard;
 use App\Exceptions\BusinessException;
 use App\Models\Employee;
 use App\Models\Enrollment;
@@ -15,8 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 final class CreateEnrollmentAction
 {
     public function __construct(
-        protected GenerateRegNumberAction $generateRegNumber,
-        protected ExamGuard $examGuard,
+        protected GenerateRegNumberAction $generateRegNumber
     ) {}
 
     public function execute(
@@ -46,8 +44,9 @@ final class CreateEnrollmentAction
         Exam $exam,
         ForeignNational $foreignNational
     ): void {
-        $this->examGuard->ensureNotCancelled($exam);
-        $this->examGuard->ensurePending($exam, 'Записать на экзамен возможна только до его начала');
+        if($exam->isCancelled()){
+            throw new BusinessException('Экзамен отменен');
+        }
         //$this->ensureEnrollementWindowNotClosed($exam);
         $this->ensureEnrollmentNotExists($exam, $foreignNational);
         $this->ensureParallellEnrollmentsNotExists($exam, $foreignNational);

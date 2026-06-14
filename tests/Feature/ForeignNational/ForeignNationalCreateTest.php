@@ -75,11 +75,12 @@ class ForeignNationalCreateTest extends TestCase
             'patronymic' => fake()->name,
             'patronymicLatin' => 'Ivanovich',
             'phone' => '8934657338',
+            'noPhone' => false,
             'surname' => fake()->name,
             'surnameLatin' => 'Ivanov',
             'noPatronymicLatin' => false,
-            'passportScan' => UploadedFile::fake()->image('passport.pdf'),
-            'passportTranslateScan' => UploadedFile::fake()->image('passport_translate.pdf'),
+            'passport' => UploadedFile::fake()->image('passport.pdf'),
+            'passportTranslate' => UploadedFile::fake()->image('passport_translate.pdf'),
         ], $overrides);
     }
 

@@ -22,9 +22,11 @@ class ExamPolicyTest extends TestCase
     {
         parent::setUp();
         $this->center = Center::factory()->create();
+
         $this->exam = Exam::factory()->create([
             'center_id' => $this->center->id,
         ]);
+
         $this->seed(RolesSeeder::class);
     }
 
@@ -32,10 +34,13 @@ class ExamPolicyTest extends TestCase
     {
         $operator = Employee::factory()
             ->operator()
-            ->create(['center_id' => $this->center->id]);
+            ->create([
+                'center_id' => $this->center->id
+            ]);
+
         $this->assertTrue($operator->can('viewAny', Exam::class));
         $this->assertTrue($operator->can('view', $this->exam));
-        $this->assertTrue($operator->can('frdo', $this->exam));
+        $this->assertTrue($operator->can('reports.frdo'));
         $this->assertTrue($operator->can('list', $this->exam));
     }
 

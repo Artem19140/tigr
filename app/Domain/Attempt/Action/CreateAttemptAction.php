@@ -5,7 +5,6 @@ namespace App\Domain\Attempt\Action;
 use App\Domain\Attempt\Services\VerifyCodeService;
 use App\Domain\Counter\GenerateGroupNumberAction;
 use App\Domain\Counter\GetSessionNumberQuery;
-use App\Domain\Exam\Guard\ExamGuard;
 use App\Exceptions\BusinessException;
 use App\Models\Attempt;
 use App\Models\AttemptAnswer;
@@ -19,8 +18,7 @@ class CreateAttemptAction
     public function __construct(
         protected GenerateGroupNumberAction $generateGroupNumber,
         protected GetSessionNumberQuery $getSessionNumber,
-        protected VerifyCodeService $verifyCodeService,
-        protected ExamGuard $examGuard
+        protected VerifyCodeService $verifyCodeService
     ) {}
 
     public function execute(string $code): Attempt
@@ -29,8 +27,10 @@ class CreateAttemptAction
             $enrollment = $this->verifyCodeService->execute($code);
 
             $exam = Exam::findOrFail($enrollment->exam_id);
-
-            $this->examGuard->ensureNotCancelled($exam);
+            
+            if($exam->isCancelled()){
+                throw new BusinessException('Экзамен отменен');
+            }
 
             if (! $exam->isGoing()) {
                 throw new BusinessException('Ввести код возможно только во время экзамена');

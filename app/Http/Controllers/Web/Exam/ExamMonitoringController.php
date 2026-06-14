@@ -67,10 +67,7 @@ class ExamMonitoringController
         });
 
         return Inertia::render('ExamMonitoring/ExamMonitoring', [
-            'exam' => new ExamMonitoringResource($exam),
-            'available' => [
-                'protocolComment' => $exam->canEditProtocolComment(),
-            ],
+            'exam' => new ExamMonitoringResource($exam)
         ]);
     }
 

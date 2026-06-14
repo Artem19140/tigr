@@ -2,8 +2,9 @@
 
 namespace App\Domain\Exam\Action;
 
-use App\Domain\Exam\Guard\ExamGuard;
+use App\Domain\Exam\Rules\ExamEditRules;
 use App\Domain\Exam\Validator\ExamBeforeSaveValidator;
+use App\Exceptions\BusinessException;
 use App\Http\Dto\ExamDto;
 use App\Models\Exam;
 use DB;
@@ -13,7 +14,7 @@ use Illuminate\Validation\ValidationException;
 final class UpdateExamAction
 {
     public function __construct(
-        protected ExamGuard $examGuard,
+        protected ExamEditRules $examEditRules,
         protected ExamBeforeSaveValidator $examBeforeSaveValidator
     ) {}
 
@@ -21,8 +22,10 @@ final class UpdateExamAction
         Exam $exam,
         ExamDto $examDto,
     ): void {
-        $this->examGuard->ensureNotCancelled($exam);
-        $this->examGuard->ensurePending($exam, 'Обновить данные экзамена возможно до его начала');
+        $result = $this->examEditRules->check($exam);
+        if($result->isNotAvailable()){
+            throw new BusinessException($result->reason());
+        }
 
         $this->examBeforeSaveValidator->execute($examDto, $exam->id);
 

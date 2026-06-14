@@ -205,9 +205,4 @@ class Exam extends Model
             $q->where('examiner_id', $employee->id);
         });
     }
-
-    public function canEditProtocolComment():bool
-    {
-        return $this->begin_time->isToday() && $this->begin_time->isPast();
-    }
 }

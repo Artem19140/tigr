@@ -3,7 +3,7 @@
 namespace Tests\Feature\Exam;
 
 use App\Domain\Exam\Action\CancelExamAction;
-use App\Domain\Exam\Guard\ExamGuard;
+use App\Domain\Exam\Rules\ExamCancellRules;
 use App\Exceptions\BusinessException;
 use App\Models\Center;
 use App\Models\Employee;
@@ -65,8 +65,7 @@ class ExamCancelTest extends TestCase
             'cancelled_at' => '2026-01-01 10:00:00',
         ]);
 
-        $guard = new ExamGuard;
-        $action = new CancelExamAction($guard);
+        $action = new CancelExamAction(app(ExamCancellRules::class));
         $this->expectException(BusinessException::class);
         $action->execute($exam, 'dfds');
     }
@@ -77,8 +76,7 @@ class ExamCancelTest extends TestCase
             'begin_time' => '2026-01-01 09:30:00',
         ]);
 
-        $guard = new ExamGuard;
-        $action = new CancelExamAction($guard);
+        $action = new CancelExamAction(app(ExamCancellRules::class));
         $this->expectException(BusinessException::class);
         $action->execute($exam, 'dfds');
     }

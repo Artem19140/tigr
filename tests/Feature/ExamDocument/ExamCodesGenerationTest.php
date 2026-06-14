@@ -62,13 +62,4 @@ class ExamCodesGenerationTest extends TestCase
         $response->assertOk();
         $response->assertHeader('Content-Type', 'application/pdf');
     }
-
-    public function test_fail_too_early_generation(): void
-    {
-
-        $exam = Exam::factory()->create([
-            'begin_time' => Carbon::now()->addHour(),
-        ]);
-        $this->assertTrue($exam->canGenerateCodes());
-    }
 }

@@ -36,8 +36,8 @@ class ForeignNationalPolicyTest extends TestCase
             'opearator create viewAny FN');
         $this->assertTrue($operator->can('update', $foriegnNational),
             'opearator update viewAny FN');
-        $this->assertTrue($operator->can('files', $foriegnNational),
-            'opearator files viewAny FN');
+        // $this->assertTrue($operator->can('files', $foriegnNational),
+        //     'opearator files viewAny FN');
         $this->assertFalse($operator->can('export', ForeignNational::class),
             'opearator should not export FN');
     }

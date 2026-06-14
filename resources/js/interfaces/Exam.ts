@@ -85,8 +85,10 @@ export interface ExamMonitoring  {
     status:string,
     hasSpeakingTasks:boolean,
     enrollments:Array<Enrollment>,
-    editProtocolCommentAvailable:boolean,
-    polling:boolean
+    polling:boolean,
+    availability:{
+        protocolComment:boolean
+    }
 }
 interface DocumentAvailble{
     available:boolean,

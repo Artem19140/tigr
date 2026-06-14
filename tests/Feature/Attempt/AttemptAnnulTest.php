@@ -60,8 +60,8 @@ class AttemptAnnulTest extends TestCase
             ]);
 
         $response = $this->actingAs($this->employee)
-            ->putJson(route('attempts.annul', ['attempt' => $attempt]), [
-                'annulReason' => 'Есть',
+            ->putJson(route('attempts.destroy', ['attempt' => $attempt]), [
+                'annulledReason' => 'Есть',
             ]);
         $attempt->refresh();
 
@@ -91,7 +91,7 @@ class AttemptAnnulTest extends TestCase
             ]);
 
         $response = $this->actingAs($this->employee)
-            ->putJson(route('attempts.annul', [
+            ->putJson(route('attempts.destroy', [
                 'attempt' => $attempt,
             ]),
                 [

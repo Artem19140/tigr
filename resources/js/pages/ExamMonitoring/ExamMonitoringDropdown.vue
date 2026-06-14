@@ -5,10 +5,7 @@ import { useModals } from '@/composables/useModals';
 import { ExamMonitoring } from '@/interfaces/Exam';
 
 const props = defineProps<{
-    exam: ExamMonitoring,
-    available:{
-        protocolComment:boolean
-    }
+    exam: ExamMonitoring
 }>()
 
 const {open} = useModals()
@@ -18,7 +15,7 @@ const {open} = useModals()
     <BaseThreeDotDropdown>
         <BaseListItem 
             title="Комментарий (протокол)"
-            :disabled="!available.protocolComment"
+            :disabled="!exam.availability.protocolComment"
             @click="open('examComment', {exam:exam})"
         />
 

@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Exam;
 
 use App\Domain\Exam\Resolver\ExamStatusResolver;
+use App\Domain\Exam\Rules\ProtocolCommentRules;
 use App\Http\Resources\Enrollment\EnrollmentMonitoringResource;
 use App\Models\Exam;
 use Illuminate\Http\Request;
@@ -28,7 +29,7 @@ class ExamMonitoringResource extends JsonResource
             'shortName' => $this->whenLoaded('type', fn () => $this->type->short_name),
             'polling' => $this->pollingStart($this->resource),
             'availability' => [
-                'protocolComment' => $this->protocol_comment
+                'protocolComment' => app(ProtocolCommentRules::class)->check($this->resource)->available
             ]
         ];
     }

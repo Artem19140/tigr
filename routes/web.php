@@ -75,11 +75,11 @@ Route::middleware([
 
         });
 
-        require __DIR__.'/center_admin.php';
+        require __DIR__.'/center_manage.php';
 
         require __DIR__.'/exams.php';
 
-        require __DIR__.'/attempts.php';
+        require __DIR__.'/attempts_manage.php';
 
         Route::prefix('instruction')->group(function () {
             Route::inertia('/exams', 'Instruction/ExamsInstruction')
@@ -122,14 +122,14 @@ Route::middleware([
 
 Route::middleware(['guest:web,foreignNationals'])
     ->group(function () {
-        Route::inertia('login', 'Auth/Login')->name('login');
+        Route::inertia('login', 'Auth/Login')
+            ->name('login');
         Route::post('login', [LoginController::class, 'login'])
             ->middleware(['throttle:5']);
         Route::post('exam-codes/verify', [ExamController::class, 'verifyCode'])
             ->middleware(['throttle:5']);
         Route::inertia('attempts/finish', 'Attempt/AfterAttempt')
             ->name('attempts.finish.after');
-        
     });
 
 Route::get('/', function(){
@@ -148,7 +148,7 @@ Route::middleware([
     AppMiddleware::ENSURE_ATTEMPT_VALID_STATUS,
 ])
     ->group(function () {
-        require __DIR__.'/foreign_national.php';
+        require __DIR__.'/attempts_passing.php';
     });
 
-require __DIR__.'/platform_admin.php';
+require __DIR__.'/platform_manage.php';

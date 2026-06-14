@@ -10,7 +10,7 @@ Route::prefix('attempts')->middleware([
    'can:attempts.employee-access,attempt'
 ])
 ->group(function () {
-    Route::delete('{attempt}', [AttemptController::class, 'annul'])->name('attempts.annulled');
+    Route::delete('{attempt}', [AttemptController::class, 'annul'])->name('attempts.destroy');
 
     Route::get('{attempt}/checking', [AttemptCheckingController::class, 'show'])
         ->name('attempts.checking');

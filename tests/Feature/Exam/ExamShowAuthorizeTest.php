@@ -63,6 +63,7 @@ class ExamShowAuthorizeTest extends TestCase
             EmployeeRole::Director,
             EmployeeRole::PlatformAdmin,
             EmployeeRole::Scheduler,
+            EmployeeRole::VideoRecordOperator,
         ];
         foreach ($allowedRoles as $role) {
             $employee = Employee::factory()
@@ -82,7 +83,7 @@ class ExamShowAuthorizeTest extends TestCase
     {
         $allowedRoles = [
             EmployeeRole::CenterAdmin,
-            EmployeeRole::VideoRecordOperator,
+            
         ];
         foreach ($allowedRoles as $role) {
             $employee = Employee::factory()
