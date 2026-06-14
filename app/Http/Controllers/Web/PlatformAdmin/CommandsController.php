@@ -19,7 +19,7 @@ class CommandsController
             1 => Artisan::call('migrate --force'),
             2 => Artisan::call('optimize:clear'),
             3 => Artisan::call('optimize'),
-            4 => Artisan::call('migrate:fresh --seed'),
+            4 => Artisan::call('migrate:fresh --seed --force'),
             5 => Artisan::call('deploy'),
             
             default => Log::critical('command not found', [
