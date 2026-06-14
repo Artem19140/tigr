@@ -10,7 +10,7 @@ enum EmployeeRole: string
     case VideoRecordOperator = 'video_record_operator';
     case Director = 'director';
     case CenterAdmin = 'center_admin';
-    case PlatformAdmin = 'super_admin';
+    case PlatformAdmin = 'platform_admin';
 
     public static function implode(self ...$roles)
     {

@@ -15,7 +15,7 @@ class AttemptAnnulTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected Employee $employee;
+    protected Employee $actor;
 
     protected Center $center;
 
@@ -27,7 +27,7 @@ class AttemptAnnulTest extends TestCase
 
         $this->seed(RolesSeeder::class);
 
-        $this->employee = Employee::factory()
+        $this->actor = Employee::factory()
             ->examiner()
             ->create([
                 'center_id' => $this->center->id,
@@ -51,7 +51,7 @@ class AttemptAnnulTest extends TestCase
                 'center_id' => $this->center->id,
             ]);
 
-        $exam->examiners()->attach($this->employee);
+        $exam->examiners()->attach($this->actor);
 
         $attempt = Attempt::factory()
             ->create([
@@ -59,7 +59,7 @@ class AttemptAnnulTest extends TestCase
                 'center_id' => $this->center->id,
             ]);
 
-        $response = $this->actingAs($this->employee)
+        $response = $this->actingAs($this->actor)
             ->putJson(route('attempts.destroy', ['attempt' => $attempt]), [
                 'annulledReason' => 'Есть',
             ]);
@@ -80,7 +80,7 @@ class AttemptAnnulTest extends TestCase
             ]);
 
         $exam->examiners()
-            ->attach($this->employee);
+            ->attach($this->actor);
 
         $attempt = Attempt::factory()
             ->annulled()
@@ -90,7 +90,7 @@ class AttemptAnnulTest extends TestCase
                 'annulled_at' => Carbon::now(),
             ]);
 
-        $response = $this->actingAs($this->employee)
+        $response = $this->actingAs($this->actor)
             ->putJson(route('attempts.destroy', [
                 'attempt' => $attempt,
             ]),
