@@ -6,6 +6,7 @@ use App\Enums\ExamDocument;
 use App\Events\ExamDocumentGenerated;
 use App\Models\Attempt;
 use App\Models\Exam;
+use App\Models\Violation;
 use App\Support\CenterIsolationCheck;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -22,11 +23,7 @@ class ExamProtocolGenerator
         $annulledAttempts = $this->getAnnulledAttempts($exam);
         $beginTimeReal = $this->getBeginTimeReal($exam);
         $endTimeReal = $this->getEndTimeReal($exam);
-
-        $attemptsWithViolations = $exam->attempts()
-            ->whereHas('violations')
-            ->with(['foreignNational', 'center', 'violations'])
-            ->get();
+        $attemptsWithViolations = $this->getAttemptsWithViolations($exam);
 
         CenterIsolationCheck::check($attemptsWithViolations);
         CenterIsolationCheck::check($annulledAttempts);
@@ -65,5 +62,20 @@ class ExamProtocolGenerator
             ->max('finished_at');
 
         return $max ? Carbon::parse($max, 'UTC')->setTimezone($exam->time_zone) : null;
+    }
+
+    protected function getAttemptsWithViolations(Exam $exam): Collection
+    {
+        $attempts = $exam->attempts()
+            ->whereHas('violations')
+            ->with(['foreignNational', 'center', 'violations'])
+            ->get();
+
+        $attempts->each(function(Attempt $attempt){
+            $attempt->violations->each(function(Violation $violation)use($attempt){
+                return $violation->setRelation('attempt', $attempt);
+            });
+        });
+        return $attempts;
     }
 }

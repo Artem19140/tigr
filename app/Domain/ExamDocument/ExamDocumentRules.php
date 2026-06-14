@@ -4,6 +4,7 @@ namespace App\Domain\ExamDocument;
 
 use App\Domain\Shared\RuleResult;
 use App\Enums\AvailabilityCode;
+use App\Models\Employee;
 use App\Models\Exam;
 
 class ExamDocumentRules
@@ -24,8 +25,22 @@ class ExamDocumentRules
         );
     }
 
-    public function resolve(Exam $exam): array
+    public function resolve(Exam $exam,Employee $employee): array
     {
+        // $rules = [];
+        // if($employee->can('codes', $exam)){
+        //     $rules['codes'] = $this->codes($exam);
+        // }
+        // if($employee->can('protocol', $exam)){
+        //     $rules['protocol'] = $this->protocol($exam);
+        // }
+        // if($employee->can('results', $exam)){
+        //     $rules['results'] = $this->results($exam);
+        // }
+        // if($employee->can('list', $exam)){
+        //     $rules['list'] = $this->list($exam);
+        // }
+        // return $rules;
         return [
             'codes' => $this->codes($exam),
             'protocol' => $this->protocol($exam),

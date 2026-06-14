@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources\Enrollment;
 
-use App\Domain\Enrollment\Rules\EnrollmentPaymentRules;
-use App\Domain\Exam\Resolver\ExamResultResolver;
 use App\Http\Resources\Exam\ExamShortResource;
 use App\Http\Resources\ForeignNational\ForeignNationalResource;
 use Illuminate\Http\Request;
@@ -23,11 +21,7 @@ class EnrollmentResource extends JsonResource
             'hasPayment' => $this->has_payment,
             'exam' => new ExamShortResource($this->whenLoaded('exam')),
             'foreignNational' => new ForeignNationalResource($this->whenLoaded('foreignNational')),
-            'examResult' => $this->when(
-                $this->relationLoaded('exam') &&
-                $this->relationLoaded('attempt'),
-                fn () => app(ExamResultResolver::class)->execute($this->resource)
-            ),
+            'examResult' => $this->exam_result,
             'availability' => [
                 'payment' => $this->payment,
             ],

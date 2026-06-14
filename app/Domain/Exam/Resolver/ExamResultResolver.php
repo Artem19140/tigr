@@ -3,14 +3,17 @@
 namespace App\Domain\Exam\Resolver;
 
 use App\Enums\ExamResultStatus;
+use App\Models\Attempt;
 use App\Models\Enrollment;
+use App\Models\Exam;
 
 class ExamResultResolver
 {
-    public function execute(Enrollment $enrollment): ?ExamResultStatus
-    {
-        $exam = $enrollment->exam;
-        $attempt = $enrollment->attempt;
+    public function execute(
+        Enrollment $enrollment,
+        Exam $exam, 
+        Attempt | null $attempt
+    ): ?ExamResultStatus {
 
         if ((! $exam->isFinished() || $exam->isCancelled()) && ! $attempt) {
             return null;

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\ForeignNational;
 
 use App\Domain\Enrollment\Rules\EnrollmentPaymentRules;
+use App\Domain\Exam\Resolver\ExamResultResolver;
 use App\Domain\ForeignNational\Action\CreateForeignNationalWithEnrollmentAction;
 use App\Domain\ForeignNational\Action\UpdateForeignNationalAction;
 use App\Domain\ForeignNational\Query\GetForeignNationalsQuery;
@@ -25,7 +26,8 @@ use Inertia\Response;
 class ForeignNationalController
 {
     public function __construct(
-        protected EnrollmentPaymentRules $enrollmentPaymentRules
+        protected EnrollmentPaymentRules $enrollmentPaymentRules,
+        protected ExamResultResolver $resolver
     ){}
     public function index(
         ForeignNationalIndexRequest $request,
@@ -84,7 +86,7 @@ class ForeignNationalController
                 'documents' => function(MorphMany $query){
                     return $query->whereNull('deleted_at');
                 },
-                'documents.creator'
+                'documents.creator', 'documents.documentable'
             ];
         }
 
@@ -103,8 +105,16 @@ class ForeignNationalController
         $foreignNational->load(['creator', ...$relations]);
 
         $foreignNational->enrollments = $foreignNational->enrollments->sortByDesc('exam.begin_time');
+        
         $foreignNational->enrollments->each(function(Enrollment $enrollment){
             $enrollment->setAttribute('payment', $this->enrollmentPaymentRules->check($enrollment, $enrollment->exam));
+            $enrollment->setAttribute('exam_result', 
+                    $this->resolver->execute(
+                        $enrollment,
+                        $enrollment->exam,
+                        $enrollment->attempt
+                    )
+                );
         });
 
 

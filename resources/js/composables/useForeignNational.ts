@@ -1,15 +1,15 @@
 import { ForeignNational } from "@/interfaces/ForeignNational";
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 
-const foreignNationals = reactive<Map<number,ForeignNational>>(new Map)
+const foreignNationals = ref<{}>({})
 
 export const useForeignNationals = () => {
     const set = (foreignNational :ForeignNational) => {
-        foreignNationals.set(foreignNational.id, {... foreignNational})
+        foreignNationals.value[foreignNational.id] = foreignNational
     }
 
     const get = (foreignNationalId : number) => {
-        return foreignNationals.get(foreignNationalId)
+        return foreignNationals.value[foreignNationalId]
     }
     
     const remove = (foreignNationalId : number) => {

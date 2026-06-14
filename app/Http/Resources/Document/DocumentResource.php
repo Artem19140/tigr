@@ -2,6 +2,7 @@
 
 namespace  App\Http\Resources\Document;
 
+use App\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,7 +23,7 @@ class DocumentResource extends JsonResource
             'type' => $this->document_type,
             'creatorFullName' => $this->whenLoaded('creator', fn () => $this->creator->full_name),
             'permissions' => [
-                'update' => true //$request->user()->can('updateAny', Document::class)
+                'update' => $request->user()->can('updateAny', Document::class)
             ],
             
         ];

@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Enrollment;
 
-use App\Domain\Exam\Resolver\ExamResultResolver;
 use App\Http\Resources\ForeignNational\ForeignNationalResource;
 use App\Models\Enrollment;
 use Illuminate\Http\Request;
@@ -21,11 +20,7 @@ class EnrollmentExamShowResource extends JsonResource
             'id' => $this->id,
             'hasPayment' => $this->has_payment,
             'foreignNational' => new ForeignNationalResource($this->whenLoaded('foreignNational')),
-            'examResult' => $this->when(
-                $this->relationLoaded('exam') &&
-                $this->relationLoaded('attempt'),
-                fn () => app(ExamResultResolver::class)->execute($this->resource),
-            ),
+            'examResult' => $this->exam_result,
             'availability' => [
                 'payment' => $this->payment ?? false
             ],

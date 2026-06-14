@@ -45,14 +45,14 @@ class ExamResource extends JsonResource
             'createdAt' => $this->created_at,
             'enrollmentsCount' => $this->whenCounted('enrollments_count'),
             'status' => app(ExamStatusResolver::class)->execute($exam),
-            'availability' => $this->availability($exam),
-            'permissions' => $this->permissions($employee, $exam)
+            'availability' => $this->availability($exam,  $employee),
+            'permissions' => $this->permissions( $exam, $employee)
         ];
     }
 
     protected function permissions(
-        Employee $employee, 
-        Exam $exam
+        Exam $exam,
+        Employee $employee
     ): array
     {
         return [
@@ -78,14 +78,14 @@ class ExamResource extends JsonResource
         ];
     }
 
-    protected function availability(Exam $exam): array
+    protected function availability(Exam $exam, Employee $employee): array
     {
         return [
             'actions' => [
                 'cancell' => app(ExamCancellRules::class)->check($exam)->available,
                 'edit' => app(ExamEditRules::class)->check($exam)->available,
             ],  
-            'documents' => app(ExamDocumentRules::class)->resolve($this->resource)
+            'documents' => app(ExamDocumentRules::class)->resolve($this->resource,  $employee)
         ];
     }
 }

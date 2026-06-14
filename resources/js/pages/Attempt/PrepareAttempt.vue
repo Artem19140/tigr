@@ -5,7 +5,6 @@ import { Exam } from '@/interfaces/Exam';
 import { Attempt } from '@/interfaces/Attempt';
 import BaseLayout from '@/layouts/BaseLayout.vue';
 
-
 const props = defineProps<{
     exam:{
         data:Exam
@@ -18,10 +17,9 @@ const props = defineProps<{
 
 const form = useForm()
 
-const begin = () => {
+const begin = () => {   
     form.put(`/attempts/${props.attempt.id}`)
 }
-
 </script>
 
 <template>

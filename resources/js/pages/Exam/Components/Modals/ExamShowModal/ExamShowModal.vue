@@ -100,7 +100,6 @@ const tab = ref()
                     v-if="permissions?.enrollments.view && exam"
                 >
                     <EnrollmentsTable 
-                        :permissions="permissions"
                         :exam="exam" 
                     />
                 </v-tabs-window-item>

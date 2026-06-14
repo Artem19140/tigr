@@ -70,7 +70,7 @@ const downloadProtocolDisabled = computed(() =>!availability.value.documents.pro
 const downloadListDisabled =  computed(() =>!availability.value.documents.list.available)
 const editDisabled  =   computed(() =>! availability.value.actions.edit)
 const cancelDisabled = computed(() =>! availability.value.actions.cancell)
-const downloadCodesDisabled  = computed(() =>!availability.value.documents.codes.available)
+const downloadCodesDisabled  = computed(() =>!availability.value.documents.codes?.available)
 </script>
 
 <template>

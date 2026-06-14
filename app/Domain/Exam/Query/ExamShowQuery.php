@@ -3,6 +3,7 @@
 namespace App\Domain\Exam\Query;
 
 use App\Domain\Enrollment\Rules\EnrollmentPaymentRules;
+use App\Domain\Exam\Resolver\ExamResultResolver;
 use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\Exam;
@@ -10,7 +11,8 @@ use App\Models\Exam;
 class ExamShowQuery
 {
     public function __construct(
-        protected EnrollmentPaymentRules $enrollmentPaymentRules
+        protected EnrollmentPaymentRules $enrollmentPaymentRules,
+        protected ExamResultResolver $resolver
     ){}
     public function execute(
         Exam $exam, 
@@ -36,6 +38,14 @@ class ExamShowQuery
             ){
                 $enrollment->setAttribute('payment', 
                     $this->enrollmentPaymentRules->check($enrollment, $exam)->available
+                );
+                
+                $enrollment->setAttribute('exam_result', 
+                    $this->resolver->execute(
+                        $enrollment,
+                        $exam,
+                        $enrollment->attempt
+                    )
                 );
             });
 
