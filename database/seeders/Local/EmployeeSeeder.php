@@ -2,7 +2,6 @@
 
 namespace Database\Seeders\Local;
 
-use App\Enums\EmployeeRole;
 use App\Models\Center;
 use App\Models\Employee;
 use Illuminate\Database\Seeder;
@@ -13,21 +12,26 @@ class EmployeeSeeder extends Seeder
     public function run(): void
     {
         $center = Center::firstWhere('inn', '1833010750');
-        $password = Hash::make('123456789');
-        $roles = EmployeeRole::cases();
-
-        foreach ($roles as $role) {
-            if ($role === EmployeeRole::PlatformAdmin) {
-                continue;
-            }
+        $password = Hash::make('12345678');
+        for($i = 0; $i < 5; $i++){
             Employee::factory()
-                ->withRole($role)
                 ->create([
                     'center_id' => $center,
-                    'email' => $role->value.'@udsu.ru',
+                    'email' => "$i@udsu.ru",
                     'has_to_change_password' => false,
                     'password' => $password,
                 ]);
         }
+
+        Employee::factory()
+            ->create([
+                'surname' => 'тестовый',
+                'name' => 'тестовый',
+                'center_id' => $center,
+                'email' => "test@udsu.ru",
+                'has_to_change_password' => false,
+                'password' => $password,
+            ]);
+        
     }
 }

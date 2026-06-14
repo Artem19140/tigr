@@ -29,7 +29,7 @@ class VnzhSeeder extends Seeder
                 'level' => 3,
                 'cost' => 5900,
                 'has_speaking_tasks' => true,
-                'certificate_name' => 'нету',
+                'certificate_name' => 'вида на жительство в РФ',
             ]);
         $orderTask = 1;
         $orderBlock = 1;
@@ -158,7 +158,7 @@ class VnzhSeeder extends Seeder
                     'variants' => json_decode(file_get_contents(base_path($path.'task5.json')), true),
                 ],
                 [
-                    'type' => TaskType::TextInput,
+                    'type' => TaskType::MultyInput,
                     'description' => 'Прослушайте диалог и дополните предложение в соответствии с информацией в тексте.',
                     'mark' => 1,
                     'variants' => json_decode(file_get_contents(base_path($path.'task6.json')), true),

@@ -8,15 +8,25 @@
       {
         "type": "text",
         "value": "Посетителю нужно заполнить ________________."
+      },
+      {
+        "type": "text",
+        "value": "Впишите ответ в поле ввода"
+      },
+      {
+        "type": "input",
+        "field_id": "input_1"
       }
     ],
     "fipi_number": "584E89",
     "answers": [
       {
-        "content" : "анкету",
+        "content": {
+          "input_1": ""
+        },
         "is_correct": true
       }
-    ] 
+    ]
   },
   {
     "content": [
@@ -27,16 +37,22 @@
       {
         "type": "text",
         "value": "Это объявление Вы можете услышать в ___________."
+      },
+      {
+        "type": "text",
+        "value": "Впишите ответ в поле ввода"
+      },
+      {
+        "type": "input",
+        "field_id": "input_1"
       }
     ],
     "fipi_number": "1AC8CC",
     "answers": [
       {
-        "content" : "аэропорту",
-        "is_correct": true
-      },
-      {
-        "content" : "аэровокзале",
+        "content": {
+          "input_1": ""
+        },
         "is_correct": true
       }
     ]
@@ -50,12 +66,22 @@
       {
         "type": "text",
         "value": "Рустам изучал русский язык в городе  ________________."
+      },
+      {
+        "type": "text",
+        "value": "Впишите ответ в поле ввода"
+      },
+      {
+        "type": "input",
+        "field_id": "input_1"
       }
     ],
     "fipi_number": "A8B0B9",
     "answers": [
       {
-        "content" : "бухара",
+        "content": {
+          "input_1": ""
+        },
         "is_correct": true
       }
     ]
@@ -69,12 +95,22 @@
       {
         "type": "text",
         "value": "Поезд следует в ________________."
+      },
+      {
+        "type": "text",
+        "value": "Впишите ответ в поле ввода"
+      },
+      {
+        "type": "input",
+        "field_id": "input_1"
       }
     ],
     "fipi_number": "BD2B34",
     "answers": [
       {
-        "content" : "севастополь",
+        "content": {
+          "input_1": ""
+        },
         "is_correct": true
       }
     ]
@@ -88,12 +124,22 @@
       {
         "type": "text",
         "value": "Наташа работает сейчас ____________ ."
+      },
+      {
+        "type": "text",
+        "value": "Впишите ответ в поле ввода"
+      },
+      {
+        "type": "input",
+        "field_id": "input_1"
       }
     ],
     "fipi_number": "D27C8B",
     "answers": [
       {
-        "content" : "продавцом",
+        "content": {
+          "input_1": ""
+        },
         "is_correct": true
       }
     ]
@@ -107,12 +153,22 @@
       {
         "type": "text",
         "value": "Раньше она работала в ресторане  ___________."
+      },
+      {
+        "type": "text",
+        "value": "Впишите ответ в поле ввода"
+      },
+      {
+        "type": "input",
+        "field_id": "input_1"
       }
     ],
     "fipi_number": "20D235",
     "answers": [
       {
-        "content" : "поваром",
+        "content": {
+          "input_1": ""
+        },
         "is_correct": true
       }
     ]
@@ -126,12 +182,22 @@
       {
         "type": "text",
         "value": "Музей не работает в ____________ ."
+      },
+      {
+        "type": "text",
+        "value": "Впишите ответ в поле ввода"
+      },
+      {
+        "type": "input",
+        "field_id": "input_1"
       }
     ],
     "fipi_number": "12A8C7",
     "answers": [
       {
-        "content" : "понедельник",
+        "content": {
+          "input_1": ""
+        },
         "is_correct": true
       }
     ]
@@ -145,12 +211,22 @@
       {
         "type": "text",
         "value": "Он хочет оформить в банке ____________ ."
+      },
+      {
+        "type": "text",
+        "value": "Впишите ответ в поле ввода"
+      },
+      {
+        "type": "input",
+        "field_id": "input_1"
       }
     ],
     "fipi_number": "567F48",
     "answers": [
       {
-        "content" : "карту",
+        "content": {
+          "input_1": ""
+        },
         "is_correct": true
       }
     ]
@@ -164,12 +240,22 @@
       {
         "type": "text",
         "value": "Друзья пригласили в субботу Михаила на ____________ ."
+      },
+      {
+        "type": "text",
+        "value": "Впишите ответ в поле ввода"
+      },
+      {
+        "type": "input",
+        "field_id": "input_1"
       }
     ],
     "fipi_number": "C347FF",
     "answers": [
       {
-        "content" : "футбол",
+        "content": {
+          "input_1": ""
+        },
         "is_correct": true
       }
     ]
@@ -183,12 +269,22 @@
       {
         "type": "text",
         "value": "Она хочет отправить посылку в _____________ ."
+      },
+      {
+        "type": "text",
+        "value": "Впишите ответ в поле ввода"
+      },
+      {
+        "type": "input",
+        "field_id": "input_1"
       }
     ],
     "fipi_number": "7AC275",
     "answers": [
       {
-        "content" : "тюмень",
+        "content": {
+          "input_1": ""
+        },
         "is_correct": true
       }
     ]
@@ -202,12 +298,22 @@
       {
         "type": "text",
         "value": "Летом Вера отдыхала у бабушки в ____________ ."
+      },
+      {
+        "type": "text",
+        "value": "Впишите ответ в поле ввода"
+      },
+      {
+        "type": "input",
+        "field_id": "input_1"
       }
     ],
     "fipi_number": "5CF48D",
     "answers": [
       {
-        "content" : "деревне",
+        "content": {
+          "input_1": ""
+        },
         "is_correct": true
       }
     ]
@@ -221,12 +327,22 @@
       {
         "type": "text",
         "value": "Они идут в ____________."
+      },
+      {
+        "type": "text",
+        "value": "Впишите ответ в поле ввода"
+      },
+      {
+        "type": "input",
+        "field_id": "input_1"
       }
     ],
     "fipi_number": "1885F5",
     "answers": [
       {
-        "content" : "кафе",
+        "content": {
+          "input_1": ""
+        },
         "is_correct": true
       }
     ]
@@ -240,12 +356,22 @@
       {
         "type": "text",
         "value": "Оля летом отдыхала на ____________ ."
+      },
+      {
+        "type": "text",
+        "value": "Впишите ответ в поле ввода"
+      },
+      {
+        "type": "input",
+        "field_id": "input_1"
       }
     ],
     "fipi_number": "97E856",
     "answers": [
       {
-        "content" : "алтае",
+        "content": {
+          "input_1": ""
+        },
         "is_correct": true
       }
     ]
@@ -259,12 +385,22 @@
       {
         "type": "text",
         "value": "Света теперь живёт в ____________ ."
+      },
+      {
+        "type": "text",
+        "value": "Впишите ответ в поле ввода"
+      },
+      {
+        "type": "input",
+        "field_id": "input_1"
       }
     ],
     "fipi_number": "81DDAB",
     "answers": [
       {
-        "content" : "центре",
+        "content": {
+          "input_1": ""
+        },
         "is_correct": true
       }
     ]
@@ -278,12 +414,22 @@
       {
         "type": "text",
         "value": "Наташа перенесла свой отпуск на ______________."
+      },
+      {
+        "type": "text",
+        "value": "Впишите ответ в поле ввода"
+      },
+      {
+        "type": "input",
+        "field_id": "input_1"
       }
     ],
     "fipi_number": "01EFC2",
     "answers": [
       {
-        "content" : "ноябрь",
+        "content": {
+          "input_1": ""
+        },
         "is_correct": true
       }
     ]
@@ -297,12 +443,22 @@
       {
         "type": "text",
         "value": "Она хочет купить билет на поезд в _____________."
+      },
+      {
+        "type": "text",
+        "value": "Впишите ответ в поле ввода"
+      },
+      {
+        "type": "input",
+        "field_id": "input_1"
       }
     ],
     "fipi_number": "D55EE9",
     "answers": [
       {
-        "content" : "самару",
+        "content": {
+          "input_1": ""
+        },
         "is_correct": true
       }
     ]

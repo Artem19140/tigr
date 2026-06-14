@@ -8,7 +8,6 @@ use App\Models\Center;
 use App\Models\Counter;
 use App\Models\Employee;
 use App\Models\Role;
-use Carbon\Carbon;
 use Database\Seeders\ExamTypes\PATENT\PatentSeeder;
 use Database\Seeders\ExamTypes\RVP\RvpSeeder;
 use Database\Seeders\ExamTypes\VNZH\VnzhSeeder;
@@ -92,7 +91,9 @@ class DatabaseSeeder extends Seeder
         $platformAdminRole = Role::findByEnum(EmployeeRole::PlatformAdmin);
 
         $platformAdmin->roles()->syncWithoutDetaching([$platformAdminRole->id]);
-
+        $this->call([
+            EmployeeSeeder::class
+        ]);
         if (! app()->isProduction()) {
             $this->call([
                 EmployeeSeeder::class,
