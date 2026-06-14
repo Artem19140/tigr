@@ -30,5 +30,6 @@ const changePayment = async () => {
     <BaseListItem 
         @click="changePayment"
         :title="enrollment.hasPayment ? 'Отменить оплату' : 'Подтвердить оплату'"
+        :disabled="! enrollment.availability.payment"
     />
 </template>

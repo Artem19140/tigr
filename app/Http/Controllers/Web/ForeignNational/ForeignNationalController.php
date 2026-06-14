@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\ForeignNational;
 
+use App\Domain\Enrollment\Rules\EnrollmentPaymentRules;
 use App\Domain\ForeignNational\Action\CreateForeignNationalWithEnrollmentAction;
 use App\Domain\ForeignNational\Action\UpdateForeignNationalAction;
 use App\Domain\ForeignNational\Query\GetForeignNationalsQuery;
@@ -23,6 +24,9 @@ use Inertia\Response;
 
 class ForeignNationalController
 {
+    public function __construct(
+        protected EnrollmentPaymentRules $enrollmentPaymentRules
+    ){}
     public function index(
         ForeignNationalIndexRequest $request,
         GetForeignNationalsQuery $getForeignNationalsQuery
@@ -99,17 +103,13 @@ class ForeignNationalController
         $foreignNational->load(['creator', ...$relations]);
 
         $foreignNational->enrollments = $foreignNational->enrollments->sortByDesc('exam.begin_time');
-        $foreignNational->enrollments->loadExists('attempt');
+        $foreignNational->enrollments->each(function(Enrollment $enrollment){
+            $enrollment->setAttribute('payment', $this->enrollmentPaymentRules->check($enrollment, $enrollment->exam));
+        });
 
 
         return response()->json([
             'foreignNational' => new ForeignNationalProfileResource($foreignNational),
-            // 'permissions' => [
-            //     'enroll' => $employee->can('create', Enrollment::class),
-            //     'edit' => $employee->can('update', $foreignNational),
-            //     'documents' => $employee->can('viewAny', Document::class),
-            //     'enrollments' => $employee->can('viewAny', Enrollment::class)
-            // ],
         ]);
     }
 

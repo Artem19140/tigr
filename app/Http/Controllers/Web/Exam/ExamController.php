@@ -17,7 +17,6 @@ use App\Http\Resources\Employee\EmployeeResource;
 use App\Http\Resources\Exam\ExamIndexResource;
 use App\Http\Resources\Exam\ExamResource;
 use App\Http\Resources\ExamType\ExamTypeResource;
-use App\Models\Enrollment;
 use App\Models\Exam;
 use App\Support\CenterIsolationCheck;
 use Illuminate\Http\JsonResponse;

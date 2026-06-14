@@ -29,7 +29,7 @@ class EnrollmentResource extends JsonResource
                 fn () => app(ExamResultResolver::class)->execute($this->resource)
             ),
             'availability' => [
-                'payment' => app(EnrollmentPaymentRules::class)->check($this->resource)->available,
+                'payment' => $this->payment,
             ],
             'permissions' => [
                 'payment' => $request->user()->can('payment', $this->resource),

@@ -2,13 +2,21 @@
 
 namespace App\Domain\Exam\Query;
 
+use App\Domain\Enrollment\Rules\EnrollmentPaymentRules;
 use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\Exam;
 
 class ExamShowQuery
 {
-    public function execute(Exam $exam, Employee $employee): Exam
+    public function __construct(
+        protected EnrollmentPaymentRules $enrollmentPaymentRules
+    ){}
+    public function execute(
+        Exam $exam, 
+        Employee $employee,
+        
+    ): Exam
     {
         $exam->load([
             'examiners',
@@ -23,11 +31,15 @@ class ExamShowQuery
                 ]
             ]);
 
-            $exam->enrollments->each(function ($enrollment) use ($exam) {
-                $enrollment->setRelation('exam', $exam);
+            $exam->enrollments->each(function(Enrollment $enrollment) use (
+                $exam
+            ){
+                $enrollment->setAttribute('payment', 
+                    $this->enrollmentPaymentRules->check($enrollment, $exam)->available
+                );
             });
 
-            $exam->enrollments->loadExists('attempt');
+            
         }
 
         $exam->loadExists([

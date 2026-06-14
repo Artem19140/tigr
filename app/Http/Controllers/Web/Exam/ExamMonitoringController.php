@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Web\Exam;
 
+use App\Domain\Enrollment\Rules\EnrollmentPaymentRules;
 use App\Domain\Exam\Action\Monitoring\UpdateProtocolCommentAction;
 use App\Http\Resources\Exam\ExamIndexResource;
 use App\Http\Resources\Exam\ExamMonitoringResource;
+use App\Models\Enrollment;
 use App\Models\Exam;
 use App\Support\CenterIsolationCheck;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class ExamMonitoringController
@@ -45,8 +45,10 @@ class ExamMonitoringController
         ]);
     }
 
-    public function show(Exam $exam): \Inertia\Response
-    {
+    public function show(
+        Exam $exam, 
+        EnrollmentPaymentRules $enrollmentPaymentRules
+    ): \Inertia\Response {
         $exam->load([
             'enrollments' => ['foreignNational', 'attempt.center'],
             'type',
@@ -55,8 +57,13 @@ class ExamMonitoringController
         $exam->enrollments->loadExists('attempt');
         $exam->enrollments = $exam->enrollments->sortBy('foreignNational.surname');
         
-        $exam->enrollments->each(function($e)use($exam){
-            $e->setRelation('exam', $exam);
+        $exam->enrollments->each(function(Enrollment $enrollment) use (
+            $exam, 
+            $enrollmentPaymentRules
+        ){
+            $enrollment->setAttribute('payment', 
+                $enrollmentPaymentRules->check($enrollment, $exam)->available
+            );
         });
 
         return Inertia::render('ExamMonitoring/ExamMonitoring', [

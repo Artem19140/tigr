@@ -71,8 +71,6 @@ const search = ref('')
         <template #item.actions="{item}">
             <EnrollmentDropDown 
                 :enrollment="item"
-                :exam="exam"
-                :loading="item"
             />
         </template>
         <template #item.results="{ item }">

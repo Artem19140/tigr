@@ -21,19 +21,21 @@ class ExamMonitoringResource extends JsonResource
             'id' => $this->id,
             'beginTime' => $this->begin_time_local->copy()->toIso8601String(),
             'enrollments' => EnrollmentMonitoringResource::collection($this->whenLoaded('enrollments')),
-            'endTime' => $this->begin_time_local->copy()->addMinutes($this->duration)->toIso8601String(),
             'enrollmentsCount' => $this->whenCounted('enrollments_count'),
             'protocolComment' => $this->protocol_comment,
             'hasSpeakingTasks' => $this->whenLoaded('type', fn () => $this->type->has_speaking_tasks),
             'status' => app(ExamStatusResolver::class)->execute($this->resource),
             'shortName' => $this->whenLoaded('type', fn () => $this->type->short_name),
-            'polling' => $this->pollingStart($this->resource) 
+            'polling' => $this->pollingStart($this->resource),
+            'availability' => [
+                'protocolComment' => $this->protocol_comment
+            ]
         ];
     }
 
     protected function pollingStart(Exam $exam):bool
     {
         
-        return $exam->isGoing() && ! $exam->isCancelled();  //&& $exam->enrollments_count > 0 && 
+        return $exam->isGoing() && ! $exam->isCancelled() && $this->enrollments->count() > 0;
     }
 }

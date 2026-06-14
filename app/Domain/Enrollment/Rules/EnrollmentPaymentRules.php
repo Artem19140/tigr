@@ -5,13 +5,12 @@ namespace App\Domain\Enrollment\Rules;
 use App\Domain\Shared\RuleResult;
 use App\Enums\AvailabilityCode;
 use App\Models\Enrollment;
+use App\Models\Exam;
 
 class EnrollmentPaymentRules
 {
-    public function check(Enrollment $enrollment):RuleResult
+    public function check(Enrollment $enrollment, Exam $exam):RuleResult
     {
-        $exam = $enrollment->exam;
-
         if($exam->isCancelled()){
             return RuleResult::fail(
                 AvailabilityCode::ExamCancelled
@@ -24,7 +23,7 @@ class EnrollmentPaymentRules
             );
         }
 
-        if($enrollment->attempt_exists){
+        if($enrollment->attempt){
             return RuleResult::fail(
                 AvailabilityCode::AttemptExists
             );

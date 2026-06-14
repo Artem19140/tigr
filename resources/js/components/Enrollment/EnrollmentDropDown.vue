@@ -19,7 +19,7 @@ const download = (document : string) => {
         <PaymentChange 
             :enrollment="enrollment"
             v-if="enrollment.permissions.payment"
-            :disabled="enrollment.availability.payment"
+            
         />
         <BaseListItem 
             title="Заявление" 

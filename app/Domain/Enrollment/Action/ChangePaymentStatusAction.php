@@ -17,11 +17,10 @@ class ChangePaymentStatusAction
 
     public function execute(Enrollment $enrollment): void
     {
-
-        $enrollment->load('exam');
-        $enrollment->loadExists('attempt');
-
-        $result = $this->enrollmentPaymentRules->check($enrollment);
+        $result = $this->enrollmentPaymentRules->check(
+            $enrollment, 
+            $enrollment->exam
+        );
 
         if($result->isNotAvailable()){
             throw new BusinessException($result->reason());
