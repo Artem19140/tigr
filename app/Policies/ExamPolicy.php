@@ -16,7 +16,8 @@ class ExamPolicy
             EmployeeRole::Operator,
             EmployeeRole::Director,
             EmployeeRole::Examiner,
-            EmployeeRole::Scheduler
+            EmployeeRole::Scheduler,
+            EmployeeRole::VideoRecordOperator
         )) {
             return true;
         }
@@ -26,13 +27,14 @@ class ExamPolicy
 
     public function view(Employee $employee, Exam $exam): bool
     {
-        if (! $this->sameCenter($employee, $exam)) {
+        if ($this->notSameCenter($employee, $exam)) {
             return false;
         }
         if ($employee->hasAnyRole(
             EmployeeRole::Operator,
             EmployeeRole::Director,
-            EmployeeRole::Scheduler
+            EmployeeRole::Scheduler,
+            EmployeeRole::VideoRecordOperator
         )) {
             return true;
         }
@@ -57,7 +59,7 @@ class ExamPolicy
 
     public function update(Employee $employee, Exam $exam): bool
     {
-        if (! $this->sameCenter($employee, $exam)) {
+        if ($this->notSameCenter($employee, $exam)) {
             return false;
         }
 
@@ -66,7 +68,7 @@ class ExamPolicy
 
     public function delete(Employee $employee, Exam $exam): bool
     {
-        if (! $this->sameCenter($employee, $exam)) {
+        if ($this->notSameCenter($employee, $exam)) {
             return false;
         }
 
@@ -75,7 +77,7 @@ class ExamPolicy
 
     public function examiner(Employee $employee, Exam $exam): bool
     {
-        if (! $this->sameCenter($employee, $exam)) {
+        if ($this->notSameCenter($employee, $exam)) {
             return false;
         }
         if (! $employee->hasRole(EmployeeRole::Examiner->value)) {
@@ -90,7 +92,7 @@ class ExamPolicy
 
     public function list(Employee $employee, Exam $exam): bool
     {
-        if (! $this->sameCenter($employee, $exam)) {
+        if ($this->notSameCenter($employee, $exam)) {
             return false;
         }
         if ($employee->hasAnyRole(
@@ -105,7 +107,7 @@ class ExamPolicy
 
     public function results(Employee $employee, Exam $exam): bool
     {
-        if (! $this->sameCenter($employee, $exam)) {
+        if ($this->notSameCenter($employee, $exam)) {
             return false;
         }
         if ($employee->hasAnyRole(
@@ -119,7 +121,7 @@ class ExamPolicy
 
     public function protocol(Employee $employee, Exam $exam): bool
     {
-        if (! $this->sameCenter($employee, $exam)) {
+        if ($this->notSameCenter($employee, $exam)) {
             return false;
         }
         if ($employee->hasAnyRole(
@@ -132,7 +134,7 @@ class ExamPolicy
     }
 
     public function video(Employee $employee, Exam $exam): bool{
-        if (! $this->sameCenter($employee, $exam)) {
+        if ($this->notSameCenter($employee, $exam)) {
             return false;
         }
         return $employee->hasAnyRole(EmployeeRole::VideoRecordOperator);

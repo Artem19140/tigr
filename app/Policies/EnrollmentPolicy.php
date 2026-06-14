@@ -35,7 +35,7 @@ class EnrollmentPolicy
 
     public function payment(Employee $employee, Enrollment $enrollment): bool
     {
-        if (! $this->sameCenter($employee, $enrollment)) {
+        if ($this->notSameCenter($employee, $enrollment)) {
             return false;
         }
 
@@ -65,7 +65,7 @@ class EnrollmentPolicy
     public function statement(Employee $employee, Enrollment $enrollment): bool
     {
 
-        if (! $this->sameCenter($employee, $enrollment)) {
+        if ($this->notSameCenter($employee, $enrollment)) {
             return false;
         }
 

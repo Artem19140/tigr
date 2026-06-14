@@ -10,6 +10,7 @@ import AppTooltip from '@/components/UI/AppTooltip/AppTooltip.vue';
 import AttemptCheckingPanel from '@/components/Attempt/AttemptCheckingPanel.vue';
 import TasksList from '../Attempt/Components/tasks/TasksList.vue';
 import { useConfirmDialog } from '@/composables/useConfirmDialog';
+import { useSnackbarQueue } from '@/composables/useSnackbarQueue.js';
 
 const props = defineProps<{
     enrollment:EnrollmentMonitoring
@@ -28,6 +29,11 @@ onMounted(() => {
 })
 
 const getSpeaking = () => {
+    if(!props.enrollment.attempt?.id){
+        const {add}= useSnackbarQueue()
+        add('Попытка не существует', 'red')
+        return
+    }
     http.get(`/attempts/${props.enrollment.attempt?.id}/speaking`,{
         onSuccess:(response : any) => {
             attempt.value=response.data
@@ -39,6 +45,11 @@ const getSpeaking = () => {
 const startHttp = useHttp()
 
 const start = () => {
+    if(!props.enrollment.attempt?.id){
+        const {add}= useSnackbarQueue()
+        add('Попытка не существует', 'red')
+        return
+    }
     startHttp.post(`/attempts/${props.enrollment.attempt?.id}/speaking/start`,{
         onSuccess:(response : any)=>{
             getSpeaking()
@@ -49,6 +60,11 @@ const start = () => {
 
 const finishHttp = useHttp()
 const finish = async () => {
+    if(!props.enrollment.attempt?.id){
+        const {add}= useSnackbarQueue()
+        add('Попытка не существует', 'red')
+        return
+    }
     const {confirmOpen} = useConfirmDialog()
     const ok = await confirmOpen('Завершить говорение? Задания больше не будут доступны')
     if(!ok) return

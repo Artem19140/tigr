@@ -31,7 +31,8 @@ Route::middleware([
     Route::post('centers/{center}/employees', [EmployeeController::class, 'store']);
     Route::put('employees/{employee}', [EmployeeController::class, 'update'])
         ->can('update', 'employee');
-    Route::patch('employees/{employee}/password', [PasswordController::class, 'reset']);
+    Route::patch('employees/{employee}/password', [PasswordController::class, 'reset'])
+        ->can('resetPassword', 'employee');
 
     Route::get('roles', [EmployeeController::class, 'rolesShow']);
 });

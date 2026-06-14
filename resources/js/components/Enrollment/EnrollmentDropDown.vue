@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import BaseThreeDotDropdown from '@components/BaseComponents/BaseThreeDotDropdown/BaseThreeDotDropdown.vue';
-import { useExamStatus } from '@/composables/useExamStatus';
 import PaymentChange from './PaymentChange.vue';
 import { Enrollment } from '@/interfaces/Enrollment';
 import BaseListItem from '../BaseComponents/BaseList/BaseListItem.vue';
@@ -13,8 +12,6 @@ const download = (document : string) => {
     window.open(`/enrollments/${props.enrollment.id}/${document}`)
 }
 
-const {isFinished, isCancelled} = useExamStatus(props.enrollment.exam)
-const isPaymentChangeDisabled  = isFinished.value || isCancelled.value
 </script>
 
 <template>
@@ -22,7 +19,7 @@ const isPaymentChangeDisabled  = isFinished.value || isCancelled.value
         <PaymentChange 
             :enrollment="enrollment"
             v-if="enrollment.permissions.payment"
-            :disabled="isPaymentChangeDisabled"
+            :disabled="enrollment.availability.payment"
         />
         <BaseListItem 
             title="Заявление" 

@@ -104,6 +104,6 @@ class ExamDocumentRules
         $deadline = $exam->begin_time
             ->copy()
             ->addMinutes(Exam::CODES_TTL_AFTER_BEGIN_MINUTES);
-        return now()->lte($deadline);
+        return now()->gte($deadline);
     }
 }

@@ -26,7 +26,7 @@ const annul = async () => {
     const loadingSnack = useLoadingSnackbar()
     loadingSnack.open('Идет аннулирование')
     const http = useHttp({
-        annulReason : res
+        annulledReason : res
     })
     http.delete(`/attempts/${props.enrollment.attempt?.id}`, {
         onSuccess() {

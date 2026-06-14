@@ -48,7 +48,7 @@ class CenterIsolationTest extends TestCase
             'center_id' => $centerA->id,
         ]);
         $policy = new ExamPolicy;
-        $this->assertTrue($policy->sameCenter($employeeA, $examA));
-        $this->assertFalse($policy->sameCenter($employeeA, $examB));
+        $this->assertTrue(!$policy->notSameCenter($employeeA, $examA));
+        $this->assertFalse(!$policy->notSameCenter($employeeA, $examB));
     }
 }

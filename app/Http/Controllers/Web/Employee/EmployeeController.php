@@ -28,7 +28,7 @@ class EmployeeController
         Request $request, 
         Center $center
     ): \Inertia\Response {
-        abort_if($center->id !== request()->user()->id, 404);
+        abort_if($center->id !== request()->user()->center_id, 404);
         $notPlatformAdmin = !$request->user()->isPlatformAdmin();
 
         $employees = Employee::active()
@@ -58,7 +58,7 @@ class EmployeeController
         CreateEmployeeAction $createEmployee,
         Center $center
     ): JsonResponse {
-        abort_if($center->id !== request()->user()->id, 404);
+        abort_if($center->id !== request()->user()->center_id, 404);
         $createEmployee->execute(
             $request->validated(),
             $center,

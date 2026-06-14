@@ -29,10 +29,7 @@ class AnnulledAttemptAction
             }
 
             $this->finishAndIfNeededFinilize($attempt);
-
-            $attempt->annulled_reason = $annulledReason;
-            $attempt->annulled_by_id = $employee->id;
-            $attempt->annulled();
+            $attempt->annul($annulledReason, $employee->id);
             $attempt->save();
         });
     }

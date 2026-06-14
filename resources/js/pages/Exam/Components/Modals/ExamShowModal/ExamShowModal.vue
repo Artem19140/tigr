@@ -90,19 +90,24 @@ const tab = ref()
         
         <v-card-text>
             <v-tabs v-model="tab">
-                <v-tab value="enrollments">Запись</v-tab>
+                <v-tab value="enrollments" v-if="permissions?.enrollments.view">Запись</v-tab>
                 <v-tab value="videos" v-if="permissions?.videos.view">Видео</v-tab>
             </v-tabs>
 
             <v-tabs-window v-model="tab" class="mt-2">
-                <v-tabs-window-item value="enrollments">
+                <v-tabs-window-item 
+                    value="enrollments" 
+                    v-if="permissions?.enrollments.view && exam"
+                >
                     <EnrollmentsTable 
                         :permissions="permissions"
-                        v-if="permissions && exam"
                         :exam="exam" 
                     />
                 </v-tabs-window-item>
-                <v-tabs-window-item value="videos" >
+                <v-tabs-window-item 
+                    value="videos" 
+                    v-if="permissions?.videos.view"
+                >
                     <ExamVideo 
                         :exam="exam"
                     />

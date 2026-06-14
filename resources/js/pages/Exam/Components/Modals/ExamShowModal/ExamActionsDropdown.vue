@@ -74,51 +74,51 @@ const downloadCodesDisabled  = computed(() =>!availability.value.documents.codes
 </script>
 
 <template>
-    <BaseThreeDotDropdown>
-      <v-list-item
-        title="Кода" 
-        :disabled="downloadCodesDisabled"
-        @click="() => download('codes')" 
-        v-if="permissions.documents.codes"
-      />
+  <BaseThreeDotDropdown>
+    <v-list-item
+      title="Кода" 
+      :disabled="downloadCodesDisabled"
+      @click="() => download('codes')" 
+      v-if="permissions.documents.codes"
+    />
 
-      <v-list-item 
-        title="Список"
-        v-if="permissions.documents.list"
-        :disabled="downloadListDisabled"  
-        @click="download('list')" 
-      />
+    <v-list-item 
+      title="Список"
+      v-if="permissions.documents.list"
+      :disabled="downloadListDisabled"  
+      @click="download('list')" 
+    />
 
-      <v-list-item 
-        title="Результаты"
-        :subtitle="availability.documents.results.code === 'exam_on_checking' ? availability.documents.results.reason : ''"
-        :disabled="downloadResultslDisabled" 
-        v-if="permissions.documents.results"
-        @click="() => download('results')" 
-      />
+    <v-list-item 
+      title="Результаты"
+      :subtitle="availability.documents.results.code === 'exam_on_checking' ? availability.documents.results.reason : ''"
+      :disabled="downloadResultslDisabled" 
+      v-if="permissions.documents.results"
+      @click="() => download('results')" 
+    />
 
-      <v-list-item
-        title="Протокол" 
-        v-if="permissions.documents.protocol"
-        :disabled="downloadProtocolDisabled"
-        @click="() => download('protocol')" 
-      />
+    <v-list-item
+      title="Протокол" 
+      v-if="permissions.documents.protocol"
+      :disabled="downloadProtocolDisabled"
+      @click="() => download('protocol')" 
+    />
 
-      <v-divider v-if="permissions.actions.edit || permissions.actions.cancell"></v-divider>
+    <v-divider></v-divider>
 
-      <v-list-item 
-        title="Редактировать" 
-        v-if="permissions.actions.edit"
-        @click="modals.open('examEdit', {exam:exam, onEdit:(exam:Exam) => emit('edit', exam)})"
-        :disabled="editDisabled"
-      />
-      
-      <v-list-item 
-        base-color="red"
-        title="Отменить" 
-        @click="cancelExam"
-        :disabled="cancelDisabled" 
-        v-if="permissions.actions.cancell"
-      />
-    </BaseThreeDotDropdown>
+    <v-list-item 
+      title="Редактировать" 
+      v-if="permissions.actions.edit"
+      @click="modals.open('examEdit', {exam:exam, onEdit:(exam:Exam) => emit('edit', exam)})"
+      :disabled="editDisabled"
+    />
+    
+    <v-list-item 
+      base-color="red"
+      title="Отменить" 
+      @click="cancelExam"
+      :disabled="cancelDisabled" 
+      v-if="permissions.actions.cancell"
+    />
+  </BaseThreeDotDropdown>
 </template>

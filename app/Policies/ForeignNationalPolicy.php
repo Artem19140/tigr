@@ -12,7 +12,7 @@ class ForeignNationalPolicy
 
     public function view(Employee $employee, ForeignNational $foreignNational): bool
     {
-        if (! $this->sameCenter($employee, $foreignNational)) 
+        if ($this->notSameCenter($employee, $foreignNational)) 
         {
             return false;
         }
@@ -54,7 +54,7 @@ class ForeignNationalPolicy
 
     public function update(Employee $employee, ForeignNational $foreignNational): bool
     {
-        if (! $this->sameCenter($employee, $foreignNational)) {
+        if ($this->notSameCenter($employee, $foreignNational)) {
             return false;
         }
 

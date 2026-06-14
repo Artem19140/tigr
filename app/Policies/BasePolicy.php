@@ -8,19 +8,19 @@ use Illuminate\Support\Facades\Log;
 
 trait BasePolicy
 {
-    public function sameCenter(Employee $employee, Model $model): bool
+    public function notSameCenter(Employee $employee, Model $model): bool
     {
-        if ($employee->center_id === $model->center_id) {
+        if ($employee->center_id !== $model->center_id) {
+            Log::warning('UNAUTHORIZED: center access',[
+                'employee_center_id' => $employee->center_id,
+                'employee_id' => $employee->id,
+                'model_center_id' => $model->center_id,
+                'model_id' => $model->id,
+                'model_type' => class_basename($model),
+                'url' => request()->url(),
+            ]);
             return true;
         }
-        Log::warning('UNAUTHORIZED: center access',[
-            'employee_center_id' => $employee->center_id,
-            'employee_id' => $employee->id,
-            'model_center_id' => $model->center_id,
-            'model_id' => $model->id,
-            'model_type' => class_basename($model),
-            'url' => request()->url(),
-        ]);
         return false;
     }
 }

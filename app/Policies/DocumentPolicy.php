@@ -25,7 +25,7 @@ class DocumentPolicy
 
     public function view(Employee $employee, Document $document): bool
     {
-        if(! $this->sameCenter($employee, $document)){
+        if($this->notSameCenter($employee, $document)){
             return false;
         }
         $owner = $document->documentable;
@@ -51,7 +51,7 @@ class DocumentPolicy
 
     public function update(Employee $employee, Document $document): bool
     {
-        if(! $this->sameCenter($employee, $document)){
+        if($this->notSameCenter($employee, $document)){
             return false;
         }
         
@@ -68,7 +68,7 @@ class DocumentPolicy
 
     public function delete(Employee $employee, Document $document): bool
     {
-        if(! $this->sameCenter($employee, $document)){
+        if($this->notSameCenter($employee, $document)){
             return false;
         }
 

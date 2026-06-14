@@ -1,11 +1,11 @@
 <script setup lang="ts">
 
 import { useModals } from '@composables/useModals';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import EnrollmentDropDown from '@/components/Enrollment/EnrollmentDropDown.vue';
 import ExamResultStatusChip from '@/components/Exam/ExamResultStatusChip.vue';
 import PaymentIcon from '@/components/Enrollment/PaymentIcon.vue';
-import { Exam, ExamActionsPermissions } from '@/interfaces/Exam';
+import { Exam } from '@/interfaces/Exam';
 import AppInput from '@/components/UI/AppInput/AppInput.vue';
 import ExamCapacityChip from '@/components/Exam/ExamCapacityChip.vue';
 
@@ -34,11 +34,9 @@ props.exam.enrollments?.forEach(fn => {
 })
 
 const search = ref('')
-
-const permissions = computed(() => props.exam.permissions)
 </script>
 
-<template v-if="permissions.enrollments.view">
+<template>
     <div class="flex items-center gap-4 ">
         <div class="flex items-center gap-2 mt-2" >
             <span>Записано: </span> <ExamCapacityChip :exam="exam"/>
@@ -72,8 +70,6 @@ const permissions = computed(() => props.exam.permissions)
         </template>
         <template #item.actions="{item}">
             <EnrollmentDropDown 
-                v-if="permissions.enrollments.statement || permissions.enrollments.payment"
-                :permissions="permissions"
                 :enrollment="item"
                 :exam="exam"
                 :loading="item"

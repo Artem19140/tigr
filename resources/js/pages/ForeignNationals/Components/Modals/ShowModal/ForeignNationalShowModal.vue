@@ -6,23 +6,30 @@ import { computed, onMounted, ref } from 'vue';
 import { useHttp } from '@inertiajs/vue3'
 import { DateFormatter } from '@helpers/DateFormatter';
 import countries from '@data/countries.json'
-import { ForeignNational, ForeignNationalActionsPermissions } from '@/interfaces/ForeignNational';
+import { ForeignNational } from '@/interfaces/ForeignNational';
 import ForeignNationalsDocuments from './ForeignNationalsDocuments.vue';
 
 const props = defineProps<{
-    foreignNationalId?:number
+    foreignNationalId:number
 }>()
 
-const http = useHttp<{}, {foreignNational:ForeignNational, permissions:ForeignNationalActionsPermissions}>()
+const http = useHttp<{}, {foreignNational:ForeignNational}>()
 
 const isOpen = defineModel<boolean>({default:false})
+
 const foreignNational = ref<ForeignNational | null>(null)
 
 const getForeignNational = async () => {
+    error.value = false
     http.get(`/foreign-nationals/${props.foreignNationalId}`,{
         onSuccess:(response)=>{
             foreignNational.value = response.foreignNational
-        }
+        },
+        onFinish() {
+            if(! http.wasSuccessful){
+                error.value = true
+            }
+        },
     })
 }
 
@@ -30,10 +37,6 @@ onMounted(async() => {
     if(!props.foreignNationalId) return
     getForeignNational()
 })
-
-const edit = (value:ForeignNational) => {
-    foreignNational.value = value
-}
 
 const getCountryTitle = (value:string | null) => {
     const result = countries.find(item => item.value === value);
@@ -59,6 +62,7 @@ function formatPhoneNumber(cleaned: string ) {
     cleaned.substring(8, 10)
   );
 }
+const error = ref(false)
 </script>
 
 <template>
@@ -69,7 +73,7 @@ function formatPhoneNumber(cleaned: string ) {
         :title="`Карточка ИГ (ID ${foreignNational?.id ?? ''})`"
         :loading="http.processing"
         v-model="isOpen"
-        :error="!http.wasSuccessful"
+        :error="error"
         :onRetry="getForeignNational"
         @before-close="(close) => {
             http.cancel()
@@ -81,11 +85,9 @@ function formatPhoneNumber(cleaned: string ) {
         <template #titleActions>
             <ForeignNationalActionsDropdown 
                 :foreignNational="foreignNational"
-                @edit="edit"
                 v-if="dropDownAccess"
             />
         </template>
-
         <v-card-text class="ml-4">
             <div class="text-headline-small">{{foreignNational?.fullName }}</div>
             <div class="text-subtitle-1">{{foreignNational?.fullNameLatin}}</div>

@@ -70,9 +70,11 @@ class Attempt extends Model
         $this->finished_at = Carbon::now();
     }
 
-    public function annul(): void
+    public function annul(string $reason, int $annulledById): void
     {
-        $this->annulled = Carbon::now();
+        $this->annulled_reason = $reason;
+        $this->annulled_by_id = $annulledById;
+        $this->annulled_at = Carbon::now();
     }
 
     public function start(): void
@@ -230,7 +232,7 @@ class Attempt extends Model
     protected function annulledAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return TimePresenter::forCenter($this->annulled, $this->center);
+            return TimePresenter::forCenter($this->annulled_at, $this->center);
         });
     }
 

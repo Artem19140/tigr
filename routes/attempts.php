@@ -7,7 +7,7 @@ use App\Http\Controllers\Web\Attempt\AttemptSpeakingController;
 use App\Http\Controllers\Web\Attempt\AttemptViolationController;
 
 Route::prefix('attempts')->middleware([
-   'can:attempts.employee-access'
+   'can:attempts.employee-access,attempt'
 ])
 ->group(function () {
     Route::delete('{attempt}', [AttemptController::class, 'annul'])->name('attempts.annulled');

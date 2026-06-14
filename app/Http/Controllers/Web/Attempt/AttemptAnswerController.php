@@ -24,6 +24,7 @@ class AttemptAnswerController
         AttemptAnswer $attemptAnswer,
         HandleAttemptAnswerAction $handleAttemptAnswerAction
     ): JsonResource {
+       
         $this->authorize($attempt, $attemptAnswer);
         $answer = $request->input('answer');
 
@@ -43,11 +44,10 @@ class AttemptAnswerController
         AttemptAnswer $attemptAnswer,
         RateAttemptAnswerAction $rateAttemptAnswerAction
     ): JsonResponse {
+        Gate::authorize('attempts.employee-access', $attemptAnswer->attempt);
         $request->validate([
             'mark' => ['required', 'integer', 'min:0'],
         ]);
-        Gate::authorize('attempts.employee-access', $attemptAnswer->attempt);
-
         $attemptAnswer = $rateAttemptAnswerAction->execute(
             $attemptAnswer, 
             $request->input('mark')
@@ -74,6 +74,6 @@ class AttemptAnswerController
         Attempt $attempt,
         AttemptAnswer $attemptAnswer
     ): void {
-        abort_if($attempt->id !== $attemptAnswer->attempt_id, 403);
+        abort_if($attempt->id !== $attemptAnswer->attempt_id, 404);
     }
 }

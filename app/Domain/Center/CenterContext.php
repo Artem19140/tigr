@@ -7,13 +7,10 @@ class CenterContext
     public function id(): ?int
     {
         $employee = auth()->user();
-        
-        if ($employee->isPlatformAdmin()) {
-
+        if (! $employee || $employee->isPlatformAdmin()) {
             if(session()->has('center_id')){
                 return session('center_id', null);
             }
-            
             return null;
         }
 

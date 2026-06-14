@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { useHttp } from '@inertiajs/vue3';
+import { router, useHttp } from '@inertiajs/vue3';
 import BaseDialog from '@components/BaseComponents/BaseDialog/BaseDialog.vue';
 import ForeignNationalForm from './ForeignNationalForm.vue';
 import { useConfirmDialog } from '@composables/useConfirmDialog';
 import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { DateFormatter } from '@helpers/DateFormatter';
 import { ForeignNational, ForeignNationalEditForm} from '@/interfaces/ForeignNational';
+import { useSnackbarQueue } from '@/composables/useSnackbarQueue.js';
 
 const props = defineProps<{
-    foreignNational: ForeignNational,
-    onEdit: (foreignNational:ForeignNational) => void
+    foreignNational: ForeignNational
 }>()
 
 const isOpen = defineModel<boolean>({default:false})
@@ -40,10 +40,12 @@ const http = useHttp<Omit<ForeignNationalEditForm, 'hasPayment' | 'examId'>, {fo
 
 const edit = () => {
     http.put(`/foreign-nationals/${props.foreignNational.id}`,{
-        onSuccess:(response, HttpResponse) => {
+        onSuccess:(response) => {
             if(response.foreignNational){
-                //props.onEdit(response.foreignNational)
                 isOpen.value=false
+                router.reload()
+                const {add} = useSnackbarQueue()
+                add('Данные обновлены, перезагрузите карту ИГ', 'green')
             }
         }
     })

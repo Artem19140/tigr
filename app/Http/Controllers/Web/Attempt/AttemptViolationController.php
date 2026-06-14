@@ -10,13 +10,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Gate;
 
 class AttemptViolationController
 {
     public function index(Attempt $attempt): AnonymousResourceCollection
     {
-        $this->authorize($attempt);
         $attempt->load('violations');
 
         return ViolationResource::collection($attempt->violations);
@@ -26,7 +24,6 @@ class AttemptViolationController
         Request $request,
         Attempt $attempt
     ): JsonResource {
-        $this->authorize($attempt);
         if(! $attempt->canEditViolation()){
             throw new BusinessException('Нарушение возможно добавить только в день сдачи попытки');
         }
@@ -44,8 +41,7 @@ class AttemptViolationController
         Attempt $attempt,
         Violation $violation
     ): JsonResource {
-        $this->authorize($attempt);
-        abort_if($attempt->id !== $violation->attempt_id, 403);
+        abort_if($attempt->id !== $violation->attempt_id, 404);
 
         if(! $attempt->canEditViolation()){
             throw new BusinessException('Нарушение возможно редактировать только в день сдачи попытки');
@@ -62,20 +58,16 @@ class AttemptViolationController
         Attempt $attempt,
         Violation $violation
     ): Response {
-        $this->authorize($attempt);
-        abort_if($attempt->id !== $violation->attempt_id, 403);
+        abort_if($attempt->id !== $violation->attempt_id, 404);
 
         if(! $attempt->canEditViolation()){
             throw new BusinessException('Нарушение возможно удалить только в день сдачи попытки');
         }
 
-        $attempt->violations()->where('id', $violation->id)->delete();
+        $attempt->violations()->where('id', $violation->id)
+            ->delete();
 
         return response()->noContent();
     }
 
-    protected function authorize(Attempt $attempt): void
-    {
-        Gate::authorize('examiner', $attempt->exam);
-    }
 }

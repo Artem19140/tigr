@@ -33,11 +33,13 @@ class EmployeePolicy
         return false;
     }
 
-    public function update(Employee $employee, Employee $actor): bool
+    public function update(Employee $actor, Employee $employee ): bool
     {
-        if($this->sameCenter($actor, $employee)){
+        
+        if($this->notSameCenter($actor, $employee)){
             return false;
         }
+        
         if($employee->isPlatformAdmin()){
             return false;
         }
@@ -50,19 +52,25 @@ class EmployeePolicy
             return false;
         }
 
+        if($actor->hasAnyRole(EmployeeRole::CenterAdmin)){
+            return true;
+        }
+
         return false;
     }
 
-    public function delete(Employee $employee, Employee $actor): bool
+    public function delete(Employee $actor, Employee $employee): bool
     {
-        if($this->sameCenter($actor, $employee)){
+
+        if($this->notSameCenter($actor, $employee)){
             return false;
         }
 
         if($employee->isPlatformAdmin()){
+            
             return false;
         }
-
+        
         if(
             $employee->hasAnyRole(EmployeeRole::CenterAdmin) 
                 && 
@@ -71,22 +79,27 @@ class EmployeePolicy
             return false;
         }
 
+        if($actor->hasAnyRole(EmployeeRole::CenterAdmin)){
+            return true;
+        }
+
+        return false;
+    }
+    public function resetPassword(Employee $actor , Employee $employee): bool
+    {
+        if($this->notSameCenter($actor, $employee)){
+            return false;
+        }
+        
+        if($employee->isPlatformAdmin()){
+            return false;
+        }
+
+        if($actor->hasAnyRole(EmployeeRole::CenterAdmin)){
+            return true;
+        }
+        
         return false;
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(Employee $employee, Employee $actor): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(Employee $employee, Employee $actor): bool
-    {
-        return false;
-    }
 }

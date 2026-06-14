@@ -66,6 +66,7 @@ class ExamDocumentController
         ExamCodesGenerator $examCodesGenerator
     ): Response {
         $this->authorize($exam);
+        $exam->loadCount('enrollments');
         $result = $this->examDocumentRules->codes($exam);
         
         if($result->isNotAvailable()){
