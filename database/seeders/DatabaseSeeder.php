@@ -91,9 +91,7 @@ class DatabaseSeeder extends Seeder
         $platformAdminRole = Role::findByEnum(EmployeeRole::PlatformAdmin);
 
         $platformAdmin->roles()->syncWithoutDetaching([$platformAdminRole->id]);
-        $this->call([
-            EmployeeSeeder::class
-        ]);
+
         if (! app()->isProduction()) {
             $this->call([
                 EmployeeSeeder::class,
