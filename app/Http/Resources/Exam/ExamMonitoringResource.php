@@ -2,8 +2,8 @@
 
 namespace App\Http\Resources\Exam;
 
-use App\Domain\Exam\Resolver\ExamStatusResolver;
-use App\Domain\Exam\Rules\ProtocolCommentRules;
+use App\Modules\Exam\Resolver\ExamStatusResolver;
+use App\Modules\Exam\Rules\ProtocolCommentRules;
 use App\Http\Resources\Enrollment\EnrollmentMonitoringResource;
 use App\Models\Exam;
 use Illuminate\Http\Request;

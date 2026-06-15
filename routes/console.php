@@ -1,7 +1,7 @@
 <?php
 
-use App\Domain\Attempt\Action\CloseAbandonedAttemptsAction;
-use App\Domain\Exam\Action\ClearExpiredExamCodesAction;
+use App\Modules\Attempt\Action\CloseAbandonedAttemptsAction;
+use App\Modules\Exam\Action\ClearExpiredExamCodesAction;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Address;
 
-use App\Domain\Center\CenterContext;
+use App\Modules\Center\CenterContext;
 use App\Http\Requests\Address\AddressPostRequest;
 use App\Http\Resources\Address\AddressResource;
 use App\Models\Address;

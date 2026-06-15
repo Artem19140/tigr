@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Attempt;
 
-use App\Domain\Attempt\Services\VerifyCodeService;
+use App\Modules\Attempt\Services\VerifyCodeService;
 use App\Models\Enrollment;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;

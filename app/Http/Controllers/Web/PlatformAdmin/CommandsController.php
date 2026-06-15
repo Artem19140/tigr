@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Web\PlatformAdmin;
 
-use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class CommandsController
@@ -32,20 +30,6 @@ class CommandsController
         Log::info('command executed', [
             'command' => $commandNumber
         ]);
-        Employee::firstOrCreate(
-                [
-                    'email' =>"1@udsu.ru"
-                ],    
-                [
-                    'surname' => 'f',
-                    'name' => 'n',
-                    'patronymic'=> 'o',
-                    'job_title' => '3s',
-                    'center_id' => 1,
-                    'email' => "1@udsu.ru",
-                    'has_to_change_password' => false,
-                    'password' =>Hash::make('12345678'),
-                ]);
 
         return response()->noContent();
     }

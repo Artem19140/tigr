@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Web\Report;
 
-use App\Domain\Report\EnsureFrdoGenerationAvailable;
-use App\Domain\Report\FlatTableGenerator;
-use App\Domain\Report\FRDOReportsGenerator;
-use App\Domain\Report\MinistryEducationReportGenerator;
+use App\Modules\Report\EnsureFrdoGenerationAvailable;
+use App\Modules\Report\FlatTableGenerator;
+use App\Modules\Report\FRDOReportsGenerator;
+use App\Modules\Report\MinistryEducationReportGenerator;
 use App\Http\Requests\Report\FlatTableRequest;
 use App\Http\Requests\Report\FrdoReportRequest;
 use App\Http\Requests\Report\MinistryEducationReportRequest;

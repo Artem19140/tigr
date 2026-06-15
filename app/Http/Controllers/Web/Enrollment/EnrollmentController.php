@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Web\Enrollment;
 
-use App\Domain\Enrollment\Action\ChangePaymentStatusAction;
-use App\Domain\Enrollment\Action\CreateEnrollmentAction;
+use App\Modules\Enrollment\Action\ChangePaymentStatusAction;
+use App\Modules\Enrollment\Action\CreateEnrollmentAction;
 use App\Http\Requests\Enrollment\EnrollmentStoreRequest;
 use App\Models\Enrollment;
 use Illuminate\Http\JsonResponse;

@@ -19,7 +19,8 @@ class ExamDocumentGenerated
      */
     public function __construct(
         public Exam $exam,
-        public ExamDocument $type
+        public ExamDocument $type,
+        public array $context = []
     ) {}
 
     /**

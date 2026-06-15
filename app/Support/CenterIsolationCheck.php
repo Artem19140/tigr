@@ -2,7 +2,7 @@
 
 namespace App\Support;
 
-use App\Domain\Center\CenterContext;
+use App\Modules\Center\CenterContext;
 use Illuminate\Support\Facades\Log;
 
 class CenterIsolationCheck

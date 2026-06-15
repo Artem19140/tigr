@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Web\Attempt;
 
-use App\Domain\Attempt\Action\AnnulledAttemptAction;
-use App\Domain\Attempt\Action\FinishAttemptAction;
-use App\Domain\Attempt\Action\StartAttemptAction;
-use App\Domain\Attempt\Query\GetCurrentAttemptQuery;
+use App\Modules\Attempt\Action\AnnulledAttemptAction;
+use App\Modules\Attempt\Action\FinishAttemptAction;
+use App\Modules\Attempt\Action\StartAttemptAction;
+use App\Modules\Attempt\Query\GetCurrentAttemptQuery;
 use App\Exceptions\BusinessException;
 use App\Http\Resources\Attempt\AttemptExamResource;
 use App\Http\Resources\Exam\ExamShortResource;

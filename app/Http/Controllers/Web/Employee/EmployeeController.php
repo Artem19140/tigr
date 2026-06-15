@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Web\Employee;
 
-use App\Domain\Employee\CreateEmployeeAction;
-use App\Domain\Employee\UpdateEmployeeAction;
+use App\Modules\Employee\CreateEmployeeAction;
+use App\Modules\Employee\UpdateEmployeeAction;
 use App\Enums\EmployeeRole;
 use App\Exceptions\BusinessException;
 use App\Http\Requests\Employee\EmployeePostRequest;

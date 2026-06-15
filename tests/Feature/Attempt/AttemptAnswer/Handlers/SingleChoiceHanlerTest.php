@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Attempt\AttemptAnswer\Handlers;
 
-use App\Domain\AttemptAnswer\Handlers\SingleChoiceTaskHandler;
+use App\Modules\AttemptAnswer\Handlers\SingleChoiceTaskHandler;
 use App\Exceptions\Attempt\AttemptAnswerValidationException;
 use App\Models\Answer;
 use App\Models\AttemptAnswer;

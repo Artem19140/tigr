@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Exam;
 
-use App\Domain\Exam\Action\CancelExamAction;
-use App\Domain\Exam\Rules\ExamCancellRules;
+use App\Modules\Exam\Action\CancelExamAction;
+use App\Modules\Exam\Rules\ExamCancellRules;
 use App\Exceptions\BusinessException;
 use App\Models\Center;
 use App\Models\Employee;

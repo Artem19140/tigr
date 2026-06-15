@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Exam;
 
-use App\Domain\Center\CenterContext;
-use App\Domain\Exam\Query\GetAvailableExamsQuery;
+use App\Modules\Center\CenterContext;
+use App\Modules\Exam\Query\GetAvailableExamsQuery;
 use App\Models\Center;
 use App\Models\Enrollment;
 use App\Models\Exam;

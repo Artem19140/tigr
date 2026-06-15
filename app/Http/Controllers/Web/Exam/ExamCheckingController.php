@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Exam;
 
-use App\Domain\Exam\Query\GetExamsToCheckQuery;
+use App\Modules\Exam\Query\GetExamsToCheckQuery;
 use App\Exceptions\BusinessException;
 use App\Http\Resources\Exam\ExamCheckingResource;
 use App\Http\Resources\Exam\ExamIndexResource;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Domain\Center\CenterContext;
+use App\Modules\Center\CenterContext;
 use App\Models\Employee;
 use App\Models\Exam;
 use App\Models\ForeignNational;

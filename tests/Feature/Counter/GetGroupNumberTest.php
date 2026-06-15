@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Counter;
 
-use App\Domain\Center\CenterContext;
-use App\Domain\Counter\GenerateGroupNumberAction;
+use App\Modules\Center\CenterContext;
+use App\Modules\Counter\GenerateGroupNumberAction;
 use App\Enums\CounterKey;
 use App\Models\Center;
 use App\Models\Counter;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Statistics;
 
-use App\Domain\Center\CenterContext;
+use App\Modules\Center\CenterContext;
 use App\Http\Requests\Statistics\StatisticsRequest;
 use App\Models\Attempt;
 use App\Models\Exam;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Exam;
 
-use App\Domain\Center\CenterContext;
+use App\Modules\Center\CenterContext;
 use App\Http\Resources\Exam\ExamCalendarResource;
 use App\Models\Exam;
 use App\Support\CenterIsolationCheck;

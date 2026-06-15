@@ -16,6 +16,7 @@ class LogReportGenerated
     {
         Log::info('report_generated', [
             'type' => $event->type->value,
+            'context' => $event->context
         ]);
     }
 }

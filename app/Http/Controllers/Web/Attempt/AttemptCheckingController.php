@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Attempt;
 
-use App\Domain\Attempt\Action\Checking\FinishAttemptManualCheckingAction;
+use App\Modules\Attempt\Action\Checking\FinishAttemptManualCheckingAction;
 use App\Enums\TaskType;
 use App\Http\Resources\Attempt\AttemptCheckingResource;
 use App\Http\Resources\Attempt\AttemptResource;

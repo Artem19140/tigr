@@ -2,10 +2,10 @@
 
 namespace App\Http\Resources\Exam;
 
-use App\Domain\Exam\Resolver\ExamStatusResolver;
-use App\Domain\Exam\Rules\ExamCancellRules;
-use App\Domain\Exam\Rules\ExamEditRules;
-use App\Domain\ExamDocument\ExamDocumentRules;
+use App\Modules\Exam\Resolver\ExamStatusResolver;
+use App\Modules\Exam\Rules\ExamCancellRules;
+use App\Modules\Exam\Rules\ExamEditRules;
+use App\Modules\ExamDocument\ExamDocumentRules;
 use App\Http\Resources\Employee\EmployeeResource;
 use App\Http\Resources\Enrollment\EnrollmentExamShowResource;
 use App\Models\Employee;

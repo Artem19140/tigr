@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Attempt;
 
-use App\Domain\Attempt\Query\GetAttemptSpeakingTasksQuery;
+use App\Modules\Attempt\Query\GetAttemptSpeakingTasksQuery;
 use App\Exceptions\BusinessException;
 use App\Http\Resources\Attempt\AttemptMonitoringResource;
 use App\Http\Resources\Attempt\AttemptResource;
@@ -11,7 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
-use App\Domain\Attempt\Rules\AttemptSpeakingRules;
+use App\Modules\Attempt\Rules\AttemptSpeakingRules;
 
 class AttemptSpeakingController
 {

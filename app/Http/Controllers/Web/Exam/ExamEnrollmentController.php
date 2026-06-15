@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Exam;
 
-use App\Domain\Exam\Query\GetAvailableExamsQuery;
+use App\Modules\Exam\Query\GetAvailableExamsQuery;
 use App\Http\Requests\Enrollment\EnrollmentAvailableRequest;
 use App\Models\Exam;
 use App\Support\CenterIsolationCheck;

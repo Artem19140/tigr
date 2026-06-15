@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Web\ForeignNational;
 
-use App\Domain\Center\CenterContext;
-use App\Domain\ForeignNational\Query\ExportForeignNationalQuery;
+use App\Modules\Center\CenterContext;
+use App\Modules\ForeignNational\Query\ExportForeignNationalQuery;
 use App\Exceptions\BusinessException;
 use App\Http\Requests\ForeignNational\ForeignNationalExportRequest;
 use App\Models\ForeignNational;

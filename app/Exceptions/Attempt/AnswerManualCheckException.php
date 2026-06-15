@@ -10,6 +10,7 @@ use Log;
 
 class AnswerManualCheckException extends BaseException
 {
+    protected int $code = 500;
     public function __construct(
         public array $context,
         string $message = 'Произошла ошибка при оценке ответа'

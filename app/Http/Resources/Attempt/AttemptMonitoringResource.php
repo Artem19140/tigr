@@ -2,13 +2,13 @@
 
 namespace App\Http\Resources\Attempt;
 
-use App\Domain\Attempt\Rules\AttemptAnnulledRules;
+use App\Modules\Attempt\Rules\AttemptAnnulledRules;
 use App\Http\Resources\AttemptAnswer\AttemptAnswerResource;
 use App\Http\Resources\ForeignNational\ForeignNationalResource;
 use App\Http\Resources\TaskVariant\TaskVariantResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Domain\Attempt\Rules\AttemptSpeakingRules;
+use App\Modules\Attempt\Rules\AttemptSpeakingRules;
 
 class AttemptMonitoringResource extends JsonResource
 {

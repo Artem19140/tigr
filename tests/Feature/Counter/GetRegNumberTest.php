@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Counter;
 
-use App\Domain\Counter\GenerateRegNumberAction;
+use App\Modules\Counter\GenerateRegNumberAction;
 use App\Enums\CounterKey;
 use App\Models\Center;
 use App\Models\Counter;

@@ -1,0 +1,47 @@
+<?php
+
+namespace App\Modules\Counter;
+
+use App\Modules\Center\CenterContext;
+use App\Enums\CounterKey;
+use App\Exceptions\Counter\CounterNotFoundException;
+use App\Models\Counter;
+use App\Support\CenterIsolationCheck;
+use Carbon\Carbon;
+use DB;
+
+class GenerateGroupNumberAction
+{
+    public function __construct(
+        protected CenterContext $centerContext
+    ) {}
+
+    public function execute(): int
+    {
+        return DB::transaction(function () {
+
+            $groupNumber = Counter::query()
+                ->where('key', CounterKey::Group)
+                ->forCenter($this->centerContext->id())
+                ->lockForUpdate()
+                ->first();
+            CenterIsolationCheck::centerBelongs($groupNumber, $this->centerContext->id());
+            if (! $groupNumber) {
+                throw new CounterNotFoundException(CounterKey::Group);
+            }
+            if ($this->isNewDay($groupNumber)) {
+                $groupNumber->value = 0;
+                $groupNumber->updated_at = Carbon::now();
+            }
+            $groupNumber->value += 1;
+            $groupNumber->save();
+
+            return $groupNumber->value;
+        });
+    }
+
+    protected function isNewDay(Counter $groupNumber): bool
+    {
+        return $groupNumber->updated_at->toDateString() !== Carbon::now()->toDateString();
+    }
+}

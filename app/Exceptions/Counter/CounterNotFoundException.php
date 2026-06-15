@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 
 class CounterNotFoundException extends BaseException
 {
+    protected int $code = 500;
     public function __construct(
         public CounterKey $counter,
         string $message = 'Запрашиваемые данные не найдены'

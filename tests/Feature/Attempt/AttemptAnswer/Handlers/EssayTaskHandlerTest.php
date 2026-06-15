@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Attempt\AttemptAnswer\Handlers;
 
-use App\Domain\AttemptAnswer\Handlers\EssayTaskHandler;
+use App\Modules\AttemptAnswer\Handlers\EssayTaskHandler;
 use App\Exceptions\Attempt\AttemptAnswerValidationException;
 use App\Models\AttemptAnswer;
 use App\Models\TaskVariant;

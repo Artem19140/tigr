@@ -17,7 +17,8 @@ class ReportGenerated
      * Create a new event instance.
      */
     public function __construct(
-        public ReportType $type
+        public ReportType $type,
+        public array $context = []
     ) {}
 
     /**

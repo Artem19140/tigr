@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Attempt\Task;
 
-use App\Domain\AttemptAnswer\Action\HandleAttemptAnswerAction;
+use App\Modules\AttemptAnswer\Action\HandleAttemptAnswerAction;
 use App\Enums\TaskType;
 use App\Exceptions\Task\TaskAnswersNotAllowedException;
 use App\Models\Attempt;

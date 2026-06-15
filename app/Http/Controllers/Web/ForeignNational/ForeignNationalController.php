@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Web\ForeignNational;
 
-use App\Domain\Enrollment\Rules\EnrollmentPaymentRules;
-use App\Domain\Exam\Resolver\ExamResultResolver;
-use App\Domain\ForeignNational\Action\CreateForeignNationalWithEnrollmentAction;
-use App\Domain\ForeignNational\Action\UpdateForeignNationalAction;
-use App\Domain\ForeignNational\Query\GetForeignNationalsQuery;
+use App\Modules\Enrollment\Rules\EnrollmentPaymentRules;
+use App\Modules\Exam\Resolver\ExamResultResolver;
+use App\Modules\ForeignNational\Action\CreateForeignNationalWithEnrollmentAction;
+use App\Modules\ForeignNational\Action\UpdateForeignNationalAction;
+use App\Modules\ForeignNational\Query\GetForeignNationalsQuery;
 use App\Http\Requests\ForeignNational\ForeignNationalIndexRequest;
 use App\Http\Requests\ForeignNational\ForeignNationalPostRequest;
 use App\Http\Requests\ForeignNational\ForeignNationalUpdateRequest;

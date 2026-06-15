@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Web\Exam;
 
-use App\Domain\Enrollment\Rules\EnrollmentPaymentRules;
-use App\Domain\Exam\Action\Monitoring\UpdateProtocolCommentAction;
+use App\Modules\Enrollment\Rules\EnrollmentPaymentRules;
+use App\Modules\Exam\Action\Monitoring\UpdateProtocolCommentAction;
 use App\Http\Resources\Exam\ExamIndexResource;
 use App\Http\Resources\Exam\ExamMonitoringResource;
 use App\Models\Enrollment;

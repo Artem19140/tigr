@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Web\Exam;
 
-use App\Domain\ExamDocument\ExamCodesGenerator;
-use App\Domain\ExamDocument\ExamDocumentRules;
-use App\Domain\ExamDocument\ExamProtocolGenerator;
-use App\Domain\ExamDocument\ExamResultsGenerator;
+use App\Modules\ExamDocument\ExamCodesGenerator;
+use App\Modules\ExamDocument\ExamDocumentRules;
+use App\Modules\ExamDocument\ExamProtocolGenerator;
+use App\Modules\ExamDocument\ExamResultsGenerator;
 use App\Enums\ExamDocument;
 use App\Events\ExamDocumentGenerated;
 use App\Exceptions\BusinessException;
@@ -34,7 +34,7 @@ class ExamDocumentController
 
         $exam->load(['foreignNationals', 'type']);
 
-        $pdf = Pdf::loadView('pdf.exam.exam-foreign_nationals-list', [
+        $pdf = Pdf::loadView(ExamDocument::List->template(), [
             'foreignNationals' => $exam->foreignNationals,
             'exam' => $exam,
         ]);

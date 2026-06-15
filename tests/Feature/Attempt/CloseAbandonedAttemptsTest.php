@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Attempt;
 
-use App\Domain\Attempt\Action\CloseAbandonedAttemptsAction;
+use App\Modules\Attempt\Action\CloseAbandonedAttemptsAction;
 use App\Models\Attempt;
 use App\Models\Exam;
 use App\Models\ExamType;

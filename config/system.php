@@ -8,7 +8,7 @@ return [
     | The system generates exam codes with fixed length
     | Codes consist only of digits 
     | Here you can change it
-    | 
+    | *@var int*
     */
 
     'codes_length' => 6,
@@ -67,11 +67,23 @@ return [
     | Data storage TTL
     |--------------------------------------------------------------------------
     | Foreign National personal data, exam results etc must be storage only 
-    | fixed peroid due to law
+    | fixed period due to law
     | Period specifies in years
     | This restriction need due to law.
     |
     */
 
     'data_storage_ttl' => 3,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Foreign National Age Constraint
+    |--------------------------------------------------------------------------
+    | Foreign National can pass the exam only from 18 years old
+    | age specifies in years
+    | This restriction need due to law.
+    |
+    */
+
+    'min_age' => 18,
 ];

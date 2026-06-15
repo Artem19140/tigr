@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Counter;
 
-use App\Domain\Counter\GetSessionNumberQuery;
+use App\Modules\Counter\GetSessionNumberQuery;
 use App\Models\Attempt;
 use App\Models\Center;
 use App\Models\Enrollment;

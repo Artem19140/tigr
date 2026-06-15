@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Web\Attempt;
 
-use App\Domain\AttemptAnswer\Action\HandleAttemptAnswerAction;
-use App\Domain\AttemptAnswer\Action\RateAttemptAnswerAction;
+use App\Modules\AttemptAnswer\Action\HandleAttemptAnswerAction;
+use App\Modules\AttemptAnswer\Action\RateAttemptAnswerAction;
 use App\Http\Requests\AttemptAnswer\AttemptAnswerRequest;
 use App\Http\Resources\AttemptAnswer\AttemptAnswerResource;
 use App\Models\Attempt;

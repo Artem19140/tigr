@@ -17,6 +17,7 @@ class LogExamDocumentGenerated
         Log::info('document_generated', [
             'document' => $event->type->value,
             'exam_id' => $event->exam->id,
+            'context' => $event->context
         ]);
     }
 }

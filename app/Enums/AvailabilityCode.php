@@ -13,10 +13,4 @@ enum AvailabilityCode: string
     case AttemptsNotExists = 'attempts_not_exists';
     case ActiveAttemptsExists = 'active_attemtps_exists';
     case AttemptAnnulled = 'attempt_annulled';
-    
-
-    public function translationKey():string
-    {
-        return "reason_codes.{$this->value}";
-    }
 }

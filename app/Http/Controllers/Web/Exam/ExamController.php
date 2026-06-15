@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Web\Exam;
 
-use App\Domain\Attempt\Action\CreateAttemptAction;
-use App\Domain\Exam\Action\CancelExamAction;
-use App\Domain\Exam\Action\CreateExamAction;
-use App\Domain\Exam\Action\UpdateExamAction;
-use App\Domain\Exam\Query\ExamCreateDataQuery;
-use App\Domain\Exam\Query\ExamShowQuery;
-use App\Domain\Exam\Query\GetExamsQuery;
+use App\Modules\Attempt\Action\CreateAttemptAction;
+use App\Modules\Exam\Action\CancelExamAction;
+use App\Modules\Exam\Action\CreateExamAction;
+use App\Modules\Exam\Action\UpdateExamAction;
+use App\Modules\Exam\Query\ExamCreateDataQuery;
+use App\Modules\Exam\Query\ExamShowQuery;
+use App\Modules\Exam\Query\GetExamsQuery;
 use App\Http\Requests\Exam\ExamIndexRequest;
 use App\Http\Requests\Exam\ExamPostRequest;
 use App\Http\Requests\Exam\VerifyCodeRequest;

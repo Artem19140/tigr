@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Document;
 
-use App\Domain\Document\DocumentService;
+use App\Modules\Document\DocumentService;
 use App\Http\Resources\Document\DocumentResource;
 use App\Models\Document;
 use Illuminate\Http\Request;
