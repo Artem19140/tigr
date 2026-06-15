@@ -75,7 +75,8 @@ class ForeignNationalExportController
         string $dateTo,
         ?string $citizenship = null
     ): void {
-        $available = ForeignNational::forCenter(app(CenterContext::class)->id())
+        $available = ForeignNational::query()
+            ->forCenter(app(CenterContext::class)->id())
             ->whereBetween('created_at', [
                 Carbon::parse($dateFrom),
                 Carbon::parse($dateTo),

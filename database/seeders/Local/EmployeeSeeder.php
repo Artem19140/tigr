@@ -14,24 +14,31 @@ class EmployeeSeeder extends Seeder
         $center = Center::firstWhere('inn', '1833010750');
         $password = Hash::make('12345678');
         for($i = 0; $i < 5; $i++){
-            Employee::factory()
-                ->create([
-                    'center_id' => $center,
+            Employee::firstOrCreate(
+                [
+                    'email' =>"$i@udsu.ru"
+                ],    
+                [
+                    'surname' => 'f',
+                    'name' => 'n',
+                    'patronymic'=> 'o',
+                    'job_title' => '3s',
+                    'center_id' => $center->id,
                     'email' => "$i@udsu.ru",
                     'has_to_change_password' => false,
                     'password' => $password,
                 ]);
         }
 
-        Employee::factory()
-            ->create([
-                'surname' => 'тестовый',
-                'name' => 'тестовый',
-                'center_id' => $center,
-                'email' => "test@udsu.ru",
-                'has_to_change_password' => false,
-                'password' => $password,
-            ]);
+        // Employee::factory()
+        //     ->create([
+        //         'surname' => 'тестовый',
+        //         'name' => 'тестовый',
+        //         'center_id' => $center,
+        //         'email' => "test@udsu.ru",
+        //         'has_to_change_password' => false,
+        //         'password' => $password,
+        //     ]);
         
     }
 }

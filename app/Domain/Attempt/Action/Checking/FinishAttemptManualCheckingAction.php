@@ -21,7 +21,6 @@ class FinishAttemptManualCheckingAction
         $this->ensureAllManualTasksChecked($attempt);
         $attempt = $this->finilizeAttemptCheckingAction
             ->execute($attempt);
-
         return $attempt;
     }
 
