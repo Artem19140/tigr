@@ -4,7 +4,6 @@ import EmployeeEntryForm from './Components/EmployeeEntryForm.vue';
 import ForeignNationalEntryForm from './Components/ForeignNationalEntryForm.vue';
 import BaseEntryCard from '@/components/BaseComponents/BaseEntryCard/BaseEntryCard.vue';
 import BaseLayout from '@/layouts/BaseLayout.vue';
-import BaseListItem from '@/components/BaseComponents/BaseList/BaseListItem.vue';
 
 const isForeignNationalEntry = ref<boolean>(true)
 
@@ -34,7 +33,7 @@ defineOptions({
             </v-btn>
         </template>
         <v-list>
-            <BaseListItem 
+            <v-list-item 
                 :title="isForeignNationalEntry ? 'Вход сотрудник' : 'Вход ИГ'"
                 @click="isForeignNationalEntry = !isForeignNationalEntry" 
             />

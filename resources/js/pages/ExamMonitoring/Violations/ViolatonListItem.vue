@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppProgressCircular from '@/components/UI/AppProgressCircular/AppProgressCircular.vue';
 import { useConfirmDialog } from '@/composables/useConfirmDialog';
 import { useHttp } from '@inertiajs/vue3';
 import { ref } from 'vue';
@@ -85,8 +84,10 @@ const editViolation = async () => {
                 variant="text"
                 @click="deleteViolation"
             ></v-btn>
-            <AppProgressCircular 
-                size="20"
+            <v-progress-circular
+                indeterminate
+                color="primary"
+                 size="20"
                 v-else
             />
         </template>

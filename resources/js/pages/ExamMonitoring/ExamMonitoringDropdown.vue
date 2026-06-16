@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import BaseListItem from '@/components/BaseComponents/BaseList/BaseListItem.vue';
 import BaseThreeDotDropdown from '@/components/BaseComponents/BaseThreeDotDropdown/BaseThreeDotDropdown.vue';
 import { useModals } from '@/composables/useModals';
 import { ExamMonitoring } from '@/interfaces/Exam';
@@ -13,13 +12,13 @@ const {open} = useModals()
 
 <template>
     <BaseThreeDotDropdown>
-        <BaseListItem 
+        <v-list-item  
             title="Комментарий (протокол)"
             :disabled="!exam.availability.protocolComment"
             @click="open('examComment', {exam:exam})"
         />
 
-        <BaseListItem 
+        <v-list-item  
             title="Карточка экзамена"
             @click="open('examShow', {examId:exam.id})"
         />

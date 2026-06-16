@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import BaseContainer from '@/components/BaseComponents/BaseContainer/BaseContainer.vue';
-import BaseTable from '@/components/BaseComponents/BaseTable/BaseTable.vue';
 import AppAddButton from '@/components/UI/AppAddButton/AppAddButton.vue';
 import { useModals } from '@/composables/useModals';
 import { Center } from '@/interfaces/Center';
@@ -32,7 +31,7 @@ const {open} = useModals()
 
 <template>
     <BaseContainer>
-        <BaseTable
+        <v-data-table 
             title="Центры"
             :items="centers.data"
             :headers="headers"
@@ -44,6 +43,6 @@ const {open} = useModals()
                     @click="open('centerCreate')"
                 />
             </template>
-        </BaseTable>
+        </v-data-table >
     </BaseContainer>
 </template>

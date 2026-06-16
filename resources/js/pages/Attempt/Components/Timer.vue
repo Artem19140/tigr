@@ -28,7 +28,6 @@ const calculateTime = () => {
         stopTimer()
         onTimeEnd()
     }
-    
 }
 
 const startTimer = () => {

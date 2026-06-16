@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import BaseTable from '@components/BaseComponents/BaseTable/BaseTable.vue';
 import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
 import { DateFormatter } from '@/helpers/DateFormatter';
@@ -22,7 +21,7 @@ const loading = ref<boolean>(false)
 </script>
 
 <template>
-    <BaseTable 
+    <v-data-table  
         title="Экзамены для проверки"
         :headers="headers"
         :items="exams"
@@ -40,6 +39,6 @@ const loading = ref<boolean>(false)
             {{ new DateFormatter(item.beginTime).format('d M Y,  H:i') }}
         </template>
 
-    </BaseTable>
+    </v-data-table >
 
 </template>

@@ -20,7 +20,6 @@ const scrollToTask = (id: number) => {
 </script>
 
 <template>
-
   <v-list density="compact" nav>
     <v-list-item
       v-for="task in attempt.tasks"

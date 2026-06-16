@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import AppRefreshButton from '@components/UI/AppRefreshButton/AppRefreshButton.vue';
-
 const props = defineProps<{
   onRetry?:() => void,
   text:string
@@ -19,10 +17,12 @@ const props = defineProps<{
         <span>
           {{ text }}
         </span>
-        <AppRefreshButton
-          icon-size="25"
-          @click="onRetry"
-        />
+         <v-btn 
+            icon
+            variant="text"
+        >
+            <v-icon icon-size="25">mdi-refresh</v-icon>
+        </v-btn>        
       </div>
     </v-alert>
   </div>

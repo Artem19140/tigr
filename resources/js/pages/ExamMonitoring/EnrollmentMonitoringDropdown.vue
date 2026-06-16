@@ -8,7 +8,6 @@ import PaymentChange from '@/components/Enrollment/PaymentChange.vue';
 import { useModals } from '@/composables/useModals';
 import {  EnrollmentMonitoring } from '@/interfaces/Enrollment';
 import { ExamMonitoring } from '@/interfaces/Exam';
-import BaseListItem from '@/components/BaseComponents/BaseList/BaseListItem.vue';
 
 const props = defineProps<{ 
     enrollment:EnrollmentMonitoring,
@@ -52,19 +51,19 @@ const annulAttemptDisabled = computed(() => !props.enrollment.attempt?.availabil
             :disabled="changePaymentDisabled"
             :enrollment="enrollment"
         />
-        <BaseListItem 
+        <v-list-item 
             :disabled="speakingDisabled"
             v-if="exam?.hasSpeakingTasks"
             title="Говорение" 
             @click="modals.open('speaking', {enrollment:props.enrollment})"
         />
-        <BaseListItem 
+        <v-list-item 
             title="Нарушения" 
             :disabled = "editViolationDisabled"
             @click="modals.open('violation', {enrollment:props.enrollment})"
         />
         <v-divider></v-divider>
-        <BaseListItem    
+        <v-list-item     
             base-color="red" 
             :disabled="annulAttemptDisabled"
             title="Аннулировать" 

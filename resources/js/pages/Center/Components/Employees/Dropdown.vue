@@ -5,7 +5,6 @@ import { useLoadingSnackbar } from '@/composables/useLoadingSnackBar';
 import { useConfirmationOptionsDialog } from '@/composables/useConfirmationOptionsDialog';
 import { useModals } from '@/composables/useModals';
 import { Employee } from '@/interfaces/Employee';
-import BaseListItem from '@/components/BaseComponents/BaseList/BaseListItem.vue';
 
 const props= defineProps<{
   employee:Employee
@@ -36,16 +35,16 @@ const {open} = useModals()
 
 <template>
   <BaseThreeDotDropdown>
-    <BaseListItem 
+    <v-list-item 
       title="Редактировать" 
       @click="open('employeeEdit', {employee:employee})"
     />
-    <BaseListItem 
+    <v-list-item 
       title="Сбросить пароль"
       @click="open('passwordReset', {employee:employee})" 
     />
     <v-divider></v-divider>
-    <BaseListItem 
+    <v-list-item 
       title="Удалить" 
       base-color="red" 
       @click="deleteEmployee"

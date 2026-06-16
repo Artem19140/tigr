@@ -2,7 +2,6 @@
 import ThreeDotDropdown from '@components/BaseComponents/BaseThreeDotDropdown/BaseThreeDotDropdown.vue';
 import { useModals } from '@composables/useModals';
 import { ForeignNational } from '@/interfaces/ForeignNational';
-import BaseListItem from '@/components/BaseComponents/BaseList/BaseListItem.vue';
 
 const {open} = useModals()
 
@@ -18,12 +17,12 @@ const emit = defineEmits<{
 
 <template>
     <ThreeDotDropdown>
-        <BaseListItem 
+        <v-list-item  
             title="Записать на экзамен"
             v-if="foreignNational?.permissions.enroll"
             @click="open('enrollment', {foreignNational})"
         />
-        <BaseListItem
+        <v-list-item 
             title="Редактировать"
             v-if="foreignNational?.permissions.edit"
             @click="open('foreignNationalEdit', {

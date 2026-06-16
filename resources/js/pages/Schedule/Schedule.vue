@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
-import { computed, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { useModals } from '@composables/useModals';
 import AppAddButton from '@components/UI/AppAddButton/AppAddButton.vue';
 import { examStatus } from '@helpers/heplers';

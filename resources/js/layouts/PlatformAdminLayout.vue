@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import BaseList from '@/components/BaseComponents/BaseList/BaseList.vue';
-import BaseListItem from '@/components/BaseComponents/BaseList/BaseListItem.vue';
 import { router } from '@inertiajs/vue3';
 
 const items = [
@@ -32,15 +30,15 @@ const go = (url:string) => {
     <v-navigation-drawer 
         location="right"
     >
-        <BaseList nav>
-            <BaseListItem
+        <v-list nav>
+            <v-list-item
                 v-for="item in items"
                 :key="item.label"
                 @click="go(item.url)"
             >
                 {{ item.label }}
-            </BaseListItem>
-        </BaseList>
+            </v-list-item>
+        </v-list>
     </v-navigation-drawer >
     <slot />
 </template>

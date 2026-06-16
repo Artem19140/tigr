@@ -6,16 +6,16 @@ defineProps<{
 </script>
 
 <template>
-        <v-autocomplete 
-            clearable
-            variant="outlined"
-            density="comfortable"
-        >
-            <template #label>
-            <span>
-                {{ label }}
-                <span v-if="required" style="color:red">*</span>
-            </span>
-            </template>
-        </v-autocomplete>
+    <v-autocomplete 
+        clearable
+        variant="outlined"
+        density="comfortable"
+    >
+        <template #label>
+        <span>
+            {{ label }}
+            <span v-if="required" style="color:red">*</span>
+        </span>
+        </template>
+    </v-autocomplete>
 </template>

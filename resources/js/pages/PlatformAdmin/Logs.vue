@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import BaseContainer from '@/components/BaseComponents/BaseContainer/BaseContainer.vue';
-import AppDateInput from '@/components/UI/AppDateInput/AppDateInput.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import PlatformAdminLayout from '@/layouts/PlatformAdminLayout.vue';
 import { useHttp } from '@inertiajs/vue3';
 import { RedirectUrl } from '@/interfaces/Interfaces';
+import AppInput from '@/components/UI/AppInput/AppInput.vue';
 
 defineOptions({
   layout: [EmployeeLayout, PlatformAdminLayout],
@@ -15,7 +15,7 @@ const http = useHttp<{date:string | null}, RedirectUrl>({
 })
 const getLog = () => {
    http.get('/admin/logs/available', {
-    onSuccess(response, httpResponse) {
+    onSuccess(response) {
         window.open(response.redirectUrl)
     },
    })
@@ -27,18 +27,13 @@ const gitLog = () => {
 </script>
 
 <template>
-    <BaseContainer
-        
-    >
+    <BaseContainer>
         <v-card>
-
             <v-card-text>
-
-            
-                <AppDateInput 
+                <AppInput
                     v-model="http.date"
                     :error-messages="http.errors.date"
-
+                    type="date"
                     label="Дата лога"
                 />
                 <AppPrimaryButton
@@ -57,5 +52,4 @@ const gitLog = () => {
             </v-card-text>
         </v-card>
     </BaseContainer>
-   
 </template>

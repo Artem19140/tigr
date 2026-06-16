@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import AppProgressCircular from '@/components/UI/AppProgressCircular/AppProgressCircular.vue';
-import AppRefreshButton from '@/components/UI/AppRefreshButton/AppRefreshButton.vue';
 
 const isOpen = defineModel<boolean>()
 const emit = defineEmits<{ (e: 'beforeClose', done: ()=>void) :void} >()
@@ -54,7 +52,12 @@ const close = () => {
 
             <v-container class="fill-height d-flex align-center justify-center" v-if="!skeleton && loading">
                 <div class="text-center">
-                <AppProgressCircular size="56" width="5" />
+                <v-progress-circular
+                    indeterminate
+                    color="primary"
+                    size="56" 
+                    width="5"
+                />
                 <div class="mt-4">'Идет загрузка...'</div>
                 </div>
             </v-container>
@@ -72,10 +75,12 @@ const close = () => {
                 
                 >
                 Повторить
-                <AppRefreshButton
-                    @click="onRetry"
-                    icon-size="36"
-                />
+                <v-btn 
+                    icon
+                    variant="text"
+                >
+                    <v-icon icon-size="36">mdi-refresh</v-icon>
+                </v-btn>
                 
             </v-card-text>
             

@@ -5,7 +5,6 @@ import ExamResultStatusChip from '@/components/Exam/ExamResultStatusChip.vue';
 import ExamStatusChip from '@/components/Exam/ExamStatusChip.vue';
 import AppStatusChip from '@/components/UI/AppStatusChip/AppStatusChip.vue';
 import { Enrollment } from '@/interfaces/Enrollment';
-import AppProgressCircular from '@/components/UI/AppProgressCircular/AppProgressCircular.vue';
 import EnrollmentDropDown from '@/components/Enrollment/EnrollmentDropDown.vue';
 
 const props = defineProps<{
@@ -44,7 +43,12 @@ const modals = useModals()
               color="red"
               size="x-small"
             />
-            <AppProgressCircular size="20" v-if="enrollment.isLoading" />
+            <v-progress-circular
+              indeterminate
+              color="primary"
+              size="20" 
+              v-if="enrollment.isLoading"
+            />
           </div> 
         </div>
         <div>

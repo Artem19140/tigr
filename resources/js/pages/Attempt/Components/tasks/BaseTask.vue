@@ -5,7 +5,6 @@ import { TaskTypes } from '@/constants/TaskTypes';
 import AppStatusChip from '@/components/UI/AppStatusChip/AppStatusChip.vue';
 import AppRetryAlert from '@/components/UI/AppRetryAlert/AppRetryAlert.vue';
 import { useAttempt } from '@/composables/useAttempt';
-import AppProgressCircular from '@/components/UI/AppProgressCircular/AppProgressCircular.vue';
 import { inject, provide } from 'vue';
 import TaskRatingBlock from './TaskRatingBlock.vue';
 
@@ -48,8 +47,12 @@ const checking = inject<boolean>('checking')
             class="flex items-center gap-2 text-grey text-caption"
             style="font-size: 12px;"
           >
-              <AppProgressCircular size="20" />
-              <span>Идет сохранение ответа...</span>
+            <v-progress-circular
+                indeterminate
+                color="primary"
+                size="20"
+            />
+            <span>Идет сохранение ответа...</span>
           </div>
         </div>
       </v-card-title>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import BaseTable from '@/components/BaseComponents/BaseTable/BaseTable.vue';
 import BaseContainer from '@/components/BaseComponents/BaseContainer/BaseContainer.vue';
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { DateFormatter } from '@/helpers/DateFormatter';
@@ -42,7 +41,7 @@ const openAttempt =  (item : Enrollment) => {
     </v-btn>
 
     <BaseContainer>
-        <BaseTable
+        <v-data-table 
             :headers="headers"
             :title="`Попытки экзмена ${exam.data.shortName} от ${new DateFormatter(exam.data.beginTime).format('H:i, d.m.Y')}`"
             :items="props.exam.data.enrollments"
@@ -62,6 +61,6 @@ const openAttempt =  (item : Enrollment) => {
                 text="Проверено"
             />
         </template>
-    </BaseTable>
+    </v-data-table >
     </BaseContainer>
 </template>

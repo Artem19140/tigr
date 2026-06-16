@@ -2,12 +2,9 @@
 import Dropdown from './Dropdown.vue';
 import { useModals } from '@composables/useModals';
 import AppAddButton from '@components/UI/AppAddButton/AppAddButton.vue';
-import BaseTable from '@/components/BaseComponents/BaseTable/BaseTable.vue';
 import { Employee } from '@/interfaces/Employee';
 import { Head } from '@inertiajs/vue3';
 import DetailsDropdown from '@/components/UI/DetailsDropdown/DetailsDropdown.vue';
-import BaseList from '@/components/BaseComponents/BaseList/BaseList.vue';
-import BaseListItem from '@/components/BaseComponents/BaseList/BaseListItem.vue';
 
 const props = defineProps<{
     employees : Employee[]
@@ -28,7 +25,7 @@ const headers = [
     <Head>
         <title>Сотрудники</title>
     </Head>
-    <BaseTable 
+    <v-data-table 
         :headers="headers"
         :items="employees"
         toolbarColor="white"
@@ -45,23 +42,23 @@ const headers = [
 
         <template #item.roles="{item}">
             <DetailsDropdown>
-                <BaseList width="300" density="compact">
-                    <BaseListItem
+                <v-list width="300" density="compact">
+                    <v-list-item
                         v-for="role in item.roles"
                     >
                         <div class="whitespace-pre">
                             {{ role.label }}
                         </div>
                         
-                    </BaseListItem>
+                    </v-list-item>
                     <div v-if="item.roles.length === 0">Роли не назначены</div>
-                </BaseList>
+                </v-list>
             </DetailsDropdown>
         </template>
         
         <template #item.actions="{item}">
             <Dropdown :employee="item" />
         </template>
-    </BaseTable>
+    </v-data-table >
 </template>
 

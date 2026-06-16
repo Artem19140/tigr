@@ -3,8 +3,6 @@ import { useAuth } from '@/composables/useAuth';
 import { Roles } from '@/constants/Roles';
 import { computed } from 'vue';
 import { router } from '@inertiajs/vue3';
-import BaseList from '@/components/BaseComponents/BaseList/BaseList.vue';
-import BaseListItem from '@/components/BaseComponents/BaseList/BaseListItem.vue';
 
 const auth = useAuth()
 
@@ -61,15 +59,15 @@ const visibleItems = computed(() =>
             permanent
             location="right"
         >
-            <BaseList nav>
-                <BaseListItem
+            <v-list nav>
+                <v-list-item
                     v-for="item in visibleItems"
                     :key="item.label"
                     @click="go(item.url)"
                 >
                     {{ item.label }}
-                </BaseListItem>
-            </BaseList>
+                </v-list-item>
+            </v-list>
         </v-navigation-drawer >
         <slot />
 

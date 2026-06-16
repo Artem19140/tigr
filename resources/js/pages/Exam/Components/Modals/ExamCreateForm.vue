@@ -4,7 +4,6 @@ import { useHttp } from '@inertiajs/vue3';
 import AppAutocomplete from '@components/UI/AppAutocomplete/AppAutocomplete.vue';
 import AppInput from '@components/UI/AppInput/AppInput.vue';
 import AppTextarea from '@components/UI/AppTextarea/AppTextarea.vue';
-import AppDateInput from '@components/UI/AppDateInput/AppDateInput.vue';
 import AppNumberInput from '@components/UI/AppNumberInput/AppNumberInput.vue';
 import { Address } from '@/interfaces/Address';
 import { Employee } from '@/interfaces/Employee';
@@ -53,7 +52,8 @@ function required (v:any) {
         />
         <div class="flex gap-5">
             <div class="flex-1">
-                <AppDateInput 
+                <AppInput 
+                    type="date"
                     label="Дата"
                     :rules="[required]"
                     v-model="form.date"

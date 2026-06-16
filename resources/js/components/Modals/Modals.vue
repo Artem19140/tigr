@@ -7,7 +7,6 @@ import ForeignNationalCreateModal from '@pages/ForeignNationals/Components/Modal
 import FlatTableModal from '@pages/Exam/Components/ExamTable/FlatTableModal.vue';
 import EnrollmentModal from '@pages/ForeignNationals/Components/EnrollmentModal.vue';
 import AttemptCheckingModal from '@pages/ExamsChecking/Components/AttemptCheckingModal.vue';
-import PdfDialogViewer from '../PdfDialogViewer/PdfDialogViewer.vue';
 import ExamCommentModal from '@pages/ExamMonitoring/ExamCommentModal.vue';
 import EmployeeCreateModal from '@pages/Center/Components/Employees/EmployeeCreateModal.vue';
 import ForeignNationalEditModal from '@pages/ForeignNationals/Components/Modals/ForeignNationalEditModal.vue';
@@ -39,7 +38,6 @@ const modalMap = {
     flatTable: FlatTableModal,
     enrollment: EnrollmentModal,
     attemptChecking: AttemptCheckingModal,
-    pdf: PdfDialogViewer,
     examComment: ExamCommentModal,
     employeeCreate: EmployeeCreateModal,
     foreignNationalEdit: ForeignNationalEditModal,

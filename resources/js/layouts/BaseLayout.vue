@@ -11,26 +11,26 @@ import AppNoNetworkBanner from '@/components/UI/AppNoNetworkBanner/AppNoNetworkB
 </script>
 
 <template>
-        <v-app>
-            <slot name="drawer" />
-            <v-main style="
-                background-image: url('/storage/images/background.png');
-                min-height: 100vh;
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-                background-attachment: fixed;
-            "
-        >       
-                <slot />
-            </v-main>
-            <confirm-dialog />
-            <alert />
-            <prompt-dialog />
-            <modals />
-            <app-loading-snackbar />
-            <app-snackbar-queue />
-            <confirmation-options-modal />
-            <app-no-network-banner />
-        </v-app>
+    <v-app>
+        <slot name="drawer" />
+        <v-main style="
+            background-image: url('/storage/images/background.png');
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        "
+    >       
+            <slot />
+        </v-main>
+        <confirm-dialog />
+        <alert />
+        <prompt-dialog />
+        <modals />
+        <app-loading-snackbar />
+        <app-snackbar-queue />
+        <confirmation-options-modal />
+        <app-no-network-banner />
+    </v-app>
 </template>

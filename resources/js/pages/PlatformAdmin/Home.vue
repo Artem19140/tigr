@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import BaseList from '@/components/BaseComponents/BaseList/BaseList.vue';
-import BaseListItem from '@/components/BaseComponents/BaseList/BaseListItem.vue';
+
 import AppInput from '@/components/UI/AppInput/AppInput.vue';
 import AppPeriodDate from '@/components/UI/AppPeriodDate/AppPeriodDate.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
@@ -89,17 +88,15 @@ const resetCenter = () => {
                 />
             </v-card-text>
         
-        <BaseList
-
-        >
-            <BaseListItem 
+        <v-list>
+            <v-list-item  
                 v-for="stat in statistics"
                 :key="stat.label"
                 :title="stat.label"
                 :subtitle="stat.value"
             >
-            </BaseListItem>
-        </BaseList>
+            </v-list-item >
+        </v-list>
     </v-card>
     <v-card class="mt-4">
         <v-card-text>

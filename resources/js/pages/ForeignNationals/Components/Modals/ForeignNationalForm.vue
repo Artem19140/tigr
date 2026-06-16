@@ -5,7 +5,6 @@ import AppTextarea from '@components/UI/AppTextarea/AppTextarea.vue';
 import { computed } from 'vue';
 import countries from '@data/countries.json'
 import AppOptionalInput from '@/components/UI/AppOptionalInput/AppOptionalInput.vue';
-import AppDateInput from '@/components/UI/AppDateInput/AppDateInput.vue';
 import { ForeignNationalEditForm, ForeignNationalFormI } from '@/interfaces/ForeignNational';
 import AppTooltip from '@/components/UI/AppTooltip/AppTooltip.vue';
 import AppCheckbox from '@/components/UI/AppCheckbox/AppCheckbox.vue';
@@ -28,7 +27,6 @@ function required (v:any) {
 </script>
 
 <template>
-    
     <v-card title="Персональные данные" class="mb-4">
         <v-card-text>
             <v-container fluid>
@@ -109,7 +107,8 @@ function required (v:any) {
                     </v-col>
 
                     <v-col cols="12" md="6">
-                        <AppDateInput 
+                        <AppInput 
+                            type="date"
                             :readonly="readonly"
                             :rules="[required]"
                             v-model="form.dateBirth"
@@ -185,7 +184,8 @@ function required (v:any) {
                     </v-col>
 
                     <v-col cols="12" md="6">
-                        <AppDateInput 
+                        <AppInput 
+                            type="date"
                             label="Дата выдачи"
                             :rules="[required]"
                             :readonly="readonly"

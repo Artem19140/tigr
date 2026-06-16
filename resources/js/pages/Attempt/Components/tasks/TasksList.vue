@@ -56,7 +56,9 @@ const update = (value:any) => {
         },
     })
 }
+
 provide<boolean>('checking', props.checking)
+
 const groupedTasks =  computed(() =>{
         const groups = new Map()
         props.attempt.tasks.forEach(task => {

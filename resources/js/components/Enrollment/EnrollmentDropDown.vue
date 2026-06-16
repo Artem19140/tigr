@@ -2,7 +2,6 @@
 import BaseThreeDotDropdown from '@components/BaseComponents/BaseThreeDotDropdown/BaseThreeDotDropdown.vue';
 import PaymentChange from './PaymentChange.vue';
 import { Enrollment } from '@/interfaces/Enrollment';
-import BaseListItem from '../BaseComponents/BaseList/BaseListItem.vue';
 
 const props = defineProps<{
     enrollment:Enrollment
@@ -21,7 +20,7 @@ const download = (document : string) => {
             v-if="enrollment.permissions.payment"
             
         />
-        <BaseListItem 
+        <v-list-item 
             title="Заявление" 
             v-if="enrollment.permissions.statement"
             @click="() => download('statements')"

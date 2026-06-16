@@ -41,7 +41,6 @@ watch(attemptAnswer, () => {
         :loading="false"
     >
         <template #answers>
-            <!-- <div class="flex flex-column"> -->
                 <v-radio-group 
                     v-model="attemptAnswer"
                 >      
