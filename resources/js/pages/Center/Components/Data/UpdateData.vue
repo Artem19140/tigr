@@ -27,8 +27,8 @@ const http = useHttp<Omit<Center, 'id' | 'employees'>>({
 const edit = () => {
     http.put('',{ 
         onSuccess(response, httpResponse) {
-            emit('modeShow')
             router.reload()
+            emit('modeShow')
         },
     })
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\Web\Address\AddressController;
 use App\Http\Controllers\Web\Auth\PasswordController;
 use App\Http\Controllers\Web\Center\CenterController;
 use App\Http\Controllers\Web\Employee\EmployeeController;
+use App\Http\Controllers\Web\PlatformAdmin\CounterController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([
@@ -37,4 +38,7 @@ Route::middleware([
         ->can('resetPassword', 'employee');
 
     Route::get('roles', [EmployeeController::class, 'rolesShow']);
+
+    Route::get('centers/{center}/counters', [CounterController::class, 'index']);
+    Route::patch('centers/{center}/counters/{counter}', [CounterController::class, 'update']);
 });

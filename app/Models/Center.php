@@ -36,4 +36,9 @@ class Center extends Model
     {
         return $this->is_active;
     }
+
+    public function counters():HasMany
+    {
+        return $this->hasMany(Counter::class, 'center_id');
+    }
 }

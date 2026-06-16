@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\PlatformAdmin\CenterPlatformAdminController;
 use App\Http\Controllers\Web\PlatformAdmin\CommandsController;
+use App\Http\Controllers\Web\PlatformAdmin\CounterController;
 use App\Http\Controllers\Web\PlatformAdmin\LogsController;
 use App\Http\Controllers\Web\PlatformAdmin\PlatformAdminStatisticsController;
 use Illuminate\Support\Facades\Route;

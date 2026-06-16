@@ -5,19 +5,15 @@ import BaseContainer from '@/components/BaseComponents/BaseContainer/BaseContain
 import CenterData from './Components/Data/CenterData.vue';
 import EmployeesTable from './Components/Employees/EmployeesTable.vue';
 import { router } from '@inertiajs/vue3';
-import { useAuth } from '@/composables/useAuth';
 import { Employee } from '@/interfaces/Employee';
 import { Address } from '@/interfaces/Address';
 import AddressesList from './Components/Addresses/AddressesList.vue';
+import Counters from './Components/Counters/Counters.vue';
+import { Counter } from '@/interfaces/Counter.js';
 
 defineOptions({
   layout: [EmployeeLayout],
 })
-
-const {user} = useAuth()
-
-const centerId = computed(() => user.centerId)
-
 const props = defineProps<{
     tab: Tab
     data?: {
@@ -29,16 +25,21 @@ const props = defineProps<{
     addresses?:{
         data:Address[]
     },
-    centerId:number
+    counters?:{
+        data:Counter[]
+    }
+    centerId:number,
+    
 }>()
 
-type Tab = 'data' | 'employees' | 'addresses'
+type Tab = 'data' | 'employees' | 'addresses' | 'counters'
 
 const tab = ref<Tab>(props.tab ?? 'data')
 
 const visit = (route : string) => {
     router.visit(`/centers/${props.centerId}${route}`)
 } 
+
 </script>
 
 <template>
@@ -47,6 +48,7 @@ const visit = (route : string) => {
             <v-tab value="data" @click="() => visit('')">Данные</v-tab>
             <v-tab value="employees" @click="() => visit('/employees')">Сотрудники</v-tab>
             <v-tab value="addresses" @click="() => visit('/addresses')">Адреса</v-tab>
+            <v-tab value="counters" @click="() => visit('/counters')">Счетчики</v-tab>
         </v-tabs>
 
         <v-divider></v-divider>
@@ -65,6 +67,12 @@ const visit = (route : string) => {
             <v-tabs-window-item value="addresses" v-if="addresses">
                 <AddressesList 
                     :addresses="addresses.data"
+                 />
+            </v-tabs-window-item>
+
+            <v-tabs-window-item value="counters" v-if="counters">
+                <Counters 
+                    :counters="counters.data"
                  />
             </v-tabs-window-item>
         </v-tabs-window>

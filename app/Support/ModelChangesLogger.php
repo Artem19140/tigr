@@ -5,9 +5,9 @@ namespace App\Support;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 
-class ModelChangesLogger
+final class ModelChangesLogger
 {
-    public function log(Model $model)
+    public function log(Model $model):void
     {
         $modelName = strtolower(class_basename($model));
         $message = "{$modelName}_updated";

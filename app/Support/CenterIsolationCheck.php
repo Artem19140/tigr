@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Log;
 
 class CenterIsolationCheck
 {
-
     public static function check( $collection):void
     {
         if(auth()->user()->isPlatformAdmin()){
