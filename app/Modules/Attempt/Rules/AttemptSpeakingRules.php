@@ -2,16 +2,12 @@
 
 namespace App\Modules\Attempt\Rules;
 
-use App\Modules\Shared\CodeTranslator;
 use App\Modules\Shared\RuleResult;
 use App\Enums\AvailabilityCode;
 use App\Models\Attempt;
 
 class AttemptSpeakingRules
 {
-    public function __construct(
-        protected CodeTranslator $translator
-    ){}
     public function start(Attempt $attempt): RuleResult
     {
         $failed = $this->baseCheck($attempt);
@@ -22,10 +18,7 @@ class AttemptSpeakingRules
 
         if($this->speakingStarted($attempt)){
             return RuleResult::fail(
-                'attempt_has_been_already_started',
-                $this->translator->translate(
-                    'attempt_has_been_already_started'
-                )
+                'attempt_has_been_already_started'
             );
         }
         return RuleResult::success();
@@ -41,19 +34,13 @@ class AttemptSpeakingRules
 
         if(! $this->speakingStarted($attempt)){
             return  RuleResult::fail(
-                'attempt_speaking_is_not_started_yet',
-                $this->translator->translate(
-                    'attempt_speaking_is_not_started_yet'
-                )
+                'attempt_speaking_is_not_started_yet'
             );
         }
 
         if($this->speakingFinished($attempt)){
             return  RuleResult::fail(
-                'attempt_speaking_is_already_finished',
-                $this->translator->translate(
-                    'attempt_speaking_is_already_finished'
-                )
+                'attempt_speaking_is_already_finished'
             );
         }
         return  RuleResult::success();
@@ -69,10 +56,7 @@ class AttemptSpeakingRules
         
         if($this->speakingFinished($attempt)){
             return  RuleResult::fail(
-                'attempt_speaking_is_already_finished',
-                $this->translator->translate(
-                    'attempt_speaking_is_already_finished'
-                )
+                'attempt_speaking_is_already_finished'
             );
         }
 
@@ -83,19 +67,13 @@ class AttemptSpeakingRules
     {
         if($this->hasNoSpeaking($attempt)){
             return  RuleResult::fail(
-                'attempt_has_no_speaking',
-                $this->translator->translate(
-                    'attempt_has_no_speaking'
-                )
+                'attempt_has_no_speaking'
             );
         }
 
         if($this->isNotToday($attempt)){
             return  RuleResult::fail(
-                'attempt_speaking_available_on_attempt_passing_day',
-                $this->translator->translate(
-                    'attempt_speaking_available_on_attempt_passing_day'
-                )
+                'attempt_speaking_available_on_attempt_passing_day'
             );
         }
 

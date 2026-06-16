@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\EmployeeRole;
 use App\Models\Address;
 use App\Models\Employee;
 
@@ -28,6 +29,9 @@ class AddressPolicy
      */
     public function create(Employee $employee): bool
     {
+        if($employee->hasAnyRole(EmployeeRole::CenterAdmin)){
+            return true;
+        }
         return false;
     }
 

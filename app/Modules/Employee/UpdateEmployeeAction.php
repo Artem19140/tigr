@@ -3,26 +3,28 @@
 namespace App\Modules\Employee;
 
 use App\Enums\EmployeeRole;
-use App\Http\Resources\Employee\EmployeeResource;
 use App\Models\Employee;
 use App\Models\Role;
-use DB;
-use Illuminate\Support\Facades\Log;
+use App\Support\ModelChangesLogger;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class UpdateEmployeeAction
 {
+    public function __construct(
+        protected ModelChangesLogger $logger
+    ){}
     public function execute(array $data, Employee $employeeToUpdate)
     {
         $this->ensureHasNoRolePlatformAdmin($data);
         $this->ensureCenterAdminValidCreation($data);
-        $before = new EmployeeResource($employeeToUpdate)->resolve();
+
         DB::transaction(function () use ($employeeToUpdate, $data) {
             $employeeToUpdate->update($this->getAttributes($data));
             $employeeToUpdate->roles()->sync($data['roles']);
         });
 
-        $this->log($employeeToUpdate, $before);
+        $this->logger->log($employeeToUpdate);
     }
 
     protected function ensureUniqueEmail(string $email, int $id)
@@ -67,16 +69,5 @@ class UpdateEmployeeAction
             'surname' => $data['surname'],
             'patronymic' => $data['patronymic'],
         ];
-    }
-
-    protected function log(Employee $updatedEmployee, array $before): void
-    {
-        Log::info('employee_updated', [
-            'employee_updated_id' => $updatedEmployee->id,
-            'changes' => [
-                'before' => $before,
-                'after' => new EmployeeResource($updatedEmployee)->resolve(),
-            ],
-        ]);
     }
 }

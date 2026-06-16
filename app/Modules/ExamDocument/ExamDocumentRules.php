@@ -11,10 +11,7 @@ class ExamDocumentRules
 {
     protected function available():RuleResult
     {
-        return new RuleResult(
-            available:true,
-            code:null
-        );
+        return RuleResult::success();
     }
 
     protected function blocked(
@@ -25,7 +22,7 @@ class ExamDocumentRules
         );
     }
 
-    public function resolve(Exam $exam,Employee $employee): array
+    public function resolve(Exam $exam, Employee $employee): array
     {
         // $rules = [];
         // if($employee->can('codes', $exam)){
@@ -42,10 +39,10 @@ class ExamDocumentRules
         // }
         // return $rules;
         return [
-            'codes' => $this->codes($exam),
-            'protocol' => $this->protocol($exam),
-            'results' => $this->results($exam),
-            'list' => $this->list($exam),
+            'codes' => $this->codes($exam)->toArray(),
+            'protocol' => $this->protocol($exam)->toArray(),
+            'results' => $this->results($exam)->toArray(),
+            'list' => $this->list($exam)->toArray() ,
         ];
     }
 

@@ -7,15 +7,16 @@ use App\Modules\Exam\Validator\ExamBeforeSaveValidator;
 use App\Exceptions\BusinessException;
 use App\Http\Dto\ExamDto;
 use App\Models\Exam;
-use DB;
-use Illuminate\Support\Facades\Log;
+use App\Support\ModelChangesLogger;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 final class UpdateExamAction
 {
     public function __construct(
         protected ExamEditRules $examEditRules,
-        protected ExamBeforeSaveValidator $examBeforeSaveValidator
+        protected ExamBeforeSaveValidator $examBeforeSaveValidator,
+        protected ModelChangesLogger $logger
     ) {}
 
     public function execute(
@@ -29,7 +30,6 @@ final class UpdateExamAction
 
         $this->examBeforeSaveValidator->execute($examDto, $exam->id);
 
-        $before = $this->getAttributesToLog($exam);
         $exam = DB::transaction(function () use ($examDto, $exam) {
 
             $exam->update(
@@ -43,7 +43,8 @@ final class UpdateExamAction
 
             return $exam;
         });
-        $this->log($exam, $before);
+
+        $this->logger->log($exam);
 
     }
 
@@ -71,29 +72,5 @@ final class UpdateExamAction
         $attributes['comment'] = $examDto->comment;
 
         return $attributes;
-    }
-
-    protected function log(Exam $exam, array $before): void
-    {
-        Log::info('exam_updated', [
-            'exam_id' => $exam->id,
-            'changes' => [
-                'before' => $before,
-                'after' => $this->getAttributesToLog($exam),
-            ],
-        ]);
-    }
-
-    protected function getAttributesToLog(Exam $exam): array
-    {
-        $attributes = [
-            'begin_time',
-            'address_id',
-            'capacity',
-            'exam_type_id',
-            'comment',
-        ];
-
-        return $exam->only($attributes);
     }
 }

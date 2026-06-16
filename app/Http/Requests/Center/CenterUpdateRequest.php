@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Center;
 
+use App\Http\Dto\CenterUpdateDto;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
@@ -33,5 +34,19 @@ class CenterUpdateRequest extends FormRequest
             'nameGenitive' => ['required', 'string'],
             'commissionChairman' => ['required', 'string'],
         ];
+    }
+
+    public function dto(): CenterUpdateDto
+    {
+        return new CenterUpdateDto(
+            name: $this->input('name'),
+            directorFio: $this->input('directorFio'),
+            certificatesIssueAddress: $this->input('certificatesIssueAddress'),
+            ogrn: $this->input('ogrn'),
+            inn: $this->input('inn'),
+            address: $this->input('address'),
+            nameGenitive: $this->input('nameGenitive'),
+            commissionChairman: $this->input('commissionChairman'),
+        );
     }
 }

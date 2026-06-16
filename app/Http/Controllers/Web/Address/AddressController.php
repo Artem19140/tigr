@@ -21,7 +21,8 @@ class AddressController
         Request $request,
         Center $center
     ): \Inertia\Response {
-        //$this->authorize($request->user(), $center);
+        $this->authorize($request->user(), $center);
+
         $addresses = Address::query()
             ->forCenter(app(CenterContext::class)->id())
             ->withExists('exams as examsExists')
@@ -43,17 +44,18 @@ class AddressController
         AddressPostRequest $request,
         Center $center
     ): JsonResponse {
-        //$this->authorize($request->user(), $center);
+        $this->authorize($request->user(), $center);
+
         $address = Address::create([
             'address' => $request->validated('address'),
             'max_capacity' => $request->validated('capacity'),
             'center_id' => $center->id,
             'creator_id' => $request->user()->id,
         ]);
+
         return response()->json([
             'address' => new AddressResource($address),
-        ],
-            201);
+        ], 201);
     }
 
     public function update(
@@ -61,21 +63,23 @@ class AddressController
         Center $center,
         Address $address
     ): JsonResponse {
-        // $this->authorize($request->user(), $center);
-        // abort_if($address->center_id !== $center->id, 404);
+        $this->authorize($request->user(), $center);
+        $this->abortIfNotBelongsCenter($center, $address);
+
         $request->validate([
             'address' => ['required', 'string'],
             'maxCapacity' => ['required', 'integer', 'min:1'],
         ]);
         
-        $before = new AddressResource($address)->resolve();
-        
         if (! $address->exams()->exists()) {
             $address->address = $request->input('address');
         }
 
+        $before = new AddressResource($address)->resolve();
+
         $address->max_capacity = $request->input('maxCapacity');
         $address->save();
+
         Log::info('address_updated', [
             'address_id' => $address->id,
             'changes' => [
@@ -91,8 +95,9 @@ class AddressController
         Center $center,
         Address $address
     ): Response {
-        // $this->authorize($request->user(), $center);
-        // abort_if($address->center_id !== $center->id, 403);
+        $this->authorize($request->user(), $center);
+        $this->abortIfNotBelongsCenter($center, $address);
+
         $address->is_active = false;
         $address->save();
 
@@ -104,7 +109,16 @@ class AddressController
 
     protected function authorize(Employee $employee, Center $center): void
     {
+        if($employee->isPlatformAdmin()){
+            return ;
+        }
         abort_if($employee->center_id !== $center->id, 403);
     }
 
+    protected function abortIfNotBelongsCenter(Center $center, Address $address){
+        if(request()->user()->isPlatformAdmin()){
+            return ;
+        }
+        abort_if($address->center_id !== $center->id, 404);
+    }
 }

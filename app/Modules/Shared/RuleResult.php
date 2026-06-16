@@ -3,19 +3,15 @@
 namespace App\Modules\Shared;
 
 use App\Enums\AvailabilityCode;
-use LogicException;
 
 final readonly  class RuleResult
 {
+    
     protected function __construct(
         public bool $available,
         protected AvailabilityCode | string | null $code = null,
-        protected string | null $reason = null
-    ){ 
-        if(! $available && ! $code){
-            throw new LogicException('UNEXPECTED: availalble = false, and no code');
-        }
-    }
+        protected array $params = []
+    ){}
 
     public static function success():self
     {
@@ -24,23 +20,32 @@ final readonly  class RuleResult
 
     public static function fail(
         AvailabilityCode | string $code,
-        string | null $reason = null
+        array $params = []
     ):self
     {
         return new self(
             false,
             $code,
-            $reason ?? app(CodeTranslator::class)->translate($code)
+            $params
         );
     }
 
     public function reason(): ?string
     {
-        return $this->reason; 
+        return app(CodeTranslator::class)->translate($this->code, $this->params); 
     }
 
     public function isNotAvailable():bool
     {
         return ! $this->available;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'available' => $this->available,
+            'code' => $this->code,
+            'reason' => $this->reason()
+        ];
     }
 }

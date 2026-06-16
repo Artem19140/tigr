@@ -6,21 +6,22 @@ use App\Enums\AvailabilityCode;
 
 class CodeTranslator{
     public function translate(
-        AvailabilityCode | string | null $code
+        AvailabilityCode | string | null $code,
+        array $params = []
     ):?string {
         if(!$code){
             return null;
         }
 
         if($code instanceof AvailabilityCode){
-            return $this->translationKey($code->value);
+            return $this->translationKey($code->value, $params);
         }
 
-        return $this->translationKey($code); 
+        return $this->translationKey($code, $params); 
     }
 
-    protected function translationKey(string $key ):string
+    protected function translationKey(string $key , array $params = []):string
     {
-        return __("reason_codes.{$key}");
+        return __("reason_codes.{$key}", $params);
     }
 }

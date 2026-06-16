@@ -16,6 +16,6 @@ class TaskAnswersNotAllowedException extends BaseException
 
     public function report(): void
     {
-        Log::channel('single')->critical('UNEXPECTED: trying load answer to task, where not allowed answers', $this->context);
+        Log::critical('UNEXPECTED: trying load answer to task, where not allowed answers', $this->context);
     }
 }

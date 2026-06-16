@@ -3,15 +3,14 @@
 namespace App\Modules\ForeignNational\Action;
 
 use App\Modules\ForeignNational\Guard\ForeignNationalGuard;
-use App\Http\Resources\ForeignNational\ForeignNationalResource;
 use App\Models\ForeignNational;
-use Illuminate\Support\Facades\Log;
-
+use App\Support\ModelChangesLogger;
 
 final class UpdateForeignNationalAction
 {
     public function __construct(
-        protected ForeignNationalGuard $foreignNationalGuard
+        protected ForeignNationalGuard $foreignNationalGuard,
+        protected ModelChangesLogger $logger
     ) {}
 
     public function execute(
@@ -20,12 +19,11 @@ final class UpdateForeignNationalAction
     ): ForeignNational {
         $this->foreignNationalGuard->ensureAge($data['dateBirth']);
         $this->foreignNationalGuard->ensureUniquePassport($data, $foreignNational->id);
-        $before = new ForeignNationalResource($foreignNational)->resolve();
         $foreignNational->update(
             $this->attributes($data)
         );
         $foreignNational->save();
-        $this->log($foreignNational, $before);
+        $this->logger->log($foreignNational);
 
         return $foreignNational;
     }
@@ -50,19 +48,5 @@ final class UpdateForeignNationalAction
             'address_reg' => $data['addressReg'],
             'comment' => $data['comment'] ?? '',
         ];
-    }
-
-
-    protected function log(
-        ForeignNational $foreignNational,
-        array $before
-    ): void {
-        Log::info('foreign_national_updated', [
-            'foreign_national_id' => $foreignNational->id,
-            'changes' => [
-                'before' => $before,
-                'after' => new ForeignNationalResource($foreignNational)->resolve(),
-            ],
-        ]);
     }
 }

@@ -36,6 +36,7 @@ class ExamProtocolGenerator
             'endTimeReal' => $endTimeReal,
             'attemptWithViolations' => $attemptsWithViolations,
         ]);
+        
         event(new ExamDocumentGenerated($exam, ExamDocument::Protocol,[
             'annulled_attempts_count' => $annulledAttempts->count(),
             'begin_time_real' => $beginTimeReal?->format('H:i'),

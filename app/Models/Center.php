@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Center extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'name',
         'director_fio',

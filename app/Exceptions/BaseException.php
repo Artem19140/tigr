@@ -10,8 +10,7 @@ use Inertia\Inertia;
 
 class BaseException extends Exception
 {
-    protected int $code;
-    public function __construct(string $message = '')
+    public function __construct(string $message = '', protected int $statusCode = 400)
     {
         parent::__construct($message);
     }
@@ -22,7 +21,7 @@ class BaseException extends Exception
         if ($request->expectsJson()) {
             return response()->json([
                 'message' => $this->getMessage(),
-            ], $this->code);
+            ], 400);
         }
 
         return Inertia::flash(['error' => $this->getMessage()])->back();

@@ -5,24 +5,19 @@ namespace App\Http\Controllers\Web\Center;
 use App\Http\Requests\Center\CenterUpdateRequest;
 use App\Http\Resources\Center\CenterResource;
 use App\Models\Center;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use App\Support\ModelChangesLogger;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class CenterController
 {
-    public function show(Request $request, Center $center): Response
+    public function __construct(
+        protected ModelChangesLogger $logger
+    ){}
+    public function show(Center $center): Response
     {
-        // if (
-        //     $center->id != $request->user()->center_id
-        // ) {
-        //     abort(404);
-        // }
-
         Log::info('center_data_view', ['center_id' => $center->id]);
-
         return Inertia::render('Center/Center', [
             'data' => new CenterResource($center),
             'tab' => 'data',
@@ -34,35 +29,22 @@ class CenterController
     public function update(
         CenterUpdateRequest $request,
         Center $center
-    ): JsonResponse {
-        // if ($center->id != $request->user()->center_id) {
-        //     abort(404);
-        // }
-        $data = $request->validated();
+    ): CenterResource {
+        $dto = $request->dto();
 
-        $payload = [
-            'name' => $data['name'],
-            'director_fio' => $data['directorFio'],
-            'certificates_issue_address' => $data['certificatesIssueAddress'],
-            'ogrn' => $data['ogrn'],
-            'inn' => $data['inn'],
-            'address' => $data['address'],
-            'name_genitive' => $data['nameGenitive'],
-            'commission_chairman' => $data['commissionChairman'],
-        ];
+        $center->name = $dto->name;
+        $center->director_fio = $dto->directorFio;
+        $center->certificates_issue_address = $dto->certificatesIssueAddress;
+        $center->ogrn = $dto->ogrn;
+        $center->inn = $dto->inn;
+        $center->address = $dto->address;
+        $center->name_genitive = $dto->nameGenitive;
+        $center->commission_chairman = $dto->commissionChairman;
 
-        $before = new CenterResource($center)->resolve();
+        $center->save();
 
-        $center->update($payload);
+        $this->logger->log($center);
 
-        Log::info('center_updated', [
-            'center_id' => $center->id,
-            'changes' => [
-                'before' => $before,
-                'after' => new CenterResource($center)->resolve(),
-            ],
-        ]);
-
-        return response()->json($center);
+        return new CenterResource($center);
     }
 }

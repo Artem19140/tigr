@@ -11,10 +11,12 @@ Route::middleware([
 ])->group(function () {
 
     Route::get('centers/{center}', [CenterController::class, 'show'])
+        ->can('view', 'center')
         ->name('centers.show');
     Route::get('centers/{center}/employees', [EmployeeController::class, 'index']);
     
-    Route::put('centers/{center}', [CenterController::class, 'update']);
+    Route::put('centers/{center}', [CenterController::class, 'update'])
+        ->can('update', 'center');
 
     Route::get('centers/{center}/addresses', [AddressController::class, 'index']);
     Route::delete('centers/{center}/addresses/{address}', [AddressController::class, 'destroy'])
