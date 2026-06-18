@@ -8,6 +8,7 @@ use App\Http\Controllers\Web\PlatformAdmin\CounterController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([
+    'meta',
     'can:center-manage'
 ])->group(function () {
 

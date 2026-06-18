@@ -8,6 +8,7 @@ use App\Models\Center;
 use App\Models\Counter;
 use App\Models\Employee;
 use App\Models\Role;
+use App\Modules\Shared\SystemSettings;
 use Database\Seeders\ExamTypes\PATENT\PatentSeeder;
 use Database\Seeders\ExamTypes\RVP\RvpSeeder;
 use Database\Seeders\ExamTypes\VNZH\VnzhSeeder;
@@ -70,7 +71,7 @@ class DatabaseSeeder extends Seeder
                 'center_id' => $center->id,
             ]);
 
-        $email = config('app.platform_admin.login');
+        $email = SystemSettings::adminEmail();
 
         $platformAdmin = Employee::firstOrCreate(
             [
@@ -81,7 +82,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Николай',
                 'patronymic' => 'Дмитрович',
                 'email' => $email,
-                'password' => Hash::make(config('app.platform_admin.password')),
+                'password' => Hash::make(SystemSettings::adminPassword()),
                 'job_title' => 'Админ',
                 'center_id' => null,// $center->id,
                 'has_to_change_password' => false,

@@ -8,7 +8,7 @@ use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\Exam;
 
-class ExamShowQuery
+class ExamViewBuilder
 {
     public function __construct(
         protected EnrollmentPaymentRules $enrollmentPaymentRules,
@@ -17,7 +17,6 @@ class ExamShowQuery
     public function execute(
         Exam $exam, 
         Employee $employee,
-        
     ): Exam
     {
         $exam->load([
@@ -36,7 +35,7 @@ class ExamShowQuery
             $exam->enrollments->each(function(Enrollment $enrollment) use (
                 $exam
             ){
-                $enrollment->setAttribute('payment', 
+                $enrollment->setAttribute('payment_available', 
                     $this->enrollmentPaymentRules->check($enrollment, $exam)->available
                 );
                 

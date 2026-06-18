@@ -48,7 +48,6 @@ class HandleInertiaRequests extends Middleware
                 array_merge(
                     $request->user()->only('id', 'surname', 'name', 'email', 'job_title', 'center_id'),
                     [
-                        //'roles' => $request->user()->roles->pluck('name'),
                         'centerId' => app(CenterContext::class)->id()
                     ]
                 )

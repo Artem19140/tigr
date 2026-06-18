@@ -24,6 +24,7 @@ class SingleChoiceTaskHandler
                 'attempt_answer_id' => $attemptAnswer->id,
                 'type' => TaskType::SingleChoice->value,
                 'message' => 'not_valid_format',
+                'answer' => $answerId
             ]);
         }
 

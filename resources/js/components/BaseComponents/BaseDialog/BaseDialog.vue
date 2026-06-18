@@ -78,6 +78,7 @@ const close = () => {
                 <v-btn 
                     icon
                     variant="text"
+                    @click="onRetry"
                 >
                     <v-icon icon-size="36">mdi-refresh</v-icon>
                 </v-btn>

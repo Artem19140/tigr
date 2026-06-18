@@ -21,8 +21,9 @@ class EssayTaskHandler
         if (! \is_string($foreignNationalAnswer)) {
             throw new AttemptAnswerValidationException([
                 'attempt_answer_id' => $attemptAnswer->id,
-                'type' => TaskType::Essay,
+                'type' => TaskType::Essay->value,
                 'message' => 'not_valid_format',
+                'foreign_national_answer' => 'foreignNationalAnswer',
             ]);
         }
 

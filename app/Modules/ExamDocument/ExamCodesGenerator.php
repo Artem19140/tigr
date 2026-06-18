@@ -18,7 +18,7 @@ final class ExamCodesGenerator
 
         $this->generateCodesForExam($exam);
 
-        $pdf = Pdf::loadView(ExamDocument::Codes->template(), [
+        $pdf = Pdf::loadView(ExamDocument::Codes->templatePath(), [
             'exam' => $exam,
         ]);
 

@@ -8,7 +8,7 @@ return [
     AvailabilityCode::ExamPending->value => 'Экзамен еще не начался',
     AvailabilityCode::AttemptsNotExists->value => 'Нет попыток экзамена',
     AvailabilityCode::ActiveAttemptsExists->value => 'Существуют активные попытки экзамена',
-    AvailabilityCode::ExamFinished->value => 'Экзамен завершен',
+    AvailabilityCode::ExamAlreadyFinished->value => 'Экзамен завершен',
     AvailabilityCode::AttemptExists->value => 'Существует попытка экзамена',
     AvailabilityCode::ExamStarted->value => 'Экзамен уже начался',
     AvailabilityCode::AttemptAnnulled->value => 'Попытка аннулирована',

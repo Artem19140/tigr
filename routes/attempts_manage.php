@@ -7,7 +7,8 @@ use App\Http\Controllers\Web\Attempt\AttemptSpeakingController;
 use App\Http\Controllers\Web\Attempt\AttemptViolationController;
 
 Route::prefix('attempts')->middleware([
-   'can:attempts.employee-access,attempt'
+    'meta',
+    'can:attempts.employee-access,attempt'
 ])
 ->group(function () {
     Route::delete('{attempt}', [AttemptController::class, 'annul'])->name('attempts.destroy');
@@ -40,4 +41,5 @@ Route::prefix('attempts')->middleware([
         ->name('attempts.violations.update');
 });
 
-Route::put('answers/{attemptAnswer}/rate', [AttemptAnswerController::class, 'rate']);
+Route::put('answers/{attemptAnswer}/rate', [AttemptAnswerController::class, 'rate'])
+    ->middleware(['meta']);

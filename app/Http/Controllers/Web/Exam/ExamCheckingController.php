@@ -36,7 +36,7 @@ class ExamCheckingController
             Log::warning('trying to get to checking exam with no human check',[
                 'exam_id' => $exam->id
             ]);
-            throw new BusinessException('Данная попытка проверяется автоматически');
+            throw new BusinessException('Данный экзамен проверяется автоматически');
         }
 
         $exam->load([

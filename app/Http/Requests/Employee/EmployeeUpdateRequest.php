@@ -5,6 +5,7 @@ namespace App\Http\Requests\Employee;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class EmployeeUpdateRequest extends FormRequest
 {
@@ -26,7 +27,11 @@ class EmployeeUpdateRequest extends FormRequest
             'surname' => ['required', 'string'],
             'name' => ['required', 'string'],
             'patronymic' => ['required', 'string'],
-            'email' => ['required', 'email'],
+            'email' => [
+                'required', 
+                'email',
+                Rule::unique('employees')->ignore($this->user()->id),
+            ],
             'jobTitle' => ['required', 'string'],
         ];
     }

@@ -19,8 +19,8 @@ use App\Support\AppMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([
+    'meta',
     'auth',
-
     AppMiddleware::EMPLOYEE_ACTIVE,
     AppMiddleware::CENTER_ACTIVE,
     AppMiddleware::HAS_CHANGE_PASSWORD,

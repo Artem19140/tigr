@@ -22,8 +22,9 @@ class TextInputTaskHandler
         if (! \is_string($foreignNationalAnswer)) {
             throw new AttemptAnswerValidationException([
                 'attempt_answer_id' => $attemptAnswer->id,
-                'type' => TaskType::TextInput,
+                'type' => TaskType::TextInput->value,
                 'message' => 'not_valid_format',
+                'answer' => $foreignNationalAnswer
             ]);
         }
 

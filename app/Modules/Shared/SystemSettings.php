@@ -18,4 +18,14 @@ class SystemSettings{
         return config('system.codes_ttl');
     }
 
+    public static function adminEmail(): string
+    {
+        return config('app.platform_admin.email');
+    }
+
+    public static function adminPassword(): string
+    {
+        return config('app.platform_admin.password');
+    }
+
 }

@@ -7,7 +7,7 @@ use App\Modules\Exam\Action\CancelExamAction;
 use App\Modules\Exam\Action\CreateExamAction;
 use App\Modules\Exam\Action\UpdateExamAction;
 use App\Modules\Exam\Query\ExamCreateDataQuery;
-use App\Modules\Exam\Query\ExamShowQuery;
+use App\Modules\Exam\Query\ExamViewBuilder;
 use App\Modules\Exam\Query\GetExamsQuery;
 use App\Http\Requests\Exam\ExamIndexRequest;
 use App\Http\Requests\Exam\ExamPostRequest;
@@ -91,12 +91,12 @@ class ExamController
     public function show(
         Request $request,
         Exam $exam,
-        ExamShowQuery $examShowQuery
+        ExamViewBuilder $builder
     ): JsonResponse {
         
         Gate::authorize('view', $exam);
         $employee = $request->user();
-        $exam = $examShowQuery->execute($exam, $employee);
+        $exam = $builder->execute($exam, $employee);
 
         return response()->json([
             'exam' => new ExamResource($exam),

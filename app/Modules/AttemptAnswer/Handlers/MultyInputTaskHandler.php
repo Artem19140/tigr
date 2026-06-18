@@ -46,6 +46,8 @@ class MultyInputTaskHandler
             throw new AttemptAnswerValidationException([
                 'type' => TaskType::MultyInput->value,
                 'message' => 'errorValidation',
+                'normalized_foreign_keys' => $normalizedForeignKeys,
+                'normalized_etalon_keys' => $normalizedEtalonKeys
             ]);
         }
     }

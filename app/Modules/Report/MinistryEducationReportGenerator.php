@@ -24,7 +24,10 @@ class MinistryEducationReportGenerator
         $this->csvWriter->setHeaders($this->headers());
         $this->writeRows($dateFrom, $dateTo);
         event(new ReportGenerated(ReportType::MinEducation, [
-            'period' => "$dateFrom-$dateTo"
+            'period' => [
+                'from' => $dateFrom->format('d.m.Y'),
+                'to' => $dateTo->format('d.m.Y')
+            ]
         ]));
     }
 

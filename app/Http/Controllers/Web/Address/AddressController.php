@@ -9,6 +9,7 @@ use App\Models\Address;
 use App\Models\Center;
 use App\Models\Employee;
 use App\Support\CenterIsolationCheck;
+use App\Support\ModelChangesLogger;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -17,6 +18,9 @@ use Inertia\Inertia;
 
 class AddressController
 {
+    public function __construct(
+        protected CenterContext $centerContext
+    ){}
     public function index(
         Request $request,
         Center $center
@@ -24,7 +28,7 @@ class AddressController
         $this->authorize($request->user(), $center);
 
         $addresses = Address::query()
-            ->forCenter(app(CenterContext::class)->id())
+            ->forCenter($this->centerContext->id())
             ->withExists('exams as examsExists')
             ->orderByDesc('id')
             ->where('is_active', true)
@@ -61,7 +65,8 @@ class AddressController
     public function update(
         Request $request,
         Center $center,
-        Address $address
+        Address $address,
+        ModelChangesLogger $logger
     ): JsonResponse {
         $this->authorize($request->user(), $center);
         $this->abortIfNotBelongsCenter($center, $address);
@@ -75,18 +80,9 @@ class AddressController
             $address->address = $request->input('address');
         }
 
-        $before = new AddressResource($address)->resolve();
-
         $address->max_capacity = $request->input('maxCapacity');
         $address->save();
-
-        Log::info('address_updated', [
-            'address_id' => $address->id,
-            'changes' => [
-                'before' => $before,
-                'after' => new AddressResource($address)->resolve(),
-            ],
-        ]);
+        $logger->log($address);
         return response()->json(new AddressResource($address));
     }
 
@@ -112,7 +108,7 @@ class AddressController
         if($employee->isPlatformAdmin()){
             return ;
         }
-        abort_if($employee->center_id !== $center->id, 403);
+        abort_if($employee->center_id !== $center->id, 404);
     }
 
     protected function abortIfNotBelongsCenter(Center $center, Address $address){

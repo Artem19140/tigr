@@ -32,7 +32,7 @@ return Application::configure(basePath: dirname(__DIR__))
             AppMiddleware::ENSURE_ATTEMPT_VALID_STATUS => EnsureValidAttemptStatus::class,
         ]);
 
-        $middleware->append([
+        $middleware->appendToGroup('meta', [
             LogContext::class,
             RequestTimeMeasure::class
         ]);

@@ -22,7 +22,7 @@ class EnrollmentExamShowResource extends JsonResource
             'foreignNational' => new ForeignNationalResource($this->whenLoaded('foreignNational')),
             'examResult' => $this->exam_result,
             'availability' => [
-                'payment' => $this->payment ?? false
+                'payment' => $this->payment_available ?? false
             ],
             'permissions' => [
                 'payment' => $request->user()->can('paymentAny', Enrollment::class),

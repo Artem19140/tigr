@@ -67,7 +67,7 @@ class CreateEmployeeAction
     protected function log(Employee $employee): void
     {
         Log::info('employee_created', [
-            'employee_created_id' => $employee->id,
+            'employee_id' => $employee->id,
         ]);
     }
 }

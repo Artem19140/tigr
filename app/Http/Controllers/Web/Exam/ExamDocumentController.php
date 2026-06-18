@@ -13,7 +13,6 @@ use App\Models\Exam;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Gate;
 
 class ExamDocumentController
 {
@@ -30,11 +29,9 @@ class ExamDocumentController
             throw new BusinessException($result->reason());
         }
 
-        Gate::authorize('list', $exam);
-
         $exam->load(['foreignNationals', 'type']);
 
-        $pdf = Pdf::loadView(ExamDocument::List->template(), [
+        $pdf = Pdf::loadView(ExamDocument::List->templatePath(), [
             'foreignNationals' => $exam->foreignNationals,
             'exam' => $exam,
         ]);
@@ -65,7 +62,6 @@ class ExamDocumentController
         Exam $exam,
         ExamCodesGenerator $examCodesGenerator
     ): Response {
-        $this->authorize($exam);
         $exam->loadCount('enrollments');
         $result = $this->examDocumentRules->codes($exam);
         
@@ -79,7 +75,6 @@ class ExamDocumentController
 
     public function codesAvailable(Exam $exam): JsonResponse
     {
-        $this->authorize($exam);
         $exam->loadCount('enrollments');
         $result = $this->examDocumentRules->codes($exam);
         
@@ -131,10 +126,5 @@ class ExamDocumentController
                 'exam' => $exam,
             ]),
         ]);
-    }
-
-    protected function authorize(Exam $exam): void
-    {
-        Gate::authorize('examiner', $exam);
     }
 }

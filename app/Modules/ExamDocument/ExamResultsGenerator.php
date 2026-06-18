@@ -19,7 +19,7 @@ class ExamResultsGenerator
         $this->loadRelations($exam);
         event(new ExamDocumentGenerated($exam, ExamDocument::Results));
 
-        return Pdf::loadView(ExamDocument::Results->template(), [
+        return Pdf::loadView(ExamDocument::Results->templatePath(), [
             'exam' => $exam,
             'statementTable' => [
                 'headers' => $this->getHeadersStatement($exam),

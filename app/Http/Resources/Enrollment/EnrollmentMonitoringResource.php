@@ -22,7 +22,7 @@ class EnrollmentMonitoringResource extends JsonResource
             'hasPayment' => $this->has_payment,
             'attempt' => new AttemptMonitoringResource($this->whenLoaded('attempt')),
             'availability' => [
-                'payment' => $this->payment
+                'payment' => $this->payment_available
             ],
         ];
     }

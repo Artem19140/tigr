@@ -16,7 +16,6 @@ class AttemptViolationController
     public function index(Attempt $attempt): AnonymousResourceCollection
     {
         $attempt->load('violations');
-
         return ViolationResource::collection($attempt->violations);
     }
 

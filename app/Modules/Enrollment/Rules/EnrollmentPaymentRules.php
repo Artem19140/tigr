@@ -19,7 +19,7 @@ class EnrollmentPaymentRules
 
         if($exam->isFinished()){
             return RuleResult::fail( 
-                AvailabilityCode::ExamFinished
+                AvailabilityCode::ExamAlreadyFinished
             );
         }
 

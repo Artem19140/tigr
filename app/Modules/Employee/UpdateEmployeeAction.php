@@ -7,7 +7,6 @@ use App\Models\Employee;
 use App\Models\Role;
 use App\Support\ModelChangesLogger;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\ValidationException;
 
 class UpdateEmployeeAction
 {
@@ -26,19 +25,6 @@ class UpdateEmployeeAction
 
         $this->logger->log($employeeToUpdate);
     }
-
-    protected function ensureUniqueEmail(string $email, int $id)
-    {
-        $emailNotUnique = Employee::where('email', $email)
-            ->where('id', '<>', $id)
-            ->exists();
-        if ($emailNotUnique) {
-            throw ValidationException::withMessages([
-                'email' => 'Такой email уже занят',
-            ]);
-        }
-    }
-
     protected function ensureHasNoRolePlatformAdmin(array $data): void
     {
         $platformAdminRole = Role::findByEnum(EmployeeRole::PlatformAdmin);

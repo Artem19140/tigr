@@ -61,7 +61,7 @@ class ExamMonitoringController
             $exam, 
             $enrollmentPaymentRules
         ){
-            $enrollment->setAttribute('payment', 
+            $enrollment->setAttribute('payment_available', 
                 $enrollmentPaymentRules->check($enrollment, $exam)->available
             );
         });

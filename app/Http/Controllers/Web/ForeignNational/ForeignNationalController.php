@@ -2,21 +2,17 @@
 
 namespace App\Http\Controllers\Web\ForeignNational;
 
-use App\Modules\Enrollment\Rules\EnrollmentPaymentRules;
-use App\Modules\Exam\Resolver\ExamResultResolver;
 use App\Modules\ForeignNational\Action\CreateForeignNationalWithEnrollmentAction;
 use App\Modules\ForeignNational\Action\UpdateForeignNationalAction;
+use App\Modules\ForeignNational\Query\ForeignNationalViewBuilder;
 use App\Modules\ForeignNational\Query\GetForeignNationalsQuery;
 use App\Http\Requests\ForeignNational\ForeignNationalIndexRequest;
 use App\Http\Requests\ForeignNational\ForeignNationalPostRequest;
 use App\Http\Requests\ForeignNational\ForeignNationalUpdateRequest;
 use App\Http\Resources\ForeignNational\ForeignNationalIndexResource;
 use App\Http\Resources\ForeignNational\ForeignNationalProfileResource;
-use App\Models\Document;
-use App\Models\Enrollment;
 use App\Models\ForeignNational;
 use App\Support\CenterIsolationCheck;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -25,10 +21,6 @@ use Inertia\Response;
 
 class ForeignNationalController
 {
-    public function __construct(
-        protected EnrollmentPaymentRules $enrollmentPaymentRules,
-        protected ExamResultResolver $resolver
-    ){}
     public function index(
         ForeignNationalIndexRequest $request,
         GetForeignNationalsQuery $getForeignNationalsQuery
@@ -40,7 +32,9 @@ class ForeignNationalController
         Inertia::flash(['filters' => $request->validated()]);
 
         $employee = $request->user();
+        
         CenterIsolationCheck::check($foreignNationals);
+
         return Inertia::render('ForeignNationals/ForeignNationals', [
             'foreignNationals' => ForeignNationalIndexResource::collection($foreignNationals),
             'permissions' => [
@@ -73,53 +67,13 @@ class ForeignNationalController
 
     public function show(
         Request $request,
-        ForeignNational $foreignNational
+        ForeignNational $foreignNational,
+        ForeignNationalViewBuilder $builder
     ): JsonResponse {
         Gate::authorize('view', $foreignNational);
-
-        $relations = [];
-
-        $employee = $request->user();
-
-        if($employee->can('viewAny', Document::class)){
-            $relations = [...$relations, 
-                'documents' => function(MorphMany $query){
-                    return $query->whereNull('deleted_at');
-                },
-                'documents.creator', 'documents.documentable'
-            ];
-        }
-
-        if($employee->can('viewAny', Enrollment::class)){
-            $relations = [...$relations,
-                'enrollments' => function ($query) use ($request) {
-                    $query->visibleFor($request->user())
-                        ->with([
-                            'exam' => ['type', 'center'],
-                            'attempt.center',
-                        ]);
-                }
-            ];
-        }
-
-        $foreignNational->load(['creator', ...$relations]);
-
-        $foreignNational->enrollments = $foreignNational->enrollments->sortByDesc('exam.begin_time');
-        
-        $foreignNational->enrollments->each(function(Enrollment $enrollment){
-            $enrollment->setAttribute('payment', $this->enrollmentPaymentRules->check($enrollment, $enrollment->exam));
-            $enrollment->setAttribute('exam_result', 
-                    $this->resolver->execute(
-                        $enrollment,
-                        $enrollment->exam,
-                        $enrollment->attempt
-                    )
-                );
-        });
-
-
+        $buildedForeignNational = $builder->build($foreignNational, $request->user());
         return response()->json([
-            'foreignNational' => new ForeignNationalProfileResource($foreignNational),
+            'foreignNational' => new ForeignNationalProfileResource($buildedForeignNational),
         ]);
     }
 

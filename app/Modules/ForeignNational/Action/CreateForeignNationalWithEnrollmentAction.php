@@ -30,7 +30,7 @@ class CreateForeignNationalWithEnrollmentAction
                 $employee, 
                 $foreignNationalData['hasPayment']
             );
-        }); // Удалить файлы загруженные при исключении
+        });
 
         return $enrollent;
 

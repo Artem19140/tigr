@@ -28,7 +28,7 @@ class ExamProtocolGenerator
         CenterIsolationCheck::check($attemptsWithViolations);
         CenterIsolationCheck::check($annulledAttempts);
 
-        $pdf = Pdf::loadView(ExamDocument::Protocol->template(), [
+        $pdf = Pdf::loadView(ExamDocument::Protocol->templatePath(), [
             'exam' => $exam,
             'center' => $exam->center,
             'annulledAttempts' => $annulledAttempts,

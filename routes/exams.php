@@ -10,9 +10,13 @@ use App\Models\Enrollment;
 use App\Models\Exam;
 use App\Models\ExamType;
 
-Route::apiResource('exams', ExamController::class)->where(['exam' => '[0-9]+']);
+Route::apiResource('exams', ExamController::class)
+    ->middleware(['meta'])
+    ->where(['exam' => '[0-9]+']);
 
-Route::prefix('exams')->group(function () {
+Route::prefix('exams')
+    ->middleware(['meta'])
+    ->group(function () {
 
     Route::get('available', [ExamEnrollmentController::class, 'available'])
         ->can('create', Enrollment::class);

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/admin')
     ->middleware([
+        'meta',
         'can:platform-manage',
     ])
     ->group(function () {

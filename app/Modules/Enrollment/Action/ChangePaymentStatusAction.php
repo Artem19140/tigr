@@ -5,12 +5,13 @@ namespace App\Modules\Enrollment\Action;
 use App\Modules\Enrollment\Rules\EnrollmentPaymentRules;
 use App\Exceptions\BusinessException;
 use App\Models\Enrollment;
-use Illuminate\Support\Facades\Log;
+use App\Support\ModelChangesLogger;
 
 class ChangePaymentStatusAction
 {
     public function __construct(
-        protected EnrollmentPaymentRules $enrollmentPaymentRules
+        protected EnrollmentPaymentRules $enrollmentPaymentRules,
+        protected ModelChangesLogger $logger
     ) {}
 
     public function execute(Enrollment $enrollment): void
@@ -28,9 +29,6 @@ class ChangePaymentStatusAction
 
         $enrollment->save();
 
-        Log::info('enrollment_payment_change', [
-            'payment_status' => $enrollment->has_payment,
-            'enrollment_id' => $enrollment->id,
-        ]);
+        $this->logger->log($enrollment);
     }
 }

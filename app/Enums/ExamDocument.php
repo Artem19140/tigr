@@ -11,7 +11,7 @@ enum ExamDocument: string
     case Protocol = 'protocol';
     case Results = 'results';
 
-    public  function template():string
+    public  function templatePath():string
     {
         return match($this){
             self::Codes => 'pdf.exam.codes',
