@@ -51,9 +51,10 @@ class FlatTableGenerator
                         if ($task->type === TaskType::SingleChoice) {
                             $answerInTable = $answer->answer['order'] ?? '';
                         }
-                        if ($task->type === TaskType::TextInput) {
-                            $answerInTable = $answer->answer;
-                        }
+                        
+                        // if ($task->type === TaskType::TextInput) {
+                        //     $answerInTable = $answer->answer;
+                        // }
 
                         fputcsv($handle, [
                             $strNumber,
@@ -74,7 +75,10 @@ class FlatTableGenerator
 
         fclose($handle);
         event(new ReportGenerated(ReportType::FlatTable, [
-            'period' => "$dateFrom-$dateTo",
+            'period' => [
+                'from' => $dateFrom->format('d.m.Y'),
+                'to' => $dateTo->format('d.m.Y')
+            ],
             'count_attempts' => $strNumber
         ]));
     }

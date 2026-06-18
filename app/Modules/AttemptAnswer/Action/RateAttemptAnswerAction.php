@@ -42,7 +42,6 @@ class RateAttemptAnswerAction
     protected function rate(
         AttemptAnswer $attemptAnswer,
         int $mark,
-
     ): void {
         $attemptAnswer->mark = $mark;
         $attemptAnswer->checked_at = Carbon::now();
@@ -66,9 +65,11 @@ class RateAttemptAnswerAction
         if ($task->autoCheck()) {
             $this->log([
                 'reason' => 'trying to manual check answer, where task with auto checking type',
+                'task_id' => $task->id
             ]);
             throw ValidationException::withMessages([
                 'mark' => 'Задание проверяется автоматически',
+                
             ]);
         }
     }
@@ -76,10 +77,12 @@ class RateAttemptAnswerAction
     protected function ensureMarkIsValid(int $mark, Task $task): void
     {
         if ($task->mark < $mark) {
+
             $this->log([
                 'reason' => 'recieved mark more than max mark',
                 'mark' => $mark,
                 'max_mark' => $task->mark,
+                'task_id' => $task->id
             ]);
             throw ValidationException::withMessages([
                 'mark' => 'Выставленный балл больше чем максимально возможный',

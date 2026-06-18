@@ -10,7 +10,6 @@ use App\Support\CenterIsolationCheck;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-
 class GenerateRegNumberAction
 {
     public function execute(): int
@@ -35,10 +34,13 @@ class GenerateRegNumberAction
             ->where('key', CounterKey::RegNum)
             ->lockForUpdate()
             ->first();
+
         CenterIsolationCheck::centerBelongs($regNumber, app(CenterContext::class)->id());
-            if (! $regNumber) {
-                throw new CounterNotFoundException(CounterKey::RegNum);
-            }
+
+        if (! $regNumber) {
+            throw new CounterNotFoundException(CounterKey::RegNum);
+        }
+
         return $regNumber;
     }
 

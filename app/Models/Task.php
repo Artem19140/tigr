@@ -14,10 +14,12 @@ class Task extends Model
         'subblock_id',
         'order',
         'mark',
+        'settings'
     ];
 
     protected $casts = [
         'type' => TaskType::class,
+        'settings' => 'array'
     ];
 
     public function variants(): HasMany

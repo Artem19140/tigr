@@ -21,7 +21,6 @@ class AttemptMonitoringResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'examName' => $this->whenLoaded('exam', fn () => $this->exam->type->short_name),
             'foreignNational' => new ForeignNationalResource($this->whenLoaded('foreignNational')),
             'startedAt' => $this->started_at_local?->toIso8601String(),
             'finishedAt' => $this->finished_at_local?->toIso8601String(),

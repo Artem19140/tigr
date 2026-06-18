@@ -30,7 +30,7 @@ class RedirectResolver
             return route('attempts.show', ['attempt' => $attempt]);
         }
 
-        Log::critical('UNEXPECTED: RedirectResolver end no resolve', []);
+        Log::critical('UNEXPECTED: RedirectResolver end with no resolve', []);
 
         abort(500);
     }

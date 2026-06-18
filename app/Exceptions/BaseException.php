@@ -10,7 +10,12 @@ use Inertia\Inertia;
 
 class BaseException extends Exception
 {
-    public function __construct(string $message = '', protected int $statusCode = 400)
+    
+    public function __construct(
+        string $message = '', 
+        // protected int $statusCode = 400,
+        // protected string $businessCode = ''
+    )
     {
         parent::__construct($message);
     }

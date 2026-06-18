@@ -19,10 +19,13 @@ class TextInputTaskHandler
         mixed $foreignNationalAnswer,
         AttemptAnswer $attemptAnswer
     ): string {
+        if(! $foreignNationalAnswer){
+            return '';
+        }
         if (! \is_string($foreignNationalAnswer)) {
             throw new AttemptAnswerValidationException([
                 'attempt_answer_id' => $attemptAnswer->id,
-                'type' => TaskType::TextInput->value,
+                'type' => TaskType::TextInput,
                 'message' => 'not_valid_format',
                 'answer' => $foreignNationalAnswer
             ]);

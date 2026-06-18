@@ -2,10 +2,10 @@
 
 namespace App\Enums;
 
-enum AvailabilityCode: string
+enum AvailabilityCode: string 
 {
     case ExamCancelled = 'exam_cancelled';
-    case ExamStarted = 'exam_started';
+    case ExamAlreadyStarted = 'exam_already_started';
     case ExamAlreadyFinished = 'exam_already_finished';
     case EnrollmentNotExists = 'enrollment_not_exists';
     case ExamPending = 'exam_pending';

@@ -25,10 +25,13 @@ class GenerateGroupNumberAction
                 ->forCenter($this->centerContext->id())
                 ->lockForUpdate()
                 ->first();
+
             CenterIsolationCheck::centerBelongs($groupNumber, $this->centerContext->id());
+
             if (! $groupNumber) {
                 throw new CounterNotFoundException(CounterKey::Group);
             }
+            
             if ($this->isNewDay($groupNumber)) {
                 $groupNumber->value = 0;
                 $groupNumber->updated_at = Carbon::now();

@@ -10,7 +10,6 @@ use App\Models\Exam;
 use App\Support\CenterIsolationCheck;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -30,10 +29,9 @@ class ExamCheckingController
 
     public function show(Exam $exam): Response
     {
-        Gate::authorize('examiner', $exam);
 
         if (! $exam->type->need_human_check) {
-            Log::warning('trying to get to checking exam with no human check',[
+            Log::warning('UNEXPECTED: try to check exam with no human checking',[
                 'exam_id' => $exam->id
             ]);
             throw new BusinessException('Данный экзамен проверяется автоматически');
@@ -42,7 +40,7 @@ class ExamCheckingController
         $exam->load([
             'type',
             'enrollments' => function (HasMany $query) {
-                $query->whereHas('attempt', function($q){
+                $query->whereHas('attempt', function( $q ){
                     return $q->whereNotNull('finished_at');
                 })
                     ->with('attempt.center');

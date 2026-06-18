@@ -18,7 +18,7 @@ class AttemptAnnulledRules
 
         if(! $attempt->created_at->isToday()){
             return  RuleResult::fail(
-                'attempt_can_be_banned_only_on_attempt_day'
+                'attempt_can_be_annuled_only_on_attempt_day'
             );
         }
 

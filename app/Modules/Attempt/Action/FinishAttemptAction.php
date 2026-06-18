@@ -4,6 +4,7 @@ namespace App\Modules\Attempt\Action;
 
 use App\Exceptions\BusinessException;
 use App\Models\Attempt;
+use App\Modules\Shared\SystemSettings;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -34,14 +35,14 @@ class FinishAttemptAction
         if ($attempt->isFinished()) {
             throw new BusinessException('Попытка уже завершена');
         }
-        $minTimeMinutes = Attempt::MIN_TIME_FROM_START_TO_FINISH_MINUTES;
+        $minTimeMinutes = SystemSettings::attemptMinTimeFromStartToFinish();
         $now = Carbon::now();
 
         $attemptCanBeFinished = $attempt->started_at->copy()->addMinutes($minTimeMinutes);
 
         $tooEarlyToFinish = $now->lte($attemptCanBeFinished);
-        // if ($tooEarlyToFinish) {
-        //     throw new BusinessException("Попытку возможно завершить минимум через  $minTimeMinutes минут после начала");
-        // }
+        if ($tooEarlyToFinish) {
+            throw new BusinessException("Попытку возможно завершить минимум через  $minTimeMinutes минут после начала");
+        }
     }
 }

@@ -57,6 +57,7 @@ class PatentSeeder extends Seeder
                         'type' => $task['type'],
                         'mark' => $task['mark'],
                         'description' => $task['description'] ?? null,
+                        'settings' => $task['settings'] ?? null
                     ]);
                     foreach ($task['variants'] as $variant) {
                         $taskVariantCreated = TaskVariant::firstOrCreate(
@@ -76,8 +77,7 @@ class PatentSeeder extends Seeder
                                 'content' => $answer['content'],
                                 'is_correct' => $answer['is_correct'],
                                 'order' => $orderAnswer,
-                                'task_variant_id' => $taskVariantCreated->id,
-                                'file_path' => $answer['file_path'] ?? null,
+                                'task_variant_id' => $taskVariantCreated->id
                             ]);
                             $orderAnswer += 1;
                         }
@@ -179,6 +179,9 @@ class PatentSeeder extends Seeder
                     'description' => 'Прочитайте текст и вставьте пропущенное слово.',
                     'mark' => 1,
                     'variants' => json_decode(file_get_contents(base_path($this->path.'task7.json')), true),
+                    'settings' => [
+                        'checking_mode' => 'auto'
+                    ]
                 ],
             ],
         ];

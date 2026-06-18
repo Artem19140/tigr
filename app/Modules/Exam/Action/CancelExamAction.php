@@ -21,7 +21,7 @@ class CancelExamAction
         $result = $this->examCancellRules->check($exam);
 
         if($result->isNotAvailable()){
-            throw new BusinessException($result->reason());
+            throw new BusinessException($result->message());
         }
 
         $exam->cancelled_reason = $reason;

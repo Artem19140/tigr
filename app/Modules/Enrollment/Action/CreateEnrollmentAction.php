@@ -8,6 +8,7 @@ use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\Exam;
 use App\Models\ForeignNational;
+use App\Modules\Shared\SystemSettings;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -47,7 +48,7 @@ final class CreateEnrollmentAction
         if($exam->isCancelled()){
             throw new BusinessException('Экзамен отменен');
         }
-        //$this->ensureEnrollementWindowNotClosed($exam);
+        $this->ensureEnrollementWindowNotClosed($exam);
         $this->ensureEnrollmentNotExists($exam, $foreignNational);
         $this->ensureParallellEnrollmentsNotExists($exam, $foreignNational);
         $this->ensureNotFullEnrollment($exam);
@@ -55,10 +56,13 @@ final class CreateEnrollmentAction
 
     protected function ensureEnrollementWindowNotClosed(Exam $exam): void
     {
-        $closeBeforeMinutes = Enrollment::CLOSE_BEFORE_START_MINUTES;
-        $enrollmentEnded = Carbon::now()->greaterThan($exam->begin_time->subMinutes($closeBeforeMinutes));
+        $closeBeforeMinutes = SystemSettings::enrollmentCloseBeforeExamMinutes();
+        $enrollmentEnded = Carbon::now()
+            ->greaterThan($exam->begin_time->subMinutes($closeBeforeMinutes));
         if ($enrollmentEnded) {
-            throw new BusinessException("Запись закрывается за $closeBeforeMinutes минут до начала экзамена");
+            throw new BusinessException(
+                "Запись закрывается за $closeBeforeMinutes минут до начала экзамена"
+            );
         }
     }
 

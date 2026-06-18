@@ -17,7 +17,7 @@ class ExamCancellRules{
 
         if(! $exam->isPending()){
             return RuleResult::fail(
-                AvailabilityCode::ExamStarted
+                AvailabilityCode::ExamAlreadyStarted
             );
         }
 

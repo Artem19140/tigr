@@ -2,20 +2,20 @@
 
 namespace App\Modules\Shared;
 
-class SystemSettings{
+final class SystemSettings{
     public static function codesLength():int
     {
         return config('system.codes_length');
     }
 
-    public static function codesTtl():int
+    public static function codesTtlMinutes():int
     {
         return config('system.codes_ttl');
     }
 
-    public static function d():int
+    public static function attemptMinTimeFromStartToFinish():int
     {
-        return config('system.codes_ttl');
+        return config('system.min_time_from_start_to_finish');
     }
 
     public static function adminEmail(): string
@@ -26,6 +26,11 @@ class SystemSettings{
     public static function adminPassword(): string
     {
         return config('app.platform_admin.password');
+    }
+
+    public static function enrollmentCloseBeforeExamMinutes(): int
+    {
+        return config('system.enrollment_window_closed_before_exam');
     }
 
 }

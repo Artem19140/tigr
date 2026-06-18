@@ -30,7 +30,7 @@ final readonly  class RuleResult
         );
     }
 
-    public function reason(): ?string
+    public function message(): ?string
     {
         return app(CodeTranslator::class)->translate($this->code, $this->params); 
     }
@@ -45,7 +45,7 @@ final readonly  class RuleResult
         return [
             'available' => $this->available,
             'code' => $this->code,
-            'reason' => $this->reason()
+            'reason' => $this->message()
         ];
     }
 }

@@ -24,8 +24,9 @@ class AttemptViolationController
         Attempt $attempt
     ): JsonResource {
         if(! $attempt->canEditViolation()){
-            throw new BusinessException('Нарушение возможно добавить только в день сдачи попытки');
+            throw new BusinessException('Нарушение возможно редактировать только во время действия попытки');
         }
+        
         $request->validate(['comment' => ['required', 'string']]);
         
         $violation = $attempt->violations()->create([
@@ -43,7 +44,7 @@ class AttemptViolationController
         abort_if($attempt->id !== $violation->attempt_id, 404);
 
         if(! $attempt->canEditViolation()){
-            throw new BusinessException('Нарушение возможно редактировать только в день сдачи попытки');
+            throw new BusinessException('Нарушение возможно редактировать только во время действия попытки');
         }
 
         $request->validate(['comment' => ['required', 'string']]);
@@ -60,7 +61,7 @@ class AttemptViolationController
         abort_if($attempt->id !== $violation->attempt_id, 404);
 
         if(! $attempt->canEditViolation()){
-            throw new BusinessException('Нарушение возможно удалить только в день сдачи попытки');
+            throw new BusinessException('Нарушение возможно редактировать только во время действия попытки');
         }
 
         $attempt->violations()->where('id', $violation->id)

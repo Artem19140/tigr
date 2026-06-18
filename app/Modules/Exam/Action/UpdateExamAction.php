@@ -25,7 +25,7 @@ final class UpdateExamAction
     ): void {
         $result = $this->examEditRules->check($exam);
         if($result->isNotAvailable()){
-            throw new BusinessException($result->reason());
+            throw new BusinessException($result->message());
         }
 
         $this->examBeforeSaveValidator->execute($examDto, $exam->id);

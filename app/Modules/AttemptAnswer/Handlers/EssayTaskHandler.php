@@ -18,6 +18,9 @@ class EssayTaskHandler
         mixed $foreignNationalAnswer,
         AttemptAnswer $attemptAnswer
     ): string {
+        if(! $foreignNationalAnswer){
+            return '';
+        }
         if (! \is_string($foreignNationalAnswer)) {
             throw new AttemptAnswerValidationException([
                 'attempt_answer_id' => $attemptAnswer->id,

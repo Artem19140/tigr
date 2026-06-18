@@ -18,7 +18,6 @@ class ExamIndexResource extends JsonResource
             'id' => $this->id,
             'beginTime' => $this->begin_time_local->toIso8601String(),
             'capacity' => $this->capacity,
-            'name' => $this->whenLoaded('type', fn () => $this->type->name),
             'shortName' => $this->whenLoaded('type', fn () => $this->type->short_name),
             'enrollmentsCount' => $this->whenCounted('enrollments_count')
         ];

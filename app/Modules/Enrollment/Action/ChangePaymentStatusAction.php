@@ -22,7 +22,7 @@ class ChangePaymentStatusAction
         );
 
         if($result->isNotAvailable()){
-            throw new BusinessException($result->reason());
+            throw new BusinessException($result->message());
         }
 
         $enrollment->has_payment = ! $enrollment->has_payment;

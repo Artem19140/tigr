@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 
 class AttemptAnswerValidationException extends BaseException
 {
-    protected int $code = 500;
+    //protected int $code = 500;
     public function __construct(
         public array $context,
         string $message = 'Произошла ошибка при обработке ответа'

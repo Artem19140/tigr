@@ -17,14 +17,16 @@ class ExamCreateDataQuery
     ){}
     public function execute():array
     {
-        $examiners = Employee::whereHas('roles', function (Builder $query) {
+        $examiners = Employee::query()
+            ->whereHas('roles', function (Builder $query) {
                 $query->where('name', EmployeeRole::Examiner);
             })
             ->active()
             ->forCenter($this->centerContext->id())
             ->get();
 
-        $addresses = Address::where('is_active', true)
+        $addresses = Address::query()
+            ->where('is_active', true)
             ->forCenter($this->centerContext->id())
             ->get();
 

@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+
             $table->foreignId('subblock_id')
                 ->constrained('subblocks')
                 ->cascadeOnDelete();
@@ -19,6 +20,9 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->unsignedTinyInteger('mark');
             $table->unsignedTinyInteger('order');
+
+            $table->jsonb('settings')->nullable();
+
             $table->timestamps();
         });
     }

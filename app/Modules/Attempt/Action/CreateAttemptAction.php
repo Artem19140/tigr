@@ -2,6 +2,7 @@
 
 namespace App\Modules\Attempt\Action;
 
+use App\Models\Task;
 use App\Modules\Attempt\Services\VerifyCodeService;
 use App\Modules\Counter\GenerateGroupNumberAction;
 use App\Modules\Counter\GetSessionNumberQuery;
@@ -10,6 +11,7 @@ use App\Models\Attempt;
 use App\Models\AttemptAnswer;
 use App\Models\Enrollment;
 use App\Models\Exam;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -75,20 +77,24 @@ class CreateAttemptAction
     protected function generateExamVariant(
         Exam $exam,
         Attempt $attempt
-    ): array {
-        $exam->load('type.blocks.subblocks.tasks.variants');
+    ): array {        
+        $tasks = Task::query()
+            ->select(['id', 'subblock_id', 'type', 'is_active', 'description', 'postscriptum', 'order'])
+            ->whereHas(
+                'subblock.block.examType', function (Builder $query) use ($exam){
+                    $query->where('id',  $exam->exam_type_id);
+                }
+            )
+            ->with(['variants:id,group_number,task_id'])
+            ->get();
 
-        $tasks = $exam->type->blocks
-            ->pluck('subblocks')
-            ->flatten()
-            ->pluck('tasks')
-            ->flatten();
         $groups = [];
         $examVariant = [];
+        
         foreach ($tasks as $task) {
-            $variants = $task->variants
-                ->where('is_active', true);
-
+            
+            $variants = $task->variants;
+            
             $variant = $variants
                 ->whereIn('group_number', $groups)
                 ->first();
@@ -96,7 +102,7 @@ class CreateAttemptAction
             if (! $variant) {
                 $variant = $variants->random();
             }
-
+            
             if ($variant->group_number && ! \in_array($variant->group_number, $groups)) {
                 $groups[] = $variant->group_number;
             }

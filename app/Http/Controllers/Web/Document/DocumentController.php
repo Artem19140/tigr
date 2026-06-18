@@ -7,7 +7,6 @@ use App\Http\Resources\Document\DocumentResource;
 use App\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,7 +18,6 @@ class DocumentController
         Document $document
     )
     {
-        Gate::authorize('view', $document);
         Log::info('document_access', [
             'document' => $document->id
         ]);
@@ -35,8 +33,6 @@ class DocumentController
         $request->validate([
             'document' => ['required']
         ]);
-
-        Gate::authorize('update', $document);
 
         $document->deleted_at = Carbon::now();
         $document->save();

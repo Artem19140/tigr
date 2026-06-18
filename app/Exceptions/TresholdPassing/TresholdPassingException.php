@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Exceptions\Subblock;
+namespace App\Exceptions\TresholdPassing;
 
 use App\Exceptions\BaseException;
 use Illuminate\Support\Facades\Log;
 
-class SubblockNotFoundException extends BaseException
+class TresholdPassingException extends BaseException 
 {
     protected int $code = 500;
     public function __construct(

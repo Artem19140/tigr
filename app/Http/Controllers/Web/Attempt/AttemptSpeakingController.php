@@ -25,7 +25,7 @@ class AttemptSpeakingController
         $this->authorize($attempt);
         $result = $this->attemptSpeakingRules->get($attempt);
         if($result->isNotAvailable()){
-            throw new BusinessException($result->reason());
+            throw new BusinessException($result->message());
         }
 
         $attempt = $getAttemptSpeakingQuery->execute($attempt);
@@ -38,7 +38,7 @@ class AttemptSpeakingController
         $this->authorize($attempt);
         $result = $this->attemptSpeakingRules->start($attempt);
         if($result->isNotAvailable()){
-            throw new BusinessException($result->reason());
+            throw new BusinessException($result->message());
         }
         $attempt->speaking_started_at = Carbon::now();
         $attempt->save();
@@ -52,7 +52,7 @@ class AttemptSpeakingController
 
         $result = $this->attemptSpeakingRules->finish($attempt);
         if($result->isNotAvailable()){
-            throw new BusinessException($result->reason());
+            throw new BusinessException($result->message());
         }
         
         $attempt->speaking_finished_at = Carbon::now();

@@ -6,6 +6,7 @@ use App\Enums\ExamDocument;
 use App\Events\ExamDocumentGenerated;
 use App\Models\Enrollment;
 use App\Models\Exam;
+use App\Modules\Shared\SystemSettings;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\QueryException;
 
@@ -61,9 +62,10 @@ final class ExamCodesGenerator
 
     protected function generateCode(): string
     {
-        $max = (10 ** Exam::CODES_LENGTH) - 1;
+        $length = SystemSettings::codesLength();
+        $max = (10 ** $length) - 1;
         $rnd = random_int(0, $max);
-        $code = str_pad($rnd, Exam::CODES_LENGTH, '0', STR_PAD_LEFT);
+        $code = str_pad($rnd, $length, '0', STR_PAD_LEFT);
 
         return $code;
     }
@@ -74,7 +76,7 @@ final class ExamCodesGenerator
         Exam $exam
     ): void {
         $enrollment->exam_code = $code;
-        $enrollment->exam_code_expired_at = $exam->begin_time->copy()->addMinutes(Exam::CODES_TTL_AFTER_BEGIN_MINUTES);
+        $enrollment->exam_code_expired_at = $exam->begin_time->copy()->addMinutes(SystemSettings::codesTtlMinutes());
         $enrollment->save();
     }
 }

@@ -11,10 +11,10 @@ use App\Http\Resources\Attempt\AttemptExamResource;
 use App\Http\Resources\Exam\ExamShortResource;
 use App\Models\Attempt;
 use App\Models\Exam;
+use App\Modules\Shared\SystemSettings;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
@@ -35,6 +35,7 @@ class AttemptController
                 'minMark' => $exam->type->min_mark,
                 'attempt' => $attempt,
                 'tasksCount' => $exam->type->tasks_count,
+                'minTimeFromStartToFinish' => SystemSettings::attemptMinTimeFromStartToFinish()
             ]);
         }
 
@@ -50,13 +51,17 @@ class AttemptController
         Attempt $attempt
     ): RedirectResponse {
         if ($attempt->isStarted()) {
-            Log::warning('trying to start not pending attempt');
+            Log::warning('trying to start not pending attempt', [
+                'attempt_id' => $attempt->id
+            ]);
             throw new BusinessException('Начать возможно только неначатую попытку');
         }
 
         $startedAttempt = $startAttempt->execute($attempt);
 
-        return redirect()->route('attempts.show', ['attempt' => $startedAttempt->id]);
+        return redirect()->route('attempts.show', [
+            'attempt' => $startedAttempt->id
+        ]);
     }
 
     public function annul(
@@ -64,7 +69,6 @@ class AttemptController
         Attempt $attempt,
         AnnulledAttemptAction $annulledAttempt
     ): Response {
-        Gate::authorize('examiner', $attempt->exam);
 
         $request->validate([
             'annulledReason' => ['required', 'string'],
@@ -85,24 +89,5 @@ class AttemptController
         $request->session()->regenerateToken();
 
         return redirect()->route('attempts.finish.after');
-    }
-
-    public function preparing(Attempt $attempt): \Inertia\Response
-    {
-        if ($attempt->isStarted()) {
-            abort(404);
-        }
-
-        $exam = Exam::with([
-            'type',
-        ])->find($attempt->exam_id);
-
-        return Inertia::render('Attempt/PrepareAttempt', [
-            'exam' => new ExamShortResource($exam),
-            'duration' => $exam->type->duration,
-            'minMark' => $exam->type->min_mark,
-            'attempt' => $attempt,
-            'tasksCount' => $exam->type->tasks_count,
-        ]);
     }
 }

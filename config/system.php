@@ -35,7 +35,7 @@ return [
     |
     */
 
-    'enrollment_window_closed_before_exam_begin' => 10,
+    'enrollment_window_closed_before_exam' => 10,
 
     /*
     |--------------------------------------------------------------------------

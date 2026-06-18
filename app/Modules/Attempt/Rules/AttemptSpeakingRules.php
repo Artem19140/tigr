@@ -18,7 +18,7 @@ class AttemptSpeakingRules
 
         if($this->speakingStarted($attempt)){
             return RuleResult::fail(
-                'attempt_has_been_already_started'
+                'attempt_speaking_already_started'
             );
         }
         return RuleResult::success();
@@ -34,13 +34,13 @@ class AttemptSpeakingRules
 
         if(! $this->speakingStarted($attempt)){
             return  RuleResult::fail(
-                'attempt_speaking_is_not_started_yet'
+                'attempt_speaking_not_started_yet'
             );
         }
 
         if($this->speakingFinished($attempt)){
             return  RuleResult::fail(
-                'attempt_speaking_is_already_finished'
+                'attempt_speaking_already_finished'
             );
         }
         return  RuleResult::success();
@@ -56,7 +56,7 @@ class AttemptSpeakingRules
         
         if($this->speakingFinished($attempt)){
             return  RuleResult::fail(
-                'attempt_speaking_is_already_finished'
+                'attempt_speaking_already_finished'
             );
         }
 

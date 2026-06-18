@@ -13,7 +13,9 @@ class StartAttemptAction
     {
 
         if ($attempt->exam->end_time->isPast()) {
-            Log::warning('trying to start an exam once it has passed', ['attempt_id' => $attempt->id]);
+            Log::warning('trying to start an exam once it has passed', [
+                'attempt_id' => $attempt->id
+            ]);
             throw new BusinessException('Экзамен уже прошел');
         }
 

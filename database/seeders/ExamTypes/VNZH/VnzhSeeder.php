@@ -31,6 +31,7 @@ class VnzhSeeder extends Seeder
                 'has_speaking_tasks' => true,
                 'certificate_name' => 'вида на жительство в РФ',
             ]);
+
         $orderTask = 1;
         $orderBlock = 1;
         foreach ($this->examBlocks() as $block) {
@@ -57,6 +58,7 @@ class VnzhSeeder extends Seeder
                         'type' => $task['type'],
                         'mark' => $task['mark'],
                         'description' => $task['description'] ?? null,
+                        'settings' => $task['settings'] ?? null
                     ]);
                     foreach ($task['variants'] as $variant) {
                         $taskVariantCreated = TaskVariant::create([
@@ -71,8 +73,7 @@ class VnzhSeeder extends Seeder
                                 'content' => $answer['content'],
                                 'is_correct' => $answer['is_correct'],
                                 'order' => $orderAnswer,
-                                'task_variant_id' => $taskVariantCreated->id,
-                                'file_path' => $answer['file_path'] ?? null,
+                                'task_variant_id' => $taskVariantCreated->id
                             ]);
                             $orderAnswer += 1;
                         }
@@ -162,6 +163,9 @@ class VnzhSeeder extends Seeder
                     'description' => 'Прослушайте диалог и дополните предложение в соответствии с информацией в тексте.',
                     'mark' => 1,
                     'variants' => json_decode(file_get_contents(base_path($path.'task6.json')), true),
+                    'settings' => [
+                        'checking_mode' => 'manual'
+                    ]
                 ],
                 [
                     'type' => TaskType::SingleChoice,
@@ -254,6 +258,9 @@ class VnzhSeeder extends Seeder
                     'description' => 'Дайте развернутый ответ. Заполните анкету.',
                     'mark' => 2,
                     'variants' => json_decode(file_get_contents(base_path($this->path.'task18.json')), true),
+                    'settings' => [
+                        'checking_mode' => 'manual'
+                    ]
                 ],
                 [
                     'type' => TaskType::Essay,

@@ -18,7 +18,7 @@ class ExamEditRules
 
         if(! $exam->isPending()){
             return RuleResult::fail(
-                AvailabilityCode::ExamStarted
+                AvailabilityCode::ExamAlreadyStarted
             );
         }
 

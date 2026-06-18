@@ -29,6 +29,9 @@ class CloseAbandonedAttemptsAction
     protected function close(Attempt $attempt): void
     {
         if ($attempt->finished_at !== null) {
+            Log::warning('cron get attempt with not null finished_at', [
+                'attempt_id' => $attempt->id
+            ]);
             return;
         }
         $attempt->finished_at = $attempt->last_activity_at;
@@ -43,8 +46,7 @@ class CloseAbandonedAttemptsAction
     protected function log(Attempt $attempt): void
     {
         Log::info('attempt_closed_by_cron', [
-            'attempt_id' => $attempt->id,
-            'status' => $attempt->status
+            'attempt_id' => $attempt->id
         ]);
     }
 }

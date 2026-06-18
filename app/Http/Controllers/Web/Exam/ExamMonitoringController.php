@@ -64,6 +64,7 @@ class ExamMonitoringController
             $enrollment->setAttribute('payment_available', 
                 $enrollmentPaymentRules->check($enrollment, $exam)->available
             );
+            $enrollment->attempt?->setRelation('exam', $exam);
         });
 
         return Inertia::render('ExamMonitoring/ExamMonitoring', [

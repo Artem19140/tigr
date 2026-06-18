@@ -25,7 +25,7 @@ class AnnulledAttemptAction
             $result = $this->attemptAnnulledRules->check($attempt);
 
             if(! $result->available){
-                throw new BusinessException($result->reason());
+                throw new BusinessException($result->message());
             }
 
             $this->finishAndIfNeededFinilize($attempt);

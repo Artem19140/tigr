@@ -26,7 +26,7 @@ class ExamDocumentController
         $result = $this->examDocumentRules->list($exam);
 
         if($result->isNotAvailable()){
-            throw new BusinessException($result->reason());
+            throw new BusinessException($result->message());
         }
 
         $exam->load(['foreignNationals', 'type']);
@@ -48,7 +48,7 @@ class ExamDocumentController
         $result = $this->examDocumentRules->list($exam);
         
         if($result->isNotAvailable()){
-            throw new BusinessException($result->reason());
+            throw new BusinessException($result->message());
         }
 
         return response()->json([
@@ -66,7 +66,7 @@ class ExamDocumentController
         $result = $this->examDocumentRules->codes($exam);
         
         if($result->isNotAvailable()){
-            throw new BusinessException($result->reason());
+            throw new BusinessException($result->message());
         }
         $fileName = "Кода_{$exam->short_name}_{$exam->begin_time_local->format('H-i_d.m.Y')}.pdf";
         $pdf = $examCodesGenerator->execute($exam);
@@ -79,7 +79,7 @@ class ExamDocumentController
         $result = $this->examDocumentRules->codes($exam);
         
         if($result->isNotAvailable()){
-            throw new BusinessException($result->reason());
+            throw new BusinessException($result->message());
         }
 
         return response()->json([
