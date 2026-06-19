@@ -75,18 +75,12 @@
 
         <div>
         @if ($exam->protocol_comment)
-        <div class="underline violation-section-title">
-            Общий комментарий:
-        </div>
             <div style="margin-left:20px;">
 {!!  nl2br(e($exam->protocol_comment)) !!}
             </div>
         @endif
             <div>
                 @if($annulledAttempts->isNotEmpty())
-                <div class="underline violation-section-title">
-                    Аннулированния:
-                </div>
                 <div class="violation-section-content">
                     @foreach ( $annulledAttempts as $attempt )
                         <div>
@@ -101,9 +95,6 @@
 
             <div>
                 @if($attemptWithViolations->isNotEmpty())
-                    <div class="underline violation-section-title">
-                        Нарушения:
-                    </div>
                     @foreach ( $attemptWithViolations as $attempt )
                         <div class="mt-10 violation-section-content">
                             <div >

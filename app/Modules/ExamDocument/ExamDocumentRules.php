@@ -6,6 +6,7 @@ use App\Modules\Shared\RuleResult;
 use App\Enums\AvailabilityCode;
 use App\Models\Employee;
 use App\Models\Exam;
+use App\Modules\Shared\SystemSettings;
 
 class ExamDocumentRules
 {
@@ -115,7 +116,7 @@ class ExamDocumentRules
     protected function codesExpired(Exam $exam){
         $deadline = $exam->begin_time
             ->copy()
-            ->addMinutes(Exam::CODES_TTL_AFTER_BEGIN_MINUTES);
+            ->addMinutes(SystemSettings::codesTtlMinutes());
         return now()->gte($deadline);
     }
 }

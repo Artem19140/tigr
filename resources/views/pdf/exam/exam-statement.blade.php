@@ -34,6 +34,7 @@
                     {{ $block['name'] }}
                 </th>
             @endforeach
+            <th rowspan="2">Сум.</th>
             <th rowspan="2">Результат</th>
         </tr>
 
@@ -73,6 +74,7 @@
             @foreach ($row['subblockMarks'] as $marks)
                 <td>{{ $marks['sum'] !== null ? $marks['sum'] : ''}}</td>   
             @endforeach
+            <td>{{ $row['totalMark']  ?? ''}}</td>
             <td>{{ $row['result']  ?? ''}}</td>
         </tr>
         @endforeach     

@@ -10,7 +10,6 @@ use App\Models\Attempt;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Gate;
 use App\Modules\Attempt\Rules\AttemptSpeakingRules;
 
 class AttemptSpeakingController
@@ -22,8 +21,8 @@ class AttemptSpeakingController
         Attempt $attempt,
         GetAttemptSpeakingTasksQuery $getAttemptSpeakingQuery
     ): JsonResource {
-        $this->authorize($attempt);
         $result = $this->attemptSpeakingRules->get($attempt);
+
         if($result->isNotAvailable()){
             throw new BusinessException($result->message());
         }
@@ -35,11 +34,12 @@ class AttemptSpeakingController
 
     public function start(Attempt $attempt): JsonResource
     {
-        $this->authorize($attempt);
         $result = $this->attemptSpeakingRules->start($attempt);
+
         if($result->isNotAvailable()){
             throw new BusinessException($result->message());
         }
+        
         $attempt->speaking_started_at = Carbon::now();
         $attempt->save();
 
@@ -48,9 +48,8 @@ class AttemptSpeakingController
 
     public function finish(Attempt $attempt): Response
     {
-        $this->authorize($attempt);
-
         $result = $this->attemptSpeakingRules->finish($attempt);
+
         if($result->isNotAvailable()){
             throw new BusinessException($result->message());
         }
@@ -61,9 +60,5 @@ class AttemptSpeakingController
         return response()->noContent();
     }
 
-    protected function authorize(Attempt $attempt): void
-    {
-        Gate::authorize('examiner', $attempt->exam);
-    }
 
 }

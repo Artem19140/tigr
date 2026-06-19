@@ -49,9 +49,12 @@ class ExportForeignNationalQuery
             });
 
         fclose($handle);
+        
         Log::info('foreign_national_export', [
-            'date_from' => $dateFrom->format('d.m.Y'),
-            'date_to' => $dateTo->format('d.m.Y'),
+            'period' => [
+                'from' => $dateFrom->format('d.m.Y'),
+                'to' => $dateTo->format('d.m.Y'),
+            ],
             'citizenship' => $citizenship,
             'count' => $count,
         ]);

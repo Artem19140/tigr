@@ -92,6 +92,7 @@ class ExamResultsGenerator
                 'finishedAt' => $attempt?->finished_at_local?->format('H:i') ?? null,
                 'result' => $this->getAttemptResultStatus($attempt),
                 'subblockMarks' => $marksBySubblock,
+                'totalMark' => $attempt?->total_mark
             ];
         });
     }
@@ -102,11 +103,7 @@ class ExamResultsGenerator
             return 'н/я';
         }
 
-        if ($attempt->isAnnulled()) {
-            return 'Справка';
-        }
-
-        return $attempt->is_passed ? 'Сертификат' : 'Справка';
+        return $attempt->isPassed() ? 'Сертификат' : 'Справка';
     }
 
     protected function getRowsMarksTable(Exam $exam): Collection

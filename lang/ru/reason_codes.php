@@ -16,10 +16,10 @@ return [
     'codes_available_only_on_exam_day' => 'Кода доступны только в день экзамена',
     'codes_ttl_expired'=>'Срок действия кодов истек',
     'attempt_can_be_annuled_only_on_attempt_day' => 'Аннулировать попытку возможно только в день ее прохождения',
-    'attempt_speaking_already_started' => 'Говорение уже начато',
-    'attempt_speaking_not_started_yet' => 'Говорение не начато',
+    'speaking_already_started' => 'Говорение уже начато',
+    'speaking_not_started_yet' => 'Говорение не начато',
     'attempt_has_no_speaking' => 'У данной попытки нет заданий на говорение',
-    'attempt_speaking_already_finished' => 'Говорение уже завершено',
-    'attempt_speaking_available_on_attempt_passing_day' => 'Говорение доступно в день прохождения попытки',
+    'speaking_already_finished' => 'Говорение уже завершено',
+    'speaking_available_on_attempt_passing_day' => 'Говорение доступно в день прохождения попытки',
     'protocol_comment_edit_available_only_on_exam_day' => 'Редактировать комментарий возможно только в день экзамена'
 ];

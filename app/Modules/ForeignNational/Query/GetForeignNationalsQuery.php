@@ -14,7 +14,6 @@ class GetForeignNationalsQuery
     ){}
     public function execute(array $data = []): Paginator
     {
-
         $surname = $data['surname'] ?? false;
         $name = $data['name'] ?? false;
         $patronymic = $data['patronymic'] ?? false;
