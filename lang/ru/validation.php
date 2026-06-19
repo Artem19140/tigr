@@ -252,6 +252,7 @@ return [
         'noPatronymicLatin' => 'нет отчества на лат',
         'code' => 'код',
         'addressReg' => 'адрес регистрации',
+        'value' => 'значение'
     ],
 
 ];

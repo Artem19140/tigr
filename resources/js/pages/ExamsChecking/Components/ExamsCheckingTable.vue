@@ -26,7 +26,7 @@ const loading = ref<boolean>(false)
         :headers="headers"
         :items="exams"
         :loading="loading"
-        @row-click="examCheck"
+        @click:row="(event :Event, { item } : any) => examCheck(item)"
     >
         <template #toolbar-left>
             <AppTooltip  

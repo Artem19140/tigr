@@ -45,7 +45,7 @@ const openAttempt =  (item : Enrollment) => {
             :headers="headers"
             :title="`Попытки экзмена ${exam.data.shortName} от ${new DateFormatter(exam.data.beginTime).format('H:i, d.m.Y')}`"
             :items="props.exam.data.enrollments"
-            @row-click="openAttempt"
+            @click:row="(event :Event, { item } : any) => openAttempt(item)"
         >
         <template #item.index="{ index }">
            {{ index + 1 }}

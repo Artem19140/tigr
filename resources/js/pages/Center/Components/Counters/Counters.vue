@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Counter } from '@/interfaces/Counter';
 import CounterCard from './CounterCard.vue';
+import { Head } from '@inertiajs/vue3';
 
 const props = defineProps<{
     counters: Array<Counter>
@@ -9,6 +10,9 @@ const props = defineProps<{
 </script>
 
 <template>
+    <Head>
+        <title>Счетчики</title>
+    </Head>
     <v-card>
         <v-card-text>
             <div 

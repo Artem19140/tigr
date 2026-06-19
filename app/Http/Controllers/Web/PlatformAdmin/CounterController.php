@@ -7,8 +7,7 @@ use App\Models\Center;
 use App\Models\Counter;
 use App\Support\ModelChangesLogger;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class CounterController
@@ -32,19 +31,20 @@ class CounterController
         Counter $counter
     )
     {
-
+        abort_if(
+            $center->id !== $counter->center_id || ! $request->user()->isPlatformAdmin(),
+            404
+        );
+        
         $request->validate([
-            'value' => ['required', 'integer', 'min:1'],
-            'password' => ['required', 'string']
+            'value' => ['required', 'integer', 'min:1']
         ]);
 
-        $employee  = $request->user();
-
-        $this->checkPasswordAndIfWrongFail(
-            $request->input('password'), 
-            $employee->password,
-            $counter->id
-        );
+        if($counter->value === $request->input('value')){
+            throw ValidationException::withMessages([
+                'value' => 'Новое значение должно отличаться от старого'
+            ]);
+        }
 
         $counter->value = $request->input('value');
         $counter->save();
@@ -52,22 +52,5 @@ class CounterController
         $this->logger->log($counter);
 
         return response()->noContent();
-    }
-
-    protected function checkPasswordAndIfWrongFail(
-        string $plain, 
-        string $hash,
-        int $counterId 
-    )
-    {  
-        $wrongPassword = ! Hash::check($plain, $hash);
-
-        if($wrongPassword){
-            Log::info('wrong_password_counter_updating', [
-                'counter_id' => $counterId 
-            ]);
-
-            abort(404);
-        }
     }
 }

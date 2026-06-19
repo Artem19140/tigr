@@ -26,17 +26,22 @@ class AttemptAnswerController
     ): JsonResource {
        
         $this->authorize($attempt, $attemptAnswer);
-        $answer = $request->input('answer');
+        $foreignNationalAnswer = $request->input('answer');
 
-        $savedAnswer = DB::transaction(function () use ($answer, $attempt, $attemptAnswer, $handleAttemptAnswerAction) {
-            $answer = $handleAttemptAnswerAction->execute($answer, $attemptAnswer);
+        $updatedAnswer = DB::transaction(function () use (
+            $foreignNationalAnswer, 
+            $attempt, 
+            $attemptAnswer, 
+            $handleAttemptAnswerAction
+        ) {
+            $answer = $handleAttemptAnswerAction->execute($foreignNationalAnswer, $attemptAnswer);
             $attempt->last_activity_at = Carbon::now();
             $attempt->save();
 
             return $answer;
         });
 
-        return new AttemptAnswerResource($savedAnswer);
+        return new AttemptAnswerResource($updatedAnswer);
     }
 
     public function rate(

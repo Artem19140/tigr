@@ -47,9 +47,4 @@ class AttemptAnswer extends Model
     {
         return $this->belongsTo(TaskVariant::class, 'task_variant_id');
     }
-
-    public function scopeNotChecked(Builder $query)
-    {
-        return $query->whereNull('mark');
-    }
 }

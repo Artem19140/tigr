@@ -48,7 +48,7 @@ class ForeignNationalExportController
             $citizenship
         );
 
-        $fileName = "Выгрузка_ИГ_{$dateFrom->toDateString()}_{$dateTo->toDateString()}{$citizenship}.csv";
+        $fileName = "Выгрузка_ИГ_{$dateFrom->toDateString()}_{$dateTo->toDateString()}_{$citizenship}.csv";
 
         return response()->streamDownload(function () use (
             $exportForeignNationalQuery,
@@ -86,7 +86,7 @@ class ForeignNationalExportController
             })
             ->exists();
         if (! $available) {
-            throw new BusinessException('Нет данных ИГ для выгрузки');
+            throw new BusinessException('Нет данных для выгрузки');
         }
     }
 }

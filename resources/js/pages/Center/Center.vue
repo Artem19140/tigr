@@ -29,17 +29,16 @@ const props = defineProps<{
         data:Counter[]
     }
     centerId:number,
-    
 }>()
 
-type Tab = 'data' | 'employees' | 'addresses' | 'counters'
+type Tab = 'data' | 'employees' | 'addresses' | 'counters' | 'audit'
 
 const tab = ref<Tab>(props.tab ?? 'data')
 
 const visit = (route : string) => {
     router.visit(`/centers/${props.centerId}${route}`)
 } 
-
+//@click="() => visit('/audit')"
 </script>
 
 <template>
@@ -49,6 +48,7 @@ const visit = (route : string) => {
             <v-tab value="employees" @click="() => visit('/employees')">Сотрудники</v-tab>
             <v-tab value="addresses" @click="() => visit('/addresses')">Адреса</v-tab>
             <v-tab value="counters" @click="() => visit('/counters')">Счетчики</v-tab>
+            <v-tab value="audit" >Аудит</v-tab> 
         </v-tabs>
 
         <v-divider></v-divider>
@@ -73,7 +73,11 @@ const visit = (route : string) => {
             <v-tabs-window-item value="counters" v-if="counters">
                 <Counters 
                     :counters="counters.data"
-                 />
+                />
+            </v-tabs-window-item>
+
+            <v-tabs-window-item value="audit" >
+                Здесь будет аудит
             </v-tabs-window-item>
         </v-tabs-window>
     </BaseContainer>

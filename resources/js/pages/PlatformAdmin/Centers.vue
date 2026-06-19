@@ -35,7 +35,7 @@ const {open} = useModals()
             title="Центры"
             :items="centers.data"
             :headers="headers"
-            @row-click="openCenter"
+            @click:row="(event :Event, { item } : any) => openCenter(item)"
         >
             <template #toolbar-actions>
                 <AppAddButton
