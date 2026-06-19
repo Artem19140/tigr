@@ -11,12 +11,12 @@ enum CounterKey: string
     case Group = 'group';
     case Session = 'session';
 
-    public static function defaultValue(self $key){
-        return match($key){
+    public function defaultValue(){
+        return match($this){
             self::RegNum => \intval(Carbon::now()->format('y') . '0000'),
-            self::Group => 0,
+            self::Group => 1,
             self::Session => 1,
-            default => throw new CounterNotFoundException($key)
+            default => throw new CounterNotFoundException($this)
         };
     }
 }

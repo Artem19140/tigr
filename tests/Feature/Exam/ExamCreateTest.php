@@ -15,15 +15,10 @@ use Tests\TestCase;
 class ExamCreateTest extends TestCase
 {
     use RefreshDatabase;
-
     protected Employee $actor;
-
     protected ExamType $examType;
-
     protected Address $address;
-
     protected Employee $examiner;
-
     protected Center $center;
 
     protected function setUp(): void

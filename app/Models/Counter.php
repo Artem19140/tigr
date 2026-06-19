@@ -25,7 +25,7 @@ class Counter extends Model
         'last_incremented_at' => 'datetime'
     ];
 
-    public function findLockedOrFail(CounterKey $key, int $centerId)
+    public static function findLockedOrFail(CounterKey $key, int $centerId)
     {
         $counter = self::query()
             ->lockForUpdate()
@@ -44,6 +44,6 @@ class Counter extends Model
 
     public function reset():void
     {
-        $this->value = CounterKey::defaultValue($this->key);
+        $this->value = $this->key->defaultValue();
     }
 }

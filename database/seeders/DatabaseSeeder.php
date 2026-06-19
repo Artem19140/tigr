@@ -48,30 +48,23 @@ class DatabaseSeeder extends Seeder
                 'name_genitive' => 'федеральному государственному бюджетному образовательному учреждению высшего образования «Удмуртский государственный университет»',
                 'commission_chairman' => 'Иванов Иван Иванович',
             ]);
+        
+        $counters = CounterKey::cases();
 
-        Counter::firstOrCreate(
+        foreach($counters as $counter){
+            Counter::firstOrCreate(
             [
-                'key' => CounterKey::RegNum,
+                'key' => $counter,
                 'center_id' => $center->id
             ],
             [
-                'key' => CounterKey::RegNum, 
-                'value' => CounterKey::defaultValue(CounterKey::RegNum), 
                 'center_id' => $center->id,
+                'key' => $counter,
+                'value' => $counter->defaultValue()
             ]);
+        }
 
-        Counter::firstOrCreate(
-            [
-                'key' => CounterKey::Group,
-                'center_id' => $center->id
-            ],
-            [
-                'key' => CounterKey::Group,
-                'value' => CounterKey::defaultValue(CounterKey::Group),
-                'center_id' => $center->id,
-            ]);
-
-        $email = SystemSettings::adminEmail();
+        $email = config('app.platform_admin.email');
 
         $platformAdmin = Employee::firstOrCreate(
             [
@@ -82,7 +75,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Николай',
                 'patronymic' => 'Дмитрович',
                 'email' => $email,
-                'password' => Hash::make(SystemSettings::adminPassword()),
+                'password' => Hash::make(config('app.platform_admin.password')),
                 'job_title' => 'Админ',
                 'center_id' => null,// $center->id,
                 'has_to_change_password' => false,

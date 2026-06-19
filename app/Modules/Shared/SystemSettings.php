@@ -13,19 +13,9 @@ final class SystemSettings{
         return config('system.codes_ttl');
     }
 
-    public static function attemptMinTimeFromStartToFinish():int
+    public static function attemptMinDuration():int
     {
         return config('system.min_time_from_start_to_finish');
-    }
-
-    public static function adminEmail(): string
-    {
-        return config('app.platform_admin.email');
-    }
-
-    public static function adminPassword(): string
-    {
-        return config('app.platform_admin.password');
     }
 
     public static function enrollmentCloseBeforeExamMinutes(): int

@@ -21,7 +21,7 @@ return new class extends Migration
                 ->constrained('centers')
                 ->cascadeOnDelete();
 
-            $table->dateTime('last_incremented_at');
+            //$table->dateTime('last_incremented_at');
                 
             $table->unique(['center_id', 'id']);
             $table->timestamps();

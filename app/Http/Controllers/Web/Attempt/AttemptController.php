@@ -35,7 +35,7 @@ class AttemptController
                 'minMark' => $exam->type->min_mark,
                 'attempt' => $attempt,
                 'tasksCount' => $exam->type->tasks_count,
-                'minTimeFromStartToFinish' => SystemSettings::attemptMinTimeFromStartToFinish()
+                'minTimeFromStartToFinish' => SystemSettings::attemptMinDuration()
             ]);
         }
 

@@ -2,7 +2,7 @@
 
 namespace App\Modules\Enrollment\Action;
 
-use App\Modules\Counter\GenerateRegNumberAction;
+use App\Modules\Counter\RegNumberGenerator;
 use App\Exceptions\BusinessException;
 use App\Models\Employee;
 use App\Models\Enrollment;
@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 final class CreateEnrollmentAction
 {
     public function __construct(
-        protected GenerateRegNumberAction $generateRegNumber
+        protected RegNumberGenerator $regNumberGenerator
     ) {}
 
     public function execute(
@@ -30,7 +30,7 @@ final class CreateEnrollmentAction
         $this->ensureCreatingAvailable($exam, $foreignNational);
 
         $enrollment = Enrollment::create([
-            'reg_number' => $this->generateRegNumber->execute(),
+            'reg_number' => $this->regNumberGenerator->execute(),
             'creator_id' => $creator->id,
             'center_id' => $exam->center_id,
             'has_payment' => $hasPayment,

@@ -35,7 +35,7 @@ class FinishAttemptAction
         if ($attempt->isFinished()) {
             throw new BusinessException('Попытка уже завершена');
         }
-        $minTimeMinutes = SystemSettings::attemptMinTimeFromStartToFinish();
+        $minTimeMinutes = SystemSettings::attemptMinDuration();
         $now = Carbon::now();
 
         $attemptCanBeFinished = $attempt->started_at->copy()->addMinutes($minTimeMinutes);

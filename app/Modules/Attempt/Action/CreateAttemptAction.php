@@ -5,7 +5,7 @@ namespace App\Modules\Attempt\Action;
 use App\Models\Task;
 use App\Modules\Attempt\Services\VerifyCodeService;
 use App\Modules\Counter\GenerateGroupNumberAction;
-use App\Modules\Counter\GetSessionNumberQuery;
+use App\Modules\Counter\SessionNumberGenerator;
 use App\Exceptions\BusinessException;
 use App\Models\Attempt;
 use App\Models\AttemptAnswer;
@@ -19,7 +19,7 @@ class CreateAttemptAction
 {
     public function __construct(
         protected GenerateGroupNumberAction $generateGroupNumber,
-        protected GetSessionNumberQuery $getSessionNumber,
+        protected SessionNumberGenerator $sessionNumberGenerator,
         protected VerifyCodeService $verifyCodeService
     ) {}
 
@@ -121,14 +121,16 @@ class CreateAttemptAction
     protected function initializeExamAttributes(Exam $exam): void
     {
         $needSave = false;
+
         if (! $exam->group) {
             $needSave = true;
             $exam->group = $this->generateGroupNumber->execute();
         }
         if (! $exam->session) {
             $needSave = true;
-            $exam->session = $this->getSessionNumber->execute($exam->begin_time);
+            $exam->session = $this->sessionNumberGenerator->execute();
         }
+        
         if ($needSave) {
             $exam->save();
         }

@@ -19,32 +19,24 @@ class GenerateGroupNumberAction
     public function execute(): int
     {
         return DB::transaction(function () {
-
             $groupNumber = Counter::query()
-                ->where('key', CounterKey::Group)
-                ->forCenter($this->centerContext->id())
-                ->lockForUpdate()
-                ->first();
+                ->findLockedOrFail(
+                    CounterKey::Group, 
+                    $this->centerContext->id()
+                );
 
-            CenterIsolationCheck::centerBelongs($groupNumber, $this->centerContext->id());
-
-            if (! $groupNumber) {
-                throw new CounterNotFoundException(CounterKey::Group);
-            }
-            
-            if ($this->isNewDay($groupNumber)) {
-                $groupNumber->value = 0;
-                $groupNumber->updated_at = Carbon::now();
-            }
-            $groupNumber->value += 1;
-            $groupNumber->save();
-
+            $this->needReset($groupNumber) 
+                ?  $groupNumber->reset() 
+                :  $groupNumber->increment('value', 1);
             return $groupNumber->value;
         });
     }
 
-    protected function isNewDay(Counter $groupNumber): bool
+    protected function needReset(Counter $counter): bool
     {
-        return $groupNumber->updated_at->toDateString() !== Carbon::now()->toDateString();
+        $today = Carbon::now()->toDateString();
+        $counterUpdatedAt = $counter->updated_at->toDateString();
+
+        return $counterUpdatedAt !== $today;
     }
 }
