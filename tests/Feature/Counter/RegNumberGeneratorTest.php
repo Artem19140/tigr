@@ -29,7 +29,7 @@ class RegNumberGeneratorTest extends TestCase
 
         $this->generator = app(RegNumberGenerator::class);
 
-        Carbon::setTestNow(Carbon::now());
+        Carbon::setTestNow(Carbon::create(2025, 5, 1, 0, 0, 0));
 
         Counter::create([
             'key' => CounterKey::RegNum,
@@ -44,13 +44,16 @@ class RegNumberGeneratorTest extends TestCase
         Carbon::setTestNow();
     }
 
-    public function test_success_reg_num_generation(): void
+    public function test_reg_num_generation(): void
     {
-        $regNumber = $this->generator->execute();
-        $this->assertEquals($regNumber, CounterKey::RegNum->defaultValue());
+        $firstNumber = $this->generator->execute();
+        $this->assertEquals($firstNumber, CounterKey::RegNum->defaultValue());
+
+        $seecondNumber = $this->generator->execute();
+        $this->assertEquals($seecondNumber, CounterKey::RegNum->defaultValue() + 1);
     }
 
-    public function test_success_reg_num_change_year(): void
+    public function test_reg_num_change_year(): void
     {
         $regNumber = $this->generator->execute();
         $this->assertEquals($regNumber, CounterKey::RegNum->defaultValue());
@@ -60,9 +63,6 @@ class RegNumberGeneratorTest extends TestCase
         $regNumber = $this->generator->execute();
         $this->assertEquals($regNumber, CounterKey::RegNum->defaultValue());
 
-        $regNumber = $this->generator->execute();
-        $this->assertEquals($regNumber, CounterKey::RegNum->defaultValue() + 1);
-        Carbon::setTestNow(Carbon::now());
     }
 
 }

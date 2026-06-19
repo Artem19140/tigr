@@ -6,6 +6,7 @@ use App\Enums\CounterKey;
 use App\Models\Counter;
 use App\Modules\Center\CenterContext;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class SessionNumberGenerator
 {
@@ -15,17 +16,19 @@ class SessionNumberGenerator
 
     public function execute():int
     {
-        $sessionCounter = Counter::findLockedOrFail(
-            CounterKey::Session, 
-            $this->centerContext->id()
-        );
+        return DB::transaction(function () {
+            $sessionCounter = Counter::findLockedOrFail(
+                CounterKey::Session, 
+                $this->centerContext->id()
+            );
 
-        $this->needReset($sessionCounter)
-            ?   $sessionCounter->reset()
-            :   $sessionCounter->increment('value', 1);
-        $sessionCounter->save();
+            $this->needReset($sessionCounter)
+                ?   $sessionCounter->reset()
+                :   $sessionCounter->increment('value', 1);
+            $sessionCounter->save();
 
-        return $sessionCounter->value;
+            return $sessionCounter->value;
+        });
     }
 
     protected function needReset(Counter $counter): bool

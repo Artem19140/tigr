@@ -4,7 +4,7 @@ namespace App\Modules\Attempt\Action;
 
 use App\Models\Task;
 use App\Modules\Attempt\Services\VerifyCodeService;
-use App\Modules\Counter\GenerateGroupNumberAction;
+use App\Modules\Counter\GroupNumberGenerator;
 use App\Modules\Counter\SessionNumberGenerator;
 use App\Exceptions\BusinessException;
 use App\Models\Attempt;
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Log;
 class CreateAttemptAction
 {
     public function __construct(
-        protected GenerateGroupNumberAction $generateGroupNumber,
+        protected GroupNumberGenerator $groupNumberGenerator,
         protected SessionNumberGenerator $sessionNumberGenerator,
         protected VerifyCodeService $verifyCodeService
     ) {}
@@ -124,7 +124,7 @@ class CreateAttemptAction
 
         if (! $exam->group) {
             $needSave = true;
-            $exam->group = $this->generateGroupNumber->execute();
+            $exam->group = $this->groupNumberGenerator->execute();
         }
         if (! $exam->session) {
             $needSave = true;

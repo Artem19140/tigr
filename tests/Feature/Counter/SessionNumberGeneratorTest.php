@@ -28,13 +28,14 @@ class SessionNumberGeneratorTest extends TestCase
 
         $this->generator = app(SessionNumberGenerator::class);
 
+        Carbon::setTestNow(Carbon::create(2025, 5, 1, 0, 0, 0));
+
         Counter::create([
             'key' => CounterKey::Session,
             'value' => CounterKey::Session->defaultValue() - 1,
             'center_id' => $center->id
         ]);
 
-        Carbon::setTestNow(Carbon::create(2025, 5, 1, 0, 0, 0));
     }
 
     protected function tearDown(): void
@@ -43,7 +44,7 @@ class SessionNumberGeneratorTest extends TestCase
         Carbon::setTestNow(); 
     }
 
-    public function test_success_session_number_generation(): void
+    public function test_session_number_generation(): void
     {
         $firstNumber = $this->generator->execute();
         $this->assertEquals($firstNumber, CounterKey::Session->defaultValue());
@@ -59,7 +60,7 @@ class SessionNumberGeneratorTest extends TestCase
 
         Carbon::setTestNow(Carbon::now()->addYear());
 
-        $newDayNumber = $this->generator->execute();
-        $this->assertEquals($newDayNumber, CounterKey::Session->defaultValue());
+        $newYearNumber = $this->generator->execute();
+        $this->assertEquals($newYearNumber, CounterKey::Session->defaultValue());
     }
 }

@@ -4,13 +4,11 @@ namespace App\Modules\Counter;
 
 use App\Modules\Center\CenterContext;
 use App\Enums\CounterKey;
-use App\Exceptions\Counter\CounterNotFoundException;
 use App\Models\Counter;
-use App\Support\CenterIsolationCheck;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 
-class GenerateGroupNumberAction
+class GroupNumberGenerator
 {
     public function __construct(
         protected CenterContext $centerContext
@@ -19,11 +17,10 @@ class GenerateGroupNumberAction
     public function execute(): int
     {
         return DB::transaction(function () {
-            $groupNumber = Counter::query()
-                ->findLockedOrFail(
-                    CounterKey::Group, 
-                    $this->centerContext->id()
-                );
+            $groupNumber = Counter::findLockedOrFail(
+                CounterKey::Group, 
+                $this->centerContext->id()
+            );
 
             $this->needReset($groupNumber) 
                 ?  $groupNumber->reset() 
