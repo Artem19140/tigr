@@ -22,8 +22,6 @@ const props = defineProps<{
                     :counter="counter"
                 />
             </div>
-            
         </v-card-text>
     </v-card>
-   
 </template>

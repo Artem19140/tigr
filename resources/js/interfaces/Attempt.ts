@@ -5,7 +5,7 @@ import { Violation } from "./Violation";
 
 export interface Attempt{
     id:number,
-    startedAt:string,
+    startedAt:number,
     finishedAt:string | null,
     isPassed:boolean | null,
     status:string,
@@ -15,7 +15,9 @@ export interface Attempt{
     foreignNational: ForeignNational,
     examName:string,
     endsAt:number,
-    serverNow:number
+    serverNow:number,
+    minDurationMinutes:number,
+    tasksCount:number
 }
 
 export interface AttemptChecking{

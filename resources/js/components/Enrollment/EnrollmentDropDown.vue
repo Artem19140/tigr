@@ -18,7 +18,6 @@ const download = (document : string) => {
         <PaymentChange 
             :enrollment="enrollment"
             v-if="enrollment.permissions.payment"
-            
         />
         <v-list-item 
             title="Заявление" 

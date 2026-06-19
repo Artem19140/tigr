@@ -124,11 +124,11 @@ class CreateAttemptAction
 
         if (! $exam->group) {
             $needSave = true;
-            $exam->group = $this->groupNumberGenerator->execute();
+            $exam->group = $this->groupNumberGenerator->execute($exam->center_id);
         }
         if (! $exam->session) {
             $needSave = true;
-            $exam->session = $this->sessionNumberGenerator->execute();
+            $exam->session = $this->sessionNumberGenerator->execute($exam->center_id);
         }
         
         if ($needSave) {

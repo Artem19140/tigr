@@ -46,6 +46,8 @@ const openAttempt =  (item : Enrollment) => {
             :title="`Попытки экзмена ${exam.data.shortName} от ${new DateFormatter(exam.data.beginTime).format('H:i, d.m.Y')}`"
             :items="props.exam.data.enrollments"
             @click:row="(event :Event, { item } : any) => openAttempt(item)"
+            hide-default-footer
+            :items-per-page="-1"
         >
         <template #item.index="{ index }">
            {{ index + 1 }}

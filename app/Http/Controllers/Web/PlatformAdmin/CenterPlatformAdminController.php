@@ -52,7 +52,7 @@ class CenterPlatformAdminController
                 Counter::create([
                     'center_id' => $center->id,
                     'key' => $counter,
-                    'value' => $counter->defaultValue()
+                    'value' => $counter->defaultValue() - 1
                 ]);
             }
         });

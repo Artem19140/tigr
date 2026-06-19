@@ -31,6 +31,7 @@ class ExamMonitoringController
                 $end
             ])
             ->notCancelled()
+            ->latest()
             ->get();
             
         CenterIsolationCheck::check($exams);

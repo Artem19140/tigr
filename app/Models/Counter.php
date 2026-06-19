@@ -33,12 +33,12 @@ class Counter extends Model
             ->where('key', $key)
             ->first();
 
-        CenterIsolationCheck::centerBelongs($counter, app(CenterContext::class)->id());
-
         if(! $counter){
             throw new CounterNotFoundException($key);
         }
 
+        CenterIsolationCheck::centerBelongs($counter, app(CenterContext::class)->id());
+        
         return $counter;
     }
 

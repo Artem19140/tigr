@@ -76,6 +76,7 @@ const groupedTasks =  computed(() =>{
 <template>
     <v-container class="flex flex-column gap-10"
         v-if="attempt.tasks.length > 0"
+        max-width="1100"
     >
         <div
             v-for="(tasks, index) in groupedTasks"

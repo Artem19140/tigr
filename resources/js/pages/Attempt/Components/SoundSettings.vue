@@ -37,7 +37,7 @@ const togglePlayPause = () => {
         Ваш браузер не поддерживает аудио.
     </audio>
 
-    <v-slider
+    <!-- <v-slider
         v-model="volume"
         min="0"
         max="1"
@@ -45,7 +45,7 @@ const togglePlayPause = () => {
         thumb-label
         :label="`Громкость: ${volume * 100}%`"
         class="mb-4"
-    ></v-slider>
+    ></v-slider> -->
 
     <v-btn @click="togglePlayPause">
         {{ isPlaying ? 'Пауза' : 'Воспроизвести' }}

@@ -8,7 +8,6 @@ use App\Modules\Attempt\Action\StartAttemptAction;
 use App\Modules\Attempt\Query\GetCurrentAttemptQuery;
 use App\Exceptions\BusinessException;
 use App\Http\Resources\Attempt\AttemptExamResource;
-use App\Http\Resources\Exam\ExamShortResource;
 use App\Models\Attempt;
 use App\Models\Exam;
 use App\Modules\Shared\SystemSettings;
@@ -30,19 +29,23 @@ class AttemptController
             ])->find($attempt->exam_id);
 
             return Inertia::render('Attempt/PrepareAttempt', [
-                'exam' => new ExamShortResource($exam),
-                'duration' => $exam->type->duration,
-                'minMark' => $exam->type->min_mark,
-                'attempt' => $attempt,
-                'tasksCount' => $exam->type->tasks_count,
-                'minTimeFromStartToFinish' => SystemSettings::attemptMinDuration()
+                'exam' => [
+                    'duration' => $exam->type->duration,
+                    'minMark' => $exam->type->min_mark,
+                    'attemptId' => $attempt->id,
+                    'tasksCount' => $exam->type->tasks_count,
+                    'minTimeFromStartToFinish' => SystemSettings::attemptMinDurationMinutes(),
+                    'name' => $exam->type->name
+                ],
+                'fullName' => $attempt->foreignNational->full_name_short
+                
             ]);
         }
 
         $attempt = $getCurrentAttemptQuery->execute($attempt);
 
         return Inertia::render('Attempt/Attempt', [
-            'attempt' => new AttemptExamResource($attempt),
+            'attempt' => new AttemptExamResource($attempt)
         ]);
     }
 

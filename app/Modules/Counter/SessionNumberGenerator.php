@@ -4,22 +4,18 @@ namespace App\Modules\Counter;
 
 use App\Enums\CounterKey;
 use App\Models\Counter;
-use App\Modules\Center\CenterContext;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class SessionNumberGenerator
 {
-    public function __construct(
-        protected CenterContext $centerContext
-    ) {}
 
-    public function execute():int
+    public function execute(int $centerId):int
     {
-        return DB::transaction(function () {
+        return DB::transaction(function () use($centerId) {
             $sessionCounter = Counter::findLockedOrFail(
                 CounterKey::Session, 
-                $this->centerContext->id()
+                $centerId
             );
 
             $this->needReset($sessionCounter)

@@ -17,13 +17,9 @@ const solved = computed(() =>  props.attempt.tasks.filter(item => item?.attemptA
 </script>
 
 <template>
-
   <div class="p-6 mt-5">
     <div class="mb-4">
-      <Timer
-        :server-now="attempt.serverNow"
-        :ends-at="attempt.endsAt"
-      />
+      <Timer />
     </div>
 
     <v-divider class="mb-4" />
@@ -36,7 +32,7 @@ const solved = computed(() =>  props.attempt.tasks.filter(item => item?.attemptA
         Задания
       </div>
       <div class="text-caption text-medium-emphasis">
-        {{ solved }} / {{ attempt.tasks?.length }}
+        {{ solved }} / {{ attempt.tasksCount }}
       </div>
     </div>
 

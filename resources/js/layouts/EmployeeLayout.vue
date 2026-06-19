@@ -28,9 +28,69 @@ const activeItem = ref('')
 
 const {open} = useModals()
 
-const menu = [
-  
+const menu: Array<MenuElem> = [
+  {
+    title:"Иностранные граждане" ,
+    prependIcon:"mdi-account-group",
+    url:'/foreign-nationals',
+    value:"foreignNationals",
+    allowed:can.value.foreignNationals
+  },
+  {
+    title:"Экзамены" ,
+    prependIcon:"mdi-school" ,
+    url:'/exams',
+    value:"exams",
+    allowed:can.value.exams
+  },
+  {
+    title:"Мониторинг экзамена" ,
+    prependIcon:"mdi-monitor-eye" ,
+    url:'/exams/monitoring',
+    value:"monitoring",
+    allowed:can.value.monitoring
+  },
+  {
+    title:"Проверка экзамена" ,
+    prependIcon:"mdi-clipboard-check" ,
+    url:'/exams/checking',
+    value:"checking",
+    allowed:can.value.checking
+  },
+  {
+    title:"Расписание" ,
+    prependIcon:"mdi-calendar-month" ,
+    url:'/exams/schedule',
+    value:"schedule",
+    allowed:can.value.schedule
+  },
+  {
+    title:"Центр" ,
+    prependIcon:"mdi-office-building" ,
+    url:`/centers/${centerId}`,
+    value:"center",
+    allowed:can.value.center
+  },
+  {
+    title:"Панель админа" ,
+    prependIcon:"mdi-cog" ,
+    url:'/admin/home',
+    value:"admin",
+    allowed:can.value.adminPanel
+  }
 ]
+
+interface MenuElem{
+  title:string,
+  prependIcon:string,
+  url:string,
+  value:string,
+  allowed:boolean
+}
+
+const visibleItems = computed(() =>
+  menu.filter(item => item.allowed)
+)
 </script>
 
 <template>
@@ -46,68 +106,23 @@ const menu = [
             <v-list-item
               :subtitle="user?.job_title"
               :title="employeeName"
-            />
+              prepend-icon="mdi-paw" 
+            >
+            </v-list-item>
+            
           </v-list>
 
           <v-divider></v-divider>
 
           <v-list density="compact" nav v-model="activeItem">
             <v-list-item
-              prepend-icon="mdi-account-group" 
-              title="Иностранные граждане" 
-              v-if="can.foreignNationals"
-              @click="go('/foreign-nationals')"  
-              value="foreignNationals"
+              v-for="(item, index) in visibleItems"
+              :key="index"
+              :title="item.title"
+              :prepend-icon="item.prependIcon"
+              @click="() => go(item.url)"
+              :value="item.value"
             />
-
-            <v-list-item
-              prepend-icon="mdi-school" 
-              title="Экзамены" 
-              v-if="can.exams"
-              @click="go('/exams')"
-              value="exams" 
-            />
-
-            <v-list-item
-              prepend-icon="mdi-monitor-eye" 
-              v-if="can.monitoring"
-              title="Мониторинг экзамена" 
-              value="monitoring" 
-              @click="go('/exams/monitoring')"
-            />
-
-            <v-list-item
-              prepend-icon="mdi-clipboard-check" 
-              v-if="can.checking"
-              title="Проверка"
-              @click="go('/exams/checking')"
-              value="checking" 
-            />
-            
-            <v-list-item
-              prepend-icon="mdi-calendar-month" 
-              title="Расписание" 
-              v-if="can.schedule"
-              @click="go('/exams/schedule')"
-              value="schedule"
-            />
-
-            <v-list-item
-              prepend-icon="mdi-office-building" 
-              v-if="can.center"
-              title="Центр" 
-              value="center" 
-              @click="go(`/centers/${centerId}`)"
-            />
-
-            <v-list-item 
-              prepend-icon="mdi-cog" 
-              v-if="can.adminPanel" 
-              title="Панель админа" 
-              value="admin" 
-              @click="go(`/admin/home`)"
-            />
-            
           </v-list>
       
           <v-list density="compact" nav class="mt-auto">

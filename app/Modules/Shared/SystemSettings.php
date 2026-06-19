@@ -13,7 +13,7 @@ final class SystemSettings{
         return config('system.codes_ttl');
     }
 
-    public static function attemptMinDuration():int
+    public static function attemptMinDurationMinutes():int
     {
         return config('system.min_time_from_start_to_finish');
     }

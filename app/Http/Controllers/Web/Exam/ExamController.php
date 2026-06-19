@@ -42,7 +42,6 @@ class ExamController
             $params,
             $employee
         );
-
         Inertia::flash('filters', $request->validated());
         CenterIsolationCheck::check($exams);
 

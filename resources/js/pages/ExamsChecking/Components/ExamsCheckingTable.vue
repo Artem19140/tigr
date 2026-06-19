@@ -27,6 +27,8 @@ const loading = ref<boolean>(false)
         :items="exams"
         :loading="loading"
         @click:row="(event :Event, { item } : any) => examCheck(item)"
+        hide-default-footer
+        :items-per-page="-1"
     >
         <template #toolbar-left>
             <AppTooltip  

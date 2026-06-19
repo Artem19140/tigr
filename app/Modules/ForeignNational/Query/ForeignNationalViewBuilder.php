@@ -84,7 +84,7 @@ class ForeignNationalViewBuilder
 
                 $enrollment->setAttribute('payment_available', 
                     $this->enrollmentPaymentRules
-                        ->check($enrollment, $enrollment->exam)
+                        ->check($enrollment, $enrollment->exam)->available
                 );
                 
                 $enrollment->setAttribute('exam_result', 
