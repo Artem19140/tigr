@@ -5,6 +5,7 @@ namespace App\Modules\ForeignNational;
 use App\Modules\Center\CenterContext;
 use App\Models\ForeignNational;
 use App\Support\CenterIsolationCheck;
+use App\Support\CsvWriter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Log;
@@ -13,7 +14,8 @@ class ExportForeignNational
 {
     public function __construct(
         protected CenterIsolationCheck $centerIsolationCheck,
-        protected CenterContext $centerContext
+        protected CenterContext $centerContext,
+        protected CsvWriter $csvWriter
     ){}
     public function execute(
         Carbon $dateFrom,

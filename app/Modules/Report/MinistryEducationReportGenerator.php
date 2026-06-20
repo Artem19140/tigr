@@ -7,7 +7,7 @@ use App\Enums\ReportType;
 use App\Events\ReportGenerated;
 use App\Models\Attempt;
 use App\Support\CenterIsolationCheck;
-use App\Support\Export\CsvWriter;
+use App\Support\CsvWriter;
 use Carbon\Carbon;
 
 class MinistryEducationReportGenerator

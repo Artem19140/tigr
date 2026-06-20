@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Web\Attempt;
 
-use App\Modules\Attempt\Action\AnnulAttempt;
-use App\Modules\Attempt\Passing\FinishAttempt;
-use App\Modules\Attempt\Passing\StartAttempt;
-use App\Modules\Attempt\Passing\AttemptPassingViewBuilder;
+use App\Modules\Attempt\AnnulAttempt;
+use App\Modules\Attempt\FinishAttempt;
+use App\Modules\Attempt\StartAttempt;
+use App\Modules\Attempt\AttemptExamViewBuilder;
 use App\Exceptions\BusinessException;
 use App\Http\Resources\Attempt\AttemptExamResource;
 use App\Models\Attempt;
@@ -21,7 +21,7 @@ class AttemptController
 {
     public function show(
         Attempt $attempt,
-        AttemptPassingViewBuilder $builder
+        AttemptExamViewBuilder $builder
     ): \Inertia\Response {
         if (! $attempt->isStarted()) {
             $exam = Exam::with([

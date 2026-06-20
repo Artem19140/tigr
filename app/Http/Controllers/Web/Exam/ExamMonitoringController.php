@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web\Exam;
 
 use App\Modules\Enrollment\EnrollmentPaymentRules;
-use App\Modules\Exam\Action\UpdateProtocolComment;
+use App\Modules\Exam\UpdateProtocolComment;
 use App\Http\Resources\Exam\ExamIndexResource;
 use App\Http\Resources\Exam\ExamMonitoringResource;
 use App\Models\Enrollment;

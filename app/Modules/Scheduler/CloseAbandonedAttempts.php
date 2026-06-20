@@ -3,7 +3,7 @@
 namespace App\Modules\Scheduler;
 
 use App\Models\Attempt;
-use App\Modules\Attempt\Action\FinilizeAttemptChecking;
+use App\Modules\Attempt\FinilizeAttemptChecking;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 

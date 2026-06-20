@@ -7,7 +7,7 @@ use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\ForeignNational;
 use App\Modules\Enrollment\EnrollmentPaymentRules;
-use App\Modules\Exam\Resolver\ExamResultResolver;
+use App\Modules\Exam\ExamResultResolver;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class ForeignNationalViewBuilder

@@ -8,12 +8,14 @@ use App\Enums\TaskType;
 use App\Events\ReportGenerated;
 use App\Models\Attempt;
 use App\Support\CenterIsolationCheck;
+use App\Support\CsvWriter;
 use Carbon\Carbon;
 
 class FlatTableGenerator
 {
     public function __construct(
-        protected CenterContext $centerContext
+        protected CenterContext $centerContext,
+        protected CsvWriter $csvWriter
     ) {}
 
     public function execute(

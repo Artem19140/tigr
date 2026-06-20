@@ -3,7 +3,7 @@
 namespace Tests\Feature\Exam;
 
 use App\Modules\Center\CenterContext;
-use App\Modules\Exam\Query\GetAvailableExams;
+use App\Modules\Exam\GetAvailableExams;
 use App\Models\Center;
 use App\Models\Enrollment;
 use App\Models\Exam;

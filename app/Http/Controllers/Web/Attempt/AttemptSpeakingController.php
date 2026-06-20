@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Attempt;
 
-use App\Modules\Attempt\Query\GetAttemptSpeakingTasksQuery;
+use App\Modules\Attempt\GetSpeakingTasks;
 use App\Exceptions\BusinessException;
 use App\Http\Resources\Attempt\AttemptMonitoringResource;
 use App\Http\Resources\Attempt\AttemptResource;
@@ -10,7 +10,7 @@ use App\Models\Attempt;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
-use App\Modules\Attempt\Rules\AttemptSpeakingRules;
+use App\Modules\Attempt\AttemptSpeakingRules;
 
 class AttemptSpeakingController
 {
@@ -19,7 +19,7 @@ class AttemptSpeakingController
     ){}
     public function show(
         Attempt $attempt,
-        GetAttemptSpeakingTasksQuery $getAttemptSpeakingQuery
+        GetSpeakingTasks $GetSpeakingTasks
     ): JsonResource {
         $result = $this->attemptSpeakingRules->get($attempt);
 
@@ -27,7 +27,7 @@ class AttemptSpeakingController
             throw new BusinessException($result->message());
         }
         
-        $attempt = $getAttemptSpeakingQuery->execute($attempt);
+        $attempt = $GetSpeakingTasks->execute($attempt);
 
         return new AttemptMonitoringResource($attempt);
     }

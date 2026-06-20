@@ -20,11 +20,7 @@ class Exam extends Model
     use BelongsToCenter;
     use HasFactory, Notifiable;
 
-    public const CREATE_AVAILABLE_BEFORE_HOURS = 3;
-
-    public const CODES_LENGTH = 6;
-
-    public const CODES_TTL_AFTER_BEGIN_MINUTES = 45;
+    public const int CREATE_AVAILABLE_BEFORE_HOURS = 3;
 
     protected $fillable = [
         'begin_time',
