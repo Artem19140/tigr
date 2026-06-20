@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\ForeignNational\Action;
+namespace App\Modules\ForeignNational;
 
 use App\Http\Dto\ForeignNationalStoreDto;
 use App\Modules\Enrollment\CreateEnrollment;
@@ -8,11 +8,10 @@ use App\Models\Employee;
 use App\Models\Enrollment;
 use Illuminate\Support\Facades\DB;
 
-
-class CreateForeignNationalWithEnrollmentAction
+class CreateForeignNationalWithEnrollment
 {
     public function __construct(
-        protected StoreForeignNationalAction $storeForeignNational,
+        protected StoreForeignNational $storeForeignNational,
         protected CreateEnrollment $createEnrollment,
     ) {}
 

@@ -8,6 +8,7 @@ use App\Models\Center;
 use App\Models\Enrollment;
 use App\Models\Exam;
 use App\Models\ForeignNational;
+use App\Modules\Shared\ExamSettings;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
@@ -30,7 +31,7 @@ class GetAvailableExamsTest extends TestCase
         Carbon::setTestNow(
             Carbon::parse('2026-01-01 10:00:00')
         );
-        $this->enrollmentTimeClosed = Carbon::now()->addMinutes(Enrollment::CLOSE_BEFORE_START_MINUTES);
+        $this->enrollmentTimeClosed = Carbon::now()->addMinutes(ExamSettings::enrollmentCloseBeforeExamMinutes());
 
         $mock = Mockery::mock(CenterContext::class);
         $mock->shouldReceive('id')->andReturn($this->center->id);

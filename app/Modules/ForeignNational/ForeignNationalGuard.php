@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\ForeignNational\Guard;
+namespace App\Modules\ForeignNational;
 
 use App\Models\ForeignNational;
 use Carbon\Carbon;

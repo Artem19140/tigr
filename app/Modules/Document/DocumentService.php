@@ -6,8 +6,8 @@ use App\Models\Document;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 
-class DocumentService{
-    public function create(
+class DocumentSaver{
+    public function store(
         UploadedFile $file,
         Model $owner,
         string $doctype

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Modules\Attempt\Action;
+namespace App\Modules\Attempt\Passing;
 
 use App\Exceptions\BusinessException;
 use App\Models\Attempt;
-use App\Modules\Shared\SystemSettings;
+use App\Modules\Shared\ExamSettings;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class FinishAttemptAction
+class FinishAttempt
 {
     public function __construct(
         protected FinilizeAttemptCheckingAction $finilizeAttemptCheckingAction
@@ -35,7 +35,7 @@ class FinishAttemptAction
         if ($attempt->isFinished()) {
             throw new BusinessException('Попытка уже завершена');
         }
-        $minTimeMinutes = SystemSettings::attemptMinDurationMinutes();
+        $minTimeMinutes = ExamSettings::attemptMinDurationMinutes();
         $now = Carbon::now();
 
         $attemptCanBeFinished = $attempt->started_at->copy()->addMinutes($minTimeMinutes);

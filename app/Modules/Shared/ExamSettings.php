@@ -2,7 +2,7 @@
 
 namespace App\Modules\Shared;
 
-final class SystemSettings{
+final class ExamSettings{
     public static function codesLength():int
     {
         return config('system.codes_length');

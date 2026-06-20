@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Web\Attempt;
 
-use App\Modules\Attempt\Action\AnnulledAttemptAction;
-use App\Modules\Attempt\Action\FinishAttemptAction;
-use App\Modules\Attempt\Action\StartAttemptAction;
-use App\Modules\Attempt\Query\GetCurrentAttemptQuery;
+use App\Modules\Attempt\Action\AnnulAttempt;
+use App\Modules\Attempt\Passing\FinishAttempt;
+use App\Modules\Attempt\Passing\StartAttempt;
+use App\Modules\Attempt\Passing\AttemptPassingViewBuilder;
 use App\Exceptions\BusinessException;
 use App\Http\Resources\Attempt\AttemptExamResource;
 use App\Models\Attempt;
 use App\Models\Exam;
-use App\Modules\Shared\SystemSettings;
+use App\Modules\Shared\ExamSettings;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -21,7 +21,7 @@ class AttemptController
 {
     public function show(
         Attempt $attempt,
-        GetCurrentAttemptQuery $getCurrentAttemptQuery
+        AttemptPassingViewBuilder $builder
     ): \Inertia\Response {
         if (! $attempt->isStarted()) {
             $exam = Exam::with([
@@ -34,7 +34,7 @@ class AttemptController
                     'minMark' => $exam->type->min_mark,
                     'attemptId' => $attempt->id,
                     'tasksCount' => $exam->type->tasks_count,
-                    'minTimeFromStartToFinish' => SystemSettings::attemptMinDurationMinutes(),
+                    'minTimeFromStartToFinish' => ExamSettings::attemptMinDurationMinutes(),
                     'name' => $exam->type->name
                 ],
                 'fullName' => $attempt->foreignNational->full_name_short
@@ -42,7 +42,7 @@ class AttemptController
             ]);
         }
 
-        $attempt = $getCurrentAttemptQuery->execute($attempt);
+        $attempt = $builder->build($attempt);
 
         return Inertia::render('Attempt/Attempt', [
             'attempt' => new AttemptExamResource($attempt)
@@ -50,7 +50,7 @@ class AttemptController
     }
 
     public function start(
-        StartAttemptAction $startAttempt,
+        StartAttempt $startAttempt,
         Attempt $attempt
     ): RedirectResponse {
         if ($attempt->isStarted()) {
@@ -70,20 +70,20 @@ class AttemptController
     public function annul(
         Request $request,
         Attempt $attempt,
-        AnnulledAttemptAction $annulledAttempt
+        AnnulAttempt $annulAttempt
     ): Response {
 
         $request->validate([
             'annulledReason' => ['required', 'string'],
         ]);
-        $annulledAttempt->execute($attempt, $request->input('annulledReason'), $request->user());
+        $annulAttempt->execute($attempt, $request->input('annulledReason'), $request->user());
 
         return response()->noContent();
     }
 
     public function finish(
         Attempt $attempt,
-        FinishAttemptAction $finishAttempt,
+        FinishAttempt $finishAttempt,
         Request $request
     ): RedirectResponse {
         $finishAttempt->execute($attempt);

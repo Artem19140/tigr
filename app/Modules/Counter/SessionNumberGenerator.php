@@ -18,20 +18,39 @@ class SessionNumberGenerator
                 $centerId
             );
 
-            $this->needReset($sessionCounter)
+            if($sessionCounter->notInitialized()){ 
+                $sessionCounter->initialize();
+                $sessionCounter->save();
+                return $sessionCounter->value;
+            }
+
+            $this->shouldReset($sessionCounter)
                 ?   $sessionCounter->reset()
-                :   $sessionCounter->increment('value', 1);
+                :   $this->incrementIfNeeded($sessionCounter);
+                
             $sessionCounter->save();
 
             return $sessionCounter->value;
         });
     }
 
-    protected function needReset(Counter $counter): bool
+    protected function shouldReset(Counter $counter): bool
     {
         $currentYear = Carbon::now()->year;
-        $counterUpdatedYear = $counter->updated_at->year;
+        $counterLastIncrementYear = $counter->last_increment_at->year;
 
-        return $counterUpdatedYear !== $currentYear;
+        return $counterLastIncrementYear !== $currentYear;
+    }
+
+    protected function incrementIfNeeded(Counter $counter): void
+    {
+        $today = Carbon::now()->toDateString();
+        $counterUpdatedDay = $counter->last_increment_at->toDateString();
+
+        if($today === $counterUpdatedDay){
+            return ;
+        }
+
+        $counter->incrementValue();
     }
 }

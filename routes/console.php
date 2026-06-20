@@ -1,7 +1,7 @@
 <?php
 
-use App\Modules\Attempt\Action\CloseAbandonedAttemptsAction;
-use App\Modules\Exam\Action\ClearExpiredExamCodes;
+use App\Modules\Scheduler\CloseAbandonedAttempts;
+use App\Modules\Scheduler\ClearExpiredExamCodes;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
@@ -17,7 +17,7 @@ Schedule::call(function () {
 })->monthly();
 
 Schedule::call(function () {
-    app(CloseAbandonedAttemptsAction::class)->execute();
+    app(CloseAbandonedAttempts::class)->execute();
 })->everyFifteenMinutes();
 
 Artisan::command('deploy', function(){

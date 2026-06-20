@@ -8,7 +8,7 @@ use App\Models\Center;
 use App\Models\Counter;
 use App\Models\Employee;
 use App\Models\Role;
-use App\Modules\Shared\SystemSettings;
+use App\Modules\Shared\ExamSettings;
 use Database\Seeders\ExamTypes\PATENT\PatentSeeder;
 use Database\Seeders\ExamTypes\RVP\RvpSeeder;
 use Database\Seeders\ExamTypes\VNZH\VnzhSeeder;

@@ -28,7 +28,7 @@ class GroupNumberGeneratorTest extends TestCase
 
         Counter::create([
             'key' => CounterKey::Group,
-            'value' => CounterKey::Group->defaultValue() - 1,
+            'value' => CounterKey::Group->defaultValue(),
             'center_id' => $this->center->id,
         ]);
     }

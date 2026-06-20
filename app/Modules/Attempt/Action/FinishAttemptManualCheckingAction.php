@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modules\Attempt\Action\Checking;
+namespace App\Modules\Attempt\Action;
 
-use App\Modules\Attempt\Action\FinilizeAttemptCheckingAction;
+use App\Modules\Attempt\Action\FinilizeAttemptChecking;
 use App\Enums\TaskType;
 use App\Exceptions\BusinessException;
 use App\Models\Attempt;
@@ -12,14 +12,14 @@ use Illuminate\Support\Facades\Log;
 class FinishAttemptManualCheckingAction
 {
     public function __construct(
-        protected FinilizeAttemptCheckingAction $finilizeAttemptCheckingAction
+        protected FinilizeAttemptChecking $finilizeAttemptChecking
     ) {}
 
     public function execute(Attempt $attempt): Attempt
     {
         $this->ensureNotChecked($attempt);
         $this->ensureAllManualTasksChecked($attempt);
-        $attempt = $this->finilizeAttemptCheckingAction
+        $attempt = $this->finilizeAttemptChecking
             ->execute($attempt);
         return $attempt;
     }

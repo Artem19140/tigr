@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\ForeignNational\Query;
+namespace App\Modules\ForeignNational;
 
 use App\Modules\Center\CenterContext;
 use App\Models\ForeignNational;
@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Log;
 
-class ExportForeignNationalQuery
+class ExportForeignNational
 {
     public function __construct(
         protected CenterIsolationCheck $centerIsolationCheck,

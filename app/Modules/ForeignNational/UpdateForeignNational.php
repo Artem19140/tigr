@@ -1,54 +1,43 @@
 <?php
 
-namespace App\Modules\ForeignNational\Action;
+namespace App\Modules\ForeignNational;
 
-use App\Http\Dto\ForeignNationalStoreDto;
-use App\Modules\Document\DocumentService;
-use App\Modules\ForeignNational\Guard\ForeignNationalGuard;
-use App\Models\Employee;
+use App\Http\Dto\ForeignNationalUpdateDto;
+use App\Modules\ForeignNational\ForeignNationalGuard;
 use App\Models\ForeignNational;
+use App\Support\ModelChangesLogger;
 
-
-final class StoreForeignNationalAction
+final class UpdateForeignNational
 {
     public function __construct(
         protected ForeignNationalGuard $foreignNationalGuard,
-        protected DocumentService $documentService
+        protected ModelChangesLogger $logger
     ) {}
 
     public function execute(
-        ForeignNationalStoreDto $dto,
-        Employee $employee,
-        
+        ForeignNationalUpdateDto $dto,
+        ForeignNational $foreignNational,
     ): ForeignNational {
         $this->foreignNationalGuard->ensureAge($dto->dateBirth);
+
         $this->foreignNationalGuard->ensureUniquePassport(
             $dto->passportSeries,
-            $dto->passportNumber
-        );
-        
-        $foreignNational = ForeignNational::create(
-            $this->attributes($dto, $employee),
+            $dto->passportNumber, 
+            $foreignNational->id
         );
 
-        $this->documentService->create(
-            $dto->passportTranslate,
-            $foreignNational,
-            'passport_translate'
+        $foreignNational->update(
+            $this->attributes($dto)
         );
 
-        $this->documentService->create(
-            $dto->passport,
-            $foreignNational,
-            'passport'
-        );
+        $foreignNational->save();
+        $this->logger->log($foreignNational);
+
         return $foreignNational;
     }
 
-    private function attributes(
-        ForeignNationalStoreDto $dto,
-        Employee $creator,
-    ): array {
+    protected function attributes(ForeignNationalUpdateDto $dto): array
+    {
         return [
             'surname' => $dto->surname,
             'name' => $dto->name,
@@ -56,18 +45,16 @@ final class StoreForeignNationalAction
             'date_birth' => $dto->dateBirth,
             'surname_latin' => $dto->surnameLatin,
             'name_latin' => $dto->nameLatin,
-            'patronymic_latin' => $dto->patronymicLatin,
+            'patronymic_latin' =>$dto->patronymicLatin,
             'passport_number' => $dto->passportNumber,
             'passport_series' => $dto->passportSeries,
             'issued_by' => $dto->issuedBy,
-            'issued_date' =>  $dto->issuedDate,
-            'citizenship' =>  $dto->citizenship,
-            'phone' =>  $dto->phone,
-            'address_reg' => $dto->addressReg,
-            'creator_id' => $creator->id,
-            'center_id' => $creator->center_id,
+            'issued_date' => $dto->issuedDate,
+            'citizenship' => $dto->citizenship,
+            'phone' => $dto->phone,
             'gender' => $dto->gender,
-            'comment' => $dto->comment,
+            'address_reg' => $dto->addressReg,
+            'comment' => $dto->comment ?? '',
             'surname_normalized' => $this->normalize($dto->surname),
             'name_normalized' => $this->normalize($dto->name),
             'patronymic_normalized' => $this->normalize($dto->patronymic),

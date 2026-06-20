@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Employee;
 
-use App\Modules\Employee\CreateEmployeeAction;
+use App\Modules\Employee\CreateEmployee;
 use App\Modules\Employee\UpdateEmployee;
 use App\Enums\EmployeeRole;
 use App\Exceptions\BusinessException;
@@ -55,7 +55,7 @@ class EmployeeController
 
     public function store(
         EmployeePostRequest $request,
-        CreateEmployeeAction $createEmployee,
+        CreateEmployee $createEmployee,
         Center $center
     ): JsonResponse {
         //abort_if($center->id !== request()->user()->center_id, 404);

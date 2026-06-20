@@ -11,26 +11,34 @@ class RegNumberGenerator
 {
     public function execute(int $centerId):int
     {
-        return DB::transaction(function () use($centerId) {
+        return DB::transaction(function () use ( $centerId ) 
+        {
             $regNumber = Counter::findLockedOrFail(
                 CounterKey::RegNum,
                 $centerId
             );
-                
-            $this->needReset($regNumber) 
+    
+            if($regNumber->notInitialized()){ 
+                $regNumber->initialize();
+                $regNumber->save();
+                return $regNumber->value;
+            }
+
+            $this->shouldReset($regNumber) 
                 ?   $regNumber->reset()
-                :   $regNumber->increment('value', 1);
+                :   $regNumber->incrementValue();
+
             $regNumber->save();
 
             return $regNumber->value;
         });
     }
 
-    protected function needReset(Counter $counter): bool
+    protected function shouldReset(Counter $counter): bool
     {
         $currentYear = Carbon::now()->year;
-        $counterUpdatedYear = $counter->updated_at->year;
+        $counterLastIncrementYear = $counter->last_increment_at->year;
 
-        return $counterUpdatedYear !== $currentYear;
+        return $counterLastIncrementYear !== $currentYear;
     }
 }

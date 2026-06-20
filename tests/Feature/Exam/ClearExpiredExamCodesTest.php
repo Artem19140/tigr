@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Exam;
 
-use App\Modules\Exam\Action\ClearExpiredExamCodes;
+use App\Modules\Scheduler\ClearExpiredExamCodes;
 use App\Models\Enrollment;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;

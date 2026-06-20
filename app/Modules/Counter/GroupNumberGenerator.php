@@ -17,17 +17,24 @@ class GroupNumberGenerator
                 $centerId
             );
 
-            $this->needReset($groupNumber) 
+            if($groupNumber->notInitialized()){
+                $groupNumber->initialize();
+                $groupNumber->save();
+                return $groupNumber->value;
+            }
+
+            $this->shouldReset($groupNumber) 
                 ?  $groupNumber->reset() 
-                :  $groupNumber->increment('value', 1);
+                :  $groupNumber->incrementValue();
+                
             return $groupNumber->value;
         });
     }
 
-    protected function needReset(Counter $counter): bool
+    protected function shouldReset(Counter $counter): bool
     {
         $today = Carbon::now()->toDateString();
-        $counterUpdatedAt = $counter->updated_at->toDateString();
+        $counterUpdatedAt = $counter->last_increment_at->toDateString();
 
         return $counterUpdatedAt !== $today;
     }

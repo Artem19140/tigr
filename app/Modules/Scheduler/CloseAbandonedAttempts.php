@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Modules\Attempt\Action;
+namespace App\Modules\Scheduler;
 
 use App\Models\Attempt;
+use App\Modules\Attempt\Action\FinilizeAttemptChecking;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
-class CloseAbandonedAttemptsAction
+class CloseAbandonedAttempts
 {
     public function __construct(
-        protected FinilizeAttemptCheckingAction $finilizeAttemptCheckingAction
+        protected FinilizeAttemptChecking $finilizeAttemptChecking
     ) {}
 
     public function execute(): void
@@ -36,7 +37,7 @@ class CloseAbandonedAttemptsAction
         }
         $attempt->finished_at = $attempt->last_activity_at;
         if ($attempt->canBeAutomaticallyFinalized()) {
-            $this->finilizeAttemptCheckingAction->execute($attempt);
+            $this->finilizeAttemptChecking->execute($attempt);
         }
 
         $attempt->save();

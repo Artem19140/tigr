@@ -7,6 +7,7 @@ use App\Exceptions\Counter\CounterNotFoundException;
 use App\Models\Scopes\BelongsToCenter;
 use App\Modules\Center\CenterContext;
 use App\Support\CenterIsolationCheck;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Counter extends Model
@@ -17,15 +18,15 @@ class Counter extends Model
         'key',
         'value',
         'center_id',
-        'last_incremented_at'
+        'last_increment_at'
     ];
 
     protected $casts = [
         'key' => CounterKey::class,
-        'last_incremented_at' => 'datetime'
+        'last_increment_at' => 'datetime'
     ];
 
-    public static function findLockedOrFail(CounterKey $key, int $centerId)
+    public static function findLockedOrFail(CounterKey $key, int $centerId): self
     {
         $counter = self::query()
             ->lockForUpdate()
@@ -45,5 +46,21 @@ class Counter extends Model
     public function reset():void
     {
         $this->value = $this->key->defaultValue();
+    }
+
+    public function incrementValue()
+    { 
+        $this->last_increment_at = Carbon::now();
+        $this->value += 1;
+    }
+
+    public function notInitialized(): bool
+    {
+        return $this->last_increment_at === null;
+    }
+
+    public function initialize(): void
+    {
+        $this->last_increment_at = Carbon::now();
     }
 }

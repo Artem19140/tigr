@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\ForeignNational\Query;
+namespace App\Modules\ForeignNational;
 
 use App\Http\Dto\ForeignNationalIndexDto;
 use App\Modules\Center\CenterContext;
@@ -8,7 +8,7 @@ use App\Models\ForeignNational;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\Paginator;
 
-class GetForeignNationalsQuery
+class GetForeignNationals
 {
     public function __construct(
         protected CenterContext $centerContext

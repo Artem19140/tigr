@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Web\ForeignNational;
 
-use App\Modules\ForeignNational\Action\CreateForeignNationalWithEnrollmentAction;
-use App\Modules\ForeignNational\Action\UpdateForeignNationalAction;
-use App\Modules\ForeignNational\Query\ForeignNationalViewBuilder;
-use App\Modules\ForeignNational\Query\GetForeignNationalsQuery;
+use App\Modules\ForeignNational\CreateForeignNationalWithEnrollment;
+use App\Modules\ForeignNational\UpdateForeignNational;
+use App\Modules\ForeignNational\ForeignNationalViewBuilder;
+use App\Modules\ForeignNational\GetForeignNationals;
 use App\Http\Requests\ForeignNational\ForeignNationalIndexRequest;
 use App\Http\Requests\ForeignNational\ForeignNationalPostRequest;
 use App\Http\Requests\ForeignNational\ForeignNationalUpdateRequest;
@@ -23,12 +23,12 @@ class ForeignNationalController
 {
     public function index(
         ForeignNationalIndexRequest $request,
-        GetForeignNationalsQuery $getForeignNationalsQuery
+        GetForeignNationals $getForeignNationals
     ): Response {
 
         Gate::authorize('viewAny', ForeignNational::class);
         $dto = $request->toDto();
-        $foreignNationals = $getForeignNationalsQuery->execute($dto);
+        $foreignNationals = $getForeignNationals->execute($dto);
 
         Inertia::flash(['filters' => $request->validated(), 'test' => $dto->toFilters()]);
 
@@ -49,10 +49,10 @@ class ForeignNationalController
 
     public function store(
         ForeignNationalPostRequest $request,
-        CreateForeignNationalWithEnrollmentAction $createForeignNationalWithEnrollmentAction
+        CreateForeignNationalWithEnrollment $createForeignNationalWithEnrollment
     ): JsonResponse {
         Gate::authorize('create', ForeignNational::class);
-        $enrollement = $createForeignNationalWithEnrollmentAction
+        $enrollement = $createForeignNationalWithEnrollment
             ->execute(
                 $request->toDto(),
                 $request->validated('examId'),
@@ -82,9 +82,9 @@ class ForeignNationalController
     public function update(
         ForeignNationalUpdateRequest $request,
         ForeignNational $foreignNational,
-        UpdateForeignNationalAction $updateForeignNationalAction
+        UpdateForeignNational $updateForeignNational
     ): JsonResponse {
-        $updatedForeignNational = $updateForeignNationalAction->execute(
+        $updatedForeignNational = $updateForeignNational->execute(
             $request->toDto(),
             $foreignNational
         );

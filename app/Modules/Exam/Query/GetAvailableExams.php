@@ -4,7 +4,7 @@ namespace App\Modules\Exam\Query;
 
 use App\Modules\Center\CenterContext;
 use App\Models\Exam;
-use App\Modules\Shared\SystemSettings;
+use App\Modules\Shared\ExamSettings;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -20,7 +20,7 @@ class GetAvailableExams
         int $examTypeId,
         ?int $foreignNationalId = null
     ): Collection {
-        $enrollmentCloseBeforeMinutes = SystemSettings::enrollmentCloseBeforeExamMinutes();
+        $enrollmentCloseBeforeMinutes = ExamSettings::enrollmentCloseBeforeExamMinutes();
         $exams = Exam::select('id', 'begin_time', 'center_id')
             ->forCenter($this->centerContext->id())
             ->with(['center'])

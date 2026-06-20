@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Attempt\Task;
 
-use App\Modules\AttemptAnswer\Resolvers\TaskHandlerResolver;
+use App\Modules\AttemptAnswer\TaskHandlerResolver;
 use App\Enums\TaskType;
 use App\Exceptions\Task\TaskHandlerNotFoundException;
 use App\Models\Task;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Exam;
 
-use App\Modules\Attempt\Action\CreateAttemptAction;
+use App\Modules\Attempt\Passing\CreateAttempt;
 use App\Modules\Exam\Action\CancelExam;
 use App\Modules\Exam\Action\CreateExam;
 use App\Modules\Exam\Action\UpdateExam;
@@ -120,7 +120,7 @@ class ExamController
 
     public function verifyCode(
         VerifyCodeRequest $request,
-        CreateAttemptAction $createAttempt
+        CreateAttempt $createAttempt
     ): RedirectResponse {
         $attempt = $createAttempt->execute($request->validated('code'));
 

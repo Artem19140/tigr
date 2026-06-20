@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modules\AttemptAnswer\Action;
+namespace App\Modules\AttemptAnswer;
 
-use App\Modules\AttemptAnswer\Resolvers\TaskHandlerResolver;
+use App\Modules\AttemptAnswer\TaskHandlerResolver;
 use App\Exceptions\Task\TaskAnswersNotAllowedException;
 use App\Models\AttemptAnswer;
 use App\Models\Task;
 
-class HandleAttemptAnswerAction
+class HandleAttemptAnswer
 {
     public function __construct(
         protected TaskHandlerResolver $taskHandlerResolver

@@ -8,7 +8,7 @@ use App\Models\AttemptAnswer;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 
-class CheckPassingThresholdsService
+class CheckPassingThresholds
 {
     public function execute(Attempt $attempt): bool
     {

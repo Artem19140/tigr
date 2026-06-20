@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Attempt;
 
-use App\Modules\Attempt\Action\CloseAbandonedAttemptsAction;
+use App\Modules\Scheduler\CloseAbandonedAttempts;
 use App\Models\Attempt;
 use App\Models\Exam;
 use App\Models\ExamType;
@@ -14,12 +14,12 @@ class CloseAbandonedAttemptsTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected CloseAbandonedAttemptsAction $action;
+    protected CloseAbandonedAttempts $action;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->action = app(CloseAbandonedAttemptsAction::class);
+        $this->action = app(CloseAbandonedAttempts::class);
         Carbon::setTestNow('2026-01-01 10:00:00');
     }
 

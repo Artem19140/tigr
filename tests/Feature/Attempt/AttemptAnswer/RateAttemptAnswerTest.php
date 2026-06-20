@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Attempt\AttemptAnswer;
 
-use App\Modules\AttemptAnswer\Action\RateAttemptAnswerAction;
+use App\Modules\AttemptAnswer\RateAttemptAnswer;
 use App\Enums\TaskType;
 use App\Models\Attempt;
 use App\Models\AttemptAnswer;
@@ -15,7 +15,7 @@ use Tests\TestCase;
 
 class RateAttemptAnswerTest extends TestCase
 {
-    protected RateAttemptAnswerAction $action;
+    protected RateAttemptAnswer $action;
 
     protected AttemptAnswer $attemptAnswer;
 
@@ -44,7 +44,7 @@ class RateAttemptAnswerTest extends TestCase
 
         $this->attemptAnswer->setRelation('taskVariant', $taskVariant);
 
-        $this->action = app(RateAttemptAnswerAction::class);
+        $this->action = app(RateAttemptAnswer::class);
         Carbon::setTestNow(Carbon::now());
     }
 

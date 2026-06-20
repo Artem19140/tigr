@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Document;
 
-use App\Modules\Document\DocumentService;
+use App\Modules\Document\DocumentSaver;
 use App\Http\Resources\Document\DocumentResource;
 use App\Models\Document;
 use Illuminate\Http\Request;
@@ -27,7 +27,7 @@ class DocumentController
     public function update(
         Request $request,
         Document $document,
-        DocumentService $documentService
+        DocumentSaver $documentSaver
     )
     {
         $request->validate([
@@ -37,7 +37,7 @@ class DocumentController
         $document->deleted_at = Carbon::now();
         $document->save();
         
-        $newDocument = $documentService->create(
+        $newDocument = $documentSaver->store(
             $request->file('document'),
             $document->documentable,
             $document->document_type

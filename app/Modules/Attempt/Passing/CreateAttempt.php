@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Modules\Attempt\Action;
+namespace App\Modules\Attempt\Passing;
 
 use App\Models\Task;
-use App\Modules\Attempt\Services\VerifyCodeService;
+use App\Modules\Enrollment\VerifyCode;
 use App\Modules\Counter\GroupNumberGenerator;
 use App\Modules\Counter\SessionNumberGenerator;
 use App\Exceptions\BusinessException;
@@ -15,18 +15,18 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class CreateAttemptAction
+class CreateAttempt
 {
     public function __construct(
         protected GroupNumberGenerator $groupNumberGenerator,
         protected SessionNumberGenerator $sessionNumberGenerator,
-        protected VerifyCodeService $verifyCodeService
+        protected VerifyCode $verifyCode
     ) {}
 
     public function execute(string $code): Attempt
     {
         $attempt = DB::transaction(function () use ($code) {
-            $enrollment = $this->verifyCodeService->execute($code);
+            $enrollment = $this->verifyCode->execute($code);
 
             $exam = Exam::findOrFail($enrollment->exam_id);
             

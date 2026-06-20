@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Counter;
 
-use App\Modules\Center\CenterContext;
 use App\Modules\Counter\RegNumberGenerator;
 use App\Enums\CounterKey;
 use App\Models\Center;
@@ -29,7 +28,7 @@ class RegNumberGeneratorTest extends TestCase
 
         Counter::create([
             'key' => CounterKey::RegNum,
-            'value' => CounterKey::RegNum->defaultValue() - 1,
+            'value' => CounterKey::RegNum->defaultValue(),
             'center_id' => $this->center->id
         ]);
     }

@@ -7,7 +7,6 @@ use App\Modules\Enrollment\CreateEnrollment;
 use App\Http\Requests\Enrollment\EnrollmentStoreRequest;
 use App\Models\Enrollment;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Gate;
 
 class EnrollmentController
 {
@@ -33,8 +32,6 @@ class EnrollmentController
         Enrollment $enrollment,
         ChangePaymentStatus $changePaymentStatus
     ): JsonResponse {
-
-        Gate::authorize('payment', $enrollment);
         $changePaymentStatus->execute($enrollment);
 
         return response()->json();

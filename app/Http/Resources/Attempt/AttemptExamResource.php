@@ -4,7 +4,7 @@ namespace App\Http\Resources\Attempt;
 
 use App\Http\Resources\ForeignNational\ForeignNationalResource;
 use App\Http\Resources\TaskVariant\TaskVariantResource;
-use App\Modules\Shared\SystemSettings;
+use App\Modules\Shared\ExamSettings;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -26,7 +26,7 @@ class AttemptExamResource extends JsonResource
             'expiredAt' => $this->resource->expired_at,
             'foreignNational' => new ForeignNationalResource($this->whenLoaded('foreignNational')),
             'examName' => $this->whenLoaded('exam', fn () => $this->exam->type->short_name),
-            'minDurationMinutes' => SystemSettings::attemptMinDurationMinutes(),
+            'minDurationMinutes' => ExamSettings::attemptMinDurationMinutes(),
             'tasksCount' => $this->whenLoaded('exam', fn () => $this->exam->type->tasks_count),
         ];
     }

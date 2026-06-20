@@ -2,13 +2,13 @@
 
 namespace App\Modules\Attempt\Action;
 
-use App\Modules\Attempt\Services\CheckPassingThresholdsService;
+use App\Modules\Attempt\Services\CheckPassingThresholds;
 use App\Models\Attempt;
 
-class FinilizeAttemptCheckingAction
+class FinilizeAttemptChecking
 {
     public function __construct(
-        protected CheckPassingThresholdsService $checkPassingThresholdsService
+        protected CheckPassingThresholds $checkPassingThresholds
     ) {}
 
     public function execute(Attempt $attempt): Attempt
@@ -20,7 +20,7 @@ class FinilizeAttemptCheckingAction
             'exam.type.blocks.subblocks'
         ]);
 
-        $attempt->is_passed = $this->checkPassingThresholdsService->execute($attempt);
+        $attempt->is_passed = $this->checkPassingThresholds->execute($attempt);
         
         $attempt->markAsChecked();
         $attempt->save();

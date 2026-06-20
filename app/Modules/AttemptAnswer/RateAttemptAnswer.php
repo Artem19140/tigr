@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Modules\AttemptAnswer\Action;
+namespace App\Modules\AttemptAnswer;
 
-use App\Modules\Attempt\Action\FinilizeAttemptCheckingAction;
 use App\Enums\TaskType;
 use App\Models\Attempt;
 use App\Models\AttemptAnswer;
@@ -11,12 +10,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
-class RateAttemptAnswerAction
+class RateAttemptAnswer
 {
-    public function __construct(
-        protected FinilizeAttemptCheckingAction $finilizeAttemptCheckingAction
-    ) {}
-
     public function execute(
         AttemptAnswer $attemptAnswer,
         int $mark

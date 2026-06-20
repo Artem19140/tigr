@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Exam\Action;
+namespace App\Modules\Scheduler;
 
 use App\Models\Enrollment;
 use Carbon\Carbon;

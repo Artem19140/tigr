@@ -25,7 +25,7 @@ class SessionNumberGeneratorTest extends TestCase
 
         Counter::create([
             'key' => CounterKey::Session,
-            'value' => CounterKey::Session->defaultValue() - 1,
+            'value' => CounterKey::Session->defaultValue(),
             'center_id' => $this->center->id
         ]);
 
@@ -43,7 +43,23 @@ class SessionNumberGeneratorTest extends TestCase
         $this->assertEquals($firstNumber, CounterKey::Session->defaultValue());
 
         $secondNumber = $this->generator->execute($this->center->id);
-        $this->assertEquals($secondNumber, CounterKey::Session->defaultValue() + 1);
+        $this->assertEquals($secondNumber, CounterKey::Session->defaultValue());
+    }
+
+    public function test_session_number_generation_change_day(): void
+    {
+        $number = $this->generator->execute($this->center->id);
+        $this->assertEquals($number, CounterKey::Session->defaultValue());
+
+        Carbon::setTestNow(Carbon::now()->addDay());
+
+        $secondDay = $this->generator->execute($this->center->id);
+        $this->assertEquals($secondDay, CounterKey::Session->defaultValue() + 1);
+
+        Carbon::setTestNow(Carbon::now()->addDays(2));
+
+        $thirdDay = $this->generator->execute($this->center->id);
+        $this->assertEquals($thirdDay, CounterKey::Session->defaultValue() + 2);
     }
 
     public function test_session_number_generation_change_year(): void

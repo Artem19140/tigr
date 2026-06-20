@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Web\Attempt;
 
-use App\Modules\AttemptAnswer\Action\HandleAttemptAnswerAction;
-use App\Modules\AttemptAnswer\Action\RateAttemptAnswerAction;
+use App\Modules\AttemptAnswer\HandleAttemptAnswer;
+use App\Modules\AttemptAnswer\RateAttemptAnswer;
 use App\Http\Requests\AttemptAnswer\AttemptAnswerRequest;
 use App\Http\Resources\AttemptAnswer\AttemptAnswerResource;
 use App\Models\Attempt;
@@ -22,7 +22,7 @@ class AttemptAnswerController
         AttemptAnswerRequest $request,
         Attempt $attempt,
         AttemptAnswer $attemptAnswer,
-        HandleAttemptAnswerAction $handleAttemptAnswerAction
+        HandleAttemptAnswer $handleAttemptAnswer
     ): JsonResource {
        
         $this->authorize($attempt, $attemptAnswer);
@@ -32,9 +32,9 @@ class AttemptAnswerController
             $foreignNationalAnswer, 
             $attempt, 
             $attemptAnswer, 
-            $handleAttemptAnswerAction
+            $handleAttemptAnswer
         ) {
-            $answer = $handleAttemptAnswerAction->execute($foreignNationalAnswer, $attemptAnswer);
+            $answer = $handleAttemptAnswer->execute($foreignNationalAnswer, $attemptAnswer);
             $attempt->last_activity_at = Carbon::now();
             $attempt->save();
 
@@ -47,13 +47,13 @@ class AttemptAnswerController
     public function rate(
         Request $request,
         AttemptAnswer $attemptAnswer,
-        RateAttemptAnswerAction $rateAttemptAnswerAction
+        RateAttemptAnswer $rateAttemptAnswer
     ): JsonResponse {
         Gate::authorize('attempts.employee-access', $attemptAnswer->attempt);
         $request->validate([
             'mark' => ['required', 'integer', 'min:0'],
         ]);
-        $attemptAnswer = $rateAttemptAnswerAction->execute(
+        $attemptAnswer = $rateAttemptAnswer->execute(
             $attemptAnswer, 
             $request->input('mark')
         );

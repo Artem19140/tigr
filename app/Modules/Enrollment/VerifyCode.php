@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modules\Attempt\Services;
+namespace App\Modules\Enrollment;
 
 use App\Models\Enrollment;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
-use Log;
 
-class VerifyCodeService
+class VerifyCode
 {
     public function execute(string $code): Enrollment
     {

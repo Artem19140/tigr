@@ -26,7 +26,7 @@ class AttemptSpeakingController
         if($result->isNotAvailable()){
             throw new BusinessException($result->message());
         }
-
+        
         $attempt = $getAttemptSpeakingQuery->execute($attempt);
 
         return new AttemptMonitoringResource($attempt);
@@ -59,6 +59,4 @@ class AttemptSpeakingController
 
         return response()->noContent();
     }
-
-
 }

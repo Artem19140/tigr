@@ -8,10 +8,10 @@ use App\Models\Attempt;
 use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
 
-class AnnulledAttemptAction
+class AnnulAttempt
 {
     public function __construct(
-        protected FinilizeAttemptCheckingAction $finilizeAttemptCheckingAction,
+        protected FinilizeAttemptChecking $finilizeAttemptChecking,
         protected AttemptAnnulledRules $attemptAnnulledRules
     ) {}
 
@@ -43,7 +43,7 @@ class AnnulledAttemptAction
         $attempt->finish();
 
         if ($attempt->canBeAutomaticallyFinalized()) {
-            $this->finilizeAttemptCheckingAction->execute($attempt);
+            $this->finilizeAttemptChecking->execute($attempt);
         }
     }
 }

@@ -11,6 +11,12 @@ class EnrollmentPaymentRules
 {
     public function check(Enrollment $enrollment, Exam $exam):RuleResult
     {
+        if($enrollment->attempt){
+            return RuleResult::fail(
+                AvailabilityCode::AttemptExists
+            );
+        }
+
         if($exam->isCancelled()){
             return RuleResult::fail(
                 AvailabilityCode::ExamCancelled
@@ -22,13 +28,6 @@ class EnrollmentPaymentRules
                 AvailabilityCode::ExamAlreadyFinished
             );
         }
-
-        if($enrollment->attempt){
-            return RuleResult::fail(
-                AvailabilityCode::AttemptExists
-            );
-        }
-
         return RuleResult::success();
     }
 }

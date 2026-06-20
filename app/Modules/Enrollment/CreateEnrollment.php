@@ -8,7 +8,7 @@ use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\Exam;
 use App\Models\ForeignNational;
-use App\Modules\Shared\SystemSettings;
+use App\Modules\Shared\ExamSettings;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -56,7 +56,7 @@ final class CreateEnrollment
 
     protected function ensureEnrollementWindowNotClosed(Exam $exam): void
     {
-        $closeBeforeMinutes = SystemSettings::enrollmentCloseBeforeExamMinutes();
+        $closeBeforeMinutes = ExamSettings::enrollmentCloseBeforeExamMinutes();
         $enrollmentEnded = Carbon::now()
             ->greaterThan($exam->begin_time->subMinutes($closeBeforeMinutes));
         if ($enrollmentEnded) {

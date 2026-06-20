@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modules\Attempt\Action;
+namespace App\Modules\Attempt\Passing;
 
 use App\Exceptions\BusinessException;
 use App\Models\Attempt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class StartAttemptAction
+class StartAttempt
 {
     public function execute(Attempt $attempt): Attempt
     {

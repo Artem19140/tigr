@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web\ForeignNational;
 
 use App\Modules\Center\CenterContext;
-use App\Modules\ForeignNational\Query\ExportForeignNationalQuery;
+use App\Modules\ForeignNational\ExportForeignNational;
 use App\Exceptions\BusinessException;
 use App\Http\Requests\ForeignNational\ForeignNationalExportRequest;
 use App\Models\ForeignNational;
@@ -35,7 +35,7 @@ class ForeignNationalExportController
 
     public function export(
         ForeignNationalExportRequest $request,
-        ExportForeignNationalQuery $exportForeignNationalQuery
+        ExportForeignNational $exportForeignNational
     ): StreamedResponse {
 
         $dateFrom = Carbon::parse($request->validated('dateFrom'));
@@ -51,7 +51,7 @@ class ForeignNationalExportController
         $fileName = "Выгрузка_ИГ_{$dateFrom->toDateString()}_{$dateTo->toDateString()}_{$citizenship}.csv";
 
         return response()->streamDownload(function () use (
-            $exportForeignNationalQuery,
+            $exportForeignNational,
             $dateFrom,
             $dateTo,
             $citizenship

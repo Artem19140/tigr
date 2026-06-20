@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Attempt\Query;
+namespace App\Modules\Attempt\Passing;
 
 use App\Enums\TaskType;
 use App\Exceptions\BusinessException;
@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class GetCurrentAttemptQuery
+class AttemptPassingViewBuilder
 {
-    public function execute(Attempt $attempt): Attempt
+    public function build(Attempt $attempt): Attempt
     {
         if (! $attempt->isStarted()) {
             throw new BusinessException('Попытка еще не начата ');

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\AttemptAnswer\Resolvers;
+namespace App\Modules\AttemptAnswer;
 
 use App\Modules\AttemptAnswer\Handlers\EssayTaskHandler;
 use App\Modules\AttemptAnswer\Handlers\MultyInputTaskHandler;

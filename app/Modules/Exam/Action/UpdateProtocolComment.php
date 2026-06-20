@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Exam\Action\Monitoring;
+namespace App\Modules\Exam\Action;
 
 use App\Modules\Exam\Rules\ProtocolCommentRules;
 use App\Exceptions\BusinessException;

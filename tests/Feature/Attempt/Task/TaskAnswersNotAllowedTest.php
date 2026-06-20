@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Attempt\Task;
 
-use App\Modules\AttemptAnswer\Action\HandleAttemptAnswerAction;
+use App\Modules\AttemptAnswer\HandleAttemptAnswer;
 use App\Enums\TaskType;
 use App\Exceptions\Task\TaskAnswersNotAllowedException;
 use App\Models\Attempt;
@@ -33,7 +33,7 @@ class TaskAnswersNotAllowedTest extends TestCase
 
         $this->expectException(TaskAnswersNotAllowedException::class);
 
-        app(HandleAttemptAnswerAction::class)->execute('', $attemptAnswer);
+        app(HandleAttemptAnswer::class)->execute('', $attemptAnswer);
 
         Log::spy();
 

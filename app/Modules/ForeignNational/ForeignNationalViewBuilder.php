@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\ForeignNational\Query;
+namespace App\Modules\ForeignNational;
 
 use App\Models\Document;
 use App\Models\Employee;

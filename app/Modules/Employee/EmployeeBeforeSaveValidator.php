@@ -27,7 +27,8 @@ class EmployeeBeforeSaveValidator
         $hasPlatformAdminRole = \in_array($platformAdminRole->id, $rolesIds);
         if ( $hasPlatformAdminRole ) {
             throw new EmployeeValidationExcepion(
-                'ANUTHORIZED: employee_validation - roles has platform admin role', [
+                'ANUTHORIZED: employee_validation - roles has platform admin role', 
+                [
                     'rolesIds' => $rolesIds
                 ]
             );
@@ -45,7 +46,8 @@ class EmployeeBeforeSaveValidator
 
         if($centerAdminCreating && $creatorIsNotPlatformAdmin){
             throw new EmployeeValidationExcepion(
-                'ANUTHORIZED: employee_validation - center admin creating with no role platform admin', [
+                'ANUTHORIZED: employee_validation - center admin creating with no role platform admin', 
+                [
                     'rolesIds' => $rolesIds
                 ]
             );
