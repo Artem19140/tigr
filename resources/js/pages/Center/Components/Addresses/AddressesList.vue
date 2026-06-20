@@ -34,10 +34,8 @@ const add = () => {
     </Head>
     <v-card>
         <v-card-text >
-            <div class="flex items-center justify-between" v-if="addresses.length > 0">
-                <v-card-title>
-                    Адреса
-                </v-card-title>
+            <div class="flex items-center justify-end" v-if="addresses.length > 0">
+
                 <div class="flex gap-4">
                     <AppAddButton 
                         @click="add"

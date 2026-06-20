@@ -10,7 +10,6 @@ const props = defineProps<{
 const download = (document : string) => {
     window.open(`/enrollments/${props.enrollment.id}/${document}`)
 }
-
 </script>
 
 <template>

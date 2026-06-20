@@ -37,46 +37,51 @@ const search = ref('')
 </script>
 
 <template>
-    <div class="flex items-center gap-4 ">
-        <div class="flex items-center gap-2 mt-2" >
-            <span>Записано: </span> <ExamCapacityChip :exam="exam"/>
-        </div>
-    
-        <AppInput
-            v-model="search"
-            density="compact"
-            label="Поиск"
-            prepend-inner-icon="mdi-magnify"
-            variant="outlined"
-            hide-details
-            single-line
-        />
-    
-    </div>
-    
-    <v-data-table 
-        :items="exam.enrollments"
-        hide-default-footer
-        :headers="headers"
-        hover
-        @click:row="foreignNationalShowModal"
-        
-        :items-per-page="-1"
-        :search="search"
+    <v-card
+        variant="text"
     >
+        <v-card-text>
+        <div class="flex items-center gap-4 ">
+            <div class="flex items-center gap-2 mt-2" >
+                <span>Записано: </span> <ExamCapacityChip :exam="exam"/>
+            </div>
         
-        <template #item.hasPayment="{ item }" >
-            <PaymentIcon :enrollment="item" />
-        </template>
-        <template #item.actions="{item}">
-            <EnrollmentDropDown 
-                :enrollment="item"
+            <AppInput
+                v-model="search"
+                density="compact"
+                label="Поиск"
+                prepend-inner-icon="mdi-magnify"
+                variant="outlined"
+                hide-details
+                single-line
+                max-width="300"
             />
-        </template>
-        <template #item.results="{ item }">
-            <ExamResultStatusChip 
-                :status="item.examResult"
-            />
-        </template>
-    </v-data-table>
+        
+        </div>
+        </v-card-text>
+        <v-data-table 
+            :items="exam.enrollments"
+            hide-default-footer
+            :headers="headers"
+            hover
+            @click:row="foreignNationalShowModal"
+            :items-per-page="-1"
+            :search="search"
+        >
+            
+            <template #item.hasPayment="{ item }" >
+                <PaymentIcon :enrollment="item" />
+            </template>
+            <template #item.actions="{item}">
+                <EnrollmentDropDown 
+                    :enrollment="item"
+                />
+            </template>
+            <template #item.results="{ item }">
+                <ExamResultStatusChip 
+                    :status="item.examResult"
+                />
+            </template>
+        </v-data-table>
+    </v-card>
 </template>

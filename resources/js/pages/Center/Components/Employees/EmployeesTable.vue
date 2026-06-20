@@ -27,10 +27,7 @@ const headers = [
     </Head>
     <v-card variant="text">
         <v-card-text >
-            <div class="flex items-center justify-between">
-                <v-card-title>
-                    Сотрудники
-                </v-card-title>
+            <div class="flex items-center justify-end">
                 <AppAddButton text="Добавить" 
                     @click="open('employeeCreate')" 
                 />

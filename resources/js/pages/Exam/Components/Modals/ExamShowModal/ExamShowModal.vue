@@ -8,6 +8,7 @@ import ExamStatusChip from '@components/Exam/ExamStatusChip.vue';
 import { Exam } from '@/interfaces/Exam';
 import ExamInfo from './ExamInfo.vue';
 import ExamVideo from './ExamVideo.vue';
+import { DateFormatter } from '@/helpers/DateFormatter.js';
 
 const props = defineProps<{
     examId:number
@@ -49,12 +50,11 @@ const tab = ref()
 
 <template>
     <BaseDialog 
-        width="900"
+        max-width="900"
         :loading="http.processing"
         v-model="isOpen"
         :error="!http.wasSuccessful"
         :onRetry="getExam"
-        :subtitle="`${exam?.sessionNumber ?? '-'} / ${exam?.group ?? '-'}`"
         @before-close="(close) =>  {
             http.cancel()
             close()
@@ -63,12 +63,14 @@ const tab = ref()
     >
         <template #title>
             <div class="flex gap-2">
-                Экзамен
+                {{ exam?.shortName }}<span v-if="exam?.sessionNumber && exam?.group">({{ exam?.sessionNumber }} / {{ exam?.group }})</span>
+                
                 <ExamStatusChip
                     v-if="exam"
                     :status="exam?.status"
                 />
             </div>
+            
         </template>
 
         <template #titleActions>
@@ -81,6 +83,8 @@ const tab = ref()
         </template> 
 
         <v-card-text class="pt-0">
+            <div class="pt-0 text-lg ml-2">{{new DateFormatter(exam?.beginTime ?? '').format('H:i, d M Y') }}</div>
+            <div class="pt-0 text-lg ml-2">{{exam?.address}}</div>
             <ExamInfo 
                 :exam="exam"
             />

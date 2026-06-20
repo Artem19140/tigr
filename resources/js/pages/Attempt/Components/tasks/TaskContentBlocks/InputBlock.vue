@@ -27,6 +27,7 @@ const checking = inject<boolean>('checking')
         density="compact"
         auto-grow
         rows="1"
+        hide-details
     >
 
         <template v-slot:prepend>

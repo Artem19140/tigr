@@ -81,13 +81,17 @@ const search = ref<string>('')
     <v-btn class="mt-4 ml-4" @click="back">Назад</v-btn>
     <v-container>
         <v-card>
-            <v-card-text class="flex items-center justify-between pb-0">
+            <v-card-text class="flex items-center justify-between">
                 <div>
-                    <v-card-title>
-                        Мониторинг
-                        <ExamStatusChip 
-                            :status="exam.data.status" 
-                        />
+                    <v-card-title >
+                        <div class="flex items-center gap-2">
+
+                        
+                            {{ exam.data.shortName }} {{ new DateFormatter(exam.data?.beginTime).format('d M Y, H:i ') }}
+                            <ExamStatusChip 
+                                :status="exam.data.status" 
+                            />
+                        </div>
                     </v-card-title>
                     <AppTooltip 
                             v-if="isPolling"
@@ -102,33 +106,14 @@ const search = ref<string>('')
                         </div>
                     </AppTooltip>    
                 </div>
-                <div>
-                    <!-- <ExamMonitoringDropdown 
-                        :exam="exam.data"
-                        :available="available"
-                    /> -->
-                    <v-btn
-                        variant="text"
-                        border
-                        @click="open('examComment', {exam:exam.data})"
-                    >
-                        Комментарий
-                    </v-btn>
-                </div>
-
-                
-
+                <ExamMonitoringDropdown 
+                    :exam="exam.data"
+                    :available="available"
+                />
             </v-card-text>
 
            
-            <v-card-text class="pt-0">
-                
-                <div 
-                    @click="() => open('examShow', {examId:exam.data.id})"
-                    class="text-blue bord underline cursor-pointer mb-2 ml-4"
-                >
-                    {{ exam.data.shortName }} {{ new DateFormatter(exam.data?.beginTime).format('d M Y, H:i ') }}
-                </div>
+            <v-card-text>
                 <AppInput
                     v-model="search"
                     density="compact"
@@ -136,7 +121,8 @@ const search = ref<string>('')
                     prepend-inner-icon="mdi-magnify"
                     variant="outlined"
                     hide-details
-                    single-line
+                    max-width="300"
+                    class="ml-2"
                 />
                 <v-data-table
                     :items="props.exam.data.enrollments"

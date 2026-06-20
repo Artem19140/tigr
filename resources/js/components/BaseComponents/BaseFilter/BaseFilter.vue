@@ -4,7 +4,7 @@ import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.v
 import { router } from '@inertiajs/vue3';
 
 const props = defineProps<{
-    form : any,
+    form: any,
     url: string,
     filters: any
 }>()

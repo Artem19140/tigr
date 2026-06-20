@@ -68,9 +68,8 @@ const error = ref(false)
 <template>
     
     <BaseDialog 
-        width="700"
-        height="900"
-        :title="`Карточка ИГ (ID ${foreignNational?.id ?? ''})`"
+        max-width="800"
+        :title="`Иностранный гражданин (ID ${foreignNational?.id ?? ''})`"
         :loading="http.processing"
         v-model="isOpen"
         :error="error"

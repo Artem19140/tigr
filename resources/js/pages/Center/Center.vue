@@ -40,7 +40,7 @@ const visit = (route : string) => {
 </script>
 
 <template>
-    <v-containter>
+    <v-container>
         <v-card>
             <v-tabs v-model="tab" color="primary">
                 <v-tab value="data" @click="() => visit('')">Данные</v-tab>
@@ -80,5 +80,5 @@ const visit = (route : string) => {
                 </v-tabs-window-item>
             </v-tabs-window>
         </v-card>
-    </v-containter>
+    </v-container>
 </template>
