@@ -21,13 +21,17 @@ class ForeignNationalGuard
     }
 
     public function ensureUniquePassport(
-        string $passportSeries,
-        string $passportNumber,
+        ?string $passportSeries,
+        ?string $passportNumber,
         ?int $ignoreId = null
     ): void {
         $notUniquePassportData = ForeignNational::query()
-            ->where('passport_number', $passportNumber)
-            ->where('passport_series', $passportSeries)
+            ->when($passportSeries, function(Builder $query) use( $passportSeries ){
+                $query->where('passport_series', $passportSeries);
+            })
+            ->when($passportSeries, function(Builder $query) use( $passportNumber ){
+                $query->where('passport_number', $passportNumber);
+            })
             ->when($ignoreId, function (Builder $query) use ($ignoreId) {
                 $query->where('id', '<>', $ignoreId);
             })

@@ -45,15 +45,15 @@
         <td>Дата рождения: <span class="data">{{ $enrollment->foreignNational->date_birth->format('d.m.Y') }}</span></td>
         <td>Место сдачи экзамена: <span class="data">{{ $enrollment->exam->address->address }}</span></td>
     </tr>
-    <tr>
+    {{-- <tr>
         <td>Контактный телефон: <span class="data">{{ $enrollment->foreignNational->phone }}</span></td>
         <td>Родной язык: <span class="data"></span></td>
-    </tr>
+    </tr> --}}
     <tr>
 
         <td>
             Наименование услуги и ее стоимость:
-            <p>{{ $enrollment->exam->type->name }}(уровень {{ $enrollment->exam->type->level }}) - стоимость <span class="data">{{ $enrollment->exam->type->amount}} ({{ $enrollment->exam->type->amount_in_words }})</span>рублей</p>
+            <p>{{ $enrollment->exam->type->name }}(уровень {{ $enrollment->exam->type->level }}) - стоимость <span class="data">{{ $enrollment->exam->type->amount}} рублей ({{ $enrollment->exam->type->amount_in_words }})</span></p>
         </td>
         <td>
             Вид документа, удостоверяющего личность <br><span class="data">{{ $enrollment->foreignNational->document_type}}</span><br>

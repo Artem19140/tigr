@@ -30,7 +30,6 @@ const close = () => {
         @keyup.esc="close"
         :height="height"
     >
-    <!-- class="dialog-card d-flex flex-column" -->
         <v-card >
             <v-card-text class="pb-0">
                 <div class="flex items-center justify-between">
@@ -66,13 +65,14 @@ const close = () => {
                 </div>
             </v-container>
             
-                <v-card-text 
-                    v-if="!loading && !error" 
-                    class="pa-4 overflow-y-auto flex-grow-1"
-                >
-                    <slot />   
-                </v-card-text>
             
+            <v-card-text 
+                v-if="!loading && !error" 
+                class="pa-6 overflow-y-auto "
+            >
+                <slot />   
+            </v-card-text>
+
             <v-card-text 
                 v-if="error && !loading" 
                 class="flex justify-center items-center flex-column"

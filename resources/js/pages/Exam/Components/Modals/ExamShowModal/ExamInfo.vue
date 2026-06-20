@@ -13,45 +13,106 @@ const examiners = computed(() =>{
 </script>
 
 <template>
-    <!-- <v-card variant="text" >
-        <v-card-text class="pt-0 pb-0">
+    <v-list class="pa-0">
 
-        
-            <div>{{new DateFormatter(exam?.beginTime ?? '').format('H:i, d M Y') }}</div>
-            <div>{{exam?.address}}</div>
-            <div>{{examiners}}</div>
-        </v-card-text>
-    </v-card> -->
-    <v-list>
-        <v-list-item v-if="exam?.cancelledAt || exam?.cancelledReason">
-            <v-list-item-subtitle class="text-red">Причина отмены</v-list-item-subtitle>
-            <v-list-item-title class="text-red" style="white-space: normal; word-break: break-word;">{{exam?.cancelledReason ?? '-'}}</v-list-item-title>
-        </v-list-item>
-        <!-- <v-list-item> 
-            <v-list-item-subtitle> Сессия / номер</v-list-item-subtitle>
-            <v-list-item-title>{{exam?.sessionNumber ?? '-' }} / {{ exam?.group ?? '-'}}</v-list-item-title>
-        </v-list-item> -->
-        <!-- <v-list-item>  
-            <v-list-item-subtitle>Тип</v-list-item-subtitle>
-            <v-list-item-title style="white-space: normal; word-break: break-word;">{{exam?.name}}</v-list-item-title>
-        </v-list-item> -->
-        
-        <!-- <v-list-item> 
-            <v-list-item-subtitle> Дата</v-list-item-subtitle>
-            <v-list-item-title>{{new DateFormatter(exam?.beginTime ?? '').format('H:i, d.m.Y') }}</v-list-item-title>
-        </v-list-item> -->
-        
-        <!-- <v-list-item>  
-            <v-list-item-subtitle>Адрес </v-list-item-subtitle>
-            <v-list-item-title style="white-space: normal; word-break: break-word;">{{exam?.address}}</v-list-item-title>
-        </v-list-item> -->
-        <v-list-item>
-            <v-list-item-subtitle>Экзаменаторы</v-list-item-subtitle>
-            <v-list-item-title style="white-space: normal; word-break: break-word;">{{examiners}}</v-list-item-title>
-        </v-list-item>
-        <v-list-item v-if="exam?.comment"> 
-            <v-list-item-subtitle>Комментарий</v-list-item-subtitle>
-            <v-list-item-title style="white-space: normal; word-break: break-word;">{{exam?.comment ?? '-'}}</v-list-item-title>
-        </v-list-item>     
-    </v-list>
+    <v-list-item
+        v-if="exam?.cancelledAt || exam?.cancelledReason"
+        class="text-error"
+    >
+        <template #prepend>
+            <v-icon color="error">mdi-alert-circle-outline</v-icon>
+        </template>
+
+        <div>
+            <div class="text-caption text-medium-emphasis">
+                Причина отмены
+            </div>
+
+            <div>
+                {{ exam?.cancelledReason ?? '-' }}
+            </div>
+        </div>
+    </v-list-item>
+
+    <v-list-item>
+        <template #prepend>
+            <v-icon>mdi-pound</v-icon>
+        </template>
+
+        <div>
+            <div class="text-caption text-medium-emphasis">
+                Сессия / группа
+            </div>
+
+            <div>
+                {{ exam?.sessionNumber ?? '-' }} / {{ exam?.group ?? '-' }}
+            </div>
+        </div>
+    </v-list-item>
+
+    <v-list-item>
+        <template #prepend>
+            <v-icon>mdi-calendar-clock-outline</v-icon>
+        </template>
+
+        <div>
+            <div class="text-caption text-medium-emphasis">
+                Дата
+            </div>
+
+            <div>
+                {{ new DateFormatter(exam?.beginTime ?? '').format('H:i, d.m.Y') }}
+            </div>
+        </div>
+    </v-list-item>
+
+    <v-list-item>
+        <template #prepend>
+            <v-icon>mdi-map-marker-outline</v-icon>
+        </template>
+
+        <div>
+            <div class="text-caption text-medium-emphasis">
+                Адрес
+            </div>
+
+            <div style="white-space: normal">
+                {{ exam?.address ?? '-' }}
+            </div>
+        </div>
+    </v-list-item>
+
+    <v-list-item>
+        <template #prepend>
+            <v-icon>mdi-account-group-outline</v-icon>
+        </template>
+
+        <div>
+            <div class="text-caption text-medium-emphasis">
+                Экзаменаторы
+            </div>
+
+            <div style="white-space: normal">
+                {{ examiners }}
+            </div>
+        </div>
+    </v-list-item>
+
+    <v-list-item v-if="exam?.comment">
+        <template #prepend>
+            <v-icon>mdi-message-text-outline</v-icon>
+        </template>
+
+        <div>
+            <div class="text-caption text-medium-emphasis">
+                Комментарий
+            </div>
+
+            <div style="white-space: normal">
+                {{ exam?.comment }}
+            </div>
+        </div>
+    </v-list-item>
+
+</v-list>
 </template>

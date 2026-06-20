@@ -61,14 +61,13 @@ const tab = ref()
         }"
         skeleton="heading, list-item-two-line, list-item-two-line"
     >
-        <template #title>
-            <div class="flex gap-2">
-                {{ exam?.shortName }}<span v-if="exam?.sessionNumber && exam?.group">({{ exam?.sessionNumber }} / {{ exam?.group }})</span>
-                
-                <ExamStatusChip
+        <template #title >
+            <div class="flex gap-2" >
+                {{ exam?.shortName }}
+                <!-- <ExamStatusChip
                     v-if="exam"
                     :status="exam?.status"
-                />
+                /> -->
             </div>
             
         </template>
@@ -83,18 +82,16 @@ const tab = ref()
         </template> 
 
         <v-card-text class="pt-0">
-            <div class="pt-0 text-lg ml-2">{{new DateFormatter(exam?.beginTime ?? '').format('H:i, d M Y') }}</div>
-            <div class="pt-0 text-lg ml-2">{{exam?.address}}</div>
             <ExamInfo 
                 :exam="exam"
             />
         </v-card-text>
 
-        <v-divider></v-divider>
+        <!-- <v-divider></v-divider> -->
         
         <v-card-text>
             <v-tabs v-model="tab">
-                <v-tab value="enrollments" v-if="permissions?.enrollments.view">Запись</v-tab>
+                <v-tab value="enrollments" v-if="permissions?.enrollments.view">Участники</v-tab>
                 <v-tab value="videos" v-if="permissions?.videos.view">Видео</v-tab>
             </v-tabs>
 
