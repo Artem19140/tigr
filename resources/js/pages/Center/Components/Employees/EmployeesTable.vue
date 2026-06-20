@@ -25,40 +25,46 @@ const headers = [
     <Head>
         <title>Сотрудники</title>
     </Head>
-    <v-data-table 
-        :headers="headers"
-        :items="employees"
-        toolbarColor="white"
-        :items-per-page="-1"
-        class="p-2"
-    >
-        <template #toolbar-actions>
-            <div class="flex gap-4">
+    <v-card variant="text">
+        <v-card-text >
+            <div class="flex items-center justify-between">
+                <v-card-title>
+                    Сотрудники
+                </v-card-title>
                 <AppAddButton text="Добавить" 
                     @click="open('employeeCreate')" 
                 />
             </div>
-        </template>
+        </v-card-text>
+    
+        <v-data-table 
+            :headers="headers"
+            :items="employees"
+            toolbarColor="white"
+            :items-per-page="-1"
+            class="p-2"
+        >
 
-        <template #item.roles="{item}">
-            <DetailsDropdown>
-                <v-list width="300" density="compact">
-                    <v-list-item
-                        v-for="role in item.roles"
-                    >
-                        <div class="whitespace-pre">
-                            {{ role.label }}
-                        </div>
-                        
-                    </v-list-item>
-                    <div v-if="item.roles.length === 0">Роли не назначены</div>
-                </v-list>
-            </DetailsDropdown>
-        </template>
-        
-        <template #item.actions="{item}">
-            <Dropdown :employee="item" />
-        </template>
-    </v-data-table >
+            <template #item.roles="{item}">
+                <DetailsDropdown>
+                    <v-list width="300" density="compact">
+                        <v-list-item
+                            v-for="role in item.roles"
+                        >
+                            <div class="whitespace-pre">
+                                {{ role.label }}
+                            </div>
+                            
+                        </v-list-item>
+                        <div v-if="item.roles.length === 0">Роли не назначены</div>
+                    </v-list>
+                </DetailsDropdown>
+            </template>
+            
+            <template #item.actions="{item}">
+                <Dropdown :employee="item" />
+            </template>
+        </v-data-table >
+    </v-card>
 </template>
 

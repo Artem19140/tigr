@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Web\Exam;
 
-use App\Modules\Enrollment\Rules\EnrollmentPaymentRules;
-use App\Modules\Exam\Action\Monitoring\UpdateProtocolCommentAction;
+use App\Modules\Enrollment\EnrollmentPaymentRules;
+use App\Modules\Exam\Action\Monitoring\UpdateProtocolComment;
 use App\Http\Resources\Exam\ExamIndexResource;
 use App\Http\Resources\Exam\ExamMonitoringResource;
 use App\Models\Enrollment;
@@ -76,7 +76,7 @@ class ExamMonitoringController
     public function protocolComment(
         Request $request,
         Exam $exam,
-        UpdateProtocolCommentAction $updateProtocolComment
+        UpdateProtocolComment $updateProtocolComment
     ): Response {
 
         $request->validate([

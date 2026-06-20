@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Enrollment\Rules;
+namespace App\Modules\Enrollment;
 
 use App\Modules\Shared\RuleResult;
 use App\Enums\AvailabilityCode;

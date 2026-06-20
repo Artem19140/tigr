@@ -1,7 +1,7 @@
 <?php
 
 use App\Modules\Attempt\Action\CloseAbandonedAttemptsAction;
-use App\Modules\Exam\Action\ClearExpiredExamCodesAction;
+use App\Modules\Exam\Action\ClearExpiredExamCodes;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
@@ -13,7 +13,7 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::call(function () {
-    app(ClearExpiredExamCodesAction::class)->execute();
+    app(ClearExpiredExamCodes::class)->execute();
 })->monthly();
 
 Schedule::call(function () {

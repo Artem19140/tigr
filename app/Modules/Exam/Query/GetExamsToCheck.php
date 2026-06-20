@@ -7,7 +7,7 @@ use App\Models\Exam;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
-class GetExamsToCheckQuery
+class GetExamsToCheck
 {
     public function execute(Employee $employee): Collection
     {

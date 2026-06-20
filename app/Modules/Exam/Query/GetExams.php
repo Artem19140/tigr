@@ -8,7 +8,7 @@ use App\Models\Employee;
 use App\Models\Exam;
 use Illuminate\Contracts\Pagination\Paginator;
 
-class GetExamsQuery
+class GetExams
 {
     public function __construct(
         protected CenterContext $centerContext

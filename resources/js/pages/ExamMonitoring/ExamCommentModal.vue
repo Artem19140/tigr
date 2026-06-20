@@ -23,6 +23,7 @@ const send = () => {
         onSuccess:() => {
             const {add} = useSnackbarQueue()
             add('Комментарий добавлен', 'green')
+            isOpen.value = false
         }
     })
 }

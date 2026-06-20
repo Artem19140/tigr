@@ -21,8 +21,6 @@ const props = defineProps<{
         <title>Проверка список</title>
     </Head>
     <v-container>
-        <v-card>
-            <ExamsCheckingTable :exams="exams.data" />
-        </v-card>
+        <ExamsCheckingTable :exams="exams.data" />
     </v-container>
 </template>

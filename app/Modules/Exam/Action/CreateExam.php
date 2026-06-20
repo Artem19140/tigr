@@ -8,7 +8,7 @@ use App\Models\Employee;
 use App\Models\Exam;
 use DB;
 
-final class CreateExamAction
+final class CreateExam
 {
     public function __construct(
         protected ExamBeforeSaveValidator $examBeforeSaveValidator

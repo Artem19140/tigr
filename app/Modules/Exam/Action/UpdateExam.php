@@ -11,7 +11,7 @@ use App\Support\ModelChangesLogger;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
-final class UpdateExamAction
+final class UpdateExam
 {
     public function __construct(
         protected ExamEditRules $examEditRules,
@@ -24,6 +24,7 @@ final class UpdateExamAction
         ExamDto $examDto,
     ): void {
         $result = $this->examEditRules->check($exam);
+        
         if($result->isNotAvailable()){
             throw new BusinessException($result->message());
         }

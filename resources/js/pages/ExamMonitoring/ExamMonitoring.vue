@@ -6,7 +6,6 @@ import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { useModals } from '@composables/useModals';
 import { computed, onMounted, onUnmounted, ref} from 'vue';
 import { DateFormatter } from '@helpers/DateFormatter';
-import BaseContainer from '@/components/BaseComponents/BaseContainer/BaseContainer.vue';
 import PaymentIcon from '@/components/Enrollment/PaymentIcon.vue';
 import ExamMonitoringDropdown from './ExamMonitoringDropdown.vue';
 import { ExamMonitoring } from '@/interfaces/Exam';
@@ -80,44 +79,56 @@ const search = ref<string>('')
         <title>{{ exam.data.shortName }} {{ new DateFormatter(exam.data?.beginTime).format('d.m.Y') }}</title>
     </Head>
     <v-btn class="mt-4 ml-4" @click="back">Назад</v-btn>
-    <BaseContainer>
-            <v-card-title>
-                <div class="flex justify-between">
-                    <div>
+    <v-container>
+        <v-card>
+            <v-card-text class="flex items-center justify-between pb-0">
+                <div>
+                    <v-card-title>
                         Мониторинг
                         <ExamStatusChip 
                             :status="exam.data.status" 
                         />
-                        <AppTooltip 
+                    </v-card-title>
+                    <AppTooltip 
                             v-if="isPolling"
                         >
-                            <div >
-                                <div>
-                                Обновления происходят каждые {{pollFrequency / 1000}} секунд
-                                </div>
-                                <div>
-                                При необходимости обновите страницу
-                                </div>
+                        <div >
+                            <div>
+                            Обновления происходят каждые {{pollFrequency / 1000}} секунд
                             </div>
-                        </AppTooltip>    
-                        
-                    </div>
-                    <ExamMonitoringDropdown 
+                            <div>
+                            При необходимости обновите страницу
+                            </div>
+                        </div>
+                    </AppTooltip>    
+                </div>
+                <div>
+                    <!-- <ExamMonitoringDropdown 
                         :exam="exam.data"
                         :available="available"
-                    />
+                    /> -->
+                    <v-btn
+                        variant="text"
+                        border
+                        @click="open('examComment', {exam:exam.data})"
+                    >
+                        Комментарий
+                    </v-btn>
                 </div>
-            </v-card-title>
 
-            <v-card-subtitle >
-                <div>{{ exam.data.shortName }} </div>
-                <div>
-                    {{ new DateFormatter(exam.data?.beginTime).format('d M Y, H:i ') }}
+                
 
-                </div>
-            </v-card-subtitle>
+            </v-card-text>
+
            
-            <v-card-text>
+            <v-card-text class="pt-0">
+                
+                <div 
+                    @click="() => open('examShow', {examId:exam.data.id})"
+                    class="text-blue bord underline cursor-pointer mb-2 ml-4"
+                >
+                    {{ exam.data.shortName }} {{ new DateFormatter(exam.data?.beginTime).format('d M Y, H:i ') }}
+                </div>
                 <AppInput
                     v-model="search"
                     density="compact"
@@ -166,5 +177,6 @@ const search = ref<string>('')
                     </template>
                 </v-data-table>
             </v-card-text>
-    </BaseContainer>
+            </v-card>
+    </v-container>
 </template>

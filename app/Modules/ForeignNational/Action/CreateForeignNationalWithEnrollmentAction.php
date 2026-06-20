@@ -3,7 +3,7 @@
 namespace App\Modules\ForeignNational\Action;
 
 use App\Http\Dto\ForeignNationalStoreDto;
-use App\Modules\Enrollment\Action\CreateEnrollmentAction;
+use App\Modules\Enrollment\CreateEnrollment;
 use App\Models\Employee;
 use App\Models\Enrollment;
 use Illuminate\Support\Facades\DB;
@@ -13,7 +13,7 @@ class CreateForeignNationalWithEnrollmentAction
 {
     public function __construct(
         protected StoreForeignNationalAction $storeForeignNational,
-        protected CreateEnrollmentAction $createEnrollment,
+        protected CreateEnrollment $createEnrollment,
     ) {}
 
     public function execute(

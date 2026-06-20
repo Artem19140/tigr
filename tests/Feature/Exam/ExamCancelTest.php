@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Exam;
 
-use App\Modules\Exam\Action\CancelExamAction;
+use App\Modules\Exam\Action\CancelExam;
 use App\Modules\Exam\Rules\ExamCancellRules;
 use App\Exceptions\BusinessException;
 use App\Models\Center;
@@ -65,7 +65,7 @@ class ExamCancelTest extends TestCase
             'cancelled_at' => '2026-01-01 10:00:00',
         ]);
 
-        $action = new CancelExamAction(app(ExamCancellRules::class));
+        $action = new CancelExam(app(ExamCancellRules::class));
         $this->expectException(BusinessException::class);
         $action->execute($exam, 'dfds');
     }
@@ -76,7 +76,7 @@ class ExamCancelTest extends TestCase
             'begin_time' => '2026-01-01 09:30:00',
         ]);
 
-        $action = new CancelExamAction(app(ExamCancellRules::class));
+        $action = new CancelExam(app(ExamCancellRules::class));
         $this->expectException(BusinessException::class);
         $action->execute($exam, 'dfds');
     }

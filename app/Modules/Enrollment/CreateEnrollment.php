@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Enrollment\Action;
+namespace App\Modules\Enrollment;
 
 use App\Modules\Counter\RegNumberGenerator;
 use App\Exceptions\BusinessException;
@@ -12,7 +12,7 @@ use App\Modules\Shared\SystemSettings;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
-final class CreateEnrollmentAction
+final class CreateEnrollment
 {
     public function __construct(
         protected RegNumberGenerator $regNumberGenerator

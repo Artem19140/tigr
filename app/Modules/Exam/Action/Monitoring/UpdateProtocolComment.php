@@ -7,7 +7,7 @@ use App\Exceptions\BusinessException;
 use App\Models\Exam;
 use Illuminate\Support\Facades\Log;
 
-class UpdateProtocolCommentAction
+class UpdateProtocolComment
 {
     public function __construct(
         protected ProtocolCommentRules $protocolCommentRules

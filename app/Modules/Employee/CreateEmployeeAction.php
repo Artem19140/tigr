@@ -2,72 +2,56 @@
 
 namespace App\Modules\Employee;
 
-use App\Enums\EmployeeRole;
+use App\Http\Dto\EmployeeDto;
 use App\Models\Center;
 use App\Models\Employee;
-use App\Models\Role;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class CreateEmployeeAction
 {
+    public function __construct(
+        protected EmployeeBeforeSaveValidator $validator
+    ){}
     public function execute(
-        array $data, 
+        EmployeeDto $dto, 
         Center $center,
         Employee $creator
     ):void {
-        $this->ensureHasNoRolePlatformAdmin($data);
-        $this->ensureCenterAdminValidCreation($data, $creator);
+        $this->validator->validate(
+            $dto,
+            $creator
+        );
 
-        DB::transaction(function () use ($data, $center) {
-
-            $employee = Employee::create($this->getAttributes($data, $center));
-            $employee->roles()->sync($data['roles']);
-            $this->log($employee);
-
+        DB::transaction(function () use ($dto, $center) {
+            $employee = Employee::create($this->getAttributes($dto, $center));
+            $rolesChanges = $employee->roles()->sync($dto->rolesIds);
+            $this->log($employee, [
+                'roles' => $rolesChanges
+            ]);
         });
+        
     }
 
-    protected function ensureHasNoRolePlatformAdmin(array $data): void
-    {
-        $platformAdminRole = Role::findByEnum(EmployeeRole::PlatformAdmin);
-
-        $hasPlatformAdminRole = \in_array($platformAdminRole->id, $data['roles']);
-        if ( $hasPlatformAdminRole ) {
-            abort(404);
-        }
-    }
-
-    protected function ensureCenterAdminValidCreation(array $data, Employee $creator): void
-    {
-        $centerAdminRole = Role::findByEnum(EmployeeRole::CenterAdmin);
-
-        $centerAdminCreating = \in_array($centerAdminRole->id, $data['roles']);
-        $creatorIsNotPlatformAdmin = ! $creator->isPlatformAdmin();
-
-        if($centerAdminCreating && $creatorIsNotPlatformAdmin){
-            abort(404);
-        }
-    }
-
-    protected function getAttributes(array $data, $center): array
+    protected function getAttributes(EmployeeDto $dto, $center): array
     {
         return [
-            'email' => $data['email'],
-            'name' => $data['name'],
-            'surname' => $data['surname'],
-            'patronymic' => $data['patronymic'],
-            'job_title' => $data['jobTitle'],
-            'password' => Hash::make($data['password']),
+            'email' => $dto->email,
+            'name' => $dto->name,
+            'surname' => $dto->surname,
+            'patronymic' => $dto->patronymic,
+            'job_title' => $dto->jobTitle,
+            'password' => Hash::make($dto->password),
             'center_id' =>  $center->id
         ];
     }
 
-    protected function log(Employee $employee): void
+    protected function log(Employee $employee, array $rolesIds): void
     {
         Log::info('employee_created', [
             'employee_id' => $employee->id,
+            'rolesIds' => $rolesIds
         ]);
     }
 }

@@ -6,7 +6,7 @@ use App\Models\Document;
 use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\ForeignNational;
-use App\Modules\Enrollment\Rules\EnrollmentPaymentRules;
+use App\Modules\Enrollment\EnrollmentPaymentRules;
 use App\Modules\Exam\Resolver\ExamResultResolver;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 

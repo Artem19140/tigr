@@ -80,7 +80,7 @@ class ExamPostRequest extends FormRequest
         ];
     }
 
-    public function getDto(): ExamDto
+    public function toDto(): ExamDto
     {
         return new ExamDto(
             Carbon::createFromFormat('Y-m-d H:i', $this->input('date').' '.$this->input('time'), request()->user()->time_zone)->utc(),

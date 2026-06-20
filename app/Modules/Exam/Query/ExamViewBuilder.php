@@ -2,7 +2,7 @@
 
 namespace App\Modules\Exam\Query;
 
-use App\Modules\Enrollment\Rules\EnrollmentPaymentRules;
+use App\Modules\Enrollment\EnrollmentPaymentRules;
 use App\Modules\Exam\Resolver\ExamResultResolver;
 use App\Models\Employee;
 use App\Models\Enrollment;

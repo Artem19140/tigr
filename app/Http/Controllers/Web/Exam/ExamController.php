@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Web\Exam;
 
 use App\Modules\Attempt\Action\CreateAttemptAction;
-use App\Modules\Exam\Action\CancelExamAction;
-use App\Modules\Exam\Action\CreateExamAction;
-use App\Modules\Exam\Action\UpdateExamAction;
-use App\Modules\Exam\Query\ExamCreateDataQuery;
+use App\Modules\Exam\Action\CancelExam;
+use App\Modules\Exam\Action\CreateExam;
+use App\Modules\Exam\Action\UpdateExam;
+use App\Modules\Exam\Query\ExamCreateData;
 use App\Modules\Exam\Query\ExamViewBuilder;
-use App\Modules\Exam\Query\GetExamsQuery;
+use App\Modules\Exam\Query\GetExams;
 use App\Http\Requests\Exam\ExamIndexRequest;
 use App\Http\Requests\Exam\ExamPostRequest;
 use App\Http\Requests\Exam\VerifyCodeRequest;
@@ -31,13 +31,13 @@ class ExamController
 {
     public function index(
         ExamIndexRequest $request,
-        GetExamsQuery $getExamQuery
+        GetExams $getExams
     ): \Inertia\Response {
         Gate::authorize('viewAny', Exam::class);
 
         $employee = $request->user();
         $dto = $request->toDto();
-        $exams = $getExamQuery->execute(
+        $exams = $getExams->execute(
             $dto,
             $employee
         );
@@ -61,12 +61,12 @@ class ExamController
 
     public function store(
         ExamPostRequest $request,
-        CreateExamAction $createExamAction
+        CreateExam $createExam
     ): JsonResponse {
         
         Gate::authorize('create', Exam::class);
-        $createExamAction->execute(
-            $request->getDto(), 
+        $createExam->execute(
+            $request->toDto(), 
             $request->user()
         );
 
@@ -74,7 +74,7 @@ class ExamController
     }
 
     public function createData(
-        ExamCreateDataQuery $query
+        ExamCreateData $query
     ): JsonResponse
     {
         Gate::authorize('create', Exam::class);
@@ -107,11 +107,11 @@ class ExamController
     public function update(
         ExamPostRequest $request,
         Exam $exam,
-        UpdateExamAction $updateExam
+        UpdateExam $updateExam
     ): JsonResponse {
         Gate::authorize('update', $exam);
 
-        $updateExam->execute($exam, $request->getDto());
+        $updateExam->execute($exam, $request->toDto());
 
         return response()->json([
             'exam' => new ExamResource($exam),
@@ -136,7 +136,7 @@ class ExamController
 
     public function destroy(
         Exam $exam,
-        CancelExamAction $cancelExam
+        CancelExam $cancelExam
     ): Response {
         Gate::authorize('delete', $exam);
 

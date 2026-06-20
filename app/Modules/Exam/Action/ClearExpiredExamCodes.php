@@ -6,7 +6,7 @@ use App\Models\Enrollment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
-class ClearExpiredExamCodesAction
+final class ClearExpiredExamCodes
 {
     public function execute(): void
     {

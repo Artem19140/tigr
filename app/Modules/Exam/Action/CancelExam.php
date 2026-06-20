@@ -7,7 +7,7 @@ use App\Exceptions\BusinessException;
 use App\Models\Exam;
 use Carbon\Carbon;
 
-class CancelExamAction
+class CancelExam
 {
     public function __construct(
         protected ExamCancellRules $examCancellRules

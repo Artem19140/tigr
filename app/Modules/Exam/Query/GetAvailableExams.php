@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
-class GetAvailableExamsQuery
+class GetAvailableExams
 {
     public function __construct(
         protected CenterContext $centerContext

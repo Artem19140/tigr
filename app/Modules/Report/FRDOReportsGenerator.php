@@ -8,6 +8,7 @@ use App\Events\ReportGenerated;
 use App\Models\Attempt;
 use App\Models\Center;
 use App\Support\CenterIsolationCheck;
+use App\Support\Export\CsvWriter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -19,7 +20,8 @@ class FRDOReportsGenerator
 {
     public function __construct(
         protected EnsureFrdoGenerationAvailable $ensureFrdoGenerationAvailable,
-        protected CenterContext $centerContext
+        protected CenterContext $centerContext,
+        protected CsvWriter $csvWriter
     ) {}
 
     public function execute(

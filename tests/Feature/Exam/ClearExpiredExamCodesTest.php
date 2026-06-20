@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Exam;
 
-use App\Modules\Exam\Action\ClearExpiredExamCodesAction;
+use App\Modules\Exam\Action\ClearExpiredExamCodes;
 use App\Models\Enrollment;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -12,12 +12,12 @@ class ClearExpiredExamCodesTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected ClearExpiredExamCodesAction $action;
+    protected ClearExpiredExamCodes $action;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->action = app(ClearExpiredExamCodesAction::class);
+        $this->action = app(ClearExpiredExamCodes::class);
         Carbon::setTestNow(Carbon::now());
     }
 

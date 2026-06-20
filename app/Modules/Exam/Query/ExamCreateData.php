@@ -10,7 +10,7 @@ use App\Models\ExamType;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Cache;
 
-class ExamCreateDataQuery
+class ExamCreateData
 {
     public function __construct(
         protected CenterContext $centerContext

@@ -14,7 +14,7 @@ Route::prefix('/admin')
     ->group(function () {
         Route::get('centers', [CenterPlatformAdminController::class, 'index']);
         Route::post('centers', [CenterPlatformAdminController::class, 'store']);
-        Route::delete('centers', [CenterPlatformAdminController::class, 'destroy']);
+        Route::delete('centers/{center}', [CenterPlatformAdminController::class, 'destroy']);
 
         Route::put('centers/id', [CenterPlatformAdminController::class, 'change']);
         Route::delete('centers/id', [CenterPlatformAdminController::class, 'reset']);

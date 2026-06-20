@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Exam;
 
-use App\Modules\Exam\Query\GetAvailableExamsQuery;
+use App\Modules\Exam\Query\GetAvailableExams;
 use App\Http\Requests\Enrollment\EnrollmentAvailableRequest;
 use App\Models\Exam;
 use App\Support\CenterIsolationCheck;
@@ -11,10 +11,10 @@ class ExamEnrollmentController
 {
     public function available(
         EnrollmentAvailableRequest $request,
-        GetAvailableExamsQuery $getAvailableExamsQuery
+        GetAvailableExams $getAvailableExams
     ) {
 
-        $exams = $getAvailableExamsQuery->execute(
+        $exams = $getAvailableExams->execute(
             $request->validated('examTypeId'),
             $request->validated('foreignNationalId')
         );

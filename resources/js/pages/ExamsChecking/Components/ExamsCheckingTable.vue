@@ -21,26 +21,34 @@ const loading = ref<boolean>(false)
 </script>
 
 <template>
-    <v-data-table  
-        title="Экзамены для проверки"
-        :headers="headers"
-        :items="exams"
-        :loading="loading"
-        @click:row="(event :Event, { item } : any) => examCheck(item)"
-        hide-default-footer
-        :items-per-page="-1"
-    >
-        <template #toolbar-left>
-            <AppTooltip  
-            >
-                <div>Здесь будут экзамены, требующие ручной проверки (РВП, ВНЖ)</div>
-                <div>После ПОЛНОЙ проверки экзамен исчезнет из списка</div>
-            </AppTooltip>
-        </template>
-        <template #item.beginTime="{item}">
-            {{ new DateFormatter(item.beginTime).format('d M Y,  H:i') }}
-        </template>
+    <v-card>
+        <v-card-text>
+            <div class="flex items-center">
+                <v-card-title>
+                    Экзамены для проверки
+                </v-card-title>
+                <AppTooltip  
+                >
+                    <div>Здесь будут экзамены, требующие ручной проверки (РВП, ВНЖ)</div>
+                    <div>После ПОЛНОЙ проверки экзамен исчезнет из списка</div>
+                </AppTooltip>
+            </div>
+        </v-card-text>
+        <v-data-table  
+            :headers="headers"
+            :items="exams"
+            :loading="loading"
+            @click:row="(event :Event, { item } : any) => examCheck(item)"
+            hide-default-footer
+            :items-per-page="-1"
+        >
+            <template #toolbar-left>
+                
+            </template>
+            <template #item.beginTime="{item}">
+                {{ new DateFormatter(item.beginTime).format('d M Y,  H:i') }}
+            </template>
 
-    </v-data-table >
-
+        </v-data-table >
+    </v-card>
 </template>

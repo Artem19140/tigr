@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import BaseContainer from '@/components/BaseComponents/BaseContainer/BaseContainer.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import PlatformAdminLayout from '@/layouts/PlatformAdminLayout.vue';
@@ -27,7 +26,7 @@ const gitLog = () => {
 </script>
 
 <template>
-    <BaseContainer>
+    <v-container>
         <v-card>
             <v-card-text>
                 <AppInput
@@ -51,5 +50,5 @@ const gitLog = () => {
                 />
             </v-card-text>
         </v-card>
-    </BaseContainer>
+    </v-container>
 </template>

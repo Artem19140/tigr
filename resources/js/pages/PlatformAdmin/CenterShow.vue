@@ -3,7 +3,6 @@ import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import PlatformAdminLayout from '@/layouts/PlatformAdminLayout.vue';
 import EmployeesTable from '../Center/Components/Employees/EmployeesTable.vue';
 import { Center } from '@/interfaces/Center';
-import BaseContainer from '@/components/BaseComponents/BaseContainer/BaseContainer.vue';
 
 const props = defineProps<{
     center: {
@@ -23,10 +22,10 @@ const headers = [
 </script>
 
 <template>
-    <BaseContainer>
+    <v-container>
         <EmployeesTable
             :employees="center.data.employees"
             :headers="headers"
         />
-    </BaseContainer>
+    </v-container>
 </template>

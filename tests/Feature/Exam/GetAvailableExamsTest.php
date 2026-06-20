@@ -3,7 +3,7 @@
 namespace Tests\Feature\Exam;
 
 use App\Modules\Center\CenterContext;
-use App\Modules\Exam\Query\GetAvailableExamsQuery;
+use App\Modules\Exam\Query\GetAvailableExams;
 use App\Models\Center;
 use App\Models\Enrollment;
 use App\Models\Exam;
@@ -21,7 +21,7 @@ class GetAvailableExamsTest extends TestCase
 
     protected Carbon $enrollmentTimeClosed;
 
-    protected GetAvailableExamsQuery $query;
+    protected GetAvailableExams $query;
 
     protected function setUp(): void
     {
@@ -36,7 +36,7 @@ class GetAvailableExamsTest extends TestCase
         $mock->shouldReceive('id')->andReturn($this->center->id);
 
         $this->app->instance(CenterContext::class, $mock);
-        $this->query = app(GetAvailableExamsQuery::class);
+        $this->query = app(GetAvailableExams::class);
     }
 
     protected function tearDown(): void

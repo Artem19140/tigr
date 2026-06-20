@@ -3,7 +3,7 @@ import BaseDialog from '@/components/BaseComponents/BaseDialog/BaseDialog.vue';
 import { computed, onMounted, ref } from 'vue';
 import { router, useHttp } from '@inertiajs/vue3';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
-import { Enrollment, EnrollmentMonitoring } from '@/interfaces/Enrollment';
+import { EnrollmentMonitoring } from '@/interfaces/Enrollment';
 import { AttemptMonitoring } from '@/interfaces/Attempt';
 import { AttemptAnswer } from '@/interfaces/Task';
 import AppTooltip from '@/components/UI/AppTooltip/AppTooltip.vue';

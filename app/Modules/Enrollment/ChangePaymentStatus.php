@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modules\Enrollment\Action;
+namespace App\Modules\Enrollment;
 
-use App\Modules\Enrollment\Rules\EnrollmentPaymentRules;
+use App\Modules\Enrollment\EnrollmentPaymentRules;
 use App\Exceptions\BusinessException;
 use App\Models\Enrollment;
 use App\Support\ModelChangesLogger;
 
-class ChangePaymentStatusAction
+class ChangePaymentStatus
 {
     public function __construct(
         protected EnrollmentPaymentRules $enrollmentPaymentRules,

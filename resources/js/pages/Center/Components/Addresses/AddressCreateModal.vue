@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import BaseDialog from '@/components/BaseComponents/BaseDialog/BaseDialog.vue';
-import AppAddButton from '@/components/UI/AppAddButton/AppAddButton.vue';
 import AppInput from '@/components/UI/AppInput/AppInput.vue';
 import AppNumberInput from '@/components/UI/AppNumberInput/AppNumberInput.vue';
+import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { useConfirmDialog } from '@/composables/useConfirmDialog';
 import { router, useHttp } from '@inertiajs/vue3';
 
@@ -51,7 +51,7 @@ const add = () => {
             :min="1"
         />
         <template #actions>
-            <AppAddButton
+            <AppPrimaryButton
                 @click="add"
                 :disabled="http.processing || !http.address || !http.capacity"
                 :loading="http.processing"

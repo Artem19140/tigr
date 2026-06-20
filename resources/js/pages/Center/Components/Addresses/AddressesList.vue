@@ -32,30 +32,36 @@ const add = () => {
     <Head>
         <title>Адреса</title>
     </Head>
-    <v-toolbar color="white">
-        <v-spacer />
-        <div class="flex gap-4">
-            <AppAddButton 
-                @click="add"
-                v-if="addresses.length > 0"
+    <v-card>
+        <v-card-text >
+            <div class="flex items-center justify-between" v-if="addresses.length > 0">
+                <v-card-title>
+                    Адреса
+                </v-card-title>
+                <div class="flex gap-4">
+                    <AppAddButton 
+                        @click="add"
+                        
+                    />
+                </div>
+            </div>
+        </v-card-text>
+        
+        <div class="mt-4 p-4" v-if="addresses.length > 0">
+            <AddressCard 
+                v-for="address in addresses" 
+                :key="address.id"
+                :address="address"
             />
         </div>
-    </v-toolbar>
-    
-    <div class="mt-4 p-4" v-if="addresses.length > 0">
-        <AddressCard 
-            v-for="address in addresses" 
-            :key="address.id"
-            :address="address"
-        />
-    </div>
-    <v-empty-state 
-        icon="mdi-clipboard-text-off-outline"
-        title="Адресов пока нет"
-        v-else
-    >
-        <AppAddButton 
-            @click="add"
-        />
-    </v-empty-state>
+        <v-empty-state 
+            icon="mdi-clipboard-text-off-outline"
+            title="Адресов пока нет"
+            v-else
+        >
+            <AppAddButton 
+                @click="add"
+            />
+        </v-empty-state>
+    </v-card>
 </template>

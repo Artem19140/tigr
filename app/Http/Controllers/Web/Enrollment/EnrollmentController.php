@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Web\Enrollment;
 
-use App\Modules\Enrollment\Action\ChangePaymentStatusAction;
-use App\Modules\Enrollment\Action\CreateEnrollmentAction;
+use App\Modules\Enrollment\ChangePaymentStatus;
+use App\Modules\Enrollment\CreateEnrollment;
 use App\Http\Requests\Enrollment\EnrollmentStoreRequest;
 use App\Models\Enrollment;
 use Illuminate\Http\JsonResponse;
@@ -13,9 +13,9 @@ class EnrollmentController
 {
     public function store(
         EnrollmentStoreRequest $request,
-        CreateEnrollmentAction $createEnrollmentAction,
+        CreateEnrollment $createEnrollment,
     ): JsonResponse {
-        $enrollment = $createEnrollmentAction->execute(
+        $enrollment = $createEnrollment->execute(
             $request->validated('examId'),
             $request->validated('foreignNationalId'),
             $request->user(),
@@ -31,11 +31,11 @@ class EnrollmentController
 
     public function changePayment(
         Enrollment $enrollment,
-        ChangePaymentStatusAction $changePaymentStatusAction
+        ChangePaymentStatus $changePaymentStatus
     ): JsonResponse {
 
         Gate::authorize('payment', $enrollment);
-        $changePaymentStatusAction->execute($enrollment);
+        $changePaymentStatus->execute($enrollment);
 
         return response()->json();
     }

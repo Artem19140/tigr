@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Exam;
 
-use App\Modules\Exam\Query\GetExamsToCheckQuery;
+use App\Modules\Exam\Query\GetExamsToCheck;
 use App\Exceptions\BusinessException;
 use App\Http\Resources\Exam\ExamCheckingResource;
 use App\Http\Resources\Exam\ExamIndexResource;
@@ -18,9 +18,9 @@ class ExamCheckingController
 {
     public function index(
         Request $request,
-        GetExamsToCheckQuery $getExamsToCheckQuery
+        GetExamsToCheck $getExamsToCheck
     ): Response {
-        $exams = $getExamsToCheckQuery->execute($request->user());
+        $exams = $getExamsToCheck->execute($request->user());
         CenterIsolationCheck::check($exams);
         return Inertia::render('ExamsChecking/ExamsChecking', [
             'exams' => ExamIndexResource::collection($exams),

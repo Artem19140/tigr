@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import ForeignNationalTable from './Components/ForeignNationalTable/ForeignNationalTable.vue';
-import BaseContainer from '@/components/BaseComponents/BaseContainer/BaseContainer.vue';
 import { Paginated } from '@/interfaces/Interfaces';
 import { ForeignNationalIndex, ForeignNationalPagePermissions } from '@/interfaces/ForeignNational';
 import { Head } from '@inertiajs/vue3';
@@ -20,10 +19,10 @@ const props = defineProps<{
   <Head>
     <title>ИГ</title>
   </Head>
-  <BaseContainer >
+  <v-container>
     <ForeignNationalTable 
       :foreignNationals="foreignNationals" 
       :permissions="permissions"
     />
-  </BaseContainer> 
+  </v-container> 
 </template>

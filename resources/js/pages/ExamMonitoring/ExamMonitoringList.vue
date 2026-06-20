@@ -5,7 +5,6 @@ import { DateFormatter } from '@helpers/DateFormatter';
 import { ref } from 'vue';
 import ExamCapacityChip from '@/components/Exam/ExamCapacityChip.vue';
 import { Paginated } from '@/interfaces/Interfaces';
-import BaseContainer from '@/components/BaseComponents/BaseContainer/BaseContainer.vue';
 import { ExamIndex } from '@/interfaces/Exam';
 import AppTooltip from '@/components/UI/AppTooltip/AppTooltip.vue';
 
@@ -51,8 +50,8 @@ const visit = (url :string) => {
     <Head>
         <title>Мониторинг список</title>
     </Head>
-    <BaseContainer>
-        <v-card variant="text">
+    <v-container>
+        <v-card >
             <v-card-text
                 class="flex items-center justify-between"
             >
@@ -86,27 +85,25 @@ const visit = (url :string) => {
                     </v-btn>
               </div>
             </v-card-text>
-        </v-card>
         
-        <v-data-table
-            :items="exams.data"
-            :headers="headers"
-            @click:row="open"
-            :loading="loading"
-            hide-default-footer
-        >
-            <template #toolbar-left>
+        
+            <v-data-table
+                :items="exams.data"
+                :headers="headers"
+                @click:row="open"
+                :loading="loading"
+                hide-default-footer
+            >
+
+                <template #item.capacity="{ item }">
+                    <ExamCapacityChip :exam="item" />
+                </template>
                 
-            </template>
 
-            <template #item.capacity="{ item }">
-                <ExamCapacityChip :exam="item" />
-            </template>
-            
-
-            <template #item.beginTime="{ item }">
-                {{ new DateFormatter(item.beginTime).format('d M Y,  H:i') }}
-            </template>
-        </v-data-table>
-    </BaseContainer>
+                <template #item.beginTime="{ item }">
+                    {{ new DateFormatter(item.beginTime).format('d M Y,  H:i') }}
+                </template>
+            </v-data-table>
+        </v-card>
+    </v-container>
 </template>

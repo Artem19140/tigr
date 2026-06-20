@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web\Employee;
 
 use App\Modules\Employee\CreateEmployeeAction;
-use App\Modules\Employee\UpdateEmployeeAction;
+use App\Modules\Employee\UpdateEmployee;
 use App\Enums\EmployeeRole;
 use App\Exceptions\BusinessException;
 use App\Http\Requests\Employee\EmployeePostRequest;
@@ -60,7 +60,7 @@ class EmployeeController
     ): JsonResponse {
         //abort_if($center->id !== request()->user()->center_id, 404);
         $createEmployee->execute(
-            $request->validated(),
+            $request->toDto(),
             $center,
             $request->user()
         );
@@ -70,9 +70,12 @@ class EmployeeController
     public function update(
         EmployeeUpdateRequest $request,
         Employee $employee,
-        UpdateEmployeeAction $updateEmployeeAction
+        UpdateEmployee $updateEmployee
     ): JsonResponse {
-        $updateEmployeeAction->execute($request->validated(), $employee);
+        $updateEmployee->execute(
+            $request->toDto(), 
+            $request->user(),
+            $employee);
 
         return response()->json();
     }

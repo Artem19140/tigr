@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 
 final class ModelChangesLogger
 {
-    public function log(Model $model):void
+    public function log(Model $model, array $relations = []):void
     {
         $modelName = strtolower(class_basename($model));
         $message = "{$modelName}_updated";
@@ -18,7 +18,8 @@ final class ModelChangesLogger
             'changes' => [
                 'before' => $model->getPrevious(),
                 'after' => $model->getChanges(),
-            ]
+                'relations' => $relations
+            ],
         ]);
     }
 }

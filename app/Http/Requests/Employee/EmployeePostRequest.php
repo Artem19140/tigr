@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Employee;
 
+use App\Http\Dto\EmployeeDto;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
@@ -30,5 +31,18 @@ class EmployeePostRequest extends FormRequest
             'password' => ['required', 'min:8',  'confirmed'],
             'jobTitle' => ['required', 'string'],
         ];
+    }
+
+    public function toDto(): EmployeeDto
+    {
+        return new EmployeeDto(
+            surname: $this->surname,
+            name: $this->name,
+            patronymic: $this->patronymic,
+            email: $this->email,
+            jobTitle: $this->jobTitle,
+            password:$this->password,
+            rolesIds: $this->roles
+        );
     }
 }
