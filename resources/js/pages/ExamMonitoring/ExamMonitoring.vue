@@ -82,11 +82,10 @@ const search = ref<string>('')
     <v-container>
         <v-card>
             <v-card-text class="flex items-center justify-between">
-                <div>
+                <div class="flex items-center">
                     <v-card-title >
-                        <div class="flex items-center gap-2">
-
                         
+                        <div class="flex items-center gap-2">
                             {{ exam.data.shortName }} {{ new DateFormatter(exam.data?.beginTime).format('d M Y, H:i ') }}
                             <ExamStatusChip 
                                 :status="exam.data.status" 

@@ -25,16 +25,18 @@ class Address extends Model
         'is_active',
         'address',
         'center_id',
-        'max_capacity',
+        'capacity',
         'creator_id',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
+        'capacity' => 'integer'
     ];
 
     public function exams(): HasMany
     {
         return $this->hasMany(Exam::class, 'address_id');
     }
+
 }

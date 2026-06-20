@@ -9,7 +9,7 @@ use App\Models\Attempt;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Log;
 
-class FinishAttemptManualCheckingAction
+class FinishManualChecking
 {
     public function __construct(
         protected FinilizeAttemptChecking $finilizeAttemptChecking

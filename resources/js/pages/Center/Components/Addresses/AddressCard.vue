@@ -32,7 +32,7 @@ const deleteAddress = async () => {
 
 const editHttp = useHttp({
     address:props.address.address ?? '',
-    maxCapacity:props.address.maxCapcity
+    capacity:props.address.capacity
 })
 
 
@@ -66,7 +66,7 @@ const cancellEdit = async () => {
                 {{ address.address }}
             </div>
         </v-card-title>
-        <v-card-subtitle v-if="!editMode">Вместимость: {{ address.maxCapcity }} человек</v-card-subtitle>
+        <v-card-subtitle v-if="!editMode">Вместимость: {{ address.capacity }} человек</v-card-subtitle>
         <div class="flex flex-column w-75 ml-4 mt-4">
             <div>
                 <div class="mb-3" v-if="address.examsExists && editMode">
@@ -90,8 +90,8 @@ const cancellEdit = async () => {
             
 
             <AppNumberInput
-                v-model="editHttp.maxCapacity"
-                :error-messages="editHttp.errors.maxCapacity"
+                v-model="editHttp.capacity"
+                :error-messages="editHttp.errors.capacity"
                 v-if="editMode" 
                 label="Вместимость"
                 :min="1"

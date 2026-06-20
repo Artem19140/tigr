@@ -17,7 +17,7 @@ return new class extends Migration
                 ->constrained('centers')
                 ->cascadeOnDelete();
 
-            $table->unsignedTinyInteger('max_capacity');
+            $table->unsignedTinyInteger('capacity');
 
             $table->foreignId('creator_id')
                 ->constrained('employees')

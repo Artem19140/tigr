@@ -12,11 +12,8 @@ use Tests\TestCase;
 class AddressCreateTest extends TestCase
 {
     use RefreshDatabase;
-
     protected Employee $actor;
-
     protected Center $center;
-
     protected function setUp(): void
     {
         parent::setUp();

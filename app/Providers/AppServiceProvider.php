@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Address;
+use App\Models\Center;
+use App\Models\Counter;
 use App\Models\Employee;
+use App\Models\Enrollment;
 use App\Models\Exam;
 use App\Models\ForeignNational;
 use Illuminate\Database\Eloquent\Model;
@@ -20,7 +24,11 @@ class AppServiceProvider extends ServiceProvider
         Relation::enforceMorphMap([
             'foreign_national' => ForeignNational::class,
             'employee' => Employee::class,
-            'exam' => Exam::class
+            'exam' => Exam::class,
+            'enrollment' => Enrollment::class,
+            'address' => Address::class,
+            'center' => Center::class,
+            'counter' => Counter::class
         ]);
 
         Model::shouldBeStrict(! app()->isProduction());

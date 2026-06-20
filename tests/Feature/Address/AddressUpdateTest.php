@@ -48,7 +48,7 @@ class AddressUpdateTest extends TestCase
             ->actingAs($this->employee)
             ->patchJson(route('centers.addresses.update', ['address' => $address,  'center' => $this->center]), [
                 'address' => fake()->streetAddress,
-                'maxCapacity' => $address->max_capacity + 1,
+                'capacity' => $address->capacity + 1,
             ]);
 
         $response->assertStatus(200);
@@ -67,19 +67,19 @@ class AddressUpdateTest extends TestCase
             ]);
 
         $oldAddress = $address->address;
-        $newCapacity = $address->max_capacity + 1;
+        $newCapacity = $address->capacity + 1;
 
         $response = $this
             ->actingAs($this->employee)
             ->patchJson(route('centers.addresses.update', ['address' => $address,  'center' => $this->center]), [
                 'address' => fake()->streetAddress,
-                'maxCapacity' => $newCapacity,
+                'capacity' => $newCapacity,
             ]);
         $address->refresh();
 
         $this->assertEquals($oldAddress, $address->address);
 
-        $this->assertEquals($newCapacity, $address->max_capacity);
+        $this->assertEquals($newCapacity, $address->capacity);
         $response->assertOk();
     }
 

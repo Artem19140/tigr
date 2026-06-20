@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Attempt;
 
-use App\Modules\Attempt\FinishAttemptManualCheckingAction;
+use App\Modules\Attempt\FinishManualChecking;
 use App\Enums\TaskType;
 use App\Http\Resources\Attempt\AttemptCheckingResource;
 use App\Http\Resources\Attempt\AttemptResource;
@@ -16,7 +16,6 @@ class AttemptCheckingController
 {
     public function show(Attempt $attempt): JsonResource
     {
-
         $attempt->load([
             'taskVariants' => function (BelongsToMany $query) {
                 $query->whereHas('task', function (Builder $q) {
@@ -38,10 +37,10 @@ class AttemptCheckingController
 
     public function finish(
         Attempt $attempt,
-        FinishAttemptManualCheckingAction $finishAttemptManualCheckingAction
+        FinishManualChecking $finishManualChecking
     ): JsonResponse {
 
-        $attempt = $finishAttemptManualCheckingAction
+        $attempt = $finishManualChecking
             ->execute($attempt);
 
         return response()->json([

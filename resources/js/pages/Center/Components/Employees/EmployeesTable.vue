@@ -40,6 +40,7 @@ const headers = [
             toolbarColor="white"
             :items-per-page="-1"
             class="p-2"
+            hide-default-footer
         >
 
             <template #item.roles="{item}">

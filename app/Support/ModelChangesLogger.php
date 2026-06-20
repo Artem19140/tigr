@@ -19,7 +19,8 @@ final class ModelChangesLogger
                 'before' => $model->getPrevious(),
                 'after' => $model->getChanges(),
                 'relations' => $relations
-            ],
+            ]
         ]);
+
     }
 }

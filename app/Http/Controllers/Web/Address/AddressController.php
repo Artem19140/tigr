@@ -52,7 +52,7 @@ class AddressController
 
         $address = Address::create([
             'address' => $request->validated('address'),
-            'max_capacity' => $request->validated('capacity'),
+            'capacity' => $request->validated('capacity'),
             'center_id' => $center->id,
             'creator_id' => $request->user()->id,
         ]);
@@ -73,14 +73,14 @@ class AddressController
 
         $request->validate([
             'address' => ['required', 'string'],
-            'maxCapacity' => ['required', 'integer', 'min:1'],
+            'capacity' => ['required', 'integer', 'min:1'],
         ]);
         
         if (! $address->exams()->exists()) {
             $address->address = $request->input('address');
         }
 
-        $address->max_capacity = $request->input('maxCapacity');
+        $address->capacity = $request->input('capacity');
         $address->save();
         $logger->log($address);
         return response()->json(new AddressResource($address));
@@ -108,13 +108,24 @@ class AddressController
         if($employee->isPlatformAdmin()){
             return ;
         }
+
         abort_if($employee->center_id !== $center->id, 404);
     }
 
-    protected function abortIfNotBelongsCenter(Center $center, Address $address){
-        if(request()->user()->isPlatformAdmin()){
+    protected function abortIfNotBelongsCenter(
+        Center $center, 
+        Address $address
+    ): void{
+        if($address->center_id === $center->id){
             return ;
         }
-        abort_if($address->center_id !== $center->id, 404);
+
+        Log::warning('address doesnot belongs center', [
+            'address_id' => $address->id,
+            'address_center_id' => $address->center_id,
+            'center_id' => $center->id
+        ]);
+
+        abort(404);
     }
 }

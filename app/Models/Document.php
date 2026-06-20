@@ -14,7 +14,7 @@ class Document extends Model
         'documentable_type',
         'documentable_id',
         'original_name',
-        'size_kb',
+        'size_bytes',
         'mime_type',
         'document_type',
         'center_id',

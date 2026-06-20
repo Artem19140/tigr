@@ -72,7 +72,7 @@ class ExamCreateTest extends TestCase
             'time' => Carbon::now()->setTimezone($this->center->time_zone)->addHours(Exam::CREATE_AVAILABLE_BEFORE_HOURS)->addMinute()->format('H:i'),
             'examTypeId' => $this->examType->id,
             'addressId' => $this->address->id,
-            'capacity' => $this->address->max_capacity,
+            'capacity' => $this->address->capacity,
             'examiners' => [$this->examiner->id],
             'comment' => '',
         ], $overrides);
@@ -106,7 +106,7 @@ class ExamCreateTest extends TestCase
         $response = $this->postExam([
             'addressId' => $address->id,
             'examiners' => [$examiner->id],
-            'capacity' => $address->max_capacity,
+            'capacity' => $address->capacity,
         ]);
         $response->assertOk();
         $this->assertDatabaseCount('exams', 2);
@@ -135,7 +135,7 @@ class ExamCreateTest extends TestCase
 
         $response = $this->postExam([
             'addressId' => $address->id,
-            'capacity' => $address->max_capacity,
+            'capacity' => $address->capacity,
         ]);
         $response->assertBadRequest();
 
@@ -156,7 +156,7 @@ class ExamCreateTest extends TestCase
     public function test_fail_more_than_max_capacity(): void
     {
         $response = $this->postExam([
-            'capacity' => $this->address->max_capacity + 1,
+            'capacity' => $this->address->capacity + 1,
         ]);
         $response->assertUnprocessable();
         $this->assertDatabaseEmpty('exams');

@@ -18,7 +18,7 @@ class DocumentSaver{
         $document = $owner->documents()->create([
             'path' => $path,
             'mime_type' =>  $file->getMimeType(),
-            'size_kb' => $file->getSize() / 1024,
+            'size_bytes' => $file->getSize(),
             'document_type' => $doctype,
             'creator_id' => auth()->user()->id,
             'original_name' => $file->getClientOriginalName(),

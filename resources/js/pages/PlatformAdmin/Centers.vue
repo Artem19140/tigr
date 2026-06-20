@@ -49,6 +49,8 @@ const {open} = useModals()
                 :items="centers.data"
                 :headers="headers"
                 @click:row="(event :Event, { item } : any) => openCenter(item)"
+                hide-default-footer
+                :items-per-page="-1"
             >
                 <template #item.actions="{item}">
                     <CenterDropDown 

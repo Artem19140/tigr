@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import BaseDialog from '@components/BaseComponents/BaseDialog/BaseDialog.vue';
-import { useHttp } from '@inertiajs/vue3';
+import { router, useHttp } from '@inertiajs/vue3';
 import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { useConfirmDialog } from '@composables/useConfirmDialog';
 import AppTextarea from '@components/UI/AppTextarea/AppTextarea.vue';
@@ -24,6 +24,7 @@ const send = () => {
             const {add} = useSnackbarQueue()
             add('Комментарий добавлен', 'green')
             isOpen.value = false
+            router.reload()
         }
     })
 }

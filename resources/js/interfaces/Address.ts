@@ -1,7 +1,7 @@
 export interface Address{
     id:number,
     address:string,
-    maxCapcity:number,
+    capacity:number,
     isActive:boolean,
     loading:boolean,
     examsExists:boolean

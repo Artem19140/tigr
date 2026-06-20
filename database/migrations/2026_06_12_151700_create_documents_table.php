@@ -13,8 +13,7 @@ return new class extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
 
-            $table->integer('documentable_id');
-            $table->string('documentable_type');
+            $table->morphs('documentable');
 
             $table->string('path');
             $table->string('original_name');
@@ -22,8 +21,9 @@ return new class extends Migration
             $table->foreignIdFor(Center::class, 'center_id');
             $table->string('document_type');
             $table->string('mime_type');
-            $table->string('size_kb');
+            $table->bigInteger('size_bytes');
             $table->dateTime('deleted_at')->nullable()->default(null);
+            $table->jsonb('context')->nullable()->default(null);
 
             $table->timestamps();
         });

@@ -17,13 +17,13 @@ class DocumentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'size' => $this->size_kb,
+            'size' => $this->size_bytes,
             'mimeType' => $this->mime_type,
             'createdAt' => $this->created_at->format('d.m.Y'),
             'type' => $this->document_type,
             'creatorFullName' => $this->whenLoaded('creator', fn () => $this->creator->full_name),
             'permissions' => [
-                'update' => $request->user()->can('updateAny', Document::class)
+                'update' => $request->user()->can('viewAny', Document::class)
             ],
             
         ];

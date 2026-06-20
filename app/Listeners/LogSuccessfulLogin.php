@@ -17,6 +17,10 @@ class LogSuccessfulLogin
         Log::info('login', [
             'guard' => $event->guard,
             'remember' => $event->remember,
+            'ip' => request()->ip(),
+            'user_agent' => request()->userAgent(),
+            'user_id' => $event->user->id,
+            'center_id' => request()->user()?->center_id
         ]);
     }
 }

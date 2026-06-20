@@ -34,7 +34,7 @@ class AddressFactory extends Factory
     {
         return $this->state(function () use ($capacity) {
             return [
-                'max_capacity' => $capacity,
+                'capacity' => $capacity,
             ];
         });
     }
@@ -43,7 +43,7 @@ class AddressFactory extends Factory
     {
         return [
             'address' => fake()->streetAddress,
-            'max_capacity' => fake()->numberBetween(8, 20),
+            'capacity' => fake()->numberBetween(8, 20),
             'center_id' => Center::inRandomOrder()->first()->id,
             'creator_id' => Employee::factory(),
         ];

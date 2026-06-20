@@ -87,6 +87,7 @@ class AttemptController
         Request $request
     ): RedirectResponse {
         $finishAttempt->execute($attempt);
+        
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();

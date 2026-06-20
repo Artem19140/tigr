@@ -19,7 +19,7 @@ class AddressResource extends JsonResource
             'address' => $this->address,
             'creator' => (new EmployeeResource($this->whenLoaded('creator'))),
             'id' => $this->id,
-            'maxCapcity' => $this->max_capacity,
+            'capacity' => $this->capacity,
             'examsExists' => $this->examsExists ?? null,
             'isActive' => $this->is_active,
         ];

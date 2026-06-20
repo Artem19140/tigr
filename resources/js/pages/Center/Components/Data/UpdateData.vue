@@ -45,54 +45,66 @@ const beforeClose = async () => {
 </script>
 
 <template>
-    <div v-if=center>
-        <AppTextarea
-            v-model="http.name"
-            label="Название"
-        />
-        <AppInput 
-            v-model="http.ogrn"
-            label="ОГРН"
-        />
+    <card>
+        <v-card-text>
+            <div v-if=center class="flex flex-column gap-1">
+                <AppTextarea
+                    v-model="http.name"
+                    :error-messages="http.errors.name"
+                    label="Название"
+                />
+                <AppInput 
+                    v-model="http.ogrn"
+                    :error-messages="http.errors.ogrn"
+                    label="ОГРН"
+                />
 
-        <AppInput 
-            v-model="http.inn"
-            label="ИНН"
-        />
+                <AppInput 
+                    v-model="http.inn"
+                    :error-messages="http.errors.inn"
+                    label="ИНН"
+                />
 
-        <AppTextarea
-            v-model="http.address"
-            label="Адрес центра"
-        />
+                <AppTextarea
+                    v-model="http.address"
+                    :error-messages="http.errors.address"
+                    label="Адрес центра"
+                />
 
-        <AppTextarea
-            v-model="http.certificatesIssueAddress"
-            label="Адрес выдачи сертификатов"
-        />
+                <AppTextarea
+                    v-model="http.certificatesIssueAddress"
+                    :error-messages="http.errors.certificatesIssueAddress"
+                    label="Адрес выдачи сертификатов"
+                />
 
-        <AppTextarea
-            v-model="http.directorFio"
-            label="Директор"
-        />
+                <AppTextarea
+                    v-model="http.directorFio"
+                    :error-messages="http.errors.directorFio"
+                    label="Директор"
+                />
 
-        <AppTextarea
-            v-model="http.commissionChairman"
-            label="Председатель комиссии"
-        />
-
-        <AppTextarea
-            v-model="http.nameGenitive"
-            label="Название в родительском падеже(для документов)"
-        />
-        <AppPrimaryButton
-            text="Обновить"
-            @click="edit"
-            :disabled="http.processing || !http.isDirty"
-            :loading="http.processing"
-            class="mr-4"
-        />
-        <v-btn @click="beforeClose">
-            Отмена
-        </v-btn>
-    </div>
+                <AppTextarea
+                    v-model="http.commissionChairman"
+                    :error-messages="http.errors.commissionChairman"
+                    label="Председатель комиссии"
+                />
+                <AppTextarea
+                        v-model="http.nameGenitive"
+                        :error-messages="http.errors.nameGenitive"
+                        label="Название в родительском падеже(для документов)"
+                    />
+                <div>
+                    <AppPrimaryButton
+                        text="Обновить"
+                        @click="edit"
+                        :disabled="http.processing || !http.isDirty"
+                        :loading="http.processing"
+                    />
+                    <v-btn @click="beforeClose" class="ml-2">
+                        Отмена
+                    </v-btn>
+                </div>
+            </div>
+        </v-card-text>
+    </card>
 </template>

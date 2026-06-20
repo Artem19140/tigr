@@ -73,7 +73,12 @@ class ForeignNationalController
         ForeignNationalViewBuilder $builder
     ): JsonResponse {
         Gate::authorize('view', $foreignNational);
-        $buildedForeignNational = $builder->build($foreignNational, $request->user());
+
+        $buildedForeignNational = $builder->build(
+            $foreignNational, 
+            $request->user()
+        );
+        
         return response()->json([
             'foreignNational' => new ForeignNationalProfileResource($buildedForeignNational),
         ]);

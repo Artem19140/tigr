@@ -43,9 +43,9 @@ class ExamBeforeSaveValidator
             $examId
         );
 
-        $this->ensureNotMoreCapacity(
+        $this->ensureNotMoreMaxCapacity(
             $examDto->capacity,
-            $address->max_capacity
+            $address->capacity
         );
 
         $this->checkExamsConflicts(
@@ -115,7 +115,7 @@ class ExamBeforeSaveValidator
         }
     }
 
-    protected function ensureNotMoreCapacity(int $capacity, int $maxCapacity)
+    protected function ensureNotMoreMaxCapacity(int $capacity, int $maxCapacity)
     {
         if ($capacity > $maxCapacity) {
             throw ValidationException::withMessages([

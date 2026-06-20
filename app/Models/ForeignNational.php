@@ -23,8 +23,6 @@ class ForeignNational extends Authenticatable
         return null;
     }
 
-    public const int STORAGE_TTL = 3;
-
     protected $fillable = [
         'surname',
         'name',
