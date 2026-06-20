@@ -9,9 +9,9 @@ use Illuminate\Validation\ValidationException;
 
 class ForeignNationalGuard
 {
-    public function ensureAge(string $dateBirth): void
+    public function ensureAge(Carbon $dateBirth): void
     {
-        $age = Carbon::parse($dateBirth)->age;
+        $age = $dateBirth->age;
 
         if ($age < 18) {
             throw ValidationException::withMessages([
@@ -21,19 +21,20 @@ class ForeignNationalGuard
     }
 
     public function ensureUniquePassport(
-        array $data,
+        string $passportSeries,
+        string $passportNumber,
         ?int $ignoreId = null
     ): void {
-        $uniquePassportData = ForeignNational::where('passport_number', $data['passportNumber'])
-            ->where('passport_series', $data['passportSeries'])
+        $notUniquePassportData = ForeignNational::query()
+            ->where('passport_number', $passportNumber)
+            ->where('passport_series', $passportSeries)
             ->when($ignoreId, function (Builder $query) use ($ignoreId) {
                 $query->where('id', '<>', $ignoreId);
             })
             ->where('id', '<>', $ignoreId)
-            ->where('citizenship', $data['citizenship'])
             ->exists();
 
-        if ($uniquePassportData) {
+        if ($notUniquePassportData) {
             throw ValidationException::withMessages([
                 'passportSeries' => 'ИГ с такими паспортными данными уже существует',
                 'passportNumber' => 'ИГ с такими паспортными данными уже существует',

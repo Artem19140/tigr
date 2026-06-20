@@ -53,7 +53,7 @@
 
         <td>
             Наименование услуги и ее стоимость:
-            <p>{{ $enrollment->exam->type->name }}(уровень {{ $enrollment->exam->type->level }}) - стоимость <span class="data">{{ $enrollment->exam->type->cost}} </span>рублей</p>
+            <p>{{ $enrollment->exam->type->name }}(уровень {{ $enrollment->exam->type->level }}) - стоимость <span class="data">{{ $enrollment->exam->type->amount}} ({{ $enrollment->exam->type->amount_in_words }})</span>рублей</p>
         </td>
         <td>
             Вид документа, удостоверяющего личность <br><span class="data">{{ $enrollment->foreignNational->document_type}}</span><br>

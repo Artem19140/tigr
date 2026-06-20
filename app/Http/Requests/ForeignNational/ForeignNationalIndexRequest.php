@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\ForeignNational;
 
+use App\Http\Dto\ForeignNationalIndexDto;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -31,5 +32,18 @@ class ForeignNationalIndexRequest extends FormRequest
             'passportNumber' => ['nullable', 'string'],
             'perPage' => ['nullable', 'integer', 'max:100', 'min:1'],
         ];
+    }
+
+    public function toDto(): ForeignNationalIndexDto
+    {
+        return new ForeignNationalIndexDto(
+            id: $this->id,
+            surname: $this->surname,
+            name: $this->name,
+            patronymic: $this->patronymic,
+            passportSeries:$this->passportSeries,
+            passportNumber: $this->passportNumber,
+            perPage: $this->perPage
+        );
     }
 }

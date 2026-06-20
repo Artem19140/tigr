@@ -13,6 +13,7 @@ use App\Support\ModelChangesLogger;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
@@ -69,7 +70,10 @@ class AddressController
         ModelChangesLogger $logger
     ): JsonResponse {
         $this->authorize($request->user(), $center);
-        $this->abortIfNotBelongsCenter($center, $address);
+        Gate::authorize('center-belong', [
+            'center' => $center,
+            'model' => $address
+        ]);
 
         $request->validate([
             'address' => ['required', 'string'],
@@ -92,7 +96,11 @@ class AddressController
         Address $address
     ): Response {
         $this->authorize($request->user(), $center);
-        $this->abortIfNotBelongsCenter($center, $address);
+        
+        Gate::authorize('center-belong', [
+            'center' => $center,
+            'model' => $address
+        ]);
 
         $address->is_active = false;
         $address->save();

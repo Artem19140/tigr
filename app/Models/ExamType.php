@@ -20,6 +20,7 @@ class ExamType extends Model
         'need_human_check',
         'min_mark',
         'protocol_name',
+        'amount_in_words'
     ];
 
     protected $casts = [

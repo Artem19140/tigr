@@ -35,14 +35,16 @@ class ExamController
     ): \Inertia\Response {
         Gate::authorize('viewAny', Exam::class);
 
-        $params =  $request->validated() ?? [];
         $employee = $request->user();
-
+        $dto = $request->toDto();
         $exams = $getExamQuery->execute(
-            $params,
+            $dto,
             $employee
         );
-        Inertia::flash('filters', $request->validated());
+        Inertia::flash([
+            'filters' => $request->validated(),
+            'test' => $dto->toFilters()
+        ]);
         CenterIsolationCheck::check($exams);
 
         $employee = $request->user();

@@ -27,9 +27,10 @@ class ForeignNationalController
     ): Response {
 
         Gate::authorize('viewAny', ForeignNational::class);
-        $foreignNationals = $getForeignNationalsQuery->execute($request->validated() ?? []);
+        $dto = $request->toDto();
+        $foreignNationals = $getForeignNationalsQuery->execute($dto);
 
-        Inertia::flash(['filters' => $request->validated()]);
+        Inertia::flash(['filters' => $request->validated(), 'test' => $dto->toFilters()]);
 
         $employee = $request->user();
         
@@ -53,9 +54,10 @@ class ForeignNationalController
         Gate::authorize('create', ForeignNational::class);
         $enrollement = $createForeignNationalWithEnrollmentAction
             ->execute(
-                $request->validated(),
+                $request->toDto(),
                 $request->validated('examId'),
-                $request->user()
+                $request->user(),
+                $request->validated('hasPayment'),
             );
 
         return response()->json([
@@ -83,7 +85,7 @@ class ForeignNationalController
         UpdateForeignNationalAction $updateForeignNationalAction
     ): JsonResponse {
         $updatedForeignNational = $updateForeignNationalAction->execute(
-            $request->validated(),
+            $request->toDto(),
             $foreignNational
         );
 

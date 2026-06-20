@@ -30,7 +30,7 @@ class EmployeeUpdateRequest extends FormRequest
             'email' => [
                 'required', 
                 'email',
-                Rule::unique('employees')->ignore($this->user()->id),
+                Rule::unique('employees')->ignore($this->route('employee')),
             ],
             'jobTitle' => ['required', 'string'],
         ];

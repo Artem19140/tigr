@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\ForeignNational;
 
+use App\Http\Dto\ForeignNationalUpdateDto;
+use Carbon\Carbon;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -141,5 +143,31 @@ class ForeignNationalUpdateRequest extends FormRequest
                 'string',
             ]
         ];
+    }
+
+    public function toDto(): ForeignNationalUpdateDto
+    {
+        return new ForeignNationalUpdateDto(
+            surname: $this->surname,
+            name: $this->name,
+            patronymic: $this->patronymic,
+            dateBirth:  Carbon::parse($this->dateBirth),
+
+            surnameLatin: $this->surnameLatin,
+            nameLatin: $this->nameLatin,
+            patronymicLatin: $this->patronymicLatin,
+
+            passportNumber: $this->passportNumber,
+            passportSeries: $this->passportSeries,
+            issuedBy: $this->issuedBy,
+            issuedDate: Carbon::parse($this->issuedDate),
+
+            citizenship: $this->citizenship,
+            phone: $this->phone,
+            addressReg: $this->addressReg,
+
+            gender: $this->gender,
+            comment: $this->comment,
+        );
     }
 }

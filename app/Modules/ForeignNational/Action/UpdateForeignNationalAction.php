@@ -2,6 +2,7 @@
 
 namespace App\Modules\ForeignNational\Action;
 
+use App\Http\Dto\ForeignNationalUpdateDto;
 use App\Modules\ForeignNational\Guard\ForeignNationalGuard;
 use App\Models\ForeignNational;
 use App\Support\ModelChangesLogger;
@@ -14,39 +15,67 @@ final class UpdateForeignNationalAction
     ) {}
 
     public function execute(
-        array $data,
+        ForeignNationalUpdateDto $dto,
         ForeignNational $foreignNational,
     ): ForeignNational {
-        $this->foreignNationalGuard->ensureAge($data['dateBirth']);
-        $this->foreignNationalGuard->ensureUniquePassport($data, $foreignNational->id);
-        $foreignNational->update(
-            $this->attributes($data)
+        $this->foreignNationalGuard->ensureAge($dto->dateBirth);
+
+        $this->foreignNationalGuard->ensureUniquePassport(
+            $dto->passportSeries,
+            $dto->passportNumber, 
+            $foreignNational->id
         );
+
+        $foreignNational->update(
+            $this->attributes($dto)
+        );
+
         $foreignNational->save();
         $this->logger->log($foreignNational);
 
         return $foreignNational;
     }
 
-    protected function attributes(array $data): array
+    protected function attributes(ForeignNationalUpdateDto $dto): array
     {
         return [
-            'surname' => $data['surname'],
-            'name' => $data['name'],
-            'patronymic' => $data['patronymic'],
-            'date_birth' => $data['dateBirth'],
-            'surname_latin' => $data['surnameLatin'],
-            'name_latin' => $data['nameLatin'],
-            'patronymic_latin' => $data['patronymicLatin'],
-            'passport_number' => $data['passportNumber'],
-            'passport_series' => $data['passportSeries'],
-            'issued_by' => $data['issuedBy'],
-            'issued_date' => $data['issuedDate'],
-            'citizenship' => $data['citizenship'],
-            'phone' => $data['phone'],
-            'gender' => $data['gender'],
-            'address_reg' => $data['addressReg'],
-            'comment' => $data['comment'] ?? '',
+            'surname' => $dto->surname,
+            'name' => $dto->name,
+            'patronymic' => $dto->patronymic,
+            'date_birth' => $dto->dateBirth,
+            'surname_latin' => $dto->surnameLatin,
+            'name_latin' => $dto->nameLatin,
+            'patronymic_latin' =>$dto->patronymicLatin,
+            'passport_number' => $dto->passportNumber,
+            'passport_series' => $dto->passportSeries,
+            'issued_by' => $dto->issuedBy,
+            'issued_date' => $dto->issuedDate,
+            'citizenship' => $dto->citizenship,
+            'phone' => $dto->phone,
+            'gender' => $dto->gender,
+            'address_reg' => $dto->addressReg,
+            'comment' => $dto->comment ?? '',
+            'surname_normalized' => $this->normalize($dto->surname),
+            'name_normalized' => $this->normalize($dto->name),
+            'patronymic_normalized' => $this->normalize($dto->patronymic),
+            'passport_number_normalized' => $this->normalize($dto->passportNumber),
+            'passport_series_normalized' => $this->normalize($dto->passportSeries),
         ];
+    }
+
+    protected function normalize(?string $value): string
+    {
+        if (! $value) {
+            return '';
+        }
+        $value = trim($value);
+
+        if (class_exists(\Normalizer::class)) {
+            $value = \Normalizer::normalize($value, \Normalizer::FORM_C);
+        }
+
+        $value = mb_strtolower($value, 'UTF-8');
+
+        return $value;
     }
 }

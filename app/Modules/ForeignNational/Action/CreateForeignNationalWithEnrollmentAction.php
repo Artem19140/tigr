@@ -2,6 +2,7 @@
 
 namespace App\Modules\ForeignNational\Action;
 
+use App\Http\Dto\ForeignNationalStoreDto;
 use App\Modules\Enrollment\Action\CreateEnrollmentAction;
 use App\Models\Employee;
 use App\Models\Enrollment;
@@ -16,19 +17,26 @@ class CreateForeignNationalWithEnrollmentAction
     ) {}
 
     public function execute(
-        array $foreignNationalData,
+        ForeignNationalStoreDto $dto,
         int $examId,
-        Employee $employee
+        Employee $employee,
+        bool $hasPayment
     ): Enrollment {
 
-        $enrollent = DB::transaction(function () use ($foreignNationalData, $employee, $examId) {
-            $foreignNational = $this->storeForeignNational->execute($foreignNationalData, $employee);
+        $enrollent = DB::transaction(function () use (
+            $employee, 
+            $examId, 
+            $dto,
+            $hasPayment
+        ) {
+            $foreignNational = $this->storeForeignNational
+                ->execute( $dto, $employee,);
 
             return $this->createEnrollment->execute(
                 $examId, 
                 $foreignNational->id, 
                 $employee, 
-                $foreignNationalData['hasPayment']
+                $hasPayment
             );
         });
 

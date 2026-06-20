@@ -2,6 +2,7 @@
 
 namespace App\Modules\ForeignNational\Query;
 
+use App\Http\Dto\ForeignNationalIndexDto;
 use App\Modules\Center\CenterContext;
 use App\Models\ForeignNational;
 use Illuminate\Database\Eloquent\Builder;
@@ -12,15 +13,15 @@ class GetForeignNationalsQuery
     public function __construct(
         protected CenterContext $centerContext
     ){}
-    public function execute(array $data = []): Paginator
+    public function execute(ForeignNationalIndexDto $dto): Paginator
     {
-        $surname = $data['surname'] ?? false;
-        $name = $data['name'] ?? false;
-        $patronymic = $data['patronymic'] ?? false;
-        $passportSeries = $data['passportSeries'] ?? false;
-        $passportNumber = $data['passportNumber'] ?? false;
-        $id = $data['id'] ?? false;
-        $perPage = $data['perPage'] ?? 10;
+        $surname = $dto->surname ?? false;
+        $name = $dto->name  ?? false;
+        $patronymic = $dto->patronymic ?? false;
+        $passportSeries = $dto->passportSeries  ?? false;
+        $passportNumber = $dto->passportNumber  ?? false;
+        $id = $dto->id  ?? false;
+        $perPage =$dto->perPage  ?? 10;
 
         return ForeignNational::query()
             ->forCenter($this->centerContext->id())

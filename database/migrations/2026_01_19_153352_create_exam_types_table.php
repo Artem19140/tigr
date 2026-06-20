@@ -16,7 +16,8 @@ return new class extends Migration
             $table->unsignedSmallInteger('duration');
             $table->string('certificate_name');
             $table->boolean('is_active')->default(true);
-            $table->unsignedInteger('cost');
+            $table->unsignedInteger('amount');
+            $table->string('amount_in_words');
             $table->unsignedTinyInteger('tasks_count');
             $table->unsignedTinyInteger('min_mark');
             $table->boolean('need_human_check');

@@ -3,9 +3,8 @@
 namespace App\Http\Dto;
 
 use Carbon\Carbon;
-use Illuminate\Http\UploadedFile;
 
-final readonly class ForeignNationalStoreDto
+final readonly class ForeignNationalUpdateDto
 {
     public function __construct(
         public string $surname,
@@ -24,7 +23,5 @@ final readonly class ForeignNationalStoreDto
         public string $addressReg,
         public string $gender,
         public ?string $comment,
-        public UploadedFile $passport,
-        public UploadedFile $passportTranslate,
     ) {}
 }

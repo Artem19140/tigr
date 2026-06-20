@@ -2,7 +2,8 @@
 
 namespace App\Http\Requests\ForeignNational;
 
-use App\Http\Dto\ForeignNationalStoreDTO;
+use App\Http\Dto\ForeignNationalStoreDto;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\File;
@@ -153,13 +154,13 @@ class ForeignNationalPostRequest extends FormRequest
         ];
     }
 
-    public function dto(): ForeignNationalStoreDTO
+    public function toDto(): ForeignNationalStoreDto
     {
-        return new ForeignNationalStoreDTO(
+        return new ForeignNationalStoreDto(
             surname: $this->surname,
             name: $this->name,
             patronymic: $this->patronymic,
-            dateBirth: $this->dateBirth,
+            dateBirth: Carbon::parse($this->dateBirth),
 
             surnameLatin: $this->surnameLatin,
             nameLatin: $this->nameLatin,
@@ -168,7 +169,7 @@ class ForeignNationalPostRequest extends FormRequest
             passportNumber: $this->passportNumber,
             passportSeries: $this->passportSeries,
             issuedBy: $this->issuedBy,
-            issuedDate: $this->issuedDate,
+            issuedDate: Carbon::parse($this->issuedDate),
 
             citizenship: $this->citizenship,
             phone: $this->phone,

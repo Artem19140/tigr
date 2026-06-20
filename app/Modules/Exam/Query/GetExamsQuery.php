@@ -2,10 +2,10 @@
 
 namespace App\Modules\Exam\Query;
 
+use App\Http\Dto\ExamIndexDto;
 use App\Modules\Center\CenterContext;
 use App\Models\Employee;
 use App\Models\Exam;
-use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\Paginator;
 
 class GetExamsQuery
@@ -14,18 +14,18 @@ class GetExamsQuery
         protected CenterContext $centerContext
     ){}
     public function execute(
-        array $data,
+        ExamIndexDto $dto,
         Employee $employee
     ): Paginator
     {
-        $examTypeId = $data['examTypeId'] ?? false;
-        $dateFrom = $data['dateFrom'] ?? false;
-        $dateTo = $data['dateTo'] ?? false;
-        $addressId = $data['addressId'] ?? false;
-        $cancelled = $data['cancelled'] ?? false;
-        $perPage = $data['perPage'] ?? 10;
+        $examTypeId = $dto->examTypeId ?? false;
+        $dateFrom =  $dto->dateFrom?? false;
+        $dateTo =  $dto->dateTo ?? false;
+        $addressId =  $dto->addressId ?? false;
+        $cancelled =  $dto->cancelled ?? false;
+        $perPage = 10;
 
-        $id = $data['id'] ?? false;
+        $id = $dto->id ?? false;
 
         $query = Exam::with(['type', 'center'])
             ->withCount(['enrollments']);
@@ -40,10 +40,10 @@ class GetExamsQuery
         $query->when($examTypeId, fn ($q) => $q->where('exam_type_id', $examTypeId)
         );
 
-        $query->when($dateFrom, fn ($q) => $q->where('begin_time', '>=', Carbon::parse($dateFrom)->startOfDay())
+        $query->when($dateFrom, fn ($q) => $q->where('begin_time', '>=', $dateFrom->startOfDay())
         );
 
-        $query->when($dateTo, fn ($q) => $q->where('begin_time', '<', Carbon::parse($dateTo)->endOfDay())
+        $query->when($dateTo, fn ($q) => $q->where('begin_time', '<', $dateTo->endOfDay())
         );
 
         $query->when($addressId, fn ($q) => $q->where('address_id', $addressId)

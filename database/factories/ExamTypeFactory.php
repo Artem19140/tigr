@@ -23,7 +23,7 @@ class ExamTypeFactory extends Factory
             'level' => 1,
             'certificate_name' => 'Имя сертификата',
             'duration' => 80,
-            'cost' => fake()->numberBetween(3000, 5000),
+            'amount' => fake()->numberBetween(3000, 5000),
             'tasks_count' => fake()->numberBetween(10, 30),
             'min_mark' => fake()->numberBetween(10, 30),
             'need_human_check' => fake()->numberBetween(0, 1),

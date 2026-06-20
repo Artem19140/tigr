@@ -2,6 +2,7 @@
 
 namespace App\Modules\ForeignNational\Action;
 
+use App\Http\Dto\ForeignNationalStoreDto;
 use App\Modules\Document\DocumentService;
 use App\Modules\ForeignNational\Guard\ForeignNationalGuard;
 use App\Models\Employee;
@@ -16,24 +17,28 @@ final class StoreForeignNationalAction
     ) {}
 
     public function execute(
-        array $data,
-        Employee $employee
+        ForeignNationalStoreDto $dto,
+        Employee $employee,
+        
     ): ForeignNational {
-        $this->foreignNationalGuard->ensureAge($data['dateBirth']);
-        $this->foreignNationalGuard->ensureUniquePassport($data);
+        $this->foreignNationalGuard->ensureAge($dto->dateBirth);
+        $this->foreignNationalGuard->ensureUniquePassport(
+            $dto->passportSeries,
+            $dto->passportNumber
+        );
         
         $foreignNational = ForeignNational::create(
-            $this->attributes($data, $employee),
+            $this->attributes($dto, $employee),
         );
 
         $this->documentService->create(
-            $data['passportTranslate'],
+            $dto->passportTranslate,
             $foreignNational,
             'passport_translate'
         );
 
         $this->documentService->create(
-            $data['passport'],
+            $dto->passport,
             $foreignNational,
             'passport'
         );
@@ -41,33 +46,33 @@ final class StoreForeignNationalAction
     }
 
     private function attributes(
-        array $data,
-        Employee $creator
+        ForeignNationalStoreDto $dto,
+        Employee $creator,
     ): array {
         return [
-            'surname' => $data['surname'],
-            'name' => $data['name'],
-            'patronymic' => $data['patronymic'],
-            'date_birth' => $data['dateBirth'],
-            'surname_latin' => $data['surnameLatin'],
-            'name_latin' => $data['nameLatin'],
-            'patronymic_latin' => $data['patronymicLatin'],
-            'passport_number' => $data['passportNumber'],
-            'passport_series' => $data['passportSeries'],
-            'issued_by' => $data['issuedBy'],
-            'issued_date' => $data['issuedDate'],
-            'citizenship' => $data['citizenship'],
-            'phone' => $data['phone'],
-            'address_reg' => $data['addressReg'],
+            'surname' => $dto->surname,
+            'name' => $dto->name,
+            'patronymic' => $dto->patronymic,
+            'date_birth' => $dto->dateBirth,
+            'surname_latin' => $dto->surnameLatin,
+            'name_latin' => $dto->nameLatin,
+            'patronymic_latin' => $dto->patronymicLatin,
+            'passport_number' => $dto->passportNumber,
+            'passport_series' => $dto->passportSeries,
+            'issued_by' => $dto->issuedBy,
+            'issued_date' =>  $dto->issuedDate,
+            'citizenship' =>  $dto->citizenship,
+            'phone' =>  $dto->phone,
+            'address_reg' => $dto->addressReg,
             'creator_id' => $creator->id,
             'center_id' => $creator->center_id,
-            'gender' => $data['gender'],
-            'comment' => $data['comment'],
-            'surname_normalized' => $this->normalize($data['surname']),
-            'name_normalized' => $this->normalize($data['name']),
-            'patronymic_normalized' => $this->normalize($data['patronymic']),
-            'passport_number_normalized' => $this->normalize($data['passportNumber']),
-            'passport_series_normalized' => $this->normalize($data['passportSeries']),
+            'gender' => $dto->gender,
+            'comment' => $dto->comment,
+            'surname_normalized' => $this->normalize($dto->surname),
+            'name_normalized' => $this->normalize($dto->name),
+            'patronymic_normalized' => $this->normalize($dto->patronymic),
+            'passport_number_normalized' => $this->normalize($dto->passportNumber),
+            'passport_series_normalized' => $this->normalize($dto->passportSeries),
         ];
     }
 

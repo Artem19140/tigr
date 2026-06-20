@@ -27,7 +27,8 @@ class VnzhSeeder extends Seeder
                 'min_mark' => 21,
                 'duration' => 90,
                 'level' => 3,
-                'cost' => 5900,
+                'amount' => 5900,
+                'amount_in_words' => 'пять тысяч девятьсот рублей ноль копеек',
                 'has_speaking_tasks' => true,
                 'certificate_name' => 'вида на жительство в РФ',
             ]);

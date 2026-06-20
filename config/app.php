@@ -133,7 +133,7 @@ return [
     | 
     */
     'platform_admin' => [
-        'login' => env('PLATFORM_ADMIN_LOGIN'),
+        'email' => env('PLATFORM_ADMIN_LOGIN'),
         'password' => env('PLATFORM_ADMIN_PASSWORD'),
     ],
 
