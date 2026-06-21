@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { watch } from 'vue';
 import AppCheckbox from '../AppCheckbox/AppCheckbox.vue';
 import AppInput from '../AppInput/AppInput.vue';
 
@@ -11,29 +11,19 @@ const props = defineProps<{
 const input = defineModel<string | null>('input')
 const checkbox = defineModel<boolean>('checkbox', {default:false})
 
-const disabled = ref<boolean>(false)
 watch(() => checkbox.value, () => {
-    if(checkbox.value){
-        input.value = null
-        disabled.value = true
-    }else{
-        disabled.value = false
-    }
+    if(!checkbox.value) return
+    input.value = null
 })
 </script>
 
 <template>
     <div class="flex flex-column">
         <AppInput 
-            :disabled="disabled"
+            :disabled="checkbox"
             v-model="input"
             v-bind="inputAttr"
         />
-        <!-- <v-text-field>
-            <template v-slot:append-inner>
-                
-            </template>
-        </v-text-field> -->
         <AppCheckbox 
             v-model="checkbox"
             v-bind="checkboxAttr"

@@ -22,9 +22,7 @@ class FlatTableGenerator
         Carbon $dateFrom,
         Carbon $dateTo
     ) {
-        $handle = fopen('php://output', 'w');
-        fwrite($handle, "\xEF\xBB\xBF");
-        fputcsv($handle, $this->headers());
+        $this->csvWriter->setHeaders($this->headers());
         $strNumber = 1;
 
         Attempt::query()
@@ -40,7 +38,7 @@ class FlatTableGenerator
 
             ->whereNotNull('checked_at')
 
-            ->chunkById(300, function ($attempts) use ($handle, &$strNumber) {
+            ->chunkById(300, function ($attempts) use (&$strNumber) {
                 foreach ($attempts as $attempt) {
                     CenterIsolationCheck::centerBelongs($attempt, $this->centerContext->id());
                     $answers = $attempt->answers->sortBy(fn ($a) => $a->taskVariant->task->order);
@@ -58,7 +56,7 @@ class FlatTableGenerator
                         //     $answerInTable = $answer->answer;
                         // }
 
-                        fputcsv($handle, [
+                        $this->csvWriter->writeRow( [
                             $strNumber,
                             $attempt->exam->type->level,
                             $attempt->foreign_national_id,
@@ -75,7 +73,6 @@ class FlatTableGenerator
                 }
             });
 
-        fclose($handle);
         event(new ReportGenerated(ReportType::FlatTable, [
             'period' => [
                 'from' => $dateFrom->format('d.m.Y'),

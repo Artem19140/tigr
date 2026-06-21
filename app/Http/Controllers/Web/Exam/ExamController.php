@@ -48,7 +48,6 @@ class ExamController
         CenterIsolationCheck::check($exams);
 
         $employee = $request->user();
-        
         return Inertia::render('Exam/Exam', [
             'permissions' => [
                 'create' => $employee->can('create', Exam::class),
@@ -135,16 +134,20 @@ class ExamController
     }
 
     public function destroy(
+        Request $request,
         Exam $exam,
         CancelExam $cancelExam
     ): Response {
         Gate::authorize('delete', $exam);
 
-        request()->validate([
+        $request->validate([
             'cancelledReason' => ['required', 'string'],
         ]);
 
-        $cancelExam->execute($exam, request()->string('cancelledReason'));
+        $cancelExam->execute(
+            $exam, 
+            $request->string('cancelledReason')
+        );
 
         return response()->noContent();
     }

@@ -5,12 +5,13 @@ namespace App\Modules\Exam;
 use App\Modules\Exam\ProtocolCommentRules;
 use App\Exceptions\BusinessException;
 use App\Models\Exam;
-use Illuminate\Support\Facades\Log;
+use App\Support\Audit;
 
 class UpdateProtocolComment
 {
     public function __construct(
-        protected ProtocolCommentRules $protocolCommentRules
+        protected ProtocolCommentRules $protocolCommentRules,
+        protected Audit $audit
     ) {}
 
     public function execute(
@@ -27,17 +28,20 @@ class UpdateProtocolComment
         $exam->protocol_comment = $protocolComment;
 
         $exam->save();
-        $this->log($exam, $oldValue);
+        $this->audit->log(
+            'update_protocol_comment',
+            $exam, 
+            [
+                'changes' => [
+                    'before' => $oldValue,
+                    'after' => $exam->protocol_comment
+                ],
+            ]
+        );
     }
 
     protected function log(Exam $exam, string $oldValue)
     {
-        Log::info('updated_protocol_comment', [
-            'exam_id' => $exam->id,
-            'changes' => [
-                'before' => $oldValue,
-                'after' => $exam->protocol_comment,
-            ]
-        ]);
+        
     }
 }

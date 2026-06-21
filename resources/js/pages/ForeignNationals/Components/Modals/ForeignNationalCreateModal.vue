@@ -82,6 +82,10 @@ watch(() => http.noPhone, () => {
         http.phone = null
     }
 })
+
+function required (v:any) {
+    return !!v || 'Поле обязательно'
+}
 </script>
 
 <template>  
@@ -116,8 +120,46 @@ watch(() => http.noPhone, () => {
                         v-model:form="http"
                         :loading="http.processing"
                         :errors="http.errors"   
-                        :docs=true
-                    />
+                    >
+                        <template #docs>
+                            <v-card title="Документы" class="mb-4" variant="flat">
+                                <v-card-text>
+                                    <v-container fluid>
+                                        <v-row class="mb-2">
+                                            
+                                            <v-col cols="12" md="6">
+                                                <v-file-upload
+                                                    density="comfortable"
+                                                    clearable
+                                                    v-model="http.passport"
+                                                    :readonly="http.processing"
+                                                    accept=".pdf,application/pdf"
+                                                    :error-messages="http.errors.passport"
+                                                    variant="comfortable"
+                                                    :rules="[required]"
+                                                    title="Скан паспорта PDF"
+                                                    
+                                                />
+                                            </v-col>
+
+                                            <v-col cols="12" md="6">
+                                                <v-file-upload 
+                                                    density="comfortable"
+                                                    title="Скан перевода паспорта PDF"
+                                                    :rules="[required]"
+                                                    clearable
+                                                    v-model="http.passportTranslate"
+                                                    :readonly="http.processing"
+                                                    accept=".pdf,application/pdf"
+                                                    :error-messages="http.errors.passportTranslate"
+                                                />
+                                            </v-col>
+                                        </v-row>
+                                    </v-container>
+                                </v-card-text>
+                            </v-card>
+                        </template>
+                    </ForeignNationalForm>
                     
                 </v-form>
                   

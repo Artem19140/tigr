@@ -13,4 +13,15 @@ class EmployeeDto
         public ?string $password = null,
         public string $jobTitle 
     ){}
+
+    public function toArray(): array
+    {
+        return [
+            'surname' => $this->surname,
+            'name' => $this->name,
+            'patronymic' => $this->patronymic,
+            'email' => $this->email,
+            'job_title' => $this->jobTitle
+        ];
+    }
 }

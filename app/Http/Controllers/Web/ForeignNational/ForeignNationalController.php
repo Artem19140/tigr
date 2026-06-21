@@ -52,6 +52,7 @@ class ForeignNationalController
         CreateForeignNationalWithEnrollment $createForeignNationalWithEnrollment
     ): JsonResponse {
         Gate::authorize('create', ForeignNational::class);
+        
         $enrollement = $createForeignNationalWithEnrollment
             ->execute(
                 $request->toDto(),

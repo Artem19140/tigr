@@ -4,27 +4,27 @@ namespace App\Modules\ForeignNational;
 
 use App\Modules\Center\CenterContext;
 use App\Models\ForeignNational;
+use App\Support\Audit;
 use App\Support\CenterIsolationCheck;
 use App\Support\CsvWriter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class ExportForeignNational
 {
     public function __construct(
         protected CenterIsolationCheck $centerIsolationCheck,
         protected CenterContext $centerContext,
-        protected CsvWriter $csvWriter
+        protected CsvWriter $csvWriter,
+        protected Audit $audit
     ){}
     public function execute(
         Carbon $dateFrom,
         Carbon $dateTo,
         ?string $citizenship
     ) {
-        $handle = fopen('php://output', 'w');
-        fwrite($handle, "\xEF\xBB\xBF");
-        fputcsv($handle, $this->headers());
+        $this->csvWriter->setHeaders($this->headers());
         $count = 0;
         ForeignNational::query()
             ->forCenter($this->centerContext->id())
@@ -36,9 +36,8 @@ class ExportForeignNational
             ->whereBetween('created_at', [$dateFrom, $dateTo])
             ->orderBy('id')
             ->lazyById(1000)
-            ->each(function ($i) use ($handle, &$count) {
-                
-                fputcsv($handle, [
+            ->each(function ($i) use (&$count) {
+                $this->csvWriter->writeRow([
                     $i->surname,
                     $i->name,
                     $i->patronymic,
@@ -48,19 +47,19 @@ class ExportForeignNational
                 ]);
                 $count++;
                 $this->centerIsolationCheck::centerBelongs($i, $this->centerContext->id());
-            });
-
-        fclose($handle);
-        
-        Log::info('foreign_national_export', [
-            'period' => [
-                'from' => $dateFrom->format('d.m.Y'),
-                'to' => $dateTo->format('d.m.Y'),
-            ],
-            'citizenship' => $citizenship,
-            'count' => $count,
-        ]);
-
+            });      
+        $this->audit->log(
+            'export',
+            Str::snake(basename(ForeignNational::class)),
+            [
+                'period' => [
+                    'from' => $dateFrom->format('d.m.Y'),
+                    'to' => $dateTo->format('d.m.Y'),
+                ],
+                'citizenship' => $citizenship,
+                'count' => $count,
+            ]
+        );
     }
 
     protected function headers(): array

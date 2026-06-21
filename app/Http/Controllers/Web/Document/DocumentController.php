@@ -5,22 +5,25 @@ namespace App\Http\Controllers\Web\Document;
 use App\Modules\Document\DocumentSaver;
 use App\Http\Resources\Document\DocumentResource;
 use App\Models\Document;
+use App\Support\Audit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 
 class DocumentController
 {
+    public function __construct(
+        protected Audit $audit
+    ){}
     public function show(
-        Request $request,
         Document $document
     )
     {
-        Log::info('document_access', [
-            'document' => $document->id
-        ]);
+        Gate::authorize('view',$document);
+        $this->audit->log('view', $document);
+
         return Storage::disk('local')->response($document->path);
     }
 
@@ -43,10 +46,17 @@ class DocumentController
             $document->document_type
         );
 
-        Log::info('document_updated', [
-            'old_doc' => $document->id,
-            'new_doc' => $newDocument->id
-        ]);
+        $this->audit->log(
+            'document_delete',
+            $document, 
+            ['new_doc_id' => $newDocument->id]
+        );
+
+        $this->audit->log(
+            'create', 
+            $newDocument, 
+            ['old_doc_id' => $document->id]
+        );
 
         return new DocumentResource($newDocument);
     }

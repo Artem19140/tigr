@@ -110,8 +110,7 @@ Route::middleware([
             ->name('password.change')
             ->withoutMiddleware([AppMiddleware::HAS_CHANGE_PASSWORD]);
 
-        Route::get('documents/{document}', [DocumentController::class, 'show'])
-            ->can('view','document');
+        Route::get('documents/{document}', [DocumentController::class, 'show']);
 
         Route::put('documents/{document}', [DocumentController::class, 'update'])
             ->can('update','document');

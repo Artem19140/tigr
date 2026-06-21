@@ -32,16 +32,7 @@ class CenterController
     ): CenterResource {
         $dto = $request->dto();
 
-        $center->name = $dto->name;
-        $center->director_fio = $dto->directorFio;
-        $center->certificates_issue_address = $dto->certificatesIssueAddress;
-        $center->ogrn = $dto->ogrn;
-        $center->inn = $dto->inn;
-        $center->address = $dto->address;
-        $center->name_genitive = $dto->nameGenitive;
-        $center->commission_chairman = $dto->commissionChairman;
-
-        $center->save();
+        $center->update($dto->toArray());
 
         $this->logger->log($center);
 

@@ -2,15 +2,15 @@
 
 namespace App\Listeners;
 
+use App\Support\Audit;
 use Illuminate\Auth\Events\Logout;
-use Illuminate\Support\Facades\Log;
 
 class LogSuccessfullLogout
 {
     /**
      * Create the event listener.
      */
-    public function __construct()
+    public function __construct(protected Audit $audit)
     {
         //
     }
@@ -20,8 +20,9 @@ class LogSuccessfullLogout
      */
     public function handle(Logout $event): void
     {
-        Log::info('logout', [
-            'guard' => $event->guard,
-        ]);
+        $this->audit->log(
+            "$event->guard:logout", 
+            $event->user
+        );
     }
 }

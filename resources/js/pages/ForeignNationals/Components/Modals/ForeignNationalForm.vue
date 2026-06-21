@@ -11,8 +11,7 @@ import AppCheckbox from '@/components/UI/AppCheckbox/AppCheckbox.vue';
 
 const props = defineProps<{
     errors:any,
-    loading:boolean,
-    docs?:boolean
+    loading:boolean
 }>()
 
 const form = defineModel<ForeignNationalFormI | ForeignNationalEditForm>('form',{
@@ -248,42 +247,7 @@ function required (v:any) {
             </v-container>
         </v-card-text>
     </v-card>
-    <v-card title="Документы" class="mb-4" variant="flat" v-if="docs">
-        <v-card-text>
-            <v-container fluid>
-                <v-row class="mb-2">
-                    
-                    <v-col cols="12" md="6">
-                        <v-file-upload
-                            density="comfortable"
-                            clearable
-                            v-model="form.passport"
-                            :readonly="readonly"
-                            accept=".pdf,application/pdf"
-                            :error-messages="errors.passport"
-                            variant="comfortable"
-                            :rules="[required]"
-                            title="Скан паспорта PDF"
-                            
-                        />
-                    </v-col>
-
-                    <v-col cols="12" md="6">
-                        <v-file-upload 
-                            density="comfortable"
-                            title="Скан перевода паспорта PDF"
-                            :rules="[required]"
-                            clearable
-                            v-model="form.passportTranslate"
-                            :readonly="readonly"
-                            accept=".pdf,application/pdf"
-                            :error-messages="errors.passportTranslate"
-                        />
-                    </v-col>
-                </v-row>
-            </v-container>
-        </v-card-text>
-    </v-card>
+    <slot name="docs" />
 
     <v-card class="mb-4" variant="flat" >
         <v-card-title>

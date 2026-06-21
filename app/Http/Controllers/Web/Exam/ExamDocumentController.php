@@ -36,7 +36,11 @@ class ExamDocumentController
             'exam' => $exam,
         ]);
 
-        event(new ExamDocumentGenerated($exam, ExamDocument::List));
+        event(new ExamDocumentGenerated($exam, ExamDocument::List, [
+            'enrollments_count' => $exam->enrollments_count,
+            'enrollments_ids' => $exam->enrollments->pluck('id')->toArray()
+        ]));
+
         $fileName = "Список_{$exam->short_name}_{$exam->begin_time_local->format('H-i_d.m.Y')}.pdf";
         
         return $pdf->stream($fileName);
@@ -94,6 +98,7 @@ class ExamDocumentController
         ExamProtocolGenerator $examProtocolGenerator
     ): Response {
         $fileName= "Протокол_{$exam->short_name}_{$exam->begin_time_local->format('H-i_d.m.Y')}.pdf";
+        
         $pdf =  $examProtocolGenerator->execute($exam);
         return $pdf->stream($fileName);
     }

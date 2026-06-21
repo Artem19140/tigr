@@ -24,22 +24,13 @@ class UpdateEmployee
         );
 
         DB::transaction(function () use ($employeeToUpdate, $dto) {
-            $employeeToUpdate->update($this->getAttributes($dto));
+
+            $employeeToUpdate->update($dto->toArray());
             $rolesChanges = $employeeToUpdate->roles()->sync($dto->rolesIds);
+
             $this->logger->log($employeeToUpdate,[
                 'roles' => $rolesChanges
             ]);
         });
-    }
-
-    protected function getAttributes(EmployeeDto $dto): array
-    {
-        return [
-            'email' => $dto->email,
-            'job_title' => $dto->jobTitle,
-            'name' => $dto->name,
-            'surname' => $dto->surname,
-            'patronymic' => $dto->patronymic,
-        ];
     }
 }

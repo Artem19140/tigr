@@ -57,7 +57,7 @@ class ForeignNationalExportController
             $citizenship
         ) {
 
-            $exportForeignNationalQuery->execute(
+            $exportForeignNational->execute(
                 $dateFrom,
                 $dateTo,
                 $citizenship

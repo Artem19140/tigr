@@ -8,6 +8,7 @@ use App\Http\Resources\Address\AddressResource;
 use App\Models\Address;
 use App\Models\Center;
 use App\Models\Employee;
+use App\Support\Audit;
 use App\Support\CenterIsolationCheck;
 use App\Support\ModelChangesLogger;
 use Illuminate\Http\JsonResponse;
@@ -19,7 +20,8 @@ use Inertia\Inertia;
 class AddressController
 {
     public function __construct(
-        protected CenterContext $centerContext
+        protected CenterContext $centerContext,
+        protected Audit $audit
     ){}
     public function index(
         Request $request,
@@ -56,6 +58,8 @@ class AddressController
             'center_id' => $center->id,
             'creator_id' => $request->user()->id,
         ]);
+
+        $this->audit->log('create', $address);
 
         return response()->json([
             'address' => new AddressResource($address),
@@ -97,9 +101,8 @@ class AddressController
         $address->is_active = false;
         $address->save();
 
-        Log::info('address_destroy', [
-            'address_id' => $address->id,
-        ]);
+        $this->audit->log('delete', $address);
+
         return response()->noContent();
     }
 
