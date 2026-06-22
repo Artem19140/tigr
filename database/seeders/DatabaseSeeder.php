@@ -85,9 +85,9 @@ class DatabaseSeeder extends Seeder
 
         $platformAdmin->roles()->syncWithoutDetaching([$platformAdminRole->id]);
         
-        $this->call([
-            EmployeeSeeder::class
-        ]);
+        // $this->call([
+        //     EmployeeSeeder::class
+        // ]);
 
         if (! app()->isProduction()) {
             $this->call([

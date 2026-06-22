@@ -16,21 +16,21 @@ const examTypeId = ref<number | null>(null)
 const exams = ref<Exam[]>()
 
 const http = useHttp<ForeignNationalFormI & {hasPayment:boolean, examId: number | null}, RedirectUrl>({
-    surname: 'sad', 
-    name:'ds',
-    patronymic:"sf",
+    surname: 'Нуржнонов', 
+    name:'Нурбек',
+    patronymic:"Васыл оглы",
     noPatronymic:false,
-    surnameLatin:'asd',
-    nameLatin:'s',
-    patronymicLatin:"sd",
+    surnameLatin:'Nyrzhonov',
+    nameLatin:'Nurbek',
+    patronymicLatin:"Vasil ogli",
     noPatronymicLatin:false,
-    passportNumber:"sd",
-    passportSeries:"sdf",
+    passportNumber:"AB",
+    passportSeries:"123456",
     noPassportNumber:false,
     noPassportSeries:false,
-    issuedBy:'qwe',
+    issuedBy:'МВД по УР',
     issuedDate:'2025-12-12',
-    citizenship:'AU',
+    citizenship:'AZ',
     phone:'1234567890',
     dateBirth:'2005-12-12',
     passport:null,
@@ -39,7 +39,7 @@ const http = useHttp<ForeignNationalFormI & {hasPayment:boolean, examId: number 
     gender:"M",
     hasPayment:false,
     comment:'',
-    addressReg:'123',
+    addressReg:'г. Сарапул, ул. Победы дом 100, кв. 90',
     noPhone:false
 })
 

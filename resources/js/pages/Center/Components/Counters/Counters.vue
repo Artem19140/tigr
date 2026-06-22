@@ -13,15 +13,39 @@ const props = defineProps<{
     <Head>
         <title>Счетчики</title>
     </Head>
-    <v-card>
-        <v-card-text>
-            <div 
-                v-for="counter in counters"
-            >
+    <v-card
+        rounded="xl"
+        class="counter-list"
+    >
+
+        <v-card-text class="pa-4">
+
+            <div v-if="counters?.length" class="counter-items">
+
                 <CounterCard
+                    v-for="counter in counters"
+                    :key="counter.id"
                     :counter="counter"
                 />
+
             </div>
+
+            <v-empty-state
+                v-else
+                icon="mdi-counter"
+                title="Счетчиков пока нет"
+            />
+
         </v-card-text>
+
     </v-card>
+    
 </template>
+
+<style lang="css" scoped>
+.counter-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+</style>

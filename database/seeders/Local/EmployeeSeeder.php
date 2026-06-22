@@ -13,7 +13,7 @@ class EmployeeSeeder extends Seeder
     {
         $center = Center::firstWhere('inn', '1833010750');
         $password = Hash::make('12345678');
-        for($i = 0; $i < 5; $i++){
+        for($i = 0; $i < 6; $i++){
             Employee::firstOrCreate(
                 [
                     'email' =>"$i@udsu.ru"
