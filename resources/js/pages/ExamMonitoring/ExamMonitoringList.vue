@@ -6,7 +6,7 @@ import { ref } from 'vue';
 import ExamCapacityChip from '@/components/Exam/ExamCapacityChip.vue';
 import { Paginated } from '@/interfaces/Interfaces';
 import { ExamIndex } from '@/interfaces/Exam';
-import AppTooltip from '@/components/UI/AppTooltip/AppTooltip.vue';
+import BaseTable from '@/components/BaseComponents/BaseTable/BaseTable.vue';
 
 defineOptions({
   layout: [EmployeeLayout]
@@ -48,23 +48,18 @@ const visit = (url :string) => {
 
 <template>
     <Head>
-        <title>Мониторинг список</title>
+        <title>Мониторинг</title>
     </Head>
-    <v-container>
-        <v-card >
-            <v-card-text
-                class="flex items-center justify-between"
-            >
-                <div class="flex items-center">
-                    <v-card-title>
-                        Мониторинг
-                    </v-card-title>
-                    <AppTooltip
-                        text="Здесь будут экзамены, где вы являетесь экзаменатором"
-                    />
-                </div>
-                <div class="mr-4">
-                    <v-btn
+    <v-container>   
+        <BaseTable
+            :elements="exams.data"
+            :headers="headers"
+            title="Мониторинг"
+            @row-click="(item) =>  router.visit(`/exams/${item.id}/monitoring`)"
+        >
+            <template #header-left>
+
+                <v-btn
                         variant="text"
                         icon
                         :disabled="loading"
@@ -83,27 +78,17 @@ const visit = (url :string) => {
                     >
                         <v-icon>mdi-chevron-right</v-icon>
                     </v-btn>
-              </div>
-            </v-card-text>
-        
-        
-            <v-data-table
-                :items="exams.data"
-                :headers="headers"
-                @click:row="open"
-                :loading="loading"
-                hide-default-footer
-            >
+            </template>
 
-                <template #item.capacity="{ item }">
-                    <ExamCapacityChip :exam="item" />
-                </template>
-                
+            <template #item.capacity="{ item }">
+                <ExamCapacityChip :exam="item" />
+            </template>
+            
 
-                <template #item.beginTime="{ item }">
-                    {{ new DateFormatter(item.beginTime).format('d M Y,  H:i') }}
-                </template>
-            </v-data-table>
-        </v-card>
+            <template #item.beginTime="{ item }">
+                {{ new DateFormatter(item.beginTime).format('d M Y,  H:i') }}
+            </template>
+        
+        </BaseTable>
     </v-container>
 </template>

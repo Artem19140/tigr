@@ -6,6 +6,7 @@ import AppStatusChip from '@/components/UI/AppStatusChip/AppStatusChip.vue';
 import { Enrollment } from '@/interfaces/Enrollment';
 import { ExamChecking } from '@/interfaces/Exam';
 import { Head, router } from '@inertiajs/vue3';
+import BaseTable from '@/components/BaseComponents/BaseTable/BaseTable.vue';
 
 defineOptions({
   layout: [EmployeeLayout],
@@ -34,41 +35,33 @@ const openAttempt =  (item : Enrollment) => {
     <Head>
         <title>Проверка {{ exam.data.shortName }}</title>
     </Head>
-
-    <v-btn class="mt-2 ml-2" @click="router.visit('/exams/checking')">
-        Назад
+    
+    <v-btn class="mt-4 ml-4" variant="text" @click="() => router.visit('/exams/checking')">
+        ← Назад
     </v-btn>
 
     <v-container>
-        <v-card>
-            <v-card-text>
-                <v-card-title>
-                    {{ `Попытки экзмена ${exam.data.shortName} от ${new DateFormatter(exam.data.beginTime).format('H:i, d.m.Y')}` }}
-                </v-card-title>
-            </v-card-text>
-
-            <v-data-table 
-                :headers="headers"
-                :items="props.exam.data.enrollments"
-                @click:row="(event :Event, { item } : any) => openAttempt(item)"
-                hide-default-footer
-                :items-per-page="-1"
-            >
-                <template #item.index="{ index }">
+        <BaseTable 
+            :elements="exam.data.enrollments"
+            :headers="headers"
+            :title="`Попытки экзмена ${exam.data.shortName} от ${new DateFormatter(exam.data.beginTime).format('H:i, d.m.Y')}`"
+            @row-click="openAttempt"
+        >
+            <template #item.index="{ index }">
                 {{ index + 1 }}
-                </template>
-                <template #item.name="{ item }">
+            </template>
+            <template #item.name="{ item }">
                 {{ item.regNum }}
-                </template>
+            </template>
 
-                <template #item.status="{ item }">
-                    <AppStatusChip 
-                        v-if="item.attempt?.checkedAt"
-                        color="green"
-                        text="Проверено"
-                    />
-                </template>
-            </v-data-table >
-        </v-card>
+            <template #item.status="{ item }">
+                <AppStatusChip 
+                    v-if="item.attempt?.checkedAt"
+                    color="green"
+                    text="Проверено"
+                />
+            </template>
+        
+        </BaseTable>
     </v-container>
 </template>
