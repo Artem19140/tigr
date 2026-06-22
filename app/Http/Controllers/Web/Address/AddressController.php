@@ -35,8 +35,6 @@ class AddressController
             ->where('is_active', true)
             ->get();
 
-        Log::info('address_view_index', []);
-
         CenterIsolationCheck::check($addresses);
         return Inertia::render('Center/Center', [
             'addresses' => AddressResource::collection($addresses),
