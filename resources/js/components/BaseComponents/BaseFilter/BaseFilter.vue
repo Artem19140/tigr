@@ -68,44 +68,109 @@ function cleanFilters(data: Record<string, any>) {
 
 <template>
     <v-menu
-        width="420"
-        :close-on-content-click="false"
         v-model="isOpen"
+        width="400"
+        :close-on-content-click="false"
+        location="bottom start"
+        offset="8"
     >
-        <template v-slot:activator="{ props }">
-            <v-btn 
-                icon 
-                variant="text"
+        <template #activator="{ props }">
+            <v-btn
                 v-bind="props"
+                icon
+                variant="text"
+                class="filter-btn"
             >
-                <v-badge :content="filledCount" 
-                    color="red" 
+                <v-badge
+                    :content="filledCount"
+                    color="error"
                     :model-value="filledCount > 0"
-                >  
-                    <v-icon>mdi-filter-menu</v-icon>
+                    dot
+                >
+                    <v-icon icon="mdi-filter-variant" />
                 </v-badge>
             </v-btn>
         </template>
+
         <v-card
-            title="Фильтры"
+            class="filter-panel"
+            rounded="xl"
+            elevation="8"
         >
-            <v-card-text>
+            <!-- HEADER -->
+            <div class="filter-header">
+                <div class="d-flex align-center justify-space-between">
+                    <div class="text-subtitle-2 font-weight-medium">
+                        Фильтры
+                    </div>
+
+                    <v-btn
+                        icon="mdi-close"
+                        variant="text"
+                        size="small"
+                        @click="isOpen = false"
+                    />
+                </div>
+            </div>
+
+            <v-divider />
+
+            <!-- CONTENT -->
+            <div class="filter-content">
                 <slot />
-            </v-card-text>
-            
-            <v-card-actions class="flex justify-center">
+            </div>
+
+            <v-divider />
+
+            <!-- ACTIONS -->
+            <div class="filter-actions">
+                <v-btn
+                    variant="text"
+                    @click="clean"
+                >
+                    Очистить
+                </v-btn>
+
                 <AppPrimaryButton
                     prepend-icon="mdi-magnify"
                     text="Найти"
                     @click="find"
                     :disabled="form.processing"
                 />
-                <v-btn
-                    @click="clean"
-                >
-                    Очистить
-                </v-btn>
-            </v-card-actions>
+            </div>
         </v-card>
     </v-menu>
 </template>
+
+<style lang="css" scoped>
+.filter-panel {
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.filter-header {
+    padding: 12px 14px;
+}
+
+.filter-content {
+    padding: 12px 14px;
+    max-height: 65vh;
+    overflow-y: auto;
+}
+
+.filter-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 10px 12px;
+}
+
+/* button polish */
+.filter-btn {
+    opacity: 0.9;
+}
+
+.filter-btn:hover {
+    opacity: 1;
+}
+</style>

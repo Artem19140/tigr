@@ -39,15 +39,19 @@ const {open} = useModals()
       title="Редактировать" 
       @click="open('employeeEdit', {employee:employee})"
     />
+
     <v-list-item 
       title="Сбросить пароль"
       @click="open('passwordReset', {employee:employee})" 
     />
-    <v-divider></v-divider>
+
+    <v-divider />
+
     <v-list-item 
       title="Удалить" 
       base-color="red" 
       @click="deleteEmployee"
     />
+    
   </BaseThreeDotDropdown>
 </template>

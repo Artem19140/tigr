@@ -26,13 +26,15 @@ const donwload = () => {
 <template>
     <BaseDialog 
         width="500"
-        title="Плоская таблица"
         v-model="isOpen"
         @before-close="(close) => {
             http.resetAndClearErrors()
             close()
         }"
     >
+        <template #header>
+            <div>Плоская таблица</div>
+        </template>
         <AppPeriodDate 
             :errors="http.errors"
             v-model:date-from="http.dateFrom"

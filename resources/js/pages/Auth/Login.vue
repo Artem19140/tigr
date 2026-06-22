@@ -13,14 +13,14 @@ defineOptions({
 </script>
 
 <template>
-        <BaseEntryCard
-            :subtitle="isForeignNationalEntry ? 'Введите код из 6 цифр' : 'Войдите в свой аккаунт'"
-        >
-            <ForeignNationalEntryForm v-if="isForeignNationalEntry" />
-            <EmployeeEntryForm v-else  />
-        </BaseEntryCard>
+    <BaseEntryCard
+        :subtitle="isForeignNationalEntry ? 'Введите код из 6 цифр' : 'Войдите в свой аккаунт'"
+    >
+        <ForeignNationalEntryForm v-if="isForeignNationalEntry" />
+        <EmployeeEntryForm v-else  />
+    </BaseEntryCard>
 
-        <v-menu location="top start" width="200">
+    <v-menu location="top start" width="200">
         <template v-slot:activator="{ props }">
             <v-btn
                 icon
@@ -38,5 +38,5 @@ defineOptions({
                 @click="isForeignNationalEntry = !isForeignNationalEntry" 
             />
         </v-list>
-        </v-menu>
+    </v-menu>
 </template>

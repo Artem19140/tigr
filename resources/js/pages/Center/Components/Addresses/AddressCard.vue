@@ -2,7 +2,6 @@
 import AppNumberInput from '@/components/UI/AppNumberInput/AppNumberInput.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import AppTextarea from '@/components/UI/AppTextarea/AppTextarea.vue';
-import AppTooltip from '@/components/UI/AppTooltip/AppTooltip.vue';
 import { useConfirmationOptionsDialog } from '@/composables/useConfirmationOptionsDialog';
 import { useConfirmDialog } from '@/composables/useConfirmDialog';
 import { Address } from '@/interfaces/Address';
@@ -15,7 +14,6 @@ const props = defineProps<{
 
 const editMode = ref<boolean>(false)
 
-    
 const http = useHttp()
 
 const deleteAddress = async () => {
@@ -34,7 +32,6 @@ const editHttp = useHttp({
     address:props.address.address ?? '',
     capacity:props.address.capacity
 })
-
 
 const edit = () => {
     editHttp.patch(`addresses/${props.address.id}`,{
@@ -60,72 +57,108 @@ const cancellEdit = async () => {
 </script>
 
 <template>
-    <v-card class="mb-10">
-        <v-card-title  v-if="!editMode">
-              <div class="whitespace-pre-wrap break-words">
-                {{ address.address }}
+    <v-card
+        class="address-card"
+        rounded="xl"
+        variant="text"
+    >
+        <div v-if="!editMode" class="pa-4">
+
+            <div class="d-flex justify-space-between align-start ga-4">
+
+                <div class="flex-grow-1 min-w-0">
+                    <div class="text-h6 font-weight-medium text-wrap">
+                        {{ address.address }}
+                    </div>
+
+                    <div class="text-caption text-medium-emphasis mt-1">
+                        Вместимость: {{ address.capacity }} человек
+                    </div>
+                </div>
+
+                <v-btn
+                    icon="mdi-pencil"
+                    variant="text"
+                    @click="editMode = true"
+                />
             </div>
-        </v-card-title>
-        <v-card-subtitle v-if="!editMode">Вместимость: {{ address.capacity }} человек</v-card-subtitle>
-        <div class="flex flex-column w-75 ml-4 mt-4">
-            <div>
-                <div class="mb-3" v-if="address.examsExists && editMode">
-                    Почему редактирование адреса невозможно?
-                    <AppTooltip 
-                        text="Редактирование возможно до привязки экзаменов"
-                        v-if="address.examsExists" 
+
+            <div class="d-flex ga-2 mt-4">
+                <v-btn
+                    color="error"
+                    variant="text"
+                    :loading="http.processing"
+                    :disabled="http.processing"
+                    @click="deleteAddress"
+                >
+                    Деактивировать
+                </v-btn>
+            </div>
+
+        </div>
+
+        <!-- EDIT MODE -->
+        <v-expand-transition>
+            <div v-if="editMode" class="pa-4">
+
+                <div class="text-subtitle-2 font-weight-medium mb-3">
+                    Редактирование адреса
+                </div>
+
+                <div
+                    v-if="address.examsExists"
+                    class="text-caption text-medium-emphasis mb-3"
+                >
+                    Редактирование недоступно — уже есть привязанные экзамены
+                </div>
+
+                <div class="d-flex flex-column ga-3">
+
+                    <AppTextarea
+                        v-model="editHttp.address"
+                        :error-messages="editHttp.errors.address"
+                        :disabled="address.examsExists"
+                        label="Адрес"
+                        maxlength="256"
+                    />
+
+                    <AppNumberInput
+                        v-model="editHttp.capacity"
+                        :error-messages="editHttp.errors.capacity"
+                        label="Вместимость"
+                        :min="1"
                     />
                 </div>
-                <AppTextarea
-                    v-model="editHttp.address"
-                    :error-messages="editHttp.errors.address"
-                    :disabled="address.examsExists" 
-                    v-if="editMode" 
-                    label="Адрес"
-                    hint="Максимум 256 символов"
-                    maxlength="256"
-                />
-                
-            </div>
-            
 
-            <AppNumberInput
-                v-model="editHttp.capacity"
-                :error-messages="editHttp.errors.capacity"
-                v-if="editMode" 
-                label="Вместимость"
-                :min="1"
-            />
-        </div>
-        
-        <v-card-actions>
-            
-            <v-btn
-                v-if="!editMode"
-                @click="editMode = true"
-            >Редактировать</v-btn>
-            <div v-else>
-                <AppPrimaryButton
-                    text="Сохранить"
-                    :disabled="!editHttp.isDirty"
-                    :loading="editHttp.processing"
-                    @click="edit"
-                />
-                <v-btn
-                    @click="cancellEdit"
-                >Отмена</v-btn>
-            </div>
-           
-            <v-btn 
-                v-if="!editMode"
-                color="red"
-                @click="deleteAddress"
-                :loading="http.processing"
-                :disabled="http.processing"
-            >
-                Деактивировать
-            </v-btn>
+                <div class="d-flex justify-end ga-2 mt-4">
+                    <v-btn
+                        variant="text"
+                        @click="cancellEdit"
+                    >
+                        Отмена
+                    </v-btn>
 
-        </v-card-actions>
+                    <AppPrimaryButton
+                        text="Сохранить"
+                        :disabled="!editHttp.isDirty"
+                        :loading="editHttp.processing"
+                        @click="edit"
+                    />
+                </div>
+
+            </div>
+        </v-expand-transition>
+
     </v-card>
 </template>
+
+<style lang="css" scoped>
+    .address-card {
+        overflow: hidden;
+        transition: all 0.2s ease;
+    }
+
+    .address-card:hover {
+        transform: translateY(-1px);
+    }
+</style>

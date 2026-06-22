@@ -7,6 +7,7 @@ import { router, useHttp } from '@inertiajs/vue3';
 import { Exam } from '@/interfaces/Exam';
 import ExamInfo from './ExamInfo.vue';
 import ExamVideo from './ExamVideo.vue';
+import { DateFormatter } from '@/helpers/DateFormatter.js';
 
 const props = defineProps<{
     examId:number
@@ -59,9 +60,10 @@ const tab = ref()
         }"
         skeleton="heading, list-item-two-line, list-item-two-line"
     >
-        <template #title >
+    
+        <template #header >
             <div>
-                {{ exam?.shortName }}
+                {{ exam?.shortName }}, {{ new DateFormatter(exam?.beginTime ?? '').format('H:i, d.m.Y') }}
             </div>
         </template>
 

@@ -36,9 +36,11 @@ const download = () => {
     <BaseDialog
         width="500"
         v-model="isOpen"
-        title="Выгрузка ИГ"
         @before-close="(close) => close()"
     >
+        <template #header>
+            <div >Выгрузка ИГ</div>
+        </template>
         <AppPeriodDate 
             :errors="http.errors"
             v-model:date-from="http.dateFrom"

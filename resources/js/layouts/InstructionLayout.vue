@@ -55,21 +55,21 @@ const visibleItems = computed(() =>
 </script>
 
 <template>
-        <v-navigation-drawer 
-            permanent
-            location="right"
-        >
-            <v-list nav>
-                <v-list-item
-                    v-for="item in visibleItems"
-                    :key="item.label"
-                    @click="go(item.url)"
-                >
-                    {{ item.label }}
-                </v-list-item>
-            </v-list>
-        </v-navigation-drawer >
-        <slot />
+    <v-navigation-drawer 
+        permanent
+        location="right"
+    >
+        <v-list nav>
+            <v-list-item
+                v-for="item in visibleItems"
+                :key="item.label"
+                @click="go(item.url)"
+            >
+                {{ item.label }}
+            </v-list-item>
+        </v-list>
+    </v-navigation-drawer >
+    <slot />
 
     
 </template>

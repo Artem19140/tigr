@@ -13,7 +13,5 @@ const props = defineProps<{
 </script>
 
 <template>
-  <v-container>
-    <EmployeesTable :employees="employees" />
-  </v-container>
+  <EmployeesTable :employees="employees" />
 </template>

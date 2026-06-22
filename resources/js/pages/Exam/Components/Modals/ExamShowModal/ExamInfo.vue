@@ -50,7 +50,7 @@ const examiners = computed(() =>{
         </div>
     </v-list-item>
 
-    <v-list-item>
+    <!-- <v-list-item>
         <template #prepend>
             <v-icon>mdi-calendar-clock-outline</v-icon>
         </template>
@@ -64,7 +64,7 @@ const examiners = computed(() =>{
                 {{ new DateFormatter(exam?.beginTime ?? '').format('H:i, d.m.Y') }}
             </div>
         </div>
-    </v-list-item>
+    </v-list-item> -->
 
     <v-list-item>
         <template #prepend>

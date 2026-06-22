@@ -47,7 +47,7 @@ const beforeClose = async (fn:() => void ) => {
         v-model="isOpen"
         @before-close="(close) => beforeClose(close)"
     >
-        <template #title>
+        <template #header>
             <span class="mr-2">Комментарий протокол</span>
             <AppTooltip 
                 text="Комментарий можно редактировать во время и в течении всего дня после экзамена"

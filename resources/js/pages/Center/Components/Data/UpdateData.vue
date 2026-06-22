@@ -45,66 +45,132 @@ const beforeClose = async () => {
 </script>
 
 <template>
-    <card>
-        <v-card-text>
-            <div v-if=center class="flex flex-column gap-1">
-                <AppTextarea
-                    v-model="http.name"
-                    :error-messages="http.errors.name"
-                    label="Название"
-                />
-                <AppInput 
-                    v-model="http.ogrn"
-                    :error-messages="http.errors.ogrn"
-                    label="ОГРН"
-                />
+    <v-card rounded="xl">
+        <v-card-text class="form-grid">
 
-                <AppInput 
-                    v-model="http.inn"
-                    :error-messages="http.errors.inn"
-                    label="ИНН"
-                />
+            <div v-if="center" class="form-layout">
 
-                <AppTextarea
-                    v-model="http.address"
-                    :error-messages="http.errors.address"
-                    label="Адрес центра"
-                />
+                <div class="form-section">
 
-                <AppTextarea
-                    v-model="http.certificatesIssueAddress"
-                    :error-messages="http.errors.certificatesIssueAddress"
-                    label="Адрес выдачи сертификатов"
-                />
+                    <div class="section-title">Основная информация</div>
 
-                <AppTextarea
-                    v-model="http.directorFio"
-                    :error-messages="http.errors.directorFio"
-                    label="Директор"
-                />
+                    <AppTextarea
+                        v-model="http.name"
+                        :error-messages="http.errors.name"
+                        label="Название"
+                    />
 
-                <AppTextarea
-                    v-model="http.commissionChairman"
-                    :error-messages="http.errors.commissionChairman"
-                    label="Председатель комиссии"
-                />
-                <AppTextarea
+                    <AppInput
+                        v-model="http.ogrn"
+                        :error-messages="http.errors.ogrn"
+                        label="ОГРН"
+                    />
+
+                    <AppInput
+                        v-model="http.inn"
+                        :error-messages="http.errors.inn"
+                        label="ИНН"
+                    />
+
+                    <AppTextarea
                         v-model="http.nameGenitive"
                         :error-messages="http.errors.nameGenitive"
-                        label="Название в родительском падеже(для документов)"
+                        label="Название (родительный падеж)"
                     />
-                <div>
-                    <AppPrimaryButton
-                        text="Обновить"
-                        @click="edit"
-                        :disabled="http.processing || !http.isDirty"
-                        :loading="http.processing"
-                    />
-                    <v-btn @click="beforeClose" class="ml-2">
-                        Отмена
-                    </v-btn>
                 </div>
+
+                <div class="form-section">
+
+                    <div class="section-title">Адреса</div>
+
+                    <AppTextarea
+                        v-model="http.address"
+                        :error-messages="http.errors.address"
+                        label="Адрес центра"
+                    />
+
+                    <AppTextarea
+                        v-model="http.certificatesIssueAddress"
+                        :error-messages="http.errors.certificatesIssueAddress"
+                        label="Адрес выдачи сертификатов"
+                    />
+
+                    <div class="section-title mt-4">Ответственные лица</div>
+
+                    <AppTextarea
+                        v-model="http.directorFio"
+                        :error-messages="http.errors.directorFio"
+                        label="Директор"
+                    />
+
+                    <AppTextarea
+                        v-model="http.commissionChairman"
+                        :error-messages="http.errors.commissionChairman"
+                        label="Председатель комиссии"
+                    />
+
+                </div>
+
             </div>
+
+            <div class="form-actions">
+                <AppPrimaryButton
+                    text="Обновить"
+                    @click="edit"
+                    :disabled="http.processing || !http.isDirty"
+                    :loading="http.processing"
+                />
+
+                <v-btn
+                    variant="text"
+                    @click="beforeClose"
+                >
+                    Отмена
+                </v-btn>
+            </div>
+
         </v-card-text>
-    </card>
+
+    </v-card>
 </template>
+
+<style lang="css" scoped>
+.form-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+@media (max-width: 960px) {
+    .form-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.section-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: rgba(var(--v-theme-on-surface), 0.6);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+
+/* actions */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+
+    margin-top: 20px;
+    padding-top: 12px;
+
+    border-top: 1px solid rgba(var(--v-border-color), 0.1);
+}
+</style>

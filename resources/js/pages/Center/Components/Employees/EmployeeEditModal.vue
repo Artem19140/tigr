@@ -37,7 +37,6 @@ const isOpen = defineModel<boolean>({default:false})
     <BaseDialog
         v-model="isOpen"
         width="500"
-        title="Редактирование данных сотрудника"
         @before-close=" async (close) => {
             if(http.isDirty){
                 const {confirmOpen} = useConfirmDialog()
@@ -48,6 +47,9 @@ const isOpen = defineModel<boolean>({default:false})
             close()
         }"
     >
+        <template #header>
+            <div>Редактирование</div>
+        </template>
         <EmployeeForm 
             v-model:form="http"
             :errors="http.errors"

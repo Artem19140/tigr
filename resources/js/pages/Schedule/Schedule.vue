@@ -54,47 +54,94 @@ watch(() => props.links.current, () => {
   <Head>
       <title>Расписание</title>
   </Head>
-  <v-sheet class="d-flex" tile>
-    <v-btn
-      class="ma-2"
-      variant="text"
-      icon
-      :disabled="loading"
-      @click="() => visit(links.prev)"
-    >
-      <v-icon>mdi-chevron-left</v-icon>
-    </v-btn>
-    <div class="flex items-center gap-8 mr-8">
-      {{ calendar?.title }}
+  <div class="calendar-page">
+
+    <!-- TOP BAR -->
+    <div class="calendar-toolbar">
+
+        <!-- LEFT: nav -->
+        <div class="d-flex align-center ga-2">
+            <v-btn
+                icon="mdi-chevron-left"
+                variant="text"
+                :disabled="loading"
+                @click="() => visit(links.prev)"
+            />
+
+            <div class="calendar-title">
+                {{ calendar?.title }}
+            </div>
+
+            <v-btn
+                icon="mdi-chevron-right"
+                variant="text"
+                :disabled="loading"
+                @click="() => visit(links.next)"
+            />
+        </div>
+
+        <!-- RIGHT: actions -->
+        <div class="d-flex align-center ga-2">
+            <AppAddButton
+                v-if="permissions.create"
+                text="Добавить"
+                @click="open('examCreate', {})"
+            />
+        </div>
+
     </div>
 
-    <v-spacer></v-spacer>
-    <div class="flex items-center gap-8 mr-8">
-      <AppAddButton
-        text="Добавить"
-        @click="open('examCreate', {})"
-        v-if="permissions.create"
-      />
+    <!-- CALENDAR -->
+    <div class="calendar-body">
+        <v-calendar
+            v-model="focus"
+            ref="calendar"
+            color="primary"
+            :events="exams?.data"
+            :event-color="(event: ExamCalendar) => examStatus(event.status).color"
+            @click:event="(nativeEvent: Event, { event } :any) => open('examShow', { examId: event.id })"
+            @click:date="addExam" 
+        />
     </div>
-    
-    <v-btn
-      class="ma-2"
-      variant="text"
-      icon
-      @click="() => visit(links.next)"
-      :disabled="loading"
-    >
-      <v-icon>mdi-chevron-right</v-icon>
-    </v-btn>
-  </v-sheet>
-    <v-calendar
-      v-model="focus"
-      color="primary"
-      ref="calendar"
-      :events="exams?.data"
-      :event-color="(event : ExamCalendar) => examStatus(event.status).color"
-      @click:event="(nativeEvent : Event, { event } :any) => open('examShow', {examId:event.id})"
-      @click:date="addExam"
-    >
-    </v-calendar>
+
+</div>
 </template>
+
+<style lang="css" scoped>
+.calendar-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: rgb(var(--v-theme-background));
+}
+
+.calendar-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 12px 16px;
+
+  /* glass effect (очень современно) */
+  background: rgba(var(--v-theme-surface), 0.7);
+  backdrop-filter: blur(10px);
+
+  border-bottom: 1px solid rgba(var(--v-border-color), 0.1);
+}
+
+.calendar-title {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 0 8px;
+  color: rgba(var(--v-theme-on-surface), 0.9);
+}
+
+.calendar-body {
+  flex: 1;
+  overflow: hidden;
+}
+
+.calendar-body :deep(.v-calendar) {
+  height: 100%;
+}
+</style>

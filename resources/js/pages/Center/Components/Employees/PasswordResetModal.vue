@@ -55,6 +55,9 @@ const disabled = computed(() => http.processing || (!http.adminPassword || !http
             close()
         }"
     >
+        <template #header>
+            <div>Сброс пароля</div>
+        </template>
         <div class="flex items-center mb-2 gap-1">
             <div>Введите новый пароль сотрудника</div>
             <AppTooltip 

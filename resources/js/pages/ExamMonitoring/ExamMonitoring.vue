@@ -78,41 +78,43 @@ const search = ref<string>('')
     <Head>
         <title>{{ exam.data.shortName }} {{ new DateFormatter(exam.data?.beginTime).format('d.m.Y') }}</title>
     </Head>
-    <v-btn class="mt-4 ml-4" @click="back">Назад</v-btn>
+    <v-btn class="mt-4 ml-4" variant="text" @click="back">
+        ← Назад
+    </v-btn>
+
     <v-container>
-        <v-card>
-            <v-card-text class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <v-card-title >
-                        
-                        <div class="flex items-center gap-2">
-                            {{ exam.data.shortName }} {{ new DateFormatter(exam.data?.beginTime).format('d M Y, H:i ') }}
-                            <ExamStatusChip 
-                                :status="exam.data.status" 
-                            />
+        <v-card
+            rounded="xl"
+        >
+            <v-card-text class="d-flex justify-space-between align-center py-4">
+                <div class="min-w-0">
+                    <div class="d-flex align-center ga-2 flex-wrap">
+                        <div class="text-h6 font-weight-medium">
+                            {{ exam.data.shortName }}
                         </div>
-                    </v-card-title>
-                    <AppTooltip 
-                            v-if="isPolling"
-                        >
-                        <div >
-                            <div>
-                            Обновления происходят каждые {{pollFrequency / 1000}} секунд
-                            </div>
-                            <div>
-                            При необходимости обновите страницу
-                            </div>
-                        </div>
-                    </AppTooltip>    
+
+                        <ExamStatusChip :status="exam.data.status" />
+                    </div>
+
+                    <div class="text-caption text-medium-emphasis mt-1">
+                        {{ new DateFormatter(exam.data?.beginTime).format('d M Y, H:i') }}
+
+                        <span v-if="isPolling" class="ml-2">
+                            · автообновление {{ pollFrequency / 1000 }}с
+                        </span>
+                    </div>
                 </div>
-                <ExamMonitoringDropdown 
+
+                <ExamMonitoringDropdown
                     :exam="exam.data"
                     :available="available"
                 />
             </v-card-text>
 
-           
-            <v-card-text>
+            <v-divider />
+
+            <!-- TOOLBAR -->
+            <v-card-text class="d-flex justify-space-between align-center py-3">
                 <AppInput
                     v-model="search"
                     density="compact"
@@ -120,48 +122,76 @@ const search = ref<string>('')
                     prepend-inner-icon="mdi-magnify"
                     variant="outlined"
                     hide-details
-                    max-width="300"
-                    class="ml-2"
+                    max-width="320"
                 />
-                <v-data-table
-                    :items="props.exam.data.enrollments"
-                    :headers="headers"
-                    hover
-                    hide-default-footer
-                    :items-per-page="-1"
-                    :search="search"
-                    @click:row="openForeignNational"
-                >
-                    <template  #item.actions="{ item }">
-                        <EnrollmentMonitoringDropdown  
-                            :enrollment="item" 
-                            :exam="exam.data" 
-                        />
-                    </template>
-                    <template  #item.foreignNational.fullName="{ item }">
+            </v-card-text>
+
+            <v-divider />
+
+            <!-- TABLE -->
+            <v-data-table
+                class="modern-table"
+                :items="exam.data.enrollments"
+                :headers="headers"
+                hover
+                hide-default-footer
+                :items-per-page="-1"
+                :search="search"
+                @click:row="openForeignNational"
+            >
+                <template #item.actions="{ item }">
+                    <EnrollmentMonitoringDropdown
+                        :enrollment="item"
+                        :exam="exam.data"
+                    />
+                </template>
+
+                <template #item.foreignNational.fullName="{ item }">
+                    <div class="d-flex align-center ga-2">
                         {{ item.foreignNational.fullName }}
+
                         <v-chip
                             v-if="item.attempt?.annulledAt"
                             color="red"
-                            text="Анн."
                             size="x-small"
-                        ></v-chip>
-                    </template>
-                    <template  #item.startedAt="{ item }">
-                        {{new DateFormatter(item.attempt?.startedAt ?? '').format('H:i')}}
-                    </template>
-                    <template  #item.finishedAt="{ item }">
-                        {{new DateFormatter(item.attempt?.finishedAt ?? '').format('H:i')}}
-                        
-                    </template>
-                    <template #item.hasPayment="{ item }">
-                        <PaymentIcon :enrollment="item" />
-                    </template>
-                    <template #item.speaking="{ item }">
-                        <v-icon icon="mdi-check-circle" color="green" v-if="item.attempt?.speakingFinishedAt"/>
-                    </template>
-                </v-data-table>
-            </v-card-text>
-            </v-card>
+                            variant="tonal"
+                        >
+                            Анн.
+                        </v-chip>
+                    </div>
+                </template>
+
+                <template #item.startedAt="{ item }">
+                    {{ new DateFormatter(item.attempt?.startedAt ?? '').format('H:i') }}
+                </template>
+
+                <template #item.finishedAt="{ item }">
+                    {{ new DateFormatter(item.attempt?.finishedAt ?? '').format('H:i') }}
+                </template>
+
+                <template #item.hasPayment="{ item }">
+                    <PaymentIcon :enrollment="item" />
+                </template>
+
+                <template #item.speaking="{ item }">
+                    <v-icon
+                        icon="mdi-check-circle"
+                        color="success"
+                        v-if="item.attempt?.speakingFinishedAt"
+                    />
+                </template>
+            </v-data-table>
+        </v-card>
     </v-container>
 </template>
+
+<style lang="css" scoped>
+.modern-table {
+    background: transparent;
+}
+
+.modern-table :deep(tbody tr:hover) {
+    cursor: pointer;
+    background: rgba(var(--v-theme-on-surface), 0.04);
+}
+</style>

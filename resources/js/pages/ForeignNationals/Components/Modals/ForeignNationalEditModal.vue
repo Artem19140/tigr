@@ -68,9 +68,11 @@ const beforeClose = async (fn: () => void) => {
         width="1000"
         height="100%"
         v-model="isOpen"
-        title="Редактирование ИГ"
         @before-close="(done) => beforeClose(done)"
     >
+        <template #header>
+            <div>Редактирование ИГ</div>
+        </template>
         <ForeignNationalForm 
             v-model:form="http"
             :errors="http.errors"

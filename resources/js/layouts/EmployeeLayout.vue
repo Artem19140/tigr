@@ -126,12 +126,6 @@ const visibleItems = computed(() =>
           </v-list>
       
           <v-list density="compact" nav class="mt-auto">
-            <!-- <v-list-item
-              prepend-icon="mdi-book-open-page-variant" 
-              title="Инструкция" 
-              value="instruction" 
-              @click="go('/instruction/foreign-nationals')"
-            /> -->
             <v-list-item
               prepend-icon="mdi-logout" 
               title="Выйти из аккаунта" 

@@ -31,20 +31,20 @@ const close = () => {
         :height="height"
     >
         <v-card >
-            <v-card-text class="pb-0">
-                <div class="flex items-center justify-between">
-                    <v-card-title v-if="$slots.title || title" class="d-flex align-center sticky-top pb-0" > 
-                        <slot name="title">
-                            {{ title }}
-                        </slot>
-                        
-                    </v-card-title>
-                    <div>
-                        <slot name="titleActions" v-if="$slots.titleActions && !error && !loading" />
-                        <v-btn icon="mdi-close"variant="text" class="ml-4" @click="close"/>
+            <div class="dialog-header">
+                <div class="flex items-center justify-between w-100">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <slot name="header" />
+                    </div>
+
+                    <div class="flex items-center">
+                        <slot name="titleActions" />
+                        <v-btn icon="mdi-close" variant="text" @click="close" />
                     </div>
                 </div>
-            </v-card-text>
+            </div>
+
+            <v-divider />
 
             <v-skeleton-loader
                 v-if="loading && skeleton"
@@ -100,3 +100,9 @@ const close = () => {
         </v-card>
     </v-dialog>
 </template>
+
+<style lang="css" scoped>
+.dialog-header {
+    padding: 16px 20px;
+}
+</style>

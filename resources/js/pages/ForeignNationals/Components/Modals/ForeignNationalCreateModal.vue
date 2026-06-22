@@ -91,7 +91,6 @@ function required (v:any) {
 <template>  
         <BaseDialog
             v-model="isOpen"
-            title="Добавление ИГ"
             width="1000"
             height="100%"
             @before-close="async (close) => {
@@ -104,16 +103,19 @@ function required (v:any) {
                 close()
             }"
         >   
-                <v-card title="Экзамен" class="mb-4" >
-                    <v-card-text>
-                        <v-container>
-                            <ExamEnrollment 
-                                v-model:exam-id="http.examId"
-                                v-model:has-payment="http.hasPayment"
-                                :exam-validation-errors="http.errors.examId"
-                            />
-                        </v-container>
-                    </v-card-text>
+            <template #header>
+                <div class="text-h6 font-weight-medium">Добавление ИГ</div>
+            </template>
+            <v-card title="Экзамен" class="mb-4" >
+                <v-card-text>
+                    <v-container>
+                        <ExamEnrollment 
+                            v-model:exam-id="http.examId"
+                            v-model:has-payment="http.hasPayment"
+                            :exam-validation-errors="http.errors.examId"
+                        />
+                    </v-container>
+                </v-card-text>
                 </v-card>
                 <v-form ref="form">
                     <ForeignNationalForm 

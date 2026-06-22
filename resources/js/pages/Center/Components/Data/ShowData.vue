@@ -18,44 +18,60 @@ const centerData = [
 </script>
 
 <template>
-  <v-card class="pa-4" variant="text">
+  <div class="data-list">
     <div
-      v-for="data in centerData"
+      v-for="(data, index) in centerData"
+      :key="index"
+      class="data-row"
     >
-      <v-row 
-        class="py-2" 
-        align="start"
-      >
-        <v-col cols="12" sm="4" class="text-medium-emphasis">
-          {{ data.label }}
-        </v-col>
-        <v-col cols="12" sm="8">
-          <div class="break-words whitespace-pre-wrap">
-            {{ data.value }}
-          </div>
-        </v-col>
-      </v-row>
-      <v-divider />
+      <div class="data-label">
+        {{ data.label }}
+      </div>
+
+      <div class="data-value">
+        {{ data.value }}
+      </div>
+
     </div>
-</v-card>
+  </div>
 </template>
 
-<style lang="css" scoped>
-.field {
+<style scoped>
+.data-list {
   display: flex;
   flex-direction: column;
-  gap: 4px;
 }
 
-.label {
+/* row */
+.data-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 16px;
+
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(var(--v-border-color), 0.08);
+}
+
+/* label */
+.data-label {
   font-size: 12px;
-  color: rgba(var(--v-theme-on-surface), 0.6);
   font-weight: 500;
+  color: rgba(var(--v-theme-on-surface), 0.55);
+  letter-spacing: 0.3px;
 }
 
-.value {
+/* value */
+.data-value {
   font-size: 14px;
   font-weight: 500;
-  line-height: 1.4;
+  color: rgba(var(--v-theme-on-surface), 0.9);
+
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* last row no border */
+.data-row:last-child {
+  border-bottom: none;
 }
 </style>

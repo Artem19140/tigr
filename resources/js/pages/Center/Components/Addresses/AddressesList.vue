@@ -32,34 +32,57 @@ const add = () => {
     <Head>
         <title>Адреса</title>
     </Head>
-    <v-card>
-        <v-card-text >
-            <div class="flex items-center justify-end" v-if="addresses.length > 0">
+    <v-card
+        rounded="xl"
+        class="address-list"
+    >
 
-                <div class="flex gap-4">
-                    <AppAddButton 
-                        @click="add"
-                        
-                    />
-                </div>
+        <div class="address-header">
+
+            <div class="d-flex justify-end">
+                <AppAddButton
+                    @click="add"
+                />
             </div>
-        </v-card-text>
-        
-        <div class="mt-4 p-4" v-if="addresses.length > 0">
-            <AddressCard 
-                v-for="address in addresses" 
+
+        </div>
+
+        <v-divider v-if="addresses.length > 0" />
+
+        <div v-if="addresses.length > 0" class="address-items">
+
+            <AddressCard
+                v-for="address in addresses"
                 :key="address.id"
                 :address="address"
             />
+
         </div>
-        <v-empty-state 
+
+        <v-empty-state
+            v-else
             icon="mdi-clipboard-text-off-outline"
             title="Адресов пока нет"
-            v-else
+            class="py-10"
         >
-            <AppAddButton 
+            <AppAddButton
                 @click="add"
             />
         </v-empty-state>
+
     </v-card>
 </template>
+
+<style lang="css" scoped>
+.address-header {
+    padding: 12px 16px;
+}
+
+.address-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    padding: 16px;
+}
+</style>

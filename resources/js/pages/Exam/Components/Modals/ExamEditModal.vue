@@ -44,7 +44,6 @@ const edit = () => {
     <BaseDialog
         width="500"
         v-model="isOpen"
-        title="Редактирование экзамена"
         @before-close="async (close) => {
             if(http.isDirty){
                 const {confirmOpen} = useConfirmDialog()
@@ -55,6 +54,9 @@ const edit = () => {
             close()
         }"
     >
+        <template #header>
+            <div>Редактирование</div>
+        </template>
         <ExamCreateForm 
             :form="http"
             :has-enrollment="hasEnrollment"

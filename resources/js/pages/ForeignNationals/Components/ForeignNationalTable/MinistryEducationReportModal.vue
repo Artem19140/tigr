@@ -51,12 +51,14 @@ const disabled = computed(() =>
     <BaseDialog
         v-model="isOpen"
         width="500"
-        title="Отчет МИНОБРНАУКИ"
         @before-close="(close) => {
             http.resetAndClearErrors()
             close()
         }"
     >
+        <template #header>
+            <div>Отчет МИНОБРНАУКИ</div>
+        </template>
         <AppCheckbox 
             label="Предыдущая неделя"
             v-model="http.lastWeek"

@@ -57,9 +57,11 @@ const beforeClose  = async (fn: () => void) => {
     <BaseDialog 
         v-model="isOpen"
         width="500"
-        title="Запись на экзамен"
         @before-close="(done) => beforeClose(done)"
     >
+        <template #header>
+            <div>Запись на экзамен</div>
+        </template>
         <ExamEnrollment 
             v-model:exam-id="http.examId"
             v-model:has-payment="http.hasPayment"

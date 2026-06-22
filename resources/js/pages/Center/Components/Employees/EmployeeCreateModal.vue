@@ -47,10 +47,13 @@ const create = () => {
 <template>
     <BaseDialog 
         width="500"
-        title='Добавить'
         v-model="isOpen"
         @before-close="(done) => canClose(done)"
     >
+
+        <template #header>
+            <div>Добавление</div>
+        </template>
         <EmployeeForm 
             v-model:form="http"
             :errors="http.errors"

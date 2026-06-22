@@ -56,7 +56,7 @@ const create = async () => {
             close()
         }"
     >
-        <template #title>
+        <template #header>
             <div class="flex gap-2">
                 Добавление экзамена
                 <AppTooltip 

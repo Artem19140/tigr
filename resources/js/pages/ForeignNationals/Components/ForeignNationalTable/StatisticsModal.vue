@@ -47,11 +47,13 @@ const getStatistics = () => {
 <template>
     <BaseDialog 
         width="500"
-        title="Статистика"
         subtitle="Выберите период для статистики"
         v-model="isOpen"
         @before-close="(close) => close()"
     >
+      <template #header>
+        <div >Статистика</div>
+      </template>
       <AppPeriodDate 
         :errors="http.errors"
         v-model:date-from="http.dateFrom"

@@ -37,13 +37,15 @@ const items = [
 <template>
     <BaseDialog 
         v-model="isOpen"
-        title="Отчеты ФИС ФРДО"
         width="500"
         @before-close="(close) => {
             http.resetAndClearErrors()
             close()
         }"
     >
+        <template #header>
+            <div>Отчеты ФИС ФРДО</div>
+        </template>
         <AppAutocomplete
             label="Тип"
             :items=items

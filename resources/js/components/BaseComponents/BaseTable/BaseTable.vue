@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import AppPaginator from '@/components/UI/AppPaginator/AppPaginator.vue';
-import { Paginated } from '@interfaces/Interfaces';
 const props = defineProps<{
-    elements?: Paginated<any>,
+    elements?: Array<Object>,
     headers: Array<any>,
     title?:string
     loading?:boolean,
+    
 }>()
 
 const emit = defineEmits<{
@@ -16,25 +15,21 @@ const emit = defineEmits<{
 <template>
     <v-card
         class="base-table"
-
         rounded="xl"
     >
-        <!-- HEADER -->
         <div class="table-header">
             <div class="d-flex align-center justify-space-between flex-wrap ga-3">
 
-                <!-- LEFT -->
                 <div class="d-flex align-center ga-3 min-w-0">
                     <div class="text-subtitle-1 font-weight-medium text-truncate">
-                        {{ title ?? 'Таблица' }}
+                        {{ title }}
                     </div>
 
-                    <slot name="toolbar-left" />
+                    <slot name="header-left" />
                 </div>
 
-                <!-- RIGHT -->
                 <div class="d-flex align-center ga-2">
-                    <slot name="toolbar-actions" />
+                    <slot name="header-actions" />
                 </div>
 
             </div>
@@ -42,16 +37,16 @@ const emit = defineEmits<{
 
         <v-divider />
 
-        <!-- TABLE -->
         <v-data-table
             class="modern-table"
-            :items="elements?.data"
+            :items="elements"
             :headers="headers"
             :loading="loading"
             hover
             @click:row="(event :Event, { item } : any) => emit('row-click', item)"
+            hide-default-footer
+            :items-per-page="-1"
         >
-            <!-- pass-through slots -->
             <template
                 v-for="(_, slotName) in $slots"
                 #[slotName]="slotProps"
@@ -59,17 +54,6 @@ const emit = defineEmits<{
                 <slot :name="slotName" v-bind="slotProps" />
             </template>
 
-            <!-- pagination -->
-            <template #bottom>
-                <div class="table-footer">
-                    <AppPaginator
-                        v-if="elements"
-                        :meta="elements.meta"
-                        :links="elements.links"
-                        :loading="loading"
-                    />
-                </div>
-            </template>
         </v-data-table>
     </v-card>
 </template>
@@ -81,7 +65,6 @@ const emit = defineEmits<{
     backdrop-filter: blur(6px);
 }
 
-/* HEADER */
 .table-header {
     padding: 14px 16px;
     position: sticky;
@@ -90,20 +73,12 @@ const emit = defineEmits<{
     backdrop-filter: blur(10px);
 }
 
-/* TABLE */
 .modern-table {
     background: transparent;
 }
 
-/* hover row */
 .modern-table :deep(tbody tr:hover) {
     cursor: pointer;
     background: rgba(var(--v-theme-on-surface), 0.04);
-}
-
-/* pagination */
-.table-footer {
-    padding: 12px 16px;
-    border-top: 1px solid rgba(var(--v-border-color), 0.08);
 }
 </style>
