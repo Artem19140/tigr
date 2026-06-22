@@ -45,7 +45,7 @@ const beforeClose = async () => {
 </script>
 
 <template>
-    <v-card rounded="xl">
+    <v-card rounded="xl" variant="text">
         <v-card-text class="form-grid">
 
             <div v-if="center" class="form-layout">

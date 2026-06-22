@@ -77,7 +77,12 @@ const visit = (route : string) => {
             <v-tabs-window v-model="tab">
                 <v-container>
                 <v-tabs-window-item value="data" v-if="data?.data">
-                    <CenterData :data="data.data" />
+                    <v-card rounded="xl">
+
+                    <v-card-text>
+                        <CenterData :data="data.data" />
+                    </v-card-text>
+                    </v-card>
                 </v-tabs-window-item>
 
                 <v-tabs-window-item value="employees" v-if="employees?.data">
