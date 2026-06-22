@@ -52,10 +52,13 @@ const clear = () => {
         >
             <v-list-item>
                 <template v-slot:prepend>
-                    <v-img
-                        width="35"
-                        src="https://cdn-icons-png.flaticon.com/512/9034/9034536.png"
-                    />
+                    <v-avatar
+                        size="40"
+                        rounded="lg"
+                        variant="tonal"
+                    >
+                        <v-icon icon="mdi-file-document-outline" />
+                    </v-avatar>
                 </template>
 
                 <v-list-item-title>

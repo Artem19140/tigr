@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppAddButton from '@/components/UI/AppAddButton/AppAddButton.vue';
+import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { useHttp } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
 const props = defineProps<{
@@ -81,7 +81,6 @@ const download = async () => {
                     console.log(response.uploadId)
                     save.post('/documents/link', {
                         onSuccess(response, httpResponse) {
-                            alert('да!')
                             emit('uploaded', response.document)
                         },
                     })
@@ -141,7 +140,7 @@ watch(() => file, () => {
 
                         <div>
                             <div class="font-weight-medium">
-                                Идёт подготовка к загрузке
+                                Во время загрузки
                             </div>
 
                             <div class="text-caption text-medium-emphasis">
@@ -160,7 +159,8 @@ watch(() => file, () => {
                     />
 
                     <div class="d-flex justify-center ga-2">
-                        <app-add-button
+                        <app-primary-button
+                            text="Загрузить"
                             @click="download"
                         />
 

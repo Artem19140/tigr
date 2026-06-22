@@ -87,37 +87,50 @@ const error = ref(false)
                 v-if="dropDownAccess"
             />
         </template>
-        <v-card-text class="ml-4">
-            <div class="text-headline-small">{{foreignNational?.fullName }}</div>
-            <div class="text-subtitle-1">{{foreignNational?.fullNameLatin}}</div>
-            <div class="text-subtitle-2">
-                {{new DateFormatter(foreignNational?.dateBirth ?? '').format('d.m.Y')}} 
-                ({{getCountryTitle(foreignNational?.citizenship ?? null) }})
-            </div> 
-        </v-card-text>
 
-        <v-divider></v-divider>
+        <v-card-text class="pb-2">
+    <div class="text-h6 font-weight-medium">
+        {{ foreignNational?.fullName }}
+    </div>
 
-        <v-card-text>
-            <v-list>
-                <v-list-item>
-                    <v-list-item-subtitle>Паспорт</v-list-item-subtitle>
-                    <v-list-item-title>
-                        {{`${foreignNational?.fullPassport ?? ''}, 
-                        выдан ${new DateFormatter(foreignNational?.issuedDate ?? '').format('d.m.Y')}
-                        (${foreignNational?.issuedBy ?? ''})`}}
-                    </v-list-item-title>
-                </v-list-item>
-                <v-list-item>
-                    <v-list-item-subtitle>Номер телефона</v-list-item-subtitle>
-                    <v-list-item-title>{{formatPhoneNumber(foreignNational?.phone ?? '')}}</v-list-item-title>
-                </v-list-item>
-                <v-list-item>
-                    <v-list-item-subtitle>Ответственный</v-list-item-subtitle>
-                    <v-list-item-title>{{foreignNational?.creatorFullName ?? ''}}</v-list-item-title>
-                </v-list-item>
-            </v-list>
-        </v-card-text>
+    <div class="text-subtitle-2 text-medium-emphasis">
+        {{ foreignNational?.fullNameLatin }}
+    </div>
+
+    <div class="text-caption text-medium-emphasis mt-1">
+        {{ new DateFormatter(foreignNational?.dateBirth ?? '').format('d.m.Y') }}
+        · {{ getCountryTitle(foreignNational?.citizenship ?? null) }}
+    </div>
+</v-card-text>
+
+<v-divider />
+
+<v-card-text>
+    <div class="info-grid">
+        <div class="info-row">
+            <div class="label">Паспорт</div>
+            <div class="value">
+                {{ foreignNational?.fullPassport }},
+                выдан {{ new DateFormatter(foreignNational?.issuedDate ?? '').format('d.m.Y') }}
+                ({{ foreignNational?.issuedBy }})
+            </div>
+        </div>
+
+        <div class="info-row">
+            <div class="label">Номер телефона</div>
+            <div class="value">
+                {{ formatPhoneNumber(foreignNational?.phone ?? '') }}
+            </div>
+        </div>
+
+        <div class="info-row">
+            <div class="label">Ответственный</div>
+            <div class="value">
+                {{ foreignNational?.creatorFullName ?? '' }}
+            </div>
+        </div>
+    </div>
+</v-card-text>
         
         <div
             v-if="foreignNational?.permissions.documents"
@@ -140,3 +153,32 @@ const error = ref(false)
         </v-card-text>
     </BaseDialog>
 </template>
+
+<style lang="css" scoped>
+.info-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.info-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 12px;
+    align-items: start;
+
+    padding: 10px 0;
+}
+
+.label {
+    font-size: 12px;
+    color: rgba(var(--v-theme-on-surface), 0.6);
+}
+
+.value {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: rgba(var(--v-theme-on-surface), 0.9);
+}
+</style>

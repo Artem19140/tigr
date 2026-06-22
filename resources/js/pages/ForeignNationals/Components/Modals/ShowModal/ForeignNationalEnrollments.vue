@@ -14,56 +14,91 @@ const modals = useModals()
 </script>
 
 <template>
-  <div class="text-h6 mb-4">Записи на экзамены ({{ enrollments.length }})</div>
+  <div class="text-h6 mb-4">
+    Записи на экзамены
+    <span class="text-medium-emphasis">
+        ({{ enrollments.length }})
+    </span>
+</div>
 
-  <v-sheet
-    max-height="400"
-    class="overflow-y-auto pr-2"
-    rounded="lg"
-  >
-    <v-card
+<v-sheet
+  max-height="400"
+  class="overflow-y-auto"
+  rounded="lg"
+>
+    <div
       v-for="enrollment in enrollments"
       :key="enrollment.id"
-      @click="modals.open('examShow', {examId:enrollment.exam.id})"
-      class="mb-3"
-      variant="outlined"
-      rounded="lg"
+      class="enrollment-row"
+      @click="modals.open('examShow', { examId: enrollment.exam.id })"
     >
-      <v-card-text class="d-flex justify-space-between align-center">
-        <div>
-          <div class="text-subtitle-1 font-weight-medium">
-            {{ enrollment.exam.shortName }}
-              
-          </div>
-          <div class="text-caption text-medium-emphasis">
-            {{ new DateFormatter(enrollment.exam.beginTime).format('H:i, d.m.Y') }}
-            <AppStatusChip 
-              v-if="! enrollment.hasPayment"
-              text="Нет оплаты"
-              color="red"
-              size="x-small"
-            />
+      <div class="flex-grow-1 min-w-0">
+        <div class="d-flex align-center ga-2 mb-1">
+            <div class="text-subtitle-2 font-weight-medium text-truncate">
+                {{ enrollment.exam.shortName }}
+            </div>
+
             <v-progress-circular
-              indeterminate
-              color="primary"
-              size="20" 
-              v-if="enrollment.isLoading"
+                v-if="enrollment.isLoading"
+                indeterminate
+                size="16"
+                width="2"
             />
-          </div> 
         </div>
-        <div>
-          <ExamResultStatusChip 
-            :status="enrollment.examResult"
-          />
-          <ExamStatusChip 
-            :status="enrollment.exam.status"
-            v-if="enrollment.exam.status === 'cancelled'"
-          />
-          <EnrollmentDropDown 
-            :enrollment="enrollment"/>
+
+        <div class="text-caption text-medium-emphasis d-flex align-center ga-2 flex-wrap">
+            <span>
+                {{ new DateFormatter(enrollment.exam.beginTime).format('H:i, d.m.Y') }}
+            </span>
+
+            <AppStatusChip
+                v-if="!enrollment.hasPayment"
+                text="Нет оплаты"
+                color="red"
+                size="x-small"
+            />
         </div>
-      </v-card-text>
-    </v-card>
-  </v-sheet>
+      </div>
+
+      <div class="d-flex align-center ga-2">
+          <ExamResultStatusChip
+              :status="enrollment.examResult"
+          />
+
+          <ExamStatusChip
+              v-if="enrollment.exam.status === 'cancelled'"
+              :status="enrollment.exam.status"
+          />
+
+          <EnrollmentDropDown
+              :enrollment="enrollment"
+              @click.stop
+          />
+      </div>
+  </div>
+</v-sheet>
 
 </template>
+
+<style lang="css" scoped>
+.enrollment-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 14px 16px;
+
+  border-radius: 12px;
+
+  transition: background-color .15s ease;
+  cursor: pointer;
+}
+
+.enrollment-row:hover {
+    background: rgba(var(--v-theme-on-surface), 0.04);
+}
+
+.enrollment-row + .enrollment-row {
+    border-top: 1px solid rgba(var(--v-border-color), 0.08);
+}
+</style>
