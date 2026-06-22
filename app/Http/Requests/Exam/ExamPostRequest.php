@@ -4,7 +4,7 @@ namespace App\Http\Requests\Exam;
 
 use App\Http\Dto\ExamDto;
 use App\Models\Employee;
-use App\Models\Exam;
+use App\Modules\Shared\ExamSettings;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -26,7 +26,7 @@ class ExamPostRequest extends FormRequest
             'date' => [
                 'required',
                 'date',
-                Rule::date()->afterOrEqual(Carbon::now()->addHours(Exam::CREATE_AVAILABLE_BEFORE_HOURS)),
+                Rule::date()->afterOrEqual(Carbon::now()->addMinutes(ExamSettings::minTimeBeforeCreateMinutes())),
             ],
             'addressId' => [
                 'required',

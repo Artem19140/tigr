@@ -20,8 +20,6 @@ class Exam extends Model
     use BelongsToCenter;
     use HasFactory, Notifiable;
 
-    public const int CREATE_AVAILABLE_BEFORE_HOURS = 3;
-
     protected $fillable = [
         'begin_time',
         'exam_type_id',

@@ -14,13 +14,13 @@ class EnsureFrdoGenerationAvailable
         protected CenterContext $centerContext
     ) {}
 
-    public function execute(string $examDate, bool $success): void
+    public function execute(string $examDate, string $type): void
     {
         $examDate = Carbon::parse($examDate);
         $this->ensureAttemptsExists($examDate);
         $this->ensureNoActiveAttempts($examDate);
         $this->ensureAllAttemptsChecked($examDate);
-        $this->ensureHasDataForReportType($examDate, $success);
+        $this->ensureHasDataForReportType($examDate, $type);
     }
 
     protected function ensureAttemptsExists(Carbon $examDate): void
@@ -63,16 +63,19 @@ class EnsureFrdoGenerationAvailable
 
     protected function ensureHasDataForReportType(
         Carbon $examDate,
-        bool $success
+        string $type
     ): void {
-        $query = $this->query($examDate)
-            ->whereNotNull('checked_at');
-        $success ? $query->passed() : $query->failed();
-        
-        $attemptsForReportExists = $query->exists();
+        $attemptsForReportExists = $this->query($examDate)
+            ->whereNotNull('checked_at')
+            ->when($type = 'certificates', function(Builder $query) {
+                $query->passed();
+            })
+            ->when($type = 'references', function(Builder $query) {
+                $query->failed();
+            })->exists();
 
         if (! $attemptsForReportExists) {
-            $reportName = $success ? 'сертификатов' : 'справок';
+            $reportName = $type === 'certificates' ? 'сертификатов' : 'справок';
             $date = $examDate->format('d.m.Y');
             throw new BusinessException("Данных для $reportName за $date нет");
         }

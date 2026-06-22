@@ -14,4 +14,15 @@ final readonly class ExamDto
         public array $examiners,
         public int $capacity
     ) {}
+
+    public function toArray(): array 
+    {
+        return [
+            'begin_time' => $this->beginTime,
+            'address_id' => $this->addressId,
+            'exam_type_id' => $this->examTypeId,
+            'comment' => $this->comment,
+            'capacity' => $this->capacity
+        ];
+    }
 }

@@ -3,11 +3,14 @@
 namespace App\Modules\Scheduler;
 
 use App\Models\Enrollment;
+use App\Support\Audit;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
 
 final class ClearExpiredExamCodes
 {
+    public function __construct(
+        protected Audit $audit
+    ){}
     public function execute(): void
     {
 
@@ -16,10 +19,14 @@ final class ClearExpiredExamCodes
             ->update(['exam_code' => null]);
 
         if ($count > 0) {
-            Log::info('deleted_exam_codes', [
-                'count' => $count,
-                'actor' => 'cron',
-            ]);
+            $this->audit->log(
+                'deleted_exam_codes',
+                '',
+                [
+                    'count' => $count,
+                    'actor' => 'cron',
+                ]
+            );
         }
     }
 }

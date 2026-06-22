@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Address;
+namespace App\Http\Requests\Upload;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddressPostRequest extends FormRequest
+class UploadStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,9 @@ class AddressPostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'address' => ['required', 'string'],
-            'capacity' => ['required', 'integer', 'min:1'],
+            'totalChunks' => ['required','integer', 'min:1'],
+            'fileName' => ['required', 'string'],
+            'fileType' => ['required', 'string'],
         ];
     }
 }

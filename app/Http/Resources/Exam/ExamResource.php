@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Exam;
 
-use App\Modules\Exam\ExamStatusResolver;
+use App\Http\Resources\Document\DocumentResource;
 use App\Modules\Exam\ExamCancellRules;
 use App\Modules\Exam\ExamEditRules;
 use App\Modules\ExamDocument\ExamDocumentRules;
@@ -44,8 +44,8 @@ class ExamResource extends JsonResource
             'addressId' => $this->whenLoaded('address', fn () => $this->address->id),
             'creator' => new EmployeeResource($this->whenLoaded('creator')),
             'createdAt' => $this->created_at,
+            'documents' => DocumentResource::collection($this->whenLoaded('documents')),
             'enrollmentsCount' => $this->whenCounted('enrollments_count'),
-            'status' => app(ExamStatusResolver::class)->execute($exam),
             'availability' => $this->availability($exam,  $employee),
             'permissions' => $this->permissions( $exam, $employee)
         ];

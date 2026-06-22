@@ -1,57 +1,69 @@
 <script setup lang="ts">
 import { Exam } from '@/interfaces/Exam';
+import VideoUpload from './VideoUpload.vue';
+import { ref } from 'vue';
 
 const props = defineProps<{
     exam:Exam | null
 }>()
-const records = [1,2,3]
+const records = ref(props.exam?.documents)
+
+const open = (id: number) => {
+    window.open(`/documents/${id}`)
+}
 </script>
 
 <template>
-    <v-file-upload density="compact"></v-file-upload>
-    <div class="p-2">
-        <v-card
-            v-for="(r, index) in records"
-            :key="r"
-            class="mb-2"
+    <video-upload 
+    @uploaded="(val:any) => records.push(val)"
+        v-if="exam"
+        :exam-id="exam.id"
+    />
+    <v-row>
+        <v-col
+            v-for="record in records"
+            :key="record.id"
+            cols="12"
+            md="6"
         >
-            <v-card-text>
-                <div class="flex justify-between items-center">
-                    <div class="flex flex-column gap-2">
-                        <div>
-                            Обзорная запись:
+            <v-card
+                rounded="xl"
+                variant="tonal"
+                class="video-card"
+                @click="open(record.id)"
+            >
+                <div class="d-flex align-center pa-4">
+                    <div class="preview">
+                        <v-icon
+                            size="32"
+                            icon="mdi-play-circle"
+                        />
+                    </div>
+
+                    <div class="flex-grow-1 ms-4">
+                        <div class="text-subtitle-1 font-weight-medium">
+                            Обзорная видеозапись
                         </div>
-                        <div>
-                            Дата загрузки:
-                        </div>
-                        <div>
-                            Автор:
-                        </div>
-                        <div>
-                            Комментарий:
+
+                        <div class="text-caption text-medium-emphasis">
+                            {{ record.createdAt }}
                         </div>
                     </div>
 
-                    <div>
-                        <v-btn
-                            icon="mdi-eye"
-                            size="small"
-                            variant="text"
-                        />
-                        <v-btn
-                            icon="mdi-download"
-                            size="small"
-                            variant="text"
-                        />
-                        <v-btn
-                            icon="mdi-delete"
-                            color="error"
-                            size="small"
-                            variant="text"
-                        />
-                    </div>
+                    <v-btn
+                        icon="mdi-arrow-right"
+                        variant="text"
+                        size="small"
+                    />
                 </div>
-            </v-card-text>
-        </v-card>
-    </div>
+            </v-card>
+        </v-col>
+    </v-row>
 </template>
+
+<style lang="css" scoped>
+
+.video-card:hover {
+    transform: translateY(-2px);
+}
+</style>

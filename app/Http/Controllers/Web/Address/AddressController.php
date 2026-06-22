@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Web\Address;
 
 use App\Modules\Center\CenterContext;
-use App\Http\Requests\Address\AddressPostRequest;
 use App\Http\Resources\Address\AddressResource;
 use App\Models\Address;
 use App\Models\Center;
@@ -47,14 +46,19 @@ class AddressController
     }
 
     public function store(
-        AddressPostRequest $request,
+        Request $request,
         Center $center
     ): JsonResponse {
         $this->authorize($request->user(), $center);
 
+        $request->validate([
+            'address' => ['required', 'string'],
+            'capacity' => ['required', 'integer', 'min:1'],
+        ]);
+
         $address = Address::create([
-            'address' => $request->validated('address'),
-            'capacity' => $request->validated('capacity'),
+            'address' => $request->input('address'),
+            'capacity' => $request->input('capacity'),
             'center_id' => $center->id,
             'creator_id' => $request->user()->id,
         ]);

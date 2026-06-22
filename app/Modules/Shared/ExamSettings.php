@@ -5,22 +5,32 @@ namespace App\Modules\Shared;
 final class ExamSettings{
     public static function codesLength():int
     {
-        return config('system.codes_length');
+        return config('exam.codes_length');
     }
 
     public static function codesTtlMinutes():int
     {
-        return config('system.codes_ttl');
+        return config('exam.codes_ttl');
     }
 
     public static function attemptMinDurationMinutes():int
     {
-        return config('system.min_time_from_start_to_finish');
+        return config('exam.min_time_from_start_to_finish');
     }
 
     public static function enrollmentCloseBeforeExamMinutes(): int
     {
-        return config('system.enrollment_window_closed_before_exam');
+        return config('exam.enrollment_window_closed_before_exam');
+    }
+
+    public static function minAgeYear():int
+    {
+        return config('exam.min_age');
+    }
+
+    public static function minTimeBeforeCreateMinutes():int
+    {
+        return config('exam.min_time_before_exam_creating');
     }
 
 }

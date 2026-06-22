@@ -14,14 +14,19 @@ class LogsController
         Request $request
     ): JsonResponse {
         $request->validate([
-            'date' => ['required', 'date']
+            'date' => ['required', 'date'],
+            'type' => ['sometimes', 'string']
         ]);
         
-        $this->getPathOrFail($request->input('date'));
+        $this->getPathOrFail(
+            $request->input('date'), 
+            $request->input('type')
+        );
         
         return response()->json([
             'redirectUrl' => route('logs.download', [
-                'date' => $request->input('date')
+                'date' => $request->input('date'),
+                'type' =>  $request->input('type'),
             ])
         ]);
     }
@@ -31,23 +36,31 @@ class LogsController
     )
     {
         $request->validate([
-            'date' => ['required', 'date']
+            'date' => ['required', 'date'],
+            'type' => ['sometimes']
         ]);
-        $path = $this->getPathOrFail($request->input('date'));
 
-        Log::info('log downloaded', [
-            'date' => $request->input('date')
-        ]);
+        $path = $this->getPathOrFail(
+            $request->input('date'), 
+            $request->input('type')
+        );
+
+    
         return response()->download($path);
     }
 
 
-    protected function getPathOrFail(string $date):string
+    protected function getPathOrFail(
+        string $date,
+        ?string $type = null
+    ):string
     {
-        $formattedDate = Carbon::parse($date)->copy()->format('Y-m-d');
-        $path = storage_path("logs/laravel-{$formattedDate}.log");
 
-        if(!file_exists($path)){
+        $formattedDate = Carbon::parse($date)->copy()->format('Y-m-d');
+
+        $path = storage_path($type ? "logs/audit/audit-{$formattedDate}.log" : "logs/laravel-{$formattedDate}.log");
+        
+        if(! file_exists($path)){
             throw new BusinessException('Лог недоступен');
         }
 

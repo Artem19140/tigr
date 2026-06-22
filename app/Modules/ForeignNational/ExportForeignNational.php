@@ -25,6 +25,7 @@ class ExportForeignNational
         ?string $citizenship
     ) {
         $this->csvWriter->setHeaders($this->headers());
+        
         $count = 0;
         ForeignNational::query()
             ->forCenter($this->centerContext->id())
@@ -47,7 +48,8 @@ class ExportForeignNational
                 ]);
                 $count++;
                 $this->centerIsolationCheck::centerBelongs($i, $this->centerContext->id());
-            });      
+            });  
+
         $this->audit->log(
             'export',
             Str::snake(basename(ForeignNational::class)),

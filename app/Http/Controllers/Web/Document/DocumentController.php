@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Web\Document;
 
+use App\Models\Exam;
+use App\Models\Upload;
 use App\Modules\Document\DocumentSaver;
 use App\Http\Resources\Document\DocumentResource;
 use App\Models\Document;
@@ -34,7 +36,7 @@ class DocumentController
     )
     {
         $request->validate([
-            'document' => ['required']
+            'document' => ['required', 'file']
         ]);
 
         $document->deleted_at = Carbon::now();
@@ -59,5 +61,31 @@ class DocumentController
         );
 
         return new DocumentResource($newDocument);
+    }
+
+    public function link(Request $request)
+    {
+        $request->validate([
+            'type' => ['required', 'string', 'in:video'],
+            'documentableType' => ['required', 'string', 'in:exam'],
+            'documentableId' => ['required', 'integer', 'min:1'],
+            'uploadId' => ['required', 'integer', 'min:1']
+        ]);
+
+        $exam = Exam::findOrFail($request->input('documentableId'));
+        $upload = Upload::findOrFail($request->input('uploadId'));
+
+        $doc = $exam->documents()->create([
+            'creator_id' => $request->user()->id,
+            'original_name' => $upload->original_name,
+            'size_bytes' => 123,
+            'mime_type' => $upload->mime_type,
+            'document_type' => $request->input('type'),
+            'center_id' => $request->user()->center_id,
+            'path' => $upload->path
+        ]);
+        return response()->json([
+            'document' => new DocumentResource($doc)
+        ]);
     }
 }

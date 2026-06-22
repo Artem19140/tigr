@@ -3,19 +3,34 @@
 namespace App\Modules\ForeignNational;
 
 use App\Models\ForeignNational;
+use App\Modules\Shared\ExamSettings;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Validation\ValidationException;
 
-class ForeignNationalGuard
+class ForeignNationalBeforeSaveValidator
 {
+    public function validate(
+        Carbon $dateBirth,
+        ?string $passportSeries,
+        ?string $passportNumber,
+        ?int $ignoreId = null
+    ): void
+    {
+        $this->ensureAge($dateBirth);
+        $this->ensureUniquePassport(
+            $passportSeries,
+            $passportNumber,
+            $ignoreId
+        );
+    }
     public function ensureAge(Carbon $dateBirth): void
     {
         $age = $dateBirth->age;
-
-        if ($age < 18) {
+        $minAgeYear = ExamSettings::minAgeYear();
+        if ($age < $minAgeYear) {
             throw ValidationException::withMessages([
-                'dateBirth' => 'На экзамен можно записывать с 18 лет',
+                'dateBirth' => "На экзамен возможно записать с $minAgeYear лет",
             ]);
         }
     }

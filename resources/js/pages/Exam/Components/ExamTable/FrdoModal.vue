@@ -10,7 +10,7 @@ const isOpen = defineModel<boolean>()
 
 const http = useHttp<FrdoExport, RedirectUrl>({
     examDate:null,
-    success:null
+    type:null
 })
 
 const  download = async () => {
@@ -25,12 +25,12 @@ const  download = async () => {
 
 interface FrdoExport{
     examDate:string | null,
-    success: boolean | null
+    type: string | null
 }
 
 const items = [
-    { name: 'Сертификаты', success : true},
-    { name: 'Справки', success : false}
+    { name: 'Сертификаты', type : 'certificates'},
+    { name: 'Справки', type : 'references'}
 ]
 </script>
 
@@ -47,12 +47,11 @@ const items = [
         <AppAutocomplete
             label="Тип"
             :items=items
-            item-value="success"
+            item-value="type"
             item-title="name"
             clearable
-            :error-messages="http.errors.success"
-            :rules="[http.success  === !!http.success]"
-            v-model="http.success"
+            :error-messages="http.errors.type"
+            v-model="http.type"
         />
 
         <AppInput
@@ -60,14 +59,14 @@ const items = [
             v-model="http.examDate"
             type="date"
             :error-messages="http.errors.examDate"
-            :disabled="http.success === null"
+            :disabled="http.type === null"
         />
         
         <template #actions>
             <AppPrimaryButton
                 @click="download"
                 text="Скачать"
-                :disabled="!http.examDate || http.success === null || http.processing"
+                :disabled="!http.examDate || http.type === null || http.processing"
             />
         </template>
     </BaseDialog>

@@ -8,6 +8,7 @@ use App\Http\Dto\ExamDto;
 use App\Models\Address;
 use App\Models\Exam;
 use App\Models\ExamType;
+use App\Modules\Shared\ExamSettings;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Log;
@@ -106,9 +107,9 @@ class ExamBeforeSaveValidator
         if ($examId) {
             return;
         }
-        $minAllowedTime = Carbon::now()->addHours(Exam::CREATE_AVAILABLE_BEFORE_HOURS);
+        $minAllowedTime = Carbon::now()->addMinutes(ExamSettings::minTimeBeforeCreateMinutes());
         if ($beginTime < $minAllowedTime) {
-            $hours = Exam::CREATE_AVAILABLE_BEFORE_HOURS;
+            $hours = ExamSettings::minTimeBeforeCreateMinutes() / 60;
             throw ValidationException::withMessages([
                 'time' => "Экзамен возможно создать минимум за $hours часа до его начала",
             ]);

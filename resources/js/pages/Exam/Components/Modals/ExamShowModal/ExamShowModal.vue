@@ -4,11 +4,9 @@ import ExamActionsDropdown from '@/pages/Exam/Components/Modals/ExamShowModal/Ex
 import EnrollmentsTable from './EnrollmentsTable.vue';
 import { computed, onMounted, ref } from 'vue';
 import { router, useHttp } from '@inertiajs/vue3';
-import ExamStatusChip from '@components/Exam/ExamStatusChip.vue';
 import { Exam } from '@/interfaces/Exam';
 import ExamInfo from './ExamInfo.vue';
 import ExamVideo from './ExamVideo.vue';
-import { DateFormatter } from '@/helpers/DateFormatter.js';
 
 const props = defineProps<{
     examId:number
@@ -50,7 +48,7 @@ const tab = ref()
 
 <template>
     <BaseDialog 
-        max-width="900"
+        max-width="850"
         :loading="http.processing"
         v-model="isOpen"
         :error="!http.wasSuccessful"
@@ -62,14 +60,9 @@ const tab = ref()
         skeleton="heading, list-item-two-line, list-item-two-line"
     >
         <template #title >
-            <div class="flex gap-2" >
+            <div>
                 {{ exam?.shortName }}
-                <!-- <ExamStatusChip
-                    v-if="exam"
-                    :status="exam?.status"
-                /> -->
             </div>
-            
         </template>
 
         <template #titleActions>
@@ -81,15 +74,13 @@ const tab = ref()
             />
         </template> 
 
-        <v-card-text class="pt-0">
+        <v-card-text class="pt-0 pb-0">
             <ExamInfo 
                 :exam="exam"
             />
         </v-card-text>
-
-        <!-- <v-divider></v-divider> -->
         
-        <v-card-text>
+        <v-card-text class="pt-0 pb-0">
             <v-tabs v-model="tab">
                 <v-tab value="enrollments" v-if="permissions?.enrollments.view">Участники</v-tab>
                 <v-tab value="videos" v-if="permissions?.videos.view">Видео</v-tab>

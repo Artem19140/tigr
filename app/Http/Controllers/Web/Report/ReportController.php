@@ -19,15 +19,16 @@ class ReportController
         FrdoReportRequest $request,
         FRDOReportsGenerator $frdoGenerator
     ): StreamedResponse {
-        $success = $request->validated('success');
+
+        $type = $request->validated('type');
         $examDate = Carbon::parse($request->validated('examDate'));
         $writer = $frdoGenerator->execute(
             $examDate,
-            $success,
+            $type,
             $request->user()->center
         );
         $stringDate = $examDate->format('d.m.Y');
-        $fileName = $success ? "Сертификаты_ФРДО_$stringDate.xlsx" : "Справки_ФРДО_$stringDate.xlsx";
+        $fileName = $type === 'certificates' ? "Сертификаты_ФРДО_$stringDate.xlsx" : "Справки_ФРДО_$stringDate.xlsx";
 
         $headers = [
             'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -44,12 +45,15 @@ class ReportController
         FrdoReportRequest $request,
         EnsureFrdoGenerationAvailable $ensureFrdoGenerationAvailable
     ): JsonResponse {
-        $ensureFrdoGenerationAvailable->execute($request->input('examDate'), $request->input('success'));
+        $ensureFrdoGenerationAvailable->execute(
+            $request->input('examDate'), 
+            $request->input('type')
+        );
 
         return response()->json([
             'redirectUrl' => route('reports.frdo', [
                 'examDate' => $request->validated('examDate'),
-                'success' => $request->validated('success'),
+                'type' => $request->validated('type'),
             ]),
         ]);
     }

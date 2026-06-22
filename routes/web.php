@@ -11,6 +11,7 @@ use App\Http\Controllers\Web\ForeignNational\ForeignNationalController;
 use App\Http\Controllers\Web\ForeignNational\ForeignNationalExportController;
 use App\Http\Controllers\Web\Report\ReportController;
 use App\Http\Controllers\Web\Statistics\StatisticsController;
+use App\Http\Controllers\Web\Upload\UploadController;
 use App\Http\RedirectResolver;
 use App\Models\Enrollment;
 use App\Models\Exam;
@@ -26,7 +27,6 @@ Route::middleware([
     AppMiddleware::HAS_CHANGE_PASSWORD,
 ])
     ->group(function () {
-
         Route::apiResource('foreign-nationals', ForeignNationalController::class)
             ->except('delete')
             ->where(['foreign_national' => '[0-9]+']);
@@ -73,7 +73,18 @@ Route::middleware([
                 ->can('reports.min-education')
                 ->name('reports.ministry-education');
 
+            
+
         });
+
+        Route::post('uploads',  [UploadController::class, 'store'])
+            ->name('uploads.store');
+        
+        Route::post('uploads/{upload}/chunks',  [UploadController::class, 'chunk'])
+            ->name('uploads.store');
+
+         Route::post('documents/link',  [DocumentController::class, 'link'])
+            ->name('uploads.store');
 
         require __DIR__.'/center_manage.php';
 
@@ -119,7 +130,10 @@ Route::middleware([
         Route::post('logout/all', [LogoutController::class, 'logoutAll'])->name('logout.all');
     });
 
-Route::middleware(['guest:web,foreignNationals'])
+Route::middleware([
+    'meta',
+    'guest:web,foreignNationals'
+])
     ->group(function () {
         Route::inertia('login', 'Auth/Login')
             ->name('login');
@@ -136,8 +150,8 @@ Route::get('/', function(){
 });
 
 Route::middleware([
+    'meta',
     'auth:web,foreignNationals'
-    
 ])->get('me', function (RedirectResolver $resolver) {
     return redirect($resolver->execute());
 })->name('me');

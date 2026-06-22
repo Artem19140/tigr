@@ -73,4 +73,5 @@ Route::prefix('exams')
 
     Route::get('{exam}/documents/list/available', [ExamDocumentController::class, 'listAvailable'])
         ->can('list', 'exam');
+    
 });

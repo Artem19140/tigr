@@ -15,6 +15,10 @@ class EnsurePasswordChange
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if($request->user()->isPlatformAdmin()){
+            return $next($request);
+        }
+        
         if ($request->user()->hasChangePassword()) {
             return redirect()->route('password.change');
         }

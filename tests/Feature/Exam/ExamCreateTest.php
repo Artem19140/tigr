@@ -5,8 +5,8 @@ namespace Tests\Feature\Exam;
 use App\Models\Address;
 use App\Models\Center;
 use App\Models\Employee;
-use App\Models\Exam;
 use App\Models\ExamType;
+use App\Modules\Shared\ExamSettings;
 use Carbon\Carbon;
 use Database\Seeders\RolesSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -67,9 +67,10 @@ class ExamCreateTest extends TestCase
 
     protected function examBody(array $overrides = [])
     {
+        $minTimeBeforeCreating = ExamSettings::minTimeBeforeCreateMinutes();
         return array_merge([
-            'date' => Carbon::now()->setTimezone($this->center->time_zone)->addHours(Exam::CREATE_AVAILABLE_BEFORE_HOURS)->format('Y-m-d'),
-            'time' => Carbon::now()->setTimezone($this->center->time_zone)->addHours(Exam::CREATE_AVAILABLE_BEFORE_HOURS)->addMinute()->format('H:i'),
+            'date' => Carbon::now()->setTimezone($this->center->time_zone)->addMinutes($minTimeBeforeCreating )->format('Y-m-d'),
+            'time' => Carbon::now()->setTimezone($this->center->time_zone)->addMinutes($minTimeBeforeCreating )->addMinute()->format('H:i'),
             'examTypeId' => $this->examType->id,
             'addressId' => $this->address->id,
             'capacity' => $this->address->capacity,
@@ -116,7 +117,7 @@ class ExamCreateTest extends TestCase
     {
         $response = $this->postExam([
             'date' => Carbon::now()->format('Y-m-d'),
-            'time' => Carbon::now()->addHours(Exam::CREATE_AVAILABLE_BEFORE_HOURS)->subHour()->format('H:i'),
+            'time' => Carbon::now()->addMinutes(ExamSettings::minTimeBeforeCreateMinutes())->subHour()->format('H:i'),
         ]);
 
         $response->assertUnprocessable();

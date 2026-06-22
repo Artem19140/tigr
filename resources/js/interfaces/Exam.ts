@@ -25,7 +25,10 @@ export interface Exam{
     addressId:number,
     cancelledAt:string,
     permissions:ExamActionsPermissions,
-    availability:availability
+    availability:availability,
+    documents:{
+        id:number
+    }
 }
 
 export interface ExamIndex{

@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Http\Requests\Report;
+namespace App\Http\Requests\Upload;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class FrdoReportRequest extends FormRequest
+class ChunkStoreRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     */
     public function authorize(): bool
     {
         return true;
@@ -20,8 +23,9 @@ class FrdoReportRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => ['required', 'string', 'in:certificates,references',],
-            'examDate' => ['required', 'date'],
+            'order' => ['required','integer', 'min:0'],
+            'chunk' => ['required', 'file'],
+            'totalChunks' => ['required','integer', 'min:1']
         ];
     }
 }

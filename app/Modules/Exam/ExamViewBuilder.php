@@ -23,6 +23,7 @@ class ExamViewBuilder
             'examiners',
             'address',
             'type',
+            'documents'
         ]);
 
         if($employee->can('viewAny', Enrollment::class)){

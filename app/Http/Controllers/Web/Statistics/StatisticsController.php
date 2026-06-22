@@ -7,6 +7,7 @@ use App\Http\Requests\Statistics\StatisticsRequest;
 use App\Models\Attempt;
 use App\Models\Exam;
 use App\Models\ForeignNational;
+use App\Support\Audit;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
@@ -14,14 +15,15 @@ use Illuminate\Http\JsonResponse;
 class StatisticsController
 {
     public function __construct(
-        protected CenterContext $centerContext
+        protected CenterContext $centerContext,
+        protected Audit $audit
     ) {}
 
     public function index(StatisticsRequest $request): JsonResponse
     {
 
-        $from = Carbon::parse($request->validated('dateFrom'))->startOfDay();
-        $to = Carbon::parse($request->validated('dateTo'))->endOfDay();
+        $from = Carbon::parse($request->validated('dateFrom'))->copy()->startOfDay();
+        $to = Carbon::parse($request->validated('dateTo'))->copy()->endOfDay();
 
         $examsCount = Exam::query()
             ->forCenter($this->centerContext->id())
@@ -58,14 +60,22 @@ class StatisticsController
         $annulledAttemptsCount = (clone $attemptsQuery)
             ->whereNotNull('annulled_at')
             ->count();
-
-        return response()->json([
+        $statistics = [
             'examsCount' => $examsCount,
             'attemptsCount' => $attemptsCount,
             'attemptsTakersCount' => $attemptsTakersCount,
             'failedAttemptsCount' => $failedAttemptsCount,
             'successfulAttemptsCount' => $successfulAttemptsCount,
             'annulledAttemptsCount' => $annulledAttemptsCount,
+        ];
+
+        $this->audit->log('export', 'statistics', [
+            ...$statistics,
+            'period' => [
+                'from' => $from,
+                'to' => $to
+            ]
         ]);
+        return response()->json($statistics);
     }
 }

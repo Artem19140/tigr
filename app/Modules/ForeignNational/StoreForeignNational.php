@@ -4,7 +4,6 @@ namespace App\Modules\ForeignNational;
 
 use App\Http\Dto\ForeignNationalStoreDto;
 use App\Modules\Document\DocumentSaver;
-use App\Modules\ForeignNational\ForeignNationalGuard;
 use App\Models\Employee;
 use App\Models\ForeignNational;
 
@@ -12,7 +11,7 @@ use App\Models\ForeignNational;
 final class StoreForeignNational
 {
     public function __construct(
-        protected ForeignNationalGuard $foreignNationalGuard,
+        protected ForeignNationalBeforeSaveValidator $validator,
         protected DocumentSaver $documentSaver
     ) {}
 
@@ -21,8 +20,8 @@ final class StoreForeignNational
         Employee $employee,
     ): ForeignNational {
         
-        $this->foreignNationalGuard->ensureAge($dto->dateBirth);
-        $this->foreignNationalGuard->ensureUniquePassport(
+        $this->validator->validate(
+            $dto->dateBirth,
             $dto->passportSeries,
             $dto->passportNumber
         );

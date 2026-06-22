@@ -24,10 +24,13 @@ class FRDOReportsGenerator
 
     public function execute(
         string $examDate,
-        bool $success,
+        string $type,
         Center $center
     ): IWriter {
         $examDate = Carbon::parse($examDate);
+        
+        $success = $type === 'certificates';
+
         $this->ensureFrdoGenerationAvailable->execute($examDate, $success);
         $spreadsheet = $this->generateReport($examDate, $success, $center);
         event(new ReportGenerated(ReportType::Frdo, [

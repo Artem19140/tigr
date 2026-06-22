@@ -8,20 +8,20 @@ use Illuminate\Support\Str;
 
 class Audit
 {
-    public static function log(
+    public function log(
         string $action,
         Model | string $subject,
         array $context = []
-    )
+    ): void
     {
         Log::channel('audit')
             ->info($action, [
-                ...self::getSubjectInfo($subject),
+                ...$this->getSubjectInfo($subject),
                 ...$context
             ]);
     }
 
-    protected static function getSubjectInfo(Model | string $subject): array
+    protected function getSubjectInfo(Model | string $subject): array
     {
         if($subject instanceof Model){
             return [

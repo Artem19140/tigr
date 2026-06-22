@@ -23,6 +23,14 @@ const getLog = () => {
 const gitLog = () => {
     window.open('/admin/logs/git')    
 }
+
+const audit = () => {
+    http.get('/admin/logs/available?type=audit', {
+        onSuccess(response) {
+            window.open(response.redirectUrl)
+        },
+    })   
+}
 </script>
 
 <template>
@@ -44,8 +52,18 @@ const gitLog = () => {
             </v-card-text>
 
             <v-card-text>
+                <AppPrimaryButton
+                    @click="audit"
+                    :disabled="!http.date || http.processing"
+                    :loading="http.processing"
+                    text="Выгрузить аудит"
+                />
+            </v-card-text>
+
+            <v-card-text>
                 <AppPrimaryButton 
                     text="гит лог"
+                    :disabled="!http.date || http.processing"
                     @click="gitLog"
                 />
             </v-card-text>

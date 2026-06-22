@@ -22,7 +22,9 @@ class EnrollmentDocumentController
         $statementPdf = Pdf::loadView('pdf.enrollment.enrollment-full', [
             'enrollment' => $enrollment,
         ]);
+
         $fileName = "Заявление_согласие_{$enrollment->foreignNational->full_name}.pdf";
+        
         return $statementPdf->stream($fileName);
     }
 }

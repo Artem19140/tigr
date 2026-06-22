@@ -4,13 +4,15 @@ namespace App\Modules\Scheduler;
 
 use App\Models\Attempt;
 use App\Modules\Attempt\FinilizeAttemptChecking;
+use App\Support\Audit;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
 class CloseAbandonedAttempts
 {
     public function __construct(
-        protected FinilizeAttemptChecking $finilizeAttemptChecking
+        protected FinilizeAttemptChecking $finilizeAttemptChecking,
+        protected Audit $audit
     ) {}
 
     public function execute(): void
@@ -42,12 +44,9 @@ class CloseAbandonedAttempts
 
         $attempt->save();
         $this->log($attempt);
-    }
-
-    protected function log(Attempt $attempt): void
-    {
-        Log::info('attempt_closed_by_cron', [
-            'attempt_id' => $attempt->id
-        ]);
+        $this->audit->log(
+            'attempt_closed_by_cron',
+            $attempt,
+        );
     }
 }
