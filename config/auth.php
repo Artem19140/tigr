@@ -67,11 +67,6 @@ return [
     */
 
     'providers' => [
-        // 'users' => [
-        //     'driver' => 'eloquent',
-        //     'model' => env('AUTH_MODEL', App\Models\User::class),
-        //     'remember' => 43200
-        // ],
         'employees' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', Employee::class),
@@ -80,11 +75,6 @@ return [
             'driver' => 'eloquent',
             'model' => ForeignNational::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*
@@ -108,11 +98,17 @@ return [
 
     'passwords' => [
         'users' => [
-            'provider' => 'users',
+            'provider' => 'employees',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
             'expire' => 60,
             'throttle' => 60,
         ],
+        // 'employees' => [
+        //     'provider' => 'employees',
+        //     'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+        //     'expire' => 60,
+        //     'throttle' => 60,
+        // ]
     ],
 
     /*

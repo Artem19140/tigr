@@ -18,13 +18,13 @@ use App\Models\Exam;
 use App\Models\ForeignNational;
 use App\Support\AppMiddleware;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::middleware([
     'meta',
     'auth',
     AppMiddleware::EMPLOYEE_ACTIVE,
-    AppMiddleware::CENTER_ACTIVE,
-    AppMiddleware::HAS_CHANGE_PASSWORD,
+    AppMiddleware::CENTER_ACTIVE
 ])
     ->group(function () {
         Route::apiResource('foreign-nationals', ForeignNationalController::class)
@@ -102,12 +102,12 @@ Route::middleware([
                 ->name('instruction.exams.schedule');
         });
 
-        Route::post('password/change', [PasswordController::class, 'change'])
-            ->withoutMiddleware([AppMiddleware::HAS_CHANGE_PASSWORD]);
+        // Route::post('password/change', [PasswordController::class, 'change'])
+        //     ->withoutMiddleware([AppMiddleware::HAS_CHANGE_PASSWORD]);
 
-        Route::inertia('password/change', 'Auth/ChangePassword')
-            ->name('password.change')
-            ->withoutMiddleware([AppMiddleware::HAS_CHANGE_PASSWORD]);
+        // Route::inertia('password/change', 'Auth/ChangePassword')
+        //     ->name('password.change')
+        //     ->withoutMiddleware([AppMiddleware::HAS_CHANGE_PASSWORD]);
 
         Route::get('documents/{document}', [DocumentController::class, 'show']);
 
@@ -130,17 +130,26 @@ Route::middleware([
 Route::middleware([
     'meta',
     'guest:web,foreignNationals'
-])
-    ->group(function () {
-        Route::inertia('login', 'Auth/Login')
-            ->name('login');
-        Route::post('login', [LoginController::class, 'login'])
-            ->middleware(['throttle:5']);
-        Route::post('exam-codes/verify', [ExamController::class, 'verifyCode'])
-            ->middleware(['throttle:5']);
-        Route::inertia('attempts/finish', 'Attempt/AfterAttempt')
-            ->name('attempts.finish.after');
-    });
+])->group(function () {
+    Route::inertia('login', 'Auth/Login')
+        ->name('login');
+
+    Route::post('login', [LoginController::class, 'login'])
+        ->middleware(['throttle:5']);
+
+    Route::get('/reset-password/{token}', fn ($token) => Inertia::render('Auth/ChangePassword', [
+        'token' => $token,
+        'email' => request()->query('email')
+    ]))->name('password.reset');
+
+    Route::get('/forgot-password', fn () => 
+        Inertia::render('Auth/ForgotPassword', [])
+    )->name('password.forgot');
+
+    Route::post('/forgot-password', [PasswordController::class, 'forgot'])->name('password.email');
+
+    Route::post('password/reset', [PasswordController::class, 'change']);
+});
 
 Route::get('/', function(){
     return redirect('login');
@@ -162,3 +171,8 @@ Route::middleware([
     });
 
 require __DIR__.'/platform_manage.php';
+
+
+Route::get('invite', function(){
+    return new App\Mail\Invite(request()->user(), route('exams.index'));
+});

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.vue'
 import AppInput from '@components/UI/AppInput/AppInput.vue';
-import { useForm } from '@inertiajs/vue3';
+import { Link, router, useForm } from '@inertiajs/vue3';
 import AppPasswordInput from '@components/UI/AppPasswordInput/AppPasswordInput.vue';
 import AppCheckbox from '@components/UI/AppCheckbox/AppCheckbox.vue';
 
@@ -53,6 +53,12 @@ const submit = () => {
       :loading="form.processing"
       :disabled="!form.email || !form.password || form.processing"
   />
+  <div
+    class="text-center mt-6 text-blue cursor-pointer"
+    @click="() => router.visit('/forgot-password')"
+  >
+    Забыли пароль?
+  </div>
   </form>
 </template>
 

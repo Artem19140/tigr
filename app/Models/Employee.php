@@ -28,7 +28,7 @@ class Employee extends Authenticatable
         'job_title',
         'email',
         'password',
-        'has_to_change_password',
+        'password_set_at',
         'is_active',
         'center_id',
     ];
@@ -44,6 +44,7 @@ class Employee extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'is_active' => 'boolean',
+            'password_set_at' => 'datetime',
         ];
     }
 
@@ -64,11 +65,6 @@ class Employee extends Authenticatable
     public function isActive(): bool
     {
         return $this->is_active;
-    }
-
-    public function hasChangePassword(): bool
-    {
-        return $this->has_to_change_password;
     }
 
     public function roles(): BelongsToMany

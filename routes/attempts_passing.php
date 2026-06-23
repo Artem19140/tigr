@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\Attempt\AttemptAnswerController;
 use App\Http\Controllers\Web\Attempt\AttemptController;
+use App\Http\Controllers\Web\Exam\ExamController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('attempts')
@@ -23,3 +24,24 @@ Route::prefix('attempts')
         Route::put('{attempt}/answers/{attemptAnswer}/audio', [AttemptAnswerController::class, 'audioPlayed'])
             ->name('attempts.answers.update.audio');
     });
+
+Route::inertia('attempts/finish', 'Attempt/AfterAttempt')
+    ->middleware([
+        'meta',
+        'guest:web,foreignNationals'
+    ])
+    ->name('attempts.finish.after');
+
+    Route::post('exam-codes/verify', [ExamController::class, 'verifyCode'])
+        ->middleware(['throttle:5']);
+
+Route::middleware([
+    'meta',
+    'guest:web,foreignNationals'
+])->group(function () {
+    Route::inertia('attempts/finish', 'Attempt/AfterAttempt')
+        ->name('attempts.finish.after');
+
+    Route::post('exam-codes/verify', [ExamController::class, 'verifyCode'])
+        ->middleware(['throttle:5']); 
+});

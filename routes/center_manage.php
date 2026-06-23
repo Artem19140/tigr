@@ -33,10 +33,12 @@ Route::middleware([
         ->name('employees.destroy');
 
     Route::post('centers/{center}/employees', [EmployeeController::class, 'store']);
+    
     Route::put('employees/{employee}', [EmployeeController::class, 'update'])
         ->can('update', 'employee');
-    Route::patch('employees/{employee}/password', [PasswordController::class, 'reset'])
-        ->can('resetPassword', 'employee');
+
+    // Route::patch('employees/{employee}/password', [PasswordController::class, 'change'])
+    //     ->can('resetPassword', 'employee');
 
     Route::get('roles', [EmployeeController::class, 'rolesShow']);
 

@@ -3,22 +3,19 @@ import AppAddButton from '@components/UI/AppAddButton/AppAddButton.vue';
 import BaseDialog from '@components/BaseComponents/BaseDialog/BaseDialog.vue';
 import { useConfirmDialog } from '@composables/useConfirmDialog';
 import {router, useHttp} from '@inertiajs/vue3';
-import AppPasswordConfirmation from '@/components/UI/AppPasswordConfirmation/AppPasswordConfirmation.vue';
 import { useSnackbarQueue } from '@/composables/useSnackbarQueue';
 import EmployeeForm from './EmployeeForm.vue';
 import { EmployeeFormI } from '@/interfaces/Employee';
 
 const isOpen = defineModel<boolean>({default:false})
 
-const http = useHttp<EmployeeFormI & {password:string, password_confirmation:string}>({
+const http = useHttp<EmployeeFormI>({
     surname:'',
     name:'',
     patronymic:'',
     jobTitle:'',
     roles:[],
-    email:'',
-    password:'',
-    password_confirmation:''
+    email:''
 })
 
 const canClose = async (fn: () => void) => {
@@ -38,7 +35,7 @@ const create = () => {
             isOpen.value=false
             http.resetAndClearErrors()
             const {add} = useSnackbarQueue()
-            add('Сотрудник добавлен', 'green')
+            add('Приглашение было отправлено на почту', 'green')
         }
     })
 }
@@ -58,13 +55,6 @@ const create = () => {
             v-model:form="http"
             :errors="http.errors"
             :loading="http.processing"
-        />
-
-        <AppPasswordConfirmation
-            v-model:password="http.password"
-            v-model:password-confirmation="http.password_confirmation"
-            :password-attr="{'error-messages':http?.errors?.password}"
-            :password-confirmation-attr="{'error-messages':http?.errors?.password_confirmation}"
         />
         <template #actions>
             <div>

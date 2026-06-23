@@ -45,8 +45,7 @@ class EmployeeUpdateRequest extends FormRequest
             patronymic: $this->patronymic,
             email: $this->email,
             jobTitle: $this->jobTitle,
-            rolesIds: $this->roles,
-            password:null
+            rolesIds: $this->roles
         );
     }
 }

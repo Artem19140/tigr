@@ -19,7 +19,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class EmployeeController
@@ -41,8 +40,6 @@ class EmployeeController
             })
             ->orderBy('surname')
             ->get();
-            
-        Log::info('employees_view', []);
 
         CenterIsolationCheck::check($employees);
         
@@ -64,6 +61,7 @@ class EmployeeController
             $center,
             $request->user()
         );
+
         return response()->json();
     }
 

@@ -22,9 +22,9 @@ const props = defineProps<{
 }>()
 
 const headers = [
-    {title : "Название",sortable: false, key: 'shortName', align: 'center' },
-    {title : "Дата",sortable: false, key: 'beginTime', align: 'center' },
-    {title : "Запись",sortable: false, key: 'enrollmentsCount', align: 'center' },
+  {title : "Название",sortable: false, key: 'shortName', align: 'center' },
+  {title : "Дата",sortable: false, key: 'beginTime', align: 'center' },
+  {title : "Запись",sortable: false, key: 'enrollmentsCount', align: 'center' },
 ]
 const {open} = useModals()
 

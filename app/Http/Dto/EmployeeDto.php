@@ -10,7 +10,6 @@ class EmployeeDto
         public string $name,
         public ?string $patronymic,
         public string $email,
-        public ?string $password = null,
         public string $jobTitle 
     ){}
 

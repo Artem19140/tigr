@@ -26,7 +26,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->alias([
-            AppMiddleware::HAS_CHANGE_PASSWORD => EnsurePasswordChange::class,
+            // AppMiddleware::HAS_CHANGE_PASSWORD => EnsurePasswordChange::class,
             AppMiddleware::EMPLOYEE_ACTIVE => EnsureEmployeeActive::class,
             AppMiddleware::CENTER_ACTIVE => EnsureCenterActive::class,
             AppMiddleware::ENSURE_ATTEMPT_VALID_STATUS => EnsureValidAttemptStatus::class,

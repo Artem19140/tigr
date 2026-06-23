@@ -13,7 +13,7 @@ class ChangePasswordRequest extends FormRequest
      */
     public function authorize(Request $request): bool
     {
-        return $request->user()->has_to_change_password;
+        return true;//$request->user()->has_to_change_password;
     }
 
     /**
@@ -25,6 +25,8 @@ class ChangePasswordRequest extends FormRequest
     {
         return [
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'token' => ['required', 'string'],
+            'email' => ['required', 'email', 'exists:employees,email']
         ];
     }
 }

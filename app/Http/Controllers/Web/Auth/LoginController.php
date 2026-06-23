@@ -23,10 +23,6 @@ class LoginController
 
         $request->session()->regenerate();
 
-        if ($employee->hasChangePassword()) {
-            return redirect()->route('password.change');
-        }
-
         return redirect()->to($employee->resolveRedirect());
     }
 

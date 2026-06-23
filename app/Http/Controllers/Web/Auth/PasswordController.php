@@ -5,11 +5,16 @@ namespace App\Http\Controllers\Web\Auth;
 use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Http\Requests\Auth\PasswordResetRequest;
 use App\Models\Employee;
+use Carbon\Carbon;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class PasswordController
@@ -21,7 +26,6 @@ class PasswordController
         if ($employee->isPlatformAdmin()) {
             abort(403);
         }
-
         $wrongPassword = ! Hash::check(
             $request->validated('adminPassword'),
             $request->user()->password
@@ -46,28 +50,42 @@ class PasswordController
 
     public function change(ChangePasswordRequest $request): RedirectResponse
     {
-        $employee = $request->user();
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function(Employee $employee, string $password){
+                $employee->forceFill([
+                    'password' => Hash::make($password)
+                ])->setRememberToken(Str::random(60));
+                $employee->password_set_at = Carbon::now();
+                $employee->save();
+                
+                Auth::guard('web')->login($employee);
+                Auth::logoutOtherDevices($password);
+                
+                event(new PasswordReset($employee));
+            }
+        );
 
-        if ($employee->isPlatformAdmin()) {
-            abort(403);
+        if($status === Password::PasswordReset){
+            return redirect()->to('me');
         }
-        $plainPassword = $request->validated('password');
-        if (Hash::check($plainPassword, $employee->password)) {
-            throw ValidationException::withMessages([
-                'password' => 'Пароль должен отличаться от старого',
-            ]);
+        
+        throw ValidationException::withMessages([
+            'email' => [__($status)]
+        ]);
+    }
+
+    public function forgot(Request $request) 
+    {
+        $request->validate(['email' => 'required|email']);
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        if($status === Password::PasswordReset){
+            return back()->withErrors(['status' => __($status)]);
         }
 
-        $employee->update([
-            'password' => Hash::make($plainPassword),
-            'has_to_change_password' => false,
-        ]);
-        Log::info('password_change', [
-            'employee_id' => $employee->id,
-        ]);
-
-        Auth::logoutOtherDevices($plainPassword);
-
-        return redirect()->to($employee->resolveRedirect());
+        return back()->withErrors(['status' => __($status)]);
     }
 }

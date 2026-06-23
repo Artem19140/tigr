@@ -5,14 +5,23 @@ import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.
 import BaseEntryCard from '@/components/BaseComponents/BaseEntryCard/BaseEntryCard.vue';
 import BaseLayout from '@/layouts/BaseLayout.vue';
 
+const props=defineProps<{
+  token:string,
+  email:string
+}>()
+
 interface PasswordChange{
   password: string | null, 
-  password_confirmation: string | null 
+  password_confirmation: string | null,
+  token:string,
+  email:string | null
 }
 
 const form = useForm<PasswordChange>({
   password: null, 
-  password_confirmation: null 
+  password_confirmation: null,
+  token:props.token,
+  email: props.email
 })
 
 const change = () => {
@@ -23,7 +32,11 @@ const change = () => {
     form.errors.password_confirmation = 'Пароли не совпадают!'
     return
   }
-  form.post('/password/change', {
+  // form.post('/password/change', {
+  //   preserveScroll: true,
+  //   preserveState: true
+  // })
+  form.post('/password/reset', {
     preserveScroll: true,
     preserveState: true
   })

@@ -2,7 +2,8 @@
 import AppLogo from '@/components/UI/AppLogo/AppLogo.vue';
 
 const props = defineProps<{
-    subtitle?:string
+    subtitle?:string,
+    title?:string
 }>()
 </script>
 
@@ -14,9 +15,19 @@ const props = defineProps<{
                 <AppLogo max-width="150" />
             </div>
 
-            <p class="text-medium-emphasis text-body-2 text-center  mb-6">
-                {{ subtitle }}
-            </p>
+            <slot name="title" >
+                <h1 v-if="title">{{ title }}</h1>
+            </slot>
+
+            <slot name="subtitle" >
+                <p 
+                    class="text-medium-emphasis text-body-2 text-center  mb-6" 
+                     v-if="subtitle"
+                >
+                    {{ subtitle }}
+                </p>
+            </slot>
+
 
             <div class="auth-body d-flex flex-column ga-4">
                 <slot />

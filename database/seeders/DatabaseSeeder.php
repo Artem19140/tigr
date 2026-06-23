@@ -77,7 +77,7 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make(config('app.platform_admin.password')),
                 'job_title' => 'Админ',
                 'center_id' =>  $center->id,// $center->id,
-                'has_to_change_password' => false,
+                //'has_to_change_password' => false,
                 'email_verified_at' => now()
             ]);
             

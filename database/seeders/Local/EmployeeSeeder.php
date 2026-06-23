@@ -25,7 +25,7 @@ class EmployeeSeeder extends Seeder
                     'job_title' => '3s',
                     'center_id' => $center->id,
                     'email' => "$i@udsu.ru",
-                    'has_to_change_password' => false,
+                    //'has_to_change_password' => false,
                     'password' => $password,
                 ]);
         }

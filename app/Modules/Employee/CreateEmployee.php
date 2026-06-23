@@ -7,7 +7,7 @@ use App\Models\Center;
 use App\Models\Employee;
 use App\Support\Audit;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 
 class CreateEmployee
 {
@@ -19,17 +19,16 @@ class CreateEmployee
         EmployeeDto $dto, 
         Center $center,
         Employee $creator
-    ):void {
+    ): Employee {
         $this->validator->validate(
             $dto,
             $creator
         );
 
-        DB::transaction(function () use ($dto, $center) {
+        return DB::transaction(function () use ($dto, $center) {
             $employee = Employee::create([
                 ...$dto->toArray(),
-                'center_id' =>  $center->id,
-                'password' => Hash::make($dto->password),
+                'center_id' =>  $center->id
             ]);
 
             $roles = $employee->roles()->sync($dto->rolesIds);
@@ -39,6 +38,10 @@ class CreateEmployee
                 $employee,
                 ['roles' => $roles]
             );
+            Password::sendResetLink([
+                'email' => $employee->email
+            ]);
+            return $employee;
         });
         
     }

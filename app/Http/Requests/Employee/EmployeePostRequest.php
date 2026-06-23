@@ -28,7 +28,6 @@ class EmployeePostRequest extends FormRequest
             'name' => ['required', 'string'],
             'patronymic' => ['required', 'string'],
             'email' => ['required', 'email', 'unique:employees,email'],
-            'password' => ['required', 'min:8',  'confirmed'],
             'jobTitle' => ['required', 'string'],
         ];
     }
@@ -41,7 +40,6 @@ class EmployeePostRequest extends FormRequest
             patronymic: $this->patronymic,
             email: $this->email,
             jobTitle: $this->jobTitle,
-            password:$this->password,
             rolesIds: $this->roles
         );
     }
