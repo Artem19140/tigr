@@ -5,7 +5,6 @@ use App\Http\Controllers\Web\Auth\LogoutController;
 use App\Http\Controllers\Web\Auth\PasswordController;
 use App\Http\Controllers\Web\Enrollment\EnrollmentController;
 use App\Http\Controllers\Web\Enrollment\EnrollmentDocumentController;
-use App\Http\Controllers\Web\Exam\ExamController;
 use App\Http\Controllers\Web\Document\DocumentController;
 use App\Http\Controllers\Web\ForeignNational\ForeignNationalController;
 use App\Http\Controllers\Web\ForeignNational\ForeignNationalExportController;
@@ -101,13 +100,6 @@ Route::middleware([
                 ->can('viewAny', Exam::class)
                 ->name('instruction.exams.schedule');
         });
-
-        // Route::post('password/change', [PasswordController::class, 'change'])
-        //     ->withoutMiddleware([AppMiddleware::HAS_CHANGE_PASSWORD]);
-
-        // Route::inertia('password/change', 'Auth/ChangePassword')
-        //     ->name('password.change')
-        //     ->withoutMiddleware([AppMiddleware::HAS_CHANGE_PASSWORD]);
 
         Route::get('documents/{document}', [DocumentController::class, 'show']);
 

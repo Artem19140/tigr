@@ -2,7 +2,6 @@
 
 use App\Http\Middleware\EnsureCenterActive;
 use App\Http\Middleware\EnsureEmployeeActive;
-use App\Http\Middleware\EnsurePasswordChange;
 use App\Http\Middleware\EnsureValidAttemptStatus;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\LogContext;
@@ -26,7 +25,6 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->alias([
-            // AppMiddleware::HAS_CHANGE_PASSWORD => EnsurePasswordChange::class,
             AppMiddleware::EMPLOYEE_ACTIVE => EnsureEmployeeActive::class,
             AppMiddleware::CENTER_ACTIVE => EnsureCenterActive::class,
             AppMiddleware::ENSURE_ATTEMPT_VALID_STATUS => EnsureValidAttemptStatus::class,

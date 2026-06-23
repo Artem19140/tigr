@@ -3,51 +3,19 @@
 namespace App\Http\Controllers\Web\Auth;
 
 use App\Http\Requests\Auth\ChangePasswordRequest;
-use App\Http\Requests\Auth\PasswordResetRequest;
 use App\Models\Employee;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class PasswordController
 {
-    public function reset(
-        PasswordResetRequest $request,
-        Employee $employee
-    ): JsonResponse {
-        if ($employee->isPlatformAdmin()) {
-            abort(403);
-        }
-        $wrongPassword = ! Hash::check(
-            $request->validated('adminPassword'),
-            $request->user()->password
-        );
-
-        if ($wrongPassword) {
-            throw ValidationException::withMessages([
-                'adminPassword' => 'Неверные учетные данные',
-            ]);
-        }
-
-        $employee->password = Hash::make($request->validated('password'));
-        $employee->has_to_change_password = true;
-
-        $employee->save();
-        Log::info('password_reset', [
-            'employee_id' => $employee->id,
-        ]);
-
-        return response()->json();
-    }
-
     public function change(ChangePasswordRequest $request): RedirectResponse
     {
         $status = Password::reset(

@@ -27,7 +27,7 @@ const page = usePage()
                 Мы отправим ссылку для сброса пароля.
             </div>
         </template>
-        <template #subtitle></template>
+
         <AppInput 
             v-model="form.email"
             :error-messages="form.errors.email || page.props.errors.status"
