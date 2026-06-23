@@ -6,7 +6,6 @@ import { useConfirmDialog } from '@composables/useConfirmDialog';
 import AppTextarea from '@components/UI/AppTextarea/AppTextarea.vue';
 import { ExamMonitoring } from '@/interfaces/Exam';
 import { useSnackbarQueue } from '@/composables/useSnackbarQueue';
-import AppTooltip from '@/components/UI/AppTooltip/AppTooltip.vue';
 
 const props = defineProps<{
     exam: ExamMonitoring
@@ -35,6 +34,7 @@ const beforeClose = async (fn:() => void ) => {
         const ok = await confirmOpen('Закрыть окно? Изменения не сохранятся')
         if(!ok) return
     }
+    http.cancel()
     http.resetAndClearErrors()
     isOpen.value = false
     fn()
@@ -45,14 +45,9 @@ const beforeClose = async (fn:() => void ) => {
     <BaseDialog 
         width="500"
         v-model="isOpen"
+        title="Комментарий протокол"
         @before-close="(close) => beforeClose(close)"
     >
-        <template #header>
-            <span class="mr-2">Комментарий протокол</span>
-            <AppTooltip 
-                text="Комментарий можно редактировать во время и в течении всего дня после экзамена"
-            />
-        </template>
         <AppTextarea
             v-model="http.protocolComment"
             maxlength="1000"

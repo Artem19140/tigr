@@ -6,10 +6,12 @@ defineProps<{
 
 <template>
     <v-text-field
+      rounded="lg"
       clearable
       variant="outlined"
       density="comfortable"
       :label="label"
     >
+      <slot />
     </v-text-field>
 </template>

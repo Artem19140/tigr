@@ -24,8 +24,7 @@ class UploadStoreRequest extends FormRequest
     {
         return [
             'totalChunks' => ['required','integer', 'min:1'],
-            'fileName' => ['required', 'string'],
-            'fileType' => ['required', 'string'],
+            'fileName' => ['required', 'string']
         ];
     }
 }

@@ -29,6 +29,7 @@ const donwload = () => {
         v-model="isOpen"
         @before-close="(close) => {
             http.resetAndClearErrors()
+            http.cancel()
             close()
         }"
     >

@@ -6,9 +6,10 @@
 
 <template>
     <v-btn
-        variant="flat"
         color="primary"
+        variant="flat"
+        rounded="lg"
     >
-        {{ text }}
+        <slot>{{ text }}</slot>
     </v-btn>
 </template>

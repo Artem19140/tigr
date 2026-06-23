@@ -72,19 +72,7 @@ Route::middleware([
             Route::get('ministry-education', [ReportController::class, 'ministryEducationReport'])
                 ->can('reports.min-education')
                 ->name('reports.ministry-education');
-
-            
-
         });
-
-        Route::post('uploads',  [UploadController::class, 'store'])
-            ->name('uploads.store');
-        
-        Route::post('uploads/{upload}/chunks',  [UploadController::class, 'chunk'])
-            ->name('uploads.store');
-
-         Route::post('documents/link',  [DocumentController::class, 'link'])
-            ->name('uploads.store');
 
         require __DIR__.'/center_manage.php';
 
@@ -125,6 +113,15 @@ Route::middleware([
 
         Route::put('documents/{document}', [DocumentController::class, 'update'])
             ->can('update','document');
+
+        Route::post('uploads',  [UploadController::class, 'store'])
+            ->name('uploads.store');
+        
+        Route::post('uploads/{upload}/chunks',  [UploadController::class, 'chunk'])
+            ->name('uploads.store.chunks');
+
+         Route::post('documents/link',  [DocumentController::class, 'link'])
+            ->name('documents.link');
 
         Route::post('logout', [LogoutController::class, 'logout'])->name('logout');
         Route::post('logout/all', [LogoutController::class, 'logoutAll'])->name('logout.all');

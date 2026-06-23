@@ -41,26 +41,23 @@ watch(attemptAnswer, () => {
         :loading="false"
     >
         <template #answers>
-                <v-radio-group 
-                    v-model="attemptAnswer"
-                >      
-                    <v-radio 
-                        v-for="answer in props.task.answers"
-                        :key="answer?.id"
-                        :value="answer?.id"
-                    >
-                        <template #label>
-                            <div>
-                                <render-blocks 
-                                    :content="answer?.content" 
-                                />
-                            </div>
-                        </template>
-                    </v-radio>
-                </v-radio-group>
-            <!-- </div> -->
+            <v-radio-group 
+                v-model="attemptAnswer"
+            >      
+                <v-radio 
+                    v-for="answer in props.task.answers"
+                    :key="answer?.id"
+                    :value="answer?.id"
+                >
+                    <template #label>
+                        <div>
+                            <render-blocks 
+                                :content="answer?.content" 
+                            />
+                        </div>
+                    </template>
+                </v-radio>
+            </v-radio-group>
         </template>
-    </BaseTask>
-    
-    
+    </BaseTask>   
 </template>

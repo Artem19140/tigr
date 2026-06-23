@@ -11,9 +11,18 @@ class Upload extends Model
         'uploaded_chunks',
         'status',
         'center_id',
-        'mime_type',
         'original_name',
         'path',
         'uuid'
     ];
+
+    public function chunksPath(): string
+    {
+        return "uploads/$this->uuid";
+    }
+
+    public function allChunksRecieved():bool
+    {
+        return $this->total_chunks === $this->uploaded_chunks;
+    }
 }

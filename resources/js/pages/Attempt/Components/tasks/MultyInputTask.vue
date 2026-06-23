@@ -26,9 +26,9 @@ Object.assign(form.value, answers)
 
 const send = () => {
     emit('updateAnswer', {
-            task:props.task,
-            answer:form.value ?? ''
-        })
+        task:props.task,
+        answer:form.value ?? ''
+    })
 }
 
 const autosaveSend = autosave(() => { send() }, 5000)
@@ -45,5 +45,4 @@ provide('form', form)
         :loading="false"
         @retry="send"
     />
-
 </template>

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Task } from '@/interfaces/Task';
 import BaseTask from './BaseTask.vue';
-import AppTextarea from '@/components/UI/AppTextarea/AppTextarea.vue';
 import { inject, ref, watch } from 'vue';
 import { autosave } from '@/helpers/debounce.js';
 
@@ -41,11 +40,13 @@ const checking = <boolean>inject('checking')
         @retry="send"
     >
         <template #answers>
-            <AppTextarea
+            <v-textarea
                 v-model="answer"
                 label="Введите текст"
                 rows="4"
                 :readonly="checking"
+                variant="outlined"
+                rounnded="lg"
             />
         </template>
     </BaseTask>

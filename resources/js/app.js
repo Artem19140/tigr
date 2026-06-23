@@ -9,6 +9,7 @@ import { ru } from 'vuetify/locale'
 import { useHttpErrorHandler } from '@/composables/useHttpErrorHandler';
 import { http, router } from '@inertiajs/vue3';
 import { useSnackbarQueue } from '@/composables/useSnackbarQueue';
+import BaseLayout from '@/layouts/BaseLayout.vue';
 
 http.onError((error) => {
     const response = (error).response
@@ -60,6 +61,7 @@ createInertiaApp({
             .use(vuetify)
             .mount(el)
     },
+    layout: () => BaseLayout,
     defaults: {
         future: {
             useDialogForErrorModal: true,

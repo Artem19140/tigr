@@ -44,7 +44,7 @@ Route::prefix('exams')
         ->group(function () {
             Route::get('{exam}/checking', [ExamCheckingController::class, 'show']);
 
-            Route::get('{exam}/monitoring', [ExamMonitoringController::class, 'show']);
+            Route::get('{exam}/monitoring', [ExamMonitoringController::class, 'show'])->name('exams.monitoring.show');
             Route::put('{exam}/monitoring/protocol-comments', [ExamMonitoringController::class, 'protocolComment']);
 
             Route::get('{exam}/documents/codes', [ExamDocumentController::class, 'codes'])

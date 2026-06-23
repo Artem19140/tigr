@@ -11,5 +11,6 @@ defineProps<{
         variant="outlined"
         density="comfortable"
         :label="label"
+        rounded="lg"
     />
 </template>

@@ -69,7 +69,8 @@ class ExamMonitoringController
         });
 
         return Inertia::render('ExamMonitoring/ExamMonitoring', [
-            'exam' => new ExamMonitoringResource($exam)
+            'exam' => new ExamMonitoringResource($exam),
+            'backDate' => $exam->begin_time->copy()->format('Y-m-d')
         ]);
     }
 

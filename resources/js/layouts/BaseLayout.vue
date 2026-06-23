@@ -7,21 +7,13 @@ import AppLoadingSnackbar from '@components/UI/AppLoadingSnackbar/AppLoadingSnac
 import AppSnackbarQueue from '@/components/UI/AppSnackbarQueue/AppSnackbarQueue.vue';
 import ConfirmationOptionsModal from '@/components/Modals/ConfirmationOptionsModal.vue';
 import AppNoNetworkBanner from '@/components/UI/AppNoNetworkBanner/AppNoNetworkBanner.vue';
-
 </script>
 
 <template>
     <v-app>
         <slot name="drawer" />
-        <v-main style="
-            background-image: url('/storage/images/background.png');
-            min-height: 100vh;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        "
-    >       
+
+        <v-main class="app-main">
             <slot />
         </v-main>
         <confirm-dialog />
@@ -34,3 +26,22 @@ import AppNoNetworkBanner from '@/components/UI/AppNoNetworkBanner/AppNoNetworkB
         <app-no-network-banner />
     </v-app>
 </template>
+
+<style scoped lang="css">
+.app-main {
+    min-height: 100vh;
+    background-image: url('/storage/images/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.app-main::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.75);
+    pointer-events: none;
+}
+</style>

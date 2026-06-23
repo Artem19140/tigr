@@ -13,6 +13,7 @@ defineProps<{
         density="comfortable"
         counter
         :label="label"
+        rounded="lg"
     >
         
     </v-textarea>

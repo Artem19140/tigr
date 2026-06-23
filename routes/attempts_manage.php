@@ -20,7 +20,7 @@ Route::prefix('attempts')->middleware([
         ->name('attempts.checking.finish');
 
     Route::get('{attempt}/speaking', [AttemptSpeakingController::class, 'show'])
-        ->name('attempts.speaking');
+        ->name('attempts.speaking.show');
 
     Route::post('{attempt}/speaking/finish', [AttemptSpeakingController::class, 'finish'])
         ->name('attempts.speaking.finish');

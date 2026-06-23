@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { DateFormatter } from '@/helpers/DateFormatter';
-import { useModals } from '@composables/useModals';
 import AppStatusChip from '@/components/UI/AppStatusChip/AppStatusChip.vue';
 import { Enrollment } from '@/interfaces/Enrollment';
 import { ExamChecking } from '@/interfaces/Exam';
@@ -24,10 +23,9 @@ const headers = [
     {title : "Статус",sortable: false, key: 'status', align: 'center' }
 ]
 
-const {open} = useModals()
 const openAttempt =  (item : Enrollment) => {
     if(!item.attempt) return
-    open('attemptChecking', {attemptId:item.attempt.id})
+    router.visit(`/attempts/${item.attempt.id}/checking`)
 }
 </script>
 

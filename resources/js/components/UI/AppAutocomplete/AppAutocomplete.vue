@@ -10,6 +10,7 @@ defineProps<{
         clearable
         variant="outlined"
         density="comfortable"
+        rounded="lg"
     >
         <template #label>
         <span>
@@ -17,5 +18,6 @@ defineProps<{
             <span v-if="required" style="color:red">*</span>
         </span>
         </template>
+        <slot />
     </v-autocomplete>
 </template>

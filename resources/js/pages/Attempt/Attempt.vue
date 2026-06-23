@@ -23,6 +23,7 @@ examAttempt.value = props.attempt.data
 const { startTimer, canFinish, stopTimer} = useTimer()
 
 startTimer()
+
 const form = useForm()
 
 const finish = async () => {
@@ -60,7 +61,6 @@ onUnmounted(() => stopTimer())
             <TasksList 
                 v-if="examAttempt" 
                 :attempt="examAttempt"
-                
             />
 
             <AppPrimaryButton

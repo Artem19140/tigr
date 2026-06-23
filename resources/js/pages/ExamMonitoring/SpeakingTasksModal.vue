@@ -41,8 +41,7 @@ const getSpeaking = () => {
     })
 }
 
-
-const startHttp = useHttp()
+const startSpeaking = useHttp()
 
 const start = () => {
     if(!props.enrollment.attempt?.id){
@@ -50,7 +49,7 @@ const start = () => {
         add('Попытка не существует', 'red')
         return
     }
-    startHttp.post(`/attempts/${props.enrollment.attempt?.id}/speaking/start`,{
+    startSpeaking.post(`/attempts/${props.enrollment.attempt?.id}/speaking/start`,{
         onSuccess:(response : any)=>{
             getSpeaking()
             props.enrollment.attempt = {... response.data}
@@ -88,7 +87,7 @@ const update = (value: AttemptAnswer) => {
     <BaseDialog
         fullscreen
         v-model="isOpen"
-        :loading="http.processing || startHttp.processing"
+        :loading="http.processing || startSpeaking.processing"
         @before-close="(close) => close()"
         :title="`Говорение ( ${enrollment.foreignNational.fullName}, ${enrollment.foreignNational.fullPassport} )`"
     >

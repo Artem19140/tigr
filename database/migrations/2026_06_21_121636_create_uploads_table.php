@@ -17,7 +17,6 @@ return new class extends Migration
             $table->uuid()->unique('uuid');
             $table->unsignedSmallInteger('uploaded_chunks');
             $table->foreignIdFor(Center::class, 'center_id');
-            $table->string('mime_type');
             $table->string('original_name');
             $table->string('path')->nullable()->default(null);
 

@@ -73,8 +73,8 @@ class ForeignNationalController
         ForeignNational $foreignNational,
         ForeignNationalViewBuilder $builder
     ): JsonResponse {
-        Gate::authorize('view', $foreignNational);
 
+        Gate::authorize('view', $foreignNational);
         $buildedForeignNational = $builder->build(
             $foreignNational, 
             $request->user()

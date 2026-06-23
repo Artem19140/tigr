@@ -55,7 +55,7 @@ const annulAttemptDisabled = computed(() => !props.enrollment.attempt?.availabil
             :disabled="speakingDisabled"
             v-if="exam?.hasSpeakingTasks"
             title="Говорение" 
-            @click="modals.open('speaking', {enrollment:props.enrollment})"
+            @click="() => router.visit(`/attempts/${props.enrollment.attempt?.id}/speaking`)"
         />
         <v-list-item 
             title="Нарушения" 

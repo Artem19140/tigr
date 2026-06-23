@@ -68,16 +68,12 @@ const error = ref(false)
 <template>
     <BaseDialog 
         max-width="700"
-        :title="`Иностранный гражданин (ID ${foreignNational?.id ?? ''})`"
-        :loading="http.processing"
         v-model="isOpen"
-        :error="error"
-        :onRetry="getForeignNational"
+        min-height="400"
         @before-close="(close) => {
             http.cancel()
             close()
         }"
-        skeleton="paragraph,divider, paragraph, divider, list-item-two-line, divider"
     >
         <template #header>
             <div class="flex flex-column">
@@ -85,12 +81,40 @@ const error = ref(false)
                     {{ foreignNational?.fullName }}
                 </div>
 
-                <div class="text-caption text-medium-emphasis">
+                <div class="text-caption text-medium-emphasis" v-if="foreignNational">
                     ID {{ foreignNational?.id }}
                     · {{ getCountryTitle(foreignNational?.citizenship ?? null) }}
                 </div>
             </div>
         </template>
+
+        <template #skeleton>
+            <v-skeleton-loader
+                v-if="http.processing"
+                type="paragraph,divider, paragraph, divider, list-item-two-line, divider"
+            />
+        </template>
+
+        <template #error>
+            <v-card-text 
+                v-if="error" 
+                class="flex justify-center items-center flex-column"
+            >
+                <div class="text-body-2 text-medium-emphasis">
+                    Что-то пошло не так
+                </div>
+                
+                <v-btn 
+                    variant="text"
+                    prepend-icon="mdi-refresh"
+                    @click="getForeignNational"
+                >
+                    Повторить
+                </v-btn>
+                
+            </v-card-text>
+        </template>
+        
     
         <template #titleActions>
             <ForeignNationalActionsDropdown 
@@ -98,67 +122,68 @@ const error = ref(false)
                 v-if="dropDownAccess"
             />
         </template>
+        <div v-if="foreignNational">
+            <v-card-text class="pt-4">
+                <div class="info-grid">
+                    <div class="info-row">
+                        <div class="label">ФИО (лат.)</div>
+                        <div class="value text-subtitle-1">
+                            {{ foreignNational?.fullNameLatin }}
+                        </div>
+                    </div>
 
-        <v-card-text class="pt-4">
-            <div class="info-grid">
-                <div class="info-row">
-                    <div class="label">ФИО (лат.)</div>
-                    <div class="value text-subtitle-1">
-                        {{ foreignNational?.fullNameLatin }}
+                    <div class="info-row">
+                        <div class="label">Дата рождения</div>
+                        <div class="value">
+                            {{ new DateFormatter(foreignNational?.dateBirth ?? '').format('d.m.Y') }}
+                        </div>
+                    </div>
+
+                    <div class="info-row">
+                        <div class="label">Паспорт</div>
+                        <div class="value">
+                            {{ foreignNational?.fullPassport }} ·
+                            {{ foreignNational?.issuedBy }} ·
+                            {{ new DateFormatter(foreignNational?.issuedDate ?? '').format('d.m.Y') }}
+                        </div>
+                    </div>
+
+                    <div class="info-row">
+                        <div class="label">Телефон</div>
+                        <div class="value">
+                            {{ formatPhoneNumber(foreignNational?.phone ?? '') }}
+                        </div>
+                    </div>
+
+                    <div class="info-row">
+                        <div class="label">Ответственный</div>
+                        <div class="value">
+                            {{ foreignNational?.creatorFullName }}
+                        </div>
                     </div>
                 </div>
-
-                <div class="info-row">
-                    <div class="label">Дата рождения</div>
-                    <div class="value">
-                        {{ new DateFormatter(foreignNational?.dateBirth ?? '').format('d.m.Y') }}
-                    </div>
-                </div>
-
-                <div class="info-row">
-                    <div class="label">Паспорт</div>
-                    <div class="value">
-                        {{ foreignNational?.fullPassport }} ·
-                        {{ foreignNational?.issuedBy }} ·
-                        {{ new DateFormatter(foreignNational?.issuedDate ?? '').format('d.m.Y') }}
-                    </div>
-                </div>
-
-                <div class="info-row">
-                    <div class="label">Телефон</div>
-                    <div class="value">
-                        {{ formatPhoneNumber(foreignNational?.phone ?? '') }}
-                    </div>
-                </div>
-
-                <div class="info-row">
-                    <div class="label">Ответственный</div>
-                    <div class="value">
-                        {{ foreignNational?.creatorFullName }}
-                    </div>
-                </div>
+            </v-card-text>
+            
+            <div
+                v-if="foreignNational?.permissions.documents"
+            >
+                <v-divider />
+                <v-card-text>
+                    <ForeignNationalsDocuments
+                        :documents="foreignNational?.documents"
+                    />
+                </v-card-text>
             </div>
-        </v-card-text>
-        
-        <div
-            v-if="foreignNational?.permissions.documents"
-        >
+
             <v-divider />
+
             <v-card-text>
-                <ForeignNationalsDocuments
-                    :documents="foreignNational?.documents"
+                <ForeignNationalEnrollments 
+                    v-if="foreignNational" 
+                    :enrollments="foreignNational?.enrollments"
                 />
             </v-card-text>
         </div>
-
-        <v-divider />
-
-        <v-card-text>
-            <ForeignNationalEnrollments 
-                v-if="foreignNational" 
-                :enrollments="foreignNational?.enrollments"
-            />
-        </v-card-text>
     </BaseDialog>
 </template>
 

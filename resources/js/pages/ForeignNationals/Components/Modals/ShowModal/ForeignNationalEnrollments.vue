@@ -85,11 +85,7 @@ const modals = useModals()
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   padding: 14px 16px;
-
-  border-radius: 12px;
-
   transition: background-color .15s ease;
   cursor: pointer;
 }

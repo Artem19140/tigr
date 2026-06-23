@@ -21,16 +21,11 @@ const props = defineProps<{
     current:string
 }>()
 
-
 const headers = [
     {title:'Название', key:"shortName",sortable:false, align:'center'},
     {title:'Дата', key:"beginTime",sortable:false, align:'start'},
     {title:'Запись', key:"capacity", sortable:false, align:'start'},
 ]
-
-const open = (event:Event, {item} : any) => {
-    router.visit(`/exams/${item.id}/monitoring`)
-}
 
 const loading=ref<boolean>(false)
 
@@ -58,26 +53,25 @@ const visit = (url :string) => {
             @row-click="(item) =>  router.visit(`/exams/${item.id}/monitoring`)"
         >
             <template #header-left>
+                <v-btn
+                    variant="text"
+                    icon
+                    :disabled="loading"
+                    @click="() => visit(props.links.prev)"
+                >
+                    <v-icon>mdi-chevron-left</v-icon>
+                </v-btn>
+
+                <span class="border p-2 rounded-lg"> {{ current }} </span>
 
                 <v-btn
-                        variant="text"
-                        icon
-                        :disabled="loading"
-                        @click="() => visit(props.links.prev)"
-                    >
-                        <v-icon>mdi-chevron-left</v-icon>
-                    </v-btn>
-
-                    <span class="border p-2 rounded-lg"> {{ current }} </span>
-
-                    <v-btn
-                        variant="text"
-                        icon
-                        :disabled="loading"
-                        @click="() => visit(props.links.next)"
-                    >
-                        <v-icon>mdi-chevron-right</v-icon>
-                    </v-btn>
+                    variant="text"
+                    icon
+                    :disabled="loading"
+                    @click="() => visit(props.links.next)"
+                >
+                    <v-icon>mdi-chevron-right</v-icon>
+                </v-btn>
             </template>
 
             <template #item.capacity="{ item }">

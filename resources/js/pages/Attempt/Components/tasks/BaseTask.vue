@@ -32,10 +32,12 @@ const checking = inject<boolean>('checking')
 </script>
 
 <template>
-  <div 
+  <!-- <div 
     class="flex flex-column justify-center"
-  >
-      <v-card-title class="d-flex flex-column align-start ga-1">
+  > -->
+      <v-card-title 
+        class="d-flex flex-column align-start ga-1"
+      >
         <div class="flex items-center gap-2">
           <AppStatusChip 
             size="small" 
@@ -48,9 +50,9 @@ const checking = inject<boolean>('checking')
             style="font-size: 12px;"
           >
             <v-progress-circular
-                indeterminate
-                color="primary"
-                size="20"
+              indeterminate
+              color="primary"
+              size="20"
             />
             <span>Идет сохранение ответа...</span>
           </div>
@@ -60,8 +62,8 @@ const checking = inject<boolean>('checking')
       <div class="font-weight-bold  pl-6 pr-4">
         {{ 
           task?.description && task.description.trim() !== "" 
-              ? task.description 
-              : getDefaultDescription(task.type) 
+            ? task.description 
+            : getDefaultDescription(task.type) 
         }}
       </div>
 
@@ -84,31 +86,29 @@ const checking = inject<boolean>('checking')
         <slot name="answers" /> 
       </div>
       
-    <v-card-text v-if="checking">
-      <TaskRatingBlock
-        class="mt-4"
-        @rated="(value :AttemptAnswer) => emit('rated', value)"
-        :task="task"
+      <v-card-text v-if="checking">
+        <TaskRatingBlock
+          class="mt-4"
+          @rated="(value :AttemptAnswer) => emit('rated', value)"
+          :task="task"
+          
+          :readonly="false"
+        />
         
-        :readonly="false"
-      />
-      
-    </v-card-text>
-    <v-card-text
-      v-if="errors.has(task.id)"
-    >
-      <AppRetryAlert 
-        
-        text="Ошибка сохранения, пожалуйста, повторите действие"
-        :onRetry="() => emit('retry')"
-      />
-    </v-card-text>
-  </div>
+      </v-card-text>
+
+      <v-card-text
+        v-if="errors.has(task.id)"
+      >
+        <AppRetryAlert 
+          text="Ошибка сохранения, пожалуйста, повторите действие"
+          :onRetry="() => emit('retry')"
+        />
+      </v-card-text>
+  <!-- </div> -->
 </template>
 
 <style scoped>
-
-
 .v-card {
   transition: all 0.2s ease;
 }

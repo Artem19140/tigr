@@ -12,6 +12,7 @@ const changePayment = async () => {
     const action = props.enrollment.hasPayment ?  'Отменить' : 'Подтвердить'
     const ok = await open(`${action} оплату ${props.enrollment.foreignNational?.fullName ?? ''}`)
     if(!ok) return
+
     const http = useHttp()
     props.enrollment.isLoading = true
     http.put(`/enrollments/${props.enrollment.id}/payment`,{

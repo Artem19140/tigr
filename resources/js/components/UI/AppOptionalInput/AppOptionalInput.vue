@@ -18,7 +18,7 @@ watch(() => checkbox.value, () => {
 </script>
 
 <template>
-    <div class="flex flex-column">
+    <div class="flex flex-column pag-0">
         <AppInput 
             :disabled="checkbox"
             v-model="input"

@@ -50,15 +50,11 @@ const tab = ref()
 <template>
     <BaseDialog 
         max-width="850"
-        :loading="http.processing"
         v-model="isOpen"
-        :error="!http.wasSuccessful"
-        :onRetry="getExam"
         @before-close="(close) =>  {
             http.cancel()
             close()
         }"
-        skeleton="heading, list-item-two-line, list-item-two-line"
     >
     
         <template #header >
@@ -76,13 +72,40 @@ const tab = ref()
             />
         </template> 
 
+        <template #skeleton>
+            <v-skeleton-loader
+                v-if="http.processing"
+                type="heading, list-item-two-line, list-item-two-line"
+            />
+        </template>
+
+        <template #error>
+            <v-card-text 
+                v-if="! http.processing && ! http.wasSuccessful" 
+                class="flex justify-center items-center flex-column"
+            >
+                <div class="text-body-2 text-medium-emphasis">
+                    Что-то пошло не так
+                </div>
+                
+                <v-btn 
+                    variant="text"
+                    prepend-icon="mdi-refresh"
+                    @click="getExam"
+                >
+                    Повторить
+                </v-btn>
+                
+            </v-card-text>
+        </template>
+
         <v-card-text class="pt-0 pb-0">
             <ExamInfo 
                 :exam="exam"
             />
         </v-card-text>
         
-        <v-card-text class="pt-0 pb-0">
+        <v-card-text class="pt-0 pb-0" v-if="exam">
             <v-tabs v-model="tab">
                 <v-tab value="enrollments" v-if="permissions?.enrollments.view">Участники</v-tab>
                 <v-tab value="videos" v-if="permissions?.videos.view">Видео</v-tab>

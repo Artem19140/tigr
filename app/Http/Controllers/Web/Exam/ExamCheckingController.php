@@ -31,7 +31,7 @@ class ExamCheckingController
             ->get();
 
         CenterIsolationCheck::check($exams);
-        return Inertia::render('ExamsChecking/ExamsChecking', [
+        return Inertia::render('ExamChecking/ExamsChecking', [
             'exams' => ExamIndexResource::collection($exams),
         ]);
     }
@@ -55,7 +55,7 @@ class ExamCheckingController
             },
         ]);
 
-        return Inertia::render('ExamsChecking/ExamChecking', [
+        return Inertia::render('ExamChecking/ExamChecking', [
             'exam' => new ExamCheckingResource($exam),
         ]);
     }

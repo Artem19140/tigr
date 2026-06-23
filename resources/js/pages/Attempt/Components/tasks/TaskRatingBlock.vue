@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import AppAutocomplete from '@/components/UI/AppAutocomplete/AppAutocomplete.vue';
-import AppRetryAlert from '@/components/UI/AppRetryAlert/AppRetryAlert.vue';
 import { AttemptAnswer, Task } from '@/interfaces/Task';
 import { useHttp } from '@inertiajs/vue3';
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 
 const props = defineProps<{
     task:Task,
@@ -16,16 +15,15 @@ const emit = defineEmits<{
 
 const answerId = props.task?.attemptAnswer?.id
 
-const http = useHttp<{mark:number | null}, {attemptAnswer:AttemptAnswer}>({
+const http = useHttp<
+    {mark: number | null}, 
+    {attemptAnswer: AttemptAnswer}
+>({
     mark: props.task.attemptAnswer.mark
 })
 
-watch(() => http.mark, () => {
-    if(http.mark === null) return
-    rate()
-})
-
 const error = ref<boolean>(false)
+
 const rate = () => {
     error.value = false
     http.put(`/answers/${answerId}/rate`,{
@@ -40,57 +38,69 @@ const rate = () => {
     })
 }
 
-const loading = computed(() => http.processing)
-
-const markSaved = computed(() => 
-    props.task.attemptAnswer.checkedAt !== null  && !error.value
+const isRated = computed(
+    () => props.task.attemptAnswer.checkedAt !== null
 )
 
-const marks = ref<Array<number>>([])
-
-onMounted(() => {
-    for(let i=0;i<=props.task.mark; i++){
-        marks.value.push(i)
-    }
-})
+const marks = computed(() =>
+    Array.from(
+        { length: props.task.mark + 1 },
+        (_, i) => i
+    )
+)
 </script>
 
 <template>
-    <div class="d-flex flex-column">
-        <AppAutocomplete
-            :label="`Выберите балл от 0 до ${task.mark}`"
-            :items="marks"
-            v-model="http.mark"
-            item-title="mark"
-            :disabled="loading"
-            :base-color="markSaved ? 'green' : ''"
-            :error-messages="http.errors.mark"
-            :readonly="readonly"
-        />
+    <AppAutocomplete
+        v-model="http.mark"
+        :label="`Выберите балл от 0 до ${task.mark}`"
+        :items="marks"
+        item-title="mark"
+        :disabled="http.processing"
+        :readonly="readonly"
+        :error-messages="http.errors.mark"
+        @update:model-value="rate"
+    />
+    <div
+        class="d-flex align-center ga-2 text-caption"
+        style="min-height: 24px"
+    >
 
-        <div class="d-flex align-center ga-2" v-if="loading">
+        <template v-if="http.processing">
             <v-progress-circular
                 indeterminate
-                color="primary"
-                size="18" 
+                size="16"
                 width="2"
             />
-            <span>Сохранение...</span>
-        </div>
-        <div v-else>
-            <v-alert
-                v-if="markSaved"
-                type="success"
-                density="compact"
-                variant="tonal"
+            <span>Сохраняем...</span>
+        </template>
+
+        <template v-else-if="isRated && ! error">
+            <v-icon
+                size="16"
+                color="success"
             >
-                Результат успешно сохранен
-            </v-alert>
-            <AppRetryAlert
-                v-if="error"
-                text="Не удалось сохранить балл"
-                :onRetry="rate"
-            />
-        </div>          
+                mdi-check-circle
+            </v-icon>
+
+            <span class="text-success">
+                Сохранено
+            </span>
+        </template>
+
+        <template v-else-if="error">
+            <span class="text-error">
+                Не удалось сохранить
+            </span>
+
+            <v-btn
+                size="small"
+                variant="outlined"
+                color="error"
+                @click="rate"
+            >
+                Повторить
+            </v-btn>
+        </template>
     </div>
 </template>

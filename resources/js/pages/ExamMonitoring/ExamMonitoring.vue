@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import EnrollmentMonitoringDropdown from './EnrollmentMonitoringDropdown.vue';
-import { Head, usePoll } from '@inertiajs/vue3'
+import { Head, router, usePoll } from '@inertiajs/vue3'
 import ExamStatusChip from '@components/Exam/ExamStatusChip.vue';
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { useModals } from '@composables/useModals';
@@ -9,7 +9,6 @@ import { DateFormatter } from '@helpers/DateFormatter';
 import PaymentIcon from '@/components/Enrollment/PaymentIcon.vue';
 import ExamMonitoringDropdown from './ExamMonitoringDropdown.vue';
 import { ExamMonitoring } from '@/interfaces/Exam';
-import AppTooltip from '@/components/UI/AppTooltip/AppTooltip.vue';
 import AppInput from '@/components/UI/AppInput/AppInput.vue';
 
 defineOptions({
@@ -22,7 +21,8 @@ const props = defineProps<{
     },
     available:{
         protocolComment:boolean
-    }
+    },
+    backDate:string
 }>()
 
 const pollFrequency = 15000
@@ -66,10 +66,6 @@ const {open} = useModals()
 const openForeignNational = (event : Event, {item} :any) => {
     open('foreignNationalShow', {foreignNationalId:item.foreignNational.id})
 }
-
-const back = () => {
-    window.history.go(-1)
-}
 const search = ref<string>('')
 </script>
 
@@ -78,7 +74,7 @@ const search = ref<string>('')
     <Head>
         <title>{{ exam.data.shortName }} {{ new DateFormatter(exam.data?.beginTime).format('d.m.Y') }}</title>
     </Head>
-    <v-btn class="mt-4 ml-4" variant="text" @click="back">
+    <v-btn class="mt-4 ml-4" variant="text" @click="() => router.visit(`/exams/monitoring?date=${props.backDate}`)">
         ← Назад
     </v-btn>
 
@@ -113,7 +109,6 @@ const search = ref<string>('')
 
             <v-divider />
 
-            <!-- TOOLBAR -->
             <v-card-text class="d-flex justify-space-between align-center py-3">
                 <AppInput
                     v-model="search"

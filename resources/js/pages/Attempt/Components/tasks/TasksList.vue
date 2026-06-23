@@ -13,14 +13,15 @@ import { computed, provide } from 'vue';
 
 const props = defineProps<{
     attempt:  Attempt | AttemptMonitoring | AttemptChecking,
-    checking?:boolean
+    checking?:boolean,
+    mode?:string
 }>()
 
 const emit = defineEmits<{
     (e:'rated', value:AttemptAnswer):void
 }>()
 
-const taskComponent = (type: string) => {
+const resolveTaskComponent = (type: string) => {
     switch (type) {
         case TaskTypes.SINGLE_CHOICE:
             return SingleChoiceTask
@@ -75,14 +76,14 @@ const groupedTasks =  computed(() =>{
 
 <template>
     <v-container class="flex flex-column gap-10"
-        v-if="attempt.tasks.length > 0"
+        v-if="attempt.tasks?.length > 0"
         max-width="1100"
     >
         <div
             v-for="(tasks, index) in groupedTasks"
             :key="index"
         >   
-            <v-card  >
+            <v-card  rounded="lg">
                 <div
                     v-for="task in tasks"
                     :key="task.id"
@@ -91,12 +92,14 @@ const groupedTasks =  computed(() =>{
                     
                     <component 
                         :key="task.id"
-                        :is="taskComponent(task.type)"
+                        :is="resolveTaskComponent(task.type)"
                         :task="task"
                         @update-answer="update"
                         @rated="(value :AttemptAnswer) => emit('rated', value)"
                     />
-                    <v-divider/>
+                    <v-divider
+                        v-if="index !== tasks.length - 1"
+                    />
                 </div>
             </v-card>
         </div>

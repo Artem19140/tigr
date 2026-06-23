@@ -10,11 +10,11 @@ use App\Models\Attempt;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Inertia\Inertia;
 
 class AttemptCheckingController
 {
-    public function show(Attempt $attempt): JsonResource
+    public function show(Attempt $attempt)
     {
         $attempt->load([
             'taskVariants' => function (BelongsToMany $query) {
@@ -32,7 +32,10 @@ class AttemptCheckingController
             ->taskVariants
             ->sortBy('task.order');
 
-        return new AttemptCheckingResource($attempt);
+        return Inertia::render('ExamChecking/AttemptChecking', [
+            'attempt' => new AttemptCheckingResource($attempt),
+            'examId' => $attempt->exam_id
+        ]);
     }
 
     public function finish(
