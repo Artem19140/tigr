@@ -76,7 +76,12 @@ class AttemptController
         $request->validate([
             'annulledReason' => ['required', 'string'],
         ]);
-        $annulAttempt->execute($attempt, $request->input('annulledReason'), $request->user());
+
+        $annulAttempt->execute(
+            $attempt, 
+            $request->input('annulledReason'), 
+            $request->user()
+        );
 
         return response()->noContent();
     }
@@ -86,6 +91,7 @@ class AttemptController
         FinishAttempt $finishAttempt,
         Request $request
     ): RedirectResponse {
+        
         $finishAttempt->execute($attempt);
         
         $request->session()->invalidate();

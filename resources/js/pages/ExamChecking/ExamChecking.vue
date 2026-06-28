@@ -34,8 +34,13 @@ const openAttempt =  (item : Enrollment) => {
         <title>Проверка {{ exam.data.shortName }}</title>
     </Head>
     
-    <v-btn class="mt-4 ml-4" variant="text" @click="() => router.visit('/exams/checking')">
-        ← Назад
+    <v-btn 
+        class="mt-4 ml-4" 
+        variant="text" 
+        @click="() => router.visit('/exams/checking')"
+        prepend-icon="mdi-arrow-left"
+    >
+        Назад
     </v-btn>
 
     <v-container>

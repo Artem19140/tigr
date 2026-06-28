@@ -42,7 +42,6 @@ provide('form', form)
 <template>
     <BaseTask
         :task="task"
-        :loading="false"
         @retry="send"
     />
 </template>

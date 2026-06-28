@@ -6,22 +6,19 @@ import FrdoModal from '@pages/Exam/Components/ExamTable/FrdoModal.vue';
 import ForeignNationalCreateModal from '@pages/ForeignNationals/Components/Modals/ForeignNationalCreateModal.vue';
 import FlatTableModal from '@pages/Exam/Components/ExamTable/FlatTableModal.vue';
 import EnrollmentModal from '@pages/ForeignNationals/Components/EnrollmentModal.vue';
-import AttemptCheckingModal from '@pages/ExamChecking/Components/AttemptCheckingModal.vue';
-import ExamCommentModal from '@pages/ExamMonitoring/ExamCommentModal.vue';
 import EmployeeCreateModal from '@pages/Center/Components/Employees/EmployeeCreateModal.vue';
 import ForeignNationalEditModal from '@pages/ForeignNationals/Components/Modals/ForeignNationalEditModal.vue';
 import ExamEditModal from '@pages/Exam/Components/Modals/ExamEditModal.vue';
 import ForeignNationalShowModal from '@pages/ForeignNationals/Components/Modals/ShowModal/ForeignNationalShowModal.vue';
 import ForeignNationalExportModal from '@pages/ForeignNationals/Components/ForeignNationalTable/ForeignNationalExportModal.vue';
 import StatisticsModal from '@pages/ForeignNationals/Components/ForeignNationalTable/StatisticsModal.vue';
-import SpeakingTasksModal from '@/pages/ExamMonitoring/SpeakingTasksModal.vue';
 import AddressCreateModal from '@/pages/Center/Components/Addresses/AddressCreateModal.vue';
 import MinistryEducationReportModal from '@/pages/ForeignNationals/Components/ForeignNationalTable/MinistryEducationReportModal.vue';
-import ViolationModal from '@/pages/ExamMonitoring/Violations/ViolationModal.vue';
-import PasswordResetModal from '@/pages/Center/Components/Employees/PasswordResetModal.vue';
+import ViolationModal from '@/pages/ExamMonitoring/Components/Violations/ViolationModal.vue';
 import EmployeeEditModal from '@/pages/Center/Components/Employees/EmployeeEditModal.vue';
 import LogoutAllDevicesModal from './LogoutAllDevicesModal.vue';
 import CenterCreateModal from '@/pages/PlatformAdmin/Components/CenterCreateModal.vue';
+import ExamCommentModal from '@/pages/ExamMonitoring/Components/ExamCommentModal.vue';
 
 const {modals, close} = useModals()
 
@@ -37,18 +34,15 @@ const modalMap = {
     foreignNationalCreate: ForeignNationalCreateModal,
     flatTable: FlatTableModal,
     enrollment: EnrollmentModal,
-    attemptChecking: AttemptCheckingModal,
     examComment: ExamCommentModal,
     employeeCreate: EmployeeCreateModal,
     foreignNationalEdit: ForeignNationalEditModal,
     examEdit: ExamEditModal,
     foreignNationalExport: ForeignNationalExportModal,
     statistics: StatisticsModal,
-    speaking: SpeakingTasksModal,
     addressCreate: AddressCreateModal,
     ministryEducationReport: MinistryEducationReportModal,
     violation: ViolationModal,
-    passwordReset:PasswordResetModal,
     employeeEdit:EmployeeEditModal,
     logoutAll:LogoutAllDevicesModal,
     centerCreate:CenterCreateModal
@@ -68,5 +62,4 @@ const closeModal = (id: number) => {
         v-model = modal.isOpen
         @update:modelValue="closeModal(modal.id)"
     />
-
 </template>

@@ -38,7 +38,6 @@ watch(attemptAnswer, () => {
     <BaseTask
         @retry="send"
         :task="task"
-        :loading="false"
     >
         <template #answers>
             <v-radio-group 

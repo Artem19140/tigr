@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import EnrollmentMonitoringDropdown from './EnrollmentMonitoringDropdown.vue';
+import EnrollmentMonitoringDropdown from './Components/EnrollmentMonitoringDropdown.vue';
 import { Head, router, usePoll } from '@inertiajs/vue3'
 import ExamStatusChip from '@components/Exam/ExamStatusChip.vue';
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
@@ -7,7 +7,7 @@ import { useModals } from '@composables/useModals';
 import { computed, onMounted, onUnmounted, ref} from 'vue';
 import { DateFormatter } from '@helpers/DateFormatter';
 import PaymentIcon from '@/components/Enrollment/PaymentIcon.vue';
-import ExamMonitoringDropdown from './ExamMonitoringDropdown.vue';
+import ExamMonitoringDropdown from './Components/ExamMonitoringDropdown.vue';
 import { ExamMonitoring } from '@/interfaces/Exam';
 import AppInput from '@/components/UI/AppInput/AppInput.vue';
 
@@ -18,9 +18,6 @@ defineOptions({
 const props = defineProps<{
     exam:{
         data:ExamMonitoring
-    },
-    available:{
-        protocolComment:boolean
     },
     backDate:string
 }>()
@@ -74,8 +71,13 @@ const search = ref<string>('')
     <Head>
         <title>{{ exam.data.shortName }} {{ new DateFormatter(exam.data?.beginTime).format('d.m.Y') }}</title>
     </Head>
-    <v-btn class="mt-4 ml-4" variant="text" @click="() => router.visit(`/exams/monitoring?date=${props.backDate}`)">
-        ← Назад
+    <v-btn 
+        class="mt-4 ml-4" 
+        variant="text" 
+        @click="() => router.visit(`/exams/monitoring?date=${props.backDate}`)"
+        prepend-icon="mdi-arrow-left"
+    >
+        Назад
     </v-btn>
 
     <v-container>
@@ -103,7 +105,6 @@ const search = ref<string>('')
 
                 <ExamMonitoringDropdown
                     :exam="exam.data"
-                    :available="available"
                 />
             </v-card-text>
 
@@ -123,7 +124,6 @@ const search = ref<string>('')
 
             <v-divider />
 
-            <!-- TABLE -->
             <v-data-table
                 class="modern-table"
                 :items="exam.data.enrollments"

@@ -3,10 +3,15 @@
 use App\Http\Controllers\Web\Attempt\AttemptAnswerController;
 use App\Http\Controllers\Web\Attempt\AttemptController;
 use App\Http\Controllers\Web\Exam\ExamController;
+use App\Support\AppMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('attempts')
-    ->middleware('meta')
+    ->middleware([
+        'meta',
+        'auth:foreignNationals',
+        AppMiddleware::ENSURE_ATTEMPT_VALID_STATUS,
+    ])
     ->can('attempts.foreign-national-access', 'attempt')
     ->group(function () {
         Route::put('{attempt}/finish', [AttemptController::class, 'finish'])
@@ -24,16 +29,6 @@ Route::prefix('attempts')
         Route::put('{attempt}/answers/{attemptAnswer}/audio', [AttemptAnswerController::class, 'audioPlayed'])
             ->name('attempts.answers.update.audio');
     });
-
-Route::inertia('attempts/finish', 'Attempt/AfterAttempt')
-    ->middleware([
-        'meta',
-        'guest:web,foreignNationals'
-    ])
-    ->name('attempts.finish.after');
-
-    Route::post('exam-codes/verify', [ExamController::class, 'verifyCode'])
-        ->middleware(['throttle:5']);
 
 Route::middleware([
     'meta',

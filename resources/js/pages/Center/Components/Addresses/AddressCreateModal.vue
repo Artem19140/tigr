@@ -38,9 +38,6 @@ const add = () => {
             close()
         }"
     >
-        <template #header>
-            <div>Создание адреса</div>
-        </template>
         <AppInput 
             label="Адрес"
             placeholder="Введите адрес"

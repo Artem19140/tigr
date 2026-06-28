@@ -16,18 +16,34 @@ class AttemptCheckingController
 {
     public function show(Attempt $attempt)
     {
+        // $attempt->load([
+        //     'taskVariants' => function (BelongsToMany $query) {
+        //         $query->whereHas('task', function (Builder $q) {
+        //             $q->whereIn('type', TaskType::manualCheckTypes());
+        //         });
+        //     },
+        //     'taskVariants.answers',
+        //     'taskVariants.task',
+        //     'taskVariants.attemptsAnswer' => function ($query) use ($attempt) {
+        //         $query->where('attempt_id', $attempt->id);
+        //     },
+        // ]);
+
         $attempt->load([
-            'taskVariants' => function (BelongsToMany $query) {
-                $query->whereHas('task', function (Builder $q) {
+            'taskVariants' => function (BelongsToMany $query) use($attempt){
+                $query->whereHas('task', function (Builder $q){
                     $q->whereIn('type', TaskType::manualCheckTypes());
-                });
-            },
-            'taskVariants.answers',
-            'taskVariants.task',
-            'taskVariants.attemptsAnswer' => function ($query) use ($attempt) {
-                $query->where('attempt_id', $attempt->id);
+                })
+                ->with([
+                    'answers',
+                    'task',
+                    'attemptsAnswer' => function ($query) use ($attempt) {
+                        $query->where('attempt_id', $attempt->id);
+                    }
+                ]);
             },
         ]);
+
         $attempt->taskVariants = $attempt
             ->taskVariants
             ->sortBy('task.order');

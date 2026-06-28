@@ -10,6 +10,7 @@ import { useHttp } from '@inertiajs/vue3';
 import MultynputTask from './MultyInputTask.vue';
 import BaseTask from './BaseTask.vue';
 import { computed, provide } from 'vue';
+import TaskRatingBlock from './TaskRatingBlock.vue';
 
 const props = defineProps<{
     attempt:  Attempt | AttemptMonitoring | AttemptChecking,
@@ -61,50 +62,57 @@ const update = (value:any) => {
 provide<boolean>('checking', props.checking)
 
 const groupedTasks =  computed(() =>{
-        const groups = new Map()
-        props.attempt.tasks.forEach(task => {
-            const groupKey = task.groupNumber ?? task.fipiNumber
-            if(! groups.has(groupKey)){
-                groups.set(groupKey, [])
-            }
-            groups.get(groupKey).push(task)
-        })
-        return groups.values()
+    const groups = new Map()
+    props.attempt.tasks.forEach(task => {
+        const groupKey = task.groupNumber ?? task.fipiNumber
+        if(! groups.has(groupKey)){
+            groups.set(groupKey, [])
+        }
+        groups.get(groupKey).push(task)
+    })
+    return groups.values()
 })
 
 </script>
 
 <template>
-    <v-container class="flex flex-column gap-10"
+    <div 
+        class="flex flex-column gap-10"
         v-if="attempt.tasks?.length > 0"
-        max-width="1100"
     >
         <div
             v-for="(tasks, index) in groupedTasks"
             :key="index"
         >   
-            <v-card  rounded="lg">
+            <v-card  rounded="xl">
                 <div
                     v-for="task in tasks"
                     :key="task.id"
                     :id="`task-${task.id}`"
                 >
-                    
                     <component 
                         :key="task.id"
                         :is="resolveTaskComponent(task.type)"
                         :task="task"
                         @update-answer="update"
-                        @rated="(value :AttemptAnswer) => emit('rated', value)"
                     />
+                    
+                    <v-card-text v-if="checking">
+                        <task-rating-block
+                            @rated="(value :AttemptAnswer) => emit('rated', value)"
+                            :task="task"
+                        />
+                    </v-card-text>
+
                     <v-divider
                         v-if="index !== tasks.length - 1"
                     />
                 </div>
+                
             </v-card>
         </div>
         
-    </v-container >
+    </div >
 
     <v-empty-state
         v-else

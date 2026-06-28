@@ -29,6 +29,7 @@ watch(() => http.examTypeId, async () => {
   examId.value = null
   if(http.examTypeId === null) return
   examDates.value = []
+  
   http.get('/exams/available',{
     onSuccess:(response) => {
       examDates.value = response

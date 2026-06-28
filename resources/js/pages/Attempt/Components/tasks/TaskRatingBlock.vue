@@ -5,8 +5,7 @@ import { useHttp } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 
 const props = defineProps<{
-    task:Task,
-    readonly:boolean
+    task:Task
 }>()
 
 const emit = defineEmits<{
@@ -57,7 +56,6 @@ const marks = computed(() =>
         :items="marks"
         item-title="mark"
         :disabled="http.processing"
-        :readonly="readonly"
         :error-messages="http.errors.mark"
         @update:model-value="rate"
     />

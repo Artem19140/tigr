@@ -29,6 +29,7 @@ class AttemptSpeakingController
         }
 
         if($attempt->speaking_started_at === null){
+           
             return Inertia::render('ExamMonitoring/SpeakingStart', [
                 'attemptId' => $attempt->id,
                 'examId' => $attempt->exam_id
@@ -36,6 +37,14 @@ class AttemptSpeakingController
         }
 
         $attemptWithSpeaking = $this->loadSpeaking($attempt);
+
+        if($attempt->speaking_finished_at !== null){
+            return Inertia::render('ExamMonitoring/SpeakingChecking', [
+                'attempt' => new AttemptResource($attemptWithSpeaking),
+                'examId' => $attempt->exam_id
+            ]);
+        }
+
         return Inertia::render('ExamMonitoring/Speaking', [
             'attempt' => new AttemptResource($attemptWithSpeaking),
             'examId' => $attempt->exam_id
@@ -51,6 +60,7 @@ class AttemptSpeakingController
         if($result->isNotAvailable()){
             throw new BusinessException($result->message());
         }
+        
         $attempt->speaking_started_at = Carbon::now();
         $attempt->save();
         return redirect()->route('attempts.speaking.show', [

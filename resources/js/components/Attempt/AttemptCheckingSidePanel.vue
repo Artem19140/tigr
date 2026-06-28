@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { AttemptChecking, AttemptMonitoring } from '@/interfaces/Attempt';
+import { Task } from '@/interfaces/Task';
+import { onMounted, ref } from 'vue';
 
 const props = defineProps<{
   attempt: AttemptChecking | AttemptMonitoring
@@ -18,24 +20,55 @@ const scrollToTask = (id: number) => {
     block: 'start'
   }) 
 }
+
+const taskParams = (task: Task) =>
+  getParams(task.attemptAnswer.checkedAt)
+
+const currentTaskId = ref<number | null>(null)
+
+onMounted(() => {
+  const observer = new IntersectionObserver(
+    entries => {
+      const visible = entries.find(entry => entry.isIntersecting)
+
+      if (visible) {
+        currentTaskId.value = Number(
+          visible.target.id.replace('task-', '')
+        )
+      }
+    },
+    {
+      threshold: 0.5,
+    }
+  )
+
+  props.attempt.tasks.forEach(task => {
+    const el = document.getElementById(`task-${task.id}`)
+    if (el) observer.observe(el)
+  })
+})
 </script>
 
 <template>
   <div class="flex flex-column items-center">
-    <v-list density="compact" nav>
+    <v-list 
+      density="compact" 
+      nav
+      
+    >
       <v-list-item
         v-for="task in attempt.tasks"
         :key="task.id"
+        :active="currentTaskId === task.id"
         @click="scrollToTask(task.id)"
-        class="cursor-pointer"
       >
         <template #prepend>
           <v-avatar
             size="24"
-            :color="getParams(task.attemptAnswer.checkedAt).color"
+            :color="taskParams(task).color"
           >
             <v-icon size="14">
-              {{ getParams(task.attemptAnswer.checkedAt).icon }}
+              {{ taskParams(task).icon }}
             </v-icon>
           </v-avatar>
         </template>
@@ -45,10 +78,11 @@ const scrollToTask = (id: number) => {
         </v-list-item-title>
       </v-list-item>
     </v-list>
+    
     <app-primary-button 
       text="Завершить"
       variant="outlined"
-      @click="() => $emit('finished')"
+      @click="$emit('finished')"
     />
   </div>
 </template>

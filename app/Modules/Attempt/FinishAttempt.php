@@ -35,6 +35,7 @@ class FinishAttempt
         if ($attempt->isFinished()) {
             throw new BusinessException('Попытка уже завершена');
         }
+        
         $minTimeMinutes = ExamSettings::attemptMinDurationMinutes();
         $now = Carbon::now();
 

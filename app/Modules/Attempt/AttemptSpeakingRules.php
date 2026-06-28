@@ -54,11 +54,11 @@ class AttemptSpeakingRules
             return $failed;
         }
         
-        if($this->speakingFinished($attempt)){
-            return  RuleResult::fail(
-                'speaking_already_finished'
-            );
-        }
+        // if($this->speakingFinished($attempt)){
+        //     return  RuleResult::fail(
+        //         'speaking_already_finished'
+        //     );
+        // }
 
         return RuleResult::success();
     }

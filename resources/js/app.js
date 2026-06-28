@@ -61,14 +61,14 @@ createInertiaApp({
             .use(vuetify)
             .mount(el)
     },
-    layout: () => BaseLayout,
+    //layout: () => BaseLayout,
     defaults: {
         future: {
             useDialogForErrorModal: true,
         },
-        // visitOptions: (href, options) => {
-        //   return { viewTransition: true };
-        // },
+        visitOptions: (href, options) => {
+          return { viewTransition: true };
+        },
     },
 })
 

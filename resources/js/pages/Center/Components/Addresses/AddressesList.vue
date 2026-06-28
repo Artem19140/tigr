@@ -9,6 +9,7 @@ import { Head } from '@inertiajs/vue3';
 const props = defineProps<{
     addresses:Address[]
 }>()
+
 watch(() => props.addresses, (value) => {
     addresses.value = value
 })
@@ -42,6 +43,7 @@ const add = () => {
             <div class="d-flex justify-end">
                 <AppAddButton
                     @click="add"
+                    v-if="addresses.length > 0"
                 />
             </div>
 

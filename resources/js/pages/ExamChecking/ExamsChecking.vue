@@ -38,6 +38,5 @@ const headers = [
                 {{ new DateFormatter(item.beginTime).format('d M Y,  H:i') }}
             </template>
         </BaseTable>
-        <ExamsCheckingTable :exams="exams.data" />
     </v-container>
 </template>

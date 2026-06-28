@@ -46,6 +46,7 @@ class PasswordController
     public function forgot(Request $request) 
     {
         $request->validate(['email' => 'required|email']);
+        
         $status = Password::sendResetLink(
             $request->only('email')
         );

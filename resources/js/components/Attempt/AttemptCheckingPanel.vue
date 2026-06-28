@@ -1,37 +1,44 @@
 <script setup lang="ts">
 import { AttemptChecking, AttemptMonitoring } from '@/interfaces/Attempt';
-import AttemptCheckingSidePanel from '@/pages/ExamChecking/Components/AttemptCheckingSidePanel.vue';
+import AttemptCheckingSidePanel from '@/components/Attempt/AttemptCheckingSidePanel.vue';
 import { AttemptAnswer } from '@/interfaces/Task';
 import TasksList from '@/pages/Attempt/Components/tasks/TasksList.vue';
+import { ref } from 'vue';
 
 const props = defineProps<{
-    attempt:AttemptChecking | AttemptMonitoring,
-    checking?:boolean
+    attempt:AttemptChecking | AttemptMonitoring
 }>()
+
 const emit = defineEmits<{
-    (e:'rated', value: AttemptAnswer):void,
     (e:'finished'):void
 }>()
 
 const update = (value:AttemptAnswer) => {
-    emit('rated', value)
+    const task = attempt.value.tasks.find(t => t.attemptAnswer.id === value.id)
+    if(!task) return
+    task.attemptAnswer = {...value}
 }
+
+const attempt = ref<AttemptChecking | AttemptMonitoring>(props.attempt)
+
 </script>
 
 <template>
-    <div class="flex gap-10 items-start">
-        <div class="flex-shrink-0 sticky top-0 self-start">
-            <AttemptCheckingSidePanel
-                v-if="attempt && checking"
-                :attempt="attempt" 
-                @finished="() => emit('finished')"
+    <div class="flex">
+        <v-container>
+            <TasksList
+                v-if="attempt"
+                @rated="update"
+                :attempt="attempt"
+                :checking="true"
             />
-        </div>
-        <TasksList
+        </v-container>
+
+        <AttemptCheckingSidePanel
             v-if="attempt"
-            @rated="update"
-            :attempt="attempt"
-            :checking="checking"
+            :attempt="attempt" 
+            @finished="() => emit('finished')"
+            class="sticky top-4 self-start" 
         />
     </div>
 </template>

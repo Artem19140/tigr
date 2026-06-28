@@ -19,6 +19,7 @@ class LoginController
         );
 
         $employee = Auth::user();
+        
         $this->ensureHasAccess($employee);
 
         $request->session()->regenerate();
@@ -46,7 +47,7 @@ class LoginController
     }
 
     protected function ensureHasAccess(Employee $employee):void{
-        if ($this->cannotAccess($employee)) {
+        if ($this->hasNoAccess($employee)) {
             Auth::logout();
             throw ValidationException::withMessages([
                 'email' => 'Неверные учетные данные.',
@@ -55,7 +56,7 @@ class LoginController
         }
     }
 
-    protected function cannotAccess(Employee $employee):bool
+    protected function hasNoAccess(Employee $employee):bool
     {
         if($employee->isPlatformAdmin()){
             return false;

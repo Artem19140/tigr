@@ -41,8 +41,8 @@ const {open} = useModals()
     />
 
     <v-list-item 
-      title="Сбросить пароль"
-      @click="open('passwordReset', {employee:employee})" 
+      title="Отправить приглашение"
+      @click="() => 12" 
     />
 
     <v-divider />

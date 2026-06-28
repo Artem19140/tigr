@@ -154,17 +154,5 @@ Route::middleware([
     return redirect($resolver->execute());
 })->name('me');
 
-Route::middleware([
-    'auth:foreignNationals',
-    AppMiddleware::ENSURE_ATTEMPT_VALID_STATUS,
-])
-    ->group(function () {
-        require __DIR__.'/attempts_passing.php';
-    });
-
+require __DIR__.'/attempts_passing.php';
 require __DIR__.'/platform_manage.php';
-
-
-Route::get('invite', function(){
-    return new App\Mail\Invite(request()->user(), route('exams.index'));
-});

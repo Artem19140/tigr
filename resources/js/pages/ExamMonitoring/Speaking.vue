@@ -3,10 +3,9 @@ import { ref } from 'vue';
 import { router, useHttp } from '@inertiajs/vue3';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { AttemptMonitoring } from '@/interfaces/Attempt';
-import { AttemptAnswer } from '@/interfaces/Task';
-import AttemptCheckingPanel from '@/components/Attempt/AttemptCheckingPanel.vue';
 import TasksList from '../Attempt/Components/tasks/TasksList.vue';
 import { useConfirmDialog } from '@/composables/useConfirmDialog';
+import BaseLayout from '@/layouts/BaseLayout.vue';
 
 const props = defineProps<{
     attempt:{
@@ -14,6 +13,10 @@ const props = defineProps<{
     },
     examId:number
 }>()
+
+defineOptions({
+  layout: [BaseLayout],
+})
 
 const checking = ref<boolean>(false)
 
@@ -30,44 +33,25 @@ const finish = async () => {
         }
     })
 }
-// const update = (value: AttemptAnswer) => {
-//     const task = attempt.value?.tasks.find(t => t.attemptAnswer.id === value.id)
-//     if(!task) return
-//     task.attemptAnswer = {...value}
-// } @rated="update"
 </script>
 
 <template>
-    {{ checking }}
-        <AttemptCheckingPanel 
-            :checking="checking"
-            :attempt="attempt.data"
-            
-        />
         <v-btn 
             class="fixed mt-4 ml-4" 
             variant="text" 
             @click="() => router.visit(`/exams/${examId}/monitoring`)"
+            prepend-icon="mdi-arrow-left"
         >
-            ← Назад
+            Назад
         </v-btn>
 
-        <!-- <TasksList 
+        <TasksList 
             :attempt="attempt.data"
-        /> -->
+        />
 
         <AppPrimaryButton
             v-if="!checking"
             text="Завершить"
             @click="finish"
         />
-        <!-- <div v-if="checking" class="flex gap-2 items-center">
-            <AppTooltip
-                text="Оценить задания возможно будет после завершения"
-            />
-            <AppPrimaryButton
-                text="Завершить"
-                @click="isOpen = false"
-            />
-        </div> -->
 </template>

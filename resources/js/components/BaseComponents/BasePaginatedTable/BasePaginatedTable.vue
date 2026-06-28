@@ -16,14 +16,10 @@ const emit = defineEmits<{
 <template>
     <v-card
         class="base-table"
-
         rounded="xl"
     >
-        <!-- HEADER -->
         <div class="table-header">
             <div class="d-flex align-center justify-space-between flex-wrap ga-3">
-
-                <!-- LEFT -->
                 <div class="d-flex align-center ga-3 min-w-0">
                     <div class="text-subtitle-1 font-weight-medium text-truncate">
                         {{ title ?? 'Таблица' }}
@@ -31,8 +27,6 @@ const emit = defineEmits<{
 
                     <slot name="toolbar-left" />
                 </div>
-
-                <!-- RIGHT -->
                 <div class="d-flex align-center ga-2">
                     <slot name="toolbar-actions" />
                 </div>
@@ -42,7 +36,6 @@ const emit = defineEmits<{
 
         <v-divider />
 
-        <!-- TABLE -->
         <v-data-table
             class="modern-table"
             :items="elements?.data"
@@ -51,7 +44,6 @@ const emit = defineEmits<{
             hover
             @click:row="(event :Event, { item } : any) => emit('row-click', item)"
         >
-            <!-- pass-through slots -->
             <template
                 v-for="(_, slotName) in $slots"
                 #[slotName]="slotProps"
@@ -59,7 +51,6 @@ const emit = defineEmits<{
                 <slot :name="slotName" v-bind="slotProps" />
             </template>
 
-            <!-- pagination -->
             <template #bottom>
                 <div class="table-footer">
                     <AppPaginator
@@ -81,7 +72,6 @@ const emit = defineEmits<{
     backdrop-filter: blur(6px);
 }
 
-/* HEADER */
 .table-header {
     padding: 14px 16px;
     position: sticky;
@@ -90,18 +80,15 @@ const emit = defineEmits<{
     backdrop-filter: blur(10px);
 }
 
-/* TABLE */
 .modern-table {
     background: transparent;
 }
 
-/* hover row */
 .modern-table :deep(tbody tr:hover) {
     cursor: pointer;
     background: rgba(var(--v-theme-on-surface), 0.04);
 }
 
-/* pagination */
 .table-footer {
     padding: 12px 16px;
     border-top: 1px solid rgba(var(--v-border-color), 0.08);
