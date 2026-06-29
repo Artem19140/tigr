@@ -24,7 +24,6 @@ class AttemptAnswerController
         AttemptAnswer $attemptAnswer,
         HandleAttemptAnswer $handleAttemptAnswer
     ): JsonResource {
-       
         $this->authorize($attempt, $attemptAnswer);
         $foreignNationalAnswer = $request->input('answer');
 
@@ -69,7 +68,7 @@ class AttemptAnswerController
     ): Response {
         $this->authorize($attempt, $attemptAnswer);
 
-        $attemptAnswer->audio_played = true;
+        $attemptAnswer->audio_played_at = Carbon::now();
         $attemptAnswer->save();
 
         return response()->noContent();

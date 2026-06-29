@@ -43,8 +43,7 @@ class ExamController
             $employee
         );
         Inertia::flash([
-            'filters' => $request->validated(),
-            'test' => $dto->toFilters()
+            'filters' => $dto->toFilters()
         ]);
         CenterIsolationCheck::check($exams);
 

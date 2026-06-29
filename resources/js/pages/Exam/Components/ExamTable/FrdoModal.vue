@@ -44,7 +44,7 @@ const items = [
         }"
     >
         <template #header>
-            <div>Отчеты ФИС ФРДО</div>
+            <div>ФИС ФРДО</div>
         </template>
         <AppAutocomplete
             label="Тип"

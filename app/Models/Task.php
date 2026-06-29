@@ -34,6 +34,10 @@ class Task extends Model
 
     public function autoCheck(): bool
     {
-        return $this->type->autoCheck();
+        if(! $this->settings){
+            return $this->type->autoCheck();
+        }
+        
+        return $this->settings['checking_mode'] !== 'manual';
     }
 }

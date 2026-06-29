@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useForm, useHttp, usePage } from '@inertiajs/vue3';
 import AppAutocomplete from '@components/UI/AppAutocomplete/AppAutocomplete.vue';
-import AppCheckbox from '@components/UI/AppCheckbox/AppCheckbox.vue';
 import BaseFilter from '@components/BaseComponents/BaseFilter/BaseFilter.vue';
 import AppPeriodDate from '@components/UI/AppPeriodDate/AppPeriodDate.vue';
 import { computed, onMounted, ref} from 'vue';
@@ -19,10 +18,10 @@ const filters = computed<ExamFilters>(() =>
 )
 
 const form = useForm<ExamFilters>({
-    dateFrom: filters.value?.dateFrom ?? undefined,
+    dateFrom: filters.value?.dateFrom,
     cancelled: Boolean(filters.value?.cancelled) ?? null,
-    examTypeId:filters.value?.examTypeId ? Number(filters.value?.examTypeId) : null,
-    dateTo:filters.value?.dateTo ?? null,
+    examTypeId:filters.value?.examTypeId ? Number(filters.value?.examTypeId) : filters.value?.examTypeId,
+    dateTo:filters.value?.dateTo,
     id: filters.value.id ?  Number(filters.value.id) : null,
 })
 
@@ -70,7 +69,7 @@ onMounted(() => {
             :error-messages="form.errors.id"
         />
         
-        <AppCheckbox 
+        <v-checkbox
             v-model="form.cancelled"
             label="Отмененные"
             :error-messages="form.errors.cancelled"

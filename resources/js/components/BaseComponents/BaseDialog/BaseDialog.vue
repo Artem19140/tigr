@@ -22,7 +22,9 @@ const close = () => {
         :width="width"
         @keyup.esc="close"
     >
-        <v-card rounded="lg">
+        <v-card 
+            rounded="lg"
+        >
             <div class="dialog-header">
                 <div class="flex items-center justify-between w-100">
                     <div class="flex items-center gap-3 min-w-0">

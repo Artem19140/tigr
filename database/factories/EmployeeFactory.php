@@ -40,7 +40,6 @@ class EmployeeFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
-            'has_to_change_password' => false,
             'is_active' => true,
             'remember_token' => Str::random(10),
             'center_id' => Center::factory(),
@@ -66,13 +65,6 @@ class EmployeeFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'is_active' => true,
-        ]);
-    }
-
-    public function hasChangePassword(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'has_to_change_password' => true,
         ]);
     }
 

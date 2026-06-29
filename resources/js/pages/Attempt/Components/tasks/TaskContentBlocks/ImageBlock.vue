@@ -14,7 +14,6 @@ const dialog = ref(false)
         <v-img
             :src="value"
             class="cursor-pointer"
-            
             min-width="250"
         />
 

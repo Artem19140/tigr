@@ -28,6 +28,7 @@ class ExamTypeFactory extends Factory
             'min_mark' => fake()->numberBetween(10, 30),
             'need_human_check' => fake()->numberBetween(0, 1),
             'has_speaking_tasks' => fake()->numberBetween(0, 1),
+            'amount_in_words' => 'sdfsdfsdfsdfsdfsdfsdhfsd ksf sdf jsdfkj',
         ];
     }
 

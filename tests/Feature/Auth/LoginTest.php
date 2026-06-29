@@ -36,8 +36,7 @@ class LoginTest extends TestCase
         $employee = Employee::factory()
             ->operator()
             ->create([
-                'password' => Hash::make($this->password),
-                'has_to_change_password' => false,
+                'password' => Hash::make($this->password)
             ]);
         $response = $this->post('/login', [
             'email' => $employee->email,

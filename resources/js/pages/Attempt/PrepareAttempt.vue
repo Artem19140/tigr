@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { useForm } from '@inertiajs/vue3';
-import BaseLayout from '@/layouts/BaseLayout.vue';
 import SoundSettings from './Components/SoundSettings.vue';
 
 const props = defineProps<{
@@ -15,10 +14,6 @@ const props = defineProps<{
     },
     fullName:string
 }>()
-
-defineOptions({
-  layout: [BaseLayout],
-})
 
 const form = useForm()
 

@@ -1,22 +1,22 @@
 <template>
-    <v-slide-y-transition>
-      <div
-        v-if="!isOnline && showOfflineBanner"
-        class="offline-bar"
-      >
-        <div class="offline-content">
-          <span>⚠ Нет соединения с интернетом</span>
+  <v-slide-y-transition>
+    <div
+      v-if="!isOnline && showOfflineBanner"
+      class="offline-bar"
+    >
+      <div class="offline-content">
+        <span>⚠ Нет соединения с интернетом</span>
 
-          <v-btn
-            size="small"
-            variant="text"
-            @click="showOfflineBanner = false"
-          >
-            скрыть
-          </v-btn>
-        </div>
+        <v-btn
+          size="small"
+          variant="text"
+          @click="showOfflineBanner = false"
+        >
+          скрыть
+        </v-btn>
       </div>
-    </v-slide-y-transition>
+    </div>
+  </v-slide-y-transition>
 </template>
 
 <script setup lang="ts">

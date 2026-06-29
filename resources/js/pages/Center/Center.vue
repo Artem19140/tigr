@@ -43,7 +43,6 @@ const visit = (route : string) => {
 <template>
     <v-container fluid class="pa-0">
 
-    <!-- TOP NAV -->
     <div class="page-tabs">
 
         <v-tabs
@@ -73,7 +72,6 @@ const visit = (route : string) => {
         <v-divider />
 
         <div class="page-content">
-
             <v-tabs-window v-model="tab">
                 <v-container>
                     <v-tabs-window-item value="data" v-if="data?.data">

@@ -58,6 +58,7 @@ const marks = computed(() =>
         :disabled="http.processing"
         :error-messages="http.errors.mark"
         @update:model-value="rate"
+        class="mb-2"
     />
     <div
         class="d-flex align-center ga-2 text-caption"

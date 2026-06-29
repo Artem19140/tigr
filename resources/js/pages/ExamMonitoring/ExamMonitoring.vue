@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import EnrollmentMonitoringDropdown from './Components/EnrollmentMonitoringDropdown.vue';
 import { Head, router, usePoll } from '@inertiajs/vue3'
-import ExamStatusChip from '@components/Exam/ExamStatusChip.vue';
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { useModals } from '@composables/useModals';
 import { computed, onMounted, onUnmounted, ref} from 'vue';
@@ -90,8 +89,12 @@ const search = ref<string>('')
                         <div class="text-h6 font-weight-medium">
                             {{ exam.data.shortName }}
                         </div>
-
-                        <ExamStatusChip :status="exam.data.status" />
+                        <v-chip 
+                            color="green"
+                            text="В процессе"
+                            size="small"
+                            v-if="isPolling"
+                        />
                     </div>
 
                     <div class="text-caption text-medium-emphasis mt-1">
@@ -144,7 +147,6 @@ const search = ref<string>('')
                 <template #item.foreignNational.fullName="{ item }">
                     <div class="d-flex align-center ga-2">
                         {{ item.foreignNational.fullName }}
-
                         <v-chip
                             v-if="item.attempt?.annulledAt"
                             color="red"

@@ -13,7 +13,7 @@ const isOpen = ref<boolean>(false)
 const loading = defineModel<boolean>({default:false})
     
 const filledCount = computed(() => {
-    return Object.keys(props.filters).length 
+    return Object.values(props.filters).some(value => value !== null) 
 })
 
 const find = () => {
@@ -28,15 +28,6 @@ const find = () => {
                 isOpen.value = false
             }
         })
-    // props.form.get(props.url, {
-    //         preserveState: true,
-    //         preserveScroll: true,
-    //         replace: false,
-    //         onFinish:() => {
-    //             loading.value = false,
-    //             isOpen.value = false
-    //         }
-    //     })
 }
 
 const clean = () => {
@@ -84,7 +75,7 @@ function cleanFilters(data: Record<string, any>) {
                 <v-badge
                     :content="filledCount"
                     color="error"
-                    :model-value="filledCount > 0"
+                    :model-value="filledCount"
                     dot
                 >
                     <v-icon icon="mdi-filter-variant" />
@@ -97,7 +88,6 @@ function cleanFilters(data: Record<string, any>) {
             rounded="xl"
             elevation="8"
         >
-            <!-- HEADER -->
             <div class="filter-header">
                 <div class="d-flex align-center justify-space-between">
                     <div class="text-subtitle-2 font-weight-medium">

@@ -3,16 +3,14 @@ import { ref } from 'vue';
 import EmployeeEntryForm from './Components/EmployeeEntryForm.vue';
 import ForeignNationalEntryForm from './Components/ForeignNationalEntryForm.vue';
 import BaseEntryCard from '@/components/BaseComponents/BaseEntryCard/BaseEntryCard.vue';
-import BaseLayout from '@/layouts/BaseLayout.vue';
-
+import { Head } from '@inertiajs/vue3';
 const isForeignNationalEntry = ref<boolean>(true)
-
-defineOptions({
-  layout: [BaseLayout]
-})
 </script>
 
 <template>
+    <Head>
+        <title>Вход</title>
+    </Head>
     <BaseEntryCard
         :subtitle="isForeignNationalEntry ? 'Введите код из 6 цифр' : 'Войдите в свой аккаунт'"
     >

@@ -43,12 +43,12 @@ const loading = ref<boolean>(false)
       :loading="loading"
       @row-click="(item) => open('examShow', {examId:item.id})"
     >
-      <template #toolbar-left>
+      <template #header-left>
         <ExamTableFilter 
           v-model="loading"
         />
       </template>
-      <template #toolbar-actions>
+      <template #header-actions>
         <AppAddButton
           text="Добавить"
           @click="open('examCreate', {})"

@@ -4,7 +4,6 @@ import TasksList from './Components/tasks/TasksList.vue';
 import { useConfirmDialog } from '@composables/useConfirmDialog';
 import { Head, useForm } from '@inertiajs/vue3';
 import { useAttempt } from '@/composables/useAttempt';
-import BaseLayout from '@/layouts/BaseLayout.vue';
 import { Attempt } from '@/interfaces/Attempt';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { useTimer } from '@/composables/useTimer.js';
@@ -44,19 +43,18 @@ onUnmounted(() => stopTimer())
         <title>Экзамен </title>
     </Head>
 
-    <BaseLayout>
-        <template #drawer>
-            <v-navigation-drawer 
-                location="right"
-                permanent
-                width="300"
-                
-            >
-                <SidePanel v-if="examAttempt" :attempt="examAttempt"/>
-            </v-navigation-drawer >
-        </template>
+        <v-navigation-drawer 
+            location="right"
+            permanent
+            width="300"
+            
+        >
+            <SidePanel v-if="examAttempt" :attempt="examAttempt"/>
+        </v-navigation-drawer >
+        
         <v-container 
             class="flex flex-column items-center gap-10"
+            max-width="1000"
         >
             <TasksList 
                 v-if="examAttempt" 
@@ -70,5 +68,4 @@ onUnmounted(() => stopTimer())
                 :loading="form.processing"
             />
         </v-container>
-    </BaseLayout>
 </template>

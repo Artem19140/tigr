@@ -15,5 +15,5 @@ const minutes = computed(() => {
 </script>
 
 <template>
-    <div> Время: <span :class="(minutes < 5) ? 'text-red' : ''">{{formattedTime}}</span></div>
+    <div> Время: <span :class="(minutes <= 5) ? 'text-red' : ''">{{formattedTime}}</span></div>
 </template>

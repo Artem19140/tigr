@@ -2,8 +2,6 @@
 import { DateFormatter } from '@helpers/DateFormatter';
 import { useModals } from '@composables/useModals';
 import ExamResultStatusChip from '@/components/Exam/ExamResultStatusChip.vue';
-import ExamStatusChip from '@/components/Exam/ExamStatusChip.vue';
-import AppStatusChip from '@/components/UI/AppStatusChip/AppStatusChip.vue';
 import { Enrollment } from '@/interfaces/Enrollment';
 import EnrollmentDropDown from '@/components/Enrollment/EnrollmentDropDown.vue';
 
@@ -51,7 +49,7 @@ const modals = useModals()
                 {{ new DateFormatter(enrollment.exam.beginTime).format('H:i, d.m.Y') }}
             </span>
 
-            <AppStatusChip
+            <v-chip
                 v-if="!enrollment.hasPayment"
                 text="Нет оплаты"
                 color="red"
@@ -65,9 +63,10 @@ const modals = useModals()
               :status="enrollment.examResult"
           />
 
-          <ExamStatusChip
-              v-if="enrollment.exam.status === 'cancelled'"
-              :status="enrollment.exam.status"
+          <v-chip
+            v-if="enrollment.exam.status === 'cancelled'"
+            color="red"
+            text="Отменен"
           />
 
           <EnrollmentDropDown

@@ -2,7 +2,6 @@
 import { onMounted, ref, watch } from 'vue';
 import AppAutocomplete from '@components/UI/AppAutocomplete/AppAutocomplete.vue';
 import {useHttp} from '@inertiajs/vue3';
-import AppCheckbox from '@components/UI/AppCheckbox/AppCheckbox.vue';
 import AppTooltip from '@components/UI/AppTooltip/AppTooltip.vue';
 import { ExamIndex, ExamType } from '@/interfaces/Exam';
 
@@ -76,8 +75,8 @@ onMounted(() => {
     item-value="id"
     label="Дата и время"
   />
-  <AppCheckbox
+  <v-checkbox
     v-model="hasPayment" 
     label="Есть оплата"
-  ></AppCheckbox>
+  />
 </template>

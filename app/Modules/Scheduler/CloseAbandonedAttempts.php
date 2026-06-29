@@ -43,7 +43,6 @@ class CloseAbandonedAttempts
         }
 
         $attempt->save();
-        $this->log($attempt);
         $this->audit->log(
             'attempt_closed_by_cron',
             $attempt,

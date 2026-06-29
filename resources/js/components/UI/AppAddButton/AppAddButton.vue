@@ -6,12 +6,17 @@ const props = defineProps<{
 
 <template>
     <v-btn
-        color="green"
+        color="add"
         variant="flat"
-        class="me-2"
+        class="me-2 add-button"
         rounded="lg"
-        border
     >
         {{ text ?? 'Добавить'}}
     </v-btn>
 </template>
+
+<style lang="css" scoped>
+.add-button:hover{
+    background: #059669;
+}
+</style>

@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { useForm } from '@inertiajs/vue3'
-import AppPasswordConfirmation from '@/components/UI/AppPasswordConfirmation/AppPasswordConfirmation.vue';
+import { Head, useForm } from '@inertiajs/vue3'
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import BaseEntryCard from '@/components/BaseComponents/BaseEntryCard/BaseEntryCard.vue';
-import BaseLayout from '@/layouts/BaseLayout.vue';
+import AppPasswordInput from '@/components/UI/AppPasswordInput/AppPasswordInput.vue';
 
 const props=defineProps<{
   token:string,
@@ -32,10 +31,6 @@ const change = () => {
     form.errors.password_confirmation = 'Пароли не совпадают!'
     return
   }
-  // form.post('/password/change', {
-  //   preserveScroll: true,
-  //   preserveState: true
-  // })
   form.post('/password/reset', {
     preserveScroll: true,
     preserveState: true
@@ -45,29 +40,32 @@ const change = () => {
 
 
 <template>
-  <BaseLayout>
-    <BaseEntryCard
-      subtitle="Смена пароля"
-    >
+  <Head>
+    <title>Смена пароля</title>
+  </Head>
+  <BaseEntryCard
+    subtitle="Смена пароля"
+  >
     <div>Вам необходимо сменить временный пароль. Придумайте свой пароль, минимум 8 символов.</div>
-      <form @submit.prevent="change">
-        <AppPasswordConfirmation
-          v-model:password="form.password"
-          v-model:password-confirmation="form.password_confirmation"
-          :password-attr="{'error-messages':form?.errors?.password}"
-          :password-confirmation-attr="{'error-messages':form?.errors?.password_confirmation}"
-        />
-        <AppPrimaryButton
-          type="submit"
-          text="Сменить"
-          large
-          block
-          :loading="form.processing"
-          :disabled="!form.password || !form.password_confirmation || form.processing"
-        />
-      </form>
-    </BaseEntryCard>
-  </BaseLayout>
+    <form @submit.prevent="change">
+      <AppPasswordInput 
+        v-model="form.password"
+        :error-messages="form.errors.password"
+      />
+      <AppPasswordInput 
+        v-model="form.password_confirmation"
+        :error-messages="form.errors.password_confirmation"
+      />
+      <AppPrimaryButton
+        type="submit"
+        text="Сменить"
+        large
+        block
+        :loading="form.processing"
+        :disabled="!form.password || !form.password_confirmation || form.processing"
+      />
+    </form>
+  </BaseEntryCard>
 </template>
 
 <style scoped>

@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import AttemptCheckingPanel from '@/components/Attempt/AttemptCheckingPanel.vue';
+import AttemptCheckingHeader from '@/components/Attempt/AttemptCheckingHeader.vue';
+import AttemptCheckingSidePanel from '@/components/Attempt/AttemptCheckingSidePanel.vue';
+import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { AttemptMonitoring } from '@/interfaces/Attempt';
-import BaseLayout from '@/layouts/BaseLayout.vue';
+import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import { router } from '@inertiajs/vue3';
+import TasksList from '../Attempt/Components/tasks/TasksList.vue';
+
+defineOptions({
+  layout: [EmployeeLayout]
+})
 
 const props = defineProps<{
     attempt:{
@@ -11,27 +18,43 @@ const props = defineProps<{
     examId:number
 }>()
 
-defineOptions({
-  layout: [BaseLayout],
-})
-
-const finish = () => {
-    alert(123)
+const back = () => {
+    router.visit(`/exams/${props.examId}/monitoring`)
 }
 </script>
 
 <template>
-    <v-btn 
-        class="sticky top-4  ml-2" 
-        variant="text" 
-        @click="() => router.visit(`/exams/${examId}/monitoring`)"
-        prepend-icon="mdi-arrow-left"
-    >
-        Назад
-    </v-btn>
-
-    <AttemptCheckingPanel
+    <AttemptCheckingHeader 
         :attempt="attempt.data"
-        @finished="finish"
     />
+    <div class="flex items-start mb-4">
+        <div class="sticky top-8">
+            <v-btn 
+                variant="text" 
+                @click="back"
+                prepend-icon="mdi-arrow-left"
+            >
+                Экзамен
+            </v-btn>
+        </div>
+
+        <AttemptCheckingSidePanel 
+            :attempt="attempt.data"
+        />
+        <v-container
+            max-width="1100"
+        >
+            <TasksList
+                :attempt="attempt.data"
+                :checking="true"
+            />
+                <div class="flex flex-column gap-4 justify-center items-center mt-4">
+                <div class="text-caption text-medium-emphasis">Выставить баллы возможно будет позднее</div>
+                <AppPrimaryButton 
+                    text="Экран экзамена"
+                    @click="back"
+                />
+            </div>
+        </v-container>
+    </div>
 </template>

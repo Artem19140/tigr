@@ -79,27 +79,6 @@ Route::middleware([
 
         require __DIR__.'/attempts_manage.php';
 
-        Route::prefix('instruction')->group(function () {
-            Route::inertia('/exams', 'Instruction/ExamsInstruction')
-                ->can('viewAny', Exam::class)
-                ->name('instruction.exams');
-
-            Route::inertia('/foreign-nationals', 'Instruction/ForeignNationalsInstruction')
-                ->name('instruction.foreign-nationals')
-                ->can('viewAny', ForeignNational::class);
-
-            Route::inertia('/exams/monitoring', 'Instruction/ExamMonitoringInstruction')
-                ->name('instruction.exams.monitoring')
-                ->can('monitoringAny', Exam::class);
-
-            Route::inertia('/exams/checking', 'Instruction/ExamCheckingInstruction')
-                ->name('instruction.exams.checking')
-                ->can('checkingAny', Exam::class);
-
-            Route::inertia('/exams/schedule', 'Instruction/ExamScheduleInstruction')
-                ->can('viewAny', Exam::class)
-                ->name('instruction.exams.schedule');
-        });
 
         Route::get('documents/{document}', [DocumentController::class, 'show']);
 

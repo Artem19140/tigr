@@ -8,6 +8,7 @@ use App\Models\Employee;
 use Carbon\Carbon;
 use Database\Seeders\RolesSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
 class FrdoGenerationAvailableTest extends TestCase
@@ -38,11 +39,11 @@ class FrdoGenerationAvailableTest extends TestCase
         Carbon::setTestNow();
     }
 
-    protected function getFrdo(bool $passed)
+    protected function getFrdo(string $type): TestResponse
     {
         return $this->actingAs($this->actor)
             ->getJson(route('reports.frdo.available', [
-                'success' => $passed,
+                'type' => $type,
                 'examDate' => Carbon::now()->format('Y-m-d'),
             ]));
     }
@@ -52,7 +53,7 @@ class FrdoGenerationAvailableTest extends TestCase
         Attempt::factory(5)->checked()->passed()->create([
             'center_id' => $this->center->id,
         ]);
-        $response = $this->getFrdo(true);
+        $response = $this->getFrdo('certificates');
 
         $response->assertOk();
     }
@@ -72,14 +73,14 @@ class FrdoGenerationAvailableTest extends TestCase
             ->create([
                 'center_id' => $this->center->id,
             ]);
-        $response = $this->getFrdo(false);
+        $response = $this->getFrdo('references');
 
         $response->assertOk();
     }
 
     public function test_fail_no_attempts(): void
     {
-        $response = $response = $this->getFrdo(true);
+        $response = $response = $this->getFrdo('certificates');
 
         $response->assertBadRequest();
     }
@@ -91,7 +92,7 @@ class FrdoGenerationAvailableTest extends TestCase
             ->create([
                 'center_id' => $this->center->id,
             ]);
-        $response = $response = $this->getFrdo(true);
+        $response = $response = $this->getFrdo('certificates');
 
         $response->assertBadRequest();
     }
@@ -104,7 +105,7 @@ class FrdoGenerationAvailableTest extends TestCase
             ->create([
                 'created_at' => Carbon::now(),
             ]);
-        $response = $response = $this->getFrdo(true);
+        $response = $response = $this->getFrdo('certificates');
 
         $response->assertBadRequest();
     }
@@ -117,7 +118,7 @@ class FrdoGenerationAvailableTest extends TestCase
             ->create([
                 'center_id' => $this->center->id,
             ]);
-        $response = $response = $this->getFrdo(false);
+        $response = $response = $this->getFrdo('references');
 
         $response->assertBadRequest();
     }
@@ -130,7 +131,7 @@ class FrdoGenerationAvailableTest extends TestCase
             ->create([
                 'center_id' => $this->center->id,
             ]);
-        $response = $response = $this->getFrdo(false);
+        $response = $response = $this->getFrdo('references');
 
         $response->assertBadRequest();
     }

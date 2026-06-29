@@ -38,7 +38,6 @@ return new class extends Migration
                 ->constrained('centers')
                 ->cascadeOnDelete();
 
-            $table->boolean('audio_played')->default(false);
             $table->datetime('audio_played_at')->nullable()->default(null);
 
             $table->foreignId('checked_by_id')

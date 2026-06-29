@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { watch } from 'vue';
-import AppCheckbox from '../AppCheckbox/AppCheckbox.vue';
 import AppInput from '../AppInput/AppInput.vue';
 
 const props = defineProps<{
@@ -24,7 +23,7 @@ watch(() => checkbox.value, () => {
             v-model="input"
             v-bind="inputAttr"
         />
-        <AppCheckbox 
+        <v-checkbox
             v-model="checkbox"
             v-bind="checkboxAttr"
         />

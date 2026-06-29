@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import BaseEntryCard from '@/components/BaseComponents/BaseEntryCard/BaseEntryCard.vue';
-import BaseLayout from '@/layouts/BaseLayout.vue';
 import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { router } from '@inertiajs/vue3';
-
-defineOptions({
-  layout: [BaseLayout],
-})
 </script>
 
 <template>

@@ -16,11 +16,16 @@ class EnsureCenterActiveTest extends TestCase
 
     public function test_success(): void
     {
-        $center = Center::factory()->notActive()->create();
+        $center = Center::factory()
+            ->create([
+                'is_active' => false
+            ]);
 
-        $employee = Employee::factory()->hasChangePassword()->create([
-            'center_id' => $center->id,
-        ]);
+        $employee = Employee::factory()
+            ->create([
+                'center_id' => $center->id,
+                'is_active' => true
+            ]);
 
         $response = $this->actingAs($employee)
             ->get('/exams');

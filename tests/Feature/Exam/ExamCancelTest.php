@@ -8,6 +8,7 @@ use App\Exceptions\BusinessException;
 use App\Models\Center;
 use App\Models\Employee;
 use App\Models\Exam;
+use App\Support\Audit;
 use Carbon\Carbon;
 use Database\Seeders\RolesSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -65,7 +66,7 @@ class ExamCancelTest extends TestCase
             'cancelled_at' => '2026-01-01 10:00:00',
         ]);
 
-        $action = new CancelExam(app(ExamCancellRules::class));
+        $action = app(CancelExam::class);
         $this->expectException(BusinessException::class);
         $action->execute($exam, 'dfds');
     }
@@ -76,7 +77,7 @@ class ExamCancelTest extends TestCase
             'begin_time' => '2026-01-01 09:30:00',
         ]);
 
-        $action = new CancelExam(app(ExamCancellRules::class));
+        $action = app(CancelExam::class);
         $this->expectException(BusinessException::class);
         $action->execute($exam, 'dfds');
     }

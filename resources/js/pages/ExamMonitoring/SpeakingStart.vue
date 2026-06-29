@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import BaseLayout from '@/layouts/BaseLayout.vue';
 import { useForm } from '@inertiajs/vue3';
 
 const props = defineProps<{
@@ -7,17 +6,17 @@ const props = defineProps<{
     examId:number
 }>()
 
-defineOptions({
-  layout: [BaseLayout],
-})
-
 const form = useForm()
 const back = useForm()
 </script>
 
 <template>
     <v-container class="fill-height d-flex align-center justify-center">
-        <v-card class="pa-10 text-center empty-card" max-width="420">
+        <v-card 
+            class="pa-10 text-center empty-card" 
+            max-width="420"
+            rounded="xl"
+        >
             <v-icon
                 size="72"
                 color="primary"

@@ -2,12 +2,12 @@
 import { router, useHttp } from '@inertiajs/vue3'
 import BaseDialog from '@components/BaseComponents/BaseDialog/BaseDialog.vue';
 import { useConfirmDialog } from '@composables/useConfirmDialog';
-import AppAddButton from '@components/UI/AppAddButton/AppAddButton.vue';
 import ExamCreateForm from './ExamCreateForm.vue';
 import { useSnackbarQueue } from '@/composables/useSnackbarQueue';
 import { ExamForm } from '@/interfaces/Exam';
 import AppTooltip from '@/components/UI/AppTooltip/AppTooltip.vue';
 import { ref } from 'vue';
+import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 
 const props = defineProps<{
     date?:string
@@ -68,7 +68,7 @@ const create = async () => {
             <ExamCreateForm :form="http" />
         </v-form>
         <template #actions >
-            <AppAddButton  
+            <AppPrimaryButton
                 text="Добавить"
                 @click="create"
                 :disabled="http.processing"

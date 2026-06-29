@@ -17,33 +17,82 @@ const solved = computed(() =>  props.attempt.tasks.filter(item => item?.attemptA
 </script>
 
 <template>
-  <div class="p-6 mt-5">
-    <div class="mb-4">
+  <div class="pa-4">
+    <div class="exam-section">
       <Timer />
     </div>
 
-    <v-divider class="mb-4" />
-    <div class="mb-4">{{ attempt.examName }}</div>
-    <div class="mb-4">{{ attempt.foreignNational.fullName }}</div>
+    <v-divider class="my-3" />
 
-    <v-divider class="mb-4" />
-    <div class="d-flex align-center justify-space-between mb-2">
-      <div class="text-subtitle-1 font-weight-medium">
-        Задания
+    <div class="exam-section">
+      <div class="exam-title">
+        {{ attempt.examName }}
       </div>
-      <div class="text-caption text-medium-emphasis">
+
+      <div class="exam-subtitle">
+        {{ attempt.foreignNational.fullName }}
+      </div>
+    </div>
+
+    <v-divider class="my-3" />
+
+    <div class="exam-progress-header">
+      <div class="label">Задания</div>
+      <div class="counter">
         {{ solved }} / {{ attempt.tasksCount }}
       </div>
     </div>
 
     <v-progress-linear
+      class="exam-progress mb-4"
       color="green"
-      height="10"
+      height="8"
       rounded
       :model-value="progress"
-      class="mb-4"
     />
 
     <TaskSideList :tasks="attempt.tasks" />
+
   </div>
 </template>
+
+<style lang="css" scoped>
+
+  .exam-section {
+    margin-bottom: 8px;
+  }
+
+  .exam-title {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: rgba(0, 0, 0, 0.85);
+  }
+
+  .exam-subtitle {
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.55);
+    margin-top: 2px;
+  }
+
+  .exam-progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+
+  .label {
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .counter {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .exam-progress {
+    border-radius: 6px;
+  }
+</style>

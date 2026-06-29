@@ -30,7 +30,7 @@ class ForeignNationalController
         $dto = $request->toDto();
         $foreignNationals = $getForeignNationals->execute($dto);
 
-        Inertia::flash(['filters' => $request->validated(), 'test' => $dto->toFilters()]);
+        Inertia::flash([ 'filters' => $dto->toFilters()]);
 
         $employee = $request->user();
         

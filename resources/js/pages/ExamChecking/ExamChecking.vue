@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { DateFormatter } from '@/helpers/DateFormatter';
-import AppStatusChip from '@/components/UI/AppStatusChip/AppStatusChip.vue';
 import { Enrollment } from '@/interfaces/Enrollment';
 import { ExamChecking } from '@/interfaces/Exam';
 import { Head, router } from '@inertiajs/vue3';
@@ -12,7 +11,7 @@ defineOptions({
 })
 
 const props = defineProps<{
-    exam:{
+    exam: {
         data:ExamChecking
     }
 }>()
@@ -58,13 +57,12 @@ const openAttempt =  (item : Enrollment) => {
             </template>
 
             <template #item.status="{ item }">
-                <AppStatusChip 
+                <v-chip 
                     v-if="item.attempt?.checkedAt"
                     color="green"
                     text="Проверено"
                 />
             </template>
-        
         </BaseTable>
     </v-container>
 </template>

@@ -2,9 +2,11 @@
 import { router, useForm } from '@inertiajs/vue3';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { AttemptChecking } from '@/interfaces/Attempt';
-import AttemptCheckingPanel from '@/components/Attempt/AttemptCheckingPanel.vue';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import { useConfirmDialog } from '@/composables/useConfirmDialog';
+import AttemptCheckingHeader from '@/components/Attempt/AttemptCheckingHeader.vue';
+import AttemptCheckingSidePanel from '@/components/Attempt/AttemptCheckingSidePanel.vue';
+import TasksList from '../Attempt/Components/tasks/TasksList.vue';
 
 defineOptions({
   layout: [EmployeeLayout],
@@ -30,39 +32,58 @@ const finishChecking = async () => {
     })
 }
 
+const back = () => {
+    router.visit(`/exams/${props.examId}/checking`)
+}
+
 </script>
 
 <template>
-    <v-btn 
-        class="mt-4 ml-4" 
-        variant="text" 
-        @click="() => router.visit(`/exams/${examId}/checking`)"
-        prepend-icon="mdi-arrow-left"
-    >
-        Назад
-    </v-btn>
-    
-    <AttemptCheckingPanel 
-        v-if="attempt"
-        :attempt="attempt.data"
-        @finished="finishChecking"
-        :checking="true"
-    />
-   
-    <span 
-        class="bg-red p-1.5 rounded" 
-        v-if="attempt.data.checkedAt"
-    >
-        Попытка проверена. Изменения недоступны.
-    </span>
-    
-    <div class="flex items-center justify-center">
-        <AppPrimaryButton 
-            :loading="form.processing"
-            :disabled="form.processing || attempt.data.checkedAt"
-            @click="finishChecking"
-            text="Завершить проверку"
-        />
+    <AttemptCheckingHeader :attempt="attempt.data" />
+
+    <div class="sticky top-8">
+        <v-btn 
+            variant="text" 
+            @click="back"
+            prepend-icon="mdi-arrow-left"
+        >
+            Список
+        </v-btn>
     </div>
-        
+
+    <AttemptCheckingSidePanel 
+        :attempt="attempt.data"
+    />
+
+    <v-container
+        max-width="1100"
+    >
+        <TasksList
+            :attempt="attempt.data"
+            :checking="true"
+            class="mb-4"
+        />
+    
+        <div 
+            v-if="attempt.data.checkedAt === null"
+            class="flex flex-column gap-4 justify-center items-center"
+        >
+            <div class="text-caption text-medium-emphasis">
+                После завершения изменения будут недоступны
+            </div>
+
+            <AppPrimaryButton 
+                :loading="form.processing"
+                :disabled="form.processing || attempt.data.checkedAt"
+                @click="finishChecking"
+                text="Завершить проверку"
+            />
+        </div>
+
+        <AppPrimaryButton
+            v-else
+            text="Список"
+            @click="back"
+        />
+    </v-container>     
 </template>

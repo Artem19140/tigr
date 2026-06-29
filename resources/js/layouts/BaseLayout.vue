@@ -11,11 +11,11 @@ import AppNoNetworkBanner from '@/components/UI/AppNoNetworkBanner/AppNoNetworkB
 
 <template>
     <v-app>
-        <slot name="drawer" />
-
         <v-main class="app-main">
+            <div class="app-bg"></div>
             <slot />
         </v-main>
+
         <confirm-dialog />
         <alert />
         <prompt-dialog />
@@ -30,18 +30,11 @@ import AppNoNetworkBanner from '@/components/UI/AppNoNetworkBanner/AppNoNetworkB
 <style scoped lang="css">
 .app-main {
     min-height: 100vh;
-    background-image: url('/storage/images/background.png');
+    position: relative;
+    /* background-image: url('/storage/images/background1.png');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.app-main::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(255, 255, 255, 0.75);
-    pointer-events: none;
+    background-repeat: no-repeat; #F3F8FF */
+    background-color: #F7F9FC;
 }
 </style>

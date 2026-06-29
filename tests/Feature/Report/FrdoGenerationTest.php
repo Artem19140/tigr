@@ -49,7 +49,7 @@ class FrdoGenerationTest extends TestCase
 
         $response = $this->actingAs($this->actor)
             ->getJson(route('reports.frdo', [
-                'success' => true,
+                'type' => 'certificates',
                 'examDate' => Carbon::now()->format('Y-m-d'),
             ]));
 
@@ -72,7 +72,7 @@ class FrdoGenerationTest extends TestCase
 
         $response = $this->actingAs($this->actor)
             ->getJson(route('reports.frdo', [
-                'success' => false,
+                'type' => 'references',
                 'examDate' => Carbon::now()->format('Y-m-d'),
             ]));
 

@@ -20,16 +20,16 @@ const props = defineProps<{
 }>()
 
 const headers = [
-    {title : "ID",sortable: false, key: 'id', align: 'center' },
-    {title : "ФИО",sortable: false, key: 'fullName', align: 'start' },
-    {title : "Паспорт",sortable: false, key: 'fullPassport', align: 'start' },
+  {title : "ID",sortable: false, key: 'id', align: 'center' },
+  {title : "ФИО",sortable: false, key: 'fullName', align: 'start' },
+  {title : "Паспорт",sortable: false, key: 'fullPassport', align: 'start' },
 ]
 
 const loading = ref<boolean>(false)
 const dropDownAccess = computed(() => 
-    props.permissions.ministryEducation ||
-    props.permissions.export ||
-    props.permissions.statistics
+  props.permissions.ministryEducation ||
+  props.permissions.export ||
+  props.permissions.statistics
 )
 
 const modals = useModals()
@@ -47,21 +47,21 @@ const modals = useModals()
       title="Иностранные граждане"
       @row-click="(item) => modals.open('foreignNationalShow', {foreignNationalId:item.id})"
     >
-        <template #toolbar-left>
-            <ForeignNationalTableFilters  
-                v-model="loading"
-            />
+        <template #header-left>
+          <ForeignNationalTableFilters  
+            v-model="loading"
+          />
         </template>
-        <template #toolbar-actions>
-            <AppAddButton
-                text="Добавить"
-                @click="modals.open('foreignNationalCreate')"
-                v-if="permissions.create"
-            />
-            <ForeignNationalTableDropdown
-                v-if="dropDownAccess"
-                :permissions="permissions"
-            />
+        <template #header-actions>
+          <AppAddButton
+              text="Добавить"
+              @click="modals.open('foreignNationalCreate')"
+              v-if="permissions.create"
+          />
+          <ForeignNationalTableDropdown
+              v-if="dropDownAccess"
+              :permissions="permissions"
+          />
         </template>
     </BasePaginatedTable>
   </v-container> 

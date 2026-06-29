@@ -5,30 +5,16 @@ namespace App\Http\Controllers\Web\Attempt;
 use App\Modules\Attempt\FinishManualChecking;
 use App\Enums\TaskType;
 use App\Http\Resources\Attempt\AttemptCheckingResource;
-use App\Http\Resources\Attempt\AttemptResource;
 use App\Models\Attempt;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 
 class AttemptCheckingController
 {
     public function show(Attempt $attempt)
     {
-        // $attempt->load([
-        //     'taskVariants' => function (BelongsToMany $query) {
-        //         $query->whereHas('task', function (Builder $q) {
-        //             $q->whereIn('type', TaskType::manualCheckTypes());
-        //         });
-        //     },
-        //     'taskVariants.answers',
-        //     'taskVariants.task',
-        //     'taskVariants.attemptsAnswer' => function ($query) use ($attempt) {
-        //         $query->where('attempt_id', $attempt->id);
-        //     },
-        // ]);
-
         $attempt->load([
             'taskVariants' => function (BelongsToMany $query) use($attempt){
                 $query->whereHas('task', function (Builder $q){
@@ -53,17 +39,18 @@ class AttemptCheckingController
             'examId' => $attempt->exam_id
         ]);
     }
+    
 
     public function finish(
         Attempt $attempt,
         FinishManualChecking $finishManualChecking
-    ): JsonResponse {
+    ): RedirectResponse {
 
         $attempt = $finishManualChecking
             ->execute($attempt);
 
-        return response()->json([
-            'attempt' => new AttemptResource($attempt),
+        return redirect()->route('exam.show.checking', [
+            'exam' => $attempt->exam
         ]);
     }
 }

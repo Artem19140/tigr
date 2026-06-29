@@ -48,6 +48,10 @@ class GroupNumberGeneratorTest extends TestCase
         $secondNumber = $this->generator->execute($this->center->id);
 
         $this->assertEquals($secondNumber, CounterKey::Group->defaultValue() + 1);
+
+        $thirdNumber = $this->generator->execute($this->center->id);
+
+        $this->assertEquals($thirdNumber, CounterKey::Group->defaultValue() + 2);
     }
 
 

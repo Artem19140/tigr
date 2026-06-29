@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppStatusChip from '@components/UI/AppStatusChip/AppStatusChip.vue';
 import { examResultStatus } from '@/helpers/heplers';
 
 const props = defineProps<{
@@ -8,7 +7,7 @@ const props = defineProps<{
 </script>
 
 <template>
-    <AppStatusChip 
+    <v-chip
         v-if="status"
         :text="examResultStatus(status).text"
         :color="examResultStatus(status).color"

@@ -2,7 +2,6 @@
 import RenderBlocks from './TaskContentBlocks/RenderBlocks.vue';
 import { Task } from '@/interfaces/Task';
 import { TaskTypes } from '@/constants/TaskTypes';
-import AppStatusChip from '@/components/UI/AppStatusChip/AppStatusChip.vue';
 import AppRetryAlert from '@/components/UI/AppRetryAlert/AppRetryAlert.vue';
 import { useAttempt } from '@/composables/useAttempt';
 import { provide } from 'vue';
@@ -34,7 +33,7 @@ provide<Task>('task', props.task)
     class="d-flex flex-column align-start ga-1"
   >
     <div class="flex items-center gap-2">
-      <AppStatusChip 
+      <v-chip 
         size="small" 
         :text="`Задание ${task?.order}`"
         color="primary"

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { AttemptChecking, AttemptMonitoring } from '@/interfaces/Attempt';
 import { Task } from '@/interfaces/Task';
 import { onMounted, ref } from 'vue';
@@ -28,19 +27,20 @@ const currentTaskId = ref<number | null>(null)
 
 onMounted(() => {
   const observer = new IntersectionObserver(
-    entries => {
-      const visible = entries.find(entry => entry.isIntersecting)
+  entries => {
+    const visible = entries
+      .filter(e => e.isIntersecting)
+      .sort((a, b) => b.boundingClientRect.top - a.boundingClientRect.top)[0]
 
-      if (visible) {
-        currentTaskId.value = Number(
-          visible.target.id.replace('task-', '')
-        )
-      }
-    },
-    {
-      threshold: 0.5,
+    if (visible) {
+      currentTaskId.value = Number(visible.target.id.replace('task-', ''))
     }
-  )
+  },
+  {
+    threshold: 0,
+    rootMargin: '-20% 0px -70% 0px',
+  }
+)
 
   props.attempt.tasks.forEach(task => {
     const el = document.getElementById(`task-${task.id}`)
@@ -50,6 +50,10 @@ onMounted(() => {
 </script>
 
 <template>
+  <v-navigation-drawer
+    location="right"
+    width="100"
+  >
   <div class="flex flex-column items-center">
     <v-list 
       density="compact" 
@@ -74,15 +78,10 @@ onMounted(() => {
         </template>
 
         <v-list-item-title>
-          Задание {{ task.order }}
+           {{ task.order }}
         </v-list-item-title>
       </v-list-item>
     </v-list>
-    
-    <app-primary-button 
-      text="Завершить"
-      variant="outlined"
-      @click="$emit('finished')"
-    />
   </div>
+  </v-navigation-drawer>
 </template>

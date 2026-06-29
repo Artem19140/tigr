@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useConfirmationOptionsDialog } from '@/composables/useConfirmationOptionsDialog';
-import AppCheckbox from '../UI/AppCheckbox/AppCheckbox.vue';
 import BaseDialog from '../BaseComponents/BaseDialog/BaseDialog.vue';
 import AppPrimaryButton from '../UI/AppPrimaryButton/AppPrimaryButton.vue';
 
@@ -19,7 +18,7 @@ const {isOpen, confimation, confimationError, message, close, ok} = useConfirmat
         }"
     >   
         {{ message }}
-        <AppCheckbox
+        <v-checkbox
             v-model="confimation"
             label="Подтвердить"
             :error-messages="confimationError ? 'Обязательно!' : null"

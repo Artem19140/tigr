@@ -36,7 +36,7 @@ const download = () => {
     <BaseDialog
         width="500"
         v-model="isOpen"
-        title="Выгрузка ИГ"
+        title="Экспорт ИГ"
         @before-close="(close) => close()"
     >
         <AppPeriodDate 

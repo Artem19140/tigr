@@ -24,14 +24,13 @@ const filters = computed<ForeignNationalFilters>(() =>
 )
 
 const form = useForm<ForeignNationalFilters>({
-    surname: filters.value.surname ?? null,
-    name: filters.value.name ?? null,
-    patronymic: filters.value.patronymic ?? null,
-    passportSeries: filters.value.passportSeries ?? null,
-    passportNumber: filters.value.passportNumber ?? null,
-    id: filters.value.id ?  Number(filters.value.id) : null,
+    surname: filters.value.surname,
+    name: filters.value.name,
+    patronymic: filters.value.patronymic,
+    passportSeries: filters.value.passportSeries,
+    passportNumber: filters.value.passportNumber,
+    id: filters.value.id ?  Number(filters.value.id) : filters.value.id,
 })
-
 
 const loading = defineModel<boolean>({default:false})
 </script>

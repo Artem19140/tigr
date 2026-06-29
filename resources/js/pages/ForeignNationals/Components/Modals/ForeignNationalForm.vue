@@ -7,7 +7,6 @@ import countries from '@data/countries.json'
 import AppOptionalInput from '@/components/UI/AppOptionalInput/AppOptionalInput.vue';
 import { ForeignNationalEditForm, ForeignNationalFormI } from '@/interfaces/ForeignNational';
 import AppTooltip from '@/components/UI/AppTooltip/AppTooltip.vue';
-import AppCheckbox from '@/components/UI/AppCheckbox/AppCheckbox.vue';
 
 const props = defineProps<{
     errors:any,
@@ -232,7 +231,7 @@ function required (v:any) {
                             :disabled="form.noPhone"
                         /> 
 
-                        <AppCheckbox 
+                        <v-checkbox 
                             label="Нет номера"
                             v-model="form.noPhone"
                             :error-messages="errors.noPhone"

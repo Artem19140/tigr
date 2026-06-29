@@ -3,16 +3,16 @@ import { router } from '@inertiajs/vue3';
 
 const props = defineProps<{
   meta:{
-      current_page:number,
-      from:number,
-      per_page:number,
-      to:number
+    current_page:number,
+    from:number,
+    per_page:number,
+    to:number
   },
   links:{
-      first:string,
-      last:string | null,
-      prev:string | null,
-      next:string
+    first:string,
+    last:string | null,
+    prev:string | null,
+    next:string
   },
   loading:boolean
 }>()

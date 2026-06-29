@@ -2,7 +2,7 @@
 import BaseEntryCard from '@/components/BaseComponents/BaseEntryCard/BaseEntryCard.vue';
 import AppInput from '@/components/UI/AppInput/AppInput.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
-import { router, useForm, usePage } from '@inertiajs/vue3';
+import { Head, router, useForm, usePage } from '@inertiajs/vue3';
 
 const form = useForm({
     email:null
@@ -15,7 +15,9 @@ const page = usePage()
 </script>
 
 <template>
-    
+    <Head>
+        <title>Сброс пароля</title>
+    </Head>
     <BaseEntryCard>
         <template #title>
             <div class="text-h6 font-weight-medium">

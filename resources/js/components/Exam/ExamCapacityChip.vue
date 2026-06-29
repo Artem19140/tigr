@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Exam } from '@/interfaces/Exam';
-import AppStatusChip from '../UI/AppStatusChip/AppStatusChip.vue';
 import { computed, ref } from 'vue';
 
 const props = defineProps<{
@@ -17,7 +16,7 @@ const full = computed(() =>{
 <template>
     <div>
         <span v-if="!full"> {{`${exam?.enrollmentsCount} / ${exam?.capacity}` }} </span>
-        <AppStatusChip
+        <v-chip
             v-else
             :text="` ${exam?.enrollmentsCount}/${exam?.capacity}`"
             color="red"

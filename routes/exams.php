@@ -42,7 +42,8 @@ Route::prefix('exams')
 
     Route::middleware('can:examiner,exam')
         ->group(function () {
-            Route::get('{exam}/checking', [ExamCheckingController::class, 'show']);
+            Route::get('{exam}/checking', [ExamCheckingController::class, 'show'])
+                ->name('exam.show.checking');
 
             Route::get('{exam}/monitoring', [ExamMonitoringController::class, 'show'])->name('exams.monitoring.show');
             Route::put('{exam}/monitoring/protocol-comments', [ExamMonitoringController::class, 'protocolComment']);

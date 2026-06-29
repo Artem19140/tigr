@@ -10,9 +10,9 @@ export const useSnackbarQueue = () => {
         timeout = 5000,
     ) => {
 
-        if(queue.value?.clear){
-            queue.value?.clear()
-        }
+        // if(queue.value?.clear){
+        //     queue.value?.clear()
+        // }
         
         messages.value.push({
             text:text,

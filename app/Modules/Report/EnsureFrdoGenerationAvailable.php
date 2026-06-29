@@ -67,10 +67,10 @@ class EnsureFrdoGenerationAvailable
     ): void {
         $attemptsForReportExists = $this->query($examDate)
             ->whereNotNull('checked_at')
-            ->when($type = 'certificates', function(Builder $query) {
+            ->when($type === 'certificates', function(Builder $query) {
                 $query->passed();
             })
-            ->when($type = 'references', function(Builder $query) {
+            ->when($type === 'references', function(Builder $query) {
                 $query->failed();
             })->exists();
 

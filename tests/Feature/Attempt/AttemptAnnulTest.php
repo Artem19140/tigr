@@ -30,7 +30,7 @@ class AttemptAnnulTest extends TestCase
         $this->actor = Employee::factory()
             ->examiner()
             ->create([
-                'center_id' => $this->center->id,
+                'center_id' => $this->center->id
             ]);
 
         Carbon::setTestNow('2026-01-01 10:00:00');
@@ -63,6 +63,7 @@ class AttemptAnnulTest extends TestCase
             ->putJson(route('attempts.destroy', ['attempt' => $attempt]), [
                 'annulledReason' => 'Есть',
             ]);
+            
         $attempt->refresh();
 
         $this->assertNotNull($attempt->finished_at);
@@ -74,7 +75,6 @@ class AttemptAnnulTest extends TestCase
     public function test_fail_annul_repeated(): void
     {
         $exam = Exam::factory()
-            ->inPast()
             ->create([
                 'center_id' => $this->center->id,
             ]);

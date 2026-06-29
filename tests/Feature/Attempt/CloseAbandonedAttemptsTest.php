@@ -19,6 +19,7 @@ class CloseAbandonedAttemptsTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->action = app(CloseAbandonedAttempts::class);
         Carbon::setTestNow('2026-01-01 10:00:00');
     }

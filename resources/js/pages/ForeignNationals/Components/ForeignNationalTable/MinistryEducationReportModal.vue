@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import BaseDialog from '@/components/BaseComponents/BaseDialog/BaseDialog.vue';
-import AppCheckbox from '@/components/UI/AppCheckbox/AppCheckbox.vue';
 import AppPeriodDate from '@/components/UI/AppPeriodDate/AppPeriodDate.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { RedirectUrl } from '@/interfaces/Interfaces';
@@ -57,7 +56,7 @@ const disabled = computed(() =>
             close()
         }"
     >
-        <AppCheckbox 
+        <v-checkbox
             label="Предыдущая неделя"
             v-model="http.lastWeek"
             :error-messages="http.errors.lastWeek"

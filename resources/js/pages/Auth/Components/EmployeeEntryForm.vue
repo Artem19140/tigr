@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.vue'
 import AppInput from '@components/UI/AppInput/AppInput.vue';
-import { Link, router, useForm } from '@inertiajs/vue3';
+import {  router, useForm } from '@inertiajs/vue3';
 import AppPasswordInput from '@components/UI/AppPasswordInput/AppPasswordInput.vue';
-import AppCheckbox from '@components/UI/AppCheckbox/AppCheckbox.vue';
 
 interface LoginEntryForm{
   email: string | null,
@@ -28,17 +27,14 @@ const submit = () => {
       label="email"
       name="email"
       v-model="form.email"
-      :invalid="!!form.errors.email"
       :error-messages="form.errors.email"
       placeholder="Введите email"
     />
     <AppPasswordInput
       v-model="form.password"
-      :invalid="!!form.errors.password"
       :error-messages="form.errors.password"
-      class="mb-6"
     />
-    <AppCheckbox
+    <v-checkbox
       label="Запомнить меня" 
       v-model="form.rememberMe"
       :error-messages="form.errors.rememberMe"

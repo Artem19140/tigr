@@ -19,13 +19,13 @@ class AttemptAnswer extends Model
         'answer',
         'answer_id',
         'checked_at',
-        'audio_played',
+        'audio_played_at',
     ];
 
     protected $casts = [
         'answer' => 'array',
         'checked_at' => 'datetime',
-        'audio_played' => 'boolean',
+        'audio_played_at' => 'datetime',
     ];
 
     public function answer(): BelongsTo

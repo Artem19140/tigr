@@ -64,80 +64,129 @@ function format(time: number) {
   return `${m}:${s.toString().padStart(2, '0')}`
 }
 </script>
-
 <template>
-    <div v-if="value" class="audio-card">
+  <div v-if="value" class="audio">
 
-    <div class="audio-status">
-        <span v-if="!audioPlayed">
-        ⚠️ Доступно для однократного прослушивания
-        </span>
-        <span v-else class="text-muted">
-        Запись уже прослушана
-        </span>
+    <div class="audio__status">
+      <span v-if="!audioPlayed" class="audio__hint">
+        Однократное прослушивание
+      </span>
+      <span v-else class="audio__done">
+        Прослушано
+      </span>
     </div>
 
     <audio
-        ref="audioRef"
-        :src="value"
-        preload="auto"
-        @timeupdate="onTimeUpdate"
-        @loadedmetadata="onLoaded"
-        @ended="onEnded"
+      ref="audioRef"
+      :src="value"
+      preload="auto"
+      @timeupdate="onTimeUpdate"
+      @loadedmetadata="onLoaded"
+      @ended="onEnded"
     />
 
-    <div class="audio-controls" v-if="!audioPlayed">
-        <v-btn
-            icon
-            variant="text"
-            @click="togglePlay"
-            
-        >
-        <v-icon>
-            {{ currentTime ? 'mdi-pause' : 'mdi-play' }}
+    <div class="audio__row" :class="{ disabled: audioPlayed }">
+
+      <button
+        class="audio__btn"
+        :disabled="audioPlayed"
+        @click="togglePlay"
+        v-if="! audioPlayed && !audioPlaying"
+      >
+        <v-icon size="20">
+          {{ currentTime > 0 && !audioPlayed ? 'mdi-pause' : 'mdi-play' }}
         </v-icon>
-        </v-btn>
+      </button>
 
-        <v-progress-linear
-            class="flex-grow-1"
-            color="primary"
-            :model-value="playedTime"
-            height="6"
-            rounded
-        />
+      <div class="audio__main">
 
-        <div class="time">
-        {{ format(currentTime) }} / {{ format(duration) }}
+        <div class="audio__bar">
+          <div class="audio__fill" :style="{ width: playedTime + '%' }" />
         </div>
+
+        <div class="audio__meta">
+          <span>{{ format(currentTime) }}</span>
+          <span>{{ format(duration) }}</span>
+        </div>
+      </div>
     </div>
-    </div>
+  </div>
 </template>
 
 <style lang="css" scoped>
-.audio-card {
+.audio {
   padding: 12px 14px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(0,0,0,0.06);
+  background: #fff;
+
 }
 
-.audio-status {
-  font-size: 13px;
-  margin-bottom: 10px;
-  color: #666;
+.audio__status {
+  font-size: 12px;
+  margin-bottom: 8px;
+  color: #888;
 }
 
-.audio-controls {
+.audio__hint {
+  color: #a16207;
+}
+
+.audio__done {
+  color: #6b7280;
+}
+
+.audio__row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
-.time {
-  font-size: 12px;
-  color: #777;
-  min-width: 90px;
-  text-align: right;
+.audio__row.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.audio__btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.audio__btn:hover {
+  background: #e5e7eb;
+}
+
+.audio__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.audio__bar {
+  height: 3px;
+  background: #eee;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.audio__fill {
+  height: 100%;
+  background: #3b82f6;
+  transition: width 0.1s linear;
+}
+
+.audio__meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #9ca3af;
 }
 </style>

@@ -98,6 +98,7 @@ const groupedTasks =  computed(() =>{
                     />
                     
                     <v-card-text v-if="checking">
+
                         <task-rating-block
                             @rated="(value :AttemptAnswer) => emit('rated', value)"
                             :task="task"

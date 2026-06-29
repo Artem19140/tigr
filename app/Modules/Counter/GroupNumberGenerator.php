@@ -26,7 +26,7 @@ class GroupNumberGenerator
             $this->shouldReset($groupNumber) 
                 ?  $groupNumber->reset() 
                 :  $groupNumber->incrementValue();
-                
+            $groupNumber->save();    
             return $groupNumber->value;
         });
     }

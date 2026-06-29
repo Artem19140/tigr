@@ -12,21 +12,21 @@ import { useSnackbarQueue } from '@/composables/useSnackbarQueue';
 import BaseLayout from '@/layouts/BaseLayout.vue';
 
 http.onError((error) => {
-    const response = (error).response
-    if (!response) return
-    useHttpErrorHandler().handle(response)
+  const response = (error).response
+  if (!response) return
+  useHttpErrorHandler().handle(response)
 })
 
 const { add } = useSnackbarQueue()
 
 router.on('flash', (event) => {
-    if(event.detail.flash.success){
-        add(String(event.detail.flash.success), 'green')
-    }
+  if(event.detail.flash.success){
+    add(String(event.detail.flash.success), 'green')
+  }
 
-    if(event.detail.flash.error){
-        add(String(event.detail.flash.error), 'red')
-    }
+  if(event.detail.flash.error){
+    add(String(event.detail.flash.error), 'red')
+  }
 })
 
 const vuetify = createVuetify({
@@ -37,9 +37,10 @@ const vuetify = createVuetify({
         colors: {
           background: '#f5f5f5',
           surface: '#ffffff',
-          primary:'#0176ff',
+          primary:'#0176ff', 
           'on-surface': '#1e293b',
-          'on-background': '#1e293b'
+          'on-background': '#1e293b',
+          'add' : '#10b767'
         }
       }
     }
@@ -50,25 +51,26 @@ const vuetify = createVuetify({
     messages: { ru },
   },
 })
+
 createInertiaApp({
-    resolve: name => {
-        const pages = import.meta.glob('./pages/**/*.vue', { eager: true })
-        return pages[`./pages/${name}.vue`]
+  resolve: name => {
+    const pages = import.meta.glob('./pages/**/*.vue', { eager: true })
+    return pages[`./pages/${name}.vue`]
+  },
+  setup({ el, App, props, plugin }) {
+    createApp({ render: () => h(App, props) })
+      .use(plugin)
+      .use(vuetify)
+      .mount(el)
+  },
+  layout: () => BaseLayout,
+  defaults: {
+    future: {
+      useDialogForErrorModal: true,
     },
-    setup({ el, App, props, plugin }) {
-        createApp({ render: () => h(App, props) })
-            .use(plugin)
-            .use(vuetify)
-            .mount(el)
+    visitOptions: (href, options) => {
+      return { viewTransition: true };
     },
-    //layout: () => BaseLayout,
-    defaults: {
-        future: {
-            useDialogForErrorModal: true,
-        },
-        visitOptions: (href, options) => {
-          return { viewTransition: true };
-        },
-    },
+  }
 })
 

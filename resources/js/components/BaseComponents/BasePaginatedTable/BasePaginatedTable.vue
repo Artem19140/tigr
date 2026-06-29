@@ -25,10 +25,10 @@ const emit = defineEmits<{
                         {{ title ?? 'Таблица' }}
                     </div>
 
-                    <slot name="toolbar-left" />
+                    <slot name="header-left" />
                 </div>
                 <div class="d-flex align-center ga-2">
-                    <slot name="toolbar-actions" />
+                    <slot name="header-actions" />
                 </div>
 
             </div>
