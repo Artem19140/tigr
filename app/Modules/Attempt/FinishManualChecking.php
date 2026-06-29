@@ -18,7 +18,7 @@ class FinishManualChecking
     public function execute(Attempt $attempt): Attempt
     {
         $this->ensureNotChecked($attempt);
-        $this->ensureAllManualTasksChecked($attempt);
+        $this->ensureAllManualReviewTasksChecked($attempt);
         $attempt = $this->finilizeAttemptChecking
             ->execute($attempt);
         return $attempt;
@@ -34,17 +34,18 @@ class FinishManualChecking
         }
     }
 
-    protected function ensureAllManualTasksChecked(Attempt $attempt): void
+    protected function ensureAllManualReviewTasksChecked(Attempt $attempt): void
     {
-        $notAllManualTasksChecked = $attempt->answers()
+        $notAllManualReviewTypes = $attempt->answers()
             ->whereNull('checked_at')
             ->whereHas('taskVariant', function (Builder $query) {
                 $query->whereHas('task', function (Builder $q) {
-                    $q->whereIn('type', TaskType::manualCheckTypes());
+                    // $q->whereIn('type', TaskType::manualReviewTypes());
+                    $q->manualReview();
                 });
             })
             ->exists();
-        if ($notAllManualTasksChecked) {
+        if ($notAllManualReviewTypes) {
             throw new BusinessException('Существуют непроверенные задания, завершение невозможно');
         }
     }

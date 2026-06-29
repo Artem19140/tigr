@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\TaskType;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,12 +15,11 @@ class Task extends Model
         'subblock_id',
         'order',
         'mark',
-        'settings'
+        'checking_mode'
     ];
 
     protected $casts = [
-        'type' => TaskType::class,
-        'settings' => 'array'
+        'type' => TaskType::class
     ];
 
     public function variants(): HasMany
@@ -34,10 +34,16 @@ class Task extends Model
 
     public function autoCheck(): bool
     {
-        if(! $this->settings){
+        if(! $this->checking_mode){
             return $this->type->autoCheck();
         }
-        
-        return $this->settings['checking_mode'] !== 'manual';
+
+        return $this->checking_mode !== 'manual';
+    }
+
+    public function scopeManualReview(Builder $query)
+    {
+        return $query->whereIn('type', TaskType::manualReviewTypes())
+            ->orWhere('checking_mode', 'manual');
     }
 }

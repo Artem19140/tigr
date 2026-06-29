@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Exam;
 
-use App\Modules\Exam\ExamStatusResolver;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,8 +19,7 @@ class ExamShortResource extends JsonResource
             'examTypeId' => $this->whenLoaded('type', fn () => $this->type->id),
             'shortName' => $this->whenLoaded('type', fn () => $this->type->short_name),
             'name' => $this->whenLoaded('type', fn () => $this->type->name),
-            'beginTime' => $this->begin_time_local->toIso8601String(),
-            'status' => app(ExamStatusResolver::class)->execute($this->resource),
+            'beginTime' => $this->begin_time_local->toIso8601String()
         ];
     }
 }

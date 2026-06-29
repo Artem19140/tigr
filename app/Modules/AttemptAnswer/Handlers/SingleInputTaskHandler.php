@@ -8,11 +8,11 @@ use App\Models\AttemptAnswer;
 use App\Models\Task;
 use App\Models\TaskVariant;
 
-class TextInputTaskHandler
+class SingleInputTaskHandler
 {
     public function for(Task $task): bool
     {
-        return $task->type === TaskType::TextInput;
+        return $task->type === TaskType::SingleInput;
     }
 
     public function validate(
@@ -25,7 +25,7 @@ class TextInputTaskHandler
         if (! \is_string($foreignNationalAnswer)) {
             throw new AttemptAnswerValidationException([
                 'attempt_answer_id' => $attemptAnswer->id,
-                'type' => TaskType::TextInput,
+                'type' => TaskType::SingleInput,
                 'message' => 'not_valid_format',
                 'answer' => $foreignNationalAnswer
             ]);
@@ -38,6 +38,7 @@ class TextInputTaskHandler
         string $foreignNationalAnswer,
         TaskVariant $taskVariant
     ): int {
+        
         $etalonAnswers = $taskVariant->answers->pluck('content');
 
         $normalizedEtalonAnswers = $etalonAnswers->map(function ($item) {

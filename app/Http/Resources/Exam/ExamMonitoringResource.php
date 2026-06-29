@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Exam;
 
-use App\Modules\Exam\ExamStatusResolver;
 use App\Modules\Exam\ProtocolCommentRules;
 use App\Http\Resources\Enrollment\EnrollmentMonitoringResource;
 use App\Models\Exam;
@@ -25,7 +24,6 @@ class ExamMonitoringResource extends JsonResource
             'enrollmentsCount' => $this->whenCounted('enrollments_count'),
             'protocolComment' => $this->protocol_comment,
             'hasSpeakingTasks' => $this->whenLoaded('type', fn () => $this->type->has_speaking_tasks),
-            'status' => app(ExamStatusResolver::class)->execute($this->resource),
             'shortName' => $this->whenLoaded('type', fn () => $this->type->short_name),
             'polling' => $this->pollingStart($this->resource),
             'availability' => [

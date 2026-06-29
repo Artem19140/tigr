@@ -39,15 +39,6 @@
             }
           ]
         ]
-      },
-      {
-        "type": "section",
-        "content":[
-          {
-            "type": "text",
-            "value": "Введите ответ"
-          }
-        ]
       }
     ],
     "fipi_number": "316069",
@@ -102,13 +93,11 @@
       }
     ],
     "fipi_number": "5FF97E",
-
     "answers": [
-        {
-            "content":"узбекистана",
-            "is_correct": true
-        }
-        
+      {
+        "content":"узбекистана",
+        "is_correct": true
+      }
     ]
   },
   {
@@ -154,12 +143,11 @@
       }
     ],
     "fipi_number": "5FB441",
-
     "answers": [
-        {
-            "content":"водитель",
-            "is_correct": true
-        }
+      {
+        "content":"водитель",
+        "is_correct": true
+      }
     ]
   },
   {
@@ -188,12 +176,11 @@
       }
     ],
     "fipi_number": "70176C",
-
     "answers": [
-        {
-            "content":"курьера",
-            "is_correct": true
-        }
+      {
+        "content":"курьера",
+        "is_correct": true
+      }
     ]
   },
   {
@@ -237,12 +224,11 @@
       }
     ],
     "fipi_number": "A1C178",
-
     "answers": [
-        {
-            "content":"женат",
-            "is_correct": true
-        }
+      {
+        "content":"женат",
+        "is_correct": true
+      }
     ]
   },
   {
@@ -286,12 +272,11 @@
       }
     ],
     "fipi_number": "F6CC3D",
-
     "answers": [
-        {
-            "content":"двадцать ",
-            "is_correct": true
-        }
+      {
+        "content":"двадцать ",
+        "is_correct": true
+      }
     ]
   },
   {
@@ -321,10 +306,10 @@
     ],
     "fipi_number": "1233BE",
     "answers": [
-        {
-            "content":"повара ",
-            "is_correct": true
-        }
+      {
+        "content":"повара ",
+        "is_correct": true
+      }
     ]
   },
   {
@@ -368,12 +353,11 @@
       } 
     ],
     "fipi_number": "5540B7",
-
     "answers": [
-        {
-            "content":"Султанов",
-            "is_correct": true
-        }
+      {
+        "content":"Султанов",
+        "is_correct": true
+      }
     ]
   },
   {
@@ -418,10 +402,10 @@
     ],
     "fipi_number": "0CC6DA",
     "answers": [
-        {
-            "content":"замужем",
-            "is_correct": true
-        }
+      {
+        "content":"замужем",
+        "is_correct": true
+      }
     ]
   },
   {
@@ -466,10 +450,10 @@
     ],
     "fipi_number": "251DBB",
     "answers": [
-        {
-            "content":"грузчик",
-            "is_correct": true
-        }
+      {
+        "content":"грузчик",
+        "is_correct": true
+      }
     ]
   },
   {
@@ -499,10 +483,10 @@
     ],
     "fipi_number": "F4AEA4",
     "answers": [
-        {
-          "content":"кассира",
-          "is_correct": true
-        }
+      {
+        "content":"кассира",
+        "is_correct": true
+      }
     ]
   },
   {

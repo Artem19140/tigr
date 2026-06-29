@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('mark');
             $table->unsignedTinyInteger('order');
 
-            $table->jsonb('settings')->nullable();
+            $table->string('checking_mode')->nullable();
 
             $table->timestamps();
         });

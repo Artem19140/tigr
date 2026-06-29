@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SingleChoiceTask from './SingleChoiceTask.vue';
 import EssayTask from './EssayTask.vue';
-import TextInputTask from './TextInputTask.vue';
+import SingleInputTask from './SingleInputTask.vue';
 import { TaskTypes } from '@/constants/TaskTypes';
 import { AttemptAnswer } from '@/interfaces/Task';
 import { Attempt, AttemptChecking, AttemptMonitoring } from '@/interfaces/Attempt';
@@ -30,8 +30,8 @@ const resolveTaskComponent = (type: string) => {
             return BaseTask
         case TaskTypes.ESSAY:
             return EssayTask
-        case TaskTypes.TEXT_INPUT:
-            return TextInputTask
+        case TaskTypes.SINGLE_INPUT:
+            return SingleInputTask
         case TaskTypes.MULTY_INPUT:
             return MultynputTask
         default:
@@ -84,12 +84,15 @@ const groupedTasks =  computed(() =>{
             v-for="(tasks, index) in groupedTasks"
             :key="index"
         >   
-            <v-card  rounded="xl">
+            <v-card  
+                rounded="xl"
+            >
                 <div
                     v-for="task in tasks"
                     :key="task.id"
                     :id="`task-${task.id}`"
                 >
+
                     <component 
                         :key="task.id"
                         :is="resolveTaskComponent(task.type)"
@@ -98,7 +101,6 @@ const groupedTasks =  computed(() =>{
                     />
                     
                     <v-card-text v-if="checking">
-
                         <task-rating-block
                             @rated="(value :AttemptAnswer) => emit('rated', value)"
                             :task="task"
@@ -109,11 +111,9 @@ const groupedTasks =  computed(() =>{
                         v-if="index !== tasks.length - 1"
                     />
                 </div>
-                
             </v-card>
         </div>
-        
-    </div >
+    </div>
 
     <v-empty-state
         v-else
@@ -121,5 +121,4 @@ const groupedTasks =  computed(() =>{
         title="Заданий нет"
         text="Пока что здесь ничего не появилось"
     />
-
 </template>

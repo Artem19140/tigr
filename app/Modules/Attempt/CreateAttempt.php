@@ -14,6 +14,7 @@ use App\Models\Exam;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 class CreateAttempt
 {
@@ -31,11 +32,15 @@ class CreateAttempt
             $exam = Exam::findOrFail($enrollment->exam_id);
             
             if($exam->isCancelled()){
-                throw new BusinessException('Экзамен отменен');
+                throw ValidationException::withMessages([
+                    'code' => 'Экзамен отменен'
+                ]);
             }
 
             if (! $exam->isGoing()) {
-                throw new BusinessException('Ввести код возможно только во время экзамена');
+                throw ValidationException::withMessages([
+                    'code' => 'Ввести код возможно только во время экзамена'
+                ]);
             }
 
             $attempt = $this->createAttempt($enrollment);

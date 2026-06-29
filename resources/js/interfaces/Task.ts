@@ -17,7 +17,7 @@ export interface AttemptAnswer{
     answer:any,
     checkedAt:string,
     mark:number | null,
-    audioPlayed:boolean
+    audioPlayedAt:string | null
 }
 
 export interface Answer{

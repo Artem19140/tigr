@@ -18,7 +18,7 @@ class AttemptCheckingController
         $attempt->load([
             'taskVariants' => function (BelongsToMany $query) use($attempt){
                 $query->whereHas('task', function (Builder $q){
-                    $q->whereIn('type', TaskType::manualCheckTypes());
+                    $q->whereIn('type', TaskType::manualReviewTypes());
                 })
                 ->with([
                     'answers',

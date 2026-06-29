@@ -51,7 +51,7 @@ class ExamCheckingController
                 $query->whereHas('attempt', function( $q ){
                     return $q->whereNotNull('finished_at');
                 })
-                    ->with('attempt.center');
+                ->with('attempt.center');
             },
         ]);
 

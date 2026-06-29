@@ -40,14 +40,11 @@ export const useTimer = (
         const minDuration  = examAttempt.value?.minDurationMinutes  ?? null
 
         if (start == null || minDuration == null) return
-
-        console.log(`${now} >= ${start}`)
         
         const diff = now - start
         const duration = Math.floor(diff / 60)
 
         if(duration >= minDuration){
-            console.log(`${duration} >= ${minDuration}`)
             canFinish.value = true
         }
     }

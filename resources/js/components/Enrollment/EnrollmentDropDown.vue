@@ -13,7 +13,9 @@ const download = (document : string) => {
 </script>
 
 <template>
-    <BaseThreeDotDropdown  v-if="enrollment.permissions.payment || enrollment.permissions.statement">
+    <BaseThreeDotDropdown  
+        v-if="enrollment.permissions.payment || enrollment.permissions.statement"
+    >
         <PaymentChange 
             :enrollment="enrollment"
             v-if="enrollment.permissions.payment"

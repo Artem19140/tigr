@@ -61,10 +61,9 @@ const marks = computed(() =>
         class="mb-2"
     />
     <div
-        class="d-flex align-center ga-2 text-caption"
+        class="d-flex align-center ga-2 text-caption ml-2"
         style="min-height: 24px"
     >
-
         <template v-if="http.processing">
             <v-progress-circular
                 indeterminate
@@ -97,6 +96,7 @@ const marks = computed(() =>
                 variant="outlined"
                 color="error"
                 @click="rate"
+                prepend-icon="mdi-refresh"
             >
                 Повторить
             </v-btn>

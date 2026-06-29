@@ -15,7 +15,10 @@ const full = computed(() =>{
 
 <template>
     <div>
-        <span v-if="!full"> {{`${exam?.enrollmentsCount} / ${exam?.capacity}` }} </span>
+        <span v-if="!full"> 
+            {{`${exam?.enrollmentsCount} / ${exam?.capacity}` }} 
+        </span>
+        
         <v-chip
             v-else
             :text="` ${exam?.enrollmentsCount}/${exam?.capacity}`"

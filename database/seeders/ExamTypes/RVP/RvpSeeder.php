@@ -58,10 +58,14 @@ class RvpSeeder extends Seeder
                         'type' => $task['type'],
                         'mark' => $task['mark'],
                         'description' => $task['description'] ?? null,
-                        'settings' => $task['settings'] ?? null
+                        'checking_mode' => $task['checking_mode'] ?? null
                     ]);
                     foreach ($task['variants'] as $variant) {
-                        $taskVariantCreated = TaskVariant::create([
+                        $taskVariantCreated = TaskVariant::firstOrCreate(
+                        [
+                            'fipi_number' => $variant['fipi_number']
+                        ],
+                        [
                             'content' => $variant['content'],
                             'fipi_number' => $variant['fipi_number'],
                             'group_number' => $variant['group_number'] ?? null,
@@ -239,9 +243,7 @@ class RvpSeeder extends Seeder
                     'description' => 'Прочитайте объявление и напишите заявление.',
                     'mark' => 2,
                     'variants' => json_decode(file_get_contents(base_path($this->path.'task15.json')), true),
-                    'settings' => [
-                        'checking_mode' => 'manual'
-                    ]
+                    'checking_mode' => 'manual'
                 ],
                 [
                     'type' => TaskType::Essay,

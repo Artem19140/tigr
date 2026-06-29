@@ -59,7 +59,7 @@ class VnzhSeeder extends Seeder
                         'type' => $task['type'],
                         'mark' => $task['mark'],
                         'description' => $task['description'] ?? null,
-                        'settings' => $task['settings'] ?? null
+                        'checking_mode' => $task['checking_mode'] ?? null
                     ]);
                     foreach ($task['variants'] as $variant) {
                         $taskVariantCreated = TaskVariant::create([
@@ -160,13 +160,11 @@ class VnzhSeeder extends Seeder
                     'variants' => json_decode(file_get_contents(base_path($path.'task5.json')), true),
                 ],
                 [
-                    'type' => TaskType::MultyInput,
+                    'type' => TaskType::SingleInput,
                     'description' => 'Прослушайте диалог и дополните предложение в соответствии с информацией в тексте.',
                     'mark' => 1,
                     'variants' => json_decode(file_get_contents(base_path($path.'task6.json')), true),
-                    'settings' => [
-                        'checking_mode' => 'manual'
-                    ]
+                    'checking_mode' => 'manual'
                 ],
                 [
                     'type' => TaskType::SingleChoice,
@@ -258,10 +256,7 @@ class VnzhSeeder extends Seeder
                     'type' => TaskType::MultyInput,
                     'description' => 'Дайте развернутый ответ. Заполните анкету.',
                     'mark' => 2,
-                    'variants' => json_decode(file_get_contents(base_path($this->path.'task18.json')), true),
-                    'settings' => [
-                        'checking_mode' => 'manual'
-                    ]
+                    'variants' => json_decode(file_get_contents(base_path($this->path.'task18.json')), true)
                 ],
                 [
                     'type' => TaskType::Essay,

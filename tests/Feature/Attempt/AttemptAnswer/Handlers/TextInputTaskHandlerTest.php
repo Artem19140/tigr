@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Attempt\AttemptAnswer\Handlers;
 
-use App\Modules\AttemptAnswer\Handlers\TextInputTaskHandler;
+use App\Modules\AttemptAnswer\Handlers\SingleInputTaskHandler;
 use App\Exceptions\Attempt\AttemptAnswerValidationException;
 use App\Models\Answer;
 use App\Models\AttemptAnswer;
@@ -14,7 +14,7 @@ use Tests\TestCase;
 
 class TextInputTaskHandlerTest extends TestCase
 {
-    protected TextInputTaskHandler $handler;
+    protected SingleInputTaskHandler $handler;
 
     protected TaskVariant $taskVariant;
 
@@ -44,7 +44,7 @@ class TextInputTaskHandlerTest extends TestCase
         $this->taskVariant->setRelation('answers', collect([$this->answer]));
 
         $this->attemptAnswer = new AttemptAnswer(['id' => 1]);
-        $this->handler = app(TextInputTaskHandler::class);
+        $this->handler = app(SingleInputTaskHandler::class);
         Carbon::setTestNow(Carbon::now());
     }
 

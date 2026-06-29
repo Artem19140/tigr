@@ -5,7 +5,7 @@ namespace App\Enums;
 enum TaskType: string
 {
     case SingleChoice = 'single-choice';
-    case TextInput = 'text-input';
+    case SingleInput = 'single-input';
     case Essay = 'essay';
     case MultyInput = 'multy-input';
     case Speaking = 'speaking';
@@ -14,7 +14,6 @@ enum TaskType: string
     {
         return match ($this) {
             self::SingleChoice => true,
-            self::TextInput => true,
             default => false
         };
     }
@@ -35,7 +34,7 @@ enum TaskType: string
         );
     }
 
-    public static function manualCheckTypes(): array
+    public static function manualReviewTypes(): array
     {
         return array_map(
             fn ($case) => $case->value,

@@ -44,14 +44,14 @@ const menu: Array<MenuElem> = [
     allowed:can.value.exams
   },
   {
-    title:"Мониторинг экзамена" ,
+    title:"Мониторинг" ,
     prependIcon:"mdi-monitor-eye" ,
     url:'/exams/monitoring',
     value:"monitoring",
     allowed:can.value.monitoring
   },
   {
-    title:"Проверка экзамена" ,
+    title:"Проверка" ,
     prependIcon:"mdi-clipboard-check" ,
     url:'/exams/checking',
     value:"checking",

@@ -7,6 +7,8 @@ import { useConfirmDialog } from '@/composables/useConfirmDialog';
 import AttemptCheckingHeader from '@/components/Attempt/AttemptCheckingHeader.vue';
 import AttemptCheckingSidePanel from '@/components/Attempt/AttemptCheckingSidePanel.vue';
 import TasksList from '../Attempt/Components/tasks/TasksList.vue';
+import { ref } from 'vue';
+import { AttemptAnswer } from '@/interfaces/Task.js';
 
 defineOptions({
   layout: [EmployeeLayout],
@@ -20,12 +22,13 @@ const props = defineProps<{
 }>()
 
 const form = useForm()
+const attempt = ref<AttemptChecking>(props.attempt.data)
 
 const finishChecking = async () => {
     const {confirmOpen} = useConfirmDialog()
     const ok = await confirmOpen('Завершить проверку? После завершения оценивание станет недоступно.')
     if(!ok) return
-    form.post(`/attempts/${props.attempt.data.id}/checking/finish`,{
+    form.post(`/attempts/${attempt.value.id}/checking/finish`,{
         onSuccess:()=>{
             router.reload()
         }
@@ -36,10 +39,15 @@ const back = () => {
     router.visit(`/exams/${props.examId}/checking`)
 }
 
+const rated = (value: AttemptAnswer) => {
+    const task = attempt.value?.tasks.find(t => t.attemptAnswer.id === value.id)
+    if(!task) return
+    task.attemptAnswer = {...value}
+}
 </script>
 
 <template>
-    <AttemptCheckingHeader :attempt="attempt.data" />
+    <AttemptCheckingHeader :attempt="attempt" />
 
     <div class="sticky top-8">
         <v-btn 
@@ -52,20 +60,21 @@ const back = () => {
     </div>
 
     <AttemptCheckingSidePanel 
-        :attempt="attempt.data"
+        :attempt="attempt"
     />
 
     <v-container
         max-width="1100"
     >
         <TasksList
-            :attempt="attempt.data"
+            :attempt="attempt"
             :checking="true"
             class="mb-4"
+            @rated="rated"
         />
     
         <div 
-            v-if="attempt.data.checkedAt === null"
+            v-if="attempt.checkedAt === null"
             class="flex flex-column gap-4 justify-center items-center"
         >
             <div class="text-caption text-medium-emphasis">
@@ -74,7 +83,7 @@ const back = () => {
 
             <AppPrimaryButton 
                 :loading="form.processing"
-                :disabled="form.processing || attempt.data.checkedAt"
+                :disabled="form.processing || attempt.checkedAt"
                 @click="finishChecking"
                 text="Завершить проверку"
             />

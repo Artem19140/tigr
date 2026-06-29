@@ -29,7 +29,7 @@ class RateAttemptAnswerTest extends TestCase
     {
         parent::setUp();
         $this->task = new Task;
-        $this->task->type = collect(TaskType::manualCheckTypes())->random();
+        $this->task->type = collect(TaskType::manualReviewTypes())->random();
         $this->task->mark = $this->mark;
 
         $taskVariant = new TaskVariant;

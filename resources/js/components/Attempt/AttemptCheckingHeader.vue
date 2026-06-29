@@ -12,7 +12,7 @@ const props = defineProps<{
         style="background-color: #F7F9FC;"
         v-if="! attempt.checkedAt"
     >
-        Оценки сохраняются автоматически
+        Баллы сохраняются автоматически
     </div>
 
     <div
@@ -33,11 +33,11 @@ const props = defineProps<{
                 "
             >
                 <v-icon size="18" color="success">
-                mdi-check-circle-outline
+                    mdi-check-circle-outline
                 </v-icon>
 
                 <div class="text-caption text-medium-emphasis">
-                Попытка проверена — изменения недоступны
+                    Попытка проверена — изменения недоступны
                 </div>
             </div>
         </div>

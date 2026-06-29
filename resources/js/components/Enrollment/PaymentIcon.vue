@@ -7,7 +7,12 @@ const props = defineProps<{
 </script>
 
 <template>
-    <v-icon icon="mdi-check-circle" color="green" v-if="!enrollment.isLoading && enrollment.hasPayment"/>
+    <v-icon 
+        icon="mdi-check-circle" 
+        color="green" 
+        v-if="!enrollment.isLoading && enrollment.hasPayment"
+    />
+    
     <v-progress-circular
         indeterminate
         color="primary"

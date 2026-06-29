@@ -6,7 +6,7 @@ import { useSnackbarQueue } from '@/composables/useSnackbarQueue';
 import { useHttp } from '@inertiajs/vue3';
 
 const props = defineProps<{ 
-    value: string 
+  value: string 
 }>()
 
 const task = inject<Task>('task')
@@ -20,26 +20,27 @@ const playedTime = computed(() => {
     return (currentTime.value / duration.value) * 100
 })
 
-const audioPlayed = ref<boolean>(task?.attemptAnswer?.audioPlayed ?? false)
+const audioPlayed = ref<boolean>(task?.attemptAnswer?.audioPlayedAt !== null)
 
 const {audioPlaying, audioStartPlaying, audioStopPlaying, examAttempt} = useAttempt()
 const http = useHttp()
+
 const togglePlay = () => {
     
-    if(!audioPlaying.value){
-        audioStartPlaying()
-    }else{
-        const {add} = useSnackbarQueue()
-        add('Воспроизводится другая аудиозапись', 'red')
-        return
-    }
+  if(!audioPlaying.value){
+    audioStartPlaying()
+  }else{
+    const {add} = useSnackbarQueue()
+    add('Воспроизводится другая аудиозапись', 'red')
+    return
+  }
 
-    if (!audioRef.value) return
-    audioRef.value.play()
-    
-    if(!examAttempt.value) return
-        http.put(`/attempts/${examAttempt.value?.id}/answers/${task?.attemptAnswer.id}/audio`,{
-    })
+  if (!audioRef.value) return
+  audioRef.value.play()
+  
+  if(!examAttempt.value) return
+    http.put(`/attempts/${examAttempt.value?.id}/answers/${task?.attemptAnswer.id}/audio`,{
+  })
 }
 
 const onTimeUpdate = () => {
@@ -64,6 +65,7 @@ function format(time: number) {
   return `${m}:${s.toString().padStart(2, '0')}`
 }
 </script>
+
 <template>
   <div v-if="value" class="audio">
 

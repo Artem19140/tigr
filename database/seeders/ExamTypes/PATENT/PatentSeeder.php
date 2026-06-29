@@ -58,7 +58,7 @@ class PatentSeeder extends Seeder
                         'type' => $task['type'],
                         'mark' => $task['mark'],
                         'description' => $task['description'] ?? null,
-                        'settings' => $task['settings'] ?? null
+                        'checking_mode' => $task['checking_mode'] ?? null
                     ]);
                     foreach ($task['variants'] as $variant) {
                         $taskVariantCreated = TaskVariant::firstOrCreate(
@@ -176,13 +176,11 @@ class PatentSeeder extends Seeder
             'min_mark' => 0,
             'tasks' => [
                 [
-                    'type' => TaskType::TextInput,
+                    'type' => TaskType::SingleInput,
                     'description' => 'Прочитайте текст и вставьте пропущенное слово.',
                     'mark' => 1,
                     'variants' => json_decode(file_get_contents(base_path($this->path.'task7.json')), true),
-                    'settings' => [
-                        'checking_mode' => 'auto'
-                    ]
+                    'checking_mode' => 'auto'
                 ],
             ],
         ];

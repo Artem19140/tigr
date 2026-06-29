@@ -1,6 +1,6 @@
 export enum TaskTypes {
     SINGLE_CHOICE = 'single-choice',
-    TEXT_INPUT = 'text-input',
+    SINGLE_INPUT = 'single-input',
     SPEAKING = 'speaking',
     ESSAY = 'essay',
     MULTY_INPUT = 'multy-input',

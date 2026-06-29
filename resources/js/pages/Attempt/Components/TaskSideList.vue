@@ -27,7 +27,7 @@ const getColor = (task:Task) :string => {
 
 <template>
   <v-container class="pa-2">
-  <v-row dense>
+  <v-row>
     <v-col
       v-for="task in tasks"
       :key="task.id"
