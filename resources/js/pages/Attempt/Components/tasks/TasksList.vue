@@ -13,7 +13,7 @@ import { computed, provide } from 'vue';
 import TaskRatingBlock from './TaskRatingBlock.vue';
 
 const props = defineProps<{
-    attempt:  Attempt | AttemptMonitoring | AttemptChecking,
+    attempt: AttemptMonitoring | AttemptChecking,
     checking?:boolean,
     mode?:string
 }>()
@@ -104,6 +104,7 @@ const groupedTasks =  computed(() =>{
                         <task-rating-block
                             @rated="(value :AttemptAnswer) => emit('rated', value)"
                             :task="task"
+                            :readonly="Boolean(attempt.checkedAt)"
                         />
                     </v-card-text>
 

@@ -2,30 +2,45 @@
 import { ref } from 'vue'
 
 const props = defineProps<{
-    value : string
+    value : string,
+    zoom?:boolean
 }>()
 
 const dialog = ref(false)
-//@click="dialog = true"
+
+const zoomIfCan = () => {
+    if(! props.zoom) return
+    dialog.value = true
+}
 </script>
 
 <template>
-    <div class="mb-5">
+    <div class="mb-5 relative">
         <v-img
             :src="value"
-            class="cursor-pointer"
+            :class="zoom ? 'cursor-pointer rounded-lg' : 'rounded-lg'"
             min-width="250"
+            
+
+            @click="zoomIfCan"
         />
 
-        <!-- <v-dialog v-model="dialog" max-width="90vw">
-            <v-card>
-                <v-img
-                    :src="value"
-                    max-height="90vh"
-                    contain
-                />
-            </v-card>
-        </v-dialog> -->
-  </div>
+        <div
+            v-if="zoom"
+            @click="zoomIfCan"
+            class="absolute bottom-3 right-3 px-2 py-1 rounded bg-black/60 text-white text-xs flex items-center cursor-pointer"
+        >
+            <v-icon size="14" class="mr-1">mdi-magnify-plus</v-icon>
+            Увеличить
+        </div>
+
+        
+    </div>
+    
+    <v-dialog v-model="dialog" width="70vw">
+        <v-card rounded="lg">
+            <v-img :src="value" />
+        </v-card>
+    </v-dialog>
 </template>
 

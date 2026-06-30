@@ -45,7 +45,7 @@
 
         <tr>
             <td>Место проведения (адрес):</td>
-            <td>{{ $exam->address_name }}</td>
+            <td>{{ $exam->address->address }}</td>
         </tr>
 
         <tr>

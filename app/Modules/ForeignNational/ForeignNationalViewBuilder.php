@@ -7,14 +7,12 @@ use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\ForeignNational;
 use App\Modules\Enrollment\EnrollmentPaymentRules;
-use App\Modules\Exam\ExamResultResolver;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class ForeignNationalViewBuilder
 {
     public function __construct(
-        protected EnrollmentPaymentRules $enrollmentPaymentRules,
-        protected ExamResultResolver $resolver
+        protected EnrollmentPaymentRules $enrollmentPaymentRules
     ){}
     public function build(
         ForeignNational $foreignNational,
@@ -26,9 +24,6 @@ class ForeignNationalViewBuilder
         $foreignNational->enrollments = $foreignNational
             ->enrollments
             ->sortByDesc('exam.begin_time');
-
-        $this->setEnrollmentsAttributes($foreignNational);
-
         return $foreignNational;
     }
 
@@ -75,25 +70,5 @@ class ForeignNationalViewBuilder
                         ]);
                 }
         ];
-    }
-
-    protected function setEnrollmentsAttributes(ForeignNational $foreignNational)
-    {
-        $foreignNational->enrollments
-            ->each(function(Enrollment $enrollment){
-
-                $enrollment->setAttribute('payment_available', 
-                    $this->enrollmentPaymentRules
-                        ->check($enrollment, $enrollment->exam)->available
-                );
-                
-                $enrollment->setAttribute('exam_result', 
-                    $this->resolver->execute(
-                        $enrollment,
-                        $enrollment->exam,
-                        $enrollment->attempt
-                    )
-                );
-        });
     }
 }

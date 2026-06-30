@@ -37,9 +37,9 @@ class CreateAttempt
                 ]);
             }
 
-            if (! $exam->isGoing()) {
+            if ($exam->begin_time->isFuture()) {
                 throw ValidationException::withMessages([
-                    'code' => 'Ввести код возможно только во время экзамена'
+                    'code' => 'Экзамен еще не начался'
                 ]);
             }
 

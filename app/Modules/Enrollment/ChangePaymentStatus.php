@@ -17,8 +17,7 @@ class ChangePaymentStatus
     public function execute(Enrollment $enrollment): void
     {
         $result = $this->enrollmentPaymentRules->check(
-            $enrollment, 
-            $enrollment->exam
+            $enrollment
         );
 
         if($result->isNotAvailable()){

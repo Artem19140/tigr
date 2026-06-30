@@ -5,7 +5,8 @@ import { useHttp } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 
 const props = defineProps<{
-    task:Task
+    task:Task,
+    readonly:boolean
 }>()
 
 const emit = defineEmits<{
@@ -59,6 +60,7 @@ const marks = computed(() =>
         :error-messages="http.errors.mark"
         @update:model-value="rate"
         class="mb-2"
+        :readonly="readonly"
     />
     <div
         class="d-flex align-center ga-2 text-caption ml-2"

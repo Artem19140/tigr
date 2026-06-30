@@ -4,6 +4,7 @@ namespace App\Http\Resources\Enrollment;
 
 use App\Http\Resources\Attempt\AttemptMonitoringResource;
 use App\Http\Resources\ForeignNational\ForeignNationalResource;
+use App\Modules\Enrollment\EnrollmentPaymentRules;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,7 +23,7 @@ class EnrollmentMonitoringResource extends JsonResource
             'hasPayment' => $this->has_payment,
             'attempt' => new AttemptMonitoringResource($this->whenLoaded('attempt')),
             'availability' => [
-                'payment' => $this->payment_available
+                'payment' => app(EnrollmentPaymentRules::class)->check($this->resource)->available 
             ],
         ];
     }

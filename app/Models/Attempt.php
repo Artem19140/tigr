@@ -81,7 +81,7 @@ class Attempt extends Model
     {
         $now = Carbon::now();
         $this->started_at = $now;
-        $this->expired_at = $now->copy()->addMinutes($this->exam->duration);
+        $this->expired_at = $now->copy()->addMinutes($this->exam->type->duration);
         $this->last_activity_at = $now;
     }
 

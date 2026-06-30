@@ -144,7 +144,7 @@ class ExamBeforeSaveValidator
             ->first();
 
         if ($conflictExam) {
-            $examConflictName = $conflictExam->short_name;
+            $examConflictName = $conflictExam->type->short_name;
             $time = $conflictExam->begin_time_local->format('H:i');
             throw new BusinessException("В это время по данному адресу уже проводится экзамен по $examConflictName в $time");
         }

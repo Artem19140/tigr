@@ -7,7 +7,7 @@ import { useConfirmDialog } from '@/composables/useConfirmDialog';
 import AttemptCheckingHeader from '@/components/Attempt/AttemptCheckingHeader.vue';
 import AttemptCheckingSidePanel from '@/components/Attempt/AttemptCheckingSidePanel.vue';
 import TasksList from '../Attempt/Components/tasks/TasksList.vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { AttemptAnswer } from '@/interfaces/Task.js';
 
 defineOptions({
@@ -44,11 +44,14 @@ const rated = (value: AttemptAnswer) => {
     if(!task) return
     task.attemptAnswer = {...value}
 }
+
+const hasUncheckedTasks = computed(
+    () => attempt.value.tasks.some(task => task.attemptAnswer.checkedAt === null)
+)
 </script>
 
 <template>
     <AttemptCheckingHeader :attempt="attempt" />
-
     <div class="sticky top-8">
         <v-btn 
             variant="text" 
@@ -83,7 +86,7 @@ const rated = (value: AttemptAnswer) => {
 
             <AppPrimaryButton 
                 :loading="form.processing"
-                :disabled="form.processing || attempt.checkedAt"
+                :disabled="form.processing || attempt.checkedAt || hasUncheckedTasks"
                 @click="finishChecking"
                 text="Завершить проверку"
             />

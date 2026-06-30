@@ -4,7 +4,6 @@ namespace App\Http\Resources\Exam;
 
 use App\Modules\Exam\ProtocolCommentRules;
 use App\Http\Resources\Enrollment\EnrollmentMonitoringResource;
-use App\Models\Exam;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -25,16 +24,10 @@ class ExamMonitoringResource extends JsonResource
             'protocolComment' => $this->protocol_comment,
             'hasSpeakingTasks' => $this->whenLoaded('type', fn () => $this->type->has_speaking_tasks),
             'shortName' => $this->whenLoaded('type', fn () => $this->type->short_name),
-            'polling' => $this->pollingStart($this->resource),
+            'polling' => $this->isGoing(),
             'availability' => [
                 'protocolComment' => app(ProtocolCommentRules::class)->check($this->resource)->available
             ]
         ];
-    }
-
-    protected function pollingStart(Exam $exam):bool
-    {
-        
-        return $exam->isGoing() && ! $exam->isCancelled() && $this->enrollments->count() > 0;
     }
 }

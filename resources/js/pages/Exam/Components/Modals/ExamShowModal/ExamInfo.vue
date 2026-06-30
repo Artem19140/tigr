@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { DateFormatter } from '@/helpers/DateFormatter';
 import { Exam } from '@/interfaces/Exam';
 import { computed } from 'vue';
 

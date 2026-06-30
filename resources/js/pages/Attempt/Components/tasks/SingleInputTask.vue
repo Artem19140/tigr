@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AppInput from '@components/UI/AppInput/AppInput.vue';
 import BaseTask from './BaseTask.vue';
-import { ref, watch } from 'vue';
+import { inject, ref, watch } from 'vue';
 import { Task } from '@/interfaces/Task';
 import { debounce } from '@/helpers/debounce.js';
 
@@ -30,7 +30,7 @@ const debouncedSend = debounce(() => { send() }, 3000)
 watch(answer, () => {
     debouncedSend()
 })
-
+const checking = inject<boolean>('checking')
 </script>
 
 <template>
@@ -42,6 +42,7 @@ watch(answer, () => {
             <v-card-text>
                 <AppInput
                     v-model="answer"
+                    :readonly="checking"
                     label="Введите ответ"
                 />
             </v-card-text>

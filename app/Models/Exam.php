@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Enums\EmployeeRole;
+use App\Enums\ExamStatus;
 use App\Models\Scopes\BelongsToCenter;
+use App\Modules\Shared\ExamSettings;
 use App\Support\TimePresenter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -98,11 +100,6 @@ class Exam extends Model
         return $this->end_time->isPast();
     }
 
-    public function isGoing(): bool
-    {
-        return $this->begin_time->isPast() && $this->end_time->isFuture();
-    }
-
     public function isPending(): bool
     {
         return $this->begin_time->isFuture();
@@ -116,20 +113,6 @@ class Exam extends Model
     public function center(): BelongsTo
     {
         return $this->belongsTo(Center::class, 'center_id');
-    }
-
-    protected function duration(): Attribute
-    {
-        return Attribute::get(function () {
-            return $this->type->duration;
-        });
-    }
-
-    protected function addressName(): Attribute
-    {
-        return Attribute::get(function () {
-            return $this->address->address;
-        });
     }
 
     public function hasSpeaking(): bool
@@ -163,25 +146,6 @@ class Exam extends Model
         return $query->where('cancelled_at', null);
     }
 
-    public function scopeCancelled(Builder $query): Builder
-    {
-        return $query->where('cancelled_at', '<>', null);
-    }
-
-    protected function name(): Attribute
-    {
-        return Attribute::get(function () {
-            return $this->type->name;
-        });
-    }
-
-    protected function shortName(): Attribute
-    {
-        return Attribute::get(function () {
-            return $this->type->short_name;
-        });
-    }
-
     public function scopeVisibleFor(
         Builder $query,
         Employee $employee
@@ -198,5 +162,76 @@ class Exam extends Model
         return $query->whereHas('examiners', function (Builder $q) use ($employee) {
             $q->where('examiner_id', $employee->id);
         });
+    }
+
+    public function isGoing():bool
+    {
+        if($this->begin_time->isFuture()){
+            return false;
+        }
+        
+        if(! $this->enrollments_exists){
+            return false;
+        }
+    
+        if(! $this->codesTtlExpired()){
+            return true;
+        }
+        
+        if(! $this->attempts_exists){
+            return false;
+        }
+
+        return $this->active_attempts_exists;
+    }
+
+    // public function isGoing():bool
+    // {
+
+    //     if($this->begin_time->isFuture()){
+    //         return false;
+    //     }
+
+    //     if(! $this->enrollments_exists){
+    //         return false;
+    //     }
+        
+    //     if(! $this->attempts_exists  && $this->codesTtlExpired()){
+    //         return false;
+    //     }
+
+    //     return $this->active_attempts_exists;
+    // }
+
+    public function codesTtlExpired():bool
+    {
+        return $this->begin_time->copy()->addMinutes(ExamSettings::codesTtlMinutes())->isPast();
+    }
+
+    public function loadState(){
+        $this->loadExists([
+            'attempts as unchecked_attempts_exists' => function ($query) {
+                $query->unchecked();
+            },
+            'attempts as active_attempts_exists' => function ($query) {
+                $query->active();
+            },
+            'attempts',
+            'enrollments'
+        ]);
+    }
+
+
+    public function status():ExamStatus
+    {
+        if ($this->isCancelled()) {
+            return ExamStatus::Cancelled;
+        }
+
+        if ($this->isFinished()) {
+            return ExamStatus::Finished;
+        }
+
+        return ExamStatus::Pending;
     }
 }

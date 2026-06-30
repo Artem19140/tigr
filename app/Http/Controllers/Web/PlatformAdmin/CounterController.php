@@ -32,7 +32,7 @@ class CounterController
     )
     {
         abort_if(
-            $center->id !== $counter->center_id || ! $request->user()->isPlatformAdmin(),
+            $center->id !== $counter->center_id,
             404
         );
         

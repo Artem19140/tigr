@@ -41,7 +41,7 @@ class ExamDocumentController
             'enrollments_ids' => $exam->enrollments->pluck('id')->toArray()
         ]));
 
-        $fileName = "Список_{$exam->short_name}_{$exam->begin_time_local->format('H-i_d.m.Y')}.pdf";
+        $fileName = "Список_{$exam->type->short_name}_{$exam->begin_time_local->format('H-i_d.m.Y')}.pdf";
         
         return $pdf->stream($fileName);
     }
@@ -72,7 +72,7 @@ class ExamDocumentController
         if($result->isNotAvailable()){
             throw new BusinessException($result->message());
         }
-        $fileName = "Кода_{$exam->short_name}_{$exam->begin_time_local->format('H-i_d.m.Y')}.pdf";
+        $fileName = "Кода_{$exam->type->short_name}_{$exam->begin_time_local->format('H-i_d.m.Y')}.pdf";
         $pdf = $examCodesGenerator->execute($exam);
         return $pdf->stream($fileName);
     }
@@ -97,7 +97,7 @@ class ExamDocumentController
         Exam $exam,
         ExamProtocolGenerator $examProtocolGenerator
     ): Response {
-        $fileName= "Протокол_{$exam->short_name}_{$exam->begin_time_local->format('H-i_d.m.Y')}.pdf";
+        $fileName= "Протокол_{$exam->type->short_name}_{$exam->begin_time_local->format('H-i_d.m.Y')}.pdf";
         
         $pdf =  $examProtocolGenerator->execute($exam);
         return $pdf->stream($fileName);
@@ -117,7 +117,7 @@ class ExamDocumentController
         ExamResultsGenerator $examResultsGenerator
     ): Response {
         $resultsPdf = $examResultsGenerator->execute($exam);
-        $fileName = "Результаты_{$exam->short_name}_{$exam->begin_time->format('H-i_d.m.Y')}.pdf";
+        $fileName = "Результаты_{$exam->type->short_name}_{$exam->begin_time->format('H-i_d.m.Y')}.pdf";
 
         return $resultsPdf->stream($fileName);
     }

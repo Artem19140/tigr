@@ -100,17 +100,17 @@ class ExamDocumentRules
 
     protected function hasNoAttempts(Exam $exam): bool
     {
-        return ! $exam->has_attempts;
+        return ! $exam->attempts_exists;
     }
 
     protected function hasUncheckedAttemtps(Exam $exam): bool
     {
-        return $exam->has_unchecked_attempts;
+        return $exam->unchecked_attempts_exists;
     }
 
     protected function hasActiveAttempts(Exam $exam): bool
     {
-        return $exam->has_active_attempts;
+        return $exam->active_attempts_exists;
     }
 
     protected function codesExpired(Exam $exam){

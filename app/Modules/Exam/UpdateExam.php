@@ -64,7 +64,7 @@ final class UpdateExam
                 'capacity' => $examDto->capacity,
                 'exam_type_id' => $examDto->examTypeId,
                 'comment' => $examDto->comment,
-                'end_time' => $examDto->beginTime->copy()->addMinutes($exam->duration),
+                'end_time' => $examDto->beginTime->copy()->addMinutes($exam->type->duration),
             ];
         } else {
             if ($exam->enrollments()->count() > $examDto->capacity) {

@@ -48,23 +48,21 @@ class ExamMonitoringController
 
     public function show(
         Exam $exam, 
-        EnrollmentPaymentRules $enrollmentPaymentRules
     ): \Inertia\Response {
+
         $exam->load([
             'enrollments' => ['foreignNational', 'attempt.center'],
             'type',
         ]);
-        
-        $exam->enrollments->loadExists('attempt');
+
+        $exam->loadState();
+
         $exam->enrollments = $exam->enrollments->sortBy('foreignNational.surname');
         
         $exam->enrollments->each(function(Enrollment $enrollment) use (
-            $exam, 
-            $enrollmentPaymentRules
+            $exam
         ){
-            $enrollment->setAttribute('payment_available', 
-                $enrollmentPaymentRules->check($enrollment, $exam)->available
-            );
+            $enrollment->setRelation('exam', $exam);
             $enrollment->attempt?->setRelation('exam', $exam);
         });
 
