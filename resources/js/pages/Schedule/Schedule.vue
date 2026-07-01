@@ -89,7 +89,6 @@ watch(() => props.links.current, () => {
         color="primary"
         :events="exams?.data"
         :event-color="(event: ExamCalendar) => examStatus(event.status).color"
-        @click:event="(nativeEvent: Event, { event } :any) => open('examShow', { examId: event.id })"
         @click:date="addExam" 
       >
       </v-calendar>

@@ -129,7 +129,7 @@ class Attempt extends Model
         return $this->belongsTo(Exam::class, 'exam_id');
     }
 
-    public function answers(): HasMany
+    public function attemptAnswers(): HasMany
     {
         return $this->hasMany(AttemptAnswer::class, 'attempt_id');
     }

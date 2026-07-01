@@ -26,6 +26,12 @@ class EnrollmentController
                 'enrollment' => $enrollment,
             ]),
         ]);
+
+        // return Inertia::flash([
+        //     'redirectUrl' => route('enrollments.statements', [
+        //         'enrollment' => $enrollment,
+        //     ])
+        // ])->back();
     }
 
     public function changePayment(

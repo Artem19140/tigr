@@ -4,13 +4,12 @@ import BaseDialog from '@components/BaseComponents/BaseDialog/BaseDialog.vue';
 import ExamEnrollment from '@components/Exam/ExamEnrollment.vue';
 import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import {  RedirectUrl } from '@interfaces/Interfaces';
-import {  useHttp } from '@inertiajs/vue3';
+import { router, useHttp } from '@inertiajs/vue3';
 import { useConfirmDialog } from '@composables/useConfirmDialog';
 import { ForeignNational } from '@/interfaces/ForeignNational';
 
 const props = defineProps<{
-    foreignNational: ForeignNational | null,
-    examTypeId?:number | null,
+    foreignNational: ForeignNational | null
 }>()
 
 const isOpen = defineModel<boolean>()
@@ -22,6 +21,7 @@ const enroll = async () => {
                 isOpen.value = false
                 window.open(String(response.redirectUrl))
                 http.resetAndClearErrors()
+                router.reload()
             }
         }
     })

@@ -24,9 +24,11 @@ Route::prefix('attempts')
             ->name('attempts.start');
 
         Route::put('{attempt}/answers/{attemptAnswer}', [AttemptAnswerController::class, 'update'])
+            ->scopeBindings()
             ->name('attempts.answers.update');
 
         Route::put('{attempt}/answers/{attemptAnswer}/audio', [AttemptAnswerController::class, 'audioPlayed'])
+            ->scopeBindings()
             ->name('attempts.answers.update.audio');
     });
 

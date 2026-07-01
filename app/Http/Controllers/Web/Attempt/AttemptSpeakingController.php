@@ -92,7 +92,7 @@ class AttemptSpeakingController
                 })->with([
                     'task',
                     'answers',
-                    'attemptsAnswer' => function ($query) use ($attempt) {
+                    'attemptAnswers' => function ($query) use ($attempt) {
                         $query->where('attempt_id', $attempt->id);
                     },
                 ]);

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web\PlatformAdmin;
+namespace App\Http\Controllers\Web\PlatformManage;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;

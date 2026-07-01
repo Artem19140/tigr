@@ -91,13 +91,13 @@ class ExamController
         Request $request,
         Exam $exam,
         ExamViewBuilder $builder
-    ): JsonResponse {
+    ): \Inertia\Response{
         
         Gate::authorize('view', $exam);
         $employee = $request->user();
         $exam = $builder->execute($exam, $employee);
 
-        return response()->json([
+        return Inertia::render('Exam/ExamView',[
             'exam' => new ExamResource($exam),
         ]);
     }
@@ -110,7 +110,7 @@ class ExamController
         Gate::authorize('update', $exam);
 
         $updateExam->execute($exam, $request->toDto());
-
+        $exam->loadState();
         return response()->json([
             'exam' => new ExamResource($exam),
         ]);

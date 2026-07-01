@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -46,7 +47,12 @@ class PasswordController
     public function forgot(Request $request) 
     {
         $request->validate(['email' => 'required|email']);
-        
+
+        if($request->input('email') === config('app.platform_admin.email')){
+            Log::warning('trying to reset admin password');
+            return back()->withErrors(['status' => __('passwords.user')]);
+        } 
+
         $status = Password::sendResetLink(
             $request->only('email')
         );
@@ -54,7 +60,7 @@ class PasswordController
         if($status === Password::PasswordReset){
             return back()->withErrors(['status' => __($status)]);
         }
-
+        
         return back()->withErrors(['status' => __($status)]);
     }
 }

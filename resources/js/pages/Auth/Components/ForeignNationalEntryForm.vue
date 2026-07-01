@@ -33,7 +33,7 @@ const submit = () => {
         </v-otp-group>
       </template>
   </v-otp-input>
-    <div class="text-red mb-4">{{ form.errors.code }}</div>
+    <div class="text-red mb-4 text-center">{{ form.errors.code }}</div>
     <AppPrimaryButton
       text=" Войти"
       type="submit"

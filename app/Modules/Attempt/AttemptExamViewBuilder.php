@@ -25,7 +25,7 @@ class AttemptExamViewBuilder
             },
             'taskVariants.task',
             'taskVariants.answers' => fn (HasMany $q) => $q->orderBy('order'),
-            'taskVariants.attemptsAnswer' => function ($query) use ($attempt) {
+            'taskVariants.attemptAnswers' => function ($query) use ($attempt) {
                 $query->where('attempt_id', $attempt->id);
             },
             'exam.type',

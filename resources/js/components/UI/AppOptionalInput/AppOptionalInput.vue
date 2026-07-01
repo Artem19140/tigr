@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { watch } from 'vue';
-import AppInput from '../AppInput/AppInput.vue';
 
 const props = defineProps<{
     inputAttr:Object,
@@ -18,7 +17,10 @@ watch(() => checkbox.value, () => {
 
 <template>
     <div class="flex flex-column pag-0">
-        <AppInput 
+        <v-text-field
+            rounded="lg"
+            variant="outlined"
+            density="comfortable"
             :disabled="checkbox"
             v-model="input"
             v-bind="inputAttr"

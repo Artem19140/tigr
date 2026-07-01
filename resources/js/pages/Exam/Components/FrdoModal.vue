@@ -63,6 +63,8 @@ const items = [
             :error-messages="http.errors.examDate"
             :disabled="http.type === null"
         />
+
+        <div class="text-center text-xs text-gray-500">Все попытки за выбранный день должны быть закончены и проверены</div>
         
         <template #actions>
             <AppPrimaryButton

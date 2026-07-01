@@ -65,9 +65,9 @@ const download = (document :string) => {
 }
 const modals = useModals()
 
-const downloadResultslDisabled  =  computed(() => !availability.value.documents.results.available )
-const downloadProtocolDisabled = computed(() =>!availability.value.documents.protocol.available )
-const downloadListDisabled =  computed(() =>!availability.value.documents.list.available)
+const downloadResultslDisabled  =  computed(() => !availability.value.documents.results?.available )
+const downloadProtocolDisabled = computed(() =>!availability.value.documents.protocol?.available )
+const downloadListDisabled =  computed(() =>!availability.value.documents.list?.available)
 const editDisabled  =   computed(() =>! availability.value.actions.edit)
 const cancelDisabled = computed(() =>! availability.value.actions.cancell)
 const downloadCodesDisabled  = computed(() =>!availability.value.documents.codes?.available)
@@ -91,7 +91,7 @@ const downloadCodesDisabled  = computed(() =>!availability.value.documents.codes
 
     <v-list-item 
       title="Результаты"
-      :subtitle="availability.documents.results.code === 'exam_on_checking' ? availability.documents.results.reason : ''"
+      :subtitle="availability.documents.results?.code === 'exam_on_checking' ? availability.documents.results.reason : ''"
       :disabled="downloadResultslDisabled" 
       v-if="permissions.documents.results"
       @click="() => download('results')" 

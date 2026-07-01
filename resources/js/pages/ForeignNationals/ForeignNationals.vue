@@ -2,12 +2,11 @@
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { Paginated } from '@/interfaces/Interfaces';
 import { ForeignNationalIndex, ForeignNationalPagePermissions } from '@/interfaces/ForeignNational';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
-import { useModals } from '@/composables/useModals.js';
-import ForeignNationalTableDropdown from './Components/ForeignNationalTable/ForeignNationalTableDropdown.vue';
+import ForeignNationalTableDropdown from './Components/ForeignNationalTableDropdown.vue';
 import BasePaginatedTable from '@/components/BaseComponents/BasePaginatedTable/BasePaginatedTable.vue';
-import ForeignNationalTableFilters from './Components/ForeignNationalTable/ForeignNationalTableFilters.vue';
+import ForeignNationalTableFilters from './Components/ForeignNationalTableFilters.vue';
 import AppAddButton from '@/components/UI/AppAddButton/AppAddButton.vue';
 
 defineOptions({
@@ -31,8 +30,6 @@ const dropDownAccess = computed(() =>
   props.permissions.export ||
   props.permissions.statistics
 )
-
-const modals = useModals()
 </script>
 
 <template>
@@ -45,24 +42,24 @@ const modals = useModals()
       :headers="headers"
       :elements="foreignNationals"
       title="Иностранные граждане"
-      @row-click="(item) => modals.open('foreignNationalShow', {foreignNationalId:item.id})"
+      @row-click="(item) => router.visit(`/foreign-nationals/${item.id}`)"
     >
-        <template #header-left>
-          <ForeignNationalTableFilters  
-            v-model="loading"
-          />
-        </template>
-        <template #header-actions>
-          <AppAddButton
-              text="Добавить"
-              @click="modals.open('foreignNationalCreate')"
-              v-if="permissions.create"
-          />
-          <ForeignNationalTableDropdown
-              v-if="dropDownAccess"
-              :permissions="permissions"
-          />
-        </template>
+      <template #header-left>
+        <ForeignNationalTableFilters  
+          v-model="loading"
+        />
+      </template>
+      <template #header-actions>
+        <AppAddButton
+          text="Добавить"
+          @click="() => router.visit('/foreign-nationals/create')""
+          v-if="permissions.create"
+        />
+        <ForeignNationalTableDropdown
+          v-if="dropDownAccess"
+          :permissions="permissions"
+        />
+      </template>
     </BasePaginatedTable>
   </v-container> 
 </template>

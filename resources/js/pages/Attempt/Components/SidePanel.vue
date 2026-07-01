@@ -39,7 +39,7 @@ const solved = computed(() =>  props.attempt.tasks.filter(item => item?.attemptA
     <div class="exam-progress-header">
       <div class="label">Задания</div>
       <div class="counter">
-        {{ solved }} / {{ attempt.tasksCount }}
+        {{ solved }} / {{ attempt.tasks.length }}
       </div>
     </div>
 

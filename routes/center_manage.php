@@ -1,10 +1,9 @@
 <?php
 
 use App\Http\Controllers\Web\Address\AddressController;
-use App\Http\Controllers\Web\Auth\PasswordController;
-use App\Http\Controllers\Web\Center\CenterController;
+use App\Http\Controllers\Web\CenterManage\CenterController;
 use App\Http\Controllers\Web\Employee\EmployeeController;
-use App\Http\Controllers\Web\PlatformAdmin\CounterController;
+use App\Http\Controllers\Web\CenterManage\CounterController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([
@@ -22,8 +21,10 @@ Route::middleware([
 
     Route::get('centers/{center}/addresses', [AddressController::class, 'index']);
     Route::delete('centers/{center}/addresses/{address}', [AddressController::class, 'destroy'])
+        ->scopeBindings()
         ->name('centers.addresses.destroy');
     Route::patch('centers/{center}/addresses/{address}', [AddressController::class, 'update'])
+        ->scopeBindings()
         ->name('centers.addresses.update');
     Route::post('centers/{center}/addresses', [AddressController::class, 'store'])
         ->name('centers.addresses.store');
@@ -37,11 +38,9 @@ Route::middleware([
     Route::put('employees/{employee}', [EmployeeController::class, 'update'])
         ->can('update', 'employee');
 
-    // Route::patch('employees/{employee}/password', [PasswordController::class, 'change'])
-    //     ->can('resetPassword', 'employee');
-
     Route::get('roles', [EmployeeController::class, 'rolesShow']);
 
     Route::get('centers/{center}/counters', [CounterController::class, 'index']);
-    Route::patch('centers/{center}/counters/{counter}', [CounterController::class, 'update']);
+    Route::patch('centers/{center}/counters/{counter}', [CounterController::class, 'update'])
+        ->scopeBindings();
 });

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web\PlatformAdmin;
+namespace App\Http\Controllers\Web\CenterManage;
 
 use App\Http\Resources\Counter\CounterResource;
 use App\Models\Center;
@@ -27,15 +27,10 @@ class CounterController
 
     public function update(
         Request $request, 
-        Center $center, 
+        Center $center,
         Counter $counter
     )
-    {
-        abort_if(
-            $center->id !== $counter->center_id,
-            404
-        );
-        
+    { 
         $request->validate([
             'value' => ['required', 'integer', 'min:1']
         ]);

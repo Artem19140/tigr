@@ -35,11 +35,14 @@ Route::prefix('attempts')->middleware([
         ->name('attempts.violations.store');
 
     Route::delete('{attempt}/violations/{violation}', [AttemptViolationController::class, 'destroy'])
+        ->scopeBindings()
         ->name('attempts.violations.destroy');
 
     Route::patch('{attempt}/violations/{violation}', [AttemptViolationController::class, 'update'])
+        ->scopeBindings()
         ->name('attempts.violations.update');
-});
 
-Route::put('answers/{attemptAnswer}/rate', [AttemptAnswerController::class, 'rate'])
-    ->middleware(['meta']);
+    Route::put('{attempt}/answers/{attemptAnswer}/rate', [AttemptAnswerController::class, 'rate'])
+        ->scopeBindings();
+});
+;

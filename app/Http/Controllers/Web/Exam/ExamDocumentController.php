@@ -22,7 +22,7 @@ class ExamDocumentController
 
     public function list(Exam $exam): Response
     {
-        $exam->loadCount('enrollments');
+        $exam->loadExists('enrollments');
         $result = $this->examDocumentRules->list($exam);
 
         if($result->isNotAvailable()){
@@ -37,7 +37,6 @@ class ExamDocumentController
         ]);
 
         event(new ExamDocumentGenerated($exam, ExamDocument::List, [
-            'enrollments_count' => $exam->enrollments_count,
             'enrollments_ids' => $exam->enrollments->pluck('id')->toArray()
         ]));
 
@@ -48,7 +47,7 @@ class ExamDocumentController
 
     public function listAvailable(Exam $exam): JsonResponse
     {
-        $exam->loadCount('enrollments');
+        $exam->loadExists('enrollments');
         $result = $this->examDocumentRules->list($exam);
         
         if($result->isNotAvailable()){
@@ -66,7 +65,7 @@ class ExamDocumentController
         Exam $exam,
         ExamCodesGenerator $examCodesGenerator
     ): Response {
-        $exam->loadCount('enrollments');
+        $exam->loadExists('enrollments');
         $result = $this->examDocumentRules->codes($exam);
         
         if($result->isNotAvailable()){
@@ -79,7 +78,7 @@ class ExamDocumentController
 
     public function codesAvailable(Exam $exam): JsonResponse
     {
-        $exam->loadCount('enrollments');
+        $exam->loadExists('enrollments');
         $result = $this->examDocumentRules->codes($exam);
         
         if($result->isNotAvailable()){

@@ -2,13 +2,12 @@
 import EnrollmentMonitoringDropdown from './Components/EnrollmentMonitoringDropdown.vue';
 import { Head, router, usePoll } from '@inertiajs/vue3'
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
-import { useModals } from '@composables/useModals';
 import { computed, onMounted, onUnmounted, ref} from 'vue';
 import { DateFormatter } from '@helpers/DateFormatter';
 import PaymentIcon from '@/components/Enrollment/PaymentIcon.vue';
-import ExamMonitoringDropdown from './Components/ExamMonitoringDropdown.vue';
 import { ExamMonitoring } from '@/interfaces/Exam';
 import AppInput from '@/components/UI/AppInput/AppInput.vue';
+import ExamCommentModal from './Components/ExamCommentModal.vue';
 
 defineOptions({
   layout: [EmployeeLayout]
@@ -57,12 +56,8 @@ onUnmounted(()=>{
     stop()
 })
 
-const {open} = useModals()
-
-const openForeignNational = (event : Event, {item} :any) => {
-    open('foreignNationalShow', {foreignNationalId:item.foreignNational.id})
-}
 const search = ref<string>('')
+const isOpen = ref<boolean>(false)
 </script>
 
 
@@ -106,9 +101,14 @@ const search = ref<string>('')
                     </div>
                 </div>
 
-                <ExamMonitoringDropdown
-                    :exam="exam.data"
-                />
+                <v-btn
+                    border
+                    variant="text"
+                    rounded="lg"
+                    @click="isOpen=true"
+                >
+                    Комментарий
+                </v-btn>
             </v-card-text>
 
             <v-divider />
@@ -128,14 +128,11 @@ const search = ref<string>('')
             <v-divider />
 
             <v-data-table
-                class="modern-table"
                 :items="exam.data.enrollments"
                 :headers="headers"
-                hover
                 hide-default-footer
                 :items-per-page="-1"
                 :search="search"
-                @click:row="openForeignNational"
             >
                 <template #item.actions="{ item }">
                     <EnrollmentMonitoringDropdown
@@ -180,15 +177,9 @@ const search = ref<string>('')
             </v-data-table>
         </v-card>
     </v-container>
+
+    <ExamCommentModal 
+        v-model="isOpen"
+        :exam="exam.data"
+    />
 </template>
-
-<style lang="css" scoped>
-.modern-table {
-    background: transparent;
-}
-
-.modern-table :deep(tbody tr:hover) {
-    cursor: pointer;
-    background: rgba(var(--v-theme-on-surface), 0.04);
-}
-</style>

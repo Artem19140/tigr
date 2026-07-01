@@ -14,7 +14,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 
 class AttemptAnswerController
 {
@@ -24,7 +23,6 @@ class AttemptAnswerController
         AttemptAnswer $attemptAnswer,
         HandleAttemptAnswer $handleAttemptAnswer
     ): JsonResource {
-        $this->authorize($attempt, $attemptAnswer);
         $foreignNationalAnswer = $request->input('answer');
 
         $updatedAnswer = DB::transaction(function () use (
@@ -45,10 +43,11 @@ class AttemptAnswerController
 
     public function rate(
         Request $request,
+        Attempt $attempt,
         AttemptAnswer $attemptAnswer,
         RateAttemptAnswer $rateAttemptAnswer
     ): JsonResponse {
-        Gate::authorize('attempts.employee-access', $attemptAnswer->attempt);
+
         $request->validate([
             'mark' => ['required', 'integer', 'min:0'],
         ]);
@@ -66,18 +65,10 @@ class AttemptAnswerController
         Attempt $attempt,
         AttemptAnswer $attemptAnswer,
     ): Response {
-        $this->authorize($attempt, $attemptAnswer);
 
         $attemptAnswer->audio_played_at = Carbon::now();
         $attemptAnswer->save();
 
         return response()->noContent();
-    }
-
-    protected function authorize(
-        Attempt $attempt,
-        AttemptAnswer $attemptAnswer
-    ): void {
-        abort_if($attempt->id !== $attemptAnswer->attempt_id, 404);
     }
 }

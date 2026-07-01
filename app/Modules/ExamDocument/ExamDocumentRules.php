@@ -6,7 +6,6 @@ use App\Modules\Shared\RuleResult;
 use App\Enums\AvailabilityCode;
 use App\Models\Employee;
 use App\Models\Exam;
-use App\Modules\Shared\ExamSettings;
 
 class ExamDocumentRules
 {
@@ -23,79 +22,146 @@ class ExamDocumentRules
         );
     }
 
-    public function resolve(Exam $exam, Employee $employee): array
-    {
-        // $rules = [];
-        // if($employee->can('codes', $exam)){
-        //     $rules['codes'] = $this->codes($exam);
-        // }
-        // if($employee->can('protocol', $exam)){
-        //     $rules['protocol'] = $this->protocol($exam);
-        // }
-        // if($employee->can('results', $exam)){
-        //     $rules['results'] = $this->results($exam);
-        // }
-        // if($employee->can('list', $exam)){
-        //     $rules['list'] = $this->list($exam);
-        // }
-        // return $rules;
-        return [
-            'codes' => $this->codes($exam)->toArray(),
-            'protocol' => $this->protocol($exam)->toArray(),
-            'results' => $this->results($exam)->toArray(),
-            'list' => $this->list($exam)->toArray() ,
-        ];
+    public function resolve(
+        Exam $exam, 
+        Employee $employee
+    ): array {
+        $rules = [];
+        if($employee->can('codes', $exam)){
+            $rules['codes'] =  $this->codes($exam)->toArray();
+        }
+        if($employee->can('protocol', $exam)){
+            $rules['protocol'] = $this->protocol($exam)->toArray();
+        }
+        if($employee->can('results', $exam)){
+            $rules['results'] = $this->results($exam)->toArray();
+        }
+        if($employee->can('list', $exam)){
+            $rules['list'] = $this->list($exam)->toArray();
+        }
+        return $rules;
     }
 
-    public function list(Exam $exam)
+    public function list(Exam $exam):RuleResult
     {
 
         if ($this->hasNoEnrollment($exam)) {
-            return $this->blocked(AvailabilityCode::EnrollmentNotExists);
+            return RuleResult::fail(
+                AvailabilityCode::EnrollmentNotExists
+            );
         }
 
-        return $this->available();
+        return RuleResult::success();
     }
 
-    public function codes(Exam $exam)
+    public function codes(Exam $exam):RuleResult
     {
-        return match (true) {
-            $exam->isCancelled() => $this->blocked(AvailabilityCode::ExamCancelled),
-            $this->hasNoEnrollment($exam) => $this->blocked(AvailabilityCode::EnrollmentNotExists),
-            ! $exam->begin_time->isToday() => $this->blocked('codes_available_only_on_exam_day'),
-            $this->codesExpired($exam) => $this->blocked('codes_ttl_expired'),
-            default => $this->available(),
-        };
+        if($exam->isCancelled()){
+            return RuleResult::fail(
+                AvailabilityCode::ExamCancelled
+            );
+        }
+
+        if($this->hasNoEnrollment($exam)){
+            return RuleResult::fail(
+                AvailabilityCode::EnrollmentNotExists
+            );
+        }
+
+        if(! $exam->begin_time->isToday()){
+            return RuleResult::fail(
+                'codes_available_only_on_exam_day'
+            );
+        }
+
+        if($exam->codesTtlExpired()){
+            return RuleResult::fail(
+                'codes_ttl_expired'
+            );
+        }
+
+        return RuleResult::success();
     }
 
-    public function protocol(Exam $exam)
+    public function protocol(Exam $exam):RuleResult
     {
-        return match (true) {
-            $exam->isCancelled() => $this->blocked(AvailabilityCode::ExamCancelled),
-            $exam->isPending() => $this->blocked(AvailabilityCode::ExamPending),
-            $this->hasNoEnrollment($exam) => $this->blocked(AvailabilityCode::EnrollmentNotExists),
-            $this->hasNoAttempts($exam) => $this->blocked(AvailabilityCode::AttemptsNotExists),
-            $this->hasActiveAttempts($exam) => $this->blocked(AvailabilityCode::ActiveAttemptsExists),
-            default => $this->available(),
-        };
+        if($exam->isCancelled()){
+            return RuleResult::fail(
+                AvailabilityCode::ExamCancelled
+            );
+        }
+
+        if($exam->isPending()){
+            return RuleResult::fail(
+                AvailabilityCode::ExamPending
+            );
+        }
+
+        if($this->hasNoEnrollment($exam)){
+            return RuleResult::fail(
+                AvailabilityCode::EnrollmentNotExists
+            );
+        }
+
+        if($this->hasNoAttempts($exam)){
+            return RuleResult::fail(
+                AvailabilityCode::AttemptsNotExists
+            );
+        }
+
+        if($this->hasActiveAttempts($exam)){
+            return RuleResult::fail(
+                AvailabilityCode::ActiveAttemptsExists
+            );
+        }
+
+        return RuleResult::success();
     }
 
-    public function results(Exam $exam)
+    public function results(Exam $exam):RuleResult
     {
-        return match (true) {
-            $exam->isCancelled() => $this->blocked(AvailabilityCode::ExamCancelled),
-            $exam->isPending() => $this->blocked(AvailabilityCode::ExamPending),
-            $this->hasNoEnrollment($exam) => $this->blocked(AvailabilityCode::EnrollmentNotExists),
-            $this->hasNoAttempts($exam) => $this->blocked(AvailabilityCode::AttemptsNotExists),
-            $this->hasActiveAttempts($exam) => $this->blocked(AvailabilityCode::ActiveAttemptsExists),
-            $this->hasUncheckedAttemtps($exam) => $this->blocked('exam_on_checking'),
-            default => $this->available(),
-        };
+        if($exam->isCancelled()){
+            return RuleResult::fail(
+                AvailabilityCode::ExamCancelled
+            );
+        }
+
+        if($exam->isPending()){
+            return RuleResult::fail(
+                AvailabilityCode::ExamPending
+            );
+        }
+
+        if($this->hasNoEnrollment($exam)){
+            return RuleResult::fail(
+                AvailabilityCode::EnrollmentNotExists
+            );
+        }
+
+        if($this->hasNoAttempts($exam)){
+            return RuleResult::fail(
+                AvailabilityCode::AttemptsNotExists
+            );
+        }
+
+        if($this->hasActiveAttempts($exam)){
+            return RuleResult::fail(
+                AvailabilityCode::ActiveAttemptsExists
+            );
+        }
+
+        if($this->hasUncheckedAttemtps($exam)){
+            return RuleResult::fail(
+                'exam_on_checking'
+            );
+        }
+
+        return RuleResult::success();
     }
 
     protected function hasNoEnrollment(Exam $exam): bool
     {
-        return $exam->enrollments_count === 0;
+        return ! $exam->enrollments_exists;
     }
 
     protected function hasNoAttempts(Exam $exam): bool
@@ -111,12 +177,5 @@ class ExamDocumentRules
     protected function hasActiveAttempts(Exam $exam): bool
     {
         return $exam->active_attempts_exists;
-    }
-
-    protected function codesExpired(Exam $exam){
-        $deadline = $exam->begin_time
-            ->copy()
-            ->addMinutes(ExamSettings::codesTtlMinutes());
-        return now()->gte($deadline);
     }
 }

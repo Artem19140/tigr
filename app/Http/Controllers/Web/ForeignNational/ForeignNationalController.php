@@ -14,6 +14,7 @@ use App\Http\Resources\ForeignNational\ForeignNationalProfileResource;
 use App\Models\ForeignNational;
 use App\Support\CenterIsolationCheck;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
@@ -50,7 +51,7 @@ class ForeignNationalController
     public function store(
         ForeignNationalPostRequest $request,
         CreateForeignNationalWithEnrollment $createForeignNationalWithEnrollment
-    ): JsonResponse {
+    ) : RedirectResponse {
         Gate::authorize('create', ForeignNational::class);
         
         $enrollement = $createForeignNationalWithEnrollment
@@ -61,27 +62,28 @@ class ForeignNationalController
                 $request->validated('hasPayment'),
             );
 
-        return response()->json([
+        return Inertia::flash([
             'redirectUrl' => route('enrollments.statements', [
                 'enrollment' => $enrollement
             ]),
-        ]);
+        ])->back();
     }
 
     public function show(
         Request $request,
         ForeignNational $foreignNational,
         ForeignNationalViewBuilder $builder
-    ): JsonResponse {
+    ): Response {
 
         Gate::authorize('view', $foreignNational);
+
         $buildedForeignNational = $builder->build(
             $foreignNational, 
             $request->user()
         );
-        
-        return response()->json([
-            'foreignNational' => new ForeignNationalProfileResource($buildedForeignNational),
+
+        return Inertia::render('ForeignNationals/ForeignNationalView', [
+            'foreignNational' => new ForeignNationalProfileResource($buildedForeignNational)
         ]);
     }
 

@@ -1,24 +1,19 @@
 <script setup lang="ts">
 import { useModals } from '@composables/useModals';
-import ExamShowModal from '@pages/Exam/Components/Modals/ExamShowModal/ExamShowModal.vue';
 import ExamCreateModal from '@pages/Exam/Components/Modals/ExamCreateModal.vue';
-import FrdoModal from '@pages/Exam/Components/ExamTable/FrdoModal.vue';
-import ForeignNationalCreateModal from '@pages/ForeignNationals/Components/Modals/ForeignNationalCreateModal.vue';
-import FlatTableModal from '@pages/Exam/Components/ExamTable/FlatTableModal.vue';
-import EnrollmentModal from '@pages/ForeignNationals/Components/EnrollmentModal.vue';
+import FrdoModal from '@/pages/Exam/Components/FrdoModal.vue';
+import FlatTableModal from '@/pages/Exam/Components/FlatTableModal.vue';
 import EmployeeCreateModal from '@pages/Center/Components/Employees/EmployeeCreateModal.vue';
-import ForeignNationalEditModal from '@pages/ForeignNationals/Components/Modals/ForeignNationalEditModal.vue';
 import ExamEditModal from '@pages/Exam/Components/Modals/ExamEditModal.vue';
-import ForeignNationalShowModal from '@pages/ForeignNationals/Components/Modals/ShowModal/ForeignNationalShowModal.vue';
-import ForeignNationalExportModal from '@pages/ForeignNationals/Components/ForeignNationalTable/ForeignNationalExportModal.vue';
-import StatisticsModal from '@pages/ForeignNationals/Components/ForeignNationalTable/StatisticsModal.vue';
+import ForeignNationalExportModal from '@/pages/ForeignNationals/Components/ForeignNationalExportModal.vue';
+import StatisticsModal from '@/pages/ForeignNationals/Components/StatisticsModal.vue';
 import AddressCreateModal from '@/pages/Center/Components/Addresses/AddressCreateModal.vue';
-import MinistryEducationReportModal from '@/pages/ForeignNationals/Components/ForeignNationalTable/MinistryEducationReportModal.vue';
+import MinistryEducationReportModal from '@/pages/ForeignNationals/Components/MinistryEducationReportModal.vue';
 import ViolationModal from '@/pages/ExamMonitoring/Components/Violations/ViolationModal.vue';
 import EmployeeEditModal from '@/pages/Center/Components/Employees/EmployeeEditModal.vue';
 import LogoutAllDevicesModal from './LogoutAllDevicesModal.vue';
 import CenterCreateModal from '@/pages/PlatformAdmin/Components/CenterCreateModal.vue';
-import ExamCommentModal from '@/pages/ExamMonitoring/Components/ExamCommentModal.vue';
+import ForeignNationalEditModal from '@/pages/ForeignNationals/Components/ForeignNationalEditModal.vue';
 
 const {modals, close} = useModals()
 
@@ -27,14 +22,9 @@ export type ModalName = keyof typeof modalMap
 const modalComponent = (name: ModalName) => modalMap[name] ?? null
 
 const modalMap = {
-    foreignNationalShow: ForeignNationalShowModal,
-    examShow: ExamShowModal,
     examCreate: ExamCreateModal,
     frdo: FrdoModal,
-    foreignNationalCreate: ForeignNationalCreateModal,
     flatTable: FlatTableModal,
-    enrollment: EnrollmentModal,
-    examComment: ExamCommentModal,
     employeeCreate: EmployeeCreateModal,
     foreignNationalEdit: ForeignNationalEditModal,
     examEdit: ExamEditModal,

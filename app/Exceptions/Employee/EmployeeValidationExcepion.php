@@ -7,14 +7,12 @@ use Illuminate\Support\Facades\Log;
 
 class EmployeeValidationExcepion extends BaseException
 {
-    protected string $message = 'Произошла ошибка при сохранении сотрудника';
     protected $busCode = 'employee_saving_error';
     public function __construct(
-        
         public string $logMessage,
         public array $context
     ){
-        parent::__construct($this->message);
+        parent::__construct('Произошла ошибка при сохранении сотрудника');
     }
     public function report(): void
     {

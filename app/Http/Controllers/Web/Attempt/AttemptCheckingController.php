@@ -23,7 +23,7 @@ class AttemptCheckingController
                 ->with([
                     'answers',
                     'task',
-                    'attemptsAnswer' => function ($query) use ($attempt) {
+                    'attemptAnswers' => function ($query) use ($attempt) {
                         $query->where('attempt_id', $attempt->id);
                     }
                 ]);

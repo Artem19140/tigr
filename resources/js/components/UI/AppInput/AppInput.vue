@@ -5,13 +5,12 @@ defineProps<{
 </script>
 
 <template>
-    <v-text-field
-      rounded="lg"
-      clearable
-      variant="outlined"
-      density="comfortable"
-      :label="label"
-    >
-      <slot />
-    </v-text-field>
+  <v-text-field
+    rounded="lg"
+    variant="outlined"
+    density="comfortable"
+    :label="label"
+  >
+    <slot />
+  </v-text-field>
 </template>

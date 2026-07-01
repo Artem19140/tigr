@@ -129,10 +129,10 @@ interface availability{
         cancell: boolean
     }
     documents: {
-        list:DocumentAvailble,
-        protocol:DocumentAvailble,
-        results:DocumentAvailble,
-        codes:DocumentAvailble
+        list?:DocumentAvailble,
+        protocol?:DocumentAvailble,
+        results?:DocumentAvailble,
+        codes?:DocumentAvailble
     }
 }
 

@@ -13,6 +13,7 @@ const isOpen = ref<boolean>(false)
 const loading = defineModel<boolean>({default:false})
     
 const filledCount = computed(() => {
+    if(!props.filters) return 0
     return Object.values(props.filters).some(value => value !== null) 
 })
 
@@ -105,14 +106,12 @@ function cleanFilters(data: Record<string, any>) {
 
             <v-divider />
 
-            <!-- CONTENT -->
             <div class="filter-content">
                 <slot />
             </div>
 
             <v-divider />
 
-            <!-- ACTIONS -->
             <div class="filter-actions">
                 <v-btn
                     variant="text"

@@ -42,7 +42,6 @@ onUnmounted(() => stopTimer())
     <Head>
         <title>Экзамен </title>
     </Head>
-
         <v-navigation-drawer 
             location="right"
             permanent

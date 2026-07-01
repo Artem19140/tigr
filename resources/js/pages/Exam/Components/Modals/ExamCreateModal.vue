@@ -42,7 +42,7 @@ const create = async () => {
 
 <template>
     <BaseDialog 
-        width="500"
+        width="600"
         v-model="isOpen"
         @before-close="async (close) => {
             if(http.isDirty){

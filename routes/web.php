@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\Web\Auth\LoginController;
 use App\Http\Controllers\Web\Auth\LogoutController;
-use App\Http\Controllers\Web\Auth\PasswordController;
 use App\Http\Controllers\Web\Enrollment\EnrollmentController;
 use App\Http\Controllers\Web\Enrollment\EnrollmentDocumentController;
 use App\Http\Controllers\Web\Document\DocumentController;
@@ -13,11 +11,9 @@ use App\Http\Controllers\Web\Statistics\StatisticsController;
 use App\Http\Controllers\Web\Upload\UploadController;
 use App\Http\RedirectResolver;
 use App\Models\Enrollment;
-use App\Models\Exam;
 use App\Models\ForeignNational;
 use App\Support\AppMiddleware;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::middleware([
     'meta',
@@ -26,6 +22,7 @@ Route::middleware([
     AppMiddleware::CENTER_ACTIVE
 ])
     ->group(function () {
+        Route::inertia('foreign-nationals/create', 'ForeignNationals/ForeignNationalCreate');
         Route::apiResource('foreign-nationals', ForeignNationalController::class)
             ->except('delete')
             ->where(['foreign_national' => '[0-9]+']);
@@ -98,29 +95,9 @@ Route::middleware([
         Route::post('logout/all', [LogoutController::class, 'logoutAll'])->name('logout.all');
     });
 
-Route::middleware([
-    'meta',
-    'guest:web,foreignNationals'
-])->group(function () {
-    Route::inertia('login', 'Auth/Login')
-        ->name('login');
-
-    Route::post('login', [LoginController::class, 'login'])
-        ->middleware(['throttle:5']);
-
-    Route::get('/reset-password/{token}', fn ($token) => Inertia::render('Auth/ChangePassword', [
-        'token' => $token,
-        'email' => request()->query('email')
-    ]))->name('password.reset');
-
-    Route::get('/forgot-password', fn () => 
-        Inertia::render('Auth/ForgotPassword', [])
-    )->name('password.forgot');
-
-    Route::post('/forgot-password', [PasswordController::class, 'forgot'])->name('password.email');
-
-    Route::post('password/reset', [PasswordController::class, 'change']);
-});
+require __DIR__.'/auth.php';
+require __DIR__.'/attempts_passing.php';
+require __DIR__.'/platform_manage.php';
 
 Route::get('/', function(){
     return redirect('login');
@@ -132,6 +109,3 @@ Route::middleware([
 ])->get('me', function (RedirectResolver $resolver) {
     return redirect($resolver->execute());
 })->name('me');
-
-require __DIR__.'/attempts_passing.php';
-require __DIR__.'/platform_manage.php';

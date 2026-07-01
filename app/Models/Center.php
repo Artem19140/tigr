@@ -41,4 +41,9 @@ class Center extends Model
     {
         return $this->hasMany(Counter::class, 'center_id');
     }
+
+    public function addresses():HasMany
+    {
+        return $this->hasMany(Address::class, 'center_id');
+    }
 }

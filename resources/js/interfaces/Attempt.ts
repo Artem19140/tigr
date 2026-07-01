@@ -17,7 +17,8 @@ export interface Attempt{
     endsAt:number,
     serverNow:number,
     minDurationMinutes:number,
-    tasksCount:number
+    tasksCount:number,
+    checkedAt:string
 }
 
 export interface AttemptChecking{

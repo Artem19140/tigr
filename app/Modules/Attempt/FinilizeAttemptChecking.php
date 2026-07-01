@@ -13,10 +13,10 @@ class FinilizeAttemptChecking
 
     public function execute(Attempt $attempt): Attempt
     {
-        $attempt->total_mark = $attempt->answers()->sum('mark');
+        $attempt->total_mark = $attempt->attemptAnswers()->sum('mark');
 
         $attempt->loadMissing([
-            'answers.taskVariant.task.subblock', 
+            'attemptAnswers.taskVariant.task.subblock', 
             'exam.type.blocks.subblocks'
         ]);
 

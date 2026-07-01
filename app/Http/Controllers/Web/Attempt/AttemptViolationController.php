@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Log;
 
 class AttemptViolationController
 {
@@ -42,7 +41,6 @@ class AttemptViolationController
         Attempt $attempt,
         Violation $violation
     ): JsonResource {
-        $this->ensureViolationBelongsAttempt($attempt, $violation);
 
         if(! $attempt->canEditViolation()){
             throw new BusinessException('Нарушение возможно редактировать только во время действия попытки');
@@ -59,7 +57,6 @@ class AttemptViolationController
         Attempt $attempt,
         Violation $violation
     ): Response {
-        $this->ensureViolationBelongsAttempt($attempt, $violation);
         if(! $attempt->canEditViolation()){
             throw new BusinessException('Нарушение возможно редактировать только во время действия попытки');
         }
@@ -68,22 +65,5 @@ class AttemptViolationController
             ->delete();
 
         return response()->noContent();
-    }
-
-    protected function ensureViolationBelongsAttempt(
-        Attempt $attempt, 
-        Violation $violation
-    ): void
-    {
-        if($attempt->id === $violation->attempt_id){
-            return ;
-        }
-
-        Log::warning('violation doesnot belong attempt', [
-            'attempt_id' => $attempt->id,
-            'violation_id' => $violation->id
-        ]);
-
-        abort(404);
     }
 }

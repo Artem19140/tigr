@@ -12,106 +12,67 @@ const examiners = computed(() =>{
 </script>
 
 <template>
-    <v-list class="pa-0">
-
-    <v-list-item
-        v-if="exam?.cancelledAt || exam?.cancelledReason"
-        class="text-error"
+  <div class="space-y-1">
+    <div
+      v-if="exam?.cancelledAt || exam?.cancelledReason"
+      class="grid grid-cols-3 gap-6 py-4 border-b border-black/5"
     >
-        <template #prepend>
-            <v-icon color="error">mdi-alert-circle-outline</v-icon>
-        </template>
+      <div class="flex items-start gap-2 text-xs uppercase tracking-wide text-red-400">
+        <v-icon size="16" color="error">mdi-alert-circle-outline</v-icon>
+        <span>Причина отмены</span>
+      </div>
 
-        <div>
-            <div class="text-caption text-medium-emphasis">
-                Причина отмены
-            </div>
+      <div class="col-span-2 text-sm text-red-600">
+        {{ exam?.cancelledReason ?? '-' }}
+      </div>
+    </div>
 
-            <div>
-                {{ exam?.cancelledReason ?? '-' }}
-            </div>
-        </div>
-    </v-list-item>
+    <div class="grid grid-cols-3 gap-6 py-4 border-b border-black/5">
+      <div class="flex items-center gap-2 text-xs uppercase tracking-wide text-gray-400">
+        <v-icon size="16">mdi-pound</v-icon>
+        <span>Сессия / группа</span>
+      </div>
 
-    <v-list-item>
-        <template #prepend>
-            <v-icon>mdi-pound</v-icon>
-        </template>
+      <div class="col-span-2 text-sm text-gray-900">
+        {{ exam?.sessionNumber ?? '-' }} / {{ exam?.group ?? '-' }}
+      </div>
+    </div>
 
-        <div>
-            <div class="text-caption text-medium-emphasis">
-                Сессия / группа
-            </div>
+    <div class="grid grid-cols-3 gap-6 py-4 border-b border-black/5">
+      <div class="flex items-center gap-2 text-xs uppercase tracking-wide text-gray-400">
+        <v-icon size="16">mdi-map-marker-outline</v-icon>
+        <span>Адрес</span>
+      </div>
 
-            <div>
-                {{ exam?.sessionNumber ?? '-' }} / {{ exam?.group ?? '-' }}
-            </div>
-        </div>
-    </v-list-item>
+      <div class="col-span-2 text-sm text-gray-900 leading-relaxed">
+        {{ exam?.address ?? '-' }}
+      </div>
+    </div>
 
-    <!-- <v-list-item>
-        <template #prepend>
-            <v-icon>mdi-calendar-clock-outline</v-icon>
-        </template>
+    <div class="grid grid-cols-3 gap-6 py-4 border-b border-black/5">
+      <div class="flex items-center gap-2 text-xs uppercase tracking-wide text-gray-400">
+        <v-icon size="16">mdi-account-group-outline</v-icon>
+        <span>Экзаменаторы</span>
+      </div>
 
-        <div>
-            <div class="text-caption text-medium-emphasis">
-                Дата
-            </div>
+      <div class="col-span-2 text-sm text-gray-900 leading-relaxed">
+        {{ examiners }}
+      </div>
+    </div>
 
-            <div>
-                {{ new DateFormatter(exam?.beginTime ?? '').format('H:i, d.m.Y') }}
-            </div>
-        </div>
-    </v-list-item> -->
+    <div
+      v-if="exam?.comment"
+      class="grid grid-cols-3 gap-6 py-4"
+    >
+      <div class="flex items-center gap-2 text-xs uppercase tracking-wide text-gray-400">
+        <v-icon size="16">mdi-message-text-outline</v-icon>
+        <span>Комментарий</span>
+      </div>
 
-    <v-list-item>
-        <template #prepend>
-            <v-icon>mdi-map-marker-outline</v-icon>
-        </template>
+      <div class="col-span-2 text-sm text-gray-900 leading-relaxed">
+        {{ exam?.comment }}
+      </div>
+    </div>
 
-        <div>
-            <div class="text-caption text-medium-emphasis">
-                Адрес
-            </div>
-
-            <div style="white-space: normal">
-                {{ exam?.address ?? '-' }}
-            </div>
-        </div>
-    </v-list-item>
-
-    <v-list-item>
-        <template #prepend>
-            <v-icon>mdi-account-group-outline</v-icon>
-        </template>
-
-        <div>
-            <div class="text-caption text-medium-emphasis">
-                Экзаменаторы
-            </div>
-
-            <div style="white-space: normal">
-                {{ examiners }}
-            </div>
-        </div>
-    </v-list-item>
-
-    <v-list-item v-if="exam?.comment">
-        <template #prepend>
-            <v-icon>mdi-message-text-outline</v-icon>
-        </template>
-
-        <div>
-            <div class="text-caption text-medium-emphasis">
-                Комментарий
-            </div>
-
-            <div style="white-space: normal">
-                {{ exam?.comment }}
-            </div>
-        </div>
-    </v-list-item>
-
-</v-list>
+  </div>
 </template>

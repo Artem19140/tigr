@@ -2,12 +2,12 @@
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { ExamIndex } from '@/interfaces/Exam';
 import { Paginated } from '@/interfaces/Interfaces';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import { DateFormatter } from '@/helpers/DateFormatter.js';
 import BasePaginatedTable from '@/components/BaseComponents/BasePaginatedTable/BasePaginatedTable.vue';
-import ExamTableFilter from './Components/ExamTable/ExamTableFilter.vue';
+import ExamTableFilter from './Components/ExamTableFilter.vue';
 import AppAddButton from '@/components/UI/AppAddButton/AppAddButton.vue';
-import ExamTableDropDown from './Components/ExamTable/ExamTableDropDown.vue';
+import ExamTableDropDown from './Components/ExamTableDropDown.vue';
 import ExamCapacityChip from '@/components/Exam/ExamCapacityChip.vue';
 import { ref } from 'vue';
 import { useModals } from '@/composables/useModals.js';
@@ -41,7 +41,7 @@ const loading = ref<boolean>(false)
       :elements="exams"
       title="Экзамены"
       :loading="loading"
-      @row-click="(item) => open('examShow', {examId:item.id})"
+      @row-click="(item) => router.visit(`/exams/${item.id}`)"
     >
       <template #header-left>
         <ExamTableFilter 

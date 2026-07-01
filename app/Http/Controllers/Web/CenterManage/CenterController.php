@@ -1,21 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Web\PlatformAdmin;
+namespace App\Http\Controllers\Web\CenterManage;
 
 use App\Enums\CounterKey;
 use App\Http\Requests\Center\CenterStoreRequest;
+use App\Http\Requests\Center\CenterUpdateRequest;
 use App\Http\Resources\Center\CenterIndexResource;
+use App\Http\Resources\Center\CenterResource;
 use App\Models\Center;
 use App\Models\Counter;
-use Illuminate\Http\Request;
+use App\Support\ModelChangesLogger;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
-class CenterPlatformAdminController
+class CenterController
 {
+    public function __construct(
+        protected ModelChangesLogger $logger
+    ){}
+
     public function index(): \Inertia\Response
     {
         $centers = Center::query()
@@ -26,6 +32,15 @@ class CenterPlatformAdminController
         return Inertia::render('PlatformAdmin/Centers', [
             'centers' => CenterIndexResource::collection($centers),
         ]);
+    }
+    public function show(Center $center): \Inertia\Response
+    {
+        return Inertia::render('Center/Center', [
+            'data' => new CenterResource($center),
+            'tab' => 'data',
+            'centerId' => $center->id
+        ]);
+
     }
 
     public function store(CenterStoreRequest $request): Response
@@ -60,23 +75,23 @@ class CenterPlatformAdminController
         return response()->noContent();
     }
 
+    public function update(
+        CenterUpdateRequest $request,
+        Center $center
+    ): CenterResource {
+        $dto = $request->dto();
+
+        $center->update($dto->toArray());
+
+        $this->logger->log($center);
+
+        return new CenterResource($center);
+    }
+
     public function destroy(Center $center): Response
     {
         $center->is_active = false;
 
-        return response()->noContent();
-    }
-
-    public function change(Request $request){
-        $request->validate([
-            'centerId' => ['required', 'integer', 'min:1', 'exists:centers,id']
-        ]);
-        session()->put('center_id', $request->input('centerId'));
-        return response()->noContent();
-    }
-
-    public function reset(){
-        session()->forget('center_id');
         return response()->noContent();
     }
 }

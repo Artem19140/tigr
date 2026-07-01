@@ -6,6 +6,7 @@ import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import PlatformAdminLayout from '@/layouts/PlatformAdminLayout.vue';
 import { router } from '@inertiajs/vue3';
 import CenterDropDown from './Components/CenterDropDown.vue';
+import BaseTable from '@/components/BaseComponents/BaseTable/BaseTable.vue';
 
 const props = defineProps<{
     centers:{
@@ -32,33 +33,23 @@ const {open} = useModals()
 
 <template>
     <v-container>
-        <v-card>
-            <v-card-text>
-                <div class="flex items-center justify-between">
-                    <v-card-title>
-                        Центры
-                    </v-card-title>
-                    <AppAddButton
-                        text="Добавить"
-                        @click="open('centerCreate')"
-                    />
-                </div>
-            </v-card-text>
-            <v-data-table 
-                title="Центры"
-                :items="centers.data"
-                :headers="headers"
-                @click:row="(event :Event, { item } : any) => openCenter(item)"
-                hide-default-footer
-                :items-per-page="-1"
-            >
-                <template #item.actions="{item}">
-                    <CenterDropDown 
-                        :center="item"
-                    />
-                </template>
-            </v-data-table >
-            
-        </v-card>
+        <BaseTable
+            :elements="centers.data"
+            :headers="headers"
+            @row-click="( item ) => openCenter(item)"
+            title="Центры"
+        >
+            <template #header-actions>
+                <AppAddButton
+                    text="Добавить"
+                    @click="open('centerCreate')"
+                />
+            </template>
+            <template #item.actions="{item}">
+                <CenterDropDown 
+                    :center="item"
+                />
+            </template>
+        </BaseTable>
     </v-container>
 </template>

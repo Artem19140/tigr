@@ -20,6 +20,7 @@ class AttemptAnswerResource extends JsonResource
             'checkedAt' => $this->checked_at,
             'mark' => $this->mark,
             'audioPlayedAt' => $this->audio_played_at,
+            'attemptId' => $this->attempt_id
         ];
     }
 }

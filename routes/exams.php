@@ -65,6 +65,7 @@ Route::prefix('exams')
     Route::get('{exam}/documents/protocol', [ExamDocumentController::class, 'protocol'])
         ->middleware('can:protocol,exam')
         ->name('exam.documents.protocol');
+        
     Route::get('{exam}/documents/protocol/available', [ExamDocumentController::class, 'protocolAvailable'])
         ->middleware('can:protocol,exam');
 

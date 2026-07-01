@@ -25,7 +25,7 @@ class CheckPassingThresholds
 
     protected function checkBlocksThresholdPassing(Attempt $attempt):bool
     {
-        $answersByBlock = $attempt->answers
+        $answersByBlock = $attempt->attemptAnswers
             ->groupBy(function (AttemptAnswer $answer) {
                 return $answer->taskVariant->task->subblock->block_id;
             });
@@ -39,7 +39,7 @@ class CheckPassingThresholds
 
     protected function checkSubblocksThresholdPassing(Attempt $attempt):bool
     {
-        $answersBySubblock = $attempt->answers
+        $answersBySubblock = $attempt->attemptAnswers
             ->groupBy(function (AttemptAnswer $answer) {
                 return $answer->taskVariant->task->subblock_id;
             });

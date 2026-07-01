@@ -77,7 +77,6 @@ const beforeClose = async (fn: () => void) => {
             v-model:form="http"
             :errors="http.errors"
             :loading="http.processing"
-            :mode="'edit'"
         />
 
         <template #actions>

@@ -39,7 +39,7 @@ class ExamResultsGenerator
                 'blocks.subblocks' => fn (HasMany $q) => $q->orderBy('order'),
             ],
             'enrollments' => [
-                'attempt.answers.taskVariant.task',
+                'attempt.attemptAnswers.taskVariant.task',
                 'attempt.center',
                 'foreignNational',
             ],
@@ -71,7 +71,7 @@ class ExamResultsGenerator
         return $exam->enrollments->map(function ($enrollment) use ($subblocks) {
             CenterIsolationCheck::centerBelongs($enrollment, app(CenterContext::class)->id());
             $attempt = $enrollment->attempt;
-            $answers = $attempt?->answers ?? collect();
+            $answers = $attempt?->attemptAnswers ?? collect();
 
             $answersBySubblock = $answers->groupBy(function ($a) {
                 return $a->taskVariant?->task?->subblock_id;
@@ -112,7 +112,7 @@ class ExamResultsGenerator
             return [
                 'fullName' => $enrollment->foreignNational->full_name,
                 'fullPassport' => $enrollment->foreignNational->full_passport,
-                'answers' => $enrollment->attempt?->answers->sortBy(function ($answer) {
+                'answers' => $enrollment->attempt?->attemptAnswers->sortBy(function ($answer) {
                     return $answer->taskVariant?->task?->order ?? 0;
                 }),
             ];

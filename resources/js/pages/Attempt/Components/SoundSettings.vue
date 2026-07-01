@@ -1,20 +1,8 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
-const volume = ref(0.7)
-const audioPlayer = ref<HTMLAudioElement | null>(null)
+import { ref } from 'vue';
+
+const audioPlayer = ref<HTMLAudioElement | null>(null);
 const isPlaying = ref(false);
-
-onMounted(() => {
-  if (audioPlayer.value) {
-    audioPlayer.value.volume = volume.value;
-  }
-});
-
-watch(volume, (newVolume) => {
-  if (audioPlayer.value) {
-    audioPlayer.value.volume = newVolume;
-  }
-});
 
 const togglePlayPause = () => {
   if (!audioPlayer.value) return;
@@ -26,28 +14,87 @@ const togglePlayPause = () => {
       console.error("Ошибка воспроизведения:", e);
     });
   }
+
   isPlaying.value = !isPlaying.value;
 };
 </script>
 
 <template>
-    Отрегулируйте громкость звука в наушниках
+  <div class="sound-card pa-6">
+
+    <div class="mb-4">
+      <div class="text-subtitle-1 font-weight-medium text-slate">
+        Проверка звука
+      </div>
+
+      <div class="text-body-2 text-medium-emphasis mt-1">
+        Убедитесь, что наушники подключены и громкость комфортная
+      </div>
+    </div>
+
+    <div class="sound-info mb-5">
+      Перед началом экзамена вы можете протестировать аудиовывод устройства.
+    </div>
+
     <audio ref="audioPlayer" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-        Ваш браузер не поддерживает аудио.
+      <source
+        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+        type="audio/mpeg"
+      />
     </audio>
 
-    <!-- <v-slider
-        v-model="volume"
-        min="0"
-        max="1"
-        step="0.01"
-        thumb-label
-        :label="`Громкость: ${volume * 100}%`"
-        class="mb-4"
-    ></v-slider> -->
+    <button
+      class="sound-button"
+      @click="togglePlayPause"
+      type="button"
+    >
+      <span v-if="!isPlaying">▶ Воспроизвести тестовый звук</span>
+      <span v-else>⏸ Пауза</span>
+    </button>
 
-    <v-btn @click="togglePlayPause">
-        {{ isPlaying ? 'Пауза' : 'Воспроизвести' }}
-    </v-btn>
+  </div>
 </template>
+
+<style lang="css" scoped>
+.sound-card {
+  background: #ffffff;
+  border: 1px solid #E6EAF0;
+  border-radius: 14px;
+}
+
+.sound-info {
+  font-size: 13px;
+  color: #667085;
+  line-height: 1.5;
+}
+
+.sound-button {
+  width: 100%;
+  padding: 12px 14px;
+
+  border-radius: 10px;
+  border: 1px solid #D0D5DD;
+  background: #F9FAFB;
+
+  font-size: 13px;
+  font-weight: 500;
+  color: #1D2939;
+
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.sound-button:hover {
+  background: #F2F4F7;
+  border-color: #C7D0DD;
+}
+
+.sound-button:active {
+  transform: scale(0.99);
+}
+</style>

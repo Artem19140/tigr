@@ -3,7 +3,6 @@
 namespace App\Modules\Attempt;
 
 use App\Modules\Attempt\FinilizeAttemptChecking;
-use App\Enums\TaskType;
 use App\Exceptions\BusinessException;
 use App\Models\Attempt;
 use Illuminate\Database\Eloquent\Builder;
@@ -36,11 +35,10 @@ class FinishManualChecking
 
     protected function ensureAllManualReviewTasksChecked(Attempt $attempt): void
     {
-        $notAllManualReviewTypes = $attempt->answers()
+        $notAllManualReviewTypes = $attempt->attemptAnswers()
             ->whereNull('checked_at')
             ->whereHas('taskVariant', function (Builder $query) {
                 $query->whereHas('task', function (Builder $q) {
-                    // $q->whereIn('type', TaskType::manualReviewTypes());
                     $q->manualReview();
                 });
             })

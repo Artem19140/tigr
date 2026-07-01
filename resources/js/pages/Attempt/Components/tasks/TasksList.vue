@@ -13,7 +13,7 @@ import { computed, provide } from 'vue';
 import TaskRatingBlock from './TaskRatingBlock.vue';
 
 const props = defineProps<{
-    attempt: AttemptMonitoring | AttemptChecking,
+    attempt: Attempt | AttemptMonitoring | AttemptChecking,
     checking?:boolean,
     mode?:string
 }>()

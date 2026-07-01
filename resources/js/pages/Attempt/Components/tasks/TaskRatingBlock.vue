@@ -26,7 +26,7 @@ const error = ref<boolean>(false)
 
 const rate = () => {
     error.value = false
-    http.put(`/answers/${answerId}/rate`,{
+    http.put(`/attempts/${props.task.attemptAnswer.attemptId}/answers/${answerId}/rate`,{
         onSuccess:(response)=>{
             emit('rated', response.attemptAnswer)
         },

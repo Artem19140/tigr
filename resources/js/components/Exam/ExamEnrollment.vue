@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
 import AppAutocomplete from '@components/UI/AppAutocomplete/AppAutocomplete.vue';
 import {useHttp} from '@inertiajs/vue3';
 import AppTooltip from '@components/UI/AppTooltip/AppTooltip.vue';
@@ -44,6 +44,11 @@ onMounted(() => {
       examTypes.value = response
     },
   })
+})
+onUnmounted(() => {
+  http.examTypeId = null
+  examId.value = null
+  hasPayment.value = false
 })
 </script>
 

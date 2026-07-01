@@ -142,7 +142,7 @@ class Employee extends Authenticatable
             $this->hasRole(EmployeeRole::Director->value) => route('foreign-nationals.index'),
             $this->hasRole(EmployeeRole::Examiner->value) => route('exams.index'),
             $this->hasRole(EmployeeRole::CenterAdmin->value) => route('centers.show', ['center' => $this->center]),
-            $this->hasRole(EmployeeRole::PlatformAdmin->value) => route('platform-admin.home'),
+            $this->hasRole(EmployeeRole::PlatformAdmin->value) => route('centers.index'),
             default => abort(403)
         };
     }

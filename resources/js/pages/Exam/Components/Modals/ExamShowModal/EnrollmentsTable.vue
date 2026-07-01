@@ -1,6 +1,4 @@
 <script setup lang="ts">
-
-import { useModals } from '@composables/useModals';
 import { ref } from 'vue';
 import EnrollmentDropDown from '@/components/Enrollment/EnrollmentDropDown.vue';
 import ExamResultStatusChip from '@/components/Exam/ExamResultStatusChip.vue';
@@ -14,12 +12,6 @@ const props = defineProps<{
 }>()
 
 const exam = ref<Exam>(props.exam)
-
-const modals = useModals()
-
-function foreignNationalShowModal(event:Event, {item}: any) {
-    modals.open('foreignNationalShow', {foreignNationalId:item.foreignNational.id})  
-}
 
 const headers = [
     {title : "ФИО",sortable: false, key: 'foreignNational.fullName', align: 'start' },
@@ -37,32 +29,26 @@ const search = ref('')
 </script>
 
 <template>
-    <v-card
-    rounded="xl"
-    variant="text"
->
-    <v-card-text class="py-4">
-        <div class="d-flex align-center justify-space-between flex-wrap ga-4">
-            <div>
-                <div class="text-caption text-medium-emphasis mb-1">
-                    Записано на экзамен
-                </div>
-
-                <ExamCapacityChip :exam="exam" />
+    <div class="d-flex align-center justify-space-between flex-wrap ga-4 p-4">
+        <div>
+            <div class="text-caption text-medium-emphasis mb-1">
+                Записано на экзамен
             </div>
 
-            <AppInput
-                v-model="search"
-                density="compact"
-                label="Поиск участника"
-                prepend-inner-icon="mdi-magnify"
-                variant="outlined"
-                hide-details
-                single-line
-                max-width="320"
-            />
+            <ExamCapacityChip :exam="exam" />
         </div>
-    </v-card-text>
+
+        <AppInput
+            v-model="search"
+            density="compact"
+            label="Поиск участника"
+            prepend-inner-icon="mdi-magnify"
+            variant="outlined"
+            hide-details
+            single-line
+            max-width="320"
+        />
+    </div>
 
     <v-divider />
 
@@ -72,8 +58,6 @@ const search = ref('')
         :search="search"
         :items-per-page="-1"
         hide-default-footer
-        hover
-        @click:row="foreignNationalShowModal"
     >
         <template #item.hasPayment="{ item }">
             <PaymentIcon :enrollment="item" />
@@ -91,5 +75,4 @@ const search = ref('')
             />
         </template>
     </v-data-table>
-</v-card>
 </template>

@@ -74,7 +74,7 @@ const menu: Array<MenuElem> = [
   {
     title:"Панель админа" ,
     prependIcon:"mdi-cog" ,
-    url:'/admin/home',
+    url:'/admin/centers',
     value:"admin",
     allowed:can.value.adminPanel
   }
@@ -99,7 +99,6 @@ const visibleItems = computed(() =>
       expand-on-hover
       permanent
       rail
-      color=""
     >
       <div class="d-flex flex-column fill-height">
         <v-list>
