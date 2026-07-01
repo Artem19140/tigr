@@ -50,6 +50,32 @@ const vuetify = createVuetify({
     fallback: 'ru',
     messages: { ru },
   },
+  defaults:{
+    VCard:{
+      rounded:'xl'
+    },
+    VTextField:{
+      density:"comfortable",
+      variant:'outlined',
+      rounded:'lg'
+    },
+    VTextarea:{
+      density:"comfortable",
+      variant:'outlined',
+      rounded:'lg'
+    },
+    VNumberInput:{
+      density:"comfortable",
+      variant:'outlined',
+      rounded:'lg',
+
+    },
+    VAutocomplete:{
+      density:"comfortable",
+      variant:'outlined',
+      rounded:'lg'
+    },
+  }
 })
 
 createInertiaApp({

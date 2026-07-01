@@ -10,6 +10,7 @@
         variant="flat"
         rounded="lg"
     >
-        <slot>{{ text }}</slot>
+        {{ text }}
+        <slot />
     </v-btn>
 </template>

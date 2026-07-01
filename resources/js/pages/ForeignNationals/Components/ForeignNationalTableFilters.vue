@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { ForeignNationalFilters } from '@/interfaces/ForeignNational';
 import BaseFilter from '@components/BaseComponents/BaseFilter/BaseFilter.vue';
-import AppInput from '@components/UI/AppInput/AppInput.vue';
-import AppNumberInput from '@components/UI/AppNumberInput/AppNumberInput.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
@@ -42,31 +40,31 @@ const loading = defineModel<boolean>({default:false})
         v-model="loading"
         :filters="page.flash.filters"
     >
-        <AppInput
+        <v-text-field
             v-model="form.surname"
             label="Фамилия"
             :error-messages="form.errors.surname"
         />
-        <AppInput
+        <v-text-field
             v-model="form.name"
             :error-messages="form.errors.name"
             label="Имя"
         />
-        <AppInput
+        <v-text-field
             v-model="form.patronymic"
             label="Отчество"
         />
-        <AppInput
+        <v-text-field
             v-model="form.passportSeries"
             :error-messages="form.errors.passportSeries"
             label="Серия"
         />
-        <AppInput
+        <v-text-field
             v-model="form.passportNumber"
             :error-messages="form.errors.passportNumber"
             label="Номер"
         />
-        <AppNumberInput 
+        <v-number-input  
             label="ID" 
             control-variant="hidden" 
             :error-messages="form.errors.id"

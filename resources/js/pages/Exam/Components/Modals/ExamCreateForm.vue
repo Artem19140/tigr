@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useHttp } from '@inertiajs/vue3';
-import AppAutocomplete from '@components/UI/AppAutocomplete/AppAutocomplete.vue';
-import AppInput from '@components/UI/AppInput/AppInput.vue';
-import AppTextarea from '@components/UI/AppTextarea/AppTextarea.vue';
-import AppNumberInput from '@components/UI/AppNumberInput/AppNumberInput.vue';
 import { Address } from '@/interfaces/Address';
 import { Employee } from '@/interfaces/Employee';
 import { ExamType } from '@/interfaces/Exam';
@@ -36,9 +32,9 @@ function required (v:any) {
 </script>
 
 <template>
-    <v-row>
+    <v-row >
         <v-col cols="12">
-            <AppAutocomplete
+            <v-autocomplete
                 label="Тип экзамена"
                 :rules="[required]"
                 item-title="name"
@@ -57,7 +53,7 @@ function required (v:any) {
             cols="12"
             md="4"
         >
-            <AppInput
+            <v-text-field
                 type="date"
                 label="Дата"
                 :rules="[required]"
@@ -72,7 +68,7 @@ function required (v:any) {
             cols="12"
             md="4"
         >
-            <AppInput
+            <v-text-field
                 type="time"
                 label="Время"
                 :rules="[required]"
@@ -87,7 +83,7 @@ function required (v:any) {
             cols="12"
             md="4"
         >
-            <AppNumberInput
+            <v-number-input 
                 label="Вместимость"
                 v-model="form.capacity"
                 :rules="[required]"
@@ -99,7 +95,7 @@ function required (v:any) {
         </v-col>
 
         <v-col cols="12">
-            <AppAutocomplete
+            <v-autocomplete
                 label="Адрес"
                 item-title="address"
                 item-value="id"
@@ -115,7 +111,7 @@ function required (v:any) {
         </v-col>
 
         <v-col cols="12">
-            <AppAutocomplete
+            <v-autocomplete
                 label="Экзаменаторы"
                 item-title="fullName"
                 item-value="id"
@@ -141,7 +137,7 @@ function required (v:any) {
                 Дополнительно
             </div>
 
-            <AppTextarea
+            <v-textarea
                 label="Комментарий"
                 v-model="form.comment"
                 :error-messages="form.errors.comment"

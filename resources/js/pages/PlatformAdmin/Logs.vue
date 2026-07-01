@@ -4,7 +4,6 @@ import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import PlatformAdminLayout from '@/layouts/PlatformAdminLayout.vue';
 import { useHttp } from '@inertiajs/vue3';
 import { RedirectUrl } from '@/interfaces/Interfaces';
-import AppInput from '@/components/UI/AppInput/AppInput.vue';
 
 defineOptions({
   layout: [EmployeeLayout, PlatformAdminLayout],
@@ -37,7 +36,7 @@ const audit = () => {
     <v-container>
         <v-card>
             <v-card-text>
-                <AppInput
+                <v-text-field
                     v-model="http.date"
                     :error-messages="http.errors.date"
                     type="date"

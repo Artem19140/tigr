@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import AppInput from '@components/UI/AppInput/AppInput.vue';
 const show = ref<boolean>(false);
 const props = defineProps<{
     label?:string,
@@ -9,7 +8,7 @@ const props = defineProps<{
 </script>
 
 <template>
-    <AppInput
+    <v-text-field
         :append-inner-icon="show ? 'mdi-eye-off' : 'mdi-eye'"
         :type="show ? 'text' : 'password'"
         name="password"

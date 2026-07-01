@@ -9,7 +9,6 @@ import ForeignNationalExportModal from '@/pages/ForeignNationals/Components/Fore
 import StatisticsModal from '@/pages/ForeignNationals/Components/StatisticsModal.vue';
 import AddressCreateModal from '@/pages/Center/Components/Addresses/AddressCreateModal.vue';
 import MinistryEducationReportModal from '@/pages/ForeignNationals/Components/MinistryEducationReportModal.vue';
-import ViolationModal from '@/pages/ExamMonitoring/Components/Violations/ViolationModal.vue';
 import EmployeeEditModal from '@/pages/Center/Components/Employees/EmployeeEditModal.vue';
 import LogoutAllDevicesModal from './LogoutAllDevicesModal.vue';
 import CenterCreateModal from '@/pages/PlatformAdmin/Components/CenterCreateModal.vue';
@@ -32,7 +31,6 @@ const modalMap = {
     statistics: StatisticsModal,
     addressCreate: AddressCreateModal,
     ministryEducationReport: MinistryEducationReportModal,
-    violation: ViolationModal,
     employeeEdit:EmployeeEditModal,
     logoutAll:LogoutAllDevicesModal,
     centerCreate:CenterCreateModal

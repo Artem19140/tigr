@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import BaseDialog from '@/components/BaseComponents/BaseDialog/BaseDialog.vue';
-import AppInput from '@/components/UI/AppInput/AppInput.vue';
-import AppNumberInput from '@/components/UI/AppNumberInput/AppNumberInput.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { useConfirmDialog } from '@/composables/useConfirmDialog';
 import { router, useHttp } from '@inertiajs/vue3';
@@ -38,13 +36,13 @@ const add = () => {
             close()
         }"
     >
-        <AppInput 
+        <v-text-field 
             label="Адрес"
             placeholder="Введите адрес"
             v-model="http.address"
             :error-messages="http.errors.address"
         />
-        <AppNumberInput 
+        <v-number-input  
             label="Вместимость"
             v-model="http.capacity"
             :error-messages="http.errors.capacity"

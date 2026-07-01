@@ -22,6 +22,7 @@ class ExamDocumentController
 
     public function list(Exam $exam): Response
     {
+        
         $exam->loadExists('enrollments');
         $result = $this->examDocumentRules->list($exam);
 

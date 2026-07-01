@@ -5,12 +5,11 @@ import { useHttp } from '@inertiajs/vue3';
 import { computed, onMounted, ref } from 'vue';
 import ViolatonListItem from './ViolatonListItem.vue';
 import ViolationForm from './ViolationForm.vue';
-import { Enrollment } from '@/interfaces/Enrollment';
+import { EnrollmentMonitoring } from '@/interfaces/Enrollment';
 import { Violation } from '@/interfaces/Violation';
-import AppTooltip from '@/components/UI/AppTooltip/AppTooltip.vue';
 
 const props = defineProps<{
-    enrollment:Enrollment
+    enrollment:EnrollmentMonitoring
 }>()
 
 const isOpen = defineModel<boolean>({default:false})
@@ -72,12 +71,6 @@ const editViolation = (updatedViolation: Violation) => {
             close()
         }"
     >
-        <template #title>
-            <span class="mr-2">{{enrollment.foreignNational.fullName}}, ({{enrollment.foreignNational.fullPassport}})</span>
-            <AppTooltip 
-                text="Фиксирование нарушений доступно во время и в течении всего дня после экзамена"
-            />
-        </template>
         <div class="mb-4">
             <div v-if="violationsExists && !adding" class="text-right">
                 <AppAddButton

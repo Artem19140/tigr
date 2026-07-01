@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppInput from '@/components/UI/AppInput/AppInput.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { Counter } from '@/interfaces/Counter';
 import { router, useHttp } from '@inertiajs/vue3';
@@ -69,7 +68,7 @@ const cancelEdit = () => {
 
                 <!-- EDIT -->
                 <div v-else>
-                    <AppInput
+                    <v-text-field
                         v-model="http.value"
                         :error-messages="http.errors.value"
                         :readonly="http.processing"

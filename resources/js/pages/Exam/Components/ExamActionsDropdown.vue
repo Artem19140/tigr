@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useHttp } from '@inertiajs/vue3'
+import { useForm, useHttp } from '@inertiajs/vue3'
 import { usePromptDialog } from '@composables/usePromptDialog';
 import BaseThreeDotDropdown from '@components/BaseComponents/BaseThreeDotDropdown/BaseThreeDotDropdown.vue';
 import { useModals } from '@composables/useModals';
@@ -15,12 +15,7 @@ const props = defineProps<{
 const permissions = computed(() => props.exam.permissions)
 const availability = computed(() => props.exam.availability)
 
-const emit = defineEmits<{
-  (e:'cancel', value:string):void,
-  (e:'edit', value:Exam):void
-}>()
-
-const http = useHttp({
+const form = useForm({
   cancelledReason: ''
 })
 
@@ -32,29 +27,24 @@ const cancelExam = async () => {
   if(!res){
     return
   }
-  http.cancelledReason = res
+  form.cancelledReason = res
   loadingSnackbar.open('Идет отмена')
-  http.delete(`/exams/${props.exam?.id}`,{
-    onSuccess:()=>{
-      emit('cancel', res)
-    },
+  form.delete(`/exams/${props.exam?.id}`,{
     onFinish() {
       loadingSnackbar.close()
     },
   })
-  
 }
 
 const download = (document :string) => {
   if(!props.exam?.id || !document){
-      return
+    return
   }
   const http = useHttp<{},RedirectUrl>()
   loadingSnackbar.open('Скачивание')
   http.get(`/exams/${props.exam.id}/documents/${document}/available`,{
     onSuccess:(response) => {
       if(response.redirectUrl){
-        //modals.open('pdf', {url:response.redirectUrl})
         window.open(String(response.redirectUrl))
       }
     },
@@ -109,7 +99,7 @@ const downloadCodesDisabled  = computed(() =>!availability.value.documents.codes
     <v-list-item 
       title="Редактировать" 
       v-if="permissions.actions.edit"
-      @click="modals.open('examEdit', {exam:exam, onEdit:(exam:Exam) => emit('edit', exam)})"
+      @click="modals.open('examEdit', {exam:exam})"
       :disabled="editDisabled"
     />
     

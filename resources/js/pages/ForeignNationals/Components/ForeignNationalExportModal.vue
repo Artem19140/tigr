@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppAutocomplete from '@components/UI/AppAutocomplete/AppAutocomplete.vue';
+
 import BaseDialog from '@components/BaseComponents/BaseDialog/BaseDialog.vue';
 import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import countries from '@data/countries.json'
@@ -45,7 +45,7 @@ const download = () => {
             v-model:date-to="http.dateTo"
         />
 
-        <AppAutocomplete
+        <V-autocomplete
             label="Гражданство"
             item-title="text"
             :items="countries"

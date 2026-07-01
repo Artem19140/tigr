@@ -8,6 +8,9 @@ import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import EnrollmentModal from './Components/EnrollmentModal.vue';
 import { ref } from 'vue';
+import AppBackButton from '@/components/UI/AppBackButton.vue';
+import { router } from '@inertiajs/vue3';
+import ForeignNationalEditModal from './Components/ForeignNationalEditModal.vue';
 
 const props = defineProps<{
   foreignNational:{
@@ -38,31 +41,30 @@ function formatPhoneNumber(cleaned: string | null) {
 }
 
 const isOpen = ref<boolean>(false)
+const editOpen = ref<boolean>(false)
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#F7F9FC] px-8 py-10">
+  <div class="sticky top-8">
+    <AppBackButton 
+      @click="router.visit('/foreign-nationals')"
+      text="Назад"
+    />
+  </div>
+  <v-container class="space-y-8 ">
+    <div
+      class="sticky top-0 z-30 bg-[#F7F9FC]/70 backdrop-blur-md border-b"
+    >
+      <div class="py-4 px-0" >
 
-    <div class="mx-auto max-w-5xl space-y-8">
+        <div class="flex items-start justify-between gap-6">
 
-      <div
-        class="sticky top-0 z-30 -mx-8 px-8
-               bg-[#F7F9FC]/70 backdrop-blur-md
-               border-b border-black/5 transition-all duration-300"
-      >
-        <div
-          class="flex items-start justify-between gap-6 py-4"
-        >
-
-          <div class="space-y-1 transition-all duration-300">
-            <h1
-              class="font-semibold tracking-tight text-gray-900
-                     text-2xl leading-tight"
-            >
+          <div class="space-y-1">
+            <h1 class="text-2xl font-semibold tracking-tight text-gray-900">
               {{ foreignNational?.data.fullName }}
             </h1>
 
-            <div class="flex items-center gap-2 text-sm text-gray-500">
+            <div class="text-sm text-gray-500 flex items-center gap-2">
               <span>ID {{ foreignNational?.data.id }}</span>
               <span class="text-gray-300">•</span>
               <span>
@@ -71,132 +73,141 @@ const isOpen = ref<boolean>(false)
             </div>
           </div>
 
-          <!-- ACTIONS -->
           <div class="flex items-center gap-3">
             <AppPrimaryButton
               text="Записать"
               @click="isOpen = true"
             />
 
-            <button
-              class="px-4 py-2 text-sm text-gray-500
-                     hover:text-gray-900 transition"
+            <v-btn
+              variant="text"
+              class="text-gray-500"
+              @click="editOpen = true"
             >
               Редактировать
-            </button>
+            </v-btn>
           </div>
 
         </div>
-      </div>
 
-      <!-- SUMMARY -->
-      <section
-        class="bg-white/80 backdrop-blur border border-black/5
-               rounded-2xl p-8 shadow-sm
-               hover:shadow-md hover:-translate-y-[1px]
-               transition-all duration-200"
-      >
+      </div>
+    </div>
+
+    <v-card
+      rounded="xl"
+      variant="flat"
+    >
+      <v-card-text class="pa-8">
         <div class="grid grid-cols-3 gap-6">
           <div class="text-xs uppercase tracking-wide text-gray-400">
             ФИО (лат.)
           </div>
 
-          <div class="col-span-2 text-sm text-gray-900 font-medium">
+          <div class="col-span-2 text-sm font-medium text-gray-900">
             {{ foreignNational?.data.fullNameLatin }}
           </div>
         </div>
-      </section>
+      </v-card-text>
+    </v-card>
 
-      <!-- DETAILS -->
-      <div class="space-y-6">
+    <v-card
+      rounded="xl"
+      elevation="0"
+    >
+      <v-card-text class="pa-8 space-y-6">
 
-        <!-- CARD -->
-        <section
-          class="bg-white rounded-2xl border border-black/5 p-8 shadow-sm
-                 hover:shadow-md hover:-translate-y-[1px]
-                 transition-all duration-200"
-        >
-          <div class="space-y-6">
-
-            <div class="grid grid-cols-3 gap-6">
-              <div class="text-xs uppercase tracking-wide text-gray-400">
-                Дата рождения
-              </div>
-              <div class="col-span-2 text-sm text-gray-900">
-                {{ new DateFormatter(foreignNational?.data.dateBirth).format('d.m.Y') }}
-              </div>
-            </div>
-
-            <div class="grid grid-cols-3 gap-6">
-              <div class="text-xs uppercase tracking-wide text-gray-400">
-                Паспорт
-              </div>
-              <div class="col-span-2 text-sm text-gray-900 leading-relaxed">
-                {{ foreignNational?.data.fullPassport }}
-                <span class="text-gray-300 mx-1">/</span>
-                {{ foreignNational?.data.issuedBy }}
-                <span class="text-gray-300 mx-1">/</span>
-                {{ new DateFormatter(foreignNational?.data.issuedDate).format('d.m.Y') }}
-              </div>
-            </div>
-
-            <div class="grid grid-cols-3 gap-6">
-              <div class="text-xs uppercase tracking-wide text-gray-400">
-                Телефон
-              </div>
-              <div class="col-span-2 text-sm text-gray-900">
-                {{ formatPhoneNumber(foreignNational?.data.phone) }}
-              </div>
-            </div>
-
-            <div class="grid grid-cols-3 gap-6">
-              <div class="text-xs uppercase tracking-wide text-gray-400">
-                Ответственный
-              </div>
-              <div class="col-span-2 text-sm text-gray-900">
-                {{ foreignNational?.data.creatorFullName }}
-              </div>
-            </div>
-
+        <div class="grid grid-cols-3 gap-6">
+          <div class="text-xs uppercase tracking-wide text-gray-400">
+            Дата рождения
           </div>
-        </section>
+          <div class="col-span-2 text-sm text-gray-900">
+            {{ new DateFormatter(foreignNational?.data.dateBirth).format('d.m.Y') }}
+          </div>
+        </div>
 
-        <!-- DOCUMENTS -->
-        <section
-          v-if="foreignNational?.data.permissions.documents"
-          class="bg-white rounded-2xl border border-black/5 p-8 shadow-sm
-                 hover:shadow-md hover:-translate-y-[1px]
-                 transition-all duration-200"
-        >
-          <h2 class="text-sm font-medium text-gray-900 mb-6 tracking-wide">
-            Документы
-          </h2>
+        <v-divider class="opacity-20" />
 
-          <ForeignNationalsDocuments
-            :documents="foreignNational.data.documents"
-          />
-        </section>
+        <div class="grid grid-cols-3 gap-6">
+          <div class="text-xs uppercase tracking-wide text-gray-400">
+            Паспорт
+          </div>
+          <div class="col-span-2 text-sm text-gray-900 leading-relaxed">
+            {{ foreignNational?.data.fullPassport }}
+            <span class="text-gray-300 mx-1">/</span>
+            {{ foreignNational?.data.issuedBy }}
+            <span class="text-gray-300 mx-1">/</span>
+            {{ new DateFormatter(foreignNational?.data.issuedDate).format('d.m.Y') }}
+          </div>
+        </div>
 
-        <section
-          class="bg-white rounded-2xl border border-black/5 p-8 shadow-sm
-                 hover:shadow-md hover:-translate-y-[1px]
-                 transition-all duration-200"
-        >
-          <h2 class="text-sm font-medium text-gray-900 mb-6 tracking-wide">
-            Записи ({{ foreignNational.data.enrollments.length }})
-          </h2>
+        <v-divider class="opacity-20" />
 
-          <ForeignNationalEnrollments
-            :enrollments="foreignNational.data.enrollments"
-          />
-        </section>
+        <div class="grid grid-cols-3 gap-6">
+          <div class="text-xs uppercase tracking-wide text-gray-400">
+            Телефон
+          </div>
+          <div class="col-span-2 text-sm text-gray-900">
+            {{ formatPhoneNumber(foreignNational?.data.phone) }}
+          </div>
+        </div>
 
-      </div>
-    </div>
+        <v-divider class="opacity-20" />
 
-    <EnrollmentModal
-      v-model="isOpen"
-      :foreign-national="foreignNational.data"
-    />
-  </div>
+        <div class="grid grid-cols-3 gap-6">
+          <div class="text-xs uppercase tracking-wide text-gray-400">
+            Ответственный
+          </div>
+          <div class="col-span-2 text-sm text-gray-900">
+            {{ foreignNational?.data.creatorFullName }}
+          </div>
+        </div>
+
+      </v-card-text>
+    </v-card>
+
+    <!-- DOCUMENTS -->
+    <v-card
+      v-if="foreignNational?.data.permissions.documents"
+        rounded="xl"
+      elevation="0"
+    >
+      <v-card-text class="pa-8">
+
+        <div class="text-sm font-medium text-gray-900 mb-6">
+          Документы
+        </div>
+
+        <ForeignNationalsDocuments
+          :documents="foreignNational.data.documents"
+        />
+
+      </v-card-text>
+    </v-card>
+
+    <v-card
+      rounded="xl"
+      elevation="0"
+    >
+      <v-card-text class="pa-8">
+
+        <div class="text-sm font-medium text-gray-900 mb-6">
+          Записи ({{ foreignNational.data.enrollments.length }})
+        </div>
+
+        <ForeignNationalEnrollments
+          :enrollments="foreignNational.data.enrollments"
+        />
+
+      </v-card-text>
+    </v-card>
+  </v-container>
+  <EnrollmentModal
+    v-model="isOpen"
+    :foreign-national="foreignNational.data"
+  />
+
+  <ForeignNationalEditModal
+    v-model="editOpen"
+    :foreign-national="foreignNational.data"
+  />
 </template>

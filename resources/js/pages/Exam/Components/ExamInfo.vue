@@ -3,18 +3,18 @@ import { Exam } from '@/interfaces/Exam';
 import { computed } from 'vue';
 
 const props = defineProps<{
-    exam:Exam | null
+  exam:Exam | null
 }>()
 
 const examiners = computed(() =>{
-    return props.exam?.examiners.map(s => s.fullName).join(', ');
+  return props.exam?.examiners.map(s => s.fullName).join(', ');
 })
 </script>
 
 <template>
   <div class="space-y-1">
     <div
-      v-if="exam?.cancelledAt || exam?.cancelledReason"
+      v-if="exam?.cancelledAt"
       class="grid grid-cols-3 gap-6 py-4 border-b border-black/5"
     >
       <div class="flex items-start gap-2 text-xs uppercase tracking-wide text-red-400">

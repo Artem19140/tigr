@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref, watch } from 'vue';
-import AppAutocomplete from '@components/UI/AppAutocomplete/AppAutocomplete.vue';
 import {useHttp} from '@inertiajs/vue3';
 import AppTooltip from '@components/UI/AppTooltip/AppTooltip.vue';
 import { ExamIndex, ExamType } from '@/interfaces/Exam';
@@ -59,7 +58,7 @@ onUnmounted(() => {
       text="Запись закрывается за 10 минут до начала экзамена"
     />
   </div>
-  <AppAutocomplete
+  <V-autocomplete
     v-model="http.examTypeId"
     :items="examTypes"
     item-title="name"
@@ -70,7 +69,7 @@ onUnmounted(() => {
     :disabled="examTypesHttp.processing"
   />
 
-  <AppAutocomplete
+  <V-autocomplete
     v-model="examId"
     :items="examDates"
     :disabled="http.processing"

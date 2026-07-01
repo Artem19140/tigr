@@ -3,11 +3,11 @@ import { usePromptDialog } from '@composables/usePromptDialog';
 import BaseThreeDotDropdown from '@components/BaseComponents/BaseThreeDotDropdown/BaseThreeDotDropdown.vue';
 import { useLoadingSnackbar } from '@composables/useLoadingSnackBar';
 import { router, useHttp } from '@inertiajs/vue3';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import PaymentChange from '@/components/Enrollment/PaymentChange.vue';
-import { useModals } from '@/composables/useModals';
 import {  EnrollmentMonitoring } from '@/interfaces/Enrollment';
 import { ExamMonitoring } from '@/interfaces/Exam';
+import ViolationModal from './ViolationModal.vue';
 
 const props = defineProps<{ 
     enrollment:EnrollmentMonitoring,
@@ -37,12 +37,13 @@ const annul = async () => {
     })
 }
 
-const modals = useModals()
 
 const changePaymentDisabled = computed(() => !props.enrollment.availability.payment )
 const speakingDisabled = computed(() => !props.enrollment.attempt?.availability?.speaking )
 const editViolationDisabled = computed(() => !props.enrollment.attempt?.availability?.violations)
 const annulAttemptDisabled = computed(() => !props.enrollment.attempt?.availability?.annul)
+
+const isOpen = ref<boolean>(false)
 </script>
 
 <template>
@@ -60,7 +61,7 @@ const annulAttemptDisabled = computed(() => !props.enrollment.attempt?.availabil
         <v-list-item 
             title="Нарушения" 
             :disabled = "editViolationDisabled"
-            @click="modals.open('violation', {enrollment:props.enrollment})"
+            @click="isOpen = true"
         />
         <v-divider></v-divider>
         <v-list-item     
@@ -70,4 +71,8 @@ const annulAttemptDisabled = computed(() => !props.enrollment.attempt?.availabil
             @click="annul"
         />
     </BaseThreeDotDropdown>
+    <ViolationModal
+        v-model="isOpen"
+        :enrollment="enrollment"
+    />
 </template>

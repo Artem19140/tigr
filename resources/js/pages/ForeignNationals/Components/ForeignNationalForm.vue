@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import AppAutocomplete from '@components/UI/AppAutocomplete/AppAutocomplete.vue';
-import AppInput from '@components/UI/AppInput/AppInput.vue';
-import AppTextarea from '@components/UI/AppTextarea/AppTextarea.vue';
 import { computed } from 'vue';
 import countries from '@data/countries.json'
 import AppOptionalInput from '@/components/UI/AppOptionalInput/AppOptionalInput.vue';
@@ -38,7 +35,7 @@ function required (v:any) {
                 </v-col>
 
                 <v-col cols="12" md="6">
-                    <AppInput
+                    <v-text-field
                         label="Фамилия на кириллице"
                         :rules="[required]"
                         v-model="form.surname"
@@ -48,7 +45,7 @@ function required (v:any) {
                 </v-col>
 
                 <v-col cols="12" md="6">
-                    <AppInput 
+                    <v-text-field 
                     :rules="[required]"
                     label="Имя на кириллице"
                     v-model="form.name"
@@ -77,7 +74,7 @@ function required (v:any) {
 
                 
                 <v-col cols="12" md="6">
-                    <AppInput  
+                    <v-text-field  
                         label="Фамилия на латинице"
                         :rules="[required]"
                         v-model="form.surnameLatin"
@@ -87,7 +84,7 @@ function required (v:any) {
                 </v-col>
 
                 <v-col cols="12" md="6">
-                    <AppInput  
+                    <v-text-field  
                         label="Имя на латинице"
                         :rules="[required]"
                         v-model="form.nameLatin"
@@ -107,7 +104,7 @@ function required (v:any) {
                 </v-col>
 
                 <v-col cols="12" md="6">
-                    <AppInput 
+                    <v-text-field 
                         type="date"
                         :readonly="readonly"
                         :rules="[required]"
@@ -118,7 +115,7 @@ function required (v:any) {
                 </v-col>
 
                 <v-col md="6" cols="12">
-                    <AppAutocomplete
+                    <V-autocomplete
                         label="Гражданство"
                         :readonly="readonly"
                         :rules="[required]"
@@ -173,7 +170,7 @@ function required (v:any) {
                 </v-col>
 
                 <v-col cols="12" md="6">  
-                    <AppInput
+                    <v-text-field
                         :rules="[required]"
                         label="Кем выдан"
                         :readonly="readonly"
@@ -184,7 +181,7 @@ function required (v:any) {
                 </v-col>
 
                 <v-col cols="12" md="6">
-                    <AppInput 
+                    <v-text-field 
                         type="date"
                         label="Дата выдачи"
                         :rules="[required]"
@@ -203,7 +200,7 @@ function required (v:any) {
                 </v-col>
 
                 <v-col cols="12" md="6" class="mb-4">
-                    <AppInput 
+                    <v-text-field 
                         label="Адрес"
                         :rules="[required]"
                         :readonly="readonly"
@@ -220,7 +217,7 @@ function required (v:any) {
                 </v-col>
 
                 <v-col cols="12" md="6">
-                    <AppInput 
+                    <v-text-field 
                         label="Номер телефона"
                         placeholder="0123456789"
                         :readonly="readonly"
@@ -256,7 +253,7 @@ function required (v:any) {
         <v-card-text>
             <v-container fluid>
                 <v-row>
-                    <AppTextarea
+                    <v-textarea
                         label="Введите комментарий"
                         auto-grow
                         rows="1"

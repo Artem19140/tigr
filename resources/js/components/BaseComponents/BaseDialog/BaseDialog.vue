@@ -33,7 +33,6 @@ const close = () => {
                     </div>
 
                     <div class="flex items-center">
-                        <slot name="titleActions" />
                         <v-btn icon="mdi-close" variant="text" @click="close" />
                     </div>
                 </div>

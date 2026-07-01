@@ -6,7 +6,6 @@ import { useConfirmDialog } from '@composables/useConfirmDialog';
 import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { DateFormatter } from '@helpers/DateFormatter';
 import { ForeignNational, ForeignNationalEditForm} from '@/interfaces/ForeignNational';
-import { useSnackbarQueue } from '@/composables/useSnackbarQueue.js';
 
 const props = defineProps<{
     foreignNational: ForeignNational
@@ -44,14 +43,13 @@ const edit = () => {
             if(response.foreignNational){
                 isOpen.value=false
                 router.reload()
-                const {add} = useSnackbarQueue()
-                add('Данные обновлены, перезагрузите карту ИГ', 'green')
             }
         }
     })
 }
 
 const {confirmOpen} = useConfirmDialog()
+
 const beforeClose = async (fn: () => void) => {
     if(http.isDirty){
         const ok = await confirmOpen('Отменить редактирование?')

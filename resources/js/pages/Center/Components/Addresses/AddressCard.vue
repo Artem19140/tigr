@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import AppNumberInput from '@/components/UI/AppNumberInput/AppNumberInput.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
-import AppTextarea from '@/components/UI/AppTextarea/AppTextarea.vue';
 import { useConfirmationOptionsDialog } from '@/composables/useConfirmationOptionsDialog';
 import { useConfirmDialog } from '@/composables/useConfirmDialog';
 import { Address } from '@/interfaces/Address';
@@ -114,7 +112,7 @@ const cancellEdit = async () => {
 
                 <div class="d-flex flex-column ga-3">
 
-                    <AppTextarea
+                    <v-textarea
                         v-model="editHttp.address"
                         :error-messages="editHttp.errors.address"
                         :disabled="address.examsExists"
@@ -122,7 +120,7 @@ const cancellEdit = async () => {
                         maxlength="256"
                     />
 
-                    <AppNumberInput
+                    <v-number-input 
                         v-model="editHttp.capacity"
                         :error-messages="editHttp.errors.capacity"
                         label="Вместимость"

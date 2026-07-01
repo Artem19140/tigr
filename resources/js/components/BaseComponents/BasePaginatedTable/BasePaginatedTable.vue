@@ -16,7 +16,6 @@ const emit = defineEmits<{
 <template>
     <v-card
         class="base-table"
-        rounded="xl"
     >
         <div class="table-header">
             <div class="d-flex align-center justify-space-between flex-wrap ga-3">

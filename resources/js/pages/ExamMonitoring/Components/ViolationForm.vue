@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
-import AppTextarea from '@/components/UI/AppTextarea/AppTextarea.vue';
 
 const props = defineProps<{
     loading:boolean,
@@ -16,7 +15,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-    <AppTextarea 
+    <v-textarea 
         class="mt-2"
         label="Нарушение"
         hint="Максимум 256 символов"

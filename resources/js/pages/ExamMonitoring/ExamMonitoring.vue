@@ -6,8 +6,8 @@ import { computed, onMounted, onUnmounted, ref} from 'vue';
 import { DateFormatter } from '@helpers/DateFormatter';
 import PaymentIcon from '@/components/Enrollment/PaymentIcon.vue';
 import { ExamMonitoring } from '@/interfaces/Exam';
-import AppInput from '@/components/UI/AppInput/AppInput.vue';
 import ExamCommentModal from './Components/ExamCommentModal.vue';
+import AppBackButton from '@/components/UI/AppBackButton.vue';
 
 defineOptions({
   layout: [EmployeeLayout]
@@ -65,14 +65,12 @@ const isOpen = ref<boolean>(false)
     <Head>
         <title>{{ exam.data.shortName }} {{ new DateFormatter(exam.data?.beginTime).format('d.m.Y') }}</title>
     </Head>
-    <v-btn 
-        class="mt-4 ml-4" 
-        variant="text" 
+
+    <AppBackButton 
+        text="Назад"
+        class="mt-4 ml-4"
         @click="() => router.visit(`/exams/monitoring?date=${props.backDate}`)"
-        prepend-icon="mdi-arrow-left"
-    >
-        Назад
-    </v-btn>
+    />
 
     <v-container>
         <v-card
@@ -102,8 +100,7 @@ const isOpen = ref<boolean>(false)
                 </div>
 
                 <v-btn
-                    border
-                    variant="text"
+                    variant="outlined"
                     rounded="lg"
                     @click="isOpen=true"
                 >
@@ -114,7 +111,7 @@ const isOpen = ref<boolean>(false)
             <v-divider />
 
             <v-card-text class="d-flex justify-space-between align-center py-3">
-                <AppInput
+                <v-text-field
                     v-model="search"
                     density="compact"
                     label="Поиск"

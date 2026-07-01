@@ -19,7 +19,7 @@ const getDefaultDescription = (type:string) => {
   switch(type){
     case TaskTypes.SINGLE_CHOICE:
       return 'Выберите правильный ответ.'
-    case TaskTypes.TEXT_INPUT:
+    case TaskTypes.SINGLE_INPUT:
       return 'Впишите ответ в поле ввода'
   }
 }

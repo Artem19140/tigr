@@ -4,12 +4,12 @@ import { useHttp } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import ViolationForm from './ViolationForm.vue';
 import { Violation } from '@/interfaces/Violation';
-import { Attempt } from '@/interfaces/Attempt';
+import {  AttemptMonitoring } from '@/interfaces/Attempt';
 
 const props = defineProps<{
     index:number,
     violation:Violation,
-    attempt:Attempt
+    attempt:AttemptMonitoring
 }>()
 
 const emit = defineEmits<{

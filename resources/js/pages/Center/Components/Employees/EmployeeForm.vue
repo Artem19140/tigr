@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import AppAutocomplete from '@/components/UI/AppAutocomplete/AppAutocomplete.vue'
-import AppInput from '@/components/UI/AppInput/AppInput.vue'
+
 import { Roles } from '@/constants/Roles';
 import { computed, onMounted, ref } from 'vue';
 import { useHttp } from '@inertiajs/vue3';
@@ -28,33 +27,33 @@ onMounted(() => {
 </script>
 
 <template>
-    <AppInput 
+    <v-text-field 
         label="Фамилия"
         v-model="form.surname"
         :error-messages="errors.surname"
         :readonly="readOnly"
     />
-    <AppInput 
+    <v-text-field 
         label="Имя"
         v-model="form.name"
         :error-messages="errors.name"
         :readonly="readOnly"
     />
-    <AppInput 
+    <v-text-field 
         label="Отчество"
         v-model="form.patronymic"
         :error-messages="errors.patronymic"
         :readonly="readOnly"
     />
 
-    <AppInput 
+    <v-text-field 
         label="Должность"
         v-model="form.jobTitle"
         :error-messages="errors.jobTitle"
         :readonly="readOnly"
     />
 
-    <AppAutocomplete 
+    <V-autocomplete 
         label="Роли"
         :loading="loading"
         :disabled="loading"
@@ -67,7 +66,7 @@ onMounted(() => {
         :readonly="readOnly"
     />
 
-    <AppInput 
+    <v-text-field 
         label="e-mail@"
         v-model="form.email"
         :error-messages="errors.email"

@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import BaseDialog from '@/components/BaseComponents/BaseDialog/BaseDialog.vue';
-import AppAutocomplete from '@/components/UI/AppAutocomplete/AppAutocomplete.vue';
-import AppInput from '@/components/UI/AppInput/AppInput.vue';
 import AppPasswordInput from '@/components/UI/AppPasswordInput/AppPasswordInput.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { router, useHttp } from '@inertiajs/vue3';
@@ -37,12 +35,12 @@ const timeZones = [
         v-model="isOpen"
         @before-close="(close) => close()"
     >
-        <AppInput
+        <v-text-field
             v-model="http.shortName"
             label="Короткое название"
             :error-messages="http.errors.shortName"
         />
-        <AppAutocomplete
+        <V-autocomplete
             v-model="http.timeZone"
             label="Временная зона"
             :items="timeZones"

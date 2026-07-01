@@ -8,7 +8,6 @@ const {isOpen, message}  = useLoadingSnackbar()
         v-model="isOpen"
         :timeout="-1"
         :text="message"
-        contained
         loading
     ></v-snackbar>
 </template>

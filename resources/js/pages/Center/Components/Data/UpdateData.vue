@@ -2,8 +2,6 @@
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { useConfirmDialog } from '@/composables/useConfirmDialog';
 import { Center } from '@/interfaces/Center';
-import AppInput from '@components/UI/AppInput/AppInput.vue';
-import AppTextarea from '@components/UI/AppTextarea/AppTextarea.vue';
 import { router, useHttp } from '@inertiajs/vue3';
 const props = defineProps<{
     center : Center
@@ -54,25 +52,25 @@ const beforeClose = async () => {
 
                     <div class="section-title">Основная информация</div>
 
-                    <AppTextarea
+                    <v-textarea
                         v-model="http.name"
                         :error-messages="http.errors.name"
                         label="Название"
                     />
 
-                    <AppInput
+                    <v-text-field
                         v-model="http.ogrn"
                         :error-messages="http.errors.ogrn"
                         label="ОГРН"
                     />
 
-                    <AppInput
+                    <v-text-field
                         v-model="http.inn"
                         :error-messages="http.errors.inn"
                         label="ИНН"
                     />
 
-                    <AppTextarea
+                    <v-textarea
                         v-model="http.nameGenitive"
                         :error-messages="http.errors.nameGenitive"
                         label="Название (родительный падеж)"
@@ -83,13 +81,13 @@ const beforeClose = async () => {
 
                     <div class="section-title">Адреса</div>
 
-                    <AppTextarea
+                    <v-textarea
                         v-model="http.address"
                         :error-messages="http.errors.address"
                         label="Адрес центра"
                     />
 
-                    <AppTextarea
+                    <v-textarea
                         v-model="http.certificatesIssueAddress"
                         :error-messages="http.errors.certificatesIssueAddress"
                         label="Адрес выдачи сертификатов"
@@ -97,13 +95,13 @@ const beforeClose = async () => {
 
                     <div class="section-title mt-4">Ответственные лица</div>
 
-                    <AppTextarea
+                    <v-textarea
                         v-model="http.directorFio"
                         :error-messages="http.errors.directorFio"
                         label="Директор"
                     />
 
-                    <AppTextarea
+                    <v-textarea
                         v-model="http.commissionChairman"
                         :error-messages="http.errors.commissionChairman"
                         label="Председатель комиссии"

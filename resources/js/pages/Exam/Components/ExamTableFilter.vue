@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { useForm, useHttp, usePage } from '@inertiajs/vue3';
-import AppAutocomplete from '@components/UI/AppAutocomplete/AppAutocomplete.vue';
 import BaseFilter from '@components/BaseComponents/BaseFilter/BaseFilter.vue';
 import AppPeriodDate from '@components/UI/AppPeriodDate/AppPeriodDate.vue';
 import { computed, onMounted, ref} from 'vue';
 import { ExamFilters, ExamType } from '@/interfaces/Exam';
-import AppNumberInput from '@/components/UI/AppNumberInput/AppNumberInput.vue';
 
 const page = usePage<{
     flash:{
@@ -47,7 +45,7 @@ onMounted(() => {
         v-model="loading"
         :filters="filters"
     >
-        <AppAutocomplete
+        <v-autocomplete
             label="Тип экзамена"
             :items="examTypes"
             item-title="name"
@@ -62,7 +60,7 @@ onMounted(() => {
             v-model:date-to="form.dateTo"
         />
 
-        <AppNumberInput
+        <v-number-input 
             v-model="form.id"
             label="ID"
             :min="1"

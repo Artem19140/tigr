@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import BaseEntryCard from '@/components/BaseComponents/BaseEntryCard/BaseEntryCard.vue';
-import AppInput from '@/components/UI/AppInput/AppInput.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { Head, router, useForm, usePage } from '@inertiajs/vue3';
 
@@ -30,7 +29,7 @@ const page = usePage()
             </div>
         </template>
 
-        <AppInput 
+        <v-text-field 
             v-model="form.email"
             :error-messages="form.errors.email || page.props.errors.status"
             :disabled="form.processing"

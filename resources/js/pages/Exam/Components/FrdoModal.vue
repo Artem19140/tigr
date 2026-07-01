@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.vue';
-import AppInput from '@components/UI/AppInput/AppInput.vue';
 import BaseDialog from '@components/BaseComponents/BaseDialog/BaseDialog.vue';
 import { useHttp } from '@inertiajs/vue3';
-import AppAutocomplete from '@components/UI/AppAutocomplete/AppAutocomplete.vue';
 import { RedirectUrl } from '@/interfaces/Interfaces';
 
 const isOpen = defineModel<boolean>()
@@ -46,7 +44,7 @@ const items = [
         <template #header>
             <div>ФИС ФРДО</div>
         </template>
-        <AppAutocomplete
+        <v-autocomplete
             label="Тип"
             :items=items
             item-value="type"
@@ -56,7 +54,7 @@ const items = [
             v-model="http.type"
         />
 
-        <AppInput
+        <v-text-field
             label="Дата"
             v-model="http.examDate"
             type="date"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useHttp } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import BaseDialog from '@components/BaseComponents/BaseDialog/BaseDialog.vue';
 import ExamCreateForm from './ExamCreateForm.vue';
 import { DateFormatter } from '@helpers/DateFormatter';
@@ -9,11 +9,10 @@ import { computed, ref } from 'vue';
 import { Exam, ExamForm } from '@/interfaces/Exam';
 
 const props = defineProps<{
-    exam: Exam,
-    onEdit?:(exam:Exam) => void
+    exam: Exam
 }>()
 
-const http = useHttp<ExamForm>({
+const http = useForm<ExamForm>({
     examTypeId: props.exam.examTypeId,
     addressId:props.exam.addressId,
     comment:props.exam.comment ?? '',
@@ -31,9 +30,7 @@ const loading = ref(false)
 
 const edit = () => {
     http.put(`/exams/${props.exam.id}`,{
-        onSuccess:(response: any) => {
-            if(!props.onEdit || !response.exam) return
-            props.onEdit(response.exam)
+        onSuccess:() => {
             isOpen.value = false
         }
     })

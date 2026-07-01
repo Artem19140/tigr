@@ -3,7 +3,6 @@ import BaseDialog from '@components/BaseComponents/BaseDialog/BaseDialog.vue';
 import { router, useHttp } from '@inertiajs/vue3';
 import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { useConfirmDialog } from '@composables/useConfirmDialog';
-import AppTextarea from '@components/UI/AppTextarea/AppTextarea.vue';
 import { ExamMonitoring } from '@/interfaces/Exam';
 import { useSnackbarQueue } from '@/composables/useSnackbarQueue';
 
@@ -48,7 +47,7 @@ const beforeClose = async (fn:() => void ) => {
         title="Комментарий протокол"
         @before-close="(close) => beforeClose(close)"
     >
-        <AppTextarea
+        <v-textarea
             v-model="http.protocolComment"
             maxlength="1000"
             :error-messages="http.errors.protocolComment"

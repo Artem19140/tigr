@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.vue'
-import AppInput from '@components/UI/AppInput/AppInput.vue';
 import {  router, useForm } from '@inertiajs/vue3';
 import AppPasswordInput from '@components/UI/AppPasswordInput/AppPasswordInput.vue';
 
@@ -23,7 +22,7 @@ const submit = () => {
 
 <template>
   <form @submit.prevent="submit">
-    <AppInput 
+    <v-text-field 
       label="email"
       name="email"
       v-model="form.email"

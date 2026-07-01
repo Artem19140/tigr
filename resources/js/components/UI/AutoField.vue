@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import AppInput from './AppInput/AppInput.vue'
 
 const value = defineModel<string>({default:'Нуржонов'})
 const isOpen = ref(false)

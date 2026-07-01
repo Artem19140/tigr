@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppInput from '@components/UI/AppInput/AppInput.vue';
 import BaseTask from './BaseTask.vue';
 import { inject, ref, watch } from 'vue';
 import { Task } from '@/interfaces/Task';
@@ -40,7 +39,7 @@ const checking = inject<boolean>('checking')
     >   
         <template #answers>
             <v-card-text>
-                <AppInput
+                <v-text-field
                     v-model="answer"
                     :readonly="checking"
                     label="Введите ответ"

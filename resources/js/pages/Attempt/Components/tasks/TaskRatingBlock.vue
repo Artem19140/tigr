@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppAutocomplete from '@/components/UI/AppAutocomplete/AppAutocomplete.vue';
 import { AttemptAnswer, Task } from '@/interfaces/Task';
 import { useHttp } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
@@ -51,7 +50,7 @@ const marks = computed(() =>
 </script>
 
 <template>
-    <AppAutocomplete
+    <V-autocomplete
         v-model="http.mark"
         :label="`Выберите балл от 0 до ${task.mark}`"
         :items="marks"

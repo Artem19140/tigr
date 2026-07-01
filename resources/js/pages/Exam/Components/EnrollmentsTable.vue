@@ -4,7 +4,6 @@ import EnrollmentDropDown from '@/components/Enrollment/EnrollmentDropDown.vue';
 import ExamResultStatusChip from '@/components/Exam/ExamResultStatusChip.vue';
 import PaymentIcon from '@/components/Enrollment/PaymentIcon.vue';
 import { Exam } from '@/interfaces/Exam';
-import AppInput from '@/components/UI/AppInput/AppInput.vue';
 import ExamCapacityChip from '@/components/Exam/ExamCapacityChip.vue';
 
 const props = defineProps<{
@@ -29,7 +28,7 @@ const search = ref('')
 </script>
 
 <template>
-    <div class="d-flex align-center justify-space-between flex-wrap ga-4 p-4">
+    <div class="flex align-center justify-space-between p-4">
         <div>
             <div class="text-caption text-medium-emphasis mb-1">
                 Записано на экзамен
@@ -37,8 +36,7 @@ const search = ref('')
 
             <ExamCapacityChip :exam="exam" />
         </div>
-
-        <AppInput
+        <v-text-field
             v-model="search"
             density="compact"
             label="Поиск участника"
@@ -55,8 +53,8 @@ const search = ref('')
     <v-data-table
         :items="exam.enrollments"
         :headers="headers"
-        :search="search"
         :items-per-page="-1"
+        :search="search"
         hide-default-footer
     >
         <template #item.hasPayment="{ item }">

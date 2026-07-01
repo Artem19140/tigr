@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppInput from '../AppInput/AppInput.vue';
 
 const props = defineProps<{
   errors?: {
@@ -17,14 +16,14 @@ const dateTo = defineModel<string | null>('dateTo', {default:null})
     <span class="text-caption text-medium-emphasis">Период</span>
     <div class="flex ga-2">
       <div class="flex-1">
-        <AppInput
+        <v-text-field
           v-model="dateFrom"
           type="date"
           :error-messages="props.errors?.dateFrom"
         />
       </div>
       <div class="flex-1">
-        <AppInput
+        <v-text-field
           v-model="dateTo"
           type="date"
           :error-messages="props.errors?.dateTo"

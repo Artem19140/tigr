@@ -9,7 +9,11 @@ const props = defineProps<{
 
 <template>
     <v-container class="auth-container fill-height">
-        <v-card class="auth-card pa-8" max-width="460" width="100%">
+        <v-card 
+            class="auth-card pa-8" 
+            max-width="460" 
+            width="100%"
+        >
             
             <div class="flex justify-center items-center mb-5"> 
                 <AppLogo max-width="150" />
@@ -43,18 +47,16 @@ const props = defineProps<{
 
 <style lang="css" scoped>
 .auth-container {
-    min-height: 100vh;
-    padding: 24px;
+
+
     display: flex;
     align-items: center;
     justify-content: center;
-    background:
-        radial-gradient(circle at top, rgba(var(--v-theme-primary), 0.08), transparent 60%);
+    /* background:
+        radial-gradient(circle at top, rgba(var(--v-theme-primary), 0.08), transparent 60%); */
 }
 
 .auth-card {
-    border-radius: 20px;
-    backdrop-filter: blur(12px);
     background: rgba(var(--v-theme-surface), 0.92);
     box-shadow:
         0 20px 60px rgba(0, 0, 0, 0.12);

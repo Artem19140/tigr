@@ -25,13 +25,8 @@ export const useLoadingSnackbar = () => {
         }
         message.value = null
         isOpen.value = false
-        //isSuccess.value=true
     }
 
-    const success = () => {
-        message.value = null
-        isOpen.value = false
-    }
 
-    return {open, isOpen, message, success, close}
+    return {open, isOpen, message, close}
 }
