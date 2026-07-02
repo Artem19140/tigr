@@ -23,6 +23,7 @@ use App\Support\CenterIsolationCheck;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
@@ -164,7 +165,7 @@ class ExamController
         Request $request,
         Exam $exam,
         CancelExam $cancelExam
-    ): JsonResponse {
+    ): Response {
         Gate::authorize('delete', $exam);
 
         $request->validate([
@@ -176,6 +177,6 @@ class ExamController
             $request->string('cancelledReason')
         );
 
-        return response()->json();
+        return response()->noContent();
     }
 }

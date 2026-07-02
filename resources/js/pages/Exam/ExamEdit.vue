@@ -4,7 +4,7 @@ import { Address } from '@/interfaces/Address';
 import { Employee } from '@/interfaces/Employee';
 import { Exam, ExamForm, ExamType } from '@/interfaces/Exam';
 import { router, useHttp } from '@inertiajs/vue3';
-import ExamCreateForm from './Components/Modals/ExamCreateForm.vue';
+import ExamCreateForm from './Components/ExamCreateForm.vue';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 

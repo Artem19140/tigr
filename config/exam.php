@@ -60,7 +60,7 @@ return [
     |
     */
 
-    'min_time_from_start_to_finish' => 1,
+    'min_time_from_start_to_finish' => 2,
 
     /*
     |--------------------------------------------------------------------------

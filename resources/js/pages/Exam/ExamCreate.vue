@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ExamForm, ExamType } from '@/interfaces/Exam.js';
-import ExamCreateForm from './Components/Modals/ExamCreateForm.vue';
+import ExamCreateForm from './Components/ExamCreateForm.vue';
 import { router, useHttp } from '@inertiajs/vue3';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';

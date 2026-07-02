@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import ExamEnrollment from '@/components/Exam/ExamEnrollment.vue';
 import { ForeignNationalFormI } from '@/interfaces/ForeignNational';
-import { router, useForm } from '@inertiajs/vue3';
+import { router, useForm, useHttp } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import ForeignNationalForm from './Components/ForeignNationalForm.vue';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import { useConfirmDialog } from '@/composables/useConfirmDialog.js';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
+import { RedirectUrl } from '@/interfaces/Interfaces.js';
 
 defineOptions({
   layout: [EmployeeLayout]
@@ -40,7 +41,7 @@ defineOptions({
 //   noPhone:false
 // })
 
-const form = useForm<ForeignNationalFormI & {hasPayment:boolean, examId: number | null}>({
+const form = useHttp<ForeignNationalFormI & {hasPayment:boolean, examId: number | null}, RedirectUrl>({
   surname: '', 
   name:'',
   patronymic:"",
@@ -83,15 +84,10 @@ const create = async () => {
   }
 
   form.post('/foreign-nationals', {
-    onSuccess:(page) => {
-        const redirectUrl = page.flash.redirectUrl
-        if(redirectUrl){
-            window.open(String(redirectUrl))
-            router.visit('/foreign-nationals')
-        }
-    },
-    preserveScroll:true,
-    preserveState:true
+    onSuccess:(response) => {
+      window.open(response.redirectUrl)
+      router.visit('/foreign-nationals')
+    }
   })
 }
 

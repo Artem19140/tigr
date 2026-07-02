@@ -54,7 +54,7 @@ class ForeignNationalController
     public function store(
         ForeignNationalPostRequest $request,
         CreateForeignNationalWithEnrollment $createForeignNationalWithEnrollment
-    ) : RedirectResponse {
+    ) : JsonResponse {
         Gate::authorize('create', ForeignNational::class);
         
         $enrollement = $createForeignNationalWithEnrollment
@@ -65,11 +65,11 @@ class ForeignNationalController
                 $request->validated('hasPayment'),
             );
 
-        return Inertia::flash([
+        return response()->json([
             'redirectUrl' => route('enrollments.statements', [
                 'enrollment' => $enrollement
             ]),
-        ])->back();
+        ]);
     }
 
     public function show(

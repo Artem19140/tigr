@@ -41,7 +41,7 @@ class MinistryEducationGenerationTest extends TestCase
             ]);
 
         $response = $this->actingAs($this->actor)
-            ->getJson(route('reports.ministry-education', [
+            ->getJson(route('reports.ministry-education.download', [
                 'lastWeek' => true,
             ]));
 
@@ -65,7 +65,7 @@ class MinistryEducationGenerationTest extends TestCase
             ]);
 
         $response = $this->actingAs($this->actor)
-            ->getJson(route('reports.ministry-education', [
+            ->getJson(route('reports.ministry-education.download', [
                 'lastWeek' => false,
                 'dateFrom' => Carbon::now()->subWeek()->format('Y-m-d'),
                 'dateTo' => Carbon::now()->subDays(4)->format('Y-m-d'),
