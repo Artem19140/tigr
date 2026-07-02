@@ -3,8 +3,7 @@ import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { Paginated } from '@/interfaces/Interfaces';
 import { ForeignNationalIndex, ForeignNationalPagePermissions } from '@/interfaces/ForeignNational';
 import { Head, router } from '@inertiajs/vue3';
-import { computed, ref } from 'vue';
-import ForeignNationalTableDropdown from './Components/ForeignNationalTableDropdown.vue';
+import { ref } from 'vue';
 import BasePaginatedTable from '@/components/BaseComponents/BasePaginatedTable/BasePaginatedTable.vue';
 import ForeignNationalTableFilters from './Components/ForeignNationalTableFilters.vue';
 import AppAddButton from '@/components/UI/AppAddButton/AppAddButton.vue';
@@ -25,11 +24,6 @@ const headers = [
 ]
 
 const loading = ref<boolean>(false)
-const dropDownAccess = computed(() => 
-  props.permissions.ministryEducation ||
-  props.permissions.export ||
-  props.permissions.statistics
-)
 </script>
 
 <template>
@@ -54,10 +48,6 @@ const dropDownAccess = computed(() =>
           text="Добавить"
           @click="() => router.visit('/foreign-nationals/create')""
           v-if="permissions.create"
-        />
-        <ForeignNationalTableDropdown
-          v-if="dropDownAccess"
-          :permissions="permissions"
         />
       </template>
     </BasePaginatedTable>

@@ -40,12 +40,15 @@ class ForeignNationalController
         return Inertia::render('ForeignNationals/ForeignNationals', [
             'foreignNationals' => ForeignNationalIndexResource::collection($foreignNationals),
             'permissions' => [
-                'create' => $employee->can('create', ForeignNational::class),
-                'export' => $employee->can('export', ForeignNational::class),
-                'statistics' => $employee->can('statistics'),
-                'ministryEducation' => $employee->can('reports.min-education'),
+                'create' => $employee->can('create', ForeignNational::class)
             ],
         ]);
+    }
+
+    public function create() {
+        Gate::authorize('create', ForeignNational::class);
+
+        return Inertia::render('ForeignNationals/ForeignNationalCreate');
     }
 
     public function store(
@@ -87,18 +90,29 @@ class ForeignNationalController
         ]);
     }
 
+    public function edit(
+        ForeignNational $foreignNational
+    ) {
+        Gate::authorize('update', $foreignNational);
+
+        return Inertia::render('ForeignNationals/ForeignNationalEdit', [
+            'foreignNational' => new ForeignNationalProfileResource($foreignNational)
+        ]);
+    }
+
     public function update(
         ForeignNationalUpdateRequest $request,
         ForeignNational $foreignNational,
         UpdateForeignNational $updateForeignNational
-    ): JsonResponse {
-        $updatedForeignNational = $updateForeignNational->execute(
+    ) {
+        Gate::authorize('update', $foreignNational);
+        $updateForeignNational->execute(
             $request->toDto(),
             $foreignNational
         );
 
-        return response()->json([
-            'foreignNational' => new ForeignNationalProfileResource($updatedForeignNational),
-        ]);
+        return response()->redirectTo(route('foreign-nationals.show', [
+            'foreign_national' => $foreignNational 
+        ]));
     }
 }

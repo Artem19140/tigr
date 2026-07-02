@@ -25,6 +25,7 @@ class ExamResource extends JsonResource
     {
         $employee = $request->user();
         $exam = $this->resource;
+
         return [
             'id' => $this->id,
             'cancelledReason' => $this->when($this->isCancelled(), $this->cancelled_reason),
@@ -39,9 +40,7 @@ class ExamResource extends JsonResource
             'examiners' => EmployeeResource::collection($this->whenLoaded('examiners')),
             'name' => $this->whenLoaded('type', fn () => $this->type->name),
             'shortName' => $this->whenLoaded('type', fn () => $this->type->short_name),
-            'examTypeId' => $this->whenLoaded('type', fn () => $this->type->id),
             'address' => $this->whenLoaded('address', fn () => $this->address->address),
-            'addressId' => $this->whenLoaded('address', fn () => $this->address->id),
             'creator' => new EmployeeResource($this->whenLoaded('creator')),
             'createdAt' => $this->created_at,
             'documents' => DocumentResource::collection($this->whenLoaded('documents')),

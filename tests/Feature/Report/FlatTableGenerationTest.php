@@ -50,7 +50,7 @@ class FlatTableGenerationTest extends TestCase
                 'center_id' => $this->center->id,
             ]);
         $response = $this->actingAs($this->actor)
-            ->get(route('reports.flat-table', [
+            ->get(route('reports.flat-table.download', [
                 'dateFrom' => Carbon::now()->subDay()->format('Y-m-d'),
                 'dateTo' => Carbon::now()->addDay()->format('Y-m-d'),
             ]));

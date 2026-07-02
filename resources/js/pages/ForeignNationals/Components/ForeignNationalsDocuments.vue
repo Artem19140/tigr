@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import BaseThreeDotDropdown from '@/components/BaseComponents/BaseThreeDotDropdown/BaseThreeDotDropdown.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
-import AutoField from '@/components/UI/AutoField.vue';
 import { useSnackbarQueue } from '@/composables/useSnackbarQueue';
-import { useHttp } from '@inertiajs/vue3';
+import { router, useHttp } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const props = defineProps<{
@@ -11,12 +10,12 @@ const props = defineProps<{
 }>()
 
 const getLabel = (type: string) => {
-    switch(type){
-        case 'passport_translate':
-            return 'Перевод паспорта'
-        case 'passport':
-            return 'Паспорт'
-    }
+  switch(type){
+      case 'passport_translate':
+          return 'Перевод паспорта'
+      case 'passport':
+          return 'Паспорт'
+  }
 }
 
 const updatedId = ref<number | null>(null)
@@ -30,18 +29,19 @@ const http = useHttp<{document : File | null}>({
 })
 
 const update = (docId :number) => {
-    http.put(`/documents/${docId}`, {
-        onSuccess(response, httpResponse) {
-            const {add} = useSnackbarQueue()
-            add('Документ обновлен', 'green')
-            clear()
-        },
-    })
+  http.put(`/documents/${docId}`, {
+    onSuccess(response, httpResponse) {
+        const {add} = useSnackbarQueue()
+        add('Документ обновлен', 'green')
+        clear()
+        router.reload()
+    },
+  })
 }
 
 const clear = () => {
-    updatedId.value = null
-    http.document = null
+  updatedId.value = null
+  http.document = null
 }
 </script>
 

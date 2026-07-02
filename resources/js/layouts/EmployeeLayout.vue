@@ -58,6 +58,13 @@ const menu: Array<MenuElem> = [
     allowed:can.value.checking
   },
   {
+    title:"Отчеты" ,
+    prependIcon:"mdi-file-chart-outline" ,
+    url:'/reports',
+    value:"reports",
+    allowed:can.value.reports
+  },
+  {
     title:"Расписание" ,
     prependIcon:"mdi-calendar-month" ,
     url:'/exams/schedule',

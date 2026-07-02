@@ -14,7 +14,6 @@ const props = defineProps<{
             max-width="460" 
             width="100%"
         >
-            
             <div class="flex justify-center items-center mb-5"> 
                 <AppLogo max-width="150" />
             </div>
@@ -47,13 +46,9 @@ const props = defineProps<{
 
 <style lang="css" scoped>
 .auth-container {
-
-
     display: flex;
     align-items: center;
     justify-content: center;
-    /* background:
-        radial-gradient(circle at top, rgba(var(--v-theme-primary), 0.08), transparent 60%); */
 }
 
 .auth-card {

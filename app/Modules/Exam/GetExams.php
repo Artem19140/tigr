@@ -49,7 +49,7 @@ class GetExams
         $query->when($addressId, fn ($q) => $q->where('address_id', $addressId)
         );
 
-        $cancelled ? $query->cancelled() : $query->notCancelled();
+        $cancelled ? $query->whereNotNull('cancelled_at') : $query->notCancelled();
 
         $query->latest('begin_time');
 

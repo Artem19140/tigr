@@ -10,7 +10,7 @@ use App\Models\Enrollment;
 use App\Models\Exam;
 use App\Models\ExamType;
 
-Route::apiResource('exams', ExamController::class)
+Route::resource('exams', ExamController::class)
     ->middleware(['meta'])
     ->where(['exam' => '[0-9]+']);
 

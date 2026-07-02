@@ -2,7 +2,6 @@
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
-import { useModals } from '@composables/useModals';
 import AppAddButton from '@components/UI/AppAddButton/AppAddButton.vue';
 import { examStatus } from '@helpers/heplers';
 import { ExamCalendar } from '@/interfaces/Exam';
@@ -24,8 +23,6 @@ const props = defineProps<{
   }
 }>()
 
-const {open} = useModals()
-
 const calendar = ref()
 const focus = ref<string>(props.links.current)
 const loading = ref<boolean>(false)
@@ -39,10 +36,6 @@ const visit = (url: string) => {
     preserveState:true,
     preserveScroll:true,
   })
-}
-const addExam = (nativeEvent : Event, { date } : any) => {
-  if(!props.permissions.create) return
-  open('examCreate', {date})
 }
 
 watch(() => props.links.current, () => {
@@ -75,11 +68,11 @@ watch(() => props.links.current, () => {
           :disabled="loading"
           @click="() => visit(links.next)"
         />
-        <AppAddButton
+        <!-- <AppAddButton
           v-if="permissions.create"
           text="Добавить"
-          @click="open('examCreate', {})"
-        />
+          @click="() => router.visit('/exams/create')"
+        /> -->
       </div>
     </div>
     <div class="calendar-body">
@@ -89,7 +82,6 @@ watch(() => props.links.current, () => {
         color="primary"
         :events="exams?.data"
         :event-color="(event: ExamCalendar) => examStatus(event.status).color"
-        @click:date="addExam" 
       >
       </v-calendar>
     </div>

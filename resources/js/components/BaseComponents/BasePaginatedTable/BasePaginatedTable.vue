@@ -26,7 +26,7 @@ const emit = defineEmits<{
 
                     <slot name="header-left" />
                 </div>
-                <div class="d-flex align-center ga-2">
+                <div class="flex align-center gap-2 pr-4">
                     <slot name="header-actions" />
                 </div>
 
@@ -65,11 +65,11 @@ const emit = defineEmits<{
 </template>
 
 <style lang="css" scoped>
-.base-table {
+/* .base-table {
     overflow: hidden;
     background: rgba(var(--v-theme-surface), 0.9);
     backdrop-filter: blur(6px);
-}
+} */
 
 .table-header {
     padding: 14px 16px;

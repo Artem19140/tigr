@@ -12,7 +12,7 @@ const dateTo = defineModel<string | null>('dateTo', {default:null})
 </script>
 
 <template>
-  <div class="d-flex flex-column ga-1">
+  <div class="flex flex-column ga-1">
     <span class="text-caption text-medium-emphasis">Период</span>
     <div class="flex ga-2">
       <div class="flex-1">

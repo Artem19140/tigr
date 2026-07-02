@@ -32,12 +32,20 @@ class AuthorizationServiceProvider extends ServiceProvider
             return $employee->hasAnyRole(EmployeeRole::Director, EmployeeRole::Operator);
         });
 
-        Gate::define('reports.min-education', function (Employee $employee) {
+        Gate::define('reports.ministry-education', function (Employee $employee) {
             return $employee->hasAnyRole(EmployeeRole::Director);
         });
 
         Gate::define('reports.flat-table', function (Employee $employee) {
             return $employee->hasAnyRole(EmployeeRole::Director);
+        });
+
+        Gate::define('reports.viewAny', function (Employee $employee) {
+            return 
+                $employee->can('reports.ministry-education') ||
+                $employee->can('reports.flat-table') ||
+                $employee->can('reports.frdo')
+            ;
         });
 
         Gate::define('platform-manage', function (Employee $employee) {

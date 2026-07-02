@@ -53,7 +53,6 @@ const download = (document :string) => {
     }
   })
 }
-const modals = useModals()
 
 const downloadResultslDisabled  =  computed(() => !availability.value.documents.results?.available )
 const downloadProtocolDisabled = computed(() =>!availability.value.documents.protocol?.available )
@@ -99,7 +98,6 @@ const downloadCodesDisabled  = computed(() =>!availability.value.documents.codes
     <v-list-item 
       title="Редактировать" 
       v-if="permissions.actions.edit"
-      @click="modals.open('examEdit', {exam:exam})"
       :disabled="editDisabled"
     />
     

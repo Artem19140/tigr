@@ -27,7 +27,7 @@ class ExamDocumentRules
         Employee $employee
     ): array {
         $rules = [];
-        if($employee->can('codes', $exam)){
+        if($employee->can('examiner', $exam)){
             $rules['codes'] =  $this->codes($exam)->toArray();
         }
         if($employee->can('protocol', $exam)){

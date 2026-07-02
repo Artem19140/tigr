@@ -10,7 +10,6 @@ import EnrollmentModal from './Components/EnrollmentModal.vue';
 import { ref } from 'vue';
 import AppBackButton from '@/components/UI/AppBackButton.vue';
 import { router } from '@inertiajs/vue3';
-import ForeignNationalEditModal from './Components/ForeignNationalEditModal.vue';
 
 const props = defineProps<{
   foreignNational:{
@@ -39,9 +38,10 @@ function formatPhoneNumber(cleaned: string | null) {
     cleaned.substring(8, 10)
   );
 }
-
+const edit = () => {
+  router.visit(`/foreign-nationals/${props.foreignNational.data.id}/edit`)
+}
 const isOpen = ref<boolean>(false)
-const editOpen = ref<boolean>(false)
 </script>
 
 <template>
@@ -53,7 +53,7 @@ const editOpen = ref<boolean>(false)
   </div>
   <v-container class="space-y-8 ">
     <div
-      class="sticky top-0 z-30 bg-[#F7F9FC]/70 backdrop-blur-md border-b"
+      class="sticky top-0 z-30 bg-[#F7F9FC]/70 backdrop-blur-md border-b -mx-6"
     >
       <div class="py-4 px-0" >
 
@@ -82,7 +82,7 @@ const editOpen = ref<boolean>(false)
             <v-btn
               variant="text"
               class="text-gray-500"
-              @click="editOpen = true"
+              @click="edit"
             >
               Редактировать
             </v-btn>
@@ -93,10 +93,7 @@ const editOpen = ref<boolean>(false)
       </div>
     </div>
 
-    <v-card
-      rounded="xl"
-      variant="flat"
-    >
+    <v-card>
       <v-card-text class="pa-8">
         <div class="grid grid-cols-3 gap-6">
           <div class="text-xs uppercase tracking-wide text-gray-400">
@@ -110,10 +107,7 @@ const editOpen = ref<boolean>(false)
       </v-card-text>
     </v-card>
 
-    <v-card
-      rounded="xl"
-      elevation="0"
-    >
+    <v-card>
       <v-card-text class="pa-8 space-y-6">
 
         <div class="grid grid-cols-3 gap-6">
@@ -165,11 +159,8 @@ const editOpen = ref<boolean>(false)
       </v-card-text>
     </v-card>
 
-    <!-- DOCUMENTS -->
     <v-card
       v-if="foreignNational?.data.permissions.documents"
-        rounded="xl"
-      elevation="0"
     >
       <v-card-text class="pa-8">
 
@@ -203,11 +194,6 @@ const editOpen = ref<boolean>(false)
   </v-container>
   <EnrollmentModal
     v-model="isOpen"
-    :foreign-national="foreignNational.data"
-  />
-
-  <ForeignNationalEditModal
-    v-model="editOpen"
     :foreign-national="foreignNational.data"
   />
 </template>

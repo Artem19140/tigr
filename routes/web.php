@@ -6,7 +6,6 @@ use App\Http\Controllers\Web\Enrollment\EnrollmentDocumentController;
 use App\Http\Controllers\Web\Document\DocumentController;
 use App\Http\Controllers\Web\ForeignNational\ForeignNationalController;
 use App\Http\Controllers\Web\ForeignNational\ForeignNationalExportController;
-use App\Http\Controllers\Web\Report\ReportController;
 use App\Http\Controllers\Web\Statistics\StatisticsController;
 use App\Http\Controllers\Web\Upload\UploadController;
 use App\Http\RedirectResolver;
@@ -22,8 +21,7 @@ Route::middleware([
     AppMiddleware::CENTER_ACTIVE
 ])
     ->group(function () {
-        Route::inertia('foreign-nationals/create', 'ForeignNationals/ForeignNationalCreate');
-        Route::apiResource('foreign-nationals', ForeignNationalController::class)
+        Route::resource('foreign-nationals', ForeignNationalController::class)
             ->except('delete')
             ->where(['foreign_national' => '[0-9]+']);
 
@@ -48,27 +46,7 @@ Route::middleware([
         Route::get('statistics', [StatisticsController::class, 'index'])
             ->can('statistics');
 
-        Route::prefix('reports')->group(function () {
-            Route::get('frdo', [ReportController::class, 'frdo'])
-                ->can('reports.frdo')
-                ->name('reports.frdo');
-
-            Route::get('frdo/available', [ReportController::class, 'availableFrdo'])
-                ->can('reports.frdo')
-                ->name('reports.frdo.available');
-
-            Route::get('flat-table', [ReportController::class, 'flatTable'])
-                ->can('reports.flat-table')
-                ->name('reports.flat-table');
-
-            Route::get('ministry-education/available', [ReportController::class, 'availableMinistryEducationReport'])
-                ->can('reports.min-education')
-                ->name('reports.ministry-education.available');
-
-            Route::get('ministry-education', [ReportController::class, 'ministryEducationReport'])
-                ->can('reports.min-education')
-                ->name('reports.ministry-education');
-        });
+        require __DIR__.'/reports.php';
 
         require __DIR__.'/center_manage.php';
 

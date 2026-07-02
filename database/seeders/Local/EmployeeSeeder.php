@@ -20,25 +20,14 @@ class EmployeeSeeder extends Seeder
                 ],    
                 [
                     'surname' => 'f',
-                    'name' => 'n',
+                    'name' => 'Татьяна',
                     'patronymic'=> 'o',
-                    'job_title' => '3s',
+                    'job_title' => 'Специалист',
                     'center_id' => $center->id,
                     'email' => "$i@udsu.ru",
-                    //'has_to_change_password' => false,
                     'password' => $password,
-                ]);
-        }
-
-        // Employee::factory()
-        //     ->create([
-        //         'surname' => 'тестовый',
-        //         'name' => 'тестовый',
-        //         'center_id' => $center,
-        //         'email' => "test@udsu.ru",
-        //         'has_to_change_password' => false,
-        //         'password' => $password,
-        //     ]);
-        
+                ]
+            );
+        }        
     }
 }

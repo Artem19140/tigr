@@ -20,7 +20,7 @@ const form = useForm<ExamFilters>({
     cancelled: Boolean(filters.value?.cancelled) ?? null,
     examTypeId:filters.value?.examTypeId ? Number(filters.value?.examTypeId) : filters.value?.examTypeId,
     dateTo:filters.value?.dateTo,
-    id: filters.value.id ?  Number(filters.value.id) : null,
+    id: filters.value?.id ?  Number(filters.value.id) : null,
 })
 
 const loading = defineModel<boolean>({default:false})

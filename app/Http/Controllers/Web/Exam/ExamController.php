@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Exam;
 
+use App\Http\Resources\Exam\ExamEditResource;
 use App\Modules\Attempt\CreateAttempt;
 use App\Modules\Exam\CancelExam;
 use App\Modules\Exam\CreateExam;
@@ -46,11 +47,9 @@ class ExamController
         CenterIsolationCheck::check($exams);
 
         $employee = $request->user();
-        return Inertia::render('Exam/Exam', [
+        return Inertia::render('Exam/Exams', [
             'permissions' => [
-                'create' => $employee->can('create', Exam::class),
-                'flatTable' => $employee->can('reports.flat-table'),
-                'frdo' => $employee->can('reports.frdo'),
+                'create' => $employee->can('create', Exam::class)
             ],
             'exams' => ExamIndexResource::collection($exams)
         ]);
@@ -86,11 +85,26 @@ class ExamController
         ], 200);
     }
 
+    public function create(
+        ExamCreateData $builder
+    ): \Inertia\Response {
+        Gate::authorize('create', Exam::class);
+
+        $createData = $builder->execute();
+        CenterIsolationCheck::check($createData['addresses']);
+        CenterIsolationCheck::check($createData['examiners']);
+        return Inertia::render('Exam/ExamCreate', [
+            'addresses' => AddressResource::collection($createData['addresses']),
+            'examTypes' => ExamTypeResource::collection($createData['examTypes']),
+            'examiners' => EmployeeResource::collection($createData['examiners']),
+        ]);
+    }
+
     public function show(
         Request $request,
         Exam $exam,
         ExamViewBuilder $builder
-    ): \Inertia\Response{
+    ): \Inertia\Response {
         
         Gate::authorize('view', $exam);
         $employee = $request->user();
@@ -101,18 +115,33 @@ class ExamController
         ]);
     }
 
+    public function edit(
+        Exam $exam,
+        ExamCreateData $builder
+    ): \Inertia\Response {
+
+        Gate::authorize('update', $exam);
+        $createData = $builder->execute();
+        $exam->load('examiners');
+
+        return Inertia::render('Exam/ExamEdit', [
+            'exam' => new ExamEditResource($exam),
+            'addresses' => AddressResource::collection($createData['addresses']),
+            'examTypes' => ExamTypeResource::collection($createData['examTypes']),
+            'examiners' => EmployeeResource::collection($createData['examiners']),
+        ]);
+    }
+
     public function update(
         ExamPostRequest $request,
         Exam $exam,
         UpdateExam $updateExam
-    ): RedirectResponse {
+    ):JsonResponse {
         Gate::authorize('update', $exam);
 
         $updateExam->execute($exam, $request->toDto());
 
-        return redirect()->back();
-
-        
+        return response()->json();
     }
 
     public function verifyCode(
@@ -135,7 +164,7 @@ class ExamController
         Request $request,
         Exam $exam,
         CancelExam $cancelExam
-    ): RedirectResponse {
+    ): JsonResponse {
         Gate::authorize('delete', $exam);
 
         $request->validate([
@@ -147,6 +176,6 @@ class ExamController
             $request->string('cancelledReason')
         );
 
-        return redirect()->back();
+        return response()->json();
     }
 }

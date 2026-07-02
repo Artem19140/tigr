@@ -50,9 +50,11 @@ const beforeClose = async (fn:() => void ) => {
         <v-textarea
             v-model="http.protocolComment"
             maxlength="1000"
+            counter
             :error-messages="http.errors.protocolComment"
             label="Введите комментарий или нарушение"
-            hint="Поле автоматически увеличится"
+            auto-grow
+            rows="2"
         />
         <template #actions>
             <AppPrimaryButton

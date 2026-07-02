@@ -5,7 +5,6 @@ import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import PlatformAdminLayout from '@/layouts/PlatformAdminLayout.vue';
 import { useHttp } from '@inertiajs/vue3';
 
-
 defineOptions({
   layout: [EmployeeLayout, PlatformAdminLayout],
 })
@@ -29,8 +28,6 @@ const execute = async (number: number) => {
 
 <template>
     <v-container>
-
-    
         <v-card>
             <v-card-text >
                 <div class="flex flex-column gap-4">

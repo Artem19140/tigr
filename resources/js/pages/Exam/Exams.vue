@@ -7,7 +7,6 @@ import { DateFormatter } from '@/helpers/DateFormatter.js';
 import BasePaginatedTable from '@/components/BaseComponents/BasePaginatedTable/BasePaginatedTable.vue';
 import ExamTableFilter from './Components/ExamTableFilter.vue';
 import AppAddButton from '@/components/UI/AppAddButton/AppAddButton.vue';
-import ExamTableDropDown from './Components/ExamTableDropDown.vue';
 import ExamCapacityChip from '@/components/Exam/ExamCapacityChip.vue';
 import { ref } from 'vue';
 import { useModals } from '@/composables/useModals.js';
@@ -48,22 +47,23 @@ const loading = ref<boolean>(false)
           v-model="loading"
         />
       </template>
+      
       <template #header-actions>
         <AppAddButton
           text="Добавить"
-          @click="open('examCreate', {})"
+          @click="() => router.visit('/exams/create')"
           v-if="permissions.create"
         />
-        <ExamTableDropDown 
-          :permissions="permissions"
-        />
       </template>
+
       <template #item.enrollmentsCount="{ item }">
         <ExamCapacityChip :exam="item" />
       </template>
+
       <template #item.beginTime="{ item }">
           {{ new DateFormatter(item.beginTime).format('d M Y,  H:i') }}
       </template>
+
     </BasePaginatedTable>
   </v-container>
 </template>

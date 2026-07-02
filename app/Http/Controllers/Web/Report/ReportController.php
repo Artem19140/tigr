@@ -11,6 +11,8 @@ use App\Http\Requests\Report\FrdoReportRequest;
 use App\Http\Requests\Report\MinistryEducationReportRequest;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ReportController
@@ -51,7 +53,7 @@ class ReportController
         );
 
         return response()->json([
-            'redirectUrl' => route('reports.frdo', [
+            'redirectUrl' => route('reports.frdo.download', [
                 'examDate' => $request->validated('examDate'),
                 'type' => $request->validated('type'),
             ]),
@@ -82,11 +84,11 @@ class ReportController
             ]);
     }
 
-    public function availableMinistryEducationReport(
+    public function availableMinistryEducation(
         MinistryEducationReportRequest $request
     ): JsonResponse {
         return response()->json([
-            'redirectUrl' => route('reports.ministry-education', [
+            'redirectUrl' => route('reports.ministry-education.download', [
                 'lastWeek' => $request->validated('lastWeek'),
                 'dateFrom' => $request->validated('dateFrom'),
                 'dateTo' => $request->validated('dateTo'),
@@ -94,7 +96,7 @@ class ReportController
         ]);
     }
 
-    public function ministryEducationReport(
+    public function ministryEducation(
         MinistryEducationReportRequest $request,
         MinistryEducationReportGenerator $ministryEducationReportGenerator
     ): StreamedResponse {
@@ -125,5 +127,25 @@ class ReportController
                 'Content-Type' => 'text/csv; charset=UTF-8',
             ]
         );
+    }
+
+    public function resolve(Request $request)
+    {
+        $employee = $request->user();
+        $route = match(true){
+            $employee->can('reports.frdo') => 'reports.frdo',
+            $employee->can('reports.flat-table') => 'reports.flat-table',
+            $employee->can('reports.ministry-education') => 'reports.ministry-education',
+            default => null
+        };
+
+        if(! $route){
+            Log::warning('UNEXPECTED: reports route not resolved ', [
+                'route' => $route
+            ]);
+            abort(403);
+        }
+
+        return redirect()->route($route);
     }
 }

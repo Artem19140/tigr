@@ -3,7 +3,6 @@ import { computed } from 'vue';
 import countries from '@data/countries.json'
 import AppOptionalInput from '@/components/UI/AppOptionalInput/AppOptionalInput.vue';
 import { ForeignNationalEditForm, ForeignNationalFormI } from '@/interfaces/ForeignNational';
-import AppTooltip from '@/components/UI/AppTooltip/AppTooltip.vue';
 
 const props = defineProps<{
     errors:any,
@@ -24,9 +23,9 @@ function required (v:any) {
 <template>
     <v-card 
         class="mb-4"
-        rounded="xl"
     >
         <v-card-text>
+            <v-container>
             <v-row class="mb-2">
                 <v-col cols="12">
                     <div class="text-sm font-medium text-medium-emphasis">
@@ -240,17 +239,18 @@ function required (v:any) {
                     />
                 </v-col>
             </v-row>
+            </v-container>
         </v-card-text>
     </v-card>
 
-    <v-card class="mb-4" rounded="xl" variant="flat" >
-        <v-card-title>
-            Дополнительная информация
-            <AppTooltip
-                text="например, лицо с ограниченными возможностями здоровья"
-            />
-        </v-card-title>
+    <v-card 
+        class="mb-4" 
+    >
+        
         <v-card-text>
+            <v-card-subtitle>
+                Дополнительная информация
+            </v-card-subtitle>
             <v-container fluid>
                 <v-row>
                     <v-textarea

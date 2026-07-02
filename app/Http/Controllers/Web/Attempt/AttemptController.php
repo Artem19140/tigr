@@ -14,6 +14,7 @@ use App\Modules\Shared\ExamSettings;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
@@ -97,6 +98,7 @@ class AttemptController
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+        Auth::logout();
 
         return redirect()->route('attempts.finish.after');
     }

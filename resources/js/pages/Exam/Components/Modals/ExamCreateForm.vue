@@ -1,153 +1,129 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { useHttp } from '@inertiajs/vue3';
 import { Address } from '@/interfaces/Address';
 import { Employee } from '@/interfaces/Employee';
 import { ExamType } from '@/interfaces/Exam';
 
 const props = defineProps<{
-    form:any, 
-    hasEnrollment?:boolean
+  form:any, 
+  hasEnrollment?:boolean, 
+  addresses:Address[],
+  examiners: Employee[],
+  examTypes:ExamType[]
 }>()
 
-const addresses = ref<Address[]>()
-const examiners = ref<Employee[]>()
-const examTypes = ref<ExamType[]>()
-
-
-const http = useHttp()
-
-onMounted( async () => {
-    http.get('/exams/create/data', {
-        onSuccess:(response:any) => {
-            addresses.value = response.addresses
-            examiners.value = response.examiners
-            examTypes.value = response.examTypes
-        }
-    })
-})
 function required (v:any) {
-    return !!v || 'Поле обязательно'
+  return !!v || 'Поле обязательно'
 }
 </script>
 
 <template>
-    <v-row >
-        <v-col cols="12">
-            <v-autocomplete
-                label="Тип экзамена"
-                :rules="[required]"
-                item-title="name"
-                item-value="id"
-                :items="examTypes"
-                v-model="form.examTypeId"
-                :error-messages="form.errors.examTypeId"
-                :loading="http.processing"
-                :disabled="hasEnrollment"
-                clearable
-                prepend-inner-icon="mdi-school-outline"
-            />
-        </v-col>
+  <div class="space-y-4 p-6 ">
+    <v-autocomplete
+      label="Тип экзамена"
+      :rules="[required]"
+      item-title="name"
+      item-value="id"
+      :items="examTypes"
+      v-model="form.examTypeId"
+      :error-messages="form.errors.examTypeId"
+      :disabled="hasEnrollment"
+      clearable
+      variant="outlined"
+      density="comfortable"
+      prepend-inner-icon="mdi-school-outline"
+    />
 
-        <v-col
-            cols="12"
-            md="4"
-        >
-            <v-text-field
-                type="date"
-                label="Дата"
-                :rules="[required]"
-                v-model="form.date"
-                :disabled="hasEnrollment"
-                :error-messages="form.errors.date"
-                prepend-inner-icon="mdi-calendar-outline"
-            />
-        </v-col>
+    <div class="grid grid-cols-2 gap-4">
+      <v-text-field
+        type="date"
+        label="Дата"
+        :rules="[required]"
+        v-model="form.date"
+        :disabled="hasEnrollment"
+        :error-messages="form.errors.date"
+        variant="outlined"
+        density="comfortable"
+      />
 
-        <v-col
-            cols="12"
-            md="4"
-        >
-            <v-text-field
-                type="time"
-                label="Время"
-                :rules="[required]"
-                v-model="form.time"
-                :disabled="hasEnrollment"
-                :error-messages="form.errors.time"
-                prepend-inner-icon="mdi-clock-outline"    
-            />
-        </v-col>
+      <v-text-field
+        type="time"
+        label="Время"
+        :rules="[required]"
+        v-model="form.time"
+        :disabled="hasEnrollment"
+        :error-messages="form.errors.time"
+        variant="outlined"
+        density="comfortable"
+      />
+    </div>
 
-        <v-col
-            cols="12"
-            md="4"
-        >
-            <v-number-input 
-                label="Вместимость"
-                v-model="form.capacity"
-                :rules="[required]"
-                :min="0"
-                :error-messages="form.errors.capacity"
-                prepend-inner-icon="mdi-account-group-outline"
-                control-variant="hidden"
-            />
-        </v-col>
+    <v-number-input
+      label="Вместимость"
+      v-model="form.capacity"
+      :rules="[required]"
+      :min="0"
+      :error-messages="form.errors.capacity"
+      prepend-inner-icon="mdi-account-group-outline"
+      control-variant="hidden"
+      density="comfortable"
+    />
 
-        <v-col cols="12">
-            <v-autocomplete
-                label="Адрес"
-                item-title="address"
-                item-value="id"
-                :items="addresses"
-                :rules="[required]"
-                v-model="form.addressId"
-                :disabled="hasEnrollment"
-                :loading="http.processing"
-                :error-messages="form.errors.addressId"
-                clearable
-                prepend-inner-icon="mdi-map-marker-outline"
-            />
-        </v-col>
+  </div>
 
-        <v-col cols="12">
-            <v-autocomplete
-                label="Экзаменаторы"
-                item-title="fullName"
-                item-value="id"
-                :items="examiners"
-                :rules="[required]"
-                v-model="form.examiners"
-                :loading="http.processing"
-                :error-messages="form.errors.examiners"
-                multiple
-                chips
-                closable-chips
-                clearable
-                prepend-inner-icon="mdi-account-tie-outline"
-            />
-        </v-col>
+  <div class="space-y-4 p-6 ">
 
-        <v-col cols="12">
-            <v-divider class="my-2" />
-        </v-col>
+    <v-autocomplete
+      label="Адрес"
+      item-title="address"
+      item-value="id"
+      :items="addresses"
+      :rules="[required]"
+      v-model="form.addressId"
+      :disabled="hasEnrollment"
+      :error-messages="form.errors.addressId"
+      clearable
+      density="comfortable"
+      prepend-inner-icon="mdi-map-marker-outline"
+    />
 
-        <v-col cols="12">
-            <div class="text-subtitle-2 text-medium-emphasis mb-2">
-                Дополнительно
-            </div>
+    <v-autocomplete
+      label="Экзаменаторы"
+      item-title="fullName"
+      item-value="id"
+      :items="examiners"
+      :rules="[required]"
+      v-model="form.examiners"
+      :error-messages="form.errors.examiners"
+      multiple
+      chips
+      closable-chips
+      clearable
+      density="comfortable"
+      prepend-inner-icon="mdi-account-tie-outline"
+    />
 
-            <v-textarea
-                label="Комментарий"
-                v-model="form.comment"
-                :error-messages="form.errors.comment"
-                hint="Максимум 256 символов"
-                maxlength="256"
-                counter
+  </div>
 
-                auto-grow
-                prepend-inner-icon="mdi-text-box-outline"
-            />
-        </v-col>
-    </v-row>
+  <div class="space-y-4 p-6 ">
+
+    <div class="mb-4 text-xs uppercase tracking-wider text-gray-400">
+      Дополнительно
+    </div>
+
+    <v-textarea
+      label="Комментарий"
+      v-model="form.comment"
+      :error-messages="form.errors.comment"
+      hint="Максимум 256 символов"
+      maxlength="256"
+      counter
+      rows="2"
+      auto-grow
+      variant="outlined"
+      density="comfortable"
+      prepend-inner-icon="mdi-text-box-outline"
+    />
+
+  </div>
+
 </template>

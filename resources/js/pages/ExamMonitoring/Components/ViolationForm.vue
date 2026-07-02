@@ -21,6 +21,8 @@ const emit = defineEmits<{
         hint="Максимум 256 символов"
         maxlength="256"
         v-model="comment"
+        auto-grow
+        rows="1"
         :error-messages="errorMessages"
     />
     <AppPrimaryButton 
