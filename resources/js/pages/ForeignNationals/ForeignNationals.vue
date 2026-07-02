@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { Paginated } from '@/interfaces/Interfaces';
-import { ForeignNationalIndex, ForeignNationalPagePermissions } from '@/interfaces/ForeignNational';
+import { ForeignNationalIndex } from '@/interfaces/ForeignNational';
 import { Head, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import BasePaginatedTable from '@/components/BaseComponents/BasePaginatedTable/BasePaginatedTable.vue';
@@ -13,43 +13,46 @@ defineOptions({
 })
 
 const props = defineProps<{
-  foreignNationals: Paginated<ForeignNationalIndex>,
-  permissions:ForeignNationalPagePermissions
+	foreignNationals: Paginated<ForeignNationalIndex>,
+	permissions:{
+		create:boolean
+	}
 }>()
 
 const headers = [
-  {title : "ID",sortable: false, key: 'id', align: 'center' },
-  {title : "ФИО",sortable: false, key: 'fullName', align: 'start' },
-  {title : "Паспорт",sortable: false, key: 'fullPassport', align: 'start' },
+	{title : "ID",sortable: false, key: 'id', align: 'center' },
+	{title : "ФИО",sortable: false, key: 'fullName', align: 'start' },
+	{title : "Паспорт",sortable: false, key: 'fullPassport', align: 'start' },
 ]
 
 const loading = ref<boolean>(false)
 </script>
 
 <template>
-  <Head>
-    <title>ИГ</title>
-  </Head>
-  <v-container>
-    <BasePaginatedTable
-      :loading="loading"
-      :headers="headers"
-      :elements="foreignNationals"
-      title="Иностранные граждане"
-      @row-click="(item) => router.visit(`/foreign-nationals/${item.id}`)"
-    >
-      <template #header-left>
-        <ForeignNationalTableFilters  
-          v-model="loading"
-        />
-      </template>
-      <template #header-actions>
-        <AppAddButton
-          text="Добавить"
-          @click="() => router.visit('/foreign-nationals/create')""
-          v-if="permissions.create"
-        />
-      </template>
-    </BasePaginatedTable>
-  </v-container> 
+	<Head>
+		<title>ИГ</title>
+	</Head>
+	
+	<v-container>
+		<BasePaginatedTable
+			:loading="loading"
+			:headers="headers"
+			:elements="foreignNationals"
+			title="Иностранные граждане"
+			@row-click="(item) => router.visit(`/foreign-nationals/${item.id}`)"
+		>
+			<template #header-left>
+				<ForeignNationalTableFilters  
+					v-model="loading"
+				/>
+			</template>
+			<template #header-actions>
+				<AppAddButton
+				text="Добавить"
+				@click="() => router.visit('/foreign-nationals/create')""
+				v-if="permissions.create"
+				/>
+			</template>
+		</BasePaginatedTable>
+	</v-container> 
 </template>

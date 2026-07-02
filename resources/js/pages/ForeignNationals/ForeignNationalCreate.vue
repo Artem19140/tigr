@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ExamEnrollment from '@/components/Exam/ExamEnrollment.vue';
 import { ForeignNationalFormI } from '@/interfaces/ForeignNational';
-import { router, useForm, useHttp } from '@inertiajs/vue3';
+import { router, useHttp } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import ForeignNationalForm from './Components/ForeignNationalForm.vue';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
@@ -92,14 +92,14 @@ const create = async () => {
 }
 
 const cancel = async () => {
-    const {confirmOpen} = useConfirmDialog()
-    if (form.isDirty) {
-        const ok = await confirmOpen('Отменить добавление ИГ?')
-        if(!ok) return
-        
-    }
-    form.cancel()
-    router.visit('/foreign-nationals')
+  const {confirmOpen} = useConfirmDialog()
+  if (form.isDirty) {
+		const ok = await confirmOpen('Отменить добавление ИГ?')
+		if(!ok) return
+      
+  }
+  form.cancel()
+  router.visit('/foreign-nationals')
 }
 </script>
 

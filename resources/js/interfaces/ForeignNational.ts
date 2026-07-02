@@ -83,13 +83,6 @@ export type ForeignNationalFilters= {
   id: number | null,
 }
 
-export interface ForeignNationalPagePermissions{
-  create: boolean,
-  export: boolean,
-  statistics: boolean,
-  ministryEducation: boolean
-}
-
 export interface ForeignNationalActionsPermissions{
   edit: boolean,
   enroll: boolean,

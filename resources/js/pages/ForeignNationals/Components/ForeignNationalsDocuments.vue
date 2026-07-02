@@ -11,10 +11,10 @@ const props = defineProps<{
 
 const getLabel = (type: string) => {
   switch(type){
-      case 'passport_translate':
-          return 'Перевод паспорта'
-      case 'passport':
-          return 'Паспорт'
+    case 'passport_translate':
+        return 'Перевод паспорта'
+    case 'passport':
+        return 'Паспорт'
   }
 }
 
@@ -25,23 +25,23 @@ const open = (docId :number) => {
 }
 
 const http = useHttp<{document : File | null}>({
-    document:  null
+  	document:  null
 })
 
 const update = (docId :number) => {
-  http.put(`/documents/${docId}`, {
-    onSuccess(response, httpResponse) {
-        const {add} = useSnackbarQueue()
-        add('Документ обновлен', 'green')
-        clear()
-        router.reload()
-    },
-  })
+  	http.put(`/documents/${docId}`, {
+		onSuccess(response, httpResponse) {
+			const {add} = useSnackbarQueue()
+			add('Документ обновлен', 'green')
+			clear()
+			router.reload()
+		},
+	})
 }
 
 const clear = () => {
-  updatedId.value = null
-  http.document = null
+	updatedId.value = null
+	http.document = null
 }
 </script>
 
@@ -62,8 +62,7 @@ const clear = () => {
             <v-icon icon="mdi-file-document-outline" />
           </v-avatar>
         </template>
-
-        <!-- CONTENT -->
+		
         <v-list-item-title class="text-sm font-medium text-slate-900">
           {{ getLabel(doc.type) }}
         </v-list-item-title>
@@ -72,7 +71,6 @@ const clear = () => {
           {{ doc.createdAt }}
         </v-list-item-subtitle>
 
-        <!-- ACTIONS -->
         <template #append>
           <div class="opacity-60 hover:opacity-100 transition">
             <BaseThreeDotDropdown>

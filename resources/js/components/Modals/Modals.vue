@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { useModals } from '@composables/useModals';
 import EmployeeCreateModal from '@pages/Center/Components/Employees/EmployeeCreateModal.vue';
-import ForeignNationalExportModal from '@/pages/ForeignNationals/Components/ForeignNationalExportModal.vue';
-import StatisticsModal from '@/pages/ForeignNationals/Components/StatisticsModal.vue';
 import AddressCreateModal from '@/pages/Center/Components/Addresses/AddressCreateModal.vue';
 import EmployeeEditModal from '@/pages/Center/Components/Employees/EmployeeEditModal.vue';
 import LogoutAllDevicesModal from './LogoutAllDevicesModal.vue';
@@ -16,8 +14,6 @@ const modalComponent = (name: ModalName) => modalMap[name] ?? null
 
 const modalMap = {
     employeeCreate: EmployeeCreateModal,
-    foreignNationalExport: ForeignNationalExportModal,
-    statistics: StatisticsModal,
     addressCreate: AddressCreateModal,
     employeeEdit:EmployeeEditModal,
     logoutAll:LogoutAllDevicesModal,

@@ -65,11 +65,11 @@ const emit = defineEmits<{
 </template>
 
 <style lang="css" scoped>
-/* .base-table {
+.base-table {
     overflow: hidden;
     background: rgba(var(--v-theme-surface), 0.9);
     backdrop-filter: blur(6px);
-} */
+}
 
 .table-header {
     padding: 14px 16px;

@@ -8,52 +8,52 @@ import { ref } from 'vue';
 const isOpen = defineModel({default:false})
 
 interface StatisticsHttp{
-  dateFrom:string | null,
-  dateTo: string | null
+	dateFrom:string | null,
+	dateTo: string | null
 }
 
 interface StatisticsData{
-  examsCount:number | null,
-  attemptsCount: number | null,
-  attemptsTakersCount: number | null,
-  failedAttemptsCount: number | null,
-  successfulAttemptsCount: number | null,
-  annulledAttemptsCount: number | null
+	examsCount:number | null,
+	attemptsCount: number | null,
+	attemptsTakersCount: number | null,
+	failedAttemptsCount: number | null,
+	successfulAttemptsCount: number | null,
+	annulledAttemptsCount: number | null
 }
 
 const http = useHttp<StatisticsHttp, StatisticsData>({
-  dateFrom:null,
-  dateTo:null
+	dateFrom:null,
+	dateTo:null
 })
 
 const statistics = ref<StatisticsData>({
-  examsCount:null,
-  attemptsCount:null,
-  attemptsTakersCount:null,
-  failedAttemptsCount:null,
-  successfulAttemptsCount:null,
-  annulledAttemptsCount:null
+	examsCount:null,
+	attemptsCount:null,
+	attemptsTakersCount:null,
+	failedAttemptsCount:null,
+	successfulAttemptsCount:null,
+	annulledAttemptsCount:null
 })
 
 const getStatistics = () => {
-  http.get('/statistics',{
-    onSuccess:(response) => {
-      statistics.value = response
-    }
-  })
+	http.get('/statistics',{
+		onSuccess:(response) => {
+		statistics.value = response
+		}
+	})
 }
 </script>
 
 <template>
-  <BaseDialog 
-      width="500"
-      subtitle="Выберите период для статистики"
-      v-model="isOpen"
-      @before-close="(close) => close()"
-  >
-    <template #header>
-      <div >Статистика</div>
-    </template>
+  	<BaseDialog 
+		width="500"
+		subtitle="Выберите период для статистики"
+		v-model="isOpen"
+		@before-close="(close) => close()"
+  	>
+		<template #header>
+			<div >Статистика</div>
+		</template>
     <AppPeriodDate 
       :errors="http.errors"
       v-model:date-from="http.dateFrom"
@@ -101,12 +101,12 @@ const getStatistics = () => {
           </v-col>
 
           <v-col cols="12" sm="4">
-            <v-card class="pa-4" color="grey-lighten-3" elevation="0">
-              <div class="text-caption text-grey-darken-2">Снято</div>
-              <div class="text-h5 font-weight-medium text-grey-darken-2">
-                {{ statistics.annulledAttemptsCount }}
-              </div>
-            </v-card>
+				<v-card class="pa-4" color="grey-lighten-3" elevation="0">
+					<div class="text-caption text-grey-darken-2">Снято</div>
+					<div class="text-h5 font-weight-medium text-grey-darken-2">
+						{{ statistics.annulledAttemptsCount }}
+					</div>
+				</v-card>
           </v-col>
 
         </v-row>

@@ -12,34 +12,34 @@ import AppBackButton from '@/components/UI/AppBackButton.vue';
 import { router } from '@inertiajs/vue3';
 
 const props = defineProps<{
-  foreignNational:{
-    data: ForeignNational
-  }
+	foreignNational:{
+		data: ForeignNational
+	}
 }>()
 
 defineOptions({
-  layout: [EmployeeLayout]
+  	layout: [EmployeeLayout]
 })
 
 const getCountryTitle = (value:string | null) => {
-  const result = countries.find(item => item.value === value);
-  return result ? result.text : '-';
+	const result = countries.find(item => item.value === value);
+	return result ? result.text : '-';
 }
 
 function formatPhoneNumber(cleaned: string | null) {
-  if (!cleaned || cleaned.length !== 10 || !/^\d+$/.test(cleaned)) {
-    return "+7 (___) ___-__-__"; 
-  }
-  return (
-    "+7 (" +
-    cleaned.substring(0, 3) + ") " +
-    cleaned.substring(3, 6) + "-" +
-    cleaned.substring(6, 8) + "-" +
-    cleaned.substring(8, 10)
-  );
+	if (!cleaned || cleaned.length !== 10 || !/^\d+$/.test(cleaned)) {
+		return "+7 (___) ___-__-__"; 
+	}
+	return (
+		"+7 (" +
+		cleaned.substring(0, 3) + ") " +
+		cleaned.substring(3, 6) + "-" +
+		cleaned.substring(6, 8) + "-" +
+		cleaned.substring(8, 10)
+	);
 }
 const edit = () => {
-  router.visit(`/foreign-nationals/${props.foreignNational.data.id}/edit`)
+  	router.visit(`/foreign-nationals/${props.foreignNational.data.id}/edit`)
 }
 const isOpen = ref<boolean>(false)
 </script>
