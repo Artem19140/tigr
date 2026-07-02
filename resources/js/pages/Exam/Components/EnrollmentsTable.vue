@@ -5,6 +5,7 @@ import ExamResultStatusChip from '@/components/Exam/ExamResultStatusChip.vue';
 import PaymentIcon from '@/components/Enrollment/PaymentIcon.vue';
 import { Exam } from '@/interfaces/Exam';
 import ExamCapacityChip from '@/components/Exam/ExamCapacityChip.vue';
+import { mdiMagnify } from '@mdi/js'
 
 const props = defineProps<{
     exam: Exam
@@ -40,7 +41,7 @@ const search = ref('')
             v-model="search"
             density="compact"
             label="Поиск участника"
-            prepend-inner-icon="mdi-magnify"
+            :prepend-inner-icon="mdiMagnify"
             variant="outlined"
             hide-details
             single-line

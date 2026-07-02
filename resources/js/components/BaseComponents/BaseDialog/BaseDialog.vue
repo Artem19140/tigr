@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { mdiClose } from '@mdi/js'
 
 const isOpen = defineModel<boolean>()
 const emit = defineEmits<{ (e: 'beforeClose', done: ()=>void) :void} >()
@@ -33,7 +34,11 @@ const close = () => {
                     </div>
 
                     <div class="flex items-center">
-                        <v-btn icon="mdi-close" variant="text" @click="close" />
+                        <v-btn
+                            :icon="mdiClose" 
+                            variant="text" 
+                            @click="close" 
+                        />
                     </div>
                 </div>
             </div>

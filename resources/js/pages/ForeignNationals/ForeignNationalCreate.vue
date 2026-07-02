@@ -104,90 +104,88 @@ const cancel = async () => {
 </script>
 
 <template>
-  <v-container>
-    <v-card class="mb-4 rounded-xl" >
-      <v-card-text>
-        <ExamEnrollment
-            v-model:exam-id="form.examId"
-            v-model:has-payment="form.hasPayment"
-            :exam-validation-errors="form.errors.examId"
-        />
-      </v-card-text>
-    </v-card>
+	<v-container>
+		<v-card class="mb-4 rounded-xl" >
+			<v-card-text>
+				<ExamEnrollment
+				v-model:exam-id="form.examId"
+				v-model:has-payment="form.hasPayment"
+				:exam-validation-errors="form.errors.examId"
+				/>
+			</v-card-text>
+		</v-card>
 
-    <v-form ref="validation">
-      <ForeignNationalForm
-        v-model:form="form"
-        :loading="form.processing"
-        :errors="form.errors"
-      />
-          <v-card>
-            <v-card-text>
-              <v-card-subtitle>
-                Документы
-              </v-card-subtitle>
-            </v-card-text>
-            <v-card-text>
-              <div class="mb-4 rounded-xl bg-white/5 px-4 py-3">
-                <p class="text-xs  leading-relaxed">
-                  Допустимы файлы формата <span class="font-medium">PDF</span>.
-                  Максимальный размер — <span class=" font-medium">20 MB</span>.
-                </p>
-              </div>
-            </v-card-text>
-            <v-card-text>
-              <v-row>
+		<v-form ref="validation">
+			<ForeignNationalForm
+				v-model:form="form"
+				:loading="form.processing"
+				:errors="form.errors"
+			/>
+			<v-card>
+				<v-card-text>
+				<v-card-subtitle>
+					Документы
+				</v-card-subtitle>
+				</v-card-text>
+				<v-card-text>
+				<div class="mb-4 rounded-xl bg-white/5 px-4 py-3">
+					<p class="text-xs  leading-relaxed">
+					Допустимы файлы формата <span class="font-medium">PDF</span>.
+					Максимальный размер — <span class=" font-medium">20 MB</span>.
+					</p>
+				</div>
+				</v-card-text>
+				<v-card-text>
+				<v-row>
 
-                <v-col cols="12" md="6">
-                  <v-file-upload
-                    v-model="form.passport"
-                    density="comfortable"
-                    clearable
-                    accept=".pdf,application/pdf"
-                    :readonly="form.processing"
-                    :error-messages="form.errors.passport"
-                    title="Скан паспорта"
-                  />
-                </v-col>
+					<v-col cols="12" md="6">
+					<v-file-upload
+						v-model="form.passport"
+						density="comfortable"
+						clearable
+						accept=".pdf,application/pdf"
+						:readonly="form.processing"
+						:error-messages="form.errors.passport"
+						title="Скан паспорта"
+					/>
+					</v-col>
 
-                <v-col cols="12" md="6">
-                  <v-file-upload
-                    v-model="form.passportTranslate"
-                    density="comfortable"
-                    clearable
-                    accept=".pdf,application/pdf"
-                    :readonly="form.processing"
-                    :error-messages="form.errors.passportTranslate"
-                    title="Перевод паспорта"
-                  />
-                </v-col>
+					<v-col cols="12" md="6">
+					<v-file-upload
+						v-model="form.passportTranslate"
+						density="comfortable"
+						clearable
+						accept=".pdf,application/pdf"
+						:readonly="form.processing"
+						:error-messages="form.errors.passportTranslate"
+						title="Перевод паспорта"
+					/>
+					</v-col>
 
-              </v-row>
-            </v-card-text>
+				</v-row>
+				</v-card-text>
 
-          </v-card>
+			</v-card>
+		</v-form>
+	</v-container>
 
-    </v-form>
-  </v-container>
+	<div class="sticky bottom-0 bg-[#F7F9FC]/70 backdrop-blur-md p-1">
+		<div class="flex flex-col items-center gap-2">
+			<div class="text-red" v-if="form.hasErrors">
+				Есть ошибки
+			</div>
+			<div class="flex gap-2">
+				<AppPrimaryButton
+					text="Добавить"
+					:disabled="form.processing"
+					:loading="form.processing"
+					@click="create"
+				/>
 
-   <div class="sticky bottom-0 bg-[#F7F9FC]/70 backdrop-blur-md p-1">
-      <div class="flex flex-col items-center gap-2">
-        <div class="text-red" v-if="form.hasErrors">Есть ошибки</div>
-        <div class="flex gap-2">
-          <AppPrimaryButton
-            text="Добавить"
-            :disabled="form.processing"
-            :loading="form.processing"
-            @click="create"
-          />
-
-          <v-btn variant="text" @click="cancel">
-            Отмена
-          </v-btn>
-
-          
-        </div>
-        
-      </div>
-    </div>
+				<v-btn variant="text" @click="cancel">
+					Отмена
+				</v-btn>
+			</div>
+		</div>
+	</div>
 </template>

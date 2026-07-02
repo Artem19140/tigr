@@ -4,6 +4,7 @@ import { useConfirmationOptionsDialog } from '@/composables/useConfirmationOptio
 import { useLoadingSnackbar } from '@/composables/useLoadingSnackBar';
 import { Center } from '@/interfaces/Center';
 import { useHttp } from '@inertiajs/vue3';
+import { mdiDelete } from '@mdi/js';
 const props=defineProps<{
     center: Center
 }>()
@@ -32,7 +33,7 @@ const deactivate = async () => {
     <BaseThreeDotDropdown>
         <v-list-item
             title=""
-            prepend-icon="mdi-delete"
+            :prepend-icon="mdiDelete"
             title-color="red"
             @click="deactivate"
         >

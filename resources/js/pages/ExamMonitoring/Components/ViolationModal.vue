@@ -7,6 +7,7 @@ import ViolatonListItem from './ViolatonListItem.vue';
 import ViolationForm from './ViolationForm.vue';
 import { EnrollmentMonitoring } from '@/interfaces/Enrollment';
 import { Violation } from '@/interfaces/Violation';
+import { mdiClipboardTextOffOutline } from '@mdi/js';
 
 const props = defineProps<{
     enrollment:EnrollmentMonitoring
@@ -113,7 +114,7 @@ const editViolation = (updatedViolation: Violation) => {
         <v-empty-state
             v-if="!violationsExists && !adding"
             action-text="Добавить"
-            icon="mdi-clipboard-text-off-outline"
+            :icon="mdiClipboardTextOffOutline"
             title="Нарушений пока нет"
             @click:action="adding = true"
         />

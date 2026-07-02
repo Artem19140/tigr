@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { mdiArrowLeft } from '@mdi/js'
 const prop = defineProps<{
     text:string
 }>()
@@ -7,7 +8,7 @@ const prop = defineProps<{
 <template>
     <v-btn 
         variant="text" 
-        prepend-icon="mdi-arrow-left"
+        :prepend-icon="mdiArrowLeft"
     >
         {{ text }}
     </v-btn>

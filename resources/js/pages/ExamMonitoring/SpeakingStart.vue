@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useForm } from '@inertiajs/vue3';
+import { mdiAccountClockOutline, mdiPlay } from '@mdi/js';
 
 const props = defineProps<{
     attemptId:number,
@@ -21,9 +22,8 @@ const back = useForm()
                 size="72"
                 color="primary"
                 class="mb-4"
-            >
-                mdi-account-clock-outline
-            </v-icon>
+                :icon="mdiAccountClockOutline"
+            />
 
             <div class="text-h6 font-weight-medium mb-2">
                 Говорение ещё не начато
@@ -37,7 +37,7 @@ const back = useForm()
                 color="primary"
                 size="large"
                 :loading="form.processing"
-                prepend-icon="mdi-play"
+                :prepend-icon="mdiPlay"
                 @click="() => form.post(`/attempts/${attemptId}/speaking/start`)"
             >
                 Начать

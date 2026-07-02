@@ -4,6 +4,7 @@ import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.
 import { AttemptMonitoring } from '@/interfaces/Attempt';
 import TasksList from '../Attempt/Components/tasks/TasksList.vue';
 import { useConfirmDialog } from '@/composables/useConfirmDialog';
+import { mdiArrowLeft } from '@mdi/js'
 
 const props = defineProps<{
     attempt:{
@@ -32,7 +33,7 @@ const finish = async () => {
             <v-btn 
                 variant="text" 
                 @click="() => router.visit(`/exams/${examId}/monitoring`)"
-                prepend-icon="mdi-arrow-left"
+                :prepend-icon="mdiArrowLeft"
                 class="pr-0"
             >
                 Экзамен

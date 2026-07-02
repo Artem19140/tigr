@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Enrollment } from '@/interfaces/Enrollment.js';
+import { mdiCheckCircle } from '@mdi/js'
 
 const props = defineProps<{
     enrollment:Enrollment
@@ -8,7 +9,7 @@ const props = defineProps<{
 
 <template>
     <v-icon 
-        icon="mdi-check-circle" 
+        :icon="mdiCheckCircle" 
         color="green" 
         v-if="!enrollment.isLoading && enrollment.hasPayment"
     />

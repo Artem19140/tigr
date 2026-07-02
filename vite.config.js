@@ -5,7 +5,6 @@ import tailwindcss from '@tailwindcss/vite'
 import vuetify from 'vite-plugin-vuetify'
 import { fileURLToPath, URL } from 'node:url'
 
-
 export default defineConfig({
     plugins: [
         laravel({
@@ -29,6 +28,17 @@ export default defineConfig({
             '@constants': fileURLToPath(new URL('./resources/js/constants', import.meta.url)),
             '@data': fileURLToPath(new URL('./resources/data', import.meta.url)),
             '@stores': fileURLToPath(new URL('./resources/stores', import.meta.url)),
+        }
+    },
+    build: {
+        sourcemap: true,
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    vue: ['vue'],
+                    vuetify: ['vuetify']
+                }
+            }
         }
     }
 })

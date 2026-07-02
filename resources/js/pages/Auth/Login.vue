@@ -4,6 +4,8 @@ import EmployeeEntryForm from './Components/EmployeeEntryForm.vue';
 import ForeignNationalEntryForm from './Components/ForeignNationalEntryForm.vue';
 import BaseEntryCard from '@/components/BaseComponents/BaseEntryCard/BaseEntryCard.vue';
 import { Head } from '@inertiajs/vue3';
+import { mdiChevronUp } from '@mdi/js'
+
 const isForeignNationalEntry = ref<boolean>(true)
 </script>
 
@@ -21,13 +23,12 @@ const isForeignNationalEntry = ref<boolean>(true)
     <v-menu location="top start" width="200">
         <template v-slot:activator="{ props }">
             <v-btn
-                icon
                 variant="text"
                 color="grey"
                 v-bind="props"
                 class="position-fixed bottom-0 left-0 ma-4"
             >
-                <v-icon>mdi-chevron-up</v-icon>
+                <v-icon :icon="mdiChevronUp" />
             </v-btn>
         </template>
         <v-list>

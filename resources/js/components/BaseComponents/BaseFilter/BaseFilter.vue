@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue';
 import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { router } from '@inertiajs/vue3';
+import { mdiFilterVariant, mdiClose, mdiMagnify } from '@mdi/js'
 
 const props = defineProps<{
     form: any,
@@ -79,7 +80,7 @@ function cleanFilters(data: Record<string, any>) {
                     :model-value="filledCount"
                     dot
                 >
-                    <v-icon icon="mdi-filter-variant" />
+                    <v-icon :icon="mdiFilterVariant" />
                 </v-badge>
             </v-btn>
         </template>
@@ -96,7 +97,7 @@ function cleanFilters(data: Record<string, any>) {
                     </div>
 
                     <v-btn
-                        icon="mdi-close"
+                        :icon="mdiClose"
                         variant="text"
                         size="small"
                         @click="isOpen = false"
@@ -121,7 +122,7 @@ function cleanFilters(data: Record<string, any>) {
                 </v-btn>
 
                 <AppPrimaryButton
-                    prepend-icon="mdi-magnify"
+                    :prepend-icon="mdiMagnify"
                     text="Найти"
                     @click="find"
                     :disabled="form.processing"

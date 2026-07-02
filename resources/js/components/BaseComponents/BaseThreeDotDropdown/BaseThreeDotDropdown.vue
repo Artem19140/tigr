@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { mdiDotsVertical } from '@mdi/js'
 </script>
 
 <template>
@@ -8,13 +9,11 @@
     >
         <template #activator="{ props }">
             <v-btn
-                icon
+                :icon="mdiDotsVertical"
                 variant="text"
                 size="small"
                 v-bind="props"
-            >
-                <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn>
+            />
         </template>
 
         <v-card

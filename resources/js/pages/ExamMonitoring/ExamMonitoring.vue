@@ -8,6 +8,7 @@ import PaymentIcon from '@/components/Enrollment/PaymentIcon.vue';
 import { ExamMonitoring } from '@/interfaces/Exam';
 import ExamCommentModal from './Components/ExamCommentModal.vue';
 import AppBackButton from '@/components/UI/AppBackButton.vue';
+import { mdiCheckCircle , mdiMagnify } from '@mdi/js'
 
 defineOptions({
   layout: [EmployeeLayout]
@@ -115,7 +116,7 @@ const isOpen = ref<boolean>(false)
                     v-model="search"
                     density="compact"
                     label="Поиск"
-                    prepend-inner-icon="mdi-magnify"
+                    :prepend-inner-icon="mdiMagnify"
                     variant="outlined"
                     hide-details
                     max-width="320"
@@ -166,7 +167,7 @@ const isOpen = ref<boolean>(false)
 
                 <template #item.speaking="{ item }">
                     <v-icon
-                        icon="mdi-check-circle"
+                        :icon="mdiCheckCircle"
                         color="success"
                         v-if="item.attempt?.speakingFinishedAt"
                     />

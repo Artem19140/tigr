@@ -5,6 +5,7 @@ import { useModals } from '@/composables/useModals';
 import AddressCard from './AddressCard.vue';
 import { Address } from '@/interfaces/Address';
 import { Head } from '@inertiajs/vue3';
+import { mdiClipboardTextOffOutline } from '@mdi/js'
 
 const props = defineProps<{
     addresses:Address[]
@@ -63,7 +64,7 @@ const add = () => {
 
         <v-empty-state
             v-else
-            icon="mdi-clipboard-text-off-outline"
+            :icon="mdiClipboardTextOffOutline"
             title="Адресов пока нет"
             class="py-10"
         >

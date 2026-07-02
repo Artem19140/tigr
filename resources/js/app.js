@@ -2,14 +2,11 @@ import '../css/app.css'
 import './bootstrap.js'
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
-import '@mdi/font/css/materialdesignicons.css'
-import 'vuetify/styles'
-import { createVuetify } from 'vuetify'
-import { ru } from 'vuetify/locale'
 import { useHttpErrorHandler } from '@/composables/useHttpErrorHandler';
 import { http, router } from '@inertiajs/vue3';
 import { useSnackbarQueue } from '@/composables/useSnackbarQueue';
 import BaseLayout from '@/layouts/BaseLayout.vue';
+import { vuetify } from '@/vuetifyConfig'
 
 http.onError((error) => {
   const response = (error).response
@@ -29,59 +26,10 @@ router.on('flash', (event) => {
   }
 })
 
-const vuetify = createVuetify({
-  theme: {
-    defaultTheme: 'light', // 'system' | 'light' | 'dark'
-    themes: {
-      light: {
-        colors: {
-          background: '#f5f5f5',
-          surface: '#ffffff',
-          primary:'#0176ff', 
-          'on-surface': '#1e293b',
-          'on-background': '#1e293b',
-          'add' : '#10b767'
-        }
-      }
-    }
-  },
-   locale: {
-    locale: 'ru',
-    fallback: 'ru',
-    messages: { ru },
-  },
-  defaults:{
-    VCard:{
-      rounded:'xl',
-    },
-    VTextField:{
-      density:"comfortable",
-      variant:'outlined',
-      rounded:'lg'
-    },
-    VTextarea:{
-      density:"comfortable",
-      variant:'outlined',
-      rounded:'lg'
-    },
-    VNumberInput:{
-      density:"comfortable",
-      variant:'outlined',
-      rounded:'lg',
-
-    },
-    VAutocomplete:{
-      density:"comfortable",
-      variant:'outlined',
-      rounded:'lg'
-    },
-  }
-})
-
 createInertiaApp({
   resolve: name => {
-    const pages = import.meta.glob('./pages/**/*.vue', { eager: true })
-    return pages[`./pages/${name}.vue`]
+    const pages = import.meta.glob('./Pages/**/*.vue')
+    return pages[`./Pages/${name}.vue`]()
   },
   setup({ el, App, props, plugin }) {
     createApp({ render: () => h(App, props) })

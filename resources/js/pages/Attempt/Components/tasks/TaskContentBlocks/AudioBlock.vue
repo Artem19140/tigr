@@ -4,6 +4,7 @@ import { computed, inject, ref } from 'vue'
 import { useAttempt } from '@/composables/useAttempt';
 import { useSnackbarQueue } from '@/composables/useSnackbarQueue';
 import { useHttp } from '@inertiajs/vue3';
+import { mdiPause, mdiPlay } from '@mdi/js'
 
 const props = defineProps<{ 
   value: string 
@@ -96,7 +97,7 @@ function format(time: number) {
         v-if="! audioPlayed && !audioPlaying"
       >
         <v-icon size="20">
-          {{ currentTime > 0 && !audioPlayed ? 'mdi-pause' : 'mdi-play' }}
+          {{ currentTime > 0 && !audioPlayed ? mdiPause : mdiPlay }}
         </v-icon>
       </button>
 

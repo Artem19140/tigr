@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { mdiMagnifyPlus } from '@mdi/js'
 
 const props = defineProps<{
     value : string,
@@ -30,7 +31,7 @@ const zoomIfCan = () => {
             @click="zoomIfCan"
             class="absolute bottom-3 right-3 px-2 py-1 rounded bg-black/60 text-white text-xs flex items-center cursor-pointer"
         >
-            <v-icon size="14" class="mr-1">mdi-magnify-plus</v-icon>
+            <v-icon size="14" class="mr-1" :icon="mdiMagnifyPlus"></v-icon>
             Увеличить
         </div>
 

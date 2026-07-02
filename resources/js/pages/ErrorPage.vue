@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { router } from '@inertiajs/vue3'
+import { mdiAlertCircle, mdiServerOff, mdiFileQuestion, mdiLockAlert, mdiAlert } from '@mdi/js'
 
 const props = defineProps<{
   status: number
@@ -14,7 +15,7 @@ const config = computed(() => {
         title: '503: Сервис недоступен',
         description:
           'Извините, сейчас проводятся технические работы. Попробуйте немного позже.',
-        icon: 'mdi-server-off',
+        icon: mdiServerOff,
         start: '#8b5cf6',
         end: '#7c3aed',
         shadow: 'rgba(124,58,237,.35)',
@@ -25,7 +26,7 @@ const config = computed(() => {
       return {
         title: '500: Ошибка сервера',
         description: 'Упс! Что-то пошло не так на сервере.',
-        icon: 'mdi-alert-circle',
+        icon: mdiAlertCircle,
         start: '#ef4444',
         end: '#f43f5e',
         shadow: 'rgba(239,68,68,.35)',
@@ -35,8 +36,8 @@ const config = computed(() => {
     case 404:
       return {
         title: '404: Страница не найдена',
-        description: 'Страница, которую вы ищете, не существует или была перемещена.', //props.message || 
-        icon: 'mdi-file-question',
+        description: 'Страница, которую вы ищете, не существует или была перемещена.', 
+        icon: mdiFileQuestion,
         start: '#3b82f6',
         end: '#6366f1',
         shadow: 'rgba(59,130,246,.35)',
@@ -47,7 +48,7 @@ const config = computed(() => {
       return {
         title: '403: Доступ запрещён',
         description: 'У вас недостаточно прав для просмотра этой страницы.',
-        icon: 'mdi-lock-alert',
+        icon: mdiLockAlert,
         start: '#f59e0b',
         end: '#fb923c',
         shadow: 'rgba(245,158,11,.35)',
@@ -58,7 +59,7 @@ const config = computed(() => {
       return {
         title: 'Ошибка',
         description: 'Произошла неизвестная ошибка.',
-        icon: 'mdi-alert',
+        icon: mdiAlert,
         start: '#10b981',
         end: '#06b6d4',
         shadow: 'rgba(16,185,129,.35)',

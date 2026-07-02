@@ -5,6 +5,7 @@ import UpdateData from './UpdateData.vue';
 import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { Center } from '@/interfaces/Center';
 import { Head } from '@inertiajs/vue3';
+import { mdiPencil } from '@mdi/js'
 
 const props = defineProps<{
     data : Center
@@ -35,7 +36,7 @@ const mode = ref<string>('show')
                 <AppPrimaryButton
                     v-if="mode === 'show'"
                     text="Редактировать"
-                    prepend-icon="mdi-pencil"
+                    :prepend-icon="mdiPencil"
                     @click="mode = 'update'"
                 />
             </div>

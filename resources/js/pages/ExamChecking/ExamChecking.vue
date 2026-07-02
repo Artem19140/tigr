@@ -5,6 +5,7 @@ import { Enrollment } from '@/interfaces/Enrollment';
 import { ExamChecking } from '@/interfaces/Exam';
 import { Head, router } from '@inertiajs/vue3';
 import BaseTable from '@/components/BaseComponents/BaseTable/BaseTable.vue';
+import { mdiArrowLeft } from '@mdi/js'
 
 defineOptions({
   layout: [EmployeeLayout],
@@ -37,7 +38,7 @@ const openAttempt =  (item : Enrollment) => {
         class="mt-4 ml-4" 
         variant="text" 
         @click="() => router.visit('/exams/checking')"
-        prepend-icon="mdi-arrow-left"
+        :prepend-icon="mdiArrowLeft"
     >
         Назад
     </v-btn>

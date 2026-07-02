@@ -2,6 +2,8 @@
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { useHttp } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
+import { mdiAlertOutline } from '@mdi/js'
+
 const props = defineProps<{
     examId: number | null
 }>()
@@ -135,7 +137,7 @@ watch(() => file, () => {
                             color="warning"
                             variant="tonal"
                         >
-                            <v-icon icon="mdi-alert-outline" />
+                            <v-icon :icon="mdiAlertOutline" />
                         </v-avatar>
 
                         <div>

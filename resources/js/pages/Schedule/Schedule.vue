@@ -5,6 +5,7 @@ import { ref, watch } from 'vue';
 import AppAddButton from '@components/UI/AppAddButton/AppAddButton.vue';
 import { examStatus } from '@helpers/heplers';
 import { ExamCalendar } from '@/interfaces/Exam';
+import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
 defineOptions({
   layout: [EmployeeLayout],
@@ -52,7 +53,7 @@ watch(() => props.links.current, () => {
     <div class="calendar-toolbar">
       <div class="d-flex align-center ga-2">
         <v-btn
-          icon="mdi-chevron-left"
+          :icon="mdiChevronLeft"
           variant="text"
           :disabled="loading"
           @click="() => visit(links.prev)"
@@ -63,7 +64,7 @@ watch(() => props.links.current, () => {
         </div>
 
         <v-btn
-          icon="mdi-chevron-right"
+          :icon="mdiChevronRight"
           variant="text"
           :disabled="loading"
           @click="() => visit(links.next)"

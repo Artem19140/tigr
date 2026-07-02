@@ -5,6 +5,7 @@ import { ref } from 'vue';
 import ViolationForm from './ViolationForm.vue';
 import { Violation } from '@/interfaces/Violation';
 import {  AttemptMonitoring } from '@/interfaces/Attempt';
+import { mdiDelete, mdiPencil } from '@mdi/js'
 
 const props = defineProps<{
     index:number,
@@ -72,7 +73,7 @@ const editViolation = async () => {
             <v-btn
                 size="x-small"
                 color="grey-lighten-1"
-                icon="mdi-pencil-outline"
+                :icon="mdiPencil"
                 variant="text"
                 @click="editting = true"
             ></v-btn>
@@ -80,7 +81,7 @@ const editViolation = async () => {
             <v-btn
                 v-if="!deleteHttp.processing"
                 size="x-small"
-                icon="mdi-delete"
+                :icon="mdiDelete"
                 variant="text"
                 @click="deleteViolation"
             ></v-btn>

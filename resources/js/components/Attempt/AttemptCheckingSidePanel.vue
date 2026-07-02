@@ -2,6 +2,7 @@
 import { AttemptChecking, AttemptMonitoring } from '@/interfaces/Attempt';
 import { Task } from '@/interfaces/Task';
 import { onMounted, ref } from 'vue';
+import { mdiCheck, mdiClose} from '@mdi/js'
 
 const props = defineProps<{
   attempt: AttemptChecking | AttemptMonitoring
@@ -9,7 +10,7 @@ const props = defineProps<{
 
 const getParams = (checkedAt:string | null) => {
   if(checkedAt === null) return {icon:'', color:'grey'}
-  return checkedAt ? {icon:'mdi-check', color:'success'} : {icon:'mdi-close', color:'error'} 
+  return checkedAt ? {icon:mdiCheck, color:'success'} : {icon:mdiClose, color:'error'} 
 }
 
 const scrollToTask = (id: number) => {
@@ -50,38 +51,38 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-navigation-drawer
-    location="right"
-    width="100"
-  >
-  <div class="flex flex-column items-center">
-    <v-list 
-      density="compact" 
-      nav
-      
-    >
-      <v-list-item
-        v-for="task in attempt.tasks"
-        :key="task.id"
-        :active="currentTaskId === task.id"
-        @click="scrollToTask(task.id)"
-      >
-        <template #prepend>
-          <v-avatar
-            size="24"
-            :color="taskParams(task).color"
-          >
-            <v-icon size="14">
-              {{ taskParams(task).icon }}
-            </v-icon>
-          </v-avatar>
-        </template>
+	<v-navigation-drawer
+		location="right"
+		width="100"
+	>
+		<div class="flex flex-column items-center">
+			<v-list 
+				density="compact" 
+				nav
+			>
+				<v-list-item
+					v-for="task in attempt.tasks"
+					:key="task.id"
+					:active="currentTaskId === task.id"
+					@click="scrollToTask(task.id)"
+				>
+					<template #prepend>
+						<v-avatar
+							size="24"
+							:color="taskParams(task).color"
+						>
+							<v-icon
+								:icon="taskParams(task).icon "
+								size="14"
+							/>
+						</v-avatar>
+					</template>
 
-        <v-list-item-title>
-           {{ task.order }}
-        </v-list-item-title>
-      </v-list-item>
-    </v-list>
-  </div>
-  </v-navigation-drawer>
+					<v-list-item-title>
+						{{ task.order }}
+					</v-list-item-title>
+				</v-list-item>
+			</v-list>
+		</div>
+	</v-navigation-drawer>
 </template>

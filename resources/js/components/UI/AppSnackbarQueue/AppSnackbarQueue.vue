@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useSnackbarQueue } from '@/composables/useSnackbarQueue';
 const {messages, queue} = useSnackbarQueue()
+import { mdiClose } from '@mdi/js'
 
 </script>
 
@@ -23,7 +24,7 @@ const {messages, queue} = useSnackbarQueue()
         density="comfortable"
         rounded="lg"
         variant="text"
-        icon="mdi-close"
+        :icon="mdiClose"
         v-bind="props"
       ></v-btn>
     </template>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { AttemptChecking, AttemptMonitoring } from '@/interfaces/Attempt';
+import { mdiCheckCircleOutline } from '@mdi/js'
 
 const props = defineProps<{
     attempt:AttemptChecking | AttemptMonitoring
@@ -32,9 +33,11 @@ const props = defineProps<{
                     border: 1px solid rgba(var(--v-theme-success), 0.25);
                 "
             >
-                <v-icon size="18" color="success">
-                    mdi-check-circle-outline
-                </v-icon>
+                <v-icon 
+                    :icon="mdiCheckCircleOutline" 
+                    size="18" 
+                    color="success"
+                />
 
                 <div class="text-caption text-medium-emphasis">
                     Попытка проверена — изменения недоступны

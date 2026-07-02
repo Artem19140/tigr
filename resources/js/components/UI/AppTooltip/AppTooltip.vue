@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { mdiInformationOutline } from '@mdi/js'
+
 const props = defineProps<{
     text?:string
 }>()
@@ -7,7 +9,7 @@ const props = defineProps<{
 <template>
     <v-tooltip location="top">
         <template #activator="{ props }">
-            <v-icon v-bind="props" icon="mdi-information-outline" />
+            <v-icon v-bind="props" :icon="mdiInformationOutline" />
         </template>
 
         <span>

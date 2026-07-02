@@ -3,6 +3,7 @@ import BaseThreeDotDropdown from '@/components/BaseComponents/BaseThreeDotDropdo
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { useSnackbarQueue } from '@/composables/useSnackbarQueue';
 import { router, useHttp } from '@inertiajs/vue3';
+import { mdiFileDocumentOutline } from '@mdi/js';
 import { ref } from 'vue';
 
 const props = defineProps<{
@@ -59,7 +60,7 @@ const clear = () => {
             rounded="lg"
             class="bg-slate-100 text-slate-600"
           >
-            <v-icon icon="mdi-file-document-outline" />
+            <v-icon :icon="mdiFileDocumentOutline" />
           </v-avatar>
         </template>
 		

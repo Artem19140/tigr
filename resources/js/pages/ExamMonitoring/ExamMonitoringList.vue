@@ -7,6 +7,7 @@ import ExamCapacityChip from '@/components/Exam/ExamCapacityChip.vue';
 import { Paginated } from '@/interfaces/Interfaces';
 import { ExamIndex } from '@/interfaces/Exam';
 import BaseTable from '@/components/BaseComponents/BaseTable/BaseTable.vue';
+import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
 defineOptions({
   layout: [EmployeeLayout]
@@ -55,23 +56,21 @@ const visit = (url :string) => {
             <template #header-left>
                 <v-btn
                     variant="text"
-                    icon
+                    :icon="mdiChevronLeft"
                     :disabled="loading"
                     @click="() => visit(props.links.prev)"
                 >
-                    <v-icon>mdi-chevron-left</v-icon>
+
                 </v-btn>
 
                 <span class="border p-2 rounded-lg"> {{ current }} </span>
 
                 <v-btn
                     variant="text"
-                    icon
+                    :icon="mdiChevronRight"
                     :disabled="loading"
                     @click="() => visit(props.links.next)"
-                >
-                    <v-icon>mdi-chevron-right</v-icon>
-                </v-btn>
+                />
             </template>
 
             <template #item.capacity="{ item }">

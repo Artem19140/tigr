@@ -2,6 +2,7 @@
 import { Counter } from '@/interfaces/Counter';
 import CounterCard from './CounterCard.vue';
 import { Head } from '@inertiajs/vue3';
+import { mdiCounter } from '@mdi/js'
 
 const props = defineProps<{
     counters: Array<Counter>
@@ -32,7 +33,7 @@ const props = defineProps<{
 
             <v-empty-state
                 v-else
-                icon="mdi-counter"
+                :icon="mdiCounter"
                 title="Счетчиков пока нет"
             />
 

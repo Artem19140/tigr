@@ -8,6 +8,7 @@ import { router } from '@inertiajs/vue3';
 import TasksList from '../Attempt/Components/tasks/TasksList.vue';
 import { ref } from 'vue';
 import { AttemptAnswer } from '@/interfaces/Task.js';
+import { mdiArrowLeft } from '@mdi/js'
 
 defineOptions({
   layout: [EmployeeLayout]
@@ -42,7 +43,7 @@ const rated = (value: AttemptAnswer) => {
             <v-btn 
                 variant="text" 
                 @click="back"
-                prepend-icon="mdi-arrow-left"
+                :prepend-icon="mdiArrowLeft"
             >
                 Экзамен
             </v-btn>

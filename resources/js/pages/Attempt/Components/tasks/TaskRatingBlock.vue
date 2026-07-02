@@ -2,6 +2,7 @@
 import { AttemptAnswer, Task } from '@/interfaces/Task';
 import { useHttp } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
+import { mdiCheckCircle, mdiRefresh } from '@mdi/js'
 
 const props = defineProps<{
     task:Task,
@@ -78,9 +79,8 @@ const marks = computed(() =>
             <v-icon
                 size="16"
                 color="success"
-            >
-                mdi-check-circle
-            </v-icon>
+                :icon="mdiCheckCircle"
+            />
 
             <span class="text-success">
                 Сохранено
@@ -97,7 +97,7 @@ const marks = computed(() =>
                 variant="outlined"
                 color="error"
                 @click="rate"
-                prepend-icon="mdi-refresh"
+                :prepend-icon="mdiRefresh"
             >
                 Повторить
             </v-btn>

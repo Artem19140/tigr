@@ -5,6 +5,7 @@ import { useConfirmDialog } from '@/composables/useConfirmDialog';
 import { Address } from '@/interfaces/Address';
 import { router, useHttp } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { mdiPencil } from '@mdi/js'
 
 const props = defineProps<{
     address:Address
@@ -75,7 +76,7 @@ const cancellEdit = async () => {
                 </div>
 
                 <v-btn
-                    icon="mdi-pencil"
+                    :icon="mdiPencil"
                     variant="text"
                     @click="editMode = true"
                 />

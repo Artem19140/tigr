@@ -11,6 +11,7 @@ import MultynputTask from './MultyInputTask.vue';
 import BaseTask from './BaseTask.vue';
 import { computed, provide } from 'vue';
 import TaskRatingBlock from './TaskRatingBlock.vue';
+import { mdiClipboardTextOffOutline } from '@mdi/js'
 
 const props = defineProps<{
     attempt: Attempt | AttemptMonitoring | AttemptChecking,
@@ -118,7 +119,7 @@ const groupedTasks =  computed(() =>{
 
     <v-empty-state
         v-else
-        icon="mdi-clipboard-text-off-outline"
+        :icon="mdiClipboardTextOffOutline"
         title="Заданий нет"
         text="Пока что здесь ничего не появилось"
     />

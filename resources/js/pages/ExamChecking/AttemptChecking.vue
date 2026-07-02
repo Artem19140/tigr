@@ -9,6 +9,7 @@ import AttemptCheckingSidePanel from '@/components/Attempt/AttemptCheckingSidePa
 import TasksList from '../Attempt/Components/tasks/TasksList.vue';
 import { computed, ref } from 'vue';
 import { AttemptAnswer } from '@/interfaces/Task.js';
+import { mdiArrowLeft } from '@mdi/js'
 
 defineOptions({
   layout: [EmployeeLayout],
@@ -56,7 +57,7 @@ const hasUncheckedTasks = computed(
         <v-btn 
             variant="text" 
             @click="back"
-            prepend-icon="mdi-arrow-left"
+            :prepend-icon="mdiArrowLeft"
         >
             Список
         </v-btn>

@@ -2,6 +2,13 @@
 import { Address } from '@/interfaces/Address';
 import { Employee } from '@/interfaces/Employee';
 import { ExamType } from '@/interfaces/Exam';
+import {
+  mdiSchoolOutline,
+  mdiAccountGroupOutline,
+  mdiMapMarkerOutline,
+  mdiAccountTieOutline,
+  mdiTextBoxOutline,
+} from '@mdi/js'
 
 const props = defineProps<{
   form:any, 
@@ -30,7 +37,7 @@ function required (v:any) {
       clearable
       variant="outlined"
       density="comfortable"
-      prepend-inner-icon="mdi-school-outline"
+      :prepend-inner-icon="mdiSchoolOutline"
     />
 
     <div class="grid grid-cols-2 gap-4">
@@ -63,7 +70,7 @@ function required (v:any) {
       :rules="[required]"
       :min="0"
       :error-messages="form.errors.capacity"
-      prepend-inner-icon="mdi-account-group-outline"
+      :prepend-inner-icon="mdiAccountGroupOutline"
       control-variant="hidden"
       density="comfortable"
     />
@@ -83,7 +90,7 @@ function required (v:any) {
       :error-messages="form.errors.addressId"
       clearable
       density="comfortable"
-      prepend-inner-icon="mdi-map-marker-outline"
+      :prepend-inner-icon="mdiMapMarkerOutline"
     />
 
     <v-autocomplete
@@ -99,7 +106,7 @@ function required (v:any) {
       closable-chips
       clearable
       density="comfortable"
-      prepend-inner-icon="mdi-account-tie-outline"
+      :prepend-inner-icon="mdiAccountTieOutline"
     />
 
   </div>
@@ -121,7 +128,7 @@ function required (v:any) {
       auto-grow
       variant="outlined"
       density="comfortable"
-      prepend-inner-icon="mdi-text-box-outline"
+      :prepend-inner-icon="mdiTextBoxOutline"
     />
 
   </div>

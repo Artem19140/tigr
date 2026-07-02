@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { mdiRefresh } from '@mdi/js'
+
 const props = defineProps<{
   onRetry?:() => void,
   text:string
@@ -21,7 +23,10 @@ const props = defineProps<{
             icon
             variant="text"
         >
-            <v-icon icon-size="25">mdi-refresh</v-icon>
+            <v-icon 
+              :icon="mdiRefresh"
+              icon-size="25"
+            />
         </v-btn>        
       </div>
     </v-alert>

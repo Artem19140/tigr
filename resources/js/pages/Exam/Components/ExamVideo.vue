@@ -2,6 +2,7 @@
 import { Exam } from '@/interfaces/Exam';
 import VideoUpload from './VideoUpload.vue';
 import { ref } from 'vue';
+import { mdiPlayCircle, mdiArrowRight } from '@mdi/js'
 
 const props = defineProps<{
     exam:Exam | null
@@ -36,7 +37,7 @@ const open = (id: number) => {
                     <div class="preview">
                         <v-icon
                             size="32"
-                            icon="mdi-play-circle"
+                            :icon="mdiPlayCircle"
                         />
                     </div>
 
@@ -51,7 +52,7 @@ const open = (id: number) => {
                     </div>
 
                     <v-btn
-                        icon="mdi-arrow-right"
+                        :icon="mdiArrowRight"
                         variant="text"
                         size="small"
                     />

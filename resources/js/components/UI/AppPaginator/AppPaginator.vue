@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { router } from '@inertiajs/vue3';
+import { mdiPageFirst, mdiChevronLeft, mdiChevronRight } from '@mdi/js'
 
 const props = defineProps<{
   meta:{
@@ -34,51 +35,60 @@ const visit = (url:string | null) => {
 </script>
 
 <template>
-  <div class="flex items-center justify-between px-4 py-2">
-  <div class="flex items-center gap-2">
-    <v-btn
-      variant="text"
-      icon
-      :disabled="!links.first"
-      @click="visit(links.first)"
-    >
-      <v-icon size="20">mdi-page-first</v-icon>
-    </v-btn>
+	<div class="flex items-center justify-between px-4 py-2">
+		<div class="flex items-center gap-2">
+			<v-btn
+				variant="text"
+				icon
+				:disabled="!links.first"
+				@click="visit(links.first)"
+			>
+				<v-icon
+					:icon="mdiPageFirst" 
+					size="20"
+				/>
+			</v-btn>
 
-    <v-btn
-      variant="text"
-      icon
-      :disabled="!links.prev || loading"
-      @click="visit(links.prev)"
-    >
-      <v-icon size="20">mdi-chevron-left</v-icon>
-    </v-btn>
+			<v-btn
+				variant="text"
+				icon
+				:disabled="!links.prev || loading"
+				@click="visit(links.prev)"
+			>
+				<v-icon
+					:icon="mdiChevronLeft" 
+					size="20"
+				/>
+			</v-btn>
 
-    <div class="px-3 py-1 text-sm font-medium bg-grey-lighten-4 rounded">
-      {{ meta.current_page }}
-    </div>
+			<div class="px-3 py-1 text-sm font-medium bg-grey-lighten-4 rounded">
+			{{ meta.current_page }}
+			</div>
 
-    <v-btn
-      variant="text"
-      icon
-      :disabled="!links.next || loading"
-      @click="visit(links.next)"
-    >
-      <v-icon size="20">mdi-chevron-right</v-icon>
-    </v-btn>
-  </div>
+			<v-btn
+				variant="text"
+				icon
+				:disabled="!links.next || loading"
+				@click="visit(links.next)"
+			>
+				<v-icon
+					:icon="mdiChevronRight" 
+					size="20"
+				/>
+			</v-btn>
+		</div>
 
-  <div class="flex items-center gap-4 text-sm text-grey-darken-1">
-    <span class="bg-grey-lighten-4 px-3 py-1 rounded">
-      {{ meta.from }} – {{ meta.to }}
-    </span>
+		<div class="flex items-center gap-4 text-sm text-grey-darken-1">
+			<span class="bg-grey-lighten-4 px-3 py-1 rounded">
+			{{ meta.from }} – {{ meta.to }}
+			</span>
 
-    <span>
-      Записей на странице:
-      <span class="font-medium text-black">
-        {{ meta.per_page }}
-      </span>
-    </span>
-  </div>
-</div>
+			<span>
+			Записей на странице:
+			<span class="font-medium text-black">
+				{{ meta.per_page }}
+			</span>
+			</span>
+		</div>
+	</div>
 </template>
