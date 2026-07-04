@@ -87,5 +87,5 @@ export interface ForeignNationalActionsPermissions{
   edit: boolean,
   enroll: boolean,
   documents:boolean,
-  enrollmentStatement:boolean
+  enrollments:boolean
 }

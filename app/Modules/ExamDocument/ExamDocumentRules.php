@@ -26,20 +26,25 @@ class ExamDocumentRules
         Exam $exam, 
         Employee $employee
     ): array {
-        $rules = [];
-        if($employee->can('examiner', $exam)){
-            $rules['codes'] =  $this->codes($exam)->toArray();
-        }
-        if($employee->can('protocol', $exam)){
-            $rules['protocol'] = $this->protocol($exam)->toArray();
-        }
-        if($employee->can('results', $exam)){
-            $rules['results'] = $this->results($exam)->toArray();
-        }
-        if($employee->can('list', $exam)){
-            $rules['list'] = $this->list($exam)->toArray();
-        }
-        return $rules;
+        $actions = [];
+        $actions['codes'] = [
+            'can' => $employee->can('examiner', $exam),
+            'availability' => $this->codes($exam)->toArray()
+        ];
+        $actions['protocol'] = [
+            'can' => $employee->can('protocol', $exam),
+            'availability' => $this->protocol($exam)->toArray()
+        ];
+        $actions['results'] = [
+            'can' => $employee->can('results', $exam),
+            'availability' => $this->results($exam)->toArray()
+        ];
+        $actions['list'] = [
+            'can' => $employee->can('list', $exam),
+            'availability' => $this->list($exam)->toArray()
+        ];
+
+        return $actions;
     }
 
     public function list(Exam $exam):RuleResult

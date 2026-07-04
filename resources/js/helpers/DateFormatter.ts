@@ -6,6 +6,7 @@ export class DateFormatter {
   }
 
   format(fmt: string) {
+    if(!this.raw) return ''
     const pad = (n: number) => String(n).padStart(2, '0');
 
     const [datePart, timePart] = this.raw.split('T');

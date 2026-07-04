@@ -19,16 +19,13 @@ export interface Exam{
     cancelledReason:string | null,
     status:string
     foreignNationals:Array<ForeignNational>,
-    examTypeId:number,
     enrollments?:Array<Enrollment>,
     enrollmentsCount:number,
-    addressId:number,
     cancelledAt:string,
-    permissions:ExamActionsPermissions,
-    availability:availability,
     documents:{
         id:number
-    }
+    },
+    actions:ExamActions
 }
 
 export interface ExamIndex{
@@ -40,14 +37,6 @@ export interface ExamIndex{
     enrollmentsCount:number,
 }
 
-export interface ExamCalendar{
-    id:number,
-    start:string,
-    end:string,
-    name:string,
-    status:string
-}
-
 export interface ExamType{
     id:number,
     name:string
@@ -57,7 +46,8 @@ export interface ExamChecking{
     id:number,
     shortName:string,
     beginTime:string,
-    enrollments:Enrollment[]
+    enrollments:Enrollment[],
+    cancelledAt:string
 }
 
 export interface ExamForm{
@@ -89,8 +79,11 @@ export interface ExamMonitoring  {
     hasSpeakingTasks:boolean,
     enrollments:Array<Enrollment>,
     polling:boolean,
-    availability:{
-        protocolComment:boolean
+    cancelledAt:string,
+    actions:{
+        protocolComment:{
+            available:boolean
+        }
     }
 }
 interface DocumentAvailble{
@@ -99,45 +92,33 @@ interface DocumentAvailble{
     code:string | null
 }
 
-export interface ExamActionsPermissions {
-  documents: {
-    codes: boolean
-    protocol: boolean
-    results: boolean
-    list: boolean
-  }
-
-  actions: {
-    edit: boolean
-    cancell: boolean
-  }
-
-  enrollments: {
-    view: boolean
-    statement: boolean
-    payment: boolean
-  }
-
-  videos:{
-    view:boolean
-  }
-}
-
-interface availability{
-    actions: {
-        edit: boolean
-        cancell: boolean
+export interface ExamActions {
+    codes: {
+        can:boolean,
+        availability:DocumentAvailble
+    },
+    protocol: {
+        can:boolean,
+        availability:DocumentAvailble
+    },
+    results: {
+        can:boolean,
+        availability:DocumentAvailble
+    },
+    list: {
+        can:boolean,
+        availability:DocumentAvailble
     }
-    documents: {
-        list?:DocumentAvailble,
-        protocol?:DocumentAvailble,
-        results?:DocumentAvailble,
-        codes?:DocumentAvailble
-    }
-}
 
-export interface ExamPagePermissions{
-    create:boolean,
-    frdo:boolean,
-    flatTable:boolean
+    enrollments: {
+        view: {
+            can:boolean
+        }
+        statement: {
+            can:boolean
+        }
+        payment: {
+            can:boolean
+        }
+    }
 }

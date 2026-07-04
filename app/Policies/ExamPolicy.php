@@ -42,7 +42,7 @@ class ExamPolicy
         return $this->examiner($employee, $exam);
     }
 
-    public function monitoringAny(Employee $employee):bool
+    public function conductAny(Employee $employee):bool
     {
         return $employee->hasAnyRole(EmployeeRole::Examiner);
     }
@@ -133,7 +133,7 @@ class ExamPolicy
         return $this->examiner($employee, $exam);
     }
 
-    public function video(Employee $employee, Exam $exam): bool{
+    public function videos(Employee $employee, Exam $exam): bool{
         if ($this->notSameCenter($employee, $exam)) {
             return false;
         }

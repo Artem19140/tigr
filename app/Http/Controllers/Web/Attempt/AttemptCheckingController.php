@@ -49,7 +49,7 @@ class AttemptCheckingController
         $attempt = $finishManualChecking
             ->execute($attempt);
 
-        return redirect()->route('exam.show.checking', [
+        return redirect()->route('exam.show.check', [
             'exam' => $attempt->exam
         ]);
     }

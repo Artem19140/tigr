@@ -19,6 +19,7 @@ use App\Http\Resources\Exam\ExamIndexResource;
 use App\Http\Resources\Exam\ExamResource;
 use App\Http\Resources\ExamType\ExamTypeResource;
 use App\Models\Exam;
+use App\Modules\Exam\UpdateProtocolComment;
 use App\Support\CenterIsolationCheck;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -101,21 +102,6 @@ class ExamController
         ]);
     }
 
-    public function show(
-        Request $request,
-        Exam $exam,
-        ExamViewBuilder $builder
-    ): \Inertia\Response {
-        
-        Gate::authorize('view', $exam);
-        $employee = $request->user();
-        $exam = $builder->execute($exam, $employee);
-
-        return Inertia::render('Exam/ExamView',[
-            'exam' => new ExamResource($exam),
-        ]);
-    }
-
     public function edit(
         Exam $exam,
         ExamCreateData $builder
@@ -175,6 +161,24 @@ class ExamController
         $cancelExam->execute(
             $exam, 
             $request->string('cancelledReason')
+        );
+
+        return response()->noContent();
+    }
+
+    public function protocolComment(
+        Request $request,
+        Exam $exam,
+        UpdateProtocolComment $updateProtocolComment
+    ): Response {
+
+        $request->validate([
+            'protocolComment' => ['required', 'string'],
+        ]);
+
+        $updateProtocolComment->execute(
+            $exam,
+            $request->input('protocolComment')
         );
 
         return response()->noContent();

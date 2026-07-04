@@ -1,13 +1,30 @@
 <script setup lang="ts">
 import { Exam } from '@/interfaces/Exam';
-import VideoUpload from './VideoUpload.vue';
 import { ref } from 'vue';
 import { mdiPlayCircle, mdiArrowRight } from '@mdi/js'
+import VideoUpload from './Components/VideoUpload.vue';
+import ExamLayout from './Components/ExamLayout.vue';
+import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
+import { setLayoutProps } from '@inertiajs/vue3';
+
+defineOptions({
+  layout: [EmployeeLayout, ExamLayout]
+})
 
 const props = defineProps<{
-    exam:Exam | null
+    exam:{
+        data:Exam
+    },
+    permissions:any
 }>()
-const records = ref(props.exam?.documents)
+
+const records = ref(props.exam.data.documents)
+
+setLayoutProps({
+    tab: 'videos',
+    permissions: props.permissions,
+	exam: props.exam.data
+})
 
 const open = (id: number) => {
     window.open(`/documents/${id}`)
@@ -15,7 +32,7 @@ const open = (id: number) => {
 </script>
 
 <template>
-    <video-upload 
+    <video-upload
     @uploaded="(val:any) => records.push(val)"
         v-if="exam"
         :exam-id="exam.id"

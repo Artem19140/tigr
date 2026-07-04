@@ -63,11 +63,9 @@ class HandleInertiaRequests extends Middleware
         return [
             'foreignNationals' => $employee->can('viewAny', ForeignNational::class),
             'exams' => $employee->can('viewAny', Exam::class),
-            'monitoring' => $employee->can('monitoringAny', Exam::class),
-            'checking' => $employee->can('checkingAny', Exam::class),
-            'schedule' => $employee->can('viewAny', Exam::class),
             'center' => $employee->can('center-manage') &&  ! $employee->isPlatformAdmin(),
             'reports' => $employee->can('reports.viewAny'),
+            'myExams' => $employee->can('conductAny', Exam::class),
             'adminPanel' => $employee->can('platform-manage'),
         ];
     }

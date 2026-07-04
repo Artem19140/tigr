@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Enums\EmployeeRole;
-use App\Enums\ExamStatus;
 use App\Models\Scopes\BelongsToCenter;
 use App\Modules\Shared\ExamSettings;
 use App\Support\TimePresenter;
@@ -185,24 +184,6 @@ class Exam extends Model
         return $this->active_attempts_exists;
     }
 
-    // public function isGoing():bool
-    // {
-
-    //     if($this->begin_time->isFuture()){
-    //         return false;
-    //     }
-
-    //     if(! $this->enrollments_exists){
-    //         return false;
-    //     }
-        
-    //     if(! $this->attempts_exists  && $this->codesTtlExpired()){
-    //         return false;
-    //     }
-
-    //     return $this->active_attempts_exists;
-    // }
-
     public function codesTtlExpired():bool
     {
         return $this->begin_time->copy()->addMinutes(ExamSettings::codesTtlMinutes())->isPast();
@@ -219,19 +200,5 @@ class Exam extends Model
             'attempts',
             'enrollments'
         ]);
-    }
-
-
-    public function status():ExamStatus
-    {
-        if ($this->isCancelled()) {
-            return ExamStatus::Cancelled;
-        }
-
-        if ($this->isFinished()) {
-            return ExamStatus::Finished;
-        }
-
-        return ExamStatus::Pending;
     }
 }

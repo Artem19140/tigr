@@ -10,11 +10,16 @@ export interface Enrollment{
     exam:Exam,
     attempt:Attempt | null,
     examResult:string,
-    availability:EnrollmentAvailability,
-    permissions:{
-        payment:boolean,
-        statement:boolean
+    actions:{
+        payment:{
+            can:boolean
+            available:boolean
+        }
+        statement:{
+            can:boolean
+        }
     }
+    
 }
 
 export interface EnrollmentAvailability{

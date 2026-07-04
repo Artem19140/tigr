@@ -8,7 +8,6 @@ import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import EnrollmentModal from './Components/EnrollmentModal.vue';
 import { ref } from 'vue';
-import AppBackButton from '@/components/UI/AppBackButton.vue';
 import { router } from '@inertiajs/vue3';
 
 const props = defineProps<{
@@ -45,12 +44,6 @@ const isOpen = ref<boolean>(false)
 </script>
 
 <template>
-  <div class="sticky top-8">
-    <AppBackButton 
-      @click="router.visit('/foreign-nationals')"
-      text="Назад"
-    />
-  </div>
   <v-container class="space-y-8 ">
     <div
       class="sticky top-0 z-30 bg-[#F7F9FC]/70 backdrop-blur-md border-b -mx-6"
@@ -77,12 +70,14 @@ const isOpen = ref<boolean>(false)
             <AppPrimaryButton
               text="Записать"
               @click="isOpen = true"
+              v-if="foreignNational.data.permissions.enroll"
             />
 
             <v-btn
               variant="text"
               class="text-gray-500"
               @click="edit"
+              v-if="foreignNational.data.permissions.edit"
             >
               Редактировать
             </v-btn>
@@ -175,10 +170,7 @@ const isOpen = ref<boolean>(false)
       </v-card-text>
     </v-card>
 
-    <v-card
-      rounded="xl"
-      elevation="0"
-    >
+    <v-card v-if="foreignNational.data.permissions.enrollments">
       <v-card-text class="pa-8">
 
         <div class="text-sm font-medium text-gray-900 mb-6">

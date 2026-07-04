@@ -1,18 +1,26 @@
 <?php
 
-use App\Http\Controllers\Web\Exam\ExamCheckingController;
 use App\Http\Controllers\Web\Exam\ExamController;
 use App\Http\Controllers\Web\Exam\ExamDocumentController;
 use App\Http\Controllers\Web\Exam\ExamEnrollmentController;
-use App\Http\Controllers\Web\Exam\ExamMonitoringController;
-use App\Http\Controllers\Web\Exam\ExamScheduleController;
+use App\Http\Controllers\Web\Exam\ExamViewController;
+use App\Http\Controllers\Web\Exam\MyExamController;
 use App\Models\Enrollment;
 use App\Models\Exam;
 use App\Models\ExamType;
 
 Route::resource('exams', ExamController::class)
+    ->except('show')
     ->middleware(['meta'])
     ->where(['exam' => '[0-9]+']);
+
+Route::get('exams/{exam}', [ExamViewController::class, 'show'])
+    ->can('view', 'exam')
+    ->where(['exam' => '[0-9]+']);
+
+Route::get('my-exams', [MyExamController::class, 'index'])
+    ->name('my-exams.index')
+    ->can('conductAny', Exam::class);
 
 Route::prefix('exams')
     ->middleware(['meta'])
@@ -21,10 +29,6 @@ Route::prefix('exams')
     Route::get('available', [ExamEnrollmentController::class, 'available'])
         ->can('create', Enrollment::class);
 
-    Route::get('schedule', [ExamScheduleController::class, 'index'])
-        ->name('exams.schedule.index')
-        ->can('viewAny', Exam::class);
-
     Route::get('create/data', [ExamController::class, 'createData'])
         ->can('create', Exam::class);
 
@@ -32,21 +36,19 @@ Route::prefix('exams')
         return ExamType::cached();
     });
 
-    Route::get('monitoring', [ExamMonitoringController::class, 'index'])
-        ->can('monitoringAny', Exam::class)
-        ->name('exams.monitoring.index');
-        
-    Route::get('checking', [ExamCheckingController::class, 'index'])
-        ->can('checkingAny', Exam::class);
 
+    Route::get('{exam}/videos', [ExamViewController::class, 'videos'])
+        ->can('videos', 'exam')
+        ->name('exam.show.videos');
 
     Route::middleware('can:examiner,exam')
         ->group(function () {
-            Route::get('{exam}/checking', [ExamCheckingController::class, 'show'])
-                ->name('exam.show.checking');
 
-            Route::get('{exam}/monitoring', [ExamMonitoringController::class, 'show'])->name('exams.monitoring.show');
-            Route::put('{exam}/monitoring/protocol-comments', [ExamMonitoringController::class, 'protocolComment']);
+            Route::get('{exam}/check', [ExamViewController::class, 'check'])
+                ->name('exam.show.check');
+
+            Route::get('{exam}/conduct', [ExamViewController::class, 'conduct'])->name('exams.show.conduct');
+            Route::put('{exam}/monitoring/protocol-comments', [ExamController::class, 'protocolComment']);
 
             Route::get('{exam}/documents/codes', [ExamDocumentController::class, 'codes'])
                 ->name('exam.documents.codes');

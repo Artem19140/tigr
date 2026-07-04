@@ -2,10 +2,8 @@
 import { ref } from 'vue';
 import EnrollmentDropDown from '@/components/Enrollment/EnrollmentDropDown.vue';
 import ExamResultStatusChip from '@/components/Exam/ExamResultStatusChip.vue';
-import PaymentIcon from '@/components/Enrollment/PaymentIcon.vue';
 import { Exam } from '@/interfaces/Exam';
-import ExamCapacityChip from '@/components/Exam/ExamCapacityChip.vue';
-import { mdiMagnify } from '@mdi/js'
+import { mdiCheckCircle, mdiMagnify } from '@mdi/js'
 
 const props = defineProps<{
     exam: Exam
@@ -31,11 +29,7 @@ const search = ref('')
 <template>
     <div class="flex align-center justify-space-between p-4">
         <div>
-            <div class="text-caption text-medium-emphasis mb-1">
-                Записано на экзамен
-            </div>
-
-            <ExamCapacityChip :exam="exam" />
+            <span>{{`${exam.enrollments?.length} / ${exam?.capacity}` }} </span>
         </div>
         <v-text-field
             v-model="search"
@@ -46,6 +40,7 @@ const search = ref('')
             hide-details
             single-line
             max-width="320"
+            clearable
         />
     </div>
 
@@ -59,7 +54,17 @@ const search = ref('')
         hide-default-footer
     >
         <template #item.hasPayment="{ item }">
-            <PaymentIcon :enrollment="item" />
+            <v-icon 
+                :icon="mdiCheckCircle" 
+                color="green" 
+                v-if="!item.isLoading && item.hasPayment"
+            />
+            
+            <v-progress-circular
+                indeterminate
+                color="primary"
+                v-if="item.isLoading"
+            />
         </template>
 
         <template #item.results="{ item }">
@@ -68,9 +73,13 @@ const search = ref('')
             />
         </template>
 
-        <template #item.actions="{ item }">
+        <template 
+            #item.actions="{ item }" 
+            v-if="exam.actions.enrollments.payment.can || exam.actions.enrollments.statement.can"
+        >
             <EnrollmentDropDown
                 :enrollment="item"
+                :actions="exam.actions.enrollments"
             />
         </template>
     </v-data-table>

@@ -6,8 +6,8 @@ import { useConfirmDialog } from '@/composables/useConfirmDialog';
 import BaseThreeDotDropdown from '@/components/BaseComponents/BaseThreeDotDropdown/BaseThreeDotDropdown.vue';
 import { useModals } from '@/composables/useModals';
 import BaseLayout from './BaseLayout.vue';
-import { mdiPaw, mdiAccountGroup, mdiSchool, mdiMonitorEye, mdiClipboardCheck, 
-	mdiFileChartOutline, mdiCalendarMonth, mdiOfficeBuilding, mdiCog, mdiLogout } from '@mdi/js'
+import { mdiPaw, mdiAccountGroup, mdiFileChartOutline, 
+  mdiOfficeBuilding, mdiCog, mdiLogout, mdiClipboardText } from '@mdi/js'
 
 const page = usePage<any>()
 const can =  computed(() => page.props?.auth?.can)
@@ -40,24 +40,17 @@ const menu: Array<MenuElem> = [
   },
   {
     title:"Экзамены" ,
-    prependIcon: mdiSchool,
+    prependIcon: mdiClipboardText,
     url:'/exams',
     value:"exams",
     allowed:can.value.exams
   },
   {
-    title:"Мониторинг" ,
-    prependIcon: mdiMonitorEye ,
-    url:'/exams/monitoring',
-    value:"monitoring",
-    allowed:can.value.monitoring
-  },
-  {
-    title:"Проверка" ,
-    prependIcon:mdiClipboardCheck ,
-    url:'/exams/checking',
-    value:"checking",
-    allowed:can.value.checking
+    title:"Мои экзамены" ,
+    prependIcon: mdiClipboardText,
+    url:'/my-exams',
+    value:"myExams",
+    allowed:can.value.myExams
   },
   {
     title:"Отчеты" ,
@@ -65,13 +58,6 @@ const menu: Array<MenuElem> = [
     url: '/reports',
     value: "reports",
     allowed:can.value.reports
-  },
-  {
-    title:"Расписание" ,
-    prependIcon: mdiCalendarMonth ,
-    url:'/exams/schedule',
-    value:"schedule",
-    allowed:can.value.schedule
   },
   {
     title:"Центр" ,

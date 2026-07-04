@@ -23,12 +23,14 @@ class EnrollmentExamShowResource extends JsonResource
             'hasPayment' => $this->has_payment,
             'foreignNational' => new ForeignNationalResource($this->whenLoaded('foreignNational')),
             'examResult' => app(ExamResultResolver::class)->execute($this->resource),
-            'availability' => [
-                'payment' => app(EnrollmentPaymentRules::class)->check($this->resource)->available
-            ],
-            'permissions' => [
-                'payment' => $request->user()->can('paymentAny', Enrollment::class),
-                'statement' => $request->user()->can('statementAny', Enrollment::class)
+            'actions' => [
+                'payment' => [
+                    'can' => $request->user()->can('paymentAny', Enrollment::class),
+                    'available' => app(EnrollmentPaymentRules::class)->check($this->resource)->available
+                ],
+                'statement' => [
+                    'can' => $request->user()->can('statementAny', Enrollment::class),
+                ]
             ]
         ];
     }

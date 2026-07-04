@@ -4,14 +4,12 @@ import BaseThreeDotDropdown from '@components/BaseComponents/BaseThreeDotDropdow
 import { useLoadingSnackbar } from '@composables/useLoadingSnackBar';
 import { router, useHttp } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
-import PaymentChange from '@/components/Enrollment/PaymentChange.vue';
 import {  EnrollmentMonitoring } from '@/interfaces/Enrollment';
-import { ExamMonitoring } from '@/interfaces/Exam';
 import ViolationModal from './ViolationModal.vue';
 
 const props = defineProps<{ 
     enrollment:EnrollmentMonitoring,
-    exam : ExamMonitoring
+    hasSpeaking:boolean
 }>()
 
 const promptDialog = usePromptDialog()
@@ -37,8 +35,6 @@ const annul = async () => {
     })
 }
 
-
-const changePaymentDisabled = computed(() => !props.enrollment.availability.payment )
 const speakingDisabled = computed(() => !props.enrollment.attempt?.availability?.speaking )
 const editViolationDisabled = computed(() => !props.enrollment.attempt?.availability?.violations)
 const annulAttemptDisabled = computed(() => !props.enrollment.attempt?.availability?.annul)
@@ -48,13 +44,9 @@ const isOpen = ref<boolean>(false)
 
 <template>
     <BaseThreeDotDropdown>
-        <PaymentChange  
-            :disabled="changePaymentDisabled"
-            :enrollment="enrollment"
-        />
         <v-list-item 
             :disabled="speakingDisabled"
-            v-if="exam?.hasSpeakingTasks"
+            v-if="hasSpeaking"
             title="Говорение" 
             @click="() => router.visit(`/attempts/${props.enrollment.attempt?.id}/speaking`)"
         />
@@ -71,6 +63,7 @@ const isOpen = ref<boolean>(false)
             @click="annul"
         />
     </BaseThreeDotDropdown>
+    
     <ViolationModal
         v-model="isOpen"
         :enrollment="enrollment"

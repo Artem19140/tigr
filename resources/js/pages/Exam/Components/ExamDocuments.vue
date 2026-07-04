@@ -3,14 +3,11 @@ import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.
 import { Exam } from '@/interfaces/Exam';
 import { RedirectUrl } from '@/interfaces/Interfaces';
 import { useHttp } from '@inertiajs/vue3';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 
 const props = defineProps<{
   exam : Exam
 }>()
-
-const permissions = computed(() => props.exam.permissions)
-const availability = computed(() => props.exam.availability)
 
 const documentDownloading = ref<string | null>(null)
 const download = (document :string) => {
@@ -25,21 +22,15 @@ const download = (document :string) => {
     onFinish:() => documentDownloading.value = null
   })
 }
-
-const downloadResultslDisabled  =  computed(() => !availability.value.documents.results?.available )
-const downloadProtocolDisabled = computed(() =>!availability.value.documents.protocol?.available )
-const downloadListDisabled =  computed(() =>!availability.value.documents.list?.available)
-const downloadCodesDisabled  = computed(() =>!availability.value.documents.codes?.available)
 </script>
 
 <template>
   <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          
     <AppPrimaryButton
       class="w-full !justify-start bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl shadow-none transition"
       text="Коды"
-      v-if="permissions.documents.codes"
-      :disabled="downloadCodesDisabled"
+      v-if="exam.actions.codes.can"
+      :disabled="! exam.actions.codes.availability.available"
       variant="outlined"
       @click="() => download('codes')" 
       :loading="documentDownloading === 'codes'"
@@ -49,8 +40,8 @@ const downloadCodesDisabled  = computed(() =>!availability.value.documents.codes
       class="w-full !justify-start bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl shadow-none transition"
       text="Список"
       variant="outlined"
-      v-if="permissions.documents.list"
-      :disabled="downloadListDisabled"  
+      v-if="exam.actions.list.can"
+      :disabled="! exam.actions.list.availability.available"  
       @click="download('list')" 
       :loading="documentDownloading === 'list'"
     />
@@ -59,21 +50,20 @@ const downloadCodesDisabled  = computed(() =>!availability.value.documents.codes
         class="w-full !justify-start bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl shadow-none transition"
         text="Результаты"
         variant="outlined"
-        :subtitle="availability.documents.results?.code === 'exam_on_checking' ? availability.documents.results.reason : ''"
-        :disabled="downloadResultslDisabled" 
-        v-if="permissions.documents.results"
+        :disabled="! exam.actions.results.availability.available" 
+        v-if="exam.actions.results.can"
         @click="() => download('results')" 
         :loading="documentDownloading === 'results'"
       />
-      <div class="text-xs text-gray-500">{{ availability.documents.results?.code === 'exam_on_checking' ? 'Проверка' : '' }}</div>
+      <div class="text-xs text-gray-500">{{ exam.actions.results.availability.code === 'exam_on_checking' ? 'Проверка' : '' }}</div>
     </div>
 
     <AppPrimaryButton
       class="w-full !justify-start bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl shadow-none transition"
       text="Протокол"
       variant="outlined"
-      v-if="permissions.documents.protocol"
-      :disabled="downloadProtocolDisabled"
+      v-if="exam.actions.protocol.can"
+      :disabled="! exam.actions.protocol.availability.available"
       @click="() => download('protocol')" 
       :loading="documentDownloading === 'protocol'"
     />

@@ -1,21 +1,28 @@
 <script setup lang="ts">
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
-import { DateFormatter } from '@/helpers/DateFormatter';
 import { Enrollment } from '@/interfaces/Enrollment';
 import { ExamChecking } from '@/interfaces/Exam';
-import { Head, router } from '@inertiajs/vue3';
+import { Head, router, setLayoutProps } from '@inertiajs/vue3';
 import BaseTable from '@/components/BaseComponents/BaseTable/BaseTable.vue';
-import { mdiArrowLeft } from '@mdi/js'
+import ExamLayout from './Components/ExamLayout.vue';
+import { computed } from 'vue';
 
 defineOptions({
-  layout: [EmployeeLayout],
+  layout: [EmployeeLayout, ExamLayout]
 })
 
 const props = defineProps<{
-    exam: {
+    exam:{
         data:ExamChecking
-    }
+    },
+    actions:any
 }>()
+
+setLayoutProps({
+    tab: 'check',
+    actions: props.actions,
+	exam: props.exam.data
+})
 
 const headers = [
     {title : "№",sortable: false, key: 'index', align: 'center' },
@@ -27,27 +34,20 @@ const openAttempt =  (item : Enrollment) => {
     if(!item.attempt) return
     router.visit(`/attempts/${item.attempt.id}/checking`)
 }
+const examChecked = computed(
+    () => ! props.exam.data.enrollments.some(enrollment => enrollment.attempt?.checkedAt === null)
+)
 </script>
 
 <template>
     <Head>
         <title>Проверка {{ exam.data.shortName }}</title>
     </Head>
-    
-    <v-btn 
-        class="mt-4 ml-4" 
-        variant="text" 
-        @click="() => router.visit('/exams/checking')"
-        :prepend-icon="mdiArrowLeft"
-    >
-        Назад
-    </v-btn>
 
     <v-container>
         <BaseTable 
             :elements="exam.data.enrollments"
             :headers="headers"
-            :title="`Попытки экзмена ${exam.data.shortName} от ${new DateFormatter(exam.data.beginTime).format('H:i, d.m.Y')}`"
             @row-click="openAttempt"
         >
             <template #item.index="{ index }">

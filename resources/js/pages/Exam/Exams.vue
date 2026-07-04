@@ -9,7 +9,6 @@ import ExamTableFilter from './Components/ExamTableFilter.vue';
 import AppAddButton from '@/components/UI/AppAddButton/AppAddButton.vue';
 import ExamCapacityChip from '@/components/Exam/ExamCapacityChip.vue';
 import { ref } from 'vue';
-import { useModals } from '@/composables/useModals.js';
 
 defineOptions({
   layout: [EmployeeLayout]
@@ -25,7 +24,6 @@ const headers = [
   {title : "Дата",sortable: false, key: 'beginTime', align: 'center' },
   {title : "Запись",sortable: false, key: 'enrollmentsCount', align: 'center' },
 ]
-const {open} = useModals()
 
 const loading = ref<boolean>(false)
 </script>

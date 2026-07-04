@@ -1,27 +1,34 @@
 <script setup lang="ts">
-import EnrollmentMonitoringDropdown from './Components/EnrollmentMonitoringDropdown.vue';
-import { Head, router, usePoll } from '@inertiajs/vue3'
+import { Head, setLayoutProps, usePoll } from '@inertiajs/vue3'
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { computed, onMounted, onUnmounted, ref} from 'vue';
 import { DateFormatter } from '@helpers/DateFormatter';
-import PaymentIcon from '@/components/Enrollment/PaymentIcon.vue';
 import { ExamMonitoring } from '@/interfaces/Exam';
-import ExamCommentModal from './Components/ExamCommentModal.vue';
-import AppBackButton from '@/components/UI/AppBackButton.vue';
 import { mdiCheckCircle , mdiMagnify } from '@mdi/js'
+import ExamCommentModal from '@/pages/ExamMonitoring/Components/ExamCommentModal.vue';
+import EnrollmentMonitoringDropdown from '@/pages/ExamMonitoring/Components/EnrollmentMonitoringDropdown.vue';
+import ExamLayout from './Components/ExamLayout.vue';
 
 defineOptions({
-  layout: [EmployeeLayout]
+  layout: [EmployeeLayout, ExamLayout]
 })
 
 const props = defineProps<{
     exam:{
         data:ExamMonitoring
     },
-    backDate:string
+    permissions:any
 }>()
 
 const pollFrequency = 15000
+
+const exam = ref<ExamMonitoring>(props.exam.data)
+
+setLayoutProps({
+    tab: 'conduct',
+    permissions: props.permissions,
+	exam:exam.value
+})
 
 const { start, stop } = usePoll(pollFrequency, {}, {
     autoStart: false,
@@ -30,7 +37,6 @@ const { start, stop } = usePoll(pollFrequency, {}, {
 const headers = [
     {title:'ФИО', key:"foreignNational.fullName",sortable: true},
     {title:'Паспорт', key:"foreignNational.fullPassport",sortable: false},
-    {title:'Оплата', key:"hasPayment",sortable: true,align: 'center'},
     {
         title:'Время',
         align:'center',
@@ -42,11 +48,11 @@ const headers = [
     {title:'', key:"actions",sortable: false,align: 'end'}
 ]
 
-if(props.exam.data.hasSpeakingTasks){
+if(exam.value.hasSpeakingTasks){
     headers.splice(headers.length -1 , 0, {title:'Говор.', key:"speaking",sortable: false, align:'center'})
 }
 
-const isPolling = computed(() => props.exam.data.polling)
+const isPolling = computed(() => exam.value.polling)
 onMounted(()=>{
     if(isPolling.value){
         start()
@@ -61,17 +67,10 @@ const search = ref<string>('')
 const isOpen = ref<boolean>(false)
 </script>
 
-
 <template>
     <Head>
-        <title>{{ exam.data.shortName }} {{ new DateFormatter(exam.data?.beginTime).format('d.m.Y') }}</title>
+        <title>{{ exam.shortName }} {{ new DateFormatter(exam?.beginTime).format('d.m.Y') }}</title>
     </Head>
-
-    <AppBackButton 
-        text="Назад"
-        class="mt-4 ml-4"
-        @click="() => router.visit(`/exams/monitoring?date=${props.backDate}`)"
-    />
 
     <v-container>
         <v-card
@@ -80,9 +79,7 @@ const isOpen = ref<boolean>(false)
             <v-card-text class="d-flex justify-space-between align-center py-4">
                 <div class="min-w-0">
                     <div class="d-flex align-center ga-2 flex-wrap">
-                        <div class="text-h6 font-weight-medium">
-                            {{ exam.data.shortName }}
-                        </div>
+
                         <v-chip 
                             color="green"
                             text="В процессе"
@@ -92,7 +89,6 @@ const isOpen = ref<boolean>(false)
                     </div>
 
                     <div class="text-caption text-medium-emphasis mt-1">
-                        {{ new DateFormatter(exam.data?.beginTime).format('d M Y, H:i') }}
 
                         <span v-if="isPolling" class="ml-2">
                             · автообновление {{ pollFrequency / 1000 }}с
@@ -104,6 +100,7 @@ const isOpen = ref<boolean>(false)
                     variant="outlined"
                     rounded="lg"
                     @click="isOpen=true"
+                    :disabled="! exam.actions.protocolComment.available"
                 >
                     Комментарий
                 </v-btn>
@@ -124,9 +121,8 @@ const isOpen = ref<boolean>(false)
             </v-card-text>
 
             <v-divider />
-
             <v-data-table
-                :items="exam.data.enrollments"
+                :items="exam.enrollments"
                 :headers="headers"
                 hide-default-footer
                 :items-per-page="-1"
@@ -135,7 +131,7 @@ const isOpen = ref<boolean>(false)
                 <template #item.actions="{ item }">
                     <EnrollmentMonitoringDropdown
                         :enrollment="item"
-                        :exam="exam.data"
+                        :has-speaking="exam.hasSpeakingTasks"
                     />
                 </template>
 
@@ -161,10 +157,6 @@ const isOpen = ref<boolean>(false)
                     {{ new DateFormatter(item.attempt?.finishedAt ?? '').format('H:i') }}
                 </template>
 
-                <template #item.hasPayment="{ item }">
-                    <PaymentIcon :enrollment="item" />
-                </template>
-
                 <template #item.speaking="{ item }">
                     <v-icon
                         :icon="mdiCheckCircle"
@@ -176,8 +168,8 @@ const isOpen = ref<boolean>(false)
         </v-card>
     </v-container>
 
-    <ExamCommentModal 
+    <ExamCommentModal
         v-model="isOpen"
-        :exam="exam.data"
+        :exam="exam"
     />
 </template>

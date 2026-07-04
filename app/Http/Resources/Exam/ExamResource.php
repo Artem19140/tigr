@@ -2,9 +2,6 @@
 
 namespace App\Http\Resources\Exam;
 
-use App\Http\Resources\Document\DocumentResource;
-use App\Modules\Exam\ExamCancellRules;
-use App\Modules\Exam\ExamEditRules;
 use App\Modules\ExamDocument\ExamDocumentRules;
 use App\Http\Resources\Employee\EmployeeResource;
 use App\Http\Resources\Enrollment\EnrollmentExamShowResource;
@@ -41,51 +38,25 @@ class ExamResource extends JsonResource
             'name' => $this->whenLoaded('type', fn () => $this->type->name),
             'shortName' => $this->whenLoaded('type', fn () => $this->type->short_name),
             'address' => $this->whenLoaded('address', fn () => $this->address->address),
-            'creator' => new EmployeeResource($this->whenLoaded('creator')),
-            'createdAt' => $this->created_at,
-            'documents' => DocumentResource::collection($this->whenLoaded('documents')),
-            'enrollmentsCount' => $this->whenCounted('enrollments_count'),
-            'availability' => $this->availability($exam,  $employee),
-            'permissions' => $this->permissions( $exam, $employee)
+            'actions' => $this->actions($exam, $employee)
         ];
     }
 
-    protected function permissions(
-        Exam $exam,
-        Employee $employee
-    ): array
+    protected function actions(Exam $exam, Employee $employee)
     {
         return [
-            'documents' => [
-                'codes' => $employee->can('examiner', $exam),
-                'protocol' => $employee->can('protocol', $exam),
-                'results' => $employee->can('results', $exam),
-                'list' => $employee->can('list', $exam),
-            ],
-            'actions' => [
-                'edit' => $employee->can('update', $exam),
-                'cancell' => $employee->can('delete', $exam),
-            ],
+            ...app(ExamDocumentRules::class)->resolve($this->resource,  $employee),
             'enrollments' => [
-                'view' => $employee->can('viewAny', Enrollment::class),
-                'statement' => $employee->can('statementAny', Enrollment::class),
-                'payment' => $employee->can('paymentAny', Enrollment::class),
-            ],
-            'videos' => [
-                'view' => $employee->can('video', $exam)
+                'view'=> [
+                    'can' => $employee->can('viewAny', Enrollment::class)
+                ],
+                'statement'=> [
+                    'can' => $employee->can('statementAny', Enrollment::class)
+                ],
+                'payment'=> [
+                    'can' => $employee->can('paymentAny', Enrollment::class)
+                ]
             ]
-
-        ];
-    }
-
-    protected function availability(Exam $exam, Employee $employee): array
-    {
-        return [
-            'actions' => [
-                'cancell' => app(ExamCancellRules::class)->check($exam)->available,
-                'edit' => app(ExamEditRules::class)->check($exam)->available,
-            ],  
-            'documents' => app(ExamDocumentRules::class)->resolve($this->resource,  $employee)
         ];
     }
 }

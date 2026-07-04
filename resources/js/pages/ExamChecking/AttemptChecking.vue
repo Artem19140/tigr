@@ -37,7 +37,7 @@ const finishChecking = async () => {
 }
 
 const back = () => {
-    router.visit(`/exams/${props.examId}/checking`)
+    router.visit(`/exams/${props.examId}/check`)
 }
 
 const rated = (value: AttemptAnswer) => {
@@ -53,6 +53,7 @@ const hasUncheckedTasks = computed(
 
 <template>
     <AttemptCheckingHeader :attempt="attempt" />
+
     <div class="sticky top-8">
         <v-btn 
             variant="text" 
@@ -68,7 +69,7 @@ const hasUncheckedTasks = computed(
     />
 
     <v-container
-        max-width="1100"
+        max-width="1000"
     >
         <TasksList
             :attempt="attempt"
