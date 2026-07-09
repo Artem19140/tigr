@@ -20,7 +20,7 @@ const deleteAddress = async () => {
     const ok = await open('Деактивировать адрес')
     if(!ok) return
 
-    http.delete(`addresses/${props.address.id}`,{
+    http.delete(`/addresses/${props.address.id}`,{
         onSuccess:() => {
             router.reload()
         },

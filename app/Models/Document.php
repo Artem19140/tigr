@@ -17,7 +17,6 @@ class Document extends Model
         'size_bytes',
         'mime_type',
         'document_type',
-        'center_id',
         'deleted_at'
     ];
 
@@ -33,10 +32,5 @@ class Document extends Model
     public function creator():BelongsTo
     {
         return $this->belongsTo(Employee::class, 'creator_id');
-    }
-
-    public function center():BelongsTo
-    {
-        return $this->belongsTo(Center::class, 'center_id');
     }
 }

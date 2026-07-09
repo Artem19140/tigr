@@ -28,10 +28,6 @@ return new class extends Migration
                 ->index()
                 ->constrained('exams');
 
-            $table->foreignId('center_id')
-                ->constrained('centers')
-                ->cascadeOnDelete();
-
             $table->string('annulled_reason')->nullable()->default(null);
 
             $table->unsignedTinyInteger('total_mark')->default(0);

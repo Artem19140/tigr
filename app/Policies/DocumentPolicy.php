@@ -6,11 +6,9 @@ use App\Enums\EmployeeRole;
 use App\Models\Document;
 use App\Models\Employee;
 use App\Models\ForeignNational;
-use Illuminate\Auth\Access\Response;
 
 class DocumentPolicy 
 {
-    use BasePolicy;
     public function viewAny(Employee $employee): bool
     {
         if($employee->hasAnyRole(
@@ -25,9 +23,6 @@ class DocumentPolicy
 
     public function view(Employee $employee, Document $document): bool
     {
-        if($this->notSameCenter($employee, $document)){
-            return false;
-        }
         $owner = $document->documentable;
 
         if($owner instanceof ForeignNational){
@@ -51,10 +46,6 @@ class DocumentPolicy
 
     public function update(Employee $employee, Document $document): bool
     {
-        if($this->notSameCenter($employee, $document)){
-            return false;
-        }
-        
         $owner = $document->documentable;
 
         if($owner instanceof ForeignNational){
@@ -68,9 +59,6 @@ class DocumentPolicy
 
     public function delete(Employee $employee, Document $document): bool
     {
-        if($this->notSameCenter($employee, $document)){
-            return false;
-        }
 
         if($employee->hasAnyRole(EmployeeRole::Operator)){
             return true;

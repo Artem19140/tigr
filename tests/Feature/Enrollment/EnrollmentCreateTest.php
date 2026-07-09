@@ -4,7 +4,6 @@ namespace Tests\Feature\Enrollment;
 
 use App\Enums\CounterKey;
 use App\Models\Address;
-use App\Models\Center;
 use App\Models\Counter;
 use App\Models\Employee;
 use App\Models\Enrollment;
@@ -18,11 +17,7 @@ use Tests\TestCase;
 class EnrollmentCreateTest extends TestCase
 {
     use RefreshDatabase;
-
     protected Employee $actor;
-
-    protected Center $center;
-
     protected ForeignNational $foreignNational;
 
     protected string $model;
@@ -31,22 +26,16 @@ class EnrollmentCreateTest extends TestCase
     {
         parent::setUp();
         $this->seed(RolesSeeder::class);
-        $this->center = Center::factory()->create();
 
-        $this->actor = Employee::factory()->operator()->create([
-            'center_id' => $this->center->id,
-        ]);
+        $this->actor = Employee::factory()->operator()->create();
 
-        $this->foreignNational = ForeignNational::factory()->create([
-            'center_id' => $this->center->id,
-        ]);
+        $this->foreignNational = ForeignNational::factory()->create();
 
         $this->model = Enrollment::class;
 
         Counter::create([
             'key' => CounterKey::RegNum,
-            'value' => 260000,
-            'center_id' => $this->center->id,
+            'value' => 260000
         ]);
         Carbon::setTestNow(now());
     }
@@ -73,8 +62,7 @@ class EnrollmentCreateTest extends TestCase
 
         $exam = Exam::factory()->create([
             'begin_time' => Carbon::now()->addMinutes(Enrollment::CLOSE_BEFORE_START_MINUTES)->addMinute(),
-            'end_time' => Carbon::now()->addMinutes(100 + Enrollment::CLOSE_BEFORE_START_MINUTES)->addMinute(),
-            'center_id' => $this->center->id,
+            'end_time' => Carbon::now()->addMinutes(100 + Enrollment::CLOSE_BEFORE_START_MINUTES)->addMinute()
         ]);
 
         $response = $this->postEnrollment($exam->id);
@@ -87,9 +75,7 @@ class EnrollmentCreateTest extends TestCase
     {
         $exam = Exam::factory()
             ->inPast()
-            ->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->create();
 
         $response = $this->postEnrollment($exam->id);
 
@@ -104,8 +90,7 @@ class EnrollmentCreateTest extends TestCase
             ->inFuture()
             ->cancelled()
             ->create([
-                'begin_time' => Carbon::now()->addMinutes(Enrollment::CLOSE_BEFORE_START_MINUTES)->addMinute(),
-                'center_id' => $this->center->id,
+                'begin_time' => Carbon::now()->addMinutes(Enrollment::CLOSE_BEFORE_START_MINUTES)->addMinute()
             ]);
 
         $response = $this->postEnrollment($exam->id);
@@ -119,8 +104,7 @@ class EnrollmentCreateTest extends TestCase
 
         $exam = Exam::factory()->cancelled()->create([
             'begin_time' => Carbon::now()->addMinutes(Enrollment::CLOSE_BEFORE_START_MINUTES)->subMinute(),
-            'end_time' => Carbon::now()->addHour(),
-            'center_id' => $this->center->id,
+            'end_time' => Carbon::now()->addHour()
         ]);
 
         $response = $this->postEnrollment($exam->id);
@@ -132,22 +116,16 @@ class EnrollmentCreateTest extends TestCase
     public function test_fail_full_enrollment(): void
     {
         $capacity = 8;
-        $centerId = $this->center->id;
         $address = Address::factory()
             ->withCapacity($capacity)
-            ->create(['center_id' => $centerId]);
+            ->create();
 
         $exam = Exam::factory()
             ->withCapacity($capacity)
-            ->has(Enrollment::factory($capacity)->state(function () use ($centerId) {
-                return [
-                    'center_id' => $centerId,
-                ];
-            }))
+            ->has(Enrollment::factory($capacity))
             ->create([
                 'begin_time' => Carbon::now()->addMinutes(Enrollment::CLOSE_BEFORE_START_MINUTES)->addMinute(),
-                'address_id' => $address->id,
-                'center_id' => $centerId,
+                'address_id' => $address->id
             ]);
 
         $response = $this->postEnrollment($exam->id);
@@ -160,9 +138,7 @@ class EnrollmentCreateTest extends TestCase
     {
         $exam = Exam::factory()
             ->inFuture()
-            ->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->create();
 
         $response = $this->postEnrollment($exam->id);
         $response->assertOk();

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
-import CenterData from './Components/Data/CenterData.vue';
 import { router } from '@inertiajs/vue3';
 import { Employee } from '@/interfaces/Employee';
 import { Address } from '@/interfaces/Address';
@@ -15,9 +14,6 @@ defineOptions({
 })
 const props = defineProps<{
     tab: Tab
-    data?: {
-        data:any
-    },
     employees?:{
         data:Employee[]
     } 
@@ -27,7 +23,6 @@ const props = defineProps<{
     counters?:{
         data:Counter[]
     }
-    centerId:number,
 }>()
 
 type Tab = 'data' | 'employees' | 'addresses' | 'counters' | 'audit'
@@ -35,7 +30,7 @@ type Tab = 'data' | 'employees' | 'addresses' | 'counters' | 'audit'
 const tab = ref<Tab>(props.tab ?? 'data')
 
 const visit = (route : string) => {
-    router.visit(`/centers/${props.centerId}${route}`)
+    router.visit(`/${route}`)
 } 
 
 </script>
@@ -50,19 +45,16 @@ const visit = (route : string) => {
             color="primary"
             class="tabs-clean"
         >
-            <v-tab value="data" @click="visit('')">
-                Данные
-            </v-tab>
 
-            <v-tab value="employees" @click="visit('/employees')">
+            <v-tab value="employees" @click="visit('employees')">
                 Сотрудники
             </v-tab>
 
-            <v-tab value="addresses" @click="visit('/addresses')">
+            <v-tab value="addresses" @click="visit('addresses')">
                 Адреса
             </v-tab>
 
-            <v-tab value="counters" @click="visit('/counters')">
+            <v-tab value="counters" @click="visit('counters')">
                 Счетчики
             </v-tab>
         </v-tabs>
@@ -74,14 +66,6 @@ const visit = (route : string) => {
         <div class="page-content">
             <v-tabs-window v-model="tab">
                 <v-container>
-                    <v-tabs-window-item value="data" v-if="data?.data">
-                        <v-card rounded="xl">
-
-                            <v-card-text>
-                                <CenterData :data="data.data" />
-                            </v-card-text>
-                        </v-card>
-                    </v-tabs-window-item>
 
                     <v-tabs-window-item value="employees" v-if="employees?.data">
                         <Employees :employees="employees.data" />

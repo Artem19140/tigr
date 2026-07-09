@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\ExamDocument;
 
-use App\Models\Center;
 use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\Exam;
@@ -16,20 +15,15 @@ class ExamCodesGenerationTest extends TestCase
     use RefreshDatabase;
 
     protected Employee $actor;
-
-    protected Center $center;
-
     protected Enrollment $enrollment;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->seed(RolesSeeder::class);
-        $this->center = Center::factory()->create();
-        $this->enrollment = Enrollment::factory()->create([
-            'center_id' => $this->center->id,
-        ]);
-        $this->actor = Employee::factory()->examiner()->create(['center_id' => $this->center->id]);
+
+        $this->enrollment = Enrollment::factory()->create();
+        $this->actor = Employee::factory()->examiner()->create();
 
         Carbon::setTestNow(
             Carbon::parse('2026-01-01 10:00:00')
@@ -49,7 +43,6 @@ class ExamCodesGenerationTest extends TestCase
 
         $exam = Exam::factory()
             ->create([
-                'center_id' => $this->center->id,
                 'begin_time' => Carbon::now()->addHour(),
             ]);
 

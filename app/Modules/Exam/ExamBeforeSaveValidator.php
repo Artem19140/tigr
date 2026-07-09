@@ -2,7 +2,6 @@
 
 namespace App\Modules\Exam;
 
-use App\Modules\Center\CenterContext;
 use App\Exceptions\BusinessException;
 use App\Http\Dto\ExamDto;
 use App\Models\Address;
@@ -17,8 +16,7 @@ use Illuminate\Validation\ValidationException;
 class ExamBeforeSaveValidator
 {
     public function __construct(
-        protected ExaminersValidator $examinersValidator,
-        protected CenterContext $centerContext
+        protected ExaminersValidator $examinersValidator
     ) {}
 
     public function execute(
@@ -69,10 +67,9 @@ class ExamBeforeSaveValidator
     protected function findOrFailAddress(int $addressId): Address
     {
         $address = Address::query()
-            ->forCenter($this->centerContext->id())
             ->find($addressId);
         if (! $address) {
-            Log::warning('address not found, no same center', [
+            Log::warning('address not found', [
                 'address_id' => $addressId,
             ]);
             abort(404);
@@ -132,7 +129,6 @@ class ExamBeforeSaveValidator
         ?int $examId
     ): void {
         $conflictExam = Exam::query()
-            ->forCenter($this->centerContext->id())
             ->notCancelled()
             ->where('begin_time', '<=', $endTime)
             ->where('end_time', '>=', $beginTime)

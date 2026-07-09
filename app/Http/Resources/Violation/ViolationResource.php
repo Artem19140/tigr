@@ -16,8 +16,7 @@ class ViolationResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'comment' => $this->comment,
-            // 'createdAt' => TimePresenter::forCenter($this->created_at, $this->attempt->center)->toIso8601String()
+            'comment' => $this->comment
         ];
     }
 }

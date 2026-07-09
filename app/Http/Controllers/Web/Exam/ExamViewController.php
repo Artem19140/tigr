@@ -44,7 +44,7 @@ class ExamViewController
         $exam->load([
             'enrollments' => [
                 'foreignNational',
-                'attempt.center'
+                'attempt'
             ],
             'type'
         ]);
@@ -76,7 +76,7 @@ class ExamViewController
                 $query->whereHas('attempt', function( $q ){
                     return $q->whereNotNull('finished_at');
                 })
-                ->with('attempt.center');
+                ->with('attempt');
             },
         ]);
 
@@ -85,19 +85,6 @@ class ExamViewController
             ...$this->actions($exam, $request->user())
         ]);
     }
-
-    public function videos(
-        Exam $exam,
-        Employee $employee
-    ){
-        $exam->load('documents');
-        
-        return Inertia::render('Exam/ExamVideos', [
-            'exam' => new ExamResource($exam),
-            ...$this->actions($exam, $employee)
-        ]);
-    }
-
 
     protected function actions(
         Exam $exam,

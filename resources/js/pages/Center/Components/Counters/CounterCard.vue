@@ -15,7 +15,7 @@ const http = useHttp<{
 })
 
 const change = () => {
-    http.patch(`counters/${props.counter.id}`,{ 
+    http.patch(`/counters/${props.counter.id}`,{ 
         onSuccess(response, httpResponse) {
             router.reload()
             confirmation.value = false

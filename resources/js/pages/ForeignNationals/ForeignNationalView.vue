@@ -38,7 +38,7 @@ function formatPhoneNumber(cleaned: string | null) {
 	);
 }
 const edit = () => {
-  	router.visit(`/foreign-nationals/${props.foreignNational.data.id}/edit`)
+  	router.visit(`/foreign-nationals/${props.foreignNational.data.id}/edit`, {replace:true})
 }
 const isOpen = ref<boolean>(false)
 </script>

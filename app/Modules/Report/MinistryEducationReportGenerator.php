@@ -3,19 +3,16 @@
 namespace App\Modules\Report;
 
 use App\Exceptions\BusinessException;
-use App\Modules\Center\CenterContext;
 use App\Enums\ReportType;
 use App\Events\ReportGenerated;
 use App\Models\Attempt;
-use App\Support\CenterIsolationCheck;
 use App\Support\CsvWriter;
 use Carbon\Carbon;
 
 class MinistryEducationReportGenerator
 {
     public function __construct(
-        protected CsvWriter $csvWriter,
-        protected CenterContext $centerContext
+        protected CsvWriter $csvWriter
     ) {}
 
     public function execute(
@@ -48,8 +45,7 @@ class MinistryEducationReportGenerator
         Carbon $dateTo
     ): void {
         Attempt::query()
-            ->select(['id', 'foreign_national_id', 'exam_id', 'is_passed', 'annulled_at','center_id'])
-            ->forCenter($this->centerContext->id())
+            ->select(['id', 'foreign_national_id', 'exam_id', 'is_passed', 'annulled_at'])
             ->whereBetween('created_at', [
                 $dateFrom,
                 $dateTo,
@@ -57,7 +53,6 @@ class MinistryEducationReportGenerator
             ->with(['foreignNational', 'exam.type'])
             ->chunkById(200, function ($attempts) {
                 foreach ($attempts as $attempt) {
-                    CenterIsolationCheck::centerBelongs($attempt, $this->centerContext->id());
                     $foreignNational = $attempt->foreignNational;
                     $exam = $attempt->exam;
                     $this->csvWriter->writeRow([
@@ -75,7 +70,6 @@ class MinistryEducationReportGenerator
     ):void
     {
         $hasNoData = ! Attempt::query()
-            ->forCenter($this->centerContext->id())
             ->whereBetween('created_at', [
                 $dateFrom,
                 $dateTo,

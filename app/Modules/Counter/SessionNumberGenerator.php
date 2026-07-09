@@ -10,12 +10,11 @@ use Illuminate\Support\Facades\DB;
 class SessionNumberGenerator
 {
 
-    public function execute(int $centerId):int
+    public function execute():int
     {
-        return DB::transaction(function () use($centerId) {
+        return DB::transaction(function () {
             $sessionCounter = Counter::findLockedOrFail(
-                CounterKey::Session, 
-                $centerId
+                CounterKey::Session,
             );
 
             if($sessionCounter->notInitialized()){ 

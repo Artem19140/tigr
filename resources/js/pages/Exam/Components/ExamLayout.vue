@@ -53,7 +53,7 @@ const cancel = async () => {
             <div>
                 <v-btn
                     variant="text"
-                    @click="() => router.visit(`/exams/${props.exam.id}/edit`)"
+                    @click="() => router.visit(`/exams/${props.exam.id}/edit`,{replace:true})"
                     v-if="actions.edit.can"
                     :disabled="! actions.edit.available"
                 >Редактировать</v-btn>

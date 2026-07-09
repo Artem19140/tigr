@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Enrollment;
 
-use App\Models\Center;
 use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\Exam;
@@ -13,33 +12,22 @@ use Tests\TestCase;
 class EnrollmentIsolationTest extends TestCase
 {
     use RefreshDatabase;
-
     public function test_enrollment_isolation(): void
     {
         $this->seed(RolesSeeder::class);
-        $center = Center::factory()->create();
-        $exam = Exam::factory()->create([
-            'center_id' => $center->id,
-        ]);
+        $exam = Exam::factory()->create();
 
         $operator = Employee::factory()
-            ->operator()->create([
-                'center_id' => $center->id,
-            ]);
+            ->operator()->create();
         $examinerA = Employee::factory()
             ->examiner()
-            ->create([
-                'center_id' => $center->id,
-            ]);
+            ->create();
         $examinerB = Employee::factory()
             ->examiner()
-            ->create([
-                'center_id' => $center->id,
-            ]);
+            ->create();
 
         $exam->examiners()->attach($examinerA);
         Enrollment::factory()->create([
-            'center_id' => $center->id,
             'exam_id' => $exam->id,
         ]);
 

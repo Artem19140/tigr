@@ -3,7 +3,6 @@
 namespace Tests\Feature\Exam;
 
 use App\Enums\EmployeeRole;
-use App\Models\Center;
 use App\Models\Employee;
 use App\Models\Exam;
 use Carbon\Carbon;
@@ -17,15 +16,12 @@ class ExamShowAuthorizeTest extends TestCase
 
     protected Exam $exam;
 
-    protected Center $center;
-
     protected function setUp(): void
     {
         parent::setUp();
         $this->seed(RolesSeeder::class);
-        $this->center = Center::factory()->create();
         $this->exam = Exam::factory()
-            ->create(['center_id' => $this->center->id]);
+            ->create();
         Carbon::setTestNow();
     }
 
@@ -37,7 +33,7 @@ class ExamShowAuthorizeTest extends TestCase
 
     public function test_success_examiner(): void
     {
-        $employee = Employee::factory()->examiner()->create(['center_id' => $this->center->id]);
+        $employee = Employee::factory()->examiner()->create();
         $this->exam->examiners()->attach($employee);
         $response = $this->actingAs($employee)
             ->getJson(route('exams.show', ['exam' => $this->exam]));
@@ -49,7 +45,7 @@ class ExamShowAuthorizeTest extends TestCase
     {
         $employee = Employee::factory()
             ->examiner()
-            ->create(['center_id' => $this->center->id]);
+            ->create();
 
         $response = $this->actingAs($employee)
             ->getJson(route('exams.show', ['exam' => $this->exam]));
@@ -68,9 +64,7 @@ class ExamShowAuthorizeTest extends TestCase
         foreach ($allowedRoles as $role) {
             $employee = Employee::factory()
                 ->withRole($role)
-                ->create([
-                    'center_id' => $this->center->id,
-                ]);
+                ->create();
             $this->assertTrue(
                 $employee->can('view', $this->exam),
                 "Role {$role->value} should be allowed"
@@ -88,9 +82,7 @@ class ExamShowAuthorizeTest extends TestCase
         foreach ($allowedRoles as $role) {
             $employee = Employee::factory()
                 ->withRole($role)
-                ->create([
-                    'center_id' => $this->center->id,
-                ]);
+                ->create();
             $this->assertFalse(
                 $employee->can('view', $this->exam),
                 "Role {$role->value} should not be allowed"

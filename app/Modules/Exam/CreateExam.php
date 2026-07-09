@@ -40,8 +40,7 @@ final class CreateExam
             'exam_type_id' => $examDto->examTypeId,
             'comment' => $examDto->comment,
             'creator_id' => $employee->id,
-            'end_time' => $examDto->beginTime->copy()->addMinutes($duration),
-            'center_id' => $employee->center_id,
+            'end_time' => $examDto->beginTime->copy()->addMinutes($duration)
         ];
     }
 }

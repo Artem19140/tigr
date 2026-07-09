@@ -3,7 +3,6 @@
 namespace Tests\Feature\Address;
 
 use App\Models\Address;
-use App\Models\Center;
 use App\Models\Employee;
 use App\Models\Exam;
 use Carbon\Carbon;
@@ -17,16 +16,13 @@ class AddressUpdateTest extends TestCase
 
     protected Employee $employee;
 
-    protected Center $center;
-
     protected function setUp(): void
     {
         parent::setUp();
         $this->seed(RolesSeeder::class);
-        $this->center = Center::factory()->create();
-        $this->employee = Employee::factory()->orgAdmin()->create([
-            'center_id' => $this->center->id,
-        ]);
+        $this->employee = Employee::factory()
+            ->orgAdmin()
+            ->create();
 
         Carbon::setTestNow(
             Carbon::now()
@@ -41,12 +37,10 @@ class AddressUpdateTest extends TestCase
 
     public function test_success(): void
     {
-        $address = Address::factory()->create([
-            'center_id' => $this->center->id,
-        ]);
+        $address = Address::factory()->create();
         $response = $this
             ->actingAs($this->employee)
-            ->patchJson(route('centers.addresses.update', ['address' => $address,  'center' => $this->center]), [
+            ->patchJson(route('addresses.update', ['address' => $address]), [
                 'address' => fake()->streetAddress,
                 'capacity' => $address->capacity + 1,
             ]);
@@ -56,22 +50,16 @@ class AddressUpdateTest extends TestCase
 
     public function test_fail_has_exam(): void
     {
-        $centerId = $this->center->id;
         $address = Address::factory()
-            ->has(Exam::factory(10)->state(function (array $attributes) use ($centerId) {
-                return [
-                    'center_id' => $centerId,
-                ];
-            }))->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->has(Exam::factory(10))
+            ->create();
 
         $oldAddress = $address->address;
         $newCapacity = $address->capacity + 1;
 
         $response = $this
             ->actingAs($this->employee)
-            ->patchJson(route('centers.addresses.update', ['address' => $address,  'center' => $this->center]), [
+            ->patchJson(route('addresses.update', ['address' => $address]), [
                 'address' => fake()->streetAddress,
                 'capacity' => $newCapacity,
             ]);
@@ -81,18 +69,5 @@ class AddressUpdateTest extends TestCase
 
         $this->assertEquals($newCapacity, $address->capacity);
         $response->assertOk();
-    }
-
-    public function test_fail_no_required_fields(): void
-    {
-        $address = Address::factory()->create([
-            'center_id' => $this->center->id,
-        ]);
-        $response = $this
-            ->actingAs($this->employee)
-            ->patchJson(route('centers.addresses.update', ['address' => $address,  'center' => $this->center]), [
-            ]);
-
-        $response->assertUnprocessable();
     }
 }

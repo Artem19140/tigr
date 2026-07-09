@@ -3,7 +3,6 @@
 namespace Tests\Feature\Attempt;
 
 use App\Models\Attempt;
-use App\Models\Center;
 use App\Models\Employee;
 use App\Models\Exam;
 use Carbon\Carbon;
@@ -14,24 +13,17 @@ use Tests\TestCase;
 class AttemptAnnulTest extends TestCase
 {
     use RefreshDatabase;
-
     protected Employee $actor;
-
-    protected Center $center;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->center = Center::factory()->create();
-
         $this->seed(RolesSeeder::class);
 
         $this->actor = Employee::factory()
             ->examiner()
-            ->create([
-                'center_id' => $this->center->id
-            ]);
+            ->create();
 
         Carbon::setTestNow('2026-01-01 10:00:00');
     }
@@ -47,16 +39,13 @@ class AttemptAnnulTest extends TestCase
         $this->withoutExceptionHandling();
 
         $exam = Exam::factory()
-            ->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->create();
 
         $exam->examiners()->attach($this->actor);
 
         $attempt = Attempt::factory()
             ->create([
-                'exam_id' => $exam->id,
-                'center_id' => $this->center->id,
+                'exam_id' => $exam->id
             ]);
 
         $response = $this->actingAs($this->actor)
@@ -75,9 +64,7 @@ class AttemptAnnulTest extends TestCase
     public function test_fail_annul_repeated(): void
     {
         $exam = Exam::factory()
-            ->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->create();
 
         $exam->examiners()
             ->attach($this->actor);
@@ -86,7 +73,6 @@ class AttemptAnnulTest extends TestCase
             ->annulled()
             ->create([
                 'exam_id' => $exam->id,
-                'center_id' => $this->center->id,
                 'annulled_at' => Carbon::now(),
             ]);
 

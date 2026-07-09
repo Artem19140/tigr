@@ -33,11 +33,6 @@ return new class extends Migration
                 ->constrained('answers')
                 ->cascadeOnDelete();
 
-            $table->foreignId('center_id')
-                ->index()
-                ->constrained('centers')
-                ->cascadeOnDelete();
-
             $table->datetime('audio_played_at')->nullable()->default(null);
 
             $table->foreignId('checked_by_id')

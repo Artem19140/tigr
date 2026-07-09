@@ -8,8 +8,6 @@ use App\Models\Exam;
 
 class ExamPolicy
 {
-    use BasePolicy;
-
     public function viewAny(Employee $employee): bool
     {
         if ($employee->hasAnyRole(
@@ -27,9 +25,6 @@ class ExamPolicy
 
     public function view(Employee $employee, Exam $exam): bool
     {
-        if ($this->notSameCenter($employee, $exam)) {
-            return false;
-        }
         if ($employee->hasAnyRole(
             EmployeeRole::Operator,
             EmployeeRole::Director,
@@ -59,27 +54,16 @@ class ExamPolicy
 
     public function update(Employee $employee, Exam $exam): bool
     {
-        if ($this->notSameCenter($employee, $exam)) {
-            return false;
-        }
-
         return $employee->hasAnyRole(EmployeeRole::Scheduler);
     }
 
     public function delete(Employee $employee, Exam $exam): bool
     {
-        if ($this->notSameCenter($employee, $exam)) {
-            return false;
-        }
-
         return $employee->hasAnyRole(EmployeeRole::Scheduler);
     }
 
     public function examiner(Employee $employee, Exam $exam): bool
     {
-        if ($this->notSameCenter($employee, $exam)) {
-            return false;
-        }
         if (! $employee->hasRole(EmployeeRole::Examiner->value)) {
             return false;
         }
@@ -92,9 +76,6 @@ class ExamPolicy
 
     public function list(Employee $employee, Exam $exam): bool
     {
-        if ($this->notSameCenter($employee, $exam)) {
-            return false;
-        }
         if ($employee->hasAnyRole(
             EmployeeRole::Operator,
             EmployeeRole::Director
@@ -107,9 +88,6 @@ class ExamPolicy
 
     public function results(Employee $employee, Exam $exam): bool
     {
-        if ($this->notSameCenter($employee, $exam)) {
-            return false;
-        }
         if ($employee->hasAnyRole(
             EmployeeRole::Director
         )) {
@@ -121,9 +99,6 @@ class ExamPolicy
 
     public function protocol(Employee $employee, Exam $exam): bool
     {
-        if ($this->notSameCenter($employee, $exam)) {
-            return false;
-        }
         if ($employee->hasAnyRole(
             EmployeeRole::Director
         )) {
@@ -134,9 +109,6 @@ class ExamPolicy
     }
 
     public function videos(Employee $employee, Exam $exam): bool{
-        if ($this->notSameCenter($employee, $exam)) {
-            return false;
-        }
         return $employee->hasAnyRole(EmployeeRole::VideoRecordOperator);
     }
 }

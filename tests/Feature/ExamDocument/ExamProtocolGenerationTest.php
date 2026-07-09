@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\ExamDocument;
 
-use App\Models\Center;
 use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\Exam;
@@ -14,19 +13,14 @@ use Tests\TestCase;
 class ExamProtocolGenerationTest extends TestCase
 {
     use RefreshDatabase;
-
     protected Employee $actor;
-
-    protected Center $center;
-
     protected function setUp(): void
     {
         parent::setUp();
         $this->seed(RolesSeeder::class);
-        $this->center = Center::factory()->create();
         $this->actor = Employee::factory()
             ->examiner()
-            ->create(['center_id' => $this->center->id]);
+            ->create();
 
         Carbon::setTestNow(now());
 
@@ -40,12 +34,10 @@ class ExamProtocolGenerationTest extends TestCase
 
     public function test_success_exam_protocol_generation(): void
     {
-        $enrollment = Enrollment::factory()->create([
-            'center_id' => $this->center->id,
-        ]);
+        $enrollment = Enrollment::factory()->create();
         $exam = Exam::factory()
             ->inFuture()
-            ->create(['center_id' => $this->center->id]);
+            ->create();
         $exam->enrollments()->save($enrollment);
         $exam->examiners()->attach($this->actor);
 

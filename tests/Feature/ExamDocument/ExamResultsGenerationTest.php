@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\ExamDocument;
 
-use App\Models\Center;
 use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\Exam;
@@ -14,20 +13,13 @@ use Tests\TestCase;
 class ExamResultsGenerationTest extends TestCase
 {
     use RefreshDatabase;
-
     protected Employee $actor;
-
-    protected Center $center;
-
     protected function setUp(): void
     {
         parent::setUp();
         $this->seed(RolesSeeder::class);
-        $this->center = Center::factory()->create();
-        $this->actor = Employee::factory()->examiner()->create(['center_id' => $this->center->id]);
-
+        $this->actor = Employee::factory()->examiner()->create();
         Carbon::setTestNow(now());
-
     }
 
     protected function tearDown(): void
@@ -39,12 +31,9 @@ class ExamResultsGenerationTest extends TestCase
     public function test_success_exam_results_generation(): void
     {
         $this->withoutExceptionHandling();
-        $enrollment = Enrollment::factory()->create([
-            'center_id' => $this->center->id,
-        ]);
+        $enrollment = Enrollment::factory()->create();
         $exam = Exam::factory()
             ->create([
-                'center_id' => $this->center->id,
                 'begin_time' => Carbon::now()->subHour(),
             ]);
         $exam->enrollments()->save($enrollment);

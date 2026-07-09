@@ -3,7 +3,6 @@
 namespace Tests\Feature\Enrollment;
 
 use App\Models\Attempt;
-use App\Models\Center;
 use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\Exam;
@@ -15,19 +14,14 @@ use Tests\TestCase;
 class EnrollmentChangePaymentTest extends TestCase
 {
     use RefreshDatabase;
-
     protected Employee $employee;
-
     protected string $model;
-
-    protected Center $center;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->seed(RolesSeeder::class);
-        $this->center = Center::factory()->create();
-        $this->employee = Employee::factory()->operator()->create(['center_id' => $this->center->id]);
+        $this->employee = Employee::factory()->operator()->create();
         Carbon::setTestNow(now());
     }
 
@@ -46,10 +40,9 @@ class EnrollmentChangePaymentTest extends TestCase
     public function test_success(): void
     {
         $this->withoutExceptionHandling();
-        $exam = Exam::factory()->inFuture()->create(['center_id' => $this->center->id]);
+        $exam = Exam::factory()->inFuture()->create();
         $enrollment = Enrollment::factory()->create([
             'exam_id' => $exam->id,
-            'center_id' => $this->center->id,
         ]);
 
         $response = $this->putPayment($enrollment->id);
@@ -59,15 +52,14 @@ class EnrollmentChangePaymentTest extends TestCase
 
     public function test_success_attached_examiner(): void
     {
-        $exam = Exam::factory()->inFuture()->create(['center_id' => $this->center->id]);
+        $exam = Exam::factory()->inFuture()->create();
 
         $enrollment = Enrollment::factory()->create([
-            'exam_id' => $exam->id,
-            'center_id' => $this->center->id,
+            'exam_id' => $exam->id
         ]);
         $employee = Employee::factory()
             ->examiner()
-            ->create(['center_id' => $this->center->id]);
+            ->create();
         $exam->examiners()->attach($employee);
         $response = $this->putPayment($enrollment->id, $employee);
 
@@ -76,13 +68,12 @@ class EnrollmentChangePaymentTest extends TestCase
 
     public function test_fail_has_attempt(): void
     {
-        $exam = Exam::factory()->inFuture()->create(['center_id' => $this->center->id]);
+        $exam = Exam::factory()->inFuture()->create();
 
         $enrollment = Enrollment::factory()
             ->has(Attempt::factory())
             ->create([
-                'exam_id' => $exam->id,
-                'center_id' => $this->center->id,
+                'exam_id' => $exam->id
             ]);
         $response = $this->putPayment($enrollment->id);
 
@@ -91,10 +82,9 @@ class EnrollmentChangePaymentTest extends TestCase
 
     public function test_fail_past_exam(): void
     {
-        $exam = Exam::factory()->inPast()->create(['center_id' => $this->center->id]);
+        $exam = Exam::factory()->inPast()->create();
         $enrollment = Enrollment::factory()->create([
-            'exam_id' => $exam->id,
-            'center_id' => $this->center->id,
+            'exam_id' => $exam->id
         ]);
         $response = $this->putPayment($enrollment->id);
 

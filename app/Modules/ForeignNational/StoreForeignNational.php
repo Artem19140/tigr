@@ -28,8 +28,7 @@ final class StoreForeignNational
         
         $foreignNational = ForeignNational::create([
             ...$dto->toArray(),
-            'creator_id' => $employee->id,
-            'center_id' => $employee->center_id,
+            'creator_id' => $employee->id
         ]);
 
         $this->documentSaver->store(

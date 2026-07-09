@@ -50,10 +50,6 @@ return new class extends Migration
                 ->constrained('employees')
                 ->cascadeOnDelete();
 
-            $table->foreignId('center_id')
-                ->constrained('centers')
-                ->cascadeOnDelete();
-
             $table->unique(['foreign_national_id', 'exam_id']);
 
             $table->timestamps();

@@ -36,11 +36,6 @@ Route::prefix('exams')
         return ExamType::cached();
     });
 
-
-    Route::get('{exam}/videos', [ExamViewController::class, 'videos'])
-        ->can('videos', 'exam')
-        ->name('exam.show.videos');
-
     Route::middleware('can:examiner,exam')
         ->group(function () {
 

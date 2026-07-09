@@ -3,19 +3,16 @@
 namespace App\Models;
 
 use App\Enums\EmployeeRole;
-use App\Models\Scopes\BelongsToCenter;
 use Database\Factories\EmployeeFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class Employee extends Authenticatable
 {
-    use BelongsToCenter;
     use  HasFactory, Notifiable;
 
     /** @use HasFactory<EmployeeFactory> */
@@ -29,8 +26,7 @@ class Employee extends Authenticatable
         'email',
         'password',
         'password_set_at',
-        'is_active',
-        'center_id',
+        'is_active'
     ];
 
     protected $hidden = [
@@ -46,15 +42,6 @@ class Employee extends Authenticatable
             'is_active' => 'boolean',
             'password_set_at' => 'datetime',
         ];
-    }
-
-    protected static function booted()
-    {
-        static::creating(function ($model) {
-            if (!$model->center_id) {
-                throw new \Exception("Platform admin must specify a center.");
-            }
-        });
     }
 
     public function isPlatformAdmin(): bool
@@ -99,11 +86,6 @@ class Employee extends Authenticatable
         return $this->belongsToMany(Exam::class, 'exam_examiner', 'examiner_id', 'exam_id');
     }
 
-    public function center(): BelongsTo
-    {
-        return $this->belongsTo(Center::class, 'center_id');
-    }
-
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true);
@@ -112,7 +94,7 @@ class Employee extends Authenticatable
     protected function timeZone(): Attribute
     {
         return Attribute::get(function () {
-            return $this->center->time_zone;
+            return 'Europe/Samara';
         });
     }
 
@@ -141,8 +123,8 @@ class Employee extends Authenticatable
             $this->hasRole(EmployeeRole::Scheduler->value) => route('exams.index'),
             $this->hasRole(EmployeeRole::Director->value) => route('foreign-nationals.index'),
             $this->hasRole(EmployeeRole::Examiner->value) => route('exams.index'),
-            $this->hasRole(EmployeeRole::CenterAdmin->value) => route('centers.show', ['center' => $this->center]),
-            $this->hasRole(EmployeeRole::PlatformAdmin->value) => route('centers.index'),
+            $this->hasRole(EmployeeRole::CenterAdmin->value) => route('employees.index'),
+            $this->hasRole(EmployeeRole::PlatformAdmin->value) => route('exams.index'),
             default => abort(403)
         };
     }

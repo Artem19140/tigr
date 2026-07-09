@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Web\Address\AddressController;
-use App\Http\Controllers\Web\CenterManage\CenterController;
 use App\Http\Controllers\Web\Employee\EmployeeController;
 use App\Http\Controllers\Web\CenterManage\CounterController;
 use Illuminate\Support\Facades\Route;
@@ -10,37 +9,30 @@ Route::middleware([
     'meta',
     'can:center-manage'
 ])->group(function () {
+    Route::get('employees', [EmployeeController::class, 'index'])->name('employees.index');
 
-    Route::get('centers/{center}', [CenterController::class, 'show'])
-        ->can('view', 'center')
-        ->name('centers.show');
-    Route::get('centers/{center}/employees', [EmployeeController::class, 'index']);
-    
-    Route::put('centers/{center}', [CenterController::class, 'update'])
-        ->can('update', 'center');
-
-    Route::get('centers/{center}/addresses', [AddressController::class, 'index']);
-    Route::delete('centers/{center}/addresses/{address}', [AddressController::class, 'destroy'])
+    Route::get('addresses', [AddressController::class, 'index']);
+    Route::delete('addresses/{address}', [AddressController::class, 'destroy'])
         ->scopeBindings()
-        ->name('centers.addresses.destroy');
-    Route::patch('centers/{center}/addresses/{address}', [AddressController::class, 'update'])
+        ->name('addresses.destroy');
+    Route::patch('addresses/{address}', [AddressController::class, 'update'])
         ->scopeBindings()
-        ->name('centers.addresses.update');
-    Route::post('centers/{center}/addresses', [AddressController::class, 'store'])
-        ->name('centers.addresses.store');
+        ->name('addresses.update');
+    Route::post('addresses', [AddressController::class, 'store'])
+        ->name('addresses.store');
 
     Route::delete('employees/{employee}', [EmployeeController::class, 'destroy'])
         ->can('delete', 'employee')
         ->name('employees.destroy');
 
-    Route::post('centers/{center}/employees', [EmployeeController::class, 'store']);
+    Route::post('employees', [EmployeeController::class, 'store']);
     
     Route::put('employees/{employee}', [EmployeeController::class, 'update'])
         ->can('update', 'employee');
 
     Route::get('roles', [EmployeeController::class, 'rolesShow']);
 
-    Route::get('centers/{center}/counters', [CounterController::class, 'index']);
-    Route::patch('centers/{center}/counters/{counter}', [CounterController::class, 'update'])
+    Route::get('counters', [CounterController::class, 'index']);
+    Route::patch('counters/{counter}', [CounterController::class, 'update'])
         ->scopeBindings();
 });

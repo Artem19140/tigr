@@ -21,8 +21,7 @@ class DocumentSaver{
             'size_bytes' => $file->getSize(),
             'document_type' => $doctype,
             'creator_id' => auth()->user()->id,
-            'original_name' => $file->getClientOriginalName(),
-            'center_id' => $owner->center_id
+            'original_name' => $file->getClientOriginalName()
         ]);
 
         return $document;

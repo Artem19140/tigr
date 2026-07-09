@@ -4,7 +4,6 @@ import EmployeeCreateModal from '@pages/Center/Components/Employees/EmployeeCrea
 import AddressCreateModal from '@/pages/Center/Components/Addresses/AddressCreateModal.vue';
 import EmployeeEditModal from '@/pages/Center/Components/Employees/EmployeeEditModal.vue';
 import LogoutAllDevicesModal from './LogoutAllDevicesModal.vue';
-import CenterCreateModal from '@/pages/PlatformAdmin/Components/CenterCreateModal.vue';
 
 const {modals, close} = useModals()
 
@@ -16,8 +15,7 @@ const modalMap = {
     employeeCreate: EmployeeCreateModal,
     addressCreate: AddressCreateModal,
     employeeEdit:EmployeeEditModal,
-    logoutAll:LogoutAllDevicesModal,
-    centerCreate:CenterCreateModal
+    logoutAll:LogoutAllDevicesModal
 } as const
 
 const closeModal = (id: number) => {

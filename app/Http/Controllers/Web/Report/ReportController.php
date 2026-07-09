@@ -26,8 +26,7 @@ class ReportController
         $examDate = Carbon::parse($request->validated('examDate'));
         $writer = $frdoGenerator->execute(
             $examDate,
-            $type,
-            $request->user()->center
+            $type
         );
         $stringDate = $examDate->format('d.m.Y');
         $fileName = $type === 'certificates' ? "Сертификаты_ФРДО_$stringDate.xlsx" : "Справки_ФРДО_$stringDate.xlsx";

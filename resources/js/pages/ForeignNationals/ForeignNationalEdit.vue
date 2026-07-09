@@ -87,7 +87,7 @@ const getCountryTitle = (value:string | null) => {
                     <v-btn
                     variant="text"
                     class="text-gray-500"
-                    @click="router.visit(`/foreign-nationals/${props.foreignNational.data.id}`)"
+                    @click="router.visit(`/foreign-nationals/${props.foreignNational.data.id}`, {replace:true})"
                     >
                     Отмена
                     </v-btn>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Modules\Center\CenterContext;
+
 use App\Models\Employee;
 use App\Models\Exam;
 use App\Models\ForeignNational;
@@ -46,10 +46,7 @@ class HandleInertiaRequests extends Middleware
             ],
             'auth.user' => fn () => $request->user() instanceof Employee ?
                 array_merge(
-                    $request->user()->only('id', 'surname', 'name', 'email', 'job_title', 'center_id'),
-                    [
-                        'centerId' => app(CenterContext::class)->id()
-                    ]
+                    $request->user()->only('id', 'surname', 'name', 'email', 'job_title')
                 )
                 : null,
             'auth.can' => fn () => $request->user() instanceof Employee ?
@@ -63,7 +60,7 @@ class HandleInertiaRequests extends Middleware
         return [
             'foreignNationals' => $employee->can('viewAny', ForeignNational::class),
             'exams' => $employee->can('viewAny', Exam::class),
-            'center' => $employee->can('center-manage') &&  ! $employee->isPlatformAdmin(),
+            'center' => $employee->can('center-manage'),
             'reports' => $employee->can('reports.viewAny'),
             'myExams' => $employee->can('conductAny', Exam::class),
             'adminPanel' => $employee->can('platform-manage'),

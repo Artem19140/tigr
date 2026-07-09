@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Web\Exam;
 use App\Modules\Exam\GetAvailableExams;
 use App\Http\Requests\Enrollment\EnrollmentAvailableRequest;
 use App\Models\Exam;
-use App\Support\CenterIsolationCheck;
 
 class ExamEnrollmentController
 {
@@ -18,9 +17,7 @@ class ExamEnrollmentController
             $request->validated('examTypeId'),
             $request->validated('foreignNationalId')
         );
-
-        CenterIsolationCheck::check($exams);
-        
+       
         return $exams->map(function (Exam $exam) {
             return [
                 'id' => $exam->id,

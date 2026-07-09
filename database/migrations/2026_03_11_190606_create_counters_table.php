@@ -17,15 +17,11 @@ return new class extends Migration
             $table->string('key');
             $table->unsignedInteger('value')->default(0);
 
-            $table->foreignId('center_id')
-                ->constrained('centers')
-                ->cascadeOnDelete();
-
             $table->dateTime('last_increment_at')
                 ->nullable()
                 ->default(null);
                 
-            $table->unique(['center_id', 'id']);
+            $table->unique(['key']);
             $table->timestamps();
         });
     }

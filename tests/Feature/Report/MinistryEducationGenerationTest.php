@@ -11,9 +11,7 @@ use Tests\TestCase;
 class MinistryEducationGenerationTest extends TestCase
 {
     use RefreshDatabase;
-
     protected Employee $actor;
-
     protected function setUp(): void
     {
         parent::setUp();

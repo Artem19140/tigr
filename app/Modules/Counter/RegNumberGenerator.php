@@ -9,13 +9,11 @@ use Illuminate\Support\Facades\DB;
 
 class RegNumberGenerator
 {
-    public function execute(int $centerId):int
+    public function execute():int
     {
-        return DB::transaction(function () use ( $centerId ) 
-        {
+        return DB::transaction(function () {
             $regNumber = Counter::findLockedOrFail(
-                CounterKey::RegNum,
-                $centerId
+                CounterKey::RegNum
             );
     
             if($regNumber->notInitialized()){ 

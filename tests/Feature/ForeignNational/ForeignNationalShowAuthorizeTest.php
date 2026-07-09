@@ -3,7 +3,6 @@
 namespace Tests\Feature\ForeignNational;
 
 use App\Enums\EmployeeRole;
-use App\Models\Center;
 use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\Exam;
@@ -18,18 +17,17 @@ use Tests\TestCase;
 class ForeignNationalShowAuthorizeTest extends TestCase
 {
     use RefreshDatabase;
-
-    protected Center $center;
-
     protected ForeignNationalPolicy $policy;
-
-    protected array $allowedRoles = [EmployeeRole::PlatformAdmin, EmployeeRole::Operator, EmployeeRole::Director];
+    protected array $allowedRoles = [
+        EmployeeRole::PlatformAdmin, 
+        EmployeeRole::Operator, 
+        EmployeeRole::Director
+    ];
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->seed(RolesSeeder::class);
-        $this->center = Center::factory()->create();
         $this->policy = new ForeignNationalPolicy;
         Carbon::setTestNow();
     }
@@ -44,23 +42,18 @@ class ForeignNationalShowAuthorizeTest extends TestCase
     {
         $employee = Employee::factory()
             ->examiner()
-            ->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->create();
 
-        $exam = Exam::factory()->create(['center_id' => $this->center->id]);
+        $exam = Exam::factory()->create();
 
         $exam->examiners()
             ->attach($employee);
 
-        $foreignNational = ForeignNational::factory()->create([
-            'center_id' => $this->center->id,
-        ]);
+        $foreignNational = ForeignNational::factory()->create();
 
         Enrollment::factory()->create([
             'foreign_national_id' => $foreignNational->id,
-            'exam_id' => $exam->id,
-            'center_id' => $this->center->id,
+            'exam_id' => $exam->id
         ]);
 
         $response = $this->actingAs($employee)

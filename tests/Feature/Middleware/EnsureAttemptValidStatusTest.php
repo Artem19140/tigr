@@ -3,7 +3,6 @@
 namespace Tests\Feature\Middleware;
 
 use App\Models\Attempt;
-use App\Models\Center;
 use App\Models\ForeignNational;
 use App\Support\AppMiddleware;
 use Carbon\Carbon;
@@ -16,20 +15,12 @@ use Tests\TestCase;
 class EnsureAttemptValidStatusTest extends TestCase
 {
     use RefreshDatabase;
-
     protected ForeignNational $actor;
-
-    protected Center $center;
-
     protected function setUp(): void
     {
-
         parent::setUp();
-        $this->center = Center::factory()->create();
         $this->actor = ForeignNational::factory()
-            ->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->create();
         Route::get('/_test/attempt/{attempt}', function (Attempt $attempt) {
             return response()->json(['ok' => true]);
         })->middleware(
@@ -59,7 +50,6 @@ class EnsureAttemptValidStatusTest extends TestCase
             ->create([
                 'foreign_national_id' => $this->actor->id,
                 'expired_at' => '2026-01-01 10:00:01',
-                'center_id' => $this->center->id,
                 'started_at' => '2026-01-01 09:00:01',
             ]);
 

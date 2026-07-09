@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Employee;
 
-use App\Models\Center;
 use App\Models\Employee;
 use Carbon\Carbon;
 use Database\Seeders\RolesSeeder;
@@ -12,31 +11,19 @@ use Tests\TestCase;
 class EmployeeDeleteTest extends TestCase
 {
     use RefreshDatabase;
-
     protected Employee $actor;
-
     protected Employee $activeEmployee;
-
-    protected Center $center;
 
     protected function setUp(): void
     {
         parent::setUp();
-
         $this->seed(RolesSeeder::class);
-
-        $this->center = Center::factory()->create();
-
         $this->actor = Employee::factory()
             ->orgAdmin()
-            ->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->create();
         $this->activeEmployee = Employee::factory()
             ->active()
-            ->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->create();
         Carbon::setTestNow();
     }
 
@@ -64,9 +51,7 @@ class EmployeeDeleteTest extends TestCase
     {
         $notActiveEmployee = Employee::factory()
             ->notActive()
-            ->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->create();
 
         $response = $this->actingAs($this->actor)
             ->deleteJson(route('employees.destroy', ['employee' => $notActiveEmployee]));
@@ -77,19 +62,5 @@ class EmployeeDeleteTest extends TestCase
         ]);
 
         $response->assertBadRequest();
-    }
-
-    public function test_fail_another_center_employee(): void
-    {
-
-        $employeeToDelete = Employee::factory()->create();
-        $response = $this->actingAs($this->actor)
-            ->deleteJson(route('employees.destroy', ['employee' => $employeeToDelete]));
-
-        $this->assertDatabaseHas('employees', [
-            'id' => $employeeToDelete->id,
-            'is_active' => $employeeToDelete->is_active,
-        ]);
-        $response->assertForbidden();
     }
 }

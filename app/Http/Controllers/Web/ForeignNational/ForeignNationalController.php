@@ -12,7 +12,6 @@ use App\Http\Requests\ForeignNational\ForeignNationalUpdateRequest;
 use App\Http\Resources\ForeignNational\ForeignNationalIndexResource;
 use App\Http\Resources\ForeignNational\ForeignNationalProfileResource;
 use App\Models\ForeignNational;
-use App\Support\CenterIsolationCheck;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -33,8 +32,6 @@ class ForeignNationalController
         Inertia::flash([ 'filters' => $dto->toFilters()]);
 
         $employee = $request->user();
-        
-        CenterIsolationCheck::check($foreignNationals);
 
         return Inertia::render('ForeignNationals/ForeignNationals', [
             'foreignNationals' => ForeignNationalIndexResource::collection($foreignNationals),

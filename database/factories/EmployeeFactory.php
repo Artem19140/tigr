@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Enums\EmployeeRole;
-use App\Models\Center;
 use App\Models\Employee;
 use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -42,7 +41,6 @@ class EmployeeFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'is_active' => true,
             'remember_token' => Str::random(10),
-            'center_id' => Center::factory(),
             'job_title' => fake()->randomElement(['Специалист центра тестирования иностранных граждан', 'Директор центра тестирования иностранных граждан', 'Сотрудник центра тестирования иностранных граждан', 'Тестер центра тестирования иностранных граждан']),
         ];
     }

@@ -7,18 +7,15 @@ use App\Http\Controllers\Web\Document\DocumentController;
 use App\Http\Controllers\Web\ForeignNational\ForeignNationalController;
 use App\Http\Controllers\Web\ForeignNational\ForeignNationalExportController;
 use App\Http\Controllers\Web\Statistics\StatisticsController;
-use App\Http\Controllers\Web\Upload\UploadController;
 use App\Http\RedirectResolver;
 use App\Models\Enrollment;
 use App\Models\ForeignNational;
-use App\Support\AppMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([
     'meta',
     'auth',
-    AppMiddleware::EMPLOYEE_ACTIVE,
-    AppMiddleware::CENTER_ACTIVE
+    'employee.active'
 ])
     ->group(function () {
         Route::resource('foreign-nationals', ForeignNationalController::class)
@@ -59,15 +56,6 @@ Route::middleware([
 
         Route::put('documents/{document}', [DocumentController::class, 'update'])
             ->can('update','document');
-
-        Route::post('uploads',  [UploadController::class, 'store'])
-            ->name('uploads.store');
-        
-        Route::post('uploads/{upload}/chunks',  [UploadController::class, 'chunk'])
-            ->name('uploads.store.chunks');
-
-         Route::post('documents/link',  [DocumentController::class, 'link'])
-            ->name('documents.link');
 
         Route::post('logout', [LogoutController::class, 'logout'])->name('logout');
         Route::post('logout/all', [LogoutController::class, 'logoutAll'])->name('logout.all');

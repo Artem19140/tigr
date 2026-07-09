@@ -5,7 +5,6 @@ namespace App\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
-
 class RedirectResolver
 {
     public function execute(): string

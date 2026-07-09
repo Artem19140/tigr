@@ -2,7 +2,6 @@
 
 namespace App\Modules\Report;
 
-use App\Modules\Center\CenterContext;
 use App\Exceptions\BusinessException;
 use App\Models\Attempt;
 use Carbon\Carbon;
@@ -10,10 +9,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class EnsureFrdoGenerationAvailable
 {
-    public function __construct(
-        protected CenterContext $centerContext
-    ) {}
-
     public function execute(string $examDate, string $type): void
     {
         $examDate = Carbon::parse($examDate);
@@ -84,7 +79,6 @@ class EnsureFrdoGenerationAvailable
     protected function query(Carbon $examDate): Builder
     {
         return Attempt::query()
-            ->forCenter($this->centerContext->id())
             ->whereBetween('created_at', [
                 $examDate->copy()->startOfDay(),
                 $examDate->copy()->endOfDay(),

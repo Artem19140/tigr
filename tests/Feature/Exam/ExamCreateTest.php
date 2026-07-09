@@ -3,7 +3,6 @@
 namespace Tests\Feature\Exam;
 
 use App\Models\Address;
-use App\Models\Center;
 use App\Models\Employee;
 use App\Models\ExamType;
 use App\Modules\Shared\ExamSettings;
@@ -19,34 +18,23 @@ class ExamCreateTest extends TestCase
     protected ExamType $examType;
     protected Address $address;
     protected Employee $examiner;
-    protected Center $center;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->center = Center::factory()->create([
-            'time_zone' => 'Europe/Moscow',
-        ]);
-
         $this->seed(RolesSeeder::class);
 
         $this->examiner = Employee::factory()
-            ->examiner()->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->examiner()->create();
 
         $this->actor = Employee::factory()
             ->scheduler()
-            ->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->create();
 
         $this->examType = ExamType::factory()->create();
 
-        $this->address = Address::factory()->create([
-            'center_id' => $this->center->id,
-        ]);
+        $this->address = Address::factory()->create();
 
         Carbon::setTestNow(
             Carbon::parse('2026-01-01 10:00:00')
@@ -69,8 +57,8 @@ class ExamCreateTest extends TestCase
     {
         $minTimeBeforeCreating = ExamSettings::minTimeBeforeCreateMinutes();
         return array_merge([
-            'date' => Carbon::now()->setTimezone($this->center->time_zone)->addMinutes($minTimeBeforeCreating )->format('Y-m-d'),
-            'time' => Carbon::now()->setTimezone($this->center->time_zone)->addMinutes($minTimeBeforeCreating )->addMinute()->format('H:i'),
+            'date' => Carbon::now()->addMinutes($minTimeBeforeCreating )->format('Y-m-d'),
+            'time' => Carbon::now()->addMinutes($minTimeBeforeCreating )->addMinute()->format('H:i'),
             'examTypeId' => $this->examType->id,
             'addressId' => $this->address->id,
             'capacity' => $this->address->capacity,
@@ -96,13 +84,9 @@ class ExamCreateTest extends TestCase
 
         $response->assertOk();
 
-        $examiner = Employee::factory()->examiner()->create([
-            'center_id' => $this->center->id,
-        ]);
+        $examiner = Employee::factory()->examiner()->create();
 
-        $address = Address::factory()->create([
-            'center_id' => $this->center->id,
-        ]);
+        $address = Address::factory()->create();
 
         $response = $this->postExam([
             'addressId' => $address->id,
@@ -130,9 +114,7 @@ class ExamCreateTest extends TestCase
         $response = $this->postExam();
         $response->assertOk();
 
-        $address = Address::factory()->create([
-            'center_id' => $this->center->id,
-        ]);
+        $address = Address::factory()->create();
 
         $response = $this->postExam([
             'addressId' => $address->id,
@@ -166,8 +148,7 @@ class ExamCreateTest extends TestCase
     public function test_fail_not_active_address(): void
     {
         $address = Address::factory()->create([
-            'is_active' => false,
-            'center_id' => $this->center->id,
+            'is_active' => false
         ]);
         $response = $this->postExam([
             'addressId' => $address->id,
@@ -181,9 +162,7 @@ class ExamCreateTest extends TestCase
         $employee = Employee::factory()
             ->examiner()
             ->notActive()
-            ->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->create();
 
         $response = $this->postExam([
             'examiners' => [$employee->id],

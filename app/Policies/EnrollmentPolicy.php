@@ -8,8 +8,6 @@ use App\Models\Enrollment;
 
 class EnrollmentPolicy
 {
-    use BasePolicy;
-
     public function viewAny(Employee $employee): bool
     {
         if ($employee->hasAnyRole(
@@ -35,10 +33,6 @@ class EnrollmentPolicy
 
     public function payment(Employee $employee, Enrollment $enrollment): bool
     {
-        if ($this->notSameCenter($employee, $enrollment)) {
-            return false;
-        }
-
         if ($employee->hasAnyRole(
             EmployeeRole::Operator
         )) {
@@ -64,11 +58,6 @@ class EnrollmentPolicy
 
     public function statement(Employee $employee, Enrollment $enrollment): bool
     {
-
-        if ($this->notSameCenter($employee, $enrollment)) {
-            return false;
-        }
-
         return $employee->hasAnyRole(EmployeeRole::Operator);
     }
 

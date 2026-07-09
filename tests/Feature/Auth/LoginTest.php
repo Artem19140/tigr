@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Models\Center;
 use App\Models\Employee;
 use Carbon\Carbon;
 use Database\Seeders\RolesSeeder;
@@ -74,24 +73,6 @@ class LoginTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors(['email']);
-        $this->assertGuest('web');
-    }
-
-    public function test_fail_not_active_center(): void
-    {
-        $center = Center::factory()->notActive()->create();
-        $employee = Employee::factory()
-            ->create([
-                'password' => Hash::make($this->password),
-                'center_id' => $center->id,
-            ]);
-
-        $response = $this->post('/login', [
-            'email' => $employee->email,
-            'password' => $this->password,
-        ]);
-
-        $response->assertRedirectBack();
         $this->assertGuest('web');
     }
 }

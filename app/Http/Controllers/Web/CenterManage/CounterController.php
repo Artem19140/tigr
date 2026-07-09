@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Web\CenterManage;
 
 use App\Http\Resources\Counter\CounterResource;
-use App\Models\Center;
 use App\Models\Counter;
 use App\Support\ModelChangesLogger;
 use Illuminate\Http\Request;
@@ -15,19 +14,16 @@ class CounterController
     public function __construct(
         protected ModelChangesLogger $logger
     ){}
-    public function index(Center $center)
+    public function index()
     {
-        $center->load('counters');
         return Inertia::render('Center/Center', [
-            'counters' => CounterResource::collection($center->counters),
-            'tab' => 'counters',
-            'centerId' => $center->id
+            'counters' => CounterResource::collection(Counter::all()),
+            'tab' => 'counters'
         ]);
     }
 
     public function update(
-        Request $request, 
-        Center $center,
+        Request $request,
         Counter $counter
     )
     { 

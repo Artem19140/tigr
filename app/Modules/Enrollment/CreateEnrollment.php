@@ -30,9 +30,8 @@ final class CreateEnrollment
         $this->ensureCreatingAvailable($exam, $foreignNational);
 
         $enrollment = Enrollment::create([
-            'reg_number' => $this->regNumberGenerator->execute($exam->center_id),
+            'reg_number' => $this->regNumberGenerator->execute(),
             'creator_id' => $creator->id,
-            'center_id' => $exam->center_id,
             'has_payment' => $hasPayment,
             'exam_id' => $exam->id,
             'foreign_national_id' => $foreignNational->id,

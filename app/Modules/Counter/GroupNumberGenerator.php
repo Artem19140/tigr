@@ -9,12 +9,11 @@ use Illuminate\Support\Facades\DB;
 class GroupNumberGenerator
 {
 
-    public function execute(int $centerId): int
+    public function execute(): int
     {
-        return DB::transaction(function () use($centerId) {
+        return DB::transaction(function (){
             $groupNumber = Counter::findLockedOrFail(
-                CounterKey::Group, 
-                $centerId
+                CounterKey::Group
             );
 
             if($groupNumber->notInitialized()){

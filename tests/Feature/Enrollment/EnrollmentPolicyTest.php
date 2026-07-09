@@ -2,30 +2,22 @@
 
 namespace Tests\Feature\Enrollment;
 
-use App\Models\Center;
 use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\Exam;
 use Database\Seeders\RolesSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\Helpers\RoleAccessAssertions;
 use Tests\TestCase;
 
 class EnrollmentPolicyTest extends TestCase
 {
-    use RefreshDatabase, RoleAccessAssertions;
-
-    protected Center $center;
-
+    use RefreshDatabase;
     protected Enrollment $enrollment;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->center = Center::factory()->create();
-        $this->enrollment = Enrollment::factory()->create([
-            'center_id' => $this->center->id,
-        ]);
+        $this->enrollment = Enrollment::factory()->create();
         $this->seed(RolesSeeder::class);
     }
 
@@ -33,7 +25,7 @@ class EnrollmentPolicyTest extends TestCase
     {
         $operator = Employee::factory()
             ->operator()
-            ->create(['center_id' => $this->center->id]);
+            ->create();
         $this->assertTrue($operator->can('viewAny', Enrollment::class));
         $this->assertTrue($operator->can('create', Enrollment::class));
         $this->assertTrue($operator->can('payment', $this->enrollment));
@@ -44,11 +36,11 @@ class EnrollmentPolicyTest extends TestCase
     {
         $examinerA = Employee::factory()
             ->examiner()
-            ->create(['center_id' => $this->center->id]);
+            ->create();
         $examinerB = Employee::factory()
             ->examiner()
-            ->create(['center_id' => $this->center->id]);
-        $exam = Exam::factory()->create(['center_id' => $this->center->id]);
+            ->create();
+        $exam = Exam::factory()->create();
         $exam->enrollments()->save($this->enrollment);
         $exam->examiners()->attach($examinerA);
         $this->assertTrue($examinerA->can('payment', $this->enrollment));

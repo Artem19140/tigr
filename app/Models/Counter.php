@@ -4,20 +4,15 @@ namespace App\Models;
 
 use App\Enums\CounterKey;
 use App\Exceptions\Counter\CounterNotFoundException;
-use App\Models\Scopes\BelongsToCenter;
-use App\Modules\Center\CenterContext;
-use App\Support\CenterIsolationCheck;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Counter extends Model
 {
-    use BelongsToCenter;
 
     protected $fillable = [
         'key',
         'value',
-        'center_id',
         'last_increment_at'
     ];
 
@@ -26,19 +21,16 @@ class Counter extends Model
         'last_increment_at' => 'datetime'
     ];
 
-    public static function findLockedOrFail(CounterKey $key, int $centerId): self
+    public static function findLockedOrFail(CounterKey $key): self
     {
         $counter = self::query()
             ->lockForUpdate()
-            ->forCenter($centerId)
             ->where('key', $key)
             ->first();
 
         if(! $counter){
             throw new CounterNotFoundException($key);
         }
-
-        CenterIsolationCheck::centerBelongs($counter, app(CenterContext::class)->id());
         
         return $counter;
     }

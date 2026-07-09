@@ -8,15 +8,9 @@ use App\Models\ForeignNational;
 
 class ForeignNationalPolicy
 {
-    use BasePolicy;
 
     public function view(Employee $employee, ForeignNational $foreignNational): bool
     {
-        if ($this->notSameCenter($employee, $foreignNational)) 
-        {
-            return false;
-        }
-
         if ($employee->hasAnyRole(
             EmployeeRole::Operator,
             EmployeeRole::Director
@@ -54,10 +48,6 @@ class ForeignNationalPolicy
 
     public function update(Employee $employee, ForeignNational $foreignNational): bool
     {
-        if ($this->notSameCenter($employee, $foreignNational)) {
-            return false;
-        }
-
         return $employee->hasAnyRole(EmployeeRole::Operator);
     }
 

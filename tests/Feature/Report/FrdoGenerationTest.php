@@ -3,7 +3,6 @@
 namespace Tests\Feature\Report;
 
 use App\Models\Attempt;
-use App\Models\Center;
 use App\Models\Employee;
 use Carbon\Carbon;
 use Database\Seeders\RolesSeeder;
@@ -13,21 +12,14 @@ use Tests\TestCase;
 class FrdoGenerationTest extends TestCase
 {
     use RefreshDatabase;
-
     protected Employee $actor;
-
-    protected Center $center;
-
     protected function setUp(): void
     {
         parent::setUp();
         $this->seed(RolesSeeder::class);
-        $this->center = Center::factory()->create();
         $this->actor = Employee::factory()
             ->director()
-            ->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->create();
 
         Carbon::setTestNow(now());
     }
@@ -43,8 +35,7 @@ class FrdoGenerationTest extends TestCase
         Attempt::factory(5)
             ->checked()
             ->passed()->create([
-                'created_at' => Carbon::now(),
-                'center_id' => $this->center->id,
+                'created_at' => Carbon::now()
             ]);
 
         $response = $this->actingAs($this->actor)
@@ -66,8 +57,7 @@ class FrdoGenerationTest extends TestCase
             ->checked()
             ->failed()
             ->create([
-                'created_at' => Carbon::now(),
-                'center_id' => $this->center->id,
+                'created_at' => Carbon::now()
             ]);
 
         $response = $this->actingAs($this->actor)

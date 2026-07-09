@@ -3,9 +3,7 @@
 namespace App\Models;
 
 use App\Enums\EmployeeRole;
-use App\Models\Scopes\BelongsToCenter;
 use App\Modules\Shared\ExamSettings;
-use App\Support\TimePresenter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,7 +16,6 @@ use Illuminate\Notifications\Notifiable;
 
 class Exam extends Model
 {
-    use BelongsToCenter;
     use HasFactory, Notifiable;
 
     protected $fillable = [
@@ -32,7 +29,6 @@ class Exam extends Model
         'address_id',
         'date',
         'cancelled_reason',
-        'center_id',
         'end_time',
         'protocol_comment',
         'cancelled_at',
@@ -57,11 +53,6 @@ class Exam extends Model
     public function examiners(): BelongsToMany
     {
         return $this->belongsToMany(Employee::class, 'exam_examiner', 'exam_id', 'examiner_id');
-    }
-
-    public function documents(): MorphMany
-    {
-        return $this->morphMany(Document::class, 'documentable');
     }
 
     public function scopeExaminer(Builder $query, Employee $employee): Builder
@@ -109,11 +100,6 @@ class Exam extends Model
         return $this->cancelled_at !== null;
     }
 
-    public function center(): BelongsTo
-    {
-        return $this->belongsTo(Center::class, 'center_id');
-    }
-
     public function hasSpeaking(): bool
     {
         return $this->type->has_speaking_tasks;
@@ -122,21 +108,21 @@ class Exam extends Model
     protected function timeZone(): Attribute
     {
         return Attribute::get(function () {
-            return $this->center->time_zone;
+            return 'Europe/Samara';
         });
     }
 
     protected function beginTimeLocal(): Attribute
     {
         return Attribute::get(function () {
-            return TimePresenter::forCenter($this->begin_time, $this->center);
+            return $this->begin_time->copy()->setTimezone('Europe/Samara');
         });
     }
 
     protected function endTimeLocal(): Attribute
     {
         return Attribute::get(function () {
-            return TimePresenter::forCenter($this->end_time, $this->center);
+            return $this->end_time->copy()->setTimezone('Europe/Samara');
         });
     }
 

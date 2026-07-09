@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Center;
 use App\Models\Employee;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -18,7 +17,7 @@ return new class extends Migration
             $table->string('path');
             $table->string('original_name');
             $table->foreignIdFor(Employee::class, 'creator_id');
-            $table->foreignIdFor(Center::class, 'center_id');
+
             $table->string('document_type');
             $table->string('mime_type');
             $table->bigInteger('size_bytes');

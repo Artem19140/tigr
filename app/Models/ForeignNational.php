@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\BelongsToCenter;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,7 +14,6 @@ use Illuminate\Notifications\Notifiable;
 
 class ForeignNational extends Authenticatable
 {
-    use BelongsToCenter;
     use HasFactory, Notifiable;
 
     public function getRememberTokenName()
@@ -49,8 +47,7 @@ class ForeignNational extends Authenticatable
         'patronymic_normalized',
         'passport_number_normalized',
         'passport_series_normalized',
-        'address_reg',
-        'center_id',
+        'address_reg'
     ];
 
     protected $casts = [

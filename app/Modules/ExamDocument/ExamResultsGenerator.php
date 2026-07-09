@@ -2,12 +2,10 @@
 
 namespace App\Modules\ExamDocument;
 
-use App\Modules\Center\CenterContext;
 use App\Enums\ExamDocument;
 use App\Events\ExamDocumentGenerated;
 use App\Models\Attempt;
 use App\Models\Exam;
-use App\Support\CenterIsolationCheck;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
@@ -40,7 +38,7 @@ class ExamResultsGenerator
             ],
             'enrollments' => [
                 'attempt.attemptAnswers.taskVariant.task',
-                'attempt.center',
+                'attempt',
                 'foreignNational',
             ],
         ]);
@@ -69,7 +67,7 @@ class ExamResultsGenerator
             ->flatMap(fn ($b) => $b->subblocks->sortBy('order'));
 
         return $exam->enrollments->map(function ($enrollment) use ($subblocks) {
-            CenterIsolationCheck::centerBelongs($enrollment, app(CenterContext::class)->id());
+
             $attempt = $enrollment->attempt;
             $answers = $attempt?->attemptAnswers ?? collect();
 

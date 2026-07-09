@@ -4,11 +4,6 @@ import { ref } from 'vue';
 
 const items = [
     {
-        label:'Центры', 
-        url:'admin/centers',
-        value:"centers",
-    },
-    {
         label:'Команды', 
         url:'admin/commands',
         value:"commands",

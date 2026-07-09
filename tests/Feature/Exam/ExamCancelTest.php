@@ -4,7 +4,6 @@ namespace Tests\Feature\Exam;
 
 use App\Modules\Exam\CancelExam;
 use App\Exceptions\BusinessException;
-use App\Models\Center;
 use App\Models\Employee;
 use App\Models\Exam;
 use Carbon\Carbon;
@@ -18,13 +17,11 @@ class ExamCancelTest extends TestCase
 
     protected Exam $exam;
 
-    protected Center $center;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->seed(RolesSeeder::class);
-        $this->center = Center::factory()->create();
 
         Carbon::setTestNow('2026-01-01 10:00:00');
     }
@@ -40,13 +37,10 @@ class ExamCancelTest extends TestCase
         $this->withoutExceptionHandling();
         $actor = Employee::factory()
             ->scheduler()
-            ->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->create();
 
         $exam = Exam::factory()
             ->create([
-                'center_id' => $this->center->id,
                 'begin_time' => Carbon::now()->addMinutes(10),
             ]);
 

@@ -24,7 +24,6 @@ const logout = async () => {
 }
 const {user} = useAuth()
 
-const centerId = user?.center_id
 const employeeName = `${user?.surname} ${user?.name}`
 const activeItem = ref('')
 
@@ -62,14 +61,14 @@ const menu: Array<MenuElem> = [
   {
     title:"Центр" ,
     prependIcon: mdiOfficeBuilding ,
-    url:`/centers/${centerId}`,
+    url:`/employees`,
     value:"center",
     allowed:can.value.center
   },
   {
     title:"Панель админа" ,
     prependIcon:mdiCog ,
-    url:'/admin/centers',
+    url:'/admin/logs',
     value:"admin",
     allowed:can.value.adminPanel
   }

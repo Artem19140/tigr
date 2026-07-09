@@ -15,8 +15,7 @@ class EnrollmentDocumentController
         $enrollment->load([
             'foreignNational',
             'exam.type',
-            'creator',
-            'center',
+            'creator'
         ]);
 
         $statementPdf = Pdf::loadView('pdf.enrollment.enrollment-full', [

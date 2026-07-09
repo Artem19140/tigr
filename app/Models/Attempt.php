@@ -3,8 +3,6 @@
 namespace App\Models;
 
 use App\Enums\AttemptStatus;
-use App\Models\Scopes\BelongsToCenter;
-use App\Support\TimePresenter;
 use Carbon\Carbon;
 use Database\Factories\AttemptFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,7 +15,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Attempt extends Model
 {
-    use BelongsToCenter;
 
     /** @use HasFactory<AttemptFactory> */
     use HasFactory;
@@ -34,7 +31,6 @@ class Attempt extends Model
         'started_at',
         'annulled_reason',
         'annulled_by_id',
-        'center_id',
         'solved',
         'enrollment_id',
         'annulled_at',
@@ -139,11 +135,6 @@ class Attempt extends Model
         return $this->hasMany(Violation::class, 'attempt_id');
     }
 
-    public function center(): BelongsTo
-    {
-        return $this->belongsTo(Center::class, 'center_id');
-    }
-
     public function enrollment(): BelongsTo
     {
         return $this->belongsTo(Enrollment::class, 'enrollment_id');
@@ -197,42 +188,42 @@ class Attempt extends Model
     protected function timeZone(): Attribute
     {
         return Attribute::get(function () {
-            return $this->center->time_zone;
+            return 'Europe/Samara';
         });
     }
 
     protected function startedAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return TimePresenter::forCenter($this->started_at, $this->center);
+            return $this->started_at->copy()->setTimezone('Europe/Samara');
         });
     }
 
     protected function finishedAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return TimePresenter::forCenter($this->finished_at, $this->center);
+            return $this->finished_at->copy()->setTimezone('Europe/Samara');
         });
     }
 
     protected function speakingStartedAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return TimePresenter::forCenter($this->speaking_started_at, $this->center);
+            return $this->speaking_started_at->copy()->setTimezone('Europe/Samara');
         });
     }
 
     protected function speakingFinishedAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return TimePresenter::forCenter($this->speaking_finished_at, $this->center);
+            return $this->speaking_finished_at->copy()->setTimezone('Europe/Samara');
         });
     }
 
     protected function annulledAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return TimePresenter::forCenter($this->annulled_at, $this->center);
+            return $this->annulled_at->copy()->setTimezone('Europe/Samara');
         });
     }
 

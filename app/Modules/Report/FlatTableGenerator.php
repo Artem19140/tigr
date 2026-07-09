@@ -2,19 +2,16 @@
 
 namespace App\Modules\Report;
 
-use App\Modules\Center\CenterContext;
 use App\Enums\ReportType;
 use App\Enums\TaskType;
 use App\Events\ReportGenerated;
 use App\Models\Attempt;
-use App\Support\CenterIsolationCheck;
 use App\Support\CsvWriter;
 use Carbon\Carbon;
 
 class FlatTableGenerator
 {
     public function __construct(
-        protected CenterContext $centerContext,
         protected CsvWriter $csvWriter
     ) {}
 
@@ -26,7 +23,6 @@ class FlatTableGenerator
         $strNumber = 1;
 
         Attempt::query()
-            ->forCenter($this->centerContext->id())
             ->with(['foreignNational', 'exam.type', 'answers' => [
                 'taskVariant.task',
                 'answer',
@@ -40,7 +36,6 @@ class FlatTableGenerator
 
             ->chunkById(300, function ($attempts) use (&$strNumber) {
                 foreach ($attempts as $attempt) {
-                    CenterIsolationCheck::centerBelongs($attempt, $this->centerContext->id());
                     $answers = $attempt->answers->sortBy(fn ($a) => $a->taskVariant->task->order);
                     foreach ($answers as $answer) {
                         $taskVariant = $answer->taskVariant;

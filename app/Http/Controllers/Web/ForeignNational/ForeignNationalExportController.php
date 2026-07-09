@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Web\ForeignNational;
 
-use App\Modules\Center\CenterContext;
 use App\Modules\ForeignNational\ExportForeignNational;
 use App\Exceptions\BusinessException;
 use App\Http\Requests\ForeignNational\ForeignNationalExportRequest;
@@ -76,7 +75,6 @@ class ForeignNationalExportController
         ?string $citizenship = null
     ): void {
         $available = ForeignNational::query()
-            ->forCenter(app(CenterContext::class)->id())
             ->whereBetween('created_at', [
                 Carbon::parse($dateFrom),
                 Carbon::parse($dateTo),

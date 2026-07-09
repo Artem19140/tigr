@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Models\Address;
-use App\Models\Center;
 use App\Models\Counter;
 use App\Models\Employee;
 use App\Models\Enrollment;
@@ -27,7 +26,6 @@ class AppServiceProvider extends ServiceProvider
             'exam' => Exam::class,
             'enrollment' => Enrollment::class,
             'address' => Address::class,
-            'center' => Center::class,
             'counter' => Counter::class
         ]);
 

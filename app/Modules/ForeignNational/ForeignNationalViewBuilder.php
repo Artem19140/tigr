@@ -65,8 +65,8 @@ class ForeignNationalViewBuilder
             'enrollments' => function ($query) use ($employee) {
                     $query->visibleFor($employee)
                         ->with([
-                            'exam' => ['type', 'center'],
-                            'attempt.center',
+                            'exam' => ['type'],
+                            'attempt',
                         ]);
                 }
         ];

@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Center;
 use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\Exam;
@@ -25,7 +24,6 @@ class EnrollmentFactory extends Factory
         return [
             'exam_id' => Exam::factory(),
             'foreign_national_id' => ForeignNational::factory(),
-            'center_id' => Center::factory(),
             'reg_number' => 260000,
             'creator_id' => Employee::factory(),
         ];

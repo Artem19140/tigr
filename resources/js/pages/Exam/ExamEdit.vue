@@ -47,7 +47,7 @@ const edit = () => {
 
 const back = () => {
     http.cancel()
-    router.visit(`/exams/${props.exam.data.id}`)
+    router.visit(`/exams/${props.exam.data.id}`, {replace:true})
 }
 </script>
 

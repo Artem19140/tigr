@@ -3,7 +3,6 @@
 namespace Tests\Feature\Employee;
 
 use App\Enums\EmployeeRole;
-use App\Models\Center;
 use App\Models\Employee;
 use App\Models\Role;
 use Carbon\Carbon;
@@ -14,27 +13,18 @@ use Tests\TestCase;
 class EmployeeCreateTest extends TestCase
 {
     use RefreshDatabase;
-
     protected $seeder = RolesSeeder::class;
-
     protected Role $platformAdminRole;
-
     protected Role $orgAdminRole;
-
     protected Employee $actor;
-
-    protected Center $center;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->seed(RolesSeeder::class);
-        $this->center = Center::factory()->create();
         $this->actor = Employee::factory()
             ->orgAdmin()
-            ->create([
-                'center_id' => $this->center->id
-            ]);
+            ->create();
 
         $this->platformAdminRole = Role::findByEnum(EmployeeRole::PlatformAdmin);
 
@@ -64,9 +54,8 @@ class EmployeeCreateTest extends TestCase
 
     protected function postEmployee(Employee $actingAs, array $overrrides = [])
     {
-        $centerId = $this->center->id;
         return $this->actingAs($actingAs)
-            ->postJson("centers/$centerId/employees", $this->employeeBody($overrrides));
+            ->postJson("employees", $this->employeeBody($overrrides));
     }
 
     public function test_success(): void
@@ -84,9 +73,7 @@ class EmployeeCreateTest extends TestCase
     {
         $platformAdmin = Employee::factory()
             ->platformAdmin()
-            ->create([
-                'center_id' => $this->center->id
-            ]);
+            ->create();
 
         $response = $this->postEmployee($platformAdmin, [
             'roles' => [ $this->orgAdminRole->id ]
@@ -98,9 +85,7 @@ class EmployeeCreateTest extends TestCase
     {
         $operator = Employee::factory()
             ->operator()
-            ->create([
-                'center_id' => $this->center->id
-            ]);
+            ->create();
         $response = $this->postEmployee($operator,[
             'roles' => [$this->orgAdminRole->id]
         ]);

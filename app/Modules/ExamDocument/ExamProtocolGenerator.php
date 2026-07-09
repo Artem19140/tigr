@@ -7,7 +7,6 @@ use App\Events\ExamDocumentGenerated;
 use App\Models\Attempt;
 use App\Models\Exam;
 use App\Models\Violation;
-use App\Support\CenterIsolationCheck;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
@@ -18,15 +17,11 @@ class ExamProtocolGenerator
         protected ExamDocumentRules $examDocumentRules
     ){}
     public function execute(Exam $exam)
-    {
-        
+    {   
         $annulledAttempts = $this->getAnnulledAttempts($exam);
         $beginTimeReal = $this->getBeginTimeReal($exam);
         $endTimeReal = $this->getEndTimeReal($exam);
         $attemptsWithViolations = $this->getAttemptsWithViolations($exam);
-
-        CenterIsolationCheck::check($attemptsWithViolations);
-        CenterIsolationCheck::check($annulledAttempts);
 
         $pdf = Pdf::loadView(ExamDocument::Protocol->templatePath(), [
             'exam' => $exam,

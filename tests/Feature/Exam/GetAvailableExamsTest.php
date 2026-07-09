@@ -2,24 +2,18 @@
 
 namespace Tests\Feature\Exam;
 
-use App\Modules\Center\CenterContext;
 use App\Modules\Exam\GetAvailableExams;
-use App\Models\Center;
 use App\Models\Enrollment;
 use App\Models\Exam;
 use App\Models\ForeignNational;
 use App\Modules\Shared\ExamSettings;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Mockery;
 use Tests\TestCase;
 
 class GetAvailableExamsTest extends TestCase
 {
     use RefreshDatabase;
-
-    protected Center $center;
-
     protected Carbon $enrollmentTimeClosed;
 
     protected GetAvailableExams $query;
@@ -27,16 +21,13 @@ class GetAvailableExamsTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->center = Center::factory()->create();
         Carbon::setTestNow(
             Carbon::parse('2026-01-01 10:00:00')
         );
-        $this->enrollmentTimeClosed = Carbon::now()->addMinutes(ExamSettings::enrollmentCloseBeforeExamMinutes());
+        $this->enrollmentTimeClosed = Carbon::now()->addMinutes(
+            ExamSettings::enrollmentCloseBeforeExamMinutes()
+        );
 
-        $mock = Mockery::mock(CenterContext::class);
-        $mock->shouldReceive('id')->andReturn($this->center->id);
-
-        $this->app->instance(CenterContext::class, $mock);
         $this->query = app(GetAvailableExams::class);
     }
 
@@ -50,8 +41,7 @@ class GetAvailableExamsTest extends TestCase
     {
         $exam = Exam::factory()
             ->create([
-                'begin_time' => $this->enrollmentTimeClosed->addMinute(),
-                'center_id' => $this->center->id,
+                'begin_time' => $this->enrollmentTimeClosed->addMinute()
             ]);
         $exams = $this->query->execute($exam->exam_type_id);
         $this->assertNotEmpty($exams);
@@ -61,8 +51,7 @@ class GetAvailableExamsTest extends TestCase
     {
         $exam = Exam::factory()
             ->create([
-                'begin_time' => $this->enrollmentTimeClosed->subMinute(),
-                'center_id' => $this->center->id,
+                'begin_time' => $this->enrollmentTimeClosed->subMinute()
             ]);
         $exams = $this->query->execute($exam->exam_type_id);
         $this->assertEmpty($exams);
@@ -75,28 +64,14 @@ class GetAvailableExamsTest extends TestCase
         $exam = Exam::factory()
             ->create([
                 'begin_time' => $this->enrollmentTimeClosed->subMinute(),
-                'center_id' => $this->center->id,
                 'capacity' => $capacity,
             ]);
 
         Enrollment::factory($capacity)->create([
-            'center_id' => $this->center->id,
             'exam_id' => $exam->id,
         ]);
 
         $exams = $this->query->execute($exam->exam_type_id);
-        $this->assertEmpty($exams);
-    }
-
-    public function test_fail_different_centers(): void
-    {
-        $exam = Exam::factory()
-            ->create([
-                'begin_time' => $this->enrollmentTimeClosed->addMinute(),
-            ]);
-
-        $exams = $this->query->execute($exam->exam_type_id);
-
         $this->assertEmpty($exams);
     }
 
@@ -121,12 +96,9 @@ class GetAvailableExamsTest extends TestCase
             ]);
 
         $foreignNational = ForeignNational::factory()
-            ->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->create();
 
         Enrollment::factory()->create([
-            'center_id' => $this->center->id,
             'exam_id' => $exam->id,
             'foreign_national_id' => $foreignNational->id,
         ]);

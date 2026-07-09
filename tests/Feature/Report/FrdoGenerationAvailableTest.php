@@ -3,7 +3,6 @@
 namespace Tests\Feature\Report;
 
 use App\Models\Attempt;
-use App\Models\Center;
 use App\Models\Employee;
 use Carbon\Carbon;
 use Database\Seeders\RolesSeeder;
@@ -14,21 +13,14 @@ use Tests\TestCase;
 class FrdoGenerationAvailableTest extends TestCase
 {
     use RefreshDatabase;
-
     protected Employee $actor;
-
-    protected Center $center;
-
     protected function setUp(): void
     {
         parent::setUp();
         $this->seed(RolesSeeder::class);
-        $this->center = Center::factory()->create();
         $this->actor = Employee::factory()
             ->director()
-            ->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->create();
 
         Carbon::setTestNow(now());
     }
@@ -50,9 +42,7 @@ class FrdoGenerationAvailableTest extends TestCase
 
     public function test_success_passed(): void
     {
-        Attempt::factory(5)->checked()->passed()->create([
-            'center_id' => $this->center->id,
-        ]);
+        Attempt::factory(5)->checked()->passed()->create();
         $response = $this->getFrdo('certificates');
 
         $response->assertOk();
@@ -63,16 +53,12 @@ class FrdoGenerationAvailableTest extends TestCase
         Attempt::factory(5)
             ->checked()
             ->failed()
-            ->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->create();
 
         Attempt::factory(5)
             ->checked()
             ->passed()
-            ->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->create();
         $response = $this->getFrdo('references');
 
         $response->assertOk();
@@ -89,9 +75,7 @@ class FrdoGenerationAvailableTest extends TestCase
     {
         Attempt::factory(5)
             ->passed()
-            ->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->create();
         $response = $response = $this->getFrdo('certificates');
 
         $response->assertBadRequest();
@@ -115,9 +99,7 @@ class FrdoGenerationAvailableTest extends TestCase
         Attempt::factory(5)
             ->checked()
             ->passed()
-            ->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->create();
         $response = $response = $this->getFrdo('references');
 
         $response->assertBadRequest();
@@ -128,9 +110,7 @@ class FrdoGenerationAvailableTest extends TestCase
         Attempt::factory(5)
             ->active()
             ->passed()
-            ->create([
-                'center_id' => $this->center->id,
-            ]);
+            ->create();
         $response = $response = $this->getFrdo('references');
 
         $response->assertBadRequest();

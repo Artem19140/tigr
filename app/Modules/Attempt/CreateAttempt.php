@@ -74,8 +74,7 @@ class CreateAttempt
         return Attempt::create([
             'foreign_national_id' => $enrollment->foreign_national_id,
             'enrollment_id' => $enrollment->id,
-            'exam_id' => $enrollment->exam_id,
-            'center_id' => $enrollment->center_id,
+            'exam_id' => $enrollment->exam_id
         ]);
     }
 
@@ -115,8 +114,7 @@ class CreateAttempt
             $examVariant[] = [
                 'exam_id' => $exam->id,
                 'task_variant_id' => $variant->id,
-                'attempt_id' => $attempt->id,
-                'center_id' => $exam->center_id,
+                'attempt_id' => $attempt->id
             ];
         }
 
@@ -129,11 +127,11 @@ class CreateAttempt
 
         if (! $exam->group) {
             $needSave = true;
-            $exam->group = $this->groupNumberGenerator->execute($exam->center_id);
+            $exam->group = $this->groupNumberGenerator->execute();
         }
         if (! $exam->session) {
             $needSave = true;
-            $exam->session = $this->sessionNumberGenerator->execute($exam->center_id);
+            $exam->session = $this->sessionNumberGenerator->execute();
         }
         
         if ($needSave) {

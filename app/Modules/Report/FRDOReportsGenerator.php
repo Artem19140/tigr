@@ -2,12 +2,9 @@
 
 namespace App\Modules\Report;
 
-use App\Modules\Center\CenterContext;
 use App\Enums\ReportType;
 use App\Events\ReportGenerated;
 use App\Models\Attempt;
-use App\Models\Center;
-use App\Support\CenterIsolationCheck;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -18,21 +15,19 @@ use PhpOffice\PhpSpreadsheet\Writer\IWriter;
 class FRDOReportsGenerator
 {
     public function __construct(
-        protected EnsureFrdoGenerationAvailable $ensureFrdoGenerationAvailable,
-        protected CenterContext $centerContext
+        protected EnsureFrdoGenerationAvailable $ensureFrdoGenerationAvailable
     ) {}
 
     public function execute(
         string $examDate,
-        string $type,
-        Center $center
+        string $type
     ): IWriter {
         $examDate = Carbon::parse($examDate);
         
         $success = $type === 'certificates';
 
         $this->ensureFrdoGenerationAvailable->execute($examDate, $success);
-        $spreadsheet = $this->generateReport($examDate, $success, $center);
+        $spreadsheet = $this->generateReport($examDate, $success);
         event(new ReportGenerated(ReportType::Frdo, [
             'date' => $examDate,
             'type' => $success ? 'certificates' : 'references'
@@ -46,7 +41,6 @@ class FRDOReportsGenerator
         bool $success
     ): Collection {
         $attempts = Attempt::query()
-            ->forCenter($this->centerContext->id())
             ->with(['exam.type', 'foreignNational', 'exam.address'])
             ->whereBetween('created_at', [
                 $examDate->copy()->startOfDay(),
@@ -60,14 +54,13 @@ class FRDOReportsGenerator
             })
             ->whereNotNull('checked_at')
             ->get();
-        CenterIsolationCheck::check($attempts);
+
         return $attempts;
     }
 
     protected function generateReport(
         Carbon $examDate,
-        bool $success,
-        Center $center
+        bool $success
     ): Spreadsheet {
         $attempts = $this->attemptsForReport($examDate, $success);
         if ($success) {
@@ -94,9 +87,9 @@ class FRDOReportsGenerator
                     ->setRowHeight($sheet->getRowDimension($templateRow)->getRowHeight());
             }
             if ($success) {
-                $markUp = $this->certificateMarkup($attempt, $center, $row);
+                $markUp = $this->certificateMarkup($attempt,$row);
             } else {
-                $markUp = $this->referencesMarkup($attempt, $center, $row);
+                $markUp = $this->referencesMarkup($attempt, $row);
             }
 
             foreach ($markUp as $key => $value) {
@@ -111,7 +104,6 @@ class FRDOReportsGenerator
 
     protected function certificateMarkup(
         Attempt $attempt,
-        Center $center,
         int $row
     ): array {
         $columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'M', 'N', 'O'];
@@ -142,7 +134,6 @@ class FRDOReportsGenerator
 
     protected function referencesMarkup(
         Attempt $attempt,
-        Center $center,
         int $row
     ): array {
         $columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'N', 'O', 'P', 'Q'];

@@ -3,16 +3,12 @@
 namespace App\Modules\Exam;
 
 use App\Http\Dto\ExamIndexDto;
-use App\Modules\Center\CenterContext;
 use App\Models\Employee;
 use App\Models\Exam;
 use Illuminate\Contracts\Pagination\Paginator;
 
 class GetExams
 {
-    public function __construct(
-        protected CenterContext $centerContext
-    ){}
     public function execute(
         ExamIndexDto $dto,
         Employee $employee
@@ -27,10 +23,9 @@ class GetExams
 
         $id = $dto->id ?? false;
 
-        $query = Exam::with(['type', 'center'])
+        $query = Exam::with(['type'])
             ->withCount(['enrollments']);
 
-        $query->forCenter($this->centerContext->id());
 
         $query->visibleFor($employee);
 

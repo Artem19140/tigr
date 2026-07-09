@@ -61,6 +61,6 @@ class LoginController
         if($employee->isPlatformAdmin()){
             return false;
         }
-        return ! $employee->isActive() || ! $employee->center?->isActive();
+        return ! $employee->isActive();
     }
 }

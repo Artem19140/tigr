@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Center;
 use App\Models\Employee;
 use App\Models\ForeignNational;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -100,7 +99,6 @@ class ForeignNationalFactory extends Factory
 
             'address_reg' => fake()->streetAddress(),
 
-            'center_id' => Center::factory(),
         ];
     }
 

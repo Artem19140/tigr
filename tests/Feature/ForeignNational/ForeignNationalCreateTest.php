@@ -3,7 +3,6 @@
 namespace Tests\Feature\ForeignNational;
 
 use App\Enums\CounterKey;
-use App\Models\Center;
 use App\Models\Counter;
 use App\Models\Employee;
 use App\Models\Exam;
@@ -18,32 +17,26 @@ use Tests\TestCase;
 class ForeignNationalCreateTest extends TestCase
 {
     use RefreshDatabase;
-
     protected Employee $actor;
-
-    protected Center $center;
-
     protected Exam $exam;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->seed(RolesSeeder::class);
-        $this->center = Center::factory()->create();
 
-        $this->actor = Employee::factory()->operator()->create(['center_id' => $this->center->id]);
+        $this->actor = Employee::factory()->operator()->create();
         Carbon::setTestNow(now());
         $this->exam = Exam::factory()->create([
             'begin_time' => Carbon::now()->addDay(),
-            'end_time' => Carbon::now()->addDay()->addMinutes(90),
-            'center_id' => $this->actor->center_id,
+            'end_time' => Carbon::now()->addDay()->addMinutes(90)
         ]);
 
         Storage::fake('private');
+        
         Counter::create([
             'key' => CounterKey::RegNum,
-            'value' => Carbon::now()->format('y').'0000',
-            'center_id' => 1,
+            'value' => Carbon::now()->format('y').'0000'
         ]);
     }
 

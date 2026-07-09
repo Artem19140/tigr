@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\ExamDocument;
 
-use App\Models\Center;
 use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\Exam;
@@ -14,20 +13,13 @@ use Tests\TestCase;
 class ExamListGenerationTest extends TestCase
 {
     use RefreshDatabase;
-
     protected Employee $actor;
-
-    protected Center $center;
-
     protected function setUp(): void
     {
         parent::setUp();
         $this->seed(RolesSeeder::class);
-        $this->center = Center::factory()->create();
-        $this->actor = Employee::factory()->examiner()->create(['center_id' => $this->center->id]);
-
+        $this->actor = Employee::factory()->examiner()->create();
         Carbon::setTestNow(now());
-
     }
 
     protected function tearDown(): void
@@ -38,11 +30,9 @@ class ExamListGenerationTest extends TestCase
 
     public function test_success_list_generation(): void
     {
-        $enrollment = Enrollment::factory()->create([
-            'center_id' => $this->center->id,
-        ]);
+        $enrollment = Enrollment::factory()->create();
         $exam = Exam::factory()
-            ->create(['center_id' => $this->center->id]);
+            ->create();
         $exam->enrollments()->save($enrollment);
         $exam->examiners()->attach($this->actor);
         $response = $this

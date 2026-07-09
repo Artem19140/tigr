@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Attempt;
-use App\Models\Center;
 use App\Models\Enrollment;
 use App\Models\Exam;
 use App\Models\ForeignNational;
@@ -25,7 +24,6 @@ class AttemptFactory extends Factory
             'foreign_national_id' => ForeignNational::factory(),
             'exam_id' => Exam::factory(),
             'total_mark' => fake()->numberBetween(5, 20),
-            'center_id' => Center::factory(),
             'enrollment_id' => Enrollment::factory(),
             'created_at' => now(),
         ];

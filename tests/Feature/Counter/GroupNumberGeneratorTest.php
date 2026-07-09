@@ -4,7 +4,6 @@ namespace Tests\Feature\Counter;
 
 use App\Modules\Counter\GroupNumberGenerator;
 use App\Enums\CounterKey;
-use App\Models\Center;
 use App\Models\Counter;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,12 +14,9 @@ class GroupNumberGeneratorTest extends TestCase
     use RefreshDatabase;
 
     protected GroupNumberGenerator $generator;
-    protected Center $center;
     protected function setUp(): void
     {
         parent::setUp();
-        
-        $this->center = Center::factory()->create();
 
         $this->generator = app(GroupNumberGenerator::class);
 
@@ -28,8 +24,7 @@ class GroupNumberGeneratorTest extends TestCase
 
         Counter::create([
             'key' => CounterKey::Group,
-            'value' => CounterKey::Group->defaultValue(),
-            'center_id' => $this->center->id,
+            'value' => CounterKey::Group->defaultValue()
         ]);
     }
 
@@ -41,15 +36,15 @@ class GroupNumberGeneratorTest extends TestCase
 
     public function test_group_number_generation(): void
     {
-        $firstNumber = $this->generator->execute($this->center->id);
+        $firstNumber = $this->generator->execute();
 
         $this->assertEquals($firstNumber, CounterKey::Group->defaultValue());
 
-        $secondNumber = $this->generator->execute($this->center->id);
+        $secondNumber = $this->generator->execute();
 
         $this->assertEquals($secondNumber, CounterKey::Group->defaultValue() + 1);
 
-        $thirdNumber = $this->generator->execute($this->center->id);
+        $thirdNumber = $this->generator->execute();
 
         $this->assertEquals($thirdNumber, CounterKey::Group->defaultValue() + 2);
     }
@@ -57,12 +52,12 @@ class GroupNumberGeneratorTest extends TestCase
 
     public function test_group_number_generation_change_day(): void
     {
-        $number = $this->generator->execute($this->center->id);
+        $number = $this->generator->execute();
         $this->assertEquals($number, CounterKey::Group->defaultValue());
 
         Carbon::setTestNow(Carbon::now()->addDay());
 
-        $anotherDayNumber = $this->generator->execute($this->center->id);
+        $anotherDayNumber = $this->generator->execute();
         $this->assertEquals($anotherDayNumber, CounterKey::Group->defaultValue());
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Modules\Employee;
 
 use App\Http\Dto\EmployeeDto;
-use App\Models\Center;
 use App\Models\Employee;
 use App\Support\Audit;
 use Illuminate\Support\Facades\DB;
@@ -15,9 +14,9 @@ class CreateEmployee
         protected EmployeeBeforeSaveValidator $validator,
         protected Audit $audit
     ){}
+    
     public function execute(
         EmployeeDto $dto, 
-        Center $center,
         Employee $creator
     ): Employee {
         $this->validator->validate(
@@ -25,10 +24,9 @@ class CreateEmployee
             $creator
         );
 
-        return DB::transaction(function () use ($dto, $center) {
+        return DB::transaction(function () use ($dto) {
             $employee = Employee::create([
-                ...$dto->toArray(),
-                'center_id' =>  $center->id
+                ...$dto->toArray()
             ]);
 
             $roles = $employee->roles()->sync($dto->rolesIds);

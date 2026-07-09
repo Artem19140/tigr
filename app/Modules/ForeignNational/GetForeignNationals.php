@@ -3,16 +3,12 @@
 namespace App\Modules\ForeignNational;
 
 use App\Http\Dto\ForeignNationalIndexDto;
-use App\Modules\Center\CenterContext;
 use App\Models\ForeignNational;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\Paginator;
 
 class GetForeignNationals
 {
-    public function __construct(
-        protected CenterContext $centerContext
-    ){}
     public function execute(ForeignNationalIndexDto $dto): Paginator
     {
         $surname = $dto->surname ?? false;
@@ -24,7 +20,6 @@ class GetForeignNationals
         $perPage =$dto->perPage  ?? 10;
 
         return ForeignNational::query()
-            ->forCenter($this->centerContext->id())
             ->when($surname, function (Builder $query) use ($surname) {
                 $surname = mb_strtolower(trim($surname), 'UTF-8');
                 $query->where('surname_normalized', 'LIKE', $surname.'%');

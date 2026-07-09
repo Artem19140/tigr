@@ -10,10 +10,8 @@ use App\Http\Requests\Employee\EmployeePostRequest;
 use App\Http\Requests\Employee\EmployeeUpdateRequest;
 use App\Http\Resources\Employee\EmployeeResource;
 use App\Http\Resources\Role\RoleResource;
-use App\Models\Center;
 use App\Models\Employee;
 use App\Models\Role;
-use App\Support\CenterIsolationCheck;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -24,14 +22,12 @@ use Inertia\Inertia;
 class EmployeeController
 {
     public function index(
-        Request $request, 
-        Center $center
+        Request $request,
     ): \Inertia\Response {
 
         $notPlatformAdmin = !$request->user()->isPlatformAdmin();
 
         $employees = Employee::active()
-            ->forCenter($center->id)
             ->with(['roles'])
             ->when($notPlatformAdmin, function (Builder $query) {
                 $query->whereDoesntHave('roles', function (Builder $q) {
@@ -41,24 +37,20 @@ class EmployeeController
             ->orderBy('surname')
             ->get();
 
-        CenterIsolationCheck::check($employees);
         
         return Inertia::render('Center/Center', [
             'employees' => EmployeeResource::collection($employees),
-            'tab' => 'employees',
-            'centerId' => $center->id
+            'tab' => 'employees'
         ]);
     }
 
     public function store(
         EmployeePostRequest $request,
-        CreateEmployee $createEmployee,
-        Center $center
+        CreateEmployee $createEmployee
     ): JsonResponse {
 
         $createEmployee->execute(
             $request->toDto(),
-            $center,
             $request->user()
         );
 

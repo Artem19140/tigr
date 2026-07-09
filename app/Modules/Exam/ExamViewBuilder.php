@@ -20,14 +20,13 @@ class ExamViewBuilder
         $exam->load([
             'examiners',
             'address',
-            'type',
-            'documents'
+            'type'
         ]);
 
         if($employee->can('viewAny', Enrollment::class)){
             $exam->load(['enrollments' => [
                     'foreignNational', 
-                    'attempt.center'
+                    'attempt'
                 ]
             ]);
 

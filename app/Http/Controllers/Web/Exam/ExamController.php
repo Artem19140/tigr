@@ -8,7 +8,6 @@ use App\Modules\Exam\CancelExam;
 use App\Modules\Exam\CreateExam;
 use App\Modules\Exam\UpdateExam;
 use App\Modules\Exam\ExamCreateData;
-use App\Modules\Exam\ExamViewBuilder;
 use App\Modules\Exam\GetExams;
 use App\Http\Requests\Exam\ExamIndexRequest;
 use App\Http\Requests\Exam\ExamPostRequest;
@@ -16,11 +15,9 @@ use App\Http\Requests\Exam\VerifyCodeRequest;
 use App\Http\Resources\Address\AddressResource;
 use App\Http\Resources\Employee\EmployeeResource;
 use App\Http\Resources\Exam\ExamIndexResource;
-use App\Http\Resources\Exam\ExamResource;
 use App\Http\Resources\ExamType\ExamTypeResource;
 use App\Models\Exam;
 use App\Modules\Exam\UpdateProtocolComment;
-use App\Support\CenterIsolationCheck;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -46,9 +43,9 @@ class ExamController
         Inertia::flash([
             'filters' => $dto->toFilters()
         ]);
-        CenterIsolationCheck::check($exams);
 
         $employee = $request->user();
+        
         return Inertia::render('Exam/Exams', [
             'permissions' => [
                 'create' => $employee->can('create', Exam::class)
@@ -77,8 +74,6 @@ class ExamController
     {
         Gate::authorize('create', Exam::class);
         $createData = $query->execute();
-        CenterIsolationCheck::check($createData['addresses']);
-        CenterIsolationCheck::check($createData['examiners']);
 
         return response()->json([
             'addresses' => AddressResource::collection($createData['addresses']),
@@ -93,8 +88,6 @@ class ExamController
         Gate::authorize('create', Exam::class);
 
         $createData = $builder->execute();
-        CenterIsolationCheck::check($createData['addresses']);
-        CenterIsolationCheck::check($createData['examiners']);
         return Inertia::render('Exam/ExamCreate', [
             'addresses' => AddressResource::collection($createData['addresses']),
             'examTypes' => ExamTypeResource::collection($createData['examTypes']),

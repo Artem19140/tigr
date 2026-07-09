@@ -2,10 +2,8 @@
 
 namespace App\Modules\ForeignNational;
 
-use App\Modules\Center\CenterContext;
 use App\Models\ForeignNational;
 use App\Support\Audit;
-use App\Support\CenterIsolationCheck;
 use App\Support\CsvWriter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,8 +12,6 @@ use Illuminate\Support\Str;
 class ExportForeignNational
 {
     public function __construct(
-        protected CenterIsolationCheck $centerIsolationCheck,
-        protected CenterContext $centerContext,
         protected CsvWriter $csvWriter,
         protected Audit $audit
     ){}
@@ -28,8 +24,7 @@ class ExportForeignNational
         
         $count = 0;
         ForeignNational::query()
-            ->forCenter($this->centerContext->id())
-            ->select(['id', 'surname', 'name', 'patronymic', 'citizenship', 'passport_series', 'passport_number', 'center_id'])
+            ->select(['id', 'surname', 'name', 'patronymic', 'citizenship', 'passport_series', 'passport_number'])
             ->when($citizenship, function (Builder $query) use ($citizenship) {
                 $query->where('citizenship', $citizenship);
             })
@@ -47,7 +42,6 @@ class ExportForeignNational
                     $i->passport_number,
                 ]);
                 $count++;
-                $this->centerIsolationCheck::centerBelongs($i, $this->centerContext->id());
             });  
 
         $this->audit->log(

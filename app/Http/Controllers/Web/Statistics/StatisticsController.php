@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Web\Statistics;
 
-use App\Modules\Center\CenterContext;
 use App\Http\Requests\Statistics\StatisticsRequest;
 use App\Models\Attempt;
 use App\Models\Exam;
@@ -15,7 +14,6 @@ use Illuminate\Http\JsonResponse;
 class StatisticsController
 {
     public function __construct(
-        protected CenterContext $centerContext,
         protected Audit $audit
     ) {}
 
@@ -26,14 +24,12 @@ class StatisticsController
         $to = Carbon::parse($request->validated('dateTo'))->copy()->endOfDay();
 
         $examsCount = Exam::query()
-            ->forCenter($this->centerContext->id())
             ->where('begin_time', '>=', $from)
             ->where('begin_time', '<=', $to)
             ->notCancelled()
             ->count();
 
         $attemptsTakersCount = ForeignNational::query()
-            ->forCenter($this->centerContext->id())
             ->whereHas('attempts', function (Builder $query) use ($from, $to) {
                 $query->whereBetween('started_at', [
                     $from,
@@ -42,7 +38,6 @@ class StatisticsController
             })->count();
 
         $attemptsQuery = Attempt::query()
-            ->forCenter($this->centerContext->id())
             ->where('created_at', '>=', $from)
             ->where('created_at', '<=', $to);
 

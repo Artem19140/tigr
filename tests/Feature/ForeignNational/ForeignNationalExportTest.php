@@ -3,7 +3,6 @@
 namespace Tests\Feature\ForeignNational;
 
 use App\Enums\EmployeeRole;
-use App\Models\Center;
 use App\Models\Employee;
 use App\Models\ForeignNational;
 use Carbon\Carbon;
@@ -14,19 +13,16 @@ use Tests\TestCase;
 class ForeignNationalExportTest extends TestCase
 {
     use RefreshDatabase;
-
     protected Employee $actor;
-
     protected function setUp(): void
     {
         parent::setUp();
         $this->seed(RolesSeeder::class);
-        $center = Center::factory()->create();
         $this->actor = Employee::factory()
             ->director()
-            ->create(['center_id' => $center->id]);
+            ->create();
         Carbon::setTestNow('2026-01-02 10:00:00');
-        ForeignNational::factory(10)->create(['center_id' => $center->id]);
+        ForeignNational::factory(10)->create();
     }
 
     protected function tearDown(): void
@@ -52,14 +48,6 @@ class ForeignNationalExportTest extends TestCase
         $this->assertStringContainsString('attachment',
             $response->headers->get('Content-Disposition')
         );
-    }
-
-    public function test_fail_foreign_national_export_diff_centers(): void
-    {
-        $employee = Employee::factory()->director()->create();
-        $response = $this->actingAs($employee)
-            ->getJson('foreign-nationals/export/available?dateFrom=2026-01-02&dateTo=2026-01-03');
-        $response->assertBadRequest();
     }
 
     public function test_no_access_roles_foreign_national_export()

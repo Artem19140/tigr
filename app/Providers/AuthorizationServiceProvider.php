@@ -4,10 +4,8 @@ namespace App\Providers;
 
 use App\Enums\EmployeeRole;
 use App\Models\Attempt;
-use App\Models\Center;
 use App\Models\Employee;
 use App\Models\ForeignNational;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -54,10 +52,6 @@ class AuthorizationServiceProvider extends ServiceProvider
 
         Gate::define('center-manage', function (Employee $employee) {
             return $employee->hasAnyRole(EmployeeRole::CenterAdmin);
-        });
-
-        Gate::define('center-belong', function (Center $center, Model $model) {
-            return $center->id === $model->center_id;
         });
 
         Gate::define('attempts.employee-access', function (Employee $employee, Attempt $attempt) {

@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Address;
-use App\Models\Center;
 use App\Models\Employee;
 use App\Models\Exam;
 use App\Models\ExamType;
@@ -29,8 +28,7 @@ class ExamFactory extends Factory
             'exam_type_id' => ExamType::factory(),
             'creator_id' => Employee::factory(),
             'capacity' => fake()->numberBetween(5, 20),
-            'address_id' => Address::factory(),
-            'center_id' => Center::factory(),
+            'address_id' => Address::factory()
         ];
     }
 

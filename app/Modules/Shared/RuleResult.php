@@ -6,7 +6,6 @@ use App\Enums\AvailabilityCode;
 
 final readonly  class RuleResult
 {
-    
     protected function __construct(
         public bool $available,
         protected AvailabilityCode | string | null $code = null,

@@ -4,11 +4,9 @@ namespace App\Policies;
 
 use App\Enums\EmployeeRole;
 use App\Models\Employee;
-use Illuminate\Auth\Access\Response;
 
 class EmployeePolicy
 {
-    use BasePolicy;
     /**
      * Determine whether the user can view any models.
      */
@@ -36,9 +34,6 @@ class EmployeePolicy
     public function update(Employee $actor, Employee $employee ): bool
     {
         
-        if($this->notSameCenter($actor, $employee)){
-            return false;
-        }
         
         if($employee->isPlatformAdmin()){
             return false;
@@ -62,9 +57,6 @@ class EmployeePolicy
     public function delete(Employee $actor, Employee $employee): bool
     {
 
-        if($this->notSameCenter($actor, $employee)){
-            return false;
-        }
 
         if($employee->isPlatformAdmin()){
             
@@ -87,10 +79,6 @@ class EmployeePolicy
     }
     public function resetPassword(Employee $actor , Employee $employee): bool
     {
-        if($this->notSameCenter($actor, $employee)){
-            return false;
-        }
-        
         if($employee->isPlatformAdmin()){
             return false;
         }

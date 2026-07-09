@@ -25,11 +25,6 @@ return new class extends Migration
 
             $table->boolean('is_active')->default(true);
 
-            $table->foreignId('center_id')
-                ->nullable()
-                ->constrained('centers')
-                ->cascadeOnDelete();
-
             $table->rememberToken();
             
             $table->timestamps();

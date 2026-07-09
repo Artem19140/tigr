@@ -2,7 +2,6 @@
 
 namespace App\Modules\Exam;
 
-use App\Modules\Center\CenterContext;
 use App\Enums\EmployeeRole;
 use App\Exceptions\BusinessException;
 use App\Models\Employee;
@@ -15,10 +14,6 @@ use Illuminate\Support\Facades\Log;
 
 class ExaminersValidator
 {
-    public function __construct(
-        protected CenterContext $centerContext
-    ) {}
-
     public function execute(
         array $examinersIds,
         Carbon $beginTime,
@@ -54,7 +49,6 @@ class ExaminersValidator
     ): Collection {
 
         return Exam::query()
-            ->forCenter($this->centerContext->id())
             ->where('begin_time', '<=', $endTime)
             ->where('end_time', '>=', $beginTime)
             ->notCancelled()

@@ -10,7 +10,6 @@ class Upload extends Model
         'total_chunks',
         'uploaded_chunks',
         'status',
-        'center_id',
         'original_name',
         'path',
         'uuid'
