@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Exam;
 
 use App\Http\Dto\ExamDto;
-use App\Models\Employee;
+use App\Modules\Shared\CenterData;
 use App\Modules\Shared\ExamSettings;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
@@ -11,7 +11,7 @@ use Illuminate\Validation\Rule;
 
 class ExamPostRequest extends FormRequest
 {
-    public function authorize(Employee $employee): bool
+    public function authorize(): bool
     {
         return true;
     }
@@ -83,7 +83,7 @@ class ExamPostRequest extends FormRequest
     public function toDto(): ExamDto
     {
         return new ExamDto(
-            Carbon::createFromFormat('Y-m-d H:i', $this->input('date').' '.$this->input('time'), request()->user()->time_zone)->utc(),
+            Carbon::createFromFormat('Y-m-d H:i', $this->input('date').' '.$this->input('time'), CenterData::timeZome())->utc(),
             \intval($this->input('addressId')),
             \intval($this->input('examTypeId')),
             \strval($this->input('comment')),

@@ -5,6 +5,7 @@ namespace App\Modules\Report;
 use App\Enums\ReportType;
 use App\Events\ReportGenerated;
 use App\Models\Attempt;
+use App\Modules\Shared\CenterData;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -15,7 +16,8 @@ use PhpOffice\PhpSpreadsheet\Writer\IWriter;
 class FRDOReportsGenerator
 {
     public function __construct(
-        protected EnsureFrdoGenerationAvailable $ensureFrdoGenerationAvailable
+        protected EnsureFrdoGenerationAvailable $ensureFrdoGenerationAvailable,
+        protected CenterData $center 
     ) {}
 
     public function execute(
@@ -120,8 +122,8 @@ class FRDOReportsGenerator
             $attempt->foreignNational->full_passport,
             $attempt->foreignNational->citizenship,
             $attempt->exam->address->address,
-            $center->certificates_issue_address,
-            $center->director_fio,
+            $this->center->certificatesIssueAddress(),
+            $this->center->directorFio(),
         ];
 
         $cells = [];
@@ -154,7 +156,7 @@ class FRDOReportsGenerator
             $attempt->exam->address->address,
             $attempt->exam->begin_time->format('d.m.Y'),
             'Неуспешно',
-            $center->director_fio,
+            $this->center->directorFio(),
         ];
         $cells = [];
         foreach ($values as $index => $value) {

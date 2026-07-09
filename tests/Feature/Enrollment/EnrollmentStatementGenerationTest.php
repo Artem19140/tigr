@@ -41,15 +41,4 @@ class EnrollmentStatementGenerationTest extends TestCase
         $response->assertHeader('Content-Type', 'application/pdf');
         $response->assertStatus(200);
     }
-
-    public function test_fail_enrollment_statement_generating_another_center(): void
-    {
-
-        $enrollment = Enrollment::factory()->create();
-
-        $response = $this->actingAs($this->actor)
-            ->getJson(route('enrollments.statements', ['enrollment' => $enrollment]));
-
-        $response->assertForbidden();
-    }
 }

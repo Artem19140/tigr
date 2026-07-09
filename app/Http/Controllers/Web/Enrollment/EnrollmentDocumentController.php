@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Enrollment;
 
 use App\Models\Enrollment;
+use App\Modules\Shared\CenterData;
 use Illuminate\Http\Response;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -20,6 +21,7 @@ class EnrollmentDocumentController
 
         $statementPdf = Pdf::loadView('pdf.enrollment.enrollment-full', [
             'enrollment' => $enrollment,
+            'center' => new CenterData()
         ]);
 
         $fileName = "Заявление_согласие_{$enrollment->foreignNational->full_name}.pdf";

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Modules\Shared\CenterData;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,7 +26,7 @@ class Violation extends Model
     protected function createdAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return $this->created_at->copy()->setTimezone('Europe/Samara');
+            return $this->created_at->copy()->setTimezone(CenterData::timeZome());
         });
     }
 }

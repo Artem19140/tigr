@@ -16,6 +16,7 @@ Route::resource('exams', ExamController::class)
 
 Route::get('exams/{exam}', [ExamViewController::class, 'show'])
     ->can('view', 'exam')
+    ->name('exams.show')
     ->where(['exam' => '[0-9]+']);
 
 Route::get('my-exams', [MyExamController::class, 'index'])

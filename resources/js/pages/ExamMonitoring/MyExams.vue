@@ -51,7 +51,7 @@ const visit = (url :string) => {
             :elements="exams.data"
             :headers="headers"
             title="Мониторинг"
-            @row-click="(item) =>  router.visit(`/exams/${item.id}/monitoring`)"
+            @row-click="(item) =>  router.visit(`/exams/${item.id}`)"
         >
             <template #header-left>
                 <v-btn

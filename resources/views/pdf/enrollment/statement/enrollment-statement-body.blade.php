@@ -78,9 +78,9 @@
                 'fio' => $enrollment->foreignNational?->full_name, 
             ])
             <p class="small" style="margin-bottom: 0; font-style: italic;">Согласие на использование средств видеофиксации.</p> 
-            <p class="small" style="margin-top: 0;">Настоящим   даю   согласие  {{$enrollment->center->name_genitive}}
-                (ИНН {{$enrollment->center->inn}} , ОГРН {{$enrollment->center->ogrn}}), 
-                {{$enrollment->center->address}},
+            <p class="small" style="margin-top: 0;">Настоящим   даю   согласие  {{$center->nameGenitive()}}
+                (ИНН {{$center->inn()}} , ОГРН {{$center->ogrn()}}), 
+                {{$center->address()}},
                 на   использование   средств   видеофиксации   при   проведении
                 экзамена   в   порядке   и   целях,   определяемых законодательством и заключаемом договором.
                 Проинформирован об использовании средств видеофиксации и хранении материаловпри проведении экзамена.

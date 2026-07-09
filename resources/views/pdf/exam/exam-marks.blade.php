@@ -70,7 +70,7 @@
         </div>
         @include('pdf.components.signature-section', [
             'date' =>  \Carbon\Carbon::now()->format('d.m.Y'), 
-            'fio' => $exam->center->commission_chairman, 
+            'fio' => $center->commissionChairman(), 
         ])
     </div>
 @endif

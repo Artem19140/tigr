@@ -7,6 +7,7 @@ use App\Events\ExamDocumentGenerated;
 use App\Models\Attempt;
 use App\Models\Exam;
 use App\Models\Violation;
+use App\Modules\Shared\CenterData;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
@@ -25,7 +26,7 @@ class ExamProtocolGenerator
 
         $pdf = Pdf::loadView(ExamDocument::Protocol->templatePath(), [
             'exam' => $exam,
-            'center' => $exam->center,
+            'center' => new CenterData(),
             'annulledAttempts' => $annulledAttempts,
             'beginTimeReal' => $beginTimeReal,
             'endTimeReal' => $endTimeReal,

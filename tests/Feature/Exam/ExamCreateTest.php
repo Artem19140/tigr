@@ -5,6 +5,7 @@ namespace Tests\Feature\Exam;
 use App\Models\Address;
 use App\Models\Employee;
 use App\Models\ExamType;
+use App\Modules\Shared\CenterData;
 use App\Modules\Shared\ExamSettings;
 use Carbon\Carbon;
 use Database\Seeders\RolesSeeder;
@@ -57,8 +58,8 @@ class ExamCreateTest extends TestCase
     {
         $minTimeBeforeCreating = ExamSettings::minTimeBeforeCreateMinutes();
         return array_merge([
-            'date' => Carbon::now()->addMinutes($minTimeBeforeCreating )->format('Y-m-d'),
-            'time' => Carbon::now()->addMinutes($minTimeBeforeCreating )->addMinute()->format('H:i'),
+            'date' => Carbon::now()->setTimezone(CenterData::timeZome())->addMinutes($minTimeBeforeCreating )->format('Y-m-d'),
+            'time' => Carbon::now()->setTimezone(CenterData::timeZome())->addMinutes($minTimeBeforeCreating )->addMinute()->format('H:i'),
             'examTypeId' => $this->examType->id,
             'addressId' => $this->address->id,
             'capacity' => $this->address->capacity,

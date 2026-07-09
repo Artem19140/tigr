@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\EmployeeRole;
+use App\Modules\Shared\CenterData;
 use Database\Factories\EmployeeFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -94,7 +95,7 @@ class Employee extends Authenticatable
     protected function timeZone(): Attribute
     {
         return Attribute::get(function () {
-            return 'Europe/Samara';
+            return CenterData::timeZome();
         });
     }
 

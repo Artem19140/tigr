@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\EmployeeRole;
+use App\Modules\Shared\CenterData;
 use App\Modules\Shared\ExamSettings;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -108,21 +109,21 @@ class Exam extends Model
     protected function timeZone(): Attribute
     {
         return Attribute::get(function () {
-            return 'Europe/Samara';
+            return CenterData::timeZome();
         });
     }
 
     protected function beginTimeLocal(): Attribute
     {
         return Attribute::get(function () {
-            return $this->begin_time->copy()->setTimezone('Europe/Samara');
+            return $this->begin_time->copy()->setTimezone(CenterData::timeZome());
         });
     }
 
     protected function endTimeLocal(): Attribute
     {
         return Attribute::get(function () {
-            return $this->end_time->copy()->setTimezone('Europe/Samara');
+            return $this->end_time->copy()->setTimezone(CenterData::timeZome());
         });
     }
 

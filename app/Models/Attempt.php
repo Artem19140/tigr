@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\AttemptStatus;
+use App\Modules\Shared\CenterData;
 use Carbon\Carbon;
 use Database\Factories\AttemptFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -188,42 +189,42 @@ class Attempt extends Model
     protected function timeZone(): Attribute
     {
         return Attribute::get(function () {
-            return 'Europe/Samara';
+            return CenterData::timeZome();
         });
     }
 
     protected function startedAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return $this->started_at->copy()->setTimezone('Europe/Samara');
+            return $this->started_at->copy()->setTimezone(CenterData::timeZome());
         });
     }
 
     protected function finishedAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return $this->finished_at->copy()->setTimezone('Europe/Samara');
+            return $this->finished_at->copy()->setTimezone(CenterData::timeZome());
         });
     }
 
     protected function speakingStartedAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return $this->speaking_started_at->copy()->setTimezone('Europe/Samara');
+            return $this->speaking_started_at->copy()->setTimezone(CenterData::timeZome());
         });
     }
 
     protected function speakingFinishedAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return $this->speaking_finished_at->copy()->setTimezone('Europe/Samara');
+            return $this->speaking_finished_at->copy()->setTimezone(CenterData::timeZome());
         });
     }
 
     protected function annulledAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return $this->annulled_at->copy()->setTimezone('Europe/Samara');
+            return $this->annulled_at->copy()->setTimezone(CenterData::timeZome());
         });
     }
 

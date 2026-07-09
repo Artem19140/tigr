@@ -6,6 +6,7 @@ use App\Enums\ExamDocument;
 use App\Events\ExamDocumentGenerated;
 use App\Models\Attempt;
 use App\Models\Exam;
+use App\Modules\Shared\CenterData;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
@@ -19,6 +20,7 @@ class ExamResultsGenerator
 
         return Pdf::loadView(ExamDocument::Results->templatePath(), [
             'exam' => $exam,
+            'center' => new CenterData(),
             'statementTable' => [
                 'headers' => $this->getHeadersStatement($exam),
                 'rows' => $this->getRowsStatement($exam),

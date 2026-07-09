@@ -30,7 +30,7 @@
     </div>
 
     <div class="section">
-        <span class="bold">Учреждение:</span> {{ $center->name }}
+        <span class="bold">Учреждение:</span> {{ $center->name() }}
     </div>
 
     <table class="section">
