@@ -20,7 +20,7 @@ class GetExams
         $addressId =  $dto->addressId ?? false;
         $cancelled =  $dto->cancelled ?? false;
         $perPage = 10;
-
+        
         $id = $dto->id ?? false;
 
         $query = Exam::with(['type'])
@@ -35,10 +35,10 @@ class GetExams
         $query->when($examTypeId, fn ($q) => $q->where('exam_type_id', $examTypeId)
         );
 
-        $query->when($dateFrom, fn ($q) => $q->where('begin_time', '>=', $dateFrom->startOfDay())
+        $query->when($dateFrom, fn ($q) => $q->where('begin_time', '>=', $dateFrom->copy()->startOfDay()->utc())
         );
 
-        $query->when($dateTo, fn ($q) => $q->where('begin_time', '<', $dateTo->endOfDay())
+        $query->when($dateTo, fn ($q) => $q->where('begin_time', '<', $dateTo->copy()->endOfDay()->utc())
         );
 
         $query->when($addressId, fn ($q) => $q->where('address_id', $addressId)

@@ -44,7 +44,7 @@ const visit = (url :string) => {
 
 <template>
     <Head>
-        <title>Мониторинг</title>
+        <title>Мои экзамены</title>
     </Head>
     <v-container>   
         <BaseTable

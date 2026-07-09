@@ -45,7 +45,6 @@ class VerifyCode
 
     protected function ensureHasPayment(bool $hasPayment): void
     {
-
         if (! $hasPayment) {
             throw ValidationException::withMessages([
                 'code' => 'Экзамен не оплачен',
@@ -55,7 +54,6 @@ class VerifyCode
 
     protected function ensureCodeNotUsed(Enrollment $enrollment): void
     {
-
         if ($enrollment->exam_code_used_at !== null) {
             Log::warning('exam code repeat used', [
                 'enrollment' => $enrollment->id,
