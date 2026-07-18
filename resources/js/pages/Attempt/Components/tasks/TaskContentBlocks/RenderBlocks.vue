@@ -6,6 +6,7 @@ import TableBlock from './TableBlock.vue';
 import FrameBlock from './FrameBlock.vue';
 import InputBlock from './InputBlock.vue';
 import RowBlock from './RowBlock.vue';
+import TextareaBlock from './TextareaBlock.vue';
 
 const props = defineProps<{
     content?:any
@@ -25,6 +26,8 @@ const taskBlocks = (type: string) => {
             return FrameBlock
         case 'input':
             return InputBlock
+        case 'textarea':
+            return TextareaBlock
         case 'row':
             return RowBlock
         default:

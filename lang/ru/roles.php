@@ -7,6 +7,5 @@ return [
     EmployeeRole::CenterAdmin->value => 'Администратор организации',
     EmployeeRole::Scheduler->value => 'Администратор экзаменов',
     EmployeeRole::Director->value => 'Директор',
-    EmployeeRole::Examiner->value => 'Экзаменатор',
-    EmployeeRole::VideoRecordOperator->value => 'Администратор видеозаписей',
+    EmployeeRole::Examiner->value => 'Экзаменатор'
 ];

@@ -18,7 +18,6 @@ const change = () => {
     http.patch(`/counters/${props.counter.id}`,{ 
         onSuccess(response, httpResponse) {
             router.reload()
-            confirmation.value = false
             mode.value = 'view'
         },
     })
@@ -34,13 +33,11 @@ const keyLabel = ( key: string) => {
     }
 }
 
-const confirmation = ref<boolean>(false)
 const mode = ref<string>('view')
 
 const cancelEdit = () => {
     http.cancel()
     http.resetAndClearErrors()
-    confirmation.value = false
     mode.value = 'view'
 }
 </script>
@@ -73,12 +70,6 @@ const cancelEdit = () => {
                         :error-messages="http.errors.value"
                         :readonly="http.processing"
                     />
-
-                    <v-checkbox
-                        v-model="confirmation"
-                        label="Подтвердите действие"
-                        class="mt-2"
-                    />
                 </div>
 
             </div>
@@ -101,7 +92,7 @@ const cancelEdit = () => {
                 <AppPrimaryButton
                     text="Обновить"
                     @click="change"
-                    :disabled="http.processing || !confirmation"
+                    :disabled="http.processing"
                     :loading="http.processing"
                 />
 

@@ -14,28 +14,28 @@ const checking = inject<boolean>('checking')
 </script>
 
 <template>
-    <v-textarea
-        v-if="form"
-        v-model="form[field_id]"
-        :name="field_id"
-        class="text-center"
-        :readonly="checking"
-        persistent-hint
-        :hint="hint"
-        :width="width"
-        variant="outlined"
-        density="compact"
-        auto-grow
-        rows="1"
-    >
+    <div class="flex mx-1">
+        <div class="flex flex-column w-full">
+            <div class="flex items-center gap-1">
 
-        <template v-slot:prepend>
-            {{ prepend }}
-        </template>
+                <span>{{ prepend }}</span>
 
-        <template v-slot:append>
-            {{ append }}
-        </template>
-    </v-textarea>
+                <v-text-field
+                    v-if="form"
+                    v-model="form[field_id]"
+                    :name="field_id"
+                    :readonly="checking"
+                    :width="width"
+                    hide-details
+                    class="flex-grow-1"
+                />
+
+                <span>{{ append }}</span>
+            </div>
+        
+            <div class="my-1 text-xs text-grey text-center">{{ hint }}</div>
+        </div>
+        
+    </div>
 </template>
 

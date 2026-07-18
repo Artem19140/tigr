@@ -12,7 +12,7 @@ Route::prefix('attempts')
         'auth:foreignNationals',
         AppMiddleware::ENSURE_ATTEMPT_VALID_STATUS,
     ])
-    ->can('attempts.foreign-national-access', 'attempt')
+    //->can('attempts.foreign-national-access:', 'attempt')
     ->group(function () {
         Route::put('{attempt}/finish', [AttemptController::class, 'finish'])
             ->name('attempts.finish');

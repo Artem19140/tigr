@@ -14,7 +14,7 @@
               "value": "1. Фамилия, имя, отчество"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_1"
             }
           ],
@@ -24,7 +24,7 @@
               "value": "2. Адрес проживания (город, улица, дом, квартира)"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_2"
             }
           ],
@@ -34,7 +34,7 @@
               "value": "3. Укажите свой возраст"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_3"
             }
           ],
@@ -44,7 +44,7 @@
               "value": "4. Ваше семейное положение (имеются ли дети)"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_4"
             }
           ],
@@ -54,7 +54,7 @@
               "value": "5. Есть ли у Вас в настоящее время проблемы со здоровьем?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_5"
             }
           ],
@@ -64,7 +64,7 @@
               "value": "6. Какой способ записи к врачу Вам удобнее – через интернет, по телефону или через регистратуру?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_6"
             }
           ],
@@ -74,7 +74,7 @@
               "value": "7. Как часто вы пользуетесь услугами нашей поликлиники?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_7"
             }
           ],
@@ -84,29 +84,14 @@
               "value": "8. Что мы можем сделать для улучшения качества и культуры медицинского обслуживания?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_8"
             }
           ]
         ]
       }
     ],
-    "fipi_number": "FCFEBB",
-    "answers": [
-      {
-        "content": {
-          "input_1": "",
-          "input_2": "",
-          "input_3": "",
-          "input_4": "",
-          "input_5": "",
-          "input_6": "",
-          "input_7": "",
-          "input_8": ""
-        },
-        "is_correct": true
-      }
-    ]
+    "fipi_number": "FCFEBB"
   },
   {
     "content": [
@@ -123,7 +108,7 @@
               "value": "1. Укажите Ваш возраст."
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_1"
             }
           ],
@@ -133,7 +118,7 @@
               "value": "2. Укажите Ваш пол."
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_2"
             }
           ],
@@ -143,7 +128,7 @@
               "value": "3. Сколько свободного времени у Вас есть в рабочие дни для досуга?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_3"
             }
           ],
@@ -153,7 +138,7 @@
               "value": "4. Что Вы обычно делаете в свободное время в выходные дни?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_4"
             }
           ],
@@ -163,7 +148,7 @@
               "value": "5. Вам нравится активный отдых? Каким спортом Вы занимаетесь?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_5"
             }
           ],
@@ -173,7 +158,7 @@
               "value": "6. Вам нравится «спокойный отдых»?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_6"
             }
           ],
@@ -183,7 +168,7 @@
               "value": "7. Как Вы думаете, что Вам иногда мешает интересно проводить свободное время?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_7"
             }
           ],
@@ -193,29 +178,14 @@
               "value": "8. У Вас есть планы изменить свой досуг?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_8"
             }
           ]
         ]
       }
     ],
-    "fipi_number": "A4984B",
-    "answers": [
-      {
-        "content": {
-          "input_1": "",
-          "input_2": "",
-          "input_3": "",
-          "input_4": "",
-          "input_5": "",
-          "input_6": "",
-          "input_7": "",
-          "input_8": ""
-        },
-        "is_correct": true
-      }
-    ]
+    "fipi_number": "A4984B"
   },
   {
     "content": [
@@ -232,7 +202,7 @@
               "value": "1. Сколько Вам лет? Ваш пол?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_1"
             }
           ],
@@ -242,7 +212,7 @@
               "value": "2. Ваше семейное положение? У Вас есть дети?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_2"
             }
           ],
@@ -252,7 +222,7 @@
               "value": "3. Каким спортом Вы занимались в детстве, в школе?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_3"
             }
           ],
@@ -262,7 +232,7 @@
               "value": "4. Каким видом спорта Вы занимаетесь в настоящее время?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_4"
             }
           ],
@@ -272,7 +242,7 @@
               "value": "5. У Вас есть время заниматься спортом часто? Если нет, то почему?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_5"
             }
           ],
@@ -282,7 +252,7 @@
               "value": "6. Получаете ли Вы от занятий спортом радость или удовольствие?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_6"
             }
           ],
@@ -292,7 +262,7 @@
               "value": "7. Вы советуете членам своей семьи, друзьям заниматься спортом?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_7"
             }
           ],
@@ -302,29 +272,14 @@
               "value": "8. Как Вы думаете, почему важно заниматься спортом?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_8"
             }
           ]
         ]
       }
     ],
-    "fipi_number": "98E3CA",
-    "answers": [
-      {
-        "content": {
-          "input_1": "",
-          "input_2": "",
-          "input_3": "",
-          "input_4": "",
-          "input_5": "",
-          "input_6": "",
-          "input_7": "",
-          "input_8": ""
-        },
-        "is_correct": true
-      }
-    ]
+    "fipi_number": "98E3CA"
   },
   {
     "content": [
@@ -341,7 +296,7 @@
               "value": "1. Ваш возраст? Ваше семейное положение?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_1"
             }
           ],
@@ -351,7 +306,7 @@
               "value": "2. Кем Вы хотели стать в детстве, в школе?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_2"
             }
           ],
@@ -361,7 +316,7 @@
               "value": "3. Кто Вам советовал получить Вашу профессию?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_3"
             }
           ],
@@ -371,7 +326,7 @@
               "value": "4. Кем и где Вы работаете сейчас?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_4"
             }
           ],
@@ -381,7 +336,7 @@
               "value": "5. Сколько лет Вы уже работаете в этой профессии?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_5"
             }
           ],
@@ -391,7 +346,7 @@
               "value": "6. Что Вам нравится в Вашей сегодняшней работе?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_6"
             }
           ],
@@ -401,7 +356,7 @@
               "value": "7. Что для Вас важнее: очень интересная работа или хорошая зарплата?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_7"
             }
           ],
@@ -411,29 +366,14 @@
               "value": "8. Вы бы посоветовали своим детям выбрать Вашу профессию?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_8"
             }
           ]
         ]
       }
     ],
-    "fipi_number": "D60E43",
-    "answers": [
-      {
-        "content": {
-          "input_1": "",
-          "input_2": "",
-          "input_3": "",
-          "input_4": "",
-          "input_5": "",
-          "input_6": "",
-          "input_7": "",
-          "input_8": ""
-        },
-        "is_correct": true
-      }
-    ]
+    "fipi_number": "D60E43"
   },
   {
     "content": [
@@ -450,7 +390,7 @@
               "value": "1. Сколько Вам лет? Ваш пол?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_1"
             }
           ],
@@ -460,7 +400,7 @@
               "value": "2. Ваш статус в настоящее время (школьник, студент, временно безработный, работающий)?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_2"
             }
           ],
@@ -470,7 +410,7 @@
               "value": "3. Где Вы предпочитаете питаться (дома, в кафе). Почему?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_3"
             }
           ],
@@ -480,7 +420,7 @@
               "value": "4. Если у Вас мало времени и Вам нужно быстро пообедать, где Вы это сделаете?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_4"
             }
           ],
@@ -490,7 +430,7 @@
               "value": "5. Что для Вас важнее: цена, вид еды или другое?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_5"
             }
           ],
@@ -500,7 +440,7 @@
               "value": "6. Как Вы относитесь к фастфуду?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_6"
             }
           ],
@@ -510,7 +450,7 @@
               "value": "7. Как часто Вы посещаете заведения быстрого питания (фастфуда)?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_7"
             }
           ],
@@ -520,29 +460,14 @@
               "value": "8. Знаете ли Вы о негативном влиянии фастфуда на человека?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_8"
             }
           ]
         ]
       }
     ],
-    "fipi_number": "1FEDE4",
-    "answers": [
-      {
-        "content": {
-          "input_1": "",
-          "input_2": "",
-          "input_3": "",
-          "input_4": "",
-          "input_5": "",
-          "input_6": "",
-          "input_7": "",
-          "input_8": ""
-        },
-        "is_correct": true
-      }
-    ]
+    "fipi_number": "1FEDE4"
   },
   {
     "content": [
@@ -559,7 +484,7 @@
               "value": "1. Фамилия, имя"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_1"
             }
           ],
@@ -569,7 +494,7 @@
               "value": "2. Дата рождения"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_2"
             }
           ],
@@ -579,7 +504,7 @@
               "value": "3. Адрес проживания (город, улица, дом, квартира)"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_3"
             }
           ],
@@ -589,7 +514,7 @@
               "value": "4. Цель посещения библиотеки: учёба / профессиональная деятельность / самообразование / иное (укажите)"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_4"
             }
           ],
@@ -599,7 +524,7 @@
               "value": "5. Любимые жанры литературы"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_5"
             }
           ],
@@ -609,7 +534,7 @@
               "value": "6. На какой период Вы хотите оформить читательский билет?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_6"
             }
           ],
@@ -619,7 +544,7 @@
               "value": "7. Как часто Вы планируете посещать библиотеку?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_7"
             }
           ],
@@ -629,29 +554,14 @@
               "value": "8. Контактный телефон, адрес электронной почты"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_8"
             }
           ]
         ]
       }
     ],
-    "fipi_number": "0E451A",
-    "answers": [
-      {
-        "content": {
-          "input_1": "",
-          "input_2": "",
-          "input_3": "",
-          "input_4": "",
-          "input_5": "",
-          "input_6": "",
-          "input_7": "",
-          "input_8": ""
-        },
-        "is_correct": true
-      }
-    ]
+    "fipi_number": "0E451A"
   },
   {
     "content": [
@@ -668,7 +578,7 @@
               "value": "1. Фамилия, имя"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_1"
             }
           ],
@@ -678,7 +588,7 @@
               "value": "2. Ваш возраст"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_2"
             }
           ],
@@ -688,7 +598,7 @@
               "value": "3. Адрес фитнес-клуба (город, улица, дом)"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_3"
             }
           ],
@@ -698,7 +608,7 @@
               "value": "4. Как долго Вы являетесь членом клуба «Атлетик»?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_4"
             }
           ],
@@ -708,7 +618,7 @@
               "value": "5. Как часто Вы посещаете клуб (1–2 раза в неделю / 3–4 раза в неделю / нерегулярно)?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_5"
             }
           ],
@@ -718,7 +628,7 @@
               "value": "6. Оцените чистоту и гигиену в тренажёрном зале, раздевалке и душевых"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_6"
             }
           ],
@@ -728,7 +638,7 @@
               "value": "7. Что стоит улучшить в работе фитнес-клуба «Атлетик»?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_7"
             }
           ],
@@ -738,29 +648,14 @@
               "value": "8. Контактный телефон, адрес электронной почты"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_8"
             }
           ]
         ]
       }
     ],
-    "fipi_number": "50F515",
-    "answers": [
-      {
-        "content": {
-          "input_1": "",
-          "input_2": "",
-          "input_3": "",
-          "input_4": "",
-          "input_5": "",
-          "input_6": "",
-          "input_7": "",
-          "input_8": ""
-        },
-        "is_correct": true
-      }
-    ]
+    "fipi_number": "50F515"
   },
   {
     "content": [
@@ -777,7 +672,7 @@
               "value": "1. Фамилия, имя"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_1"
             }
           ],
@@ -787,7 +682,7 @@
               "value": "2. Дата рождения, пол"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_2"
             }
           ],
@@ -797,7 +692,7 @@
               "value": "3. Оцените Ваше текущее самочувствие"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_3"
             }
           ],
@@ -807,7 +702,7 @@
               "value": "4. Были ли у Вас контакты с людьми, больными простудой или гриппом за последний месяц? Нет/Да (укажите когда)"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_4"
             }
           ],
@@ -817,7 +712,7 @@
               "value": "5. Когда последний раз Вы сдавали кровь? Укажите дату и адрес поликлиники"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_5"
             }
           ],
@@ -827,7 +722,7 @@
               "value": "6. Есть ли у Вас аллергии? Нет/Да (укажите какие)"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_6"
             }
           ],
@@ -837,7 +732,7 @@
               "value": "7. Укажите страны, в которых Вы были в последние два года"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_7"
             }
           ],
@@ -847,29 +742,14 @@
               "value": "8. Контактный телефон, адрес электронной почты"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_8"
             }
           ]
         ]
       }
     ],
-    "fipi_number": "665011",
-    "answers": [
-      {
-        "content": {
-          "input_1": "",
-          "input_2": "",
-          "input_3": "",
-          "input_4": "",
-          "input_5": "",
-          "input_6": "",
-          "input_7": "",
-          "input_8": ""
-        },
-        "is_correct": true
-      }
-    ]
+    "fipi_number": "665011"
   },
   {
     "content": [
@@ -886,7 +766,7 @@
               "value": "1. Фамилия, имя ребёнка"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_1"
             }
           ],
@@ -896,7 +776,7 @@
               "value": "2. Дата рождения ребёнка"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_2"
             }
           ],
@@ -906,7 +786,7 @@
               "value": "3. В каком классе учится Ваш ребёнок?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_3"
             }
           ],
@@ -916,7 +796,7 @@
               "value": "4. Какие виды досуга интересуют больше всего Вашего ребёнка?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_4"
             }
           ],
@@ -926,7 +806,7 @@
               "value": "5. Вашему ребёнку нравится  играть в команде / находиться в малой группе (2–3 человека)?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_5"
             }
           ],
@@ -936,7 +816,7 @@
               "value": "6. Какие продукты не ест Ваш ребёнок?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_6"
             }
           ],
@@ -946,7 +826,7 @@
               "value": "7. На какой срок Вы хотите отправить ребёнка в лагерь?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_7"
             }
           ],
@@ -956,29 +836,14 @@
               "value": "8. Ваш номер телефона, Ваша электронная почта"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_8"
             }
           ]
         ]
       }
     ],
-    "fipi_number": "4E2D82",
-    "answers": [
-      {
-        "content": {
-          "input_1": "",
-          "input_2": "",
-          "input_3": "",
-          "input_4": "",
-          "input_5": "",
-          "input_6": "",
-          "input_7": "",
-          "input_8": ""
-        },
-        "is_correct": true
-      }
-    ]
+    "fipi_number": "4E2D82"
   },
   {
     "content": [
@@ -995,7 +860,7 @@
               "value": "1. Фамилия, имя"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_1"
             }
           ],
@@ -1005,7 +870,7 @@
               "value": "2. Дата и место рождения"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_2"
             }
           ],
@@ -1015,7 +880,7 @@
               "value": "3. Адрес проживания (город, улица, дом, квартира)"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_3"
             }
           ],
@@ -1025,7 +890,7 @@
               "value": "4. Ваши успехи/достижения в фотографии"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_4"
             }
           ],
@@ -1035,7 +900,7 @@
               "value": "5. Что бы Вы могли делать для сохранения природы?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_5"
             }
           ],
@@ -1045,7 +910,7 @@
               "value": "6. Выберите номинацию конкурса: птицы, пейзажи, растения"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_6"
             }
           ],
@@ -1055,7 +920,7 @@
               "value": "7. Почему Вы хотите принять участие в конкурсе?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_7"
             }
           ],
@@ -1065,29 +930,14 @@
               "value": "8. Откуда Вы узнали о фотоконкурсе?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_8"
             }
           ]
         ]
       }
     ],
-    "fipi_number": "060B20",
-    "answers": [
-      {
-        "content": {
-          "input_1": "",
-          "input_2": "",
-          "input_3": "",
-          "input_4": "",
-          "input_5": "",
-          "input_6": "",
-          "input_7": "",
-          "input_8": ""
-        },
-        "is_correct": true
-      }
-    ]
+    "fipi_number": "060B20"
   },
   {
     "content": [
@@ -1104,7 +954,7 @@
               "value": "1. Фамилия, имя"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_1"
             }
           ],
@@ -1114,7 +964,7 @@
               "value": "2. Дата и место рождения"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_2"
             }
           ],
@@ -1124,7 +974,7 @@
               "value": "3. Адрес проживания (город, улица, дом, квартира)"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_3"
             }
           ],
@@ -1134,7 +984,7 @@
               "value": "4. В каком месте Вы хотите снять квартиру (в центре города, на его окраине, рядом со станцией метро или за городом)?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_4"
             }
           ],
@@ -1144,7 +994,7 @@
               "value": "5. На какой срок Вы хотите снять квартиру?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_5"
             }
           ],
@@ -1154,7 +1004,7 @@
               "value": "6. Сколько комнат должно быть в квартире?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_6"
             }
           ],
@@ -1164,7 +1014,7 @@
               "value": "7. Какая бытовая техника должна быть в квартире?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_7"
             }
           ],
@@ -1174,29 +1024,14 @@
               "value": "8. Какая мебель должна быть в квартире?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_8"
             }
           ]
         ]
       }
     ],
-    "fipi_number": "01BEDB",
-    "answers": [
-      {
-        "content": {
-          "input_1": "",
-          "input_2": "",
-          "input_3": "",
-          "input_4": "",
-          "input_5": "",
-          "input_6": "",
-          "input_7": "",
-          "input_8": ""
-        },
-        "is_correct": true
-      }
-    ]
+    "fipi_number": "01BEDB"
   },
   {
     "content": [
@@ -1213,7 +1048,7 @@
               "value": "1. Ваши фамилия, имя, отчество."
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_1"
             }
           ],
@@ -1223,7 +1058,7 @@
               "value": "2. Сколько Вам лет?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_2"
             }
           ],
@@ -1233,7 +1068,7 @@
               "value": "3. Где Вы живёте в настоящее время (назовите город или район, посёлок)?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_3"
             }
           ],
@@ -1243,7 +1078,7 @@
               "value": "4. Как можно с Вами связаться? Укажите телефон или почту."
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_4"
             }
           ],
@@ -1253,7 +1088,7 @@
               "value": "5. Каков Ваш род занятий (пенсионер, служащий, рабочий, домохозяйка и др.)?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_5"
             }
           ],
@@ -1263,7 +1098,7 @@
               "value": "6. Укажите информацию, которую Вы хотите получать от нас (скидки, акции, конкурсы и др.)"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_6"
             }
           ],
@@ -1273,7 +1108,7 @@
               "value": "7. Как Вы узнали о нашем магазине (посоветовали знакомые, увидели в рекламе на ТВ)?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_7"
             }
           ],
@@ -1283,29 +1118,14 @@
               "value": "8. Удобно или нет для Вас время работы магазина?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_8"
             }
           ]
         ]
       }
     ],
-    "fipi_number": "832807",
-    "answers": [
-      {
-        "content": {
-          "input_1": "",
-          "input_2": "",
-          "input_3": "",
-          "input_4": "",
-          "input_5": "",
-          "input_6": "",
-          "input_7": "",
-          "input_8": ""
-        },
-        "is_correct": true
-      }
-    ]
+    "fipi_number": "832807"
   },
   {
     "content": [
@@ -1322,7 +1142,7 @@
               "value": "1. Фамилия, имя, отчество"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_1"
             }
           ],
@@ -1332,7 +1152,7 @@
               "value": "2. Дата и место рождения"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_2"
             }
           ],
@@ -1342,7 +1162,7 @@
               "value": "3. Семейное положение, дети"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_3"
             }
           ],
@@ -1352,7 +1172,7 @@
               "value": "4. Адрес проживания в настоящее время, контактный телефон"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_4"
             }
           ],
@@ -1362,7 +1182,7 @@
               "value": "5. Образование: название учебного заведения (год поступления, год окончания), специальность по диплому"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_5"
             }
           ],
@@ -1372,7 +1192,7 @@
               "value": "6. Последнее место работы. Ваша должность"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_6"
             }
           ],
@@ -1382,7 +1202,7 @@
               "value": "7. Знание ПК, наличие водительских прав"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_7"
             }
           ],
@@ -1392,29 +1212,14 @@
               "value": "8. Какую работу Вы ищете? Укажите уровень желаемой заработной платы"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_8"
             }
           ]
         ]
       }
     ],
-    "fipi_number": "F72A71",
-    "answers": [
-      {
-        "content": {
-          "input_1": "",
-          "input_2": "",
-          "input_3": "",
-          "input_4": "",
-          "input_5": "",
-          "input_6": "",
-          "input_7": "",
-          "input_8": ""
-        },
-        "is_correct": true
-      }
-    ]
+    "fipi_number": "F72A71"
   },
   {
     "content": [
@@ -1431,7 +1236,7 @@
               "value": "1. Укажите Ваш возраст."
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_1"
             }
           ],
@@ -1441,7 +1246,7 @@
               "value": "2. Укажите Ваш пол."
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_2"
             }
           ],
@@ -1451,7 +1256,7 @@
               "value": "3. Где Вы чаще всего покупаете одежду, обувь, бытовую технику?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_3"
             }
           ],
@@ -1461,7 +1266,7 @@
               "value": "4. У Вас есть любимые магазины? Какие?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_4"
             }
           ],
@@ -1471,7 +1276,7 @@
               "value": "5. Знаете ли Вы об интернет-магазинах?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_5"
             }
           ],
@@ -1481,7 +1286,7 @@
               "value": "6. Вы давно делали покупки по Интернету?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_6"
             }
           ],
@@ -1491,7 +1296,7 @@
               "value": "7. Как Вы чаще делаете покупки: в торговом центре, в магазине, на рынке или в интернет-магазине?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_7"
             }
           ],
@@ -1501,29 +1306,14 @@
               "value": "8. Вы считаете, что покупать в Интернете безопасно?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_8"
             }
           ]
         ]
       }
     ],
-    "fipi_number": "00467B",
-    "answers": [
-      {
-        "content": {
-          "input_1": "",
-          "input_2": "",
-          "input_3": "",
-          "input_4": "",
-          "input_5": "",
-          "input_6": "",
-          "input_7": "",
-          "input_8": ""
-        },
-        "is_correct": true
-      }
-    ]
+    "fipi_number": "00467B"
   },
   {
     "content": [
@@ -1540,7 +1330,7 @@
               "value": "1. Фамилия, имя, отчество."
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_1"
             }
           ],
@@ -1550,7 +1340,7 @@
               "value": "2. Гражданство."
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_2"
             }
           ],
@@ -1560,7 +1350,7 @@
               "value": "3. Ваше место работы (название организации)."
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_3"
             }
           ],
@@ -1570,7 +1360,7 @@
               "value": "4. Укажите Вашу должность."
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_4"
             }
           ],
@@ -1580,7 +1370,7 @@
               "value": "5. Сколько времени Вы работаете в этой организации?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_5"
             }
           ],
@@ -1590,7 +1380,7 @@
               "value": "6. Какое у Вас образование?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_6"
             }
           ],
@@ -1600,7 +1390,7 @@
               "value": "7. Вы проходили раньше повышение квалификации?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_7"
             }
           ],
@@ -1610,29 +1400,14 @@
               "value": "8. Контактный телефон, адрес электронный почты."
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_8"
             }
           ]
         ]
       }
     ],
-    "fipi_number": "58AE54",
-    "answers": [
-      {
-        "content": {
-          "input_1": "",
-          "input_2": "",
-          "input_3": "",
-          "input_4": "",
-          "input_5": "",
-          "input_6": "",
-          "input_7": "",
-          "input_8": ""
-        },
-        "is_correct": true
-      }
-    ]
+    "fipi_number": "58AE54"
   },
   {
     "content": [
@@ -1649,7 +1424,7 @@
               "value": "1. Ваши имя, фамилия"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_1"
             }
           ],
@@ -1659,7 +1434,7 @@
               "value": "2. Кем и где Вы работаете?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_2"
             }
           ],
@@ -1669,7 +1444,7 @@
               "value": "3. Ваше семейное положение. Есть ли у Вас дети, сколько им лет?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_3"
             }
           ],
@@ -1679,7 +1454,7 @@
               "value": "4. Адрес проживания. Это квартира или частный дом?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_4"
             }
           ],
@@ -1689,7 +1464,7 @@
               "value": "5. Есть ли у Вас в доме животные? Укажите их вид и возраст"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_5"
             }
           ],
@@ -1699,7 +1474,7 @@
               "value": "6. Какую собаку Вы хотели бы взять (щенка/взрослую/ пожилую)?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_6"
             }
           ],
@@ -1709,7 +1484,7 @@
               "value": "7. Почему Вы решили взять собаку из приюта?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_7"
             }
           ],
@@ -1719,28 +1494,13 @@
               "value": "8. Где Вы планируете гулять с собакой?"
             },
             {
-              "type": "input",
+              "type": "textarea",
               "field_id": "input_8"
             }
           ]
         ]
       }
     ],
-    "fipi_number": "BB75A3",
-    "answers": [
-      {
-        "content": {
-          "input_1": "",
-          "input_2": "",
-          "input_3": "",
-          "input_4": "",
-          "input_5": "",
-          "input_6": "",
-          "input_7": "",
-          "input_8": ""
-        },
-        "is_correct": true
-      }
-    ]
+    "fipi_number": "BB75A3"
   }
 ]

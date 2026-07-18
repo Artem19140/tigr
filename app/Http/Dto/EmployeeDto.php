@@ -9,8 +9,7 @@ class EmployeeDto
         public string $surname,
         public string $name,
         public ?string $patronymic,
-        public string $email,
-        public string $jobTitle 
+        public string $email
     ){}
 
     public function toArray(): array
@@ -19,8 +18,7 @@ class EmployeeDto
             'surname' => $this->surname,
             'name' => $this->name,
             'patronymic' => $this->patronymic,
-            'email' => $this->email,
-            'job_title' => $this->jobTitle
+            'email' => $this->email
         ];
     }
 }

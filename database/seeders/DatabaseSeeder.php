@@ -72,7 +72,6 @@ class DatabaseSeeder extends Seeder
                 'patronymic' => 'Дмитрович',
                 'email' => $email,
                 'password' => Hash::make(config('app.platform_admin.password')),
-                'job_title' => 'Админ',
                 'email_verified_at' => now()
             ]);
             

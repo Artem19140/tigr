@@ -24,7 +24,7 @@ const props = defineProps<{
 const attempt = ref<AttemptMonitoring>(props.attempt.data)
 
 const back = () => {
-    router.visit(`/exams/${props.examId}/monitoring`)
+    router.visit(`/exams/${props.examId}/conduct`)
 }
 
 const rated = (value: AttemptAnswer) => {

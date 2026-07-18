@@ -23,7 +23,6 @@ class Employee extends Authenticatable
         'surname',
         'name',
         'patronymic',
-        'job_title',
         'email',
         'password',
         'password_set_at',

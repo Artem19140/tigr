@@ -5,6 +5,7 @@ namespace App\Modules\AttemptAnswer\Handlers;
 use App\Enums\TaskType;
 use App\Exceptions\Attempt\AttemptAnswerValidationException;
 use App\Models\AttemptAnswer;
+use Illuminate\Support\Facades\Log;
 
 class MultyInputTaskHandler
 {
@@ -17,17 +18,42 @@ class MultyInputTaskHandler
         mixed $foreignNationalAnswer,
         AttemptAnswer $attemptAnswer
     ): array {
-        $etalonAnswers = $attemptAnswer->taskVariant->answers[0]->content;
+        $etalonAnswers = $this->getEtalonAnswers($attemptAnswer);
 
         $normalizedEtalonKeys = $this->getAndNormalizeKeys($etalonAnswers);
         $normalizedForeignKeys = $this->getAndNormalizeKeys($foreignNationalAnswer);
 
         $this->ensureMatchingKeys(
             $normalizedForeignKeys,
-            $normalizedEtalonKeys
+            $normalizedEtalonKeys,
+            $attemptAnswer
         );
 
         return $foreignNationalAnswer;
+    }
+
+    protected function getEtalonAnswers(AttemptAnswer $attemptAnswer)
+    {
+        $content = $attemptAnswer->taskVariant->content;
+        $keys = [];
+        $this->recurse($content, $keys);
+    
+        return $keys;
+    }
+
+    protected function recurse(mixed $node, array &$fields): void
+    {
+        if (! \is_array($node)) {
+            return;
+        }
+
+        if (isset($node['field_id'])) {
+            $fields[$node['field_id']] = '';
+        }
+
+        foreach ($node as $child) {
+            $this->recurse($child, $fields);
+        }
     }
 
     protected function getAndNormalizeKeys(array $answers): array
@@ -40,14 +66,16 @@ class MultyInputTaskHandler
 
     protected function ensureMatchingKeys(
         array $normalizedForeignKeys,
-        array $normalizedEtalonKeys
+        array $normalizedEtalonKeys,
+        AttemptAnswer $attemptAnswer
     ): void {
         if ($normalizedEtalonKeys !== $normalizedForeignKeys) {
             throw new AttemptAnswerValidationException([
                 'type' => TaskType::MultyInput->value,
                 'message' => 'errorValidation',
                 'normalized_foreign_keys' => $normalizedForeignKeys,
-                'normalized_etalon_keys' => $normalizedEtalonKeys
+                'normalized_etalon_keys' => $normalizedEtalonKeys,
+                'attempt_answer_id' => $attemptAnswer->id
             ]);
         }
     }

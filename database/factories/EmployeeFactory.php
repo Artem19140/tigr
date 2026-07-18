@@ -40,8 +40,7 @@ class EmployeeFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'is_active' => true,
-            'remember_token' => Str::random(10),
-            'job_title' => fake()->randomElement(['Специалист центра тестирования иностранных граждан', 'Директор центра тестирования иностранных граждан', 'Сотрудник центра тестирования иностранных граждан', 'Тестер центра тестирования иностранных граждан']),
+            'remember_token' => Str::random(10)
         ];
     }
 

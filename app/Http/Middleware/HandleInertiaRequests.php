@@ -46,7 +46,7 @@ class HandleInertiaRequests extends Middleware
             ],
             'auth.user' => fn () => $request->user() instanceof Employee ?
                 array_merge(
-                    $request->user()->only('id', 'surname', 'name', 'email', 'job_title')
+                    $request->user()->only('id', 'surname', 'name', 'email')
                 )
                 : null,
             'auth.can' => fn () => $request->user() instanceof Employee ?

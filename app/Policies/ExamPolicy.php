@@ -14,8 +14,7 @@ class ExamPolicy
             EmployeeRole::Operator,
             EmployeeRole::Director,
             EmployeeRole::Examiner,
-            EmployeeRole::Scheduler,
-            EmployeeRole::VideoRecordOperator
+            EmployeeRole::Scheduler
         )) {
             return true;
         }
@@ -28,8 +27,7 @@ class ExamPolicy
         if ($employee->hasAnyRole(
             EmployeeRole::Operator,
             EmployeeRole::Director,
-            EmployeeRole::Scheduler,
-            EmployeeRole::VideoRecordOperator
+            EmployeeRole::Scheduler
         )) {
             return true;
         }
@@ -106,9 +104,5 @@ class ExamPolicy
         }
 
         return $this->examiner($employee, $exam);
-    }
-
-    public function videos(Employee $employee, Exam $exam): bool{
-        return $employee->hasAnyRole(EmployeeRole::VideoRecordOperator);
     }
 }

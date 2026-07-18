@@ -21,8 +21,6 @@ return new class extends Migration
             $table->string('password')->nullable()->default(null);
             $table->timestamp('password_set_at')->nullable()->default(null);
 
-            $table->string('job_title');
-
             $table->boolean('is_active')->default(true);
 
             $table->rememberToken();

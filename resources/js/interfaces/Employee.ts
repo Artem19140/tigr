@@ -6,7 +6,6 @@ export interface Employee{
     name:string,
     patronymic:string | null,
     email:string,
-    jobTitle:string,
     roles:Array<Role>,
     fullName:string
 }

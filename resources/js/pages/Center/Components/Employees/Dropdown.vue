@@ -40,11 +40,6 @@ const {open} = useModals()
       @click="open('employeeEdit', {employee:employee})"
     />
 
-    <v-list-item 
-      title="Отправить приглашение"
-      @click="() => 12" 
-    />
-
     <v-divider />
 
     <v-list-item 

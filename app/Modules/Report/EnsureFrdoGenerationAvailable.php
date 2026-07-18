@@ -4,6 +4,7 @@ namespace App\Modules\Report;
 
 use App\Exceptions\BusinessException;
 use App\Models\Attempt;
+use App\Modules\Shared\CenterData;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -11,7 +12,8 @@ class EnsureFrdoGenerationAvailable
 {
     public function execute(string $examDate, string $type): void
     {
-        $examDate = Carbon::parse($examDate);
+        $examDate = Carbon::parse($examDate)->setTimezone(CenterData::timeZome());
+
         $this->ensureAttemptsExists($examDate);
         $this->ensureNoActiveAttempts($examDate);
         $this->ensureAllAttemptsChecked($examDate);
@@ -71,7 +73,7 @@ class EnsureFrdoGenerationAvailable
 
         if (! $attemptsForReportExists) {
             $reportName = $type === 'certificates' ? 'сертификатов' : 'справок';
-            $date = $examDate->format('d.m.Y');
+            $date = $examDate->copy()->format('d.m.Y');
             throw new BusinessException("Данных для $reportName за $date нет");
         }
     }
@@ -80,8 +82,8 @@ class EnsureFrdoGenerationAvailable
     {
         return Attempt::query()
             ->whereBetween('created_at', [
-                $examDate->copy()->startOfDay(),
-                $examDate->copy()->endOfDay(),
+                $examDate->copy()->startOfDay()->utc(),
+                $examDate->copy()->endOfDay()->utc(),
             ]);
     }
 }

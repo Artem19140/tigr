@@ -7,7 +7,7 @@ import BaseThreeDotDropdown from '@/components/BaseComponents/BaseThreeDotDropdo
 import { useModals } from '@/composables/useModals';
 import BaseLayout from './BaseLayout.vue';
 import { mdiPaw, mdiAccountGroup, mdiFileChartOutline, 
-  mdiOfficeBuilding, mdiCog, mdiLogout, mdiClipboardText } from '@mdi/js'
+  mdiOfficeBuilding, mdiCog, mdiLogout, mdiClipboardText, mdiFileSign } from '@mdi/js'
 
 const page = usePage<any>()
 const can =  computed(() => page.props?.auth?.can)
@@ -46,7 +46,7 @@ const menu: Array<MenuElem> = [
   },
   {
     title:"Мои экзамены" ,
-    prependIcon: mdiClipboardText,
+    prependIcon: mdiFileSign,
     url:'/my-exams',
     value:"myExams",
     allowed:can.value.myExams

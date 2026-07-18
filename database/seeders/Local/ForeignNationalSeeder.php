@@ -2,6 +2,7 @@
 
 namespace Database\Seeders\Local;
 
+use App\Models\Address;
 use App\Models\ForeignNational;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -18,5 +19,7 @@ class ForeignNationalSeeder extends Seeder
         ForeignNational::factory(500)
             ->withRandomCreator()
             ->create();
+            
+        Address::factory()->create();
     }
 }

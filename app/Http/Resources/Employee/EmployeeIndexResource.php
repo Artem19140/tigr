@@ -17,8 +17,7 @@ class EmployeeIndexResource extends JsonResource
         return [
             'id' => $this->resource->id,
             'fullName' => $this->resource->surname.' '.$this->resource->name.' '.$this->resource->patronymic,
-            'email' => $this->resource->email,
-            'jobTitle' => $this->job_title,
+            'email' => $this->resource->email
         ];
     }
 }

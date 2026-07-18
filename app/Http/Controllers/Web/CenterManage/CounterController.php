@@ -17,7 +17,7 @@ class CounterController
     public function index()
     {
         return Inertia::render('Center/Center', [
-            'counters' => CounterResource::collection(Counter::all()),
+            'counters' => CounterResource::collection(Counter::all()->sortBy('id')),
             'tab' => 'counters'
         ]);
     }

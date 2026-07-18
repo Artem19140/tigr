@@ -20,7 +20,6 @@ class EmployeeSeeder extends Seeder
                     'surname' => 'f',
                     'name' => 'Татьяна',
                     'patronymic'=> 'o',
-                    'job_title' => 'Специалист',
                     'email' => "$i@udsu.ru",
                     'password' => $password,
                 ]

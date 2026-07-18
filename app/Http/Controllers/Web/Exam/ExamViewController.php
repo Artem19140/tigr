@@ -81,6 +81,7 @@ class ExamViewController
         ]);
 
         return Inertia::render('Exam/ExamCheck', [
+            'tab' => 'check',
             'exam' => new ExamCheckingResource($exam),
             ...$this->actions($exam, $request->user())
         ]);
@@ -107,9 +108,6 @@ class ExamViewController
                 ] ,
                 'check' => [
                     'can' => $isExaminer && $exam->type->need_human_check
-                ],
-                'videos' => [
-                    'can' => $employee->can('video', $exam)
                 ]
             ]
         ];

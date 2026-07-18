@@ -58,8 +58,7 @@ class ExamShowAuthorizeTest extends TestCase
             EmployeeRole::Operator,
             EmployeeRole::Director,
             EmployeeRole::PlatformAdmin,
-            EmployeeRole::Scheduler,
-            EmployeeRole::VideoRecordOperator,
+            EmployeeRole::Scheduler
         ];
         foreach ($allowedRoles as $role) {
             $employee = Employee::factory()

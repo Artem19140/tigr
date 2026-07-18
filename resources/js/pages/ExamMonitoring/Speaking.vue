@@ -32,7 +32,7 @@ const finish = async () => {
         <div class="sticky top-3 " >
             <v-btn 
                 variant="text" 
-                @click="() => router.visit(`/exams/${examId}/monitoring`)"
+                @click="() => router.visit(`/exams/${examId}/conduct`)"
                 :prepend-icon="mdiArrowLeft"
                 class="pr-0"
             >

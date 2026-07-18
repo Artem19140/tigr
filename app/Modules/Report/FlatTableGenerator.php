@@ -6,6 +6,7 @@ use App\Enums\ReportType;
 use App\Enums\TaskType;
 use App\Events\ReportGenerated;
 use App\Models\Attempt;
+use App\Modules\Shared\CenterData;
 use App\Support\CsvWriter;
 use Carbon\Carbon;
 
@@ -28,8 +29,8 @@ class FlatTableGenerator
                 'answer',
             ]])
             ->whereBetween('created_at', [
-                $dateFrom->copy()->startOfDay(),
-                $dateTo->copy()->endOfDay(),
+                $dateFrom->copy()->setTimezone(CenterData::timeZome())->startOfDay()->utc(),
+                $dateTo->copy()->setTimezone(CenterData::timeZome())->endOfDay()->utc(),
             ])
 
             ->whereNotNull('checked_at')
@@ -70,8 +71,8 @@ class FlatTableGenerator
 
         event(new ReportGenerated(ReportType::FlatTable, [
             'period' => [
-                'from' => $dateFrom->format('d.m.Y'),
-                'to' => $dateTo->format('d.m.Y')
+                'from' => $dateFrom->copy()->format('d.m.Y'),
+                'to' => $dateTo->copy()->format('d.m.Y')
             ],
             'count_attempts' => $strNumber
         ]));

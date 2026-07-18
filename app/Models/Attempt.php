@@ -19,9 +19,6 @@ class Attempt extends Model
 
     /** @use HasFactory<AttemptFactory> */
     use HasFactory;
-
-    public const int MIN_TIME_FROM_START_TO_FINISH_MINUTES = 10;
-
     protected $fillable = [
         'foreign_national_id',
         'exam_id',
@@ -196,35 +193,35 @@ class Attempt extends Model
     protected function startedAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return $this->started_at->copy()->setTimezone(CenterData::timeZome());
+            return $this->started_at?->copy()->setTimezone(CenterData::timeZome());
         });
     }
 
     protected function finishedAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return $this->finished_at->copy()->setTimezone(CenterData::timeZome());
+            return $this->finished_at?->copy()->setTimezone(CenterData::timeZome());
         });
     }
 
     protected function speakingStartedAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return $this->speaking_started_at->copy()->setTimezone(CenterData::timeZome());
+            return $this->speaking_started_at?->copy()->setTimezone(CenterData::timeZome());
         });
     }
 
     protected function speakingFinishedAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return $this->speaking_finished_at->copy()->setTimezone(CenterData::timeZome());
+            return $this->speaking_finished_at?->copy()->setTimezone(CenterData::timeZome());
         });
     }
 
     protected function annulledAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return $this->annulled_at->copy()->setTimezone(CenterData::timeZome());
+            return $this->annulled_at?->copy()->setTimezone(CenterData::timeZome());
         });
     }
 

@@ -16,11 +16,6 @@ const tabs = [
         tab:"",
         title:'Основное'
     },
-    // {
-    //     visible: props.permissions.videos,
-    //     tab:"videos",
-    //     title:"Видео"
-    // },
     {
         visible: props.actions.conduct.can,
         tab:"conduct",

@@ -16,7 +16,6 @@ const http = useHttp <EmployeeFormI>({
     surname:employee.surname,
     name:employee.name,
     patronymic:employee.patronymic,
-    jobTitle:employee.jobTitle,
     roles:employee.roles.map(r => r.id),
     email:employee.email,
 })

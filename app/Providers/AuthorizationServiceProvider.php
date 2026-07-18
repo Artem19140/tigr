@@ -18,7 +18,11 @@ class AuthorizationServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Gate::define('attempts.foreign-national-access', function (ForeignNational $foreignNational, Attempt $attempt) {
+        Gate::define('attempts.foreign-national-access', function (
+            ForeignNational $foreignNational, 
+            Attempt $attempt
+        ) 
+        {
             return $foreignNational->id === $attempt->foreign_national_id;
         });
 

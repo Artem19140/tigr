@@ -46,7 +46,7 @@ const back = useForm()
             <v-btn 
                 variant="text" 
                 class="ml-2"
-                @click="() => back.get(`/exams/${examId}/monitoring`)"
+                @click="() => back.get(`/exams/${examId}/conduct`)"
             >Назад</v-btn>
 
         </v-card>

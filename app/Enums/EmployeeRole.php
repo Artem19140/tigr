@@ -7,7 +7,6 @@ enum EmployeeRole: string
     case Operator = 'operator';
     case Scheduler = 'scheduler';
     case Examiner = 'examiner';
-    case VideoRecordOperator = 'video_record_operator';
     case Director = 'director';
     case CenterAdmin = 'center_admin';
     case PlatformAdmin = 'platform_admin';

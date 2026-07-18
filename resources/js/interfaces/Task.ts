@@ -1,6 +1,6 @@
 export interface Task{
     id: number,
-    content:Object,
+    content:Array<Object>,
     type:string,
     attemptAnswer:AttemptAnswer,
     answers:Array<Answer>,

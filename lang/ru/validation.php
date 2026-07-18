@@ -241,7 +241,6 @@ return [
         'passportScan' => 'скан паспорта',
         'gender' => 'пол',
         'cancelled' => 'отмененные',
-        'jobTitle' => 'должность',
         'roles' => 'роли',
         'roles.0' => 'роль',
         'time' => 'время',

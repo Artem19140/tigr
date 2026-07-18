@@ -13,7 +13,6 @@ const http = useHttp<EmployeeFormI>({
     surname:'',
     name:'',
     patronymic:'',
-    jobTitle:'',
     roles:[],
     email:''
 })
@@ -51,11 +50,12 @@ const create = () => {
         <template #header>
             <div>Добавление</div>
         </template>
-        <EmployeeForm 
-            v-model:form="http"
-            :errors="http.errors"
-            :loading="http.processing"
-        />
+            <EmployeeForm 
+                v-model:form="http"
+                :errors="http.errors"
+                :loading="http.processing"
+            />
+
         <template #actions>
             <div>
                 <AppAddButton 

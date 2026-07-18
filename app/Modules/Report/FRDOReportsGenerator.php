@@ -24,14 +24,17 @@ class FRDOReportsGenerator
         string $examDate,
         string $type
     ): IWriter {
-        $examDate = Carbon::parse($examDate);
+        $examDate = Carbon::parse($examDate)->setTimezone(
+            CenterData::timeZome()
+        );
         
         $success = $type === 'certificates';
 
         $this->ensureFrdoGenerationAvailable->execute($examDate, $success);
         $spreadsheet = $this->generateReport($examDate, $success);
+        
         event(new ReportGenerated(ReportType::Frdo, [
-            'date' => $examDate,
+            'date' => $examDate->copy()->format('d.m.Y'),
             'type' => $success ? 'certificates' : 'references'
         ]));
 
@@ -45,8 +48,8 @@ class FRDOReportsGenerator
         $attempts = Attempt::query()
             ->with(['exam.type', 'foreignNational', 'exam.address'])
             ->whereBetween('created_at', [
-                $examDate->copy()->startOfDay(),
-                $examDate->copy()->endOfDay(),
+                $examDate->copy()->startOfDay()->utc(),
+                $examDate->copy()->endOfDay()->utc(),
             ])
             ->when($success, function(Builder $query){
                 $query->passed();
@@ -113,7 +116,7 @@ class FRDOReportsGenerator
             mb_strtoupper($attempt->foreignNational->surname, 'UTF-8'),
             mb_strtoupper($attempt->foreignNational->name, 'UTF-8'),
             mb_strtoupper($attempt->foreignNational->patronymic, 'UTF-8'),
-            $attempt->foreignNational->date_birth->format('d.m.Y'),
+            $attempt->foreignNational->date_birth->copy()->format('d.m.Y'),
             $attempt->exam->begin_time->year,
             strtoupper($this->certificateText($attempt->exam->type->certificate_name)),
             strtoupper($attempt->foreignNational->surname_latin),

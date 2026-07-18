@@ -44,7 +44,6 @@ class EmployeeCreateTest extends TestCase
             'surname' => fake()->name(),
             'name' => fake()->name(),
             'patronymic' => fake()->name(),
-            'jobTitle' => 'Сотрудник ЦТИГ',
             'password' => '12345678',
             'password_confirmation' => '12345678',
             'roles' => [ Role::findByEnum(EmployeeRole::Operator)->id ],

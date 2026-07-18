@@ -15,14 +15,15 @@ const emit = defineEmits<{
     }):void
 }>()
 
-const answers = {
-  ...props.task.answers[0].content,
-  ...(props.task.attemptAnswer?.answer ?? {})
-}
+const emptyAnswers = Object.fromEntries(
+    collectFieldIds(props.task.content).map(id => [id, ''])
+);
 
-const form = ref<Record<string, any>>({})
+const form = ref<Record<string, string>>({
+    ...emptyAnswers,
+    ...(props.task.attemptAnswer?.answer ?? {})
+});
 
-Object.assign(form.value, answers)
 
 const send = () => {
     emit('updateAnswer', {
@@ -36,7 +37,28 @@ const autosaveSend = autosave(() => { send() }, 5000)
 watch(form.value, () => {
     autosaveSend()
 })
+
 provide('form', form)
+
+function collectFieldIds(node: unknown): string[] {
+    const ids: string[] = [];
+
+    const walk = (node: unknown) => {
+        if (!node || typeof node !== 'object') {
+            return;
+        }
+
+        if ('field_id' in node) {
+            ids.push((node as { field_id: string }).field_id);
+        }
+
+        Object.values(node).forEach(walk);
+    };
+
+    walk(node);
+
+    return ids;
+}
 </script>
 
 <template>

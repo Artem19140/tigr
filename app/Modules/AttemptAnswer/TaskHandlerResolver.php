@@ -12,7 +12,8 @@ use App\Models\Task;
 
 class TaskHandlerResolver
 {
-    public function resolve(Task $task): EssayTaskHandler|MultyInputTaskHandler|SingleChoiceTaskHandler|SingleInputTaskHandler
+    public function resolve(Task $task)
+    : EssayTaskHandler | MultyInputTaskHandler| SingleChoiceTaskHandler|SingleInputTaskHandler
     {
         return match ($task->type) {
             TaskType::SingleChoice => new SingleChoiceTaskHandler,

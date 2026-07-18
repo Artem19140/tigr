@@ -20,7 +20,6 @@ const {open} = useModals()
 
 const headers = [
     {title : "ФИО",sortable: false, key: 'fullName', align: 'start' },
-    {title : "Должность",sortable: false, key: 'jobTitle', align: 'start' },
     {title : "email",sortable: false, key: 'email', align: 'start' },
     {title : "Роли",sortable: false, key: 'roles', align: 'center' },
     {title : "",sortable: false, key: 'actions', align: 'center' }

@@ -14,7 +14,7 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div class="mb-2 mt-2"
+    <div class="mb-4 mt-4 w-100" 
     >
         <div 
             class="flex" 

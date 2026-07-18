@@ -46,13 +46,6 @@ onMounted(() => {
         :readonly="readOnly"
     />
 
-    <v-text-field 
-        label="Должность"
-        v-model="form.jobTitle"
-        :error-messages="errors.jobTitle"
-        :readonly="readOnly"
-    />
-
     <V-autocomplete 
         label="Роли"
         :loading="loading"

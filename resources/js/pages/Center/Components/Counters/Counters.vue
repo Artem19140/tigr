@@ -22,7 +22,7 @@ const props = defineProps<{
         <v-card-text class="pa-4">
 
             <div v-if="counters?.length" class="counter-items">
-
+                <div class="text-xs text-grey">* Указан последний сгенерированный номер</div>
                 <CounterCard
                     v-for="counter in counters"
                     :key="counter.id"
