@@ -40,7 +40,7 @@ class LoginController
 
         if ($wrongCredentials) {
             throw ValidationException::withMessages([
-                'email' => 'Неверные учетные данные.',
+                'email' => 'Неверные учетные Данные . ',
                 'password' => '',
             ]);
         }
@@ -50,7 +50,7 @@ class LoginController
         if ($this->hasNoAccess($employee)) {
             Auth::logout();
             throw ValidationException::withMessages([
-                'email' => 'Неверные учетные данные.',
+                'email' => 'неверные учетные данные',
                 'password' => '',
             ]);
         }
