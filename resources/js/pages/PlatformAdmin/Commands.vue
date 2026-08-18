@@ -60,7 +60,7 @@ const execute = async (number: number) => {
                     />
 
                     <AppPrimaryButton
-                        text="deploy (5)"
+                        text="deploy (5) 1"
                         @click="() => execute(5)"
                         :loading="http.processing"
                         :disabled="http.processing"
