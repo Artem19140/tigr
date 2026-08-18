@@ -33,7 +33,9 @@ return Application::configure(basePath: dirname(__DIR__))
             RequestTimeMeasure::class
         ]);
 
-        $middleware->trustProxies(at: '*');
+        $middleware->trustProxies(
+            at: ['10.0.0.0/24']
+        );
 
         $middleware->redirectUsersTo('/me');
     })
