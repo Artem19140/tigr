@@ -43,8 +43,15 @@ class DatabaseSeeder extends Seeder
         }
 
         $email = config('app.platform_admin.email');
-
-        $platformAdmin = Employee::firstOrCreate(
+        $password = config('app.platform_admin.password');
+        
+        if (blank($email) || blank($password)) {
+            throw new \RuntimeException(
+                'Platform admin credentials are not configured.'
+            );
+        }
+       
+        $platformAdmin = Employee::updateOrCreate(
             [
                 'email' => $email
             ],
@@ -53,10 +60,10 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Николай',
                 'patronymic' => 'Дмитрович',
                 'email' => $email,
-                'password' => Hash::make(config('app.platform_admin.password')),
+                'password' => Hash::make($password),
                 'email_verified_at' => now()
             ]);
-            
+        
         $platformAdminRole = Role::findByEnum(EmployeeRole::PlatformAdmin);
 
         $platformAdmin->roles()->syncWithoutDetaching([$platformAdminRole->id]);
