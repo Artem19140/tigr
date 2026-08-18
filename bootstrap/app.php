@@ -34,7 +34,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->trustProxies(
-            at: ['10.0.0.0/24']
+            at: ['10.0.0.0/8']
         );
 
         $middleware->redirectUsersTo('/me');
