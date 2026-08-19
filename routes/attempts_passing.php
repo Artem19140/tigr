@@ -40,5 +40,5 @@ Route::middleware([
         ->name('attempts.finish.after');
 
     Route::post('exam-codes/verify', [ExamController::class, 'verifyCode'])
-        ->middleware(['throttle:5']); 
+        ->middleware(['throttle:10']); 
 });
