@@ -37,9 +37,9 @@ class CreateEmployee
                 ['roles' => $roles]
             );
 
-            Password::sendResetLink([
-                'email' => $employee->email
-            ]);
+            // Password::sendResetLink([
+            //     'email' => $employee->email
+            // ]);
             
             return $employee;
         });
