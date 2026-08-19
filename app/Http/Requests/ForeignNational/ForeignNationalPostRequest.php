@@ -143,13 +143,13 @@ class ForeignNationalPostRequest extends FormRequest
                 'required',
                 'mimes:pdf',
                 File::types(['pdf'])
-                    ->max('10mb'),
+                    ->max('20mb'),
             ],
             'passport' => [
                 'required',
                 'mimes:pdf',
                 File::types(['pdf'])
-                    ->max('10mb'),
+                    ->max('20mb'),
             ],
         ];
     }

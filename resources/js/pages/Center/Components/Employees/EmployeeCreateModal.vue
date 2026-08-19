@@ -3,7 +3,6 @@ import AppAddButton from '@components/UI/AppAddButton/AppAddButton.vue';
 import BaseDialog from '@components/BaseComponents/BaseDialog/BaseDialog.vue';
 import { useConfirmDialog } from '@composables/useConfirmDialog';
 import {router, useHttp} from '@inertiajs/vue3';
-import { useSnackbarQueue } from '@/composables/useSnackbarQueue';
 import EmployeeForm from './EmployeeForm.vue';
 import { EmployeeFormI } from '@/interfaces/Employee';
 
@@ -33,8 +32,6 @@ const create = () => {
             router.reload()
             isOpen.value=false
             http.resetAndClearErrors()
-            const {add} = useSnackbarQueue()
-            add('Приглашение было отправлено на почту', 'green')
         }
     })
 }
