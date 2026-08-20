@@ -144,7 +144,6 @@ class RvpSeeder extends Seeder
     {
         return [
             'name' => 'Чтение',
-            'min_mark' => 0,
             'tasks' => [
                 [
                     'type' => TaskType::SingleChoice,
@@ -185,7 +184,6 @@ class RvpSeeder extends Seeder
     {
         return [
             'name' => 'Письмо',
-            'min_mark' => 0,
             'tasks' => [
                 [
                     'type' => TaskType::MultyInput,
@@ -208,7 +206,6 @@ class RvpSeeder extends Seeder
     {
         return [
             'name' => 'Лексика и грамматика',
-            'min_mark' => 0,
             'tasks' => [
                 [
                     'type' => TaskType::SingleChoice,
@@ -252,7 +249,6 @@ class RvpSeeder extends Seeder
             'subblocks' => [
                 [
                     'name' => '',
-                    'min_mark' => 0,
                     'tasks' => [
                         [
                             'type' => TaskType::SingleChoice,
@@ -310,7 +306,6 @@ class RvpSeeder extends Seeder
             'subblocks' => [
                 [
                     'name' => '',
-                    'min_mark' => 0,
                     'tasks' => [
                         [
                             'type' => TaskType::SingleChoice,

@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
 
             $table->string('name');
-            $table->unsignedSmallInteger('min_mark');
+            $table->unsignedSmallInteger('min_mark')->nullable();
 
             $table->foreignId('exam_type_id')
                 ->constrained('exam_types')

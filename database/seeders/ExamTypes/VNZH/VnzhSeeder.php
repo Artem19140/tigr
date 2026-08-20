@@ -150,7 +150,6 @@ class VnzhSeeder extends Seeder
     {
         return [
             'name' => 'Чтение',
-            'min_mark' => 0,
             'tasks' => [
                 [
                     'type' => TaskType::SingleChoice,
@@ -202,7 +201,6 @@ class VnzhSeeder extends Seeder
     {
         return [
             'name' => 'Письмо',
-            'min_mark' => 0,
             'tasks' => [
                 [
                     'type' => TaskType::MultyInput,
@@ -224,7 +222,6 @@ class VnzhSeeder extends Seeder
     {
         return [
             'name' => 'Лексика и грамматика',
-            'min_mark' => 0,
             'tasks' => [
                 [
                     'type' => TaskType::SingleChoice,
@@ -274,7 +271,6 @@ class VnzhSeeder extends Seeder
             'subblocks' => [
                 [
                     'name' => '',
-                    'min_mark' => 0,
                     'tasks' => [
                         [
                             'type' => TaskType::SingleChoice,
@@ -332,7 +328,6 @@ class VnzhSeeder extends Seeder
             'subblocks' => [
                 [
                     'name' => '',
-                    'min_mark' => 0,
                     'tasks' => [
                         [
                             'type' => TaskType::SingleChoice,

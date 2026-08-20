@@ -98,7 +98,6 @@ class PatentSeeder extends Seeder
     {
         return [
             'name' => 'Чтение',
-            'min_mark' => 0,
             'tasks' => [
                 [
                     'type' => TaskType::SingleChoice,
@@ -120,7 +119,6 @@ class PatentSeeder extends Seeder
     {
         return [
             'name' => 'Письмо',
-            'min_mark' => 0,
             'tasks' => [
                 [
                     'type' => TaskType::SingleInput,
@@ -137,7 +135,6 @@ class PatentSeeder extends Seeder
     {
         return [
             'name' => 'Лексика и грамматика',
-            'min_mark' => 0,
             'tasks' => [
                 [
                     'type' => TaskType::SingleChoice,

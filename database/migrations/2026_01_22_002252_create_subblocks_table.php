@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedTinyInteger('order');
-            $table->unsignedTinyInteger('min_mark');
+            $table->unsignedTinyInteger('min_mark')->nullable();
             $table->foreignId('block_id')
                 ->constrained('blocks');
             $table->boolean('is_active')->default(true);

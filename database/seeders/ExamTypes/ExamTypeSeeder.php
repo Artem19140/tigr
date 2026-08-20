@@ -26,7 +26,7 @@ class ExamTypeSeeder
                 ]  , 
                 [
                     'exam_type_id' => $examType->id,
-                    'min_mark' => $block['min_mark'],
+                    'min_mark' => $block['min_mark'] ?? null,
                     'name' => $block['name'],
                     'order' => $orderBlock,
                 ]
@@ -42,7 +42,7 @@ class ExamTypeSeeder
                     [
                         'block_id' => $blockCreated->id,
                         'name' => $subblock['name'],
-                        'min_mark' => $subblock['min_mark'],
+                        'min_mark' => $subblock['min_mark'] ?? null,
                         'order' => $orderSubblock,
                     ]
                 );
