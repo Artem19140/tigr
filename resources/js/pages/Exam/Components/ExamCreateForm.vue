@@ -25,6 +25,7 @@ function required (v:any) {
 
 <template>
   <div class="space-y-4 p-6 ">
+    <div v-if="hasEnrollment" class="mb-6 text-grey ">Редактирование некоторых полей невозможно, так как эти данные занесены в заявления иностранных граждан</div>
     <v-autocomplete
       label="Тип экзамена"
       :rules="[required]"

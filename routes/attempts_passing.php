@@ -6,13 +6,25 @@ use App\Http\Controllers\Web\Exam\ExamController;
 use App\Support\AppMiddleware;
 use Illuminate\Support\Facades\Route;
 
+Route::middleware([
+        'meta',
+        'guest:web,foreignNationals'
+    ])->group(function () {
+        
+        Route::inertia('attempts/finish', 'Attempt/AfterAttempt')
+            ->name('attempts.finish.after');
+
+        Route::post('exam-codes/verify', [ExamController::class, 'verifyCode'])
+            ->middleware(['throttle:10']); 
+    });
+    
 Route::prefix('attempts')
     ->middleware([
         'meta',
         'auth:foreignNationals',
+        'can:attempts.foreign-national-access,attempt',
         AppMiddleware::ENSURE_ATTEMPT_VALID_STATUS,
     ])
-    //->can('attempts.foreign-national-access:', 'attempt')
     ->group(function () {
         Route::put('{attempt}/finish', [AttemptController::class, 'finish'])
             ->name('attempts.finish');
@@ -32,13 +44,6 @@ Route::prefix('attempts')
             ->name('attempts.answers.update.audio');
     });
 
-Route::middleware([
-    'meta',
-    'guest:web,foreignNationals'
-])->group(function () {
-    Route::inertia('attempts/finish', 'Attempt/AfterAttempt')
-        ->name('attempts.finish.after');
 
-    Route::post('exam-codes/verify', [ExamController::class, 'verifyCode'])
-        ->middleware(['throttle:10']); 
-});
+
+    

@@ -23,14 +23,14 @@ const attemptId = computed(() => props.enrollment.attempt?.id)
 
 const http = useHttp()
 
-onMounted(() => {
-    if(!attemptId.value) return 
-    http.get(`/attempts/${attemptId.value}/violations`, {
-        onSuccess(response :any) {
-            violations.value = response.data
-        },
-    })
-})
+// onMounted(() => {
+//     if(!attemptId.value) return 
+//     http.get(`/attempts/${attemptId.value}/violations`, {
+//         onSuccess(response :any) {
+//             violations.value = response.data
+//         },
+//     })
+// })
 
 const addHttp = useHttp({
     comment:null

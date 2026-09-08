@@ -27,7 +27,7 @@ class EmployeeController
 
         $notPlatformAdmin = !$request->user()->isPlatformAdmin();
 
-        $employees = Employee::active()
+        $employees = Employee::query()
             ->with(['roles'])
             ->when($notPlatformAdmin, function (Builder $query) {
                 $query->whereDoesntHave('roles', function (Builder $q) {

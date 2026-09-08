@@ -82,7 +82,7 @@ const cancellEdit = async () => {
                 />
             </div>
 
-            <div class="d-flex ga-2 mt-4">
+            <div class="d-flex ga-2 mt-4" v-if="address.isActive">
                 <v-btn
                     color="error"
                     variant="text"
@@ -92,6 +92,10 @@ const cancellEdit = async () => {
                 >
                     Деактивировать
                 </v-btn>
+            </div>
+
+            <div v-else class="mt-2 ml-2 text-grey">
+                Адрес неактивен
             </div>
 
         </div>

@@ -2,6 +2,11 @@
 import BaseEntryCard from '@/components/BaseComponents/BaseEntryCard/BaseEntryCard.vue';
 import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { router } from '@inertiajs/vue3';
+import { onMounted } from 'vue';
+
+onMounted(() => {
+    
+})
 </script>
 
 <template>

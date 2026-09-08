@@ -23,6 +23,7 @@ class EmployeeResource extends JsonResource
             'name' => $this->resource->name,
             'email' => $this->resource->email,
             'roles' => RoleResource::collection($this->whenLoaded('roles')),
+            'isActive' => $this->resource->is_active
         ];
     }
 }

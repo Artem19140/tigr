@@ -24,7 +24,7 @@ class FlatTableGenerator
         $strNumber = 1;
 
         Attempt::query()
-            ->with(['foreignNational', 'exam.type', 'answers' => [
+            ->with(['foreignNational', 'exam.type', 'attemptAnswers' => [
                 'taskVariant.task',
                 'answer',
             ]])
@@ -37,7 +37,7 @@ class FlatTableGenerator
 
             ->chunkById(300, function ($attempts) use (&$strNumber) {
                 foreach ($attempts as $attempt) {
-                    $answers = $attempt->answers->sortBy(fn ($a) => $a->taskVariant->task->order);
+                    $answers = $attempt->attemptAnswers->sortBy(fn ($a) => $a->taskVariant->task->order);
                     foreach ($answers as $answer) {
                         $taskVariant = $answer->taskVariant;
                         $task = $taskVariant?->task;
@@ -48,9 +48,9 @@ class FlatTableGenerator
                             $answerInTable = $answer->answer['order'] ?? '';
                         }
                         
-                        // if ($task->type === TaskType::TextInput) {
-                        //     $answerInTable = $answer->answer;
-                        // }
+                        if ($task->type === TaskType::SingleInput) {
+                            $answerInTable = $answer->answer;
+                        }
 
                         $this->csvWriter->writeRow( [
                             $strNumber,

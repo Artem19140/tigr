@@ -25,7 +25,8 @@ export interface Exam{
     documents:{
         id:number
     },
-    actions:ExamActions
+    actions:ExamActions,
+    hasEnrollment:boolean
 }
 
 export interface ExamIndex{

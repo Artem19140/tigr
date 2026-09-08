@@ -50,12 +50,12 @@ const isOpen = ref<boolean>(false)
             title="Говорение" 
             @click="() => router.visit(`/attempts/${props.enrollment.attempt?.id}/speaking`)"
         />
-        <v-list-item 
+        <!-- <v-list-item 
             title="Нарушения" 
             :disabled = "editViolationDisabled"
             @click="isOpen = true"
         />
-        <v-divider></v-divider>
+        <v-divider></v-divider> -->
         <v-list-item     
             base-color="red" 
             :disabled="annulAttemptDisabled"

@@ -22,7 +22,6 @@ class AddressController
         $addresses = Address::query()
             ->withExists('exams as examsExists')
             ->orderByDesc('id')
-            ->where('is_active', true)
             ->get();
 
         return Inertia::render('Center/Center', [

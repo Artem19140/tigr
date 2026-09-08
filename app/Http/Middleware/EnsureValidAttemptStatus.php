@@ -38,14 +38,14 @@ class EnsureValidAttemptStatus
         string $message,
         Request $request
     ): JsonResponse|RedirectResponse {
-        Auth::logout();
+        
         if ($request->expectsJson()) {
             return response()->json([
                 'message' => $message,
-            ], 401);
+            ], 400);
         }
         Inertia::flash(['error' => $message]);
-
+        Auth::logout();
         return redirect()->route('login');
     }
 }

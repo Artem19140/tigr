@@ -97,6 +97,7 @@ const back = () => {
                     :exam-types="examTypes.data"
                     :examiners="examiners.data"
                     :form="http" 
+                    :has-enrollment="exam.data.hasEnrollment"
                 />
             </v-card-text>
         </v-card>

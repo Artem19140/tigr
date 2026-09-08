@@ -70,7 +70,7 @@ class ExamProtocolGenerator
     {
         $attempts = $exam->attempts()
             ->whereHas('violations')
-            ->with(['foreignNational', 'center', 'violations'])
+            ->with(['foreignNational', 'violations'])
             ->get();
 
         $attempts->each(function(Attempt $attempt){

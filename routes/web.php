@@ -12,6 +12,9 @@ use App\Models\Enrollment;
 use App\Models\ForeignNational;
 use Illuminate\Support\Facades\Route;
 
+// Route::inertia('attempts/finish', 'Attempt/AfterAttempt')
+//     ->name('attempts.finish.after');
+
 Route::middleware([
     'meta',
     'auth',

@@ -44,7 +44,7 @@ class ForeignNationalBeforeSaveValidator
             ->when($passportSeries, function(Builder $query) use( $passportSeries ){
                 $query->where('passport_series', $passportSeries);
             })
-            ->when($passportSeries, function(Builder $query) use( $passportNumber ){
+            ->when($passportNumber, function(Builder $query) use( $passportNumber ){
                 $query->where('passport_number', $passportNumber);
             })
             ->when($ignoreId, function (Builder $query) use ($ignoreId) {
