@@ -35,7 +35,7 @@ class ExamDocumentController
         $pdf = Pdf::loadView(ExamDocument::List->templatePath(), [
             'foreignNationals' => $exam->foreignNationals,
             'exam' => $exam,
-        ]);
+        ])->setPaper('a4', 'landscape');
 
         event(new ExamDocumentGenerated($exam, ExamDocument::List, [
             'enrollments_ids' => $exam->enrollments->pluck('id')->toArray()

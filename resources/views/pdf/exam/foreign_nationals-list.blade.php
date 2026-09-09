@@ -16,6 +16,7 @@
 <table class="table">
     <tr>
         <th>ФИО</th>
+        <th>ФИО (лат.)</th>
         <th>Паспорт</th>
         <th>Дата рождения</th>
         <th>Гражданство</th>
@@ -27,6 +28,7 @@
         $countryName = $countries->firstWhere('value', $f->citizenship)['text'] ?? '';
     @endphp
         <tr>
+            <td>{{ $f->full_name }}</td>
             <td>{{ $f->full_name_latin }}</td>
             <td>{{ $f->full_passport }}</td>
             <td>{{ $f->date_birth->format('d.m.Y') }}</td>
