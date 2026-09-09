@@ -17,12 +17,20 @@
     <tr>
         <th>ФИО</th>
         <th>Паспорт</th>
+        <th>Дата рождения</th>
+        <th>Гражданство</th>
     </tr>
-
+    
     @foreach ($foreignNationals as $f)
+    @php
+        $countries = collect(json_decode(file_get_contents(storage_path('app/public/countries.json')), true));
+        $countryName = $countries->firstWhere('value', $f->citizenship)['text'] ?? '';
+    @endphp
         <tr>
-            <td>{{ $f->full_name }}</td>
+            <td>{{ $f->full_name_latin }}</td>
             <td>{{ $f->full_passport }}</td>
+            <td>{{ $f->date_birth->format('d.m.Y') }}</td>
+            <td>{{ $countryName }}</td>
         </tr>
     @endforeach
 

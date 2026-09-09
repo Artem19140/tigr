@@ -110,7 +110,7 @@ class Attempt extends Model
             return false;
         }
 
-        return $this->is_passed;
+        return $this->is_passed ?? false;
     }
 
     public function foreignNational(): BelongsTo
