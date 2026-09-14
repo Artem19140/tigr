@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { router, useHttp } from '@inertiajs/vue3';
+import { Head, router, useHttp } from '@inertiajs/vue3';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { AttemptMonitoring } from '@/interfaces/Attempt';
 import TasksList from '../Attempt/Components/tasks/TasksList.vue';
