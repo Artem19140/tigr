@@ -28,6 +28,9 @@ const finish = async () => {
 </script>
 
 <template>
+    <Head>
+        <title>Говорение</title>
+    </Head>
     <div class="flex items-start">
         <div class="sticky top-3 " >
             <v-btn 

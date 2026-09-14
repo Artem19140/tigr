@@ -49,7 +49,7 @@ const loading = ref<boolean>(false)
 			<template #header-actions>
 				<AppAddButton
 				text="Добавить"
-				@click="() => router.visit('/foreign-nationals/create')""
+				@click="() => router.visit('/foreign-nationals/create')"
 				v-if="permissions.create"
 				/>
 			</template>

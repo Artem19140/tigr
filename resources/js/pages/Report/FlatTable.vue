@@ -3,7 +3,7 @@ import AppPeriodDate from '@/components/UI/AppPeriodDate/AppPeriodDate.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { RedirectUrl } from '@/interfaces/Interfaces';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
-import { setLayoutProps, useHttp } from '@inertiajs/vue3';
+import { Head, setLayoutProps, useHttp } from '@inertiajs/vue3';
 import ReportLayout from './ReportLayout.vue';
 
 const props = defineProps<{
@@ -35,6 +35,9 @@ const donwload = () => {
 </script>
 
 <template>
+    <Head>
+        <title>Плоская таблица</title>
+    </Head>
     <v-card>
         <v-card-text>
             <v-card-title>Плоская таблица</v-card-title>

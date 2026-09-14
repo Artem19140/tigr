@@ -2,7 +2,7 @@
 import AppPeriodDate from '@/components/UI/AppPeriodDate/AppPeriodDate.vue';
 import { RedirectUrl } from '@/interfaces/Interfaces';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
-import { setLayoutProps, useHttp } from '@inertiajs/vue3';
+import { Head, setLayoutProps, useHttp } from '@inertiajs/vue3';
 import { computed, watch } from 'vue';
 import ReportLayout from './ReportLayout.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
@@ -58,6 +58,9 @@ const disabled = computed(() =>
 </script>
 
 <template>
+    <Head>
+        <title>МинОбрНауки</title>
+    </Head>
     <v-card>
         <v-card-text>
             <v-card-title>

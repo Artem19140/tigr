@@ -42,43 +42,6 @@ const visibleTabs = computed(() => {
 </script>
 
 <template>
-    <!-- <div class="flex p-8 justify-center">
-        <v-btn-group variant="text">
-            <v-btn
-                @click="() => visit('')"
-                :disabled="tab === 'frdo'"
-                v-if="permissions.frdo"
-            >ФИС ФРДО</v-btn>
-
-            <v-btn
-                @click="() => visit('ministry-education')"
-                :disabled="tab === 'ministry-education'"
-                v-if="permissions.ministryEducation"
-            >МинОбрНауки</v-btn>
-            <v-btn
-                @click="() => visit('flat-table')"
-                :disabled="tab === 'flat-table'"
-                v-if="permissions.flatTable"
-            >Плоская таблица</v-btn>
-        </v-btn-group>
-    </div>
-
-    <v-container>
-        <v-tabs v-model="tab">
-            <v-tab
-                v-for="(tab, index) in visibleTabs"
-                :key="index"
-                class="text-sm tracking-wide"
-                :value="tab.value"
-                @click="() => visit(tab.value)"
-            >
-                {{ tab.title }}
-            </v-tab>
-
-        </v-tabs>
-        <slot />
-    </v-container> -->
-
     <v-app-bar density="comfortable" elevation="0">
         <v-tabs v-model="tab">
             <v-tab

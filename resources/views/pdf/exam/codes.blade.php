@@ -19,14 +19,12 @@
 <table class="table">
     <tr>
         <th>ФИО</th>
-        <th>Паспорт</th>
         <th>Код</th>
     </tr>
 
     @foreach ($exam->enrollments as $enrollment)
     <tr>
         <td>{{  $enrollment->foreignNational->surname }} {{ $enrollment->foreignNational->name }} {{ $enrollment->foreignNational->patronymic }}</td>
-        <td>{{  $enrollment->foreignNational->passport_series }} {{  $enrollment->foreignNational->passport_number }}</td>
         <td>{{ substr($enrollment?->exam_code, 0, 3) . "  " .  substr($enrollment?->exam_code, 3, 3) }}</td>
     </tr>
     @endforeach

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useForm } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import { mdiAccountClockOutline, mdiPlay } from '@mdi/js';
 
 const props = defineProps<{
@@ -12,6 +12,9 @@ const back = useForm()
 </script>
 
 <template>
+    <Head>
+        <title>Говорение подготовка</title>
+    </Head>
     <v-container class="fill-height d-flex align-center justify-center">
         <v-card 
             class="pa-10 text-center empty-card" 

@@ -2,7 +2,7 @@
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { RedirectUrl } from '@/interfaces/Interfaces';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
-import { setLayoutProps, useHttp } from '@inertiajs/vue3';
+import { Head, setLayoutProps, useHttp } from '@inertiajs/vue3';
 import ReportLayout from './ReportLayout.vue';
 
 const props = defineProps<{
@@ -45,6 +45,9 @@ const items = [
 </script>
 
 <template>
+    <Head>
+        <title>Фрдо</title>
+    </Head>
     <v-card>
         <v-card-text>
             <v-card-title>
