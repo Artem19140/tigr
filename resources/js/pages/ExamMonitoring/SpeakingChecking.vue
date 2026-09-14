@@ -4,7 +4,7 @@ import AttemptCheckingSidePanel from '@/components/Attempt/AttemptCheckingSidePa
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { AttemptMonitoring } from '@/interfaces/Attempt';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
-import { router } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import TasksList from '../Attempt/Components/tasks/TasksList.vue';
 import { ref } from 'vue';
 import { AttemptAnswer } from '@/interfaces/Task.js';
@@ -35,6 +35,9 @@ const rated = (value: AttemptAnswer) => {
 </script>
 
 <template>
+    <Head>
+        <title>Говорение проверка</title>
+    </Head>
     <AttemptCheckingHeader 
         :attempt="attempt"
     />
