@@ -2,22 +2,17 @@
 import AppPeriodDate from '@/components/UI/AppPeriodDate/AppPeriodDate.vue';
 import { RedirectUrl } from '@/interfaces/Interfaces';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
-import { Head, setLayoutProps, useHttp } from '@inertiajs/vue3';
+import { Head, useHttp } from '@inertiajs/vue3';
 import { computed, watch } from 'vue';
 import ReportLayout from './ReportLayout.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 
-const props = defineProps<{
-    permissions: Object
+const props=defineProps<{
+    availabilityUrl: string
 }>()
 
 defineOptions({
   layout: [EmployeeLayout, ReportLayout],
-})
-
-setLayoutProps({
-    tab: 'ministry-education',
-    permissions: props.permissions
 })
 
 interface MinistryEducation{
@@ -33,7 +28,7 @@ const http = useHttp<MinistryEducation, RedirectUrl>({
 })
 
 const download = () => {
-    http.get('/reports/ministry-education/available',{
+    http.get(props.availabilityUrl,{
         onSuccess(response) {
             window.open(response.redirectUrl)
         },
@@ -58,40 +53,54 @@ const disabled = computed(() =>
 </script>
 
 <template>
-    <Head>
-        <title>МинОбрНауки</title>
-    </Head>
-    <v-card>
-        <v-card-text>
-            <v-card-title>
-                МинОбрНауки
-            </v-card-title>
-        </v-card-text>
-        <v-card-text>
-            <div v-if="!http.lastWeek">
-                <AppPeriodDate
-                    v-model:date-from="http.dateFrom"
-                    v-model:date-to="http.dateTo"
-                />
-            </div>
+    <Head title="МинОбрНауки" />
 
-            <v-checkbox
-                label="Предыдущая неделя"
-                v-model="http.lastWeek"
-                :error-messages="http.errors.lastWeek"
-            />
-            
-        </v-card-text>
+    <v-container>
+        <div class="mx-auto max-w-xl">
+            <v-card class="overflow-hidden rounded-xl">
+                <!-- Header -->
+                <v-card-text class="px-6 pt-6">
+                    <div class="text-xl font-semibold text-gray-900">
+                        МинОбрНауки
+                    </div>
 
-        <v-card-text>
-            <div class="flex justify-center">
-                <AppPrimaryButton 
-                    text="Сформировать"
-                    @click="download"
-                    :loading="loading"
-                    :disabled="disabled"
-                />
-            </div>
-        </v-card-text>
-    </v-card>
+                    <div class="mt-1 text-sm text-gray-500">
+                        Выберите период для формирования данных.
+                    </div>
+                </v-card-text>
+
+                <!-- Form -->
+                <v-card-text class="px-6">
+                    <div class="space-y-4">
+                        <v-checkbox
+                            v-model="http.lastWeek"
+                            label="Предыдущая неделя"
+                            :error-messages="http.errors.lastWeek"
+                            density="comfortable"
+                            hide-details="auto"
+                        />
+
+                        <div v-if="!http.lastWeek">
+                            <AppPeriodDate
+                                v-model:date-from="http.dateFrom"
+                                v-model:date-to="http.dateTo"
+                            />
+                        </div>
+                    </div>
+                </v-card-text>
+
+                <!-- Actions -->
+                <v-card-text class="px-6 pb-6">
+                    <div class="flex justify-end">
+                        <AppPrimaryButton
+                            text="Сформировать"
+                            :loading="loading"
+                            :disabled="disabled"
+                            @click="download"
+                        />
+                    </div>
+                </v-card-text>
+            </v-card>
+        </div>
+    </v-container>
 </template>

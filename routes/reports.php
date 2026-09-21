@@ -1,11 +1,11 @@
 <?php
 
 use App\Http\Controllers\Web\Report\ReportController;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 Route::prefix('reports')->group(function () {
-    Route::get('',[ReportController::class, 'resolve'])
+    
+    Route::get('resolver',[ReportController::class, 'resolve'])
         ->can('reports.viewAny')
         ->name('reports.resolver');
 
@@ -13,9 +13,9 @@ Route::prefix('reports')->group(function () {
         ->can('reports.frdo')
         ->name('reports.frdo.download');
 
-    Route::get('frdo/available', [ReportController::class, 'availableFrdo'])
+    Route::get('frdo/availability', [ReportController::class, 'availabilityFrdo'])
         ->can('reports.frdo')
-        ->name('reports.frdo.available');
+        ->name('reports.frdo.availability');
 
     Route::get('flat-table/download', [ReportController::class, 'flatTable'])
         ->can('reports.flat-table')
@@ -23,46 +23,31 @@ Route::prefix('reports')->group(function () {
 
     Route::get('ministry-education/available', [ReportController::class, 'availableMinistryEducation'])
         ->can('reports.ministry-education')
-        ->name('reports.ministry-education.available');
+        ->name('reports.ministry-education.availability');
 
     Route::get('ministry-education/download', [ReportController::class, 'ministryEducation'])
         ->can('reports.ministry-education')
         ->name('reports.ministry-education.download');
-    //1
-    Route::get('frdo', function(Request $request){
-        $employee = $request->user();
+
+    Route::get('frdo', function(){
         return  Inertia::render('Report/Frdo', [
-            'permissions' => [
-                'flatTable'  => $employee->can('reports.flat-table'),
-                'frdo' =>$employee->can('reports.frdo'),
-                'ministryEducation' =>$employee->can('reports.ministry-education'),
-            ]
+            'availabilityUrl' => route('reports.frdo.availability')
         ]);
     })
         ->can('reports.frdo')
         ->name('reports.frdo');
-    //2
-    Route::get('ministry-education', function(Request $request){
-        $employee = $request->user();
+
+    Route::get('ministry-education', function(){
         return  Inertia::render('Report/MinistryEducation', [
-            'permissions' => [
-                'flatTable'  => $employee->can('reports.flat-table'),
-                'frdo' =>$employee->can('reports.frdo'),
-                'ministryEducation' =>$employee->can('reports.ministry-education'),
-            ]
+            'availabilityUrl' => route('reports.ministry-education.availability')
         ]);
     })
         ->can('reports.ministry-education')
         ->name('reports.ministry-education');
-    //3
-    Route::get('flat-table', function(Request $request){
-        $employee = $request->user();
+
+    Route::get('flat-table', function(){
         return  Inertia::render('Report/FlatTable', [
-            'permissions' => [
-                'flatTable'  => $employee->can('reports.flat-table'),
-                'frdo' =>$employee->can('reports.frdo'),
-                'ministryEducation' =>$employee->can('reports.ministry-education'),
-            ]
+            'downloadUrl' => route('reports.flat-table.download')
         ]);
     })
         ->can('reports.flat-table')

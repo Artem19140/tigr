@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Notifications\Notifiable;
 
 class Exam extends Model
@@ -150,7 +149,7 @@ class Exam extends Model
         });
     }
 
-    public function isGoing():bool
+    public function needPolling():bool
     {
         if($this->begin_time->isFuture()){
             return false;

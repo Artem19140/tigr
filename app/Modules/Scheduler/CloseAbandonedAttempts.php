@@ -3,7 +3,7 @@
 namespace App\Modules\Scheduler;
 
 use App\Models\Attempt;
-use App\Modules\Attempt\FinilizeAttemptChecking;
+use App\Modules\Attempt\FinilizeAttemptReview;
 use App\Support\Audit;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 class CloseAbandonedAttempts
 {
     public function __construct(
-        protected FinilizeAttemptChecking $finilizeAttemptChecking,
+        protected FinilizeAttemptReview $finilizeAttemptReview,
         protected Audit $audit
     ) {}
 
@@ -39,7 +39,7 @@ class CloseAbandonedAttempts
         }
         $attempt->finished_at = $attempt->last_activity_at;
         if ($attempt->canBeAutomaticallyFinalized()) {
-            $this->finilizeAttemptChecking->execute($attempt);
+            $this->finilizeAttemptReview->execute($attempt);
         }
 
         $attempt->save();

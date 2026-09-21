@@ -40,36 +40,52 @@ const change = () => {
 
 
 <template>
-  <Head>
-    <title>Смена пароля</title>
-  </Head>
-  <BaseEntryCard
-    subtitle="Смена пароля"
-  >
-    <div>Вам необходимо сменить временный пароль. Придумайте свой пароль, минимум 8 символов.</div>
-    <form @submit.prevent="change">
-      <AppPasswordInput 
-        v-model="form.password"
-        :error-messages="form.errors.password"
-      />
-      <AppPasswordInput 
-        v-model="form.password_confirmation"
-        :error-messages="form.errors.password_confirmation"
-      />
-      <AppPrimaryButton
-        type="submit"
-        text="Сменить"
-        large
-        block
-        :loading="form.processing"
-        :disabled="!form.password || !form.password_confirmation || form.processing"
-      />
-    </form>
-  </BaseEntryCard>
-</template>
+    <Head>
+        <title>Смена пароля</title>
+    </Head>
 
-<style scoped>
-.v-card {
-  border-radius: 16px;
-}
-</style>
+    <BaseEntryCard>
+        <template #title>
+            <div class="text-center">
+                <div class="text-xl font-semibold tracking-tight text-gray-900">
+                    Смена пароля
+                </div>
+
+                <div class="mt-2 text-sm leading-relaxed text-gray-500">
+                    Вам необходимо сменить временный пароль.
+                    Придумайте новый пароль длиной не менее 8 символов.
+                </div>
+            </div>
+        </template>
+
+        <form
+            class="space-y-4"
+            @submit.prevent="change"
+        >
+            <AppPasswordInput
+                v-model="form.password"
+                :error-messages="form.errors.password"
+            />
+
+            <AppPasswordInput
+                v-model="form.password_confirmation"
+                :error-messages="form.errors.password_confirmation"
+            />
+
+            <div class="pt-2">
+                <AppPrimaryButton
+                    type="submit"
+                    text="Сменить пароль"
+                    block
+                    :loading="form.processing"
+                    :disabled="
+                        !form.password ||
+                        !form.password_confirmation ||
+                        form.processing
+                    "
+                    class="w-full"
+                />
+            </div>
+        </form>
+    </BaseEntryCard>
+</template>

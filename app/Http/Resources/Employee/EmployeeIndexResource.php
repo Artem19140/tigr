@@ -14,10 +14,18 @@ class EmployeeIndexResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $employee = $request->user();
         return [
             'id' => $this->resource->id,
             'fullName' => $this->resource->surname.' '.$this->resource->name.' '.$this->resource->patronymic,
-            'email' => $this->resource->email
+            'email' => $this->resource->email,
+            'destroyUrl' => $employee->can('delete', $this->resource)
+                ? route('employees.destroy', ['employee' => $this->resource], false)
+                : null,
+            'editUrl' => $employee->can('update', $this->resource)
+                ? route('employees.edit', ['employee' => $this->resource], false)
+                : null,
+            'isActive' => $this->resource->is_active
         ];
     }
 }

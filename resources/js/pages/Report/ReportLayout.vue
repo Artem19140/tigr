@@ -1,60 +1,48 @@
 <script setup lang="ts">
-import { router } from '@inertiajs/vue3';
-import { computed } from 'vue';
-const props = withDefaults(defineProps<{
-    tab: string
-    permissions:{
-        flatTable:boolean,
-        frdo:boolean,
-        ministryEducation:boolean
+import { router, usePage } from '@inertiajs/vue3';
+import { computed, ref } from 'vue';
+
+const page = usePage<any>()
+const menu =  computed(() => page.props?.auth?.navigation.reports)
+
+const activeItem = ref(page.url ?? '')
+
+const menuProps = {
+    frdo: {
+        label: 'Фрдо'
+    },
+    flatTable: {
+        label: 'Плоская таблица'
+    },
+    ministryEducation: {
+        label: 'МинОбрНауки'
     }
-}>(), {
-    tab: ''
-})
-const visit = (tab: string) => {
-    router.visit(`/reports/${tab}`)
 }
-
-const tab = computed(() => props.tab)
-
-const tabs = [
-    {
-        visible: props.permissions.frdo,
-        value:"frdo",
-        title:'ФИС ФРДО',
-    },
-    {
-        visible: props.permissions.ministryEducation,
-        value:"ministry-education",
-        title:"МинОбрНауки"
-    },
-    {
-        visible: props.permissions.flatTable,
-        value:"flat-table",
-        title:"Плоская таблица"
-    }
-]
-
-const visibleTabs = computed(() => {
-    return tabs.filter(tab => tab.visible === true)
-})
-
 </script>
 
 <template>
-    <v-app-bar density="comfortable" elevation="0">
-        <v-tabs v-model="tab">
-            <v-tab
-                v-for="(tab, index) in visibleTabs"
-                :key="index"
-                class="text-sm tracking-wide"
-                :value="tab.value"
-                @click="() => visit(tab.value)"
+    <div class="border-b border-gray-200 bg-white">
+        <div class="mx-auto max-w-5xl px-4">
+            <v-tabs
+                v-model="activeItem"
+                color="primary"
+                density="comfortable"
+                hide-slider
+                class="min-h-12"
             >
-                {{ tab.title }}
-            </v-tab>
-        </v-tabs>
-    </v-app-bar>
+                <v-tab
+                    v-for="(item, key) in menu"
+                    :key="key"
+                    :value="item.url"
+                    class="px-4 text-sm font-medium normal-case"
+                    @click="router.visit(item.url)"
+                >
+                    {{ menuProps[key].label }}
+                </v-tab>
+            </v-tabs>
+        </div>
+    </div>
+
     <v-container>
         <slot />
     </v-container>

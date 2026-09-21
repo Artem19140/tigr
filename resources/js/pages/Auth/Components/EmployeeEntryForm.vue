@@ -21,44 +21,60 @@ const submit = () => {
 </script>
 
 <template>
-  <form @submit.prevent="submit">
-    <v-text-field 
-      label="email"
-      name="email"
-      v-model="form.email"
-      :error-messages="form.errors.email"
-      placeholder="Введите email"
-    />
-    <AppPasswordInput
-      v-model="form.password"
-      :error-messages="form.errors.password"
-    />
-    <v-checkbox
-      label="Запомнить меня" 
-      v-model="form.rememberMe"
-      :error-messages="form.errors.rememberMe"
-    />
+    <form
+        class="space-y-4"
+        @submit.prevent="submit"
+    >
+        <v-text-field
+            v-model="form.email"
+            label="E-mail"
+            name="email"
+            type="email"
+            placeholder="example@mail.ru"
+            :error-messages="form.errors.email"
+            variant="outlined"
+            density="comfortable"
+            hide-details="auto"
+        />
 
-    <AppPrimaryButton
-      type="submit"
-      color="primary"
-      large
-      block
-      text="Войти"
-      :loading="form.processing"
-      :disabled="!form.email || !form.password || form.processing"
-  />
-  <div
-    class="text-center mt-6 text-blue cursor-pointer"
-    @click="() => router.visit('/forgot-password')"
-  >
-    Забыли пароль?
-  </div>
-  </form>
+        <AppPasswordInput
+            v-model="form.password"
+            :error-messages="form.errors.password"
+        />
+
+        <v-checkbox
+            v-model="form.rememberMe"
+            label="Запомнить меня"
+            :error-messages="form.errors.rememberMe"
+            density="comfortable"
+            hide-details="auto"
+        />
+
+        <div class="pt-2">
+            <AppPrimaryButton
+                type="submit"
+                text="Войти"
+                block
+                class="w-full"
+                :loading="form.processing"
+                :disabled="
+                    !form.email ||
+                    !form.password ||
+                    form.processing
+                "
+            />
+        </div>
+
+        <div class="pt-1 text-center">
+            <v-btn
+                variant="text"
+                size="small"
+                color="primary"
+                :disabled="form.processing"
+                @click="router.visit('/forgot-password')"
+            >
+                Забыли пароль?
+            </v-btn>
+        </div>
+    </form>
 </template>
-
-<style scoped>
-  .v-card {
-    border-radius: 16px;
-  }
-</style>

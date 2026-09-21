@@ -3,26 +3,26 @@
 namespace App\Http\Controllers\Web\Exam;
 
 use App\Http\Resources\Exam\ExamEditResource;
-use App\Modules\Attempt\CreateAttempt;
+use App\Http\Resources\Exam\ExamResource;
 use App\Modules\Exam\CancelExam;
 use App\Modules\Exam\CreateExam;
+use App\Modules\Exam\ExamCancellRules;
+use App\Modules\Exam\ExamEditRules;
+use App\Modules\Exam\ExamViewBuilder;
 use App\Modules\Exam\UpdateExam;
 use App\Modules\Exam\ExamCreateData;
 use App\Modules\Exam\GetExams;
 use App\Http\Requests\Exam\ExamIndexRequest;
 use App\Http\Requests\Exam\ExamPostRequest;
-use App\Http\Requests\Exam\VerifyCodeRequest;
 use App\Http\Resources\Address\AddressResource;
 use App\Http\Resources\Employee\EmployeeResource;
 use App\Http\Resources\Exam\ExamIndexResource;
 use App\Http\Resources\ExamType\ExamTypeResource;
 use App\Models\Exam;
-use App\Modules\Exam\UpdateProtocolComment;
+use App\Modules\ExamDocument\ExamDocumentBuilder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
@@ -46,12 +46,47 @@ class ExamController
 
         $employee = $request->user();
         
-        return Inertia::render('Exam/Exams', [
-            'permissions' => [
-                'create' => $employee->can('create', Exam::class)
-            ],
+        return Inertia::render('Exam/Index', [
+            'createUrl' => $employee->can('create', Exam::class)
+                ? route('exams.create', [], false)
+                : null,
             'exams' => ExamIndexResource::collection($exams)
         ]);
+    }
+
+    public function show(
+        Request $request,
+        Exam $exam,
+        ExamViewBuilder $builder
+    ): \Inertia\Response {
+
+        $employee = $request->user();
+
+        $exam = $builder->execute($exam, $employee);
+
+        return Inertia::render('Exam/View',[
+            'exam' => new ExamResource($exam),
+            'actions' => [
+                'edit' => [
+                    'url' => $employee->can('update', $exam)
+                        ? route('exams.edit', [
+                            'exam' => $exam
+                        ], false)
+                        : null,
+                    'disabled' => ! app(ExamEditRules::class)->check($exam)->available
+                ],
+                'destroy' => [
+                    'url' => $employee->can('delete', $exam)
+                        ? route('exams.destroy', [
+                            'exam' => $exam
+                        ], false)
+                        : null,
+                    'disabled' => ! app(ExamCancellRules::class)->check($exam)->available
+                ]
+            ],
+            'documents' => app(ExamDocumentBuilder::class)->build($exam, $request->user())
+        ]);
+        
     }
 
     public function store(
@@ -68,27 +103,13 @@ class ExamController
         return response()->json();
     }
 
-    public function createData(
-        ExamCreateData $query
-    ): JsonResponse
-    {
-        Gate::authorize('create', Exam::class);
-        $createData = $query->execute();
-
-        return response()->json([
-            'addresses' => AddressResource::collection($createData['addresses']),
-            'examTypes' => ExamTypeResource::collection($createData['examTypes']),
-            'examiners' => EmployeeResource::collection($createData['examiners']),
-        ], 200);
-    }
-
     public function create(
         ExamCreateData $builder
     ): \Inertia\Response {
         Gate::authorize('create', Exam::class);
 
         $createData = $builder->execute();
-        return Inertia::render('Exam/ExamCreate', [
+        return Inertia::render('Exam/Create', [
             'addresses' => AddressResource::collection($createData['addresses']),
             'examTypes' => ExamTypeResource::collection($createData['examTypes']),
             'examiners' => EmployeeResource::collection($createData['examiners']),
@@ -104,11 +125,17 @@ class ExamController
         $createData = $builder->execute();
         $exam->load('examiners');
 
-        return Inertia::render('Exam/ExamEdit', [
+        return Inertia::render('Exam/Edit', [
             'exam' => new ExamEditResource($exam),
             'addresses' => AddressResource::collection($createData['addresses']),
             'examTypes' => ExamTypeResource::collection($createData['examTypes']),
             'examiners' => EmployeeResource::collection($createData['examiners']),
+            'backUrl' => route('exams.show', [
+                'exam' => $exam
+            ], false),
+            'updateUrl' => route('exams.update', [
+                'exam' => $exam
+            ], false)
         ]);
     }
 
@@ -116,27 +143,13 @@ class ExamController
         ExamPostRequest $request,
         Exam $exam,
         UpdateExam $updateExam
-    ):JsonResponse {
+    ):RedirectResponse {
         Gate::authorize('update', $exam);
 
         $updateExam->execute($exam, $request->toDto());
 
-        return response()->json();
-    }
-
-    public function verifyCode(
-        VerifyCodeRequest $request,
-        CreateAttempt $createAttempt
-    ): RedirectResponse {
-        $attempt = $createAttempt->execute($request->validated('code'));
-
-        Auth::guard('foreignNationals')
-            ->login($attempt->foreignNational);
-
-        $request->session()->regenerate();
-
-        return redirect()->route('attempts.show', [
-            'attempt' => $attempt->id,
+        return redirect()->route('exams.show', [
+            'exam' => $exam
         ]);
     }
 
@@ -144,36 +157,20 @@ class ExamController
         Request $request,
         Exam $exam,
         CancelExam $cancelExam
-    ): Response {
+    ): RedirectResponse {
         Gate::authorize('delete', $exam);
 
         $request->validate([
-            'cancelledReason' => ['required', 'string'],
+            'reason' => ['required', 'string'],
         ]);
 
         $cancelExam->execute(
             $exam, 
-            $request->string('cancelledReason')
+            $request->string('reason')
         );
 
-        return response()->noContent();
-    }
-
-    public function protocolComment(
-        Request $request,
-        Exam $exam,
-        UpdateProtocolComment $updateProtocolComment
-    ): Response {
-
-        $request->validate([
-            'protocolComment' => ['required', 'string'],
+        return redirect()->route('exams.show', [
+            'exam' => $exam
         ]);
-
-        $updateProtocolComment->execute(
-            $exam,
-            $request->input('protocolComment')
-        );
-
-        return response()->noContent();
     }
 }

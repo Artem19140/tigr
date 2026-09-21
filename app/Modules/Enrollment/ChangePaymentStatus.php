@@ -24,9 +24,9 @@ class ChangePaymentStatus
             throw new BusinessException($result->message());
         }
 
-        $enrollment->has_payment = ! $enrollment->has_payment;
-
-        $enrollment->save();
+        $enrollment->update([
+            'has_payment' =>  ! $enrollment->has_payment
+        ]);
 
         $this->logger->log($enrollment);
     }

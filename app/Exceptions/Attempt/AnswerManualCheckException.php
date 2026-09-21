@@ -20,7 +20,7 @@ class AnswerManualCheckException extends BaseException
 
     public function report(Request $request): void
     {
-        Log::warning('Manual attempt checking', [
+        Log::warning('Manual attempt Review', [
             'attempt_answer_id' => $request->route('attemptAnswer')?->id,
             ...$this->context,
         ]);

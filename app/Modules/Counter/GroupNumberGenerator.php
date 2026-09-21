@@ -8,10 +8,9 @@ use Illuminate\Support\Facades\DB;
 
 class GroupNumberGenerator
 {
-
-    public function execute(): int
+    public function execute(bool $rollback = false): int
     {
-        return DB::transaction(function (){
+        return DB::transaction(function () use( $rollback ) {
             $groupNumber = Counter::findLockedOrFail(
                 CounterKey::Group
             );
@@ -19,14 +18,25 @@ class GroupNumberGenerator
             if($groupNumber->notInitialized()){
                 $groupNumber->initialize();
                 $groupNumber->save();
+
+                if($rollback){
+                    return $this->rollback($groupNumber->value);
+                }
+
                 return $groupNumber->value;
             }
 
             $this->shouldReset($groupNumber) 
                 ?  $groupNumber->reset() 
                 :  $groupNumber->incrementValue();
-            $groupNumber->save();    
+            $groupNumber->save(); 
+
+            if($rollback){
+                return $this->rollback($groupNumber->value);
+            }
+
             return $groupNumber->value;
+            
         });
     }
 
@@ -36,5 +46,11 @@ class GroupNumberGenerator
         $counterUpdatedAt = $counter->last_increment_at->toDateString();
 
         return $counterUpdatedAt !== $today;
+    }
+
+    protected function rollback(int $value)
+    {
+        DB::rollBack();
+        return $value;
     }
 }

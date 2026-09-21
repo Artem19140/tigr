@@ -19,13 +19,12 @@ export interface Exam{
     cancelledReason:string | null,
     status:string
     foreignNationals:Array<ForeignNational>,
-    enrollments?:Array<Enrollment>,
+    enrollments: Array<Enrollment>,
     enrollmentsCount:number,
     cancelledAt:string,
     documents:{
         id:number
     },
-    actions:ExamActions,
     hasEnrollment:boolean
 }
 
@@ -43,7 +42,7 @@ export interface ExamType{
     name:string
 }
 
-export interface ExamChecking{
+export interface ExamReview{
     id:number,
     shortName:string,
     beginTime:string,
@@ -69,7 +68,7 @@ export interface ExamFilters  {
     id:number | null
 }
 
-export interface ExamMonitoring  {
+export interface ExamConduct  {
     id:number,
     name:string,
     shortName:string,
@@ -79,47 +78,13 @@ export interface ExamMonitoring  {
     status:string,
     hasSpeakingTasks:boolean,
     enrollments:Array<Enrollment>,
-    polling:boolean,
     cancelledAt:string,
-    actions:{
-        protocolComment:{
-            available:boolean
-        }
-    }
-}
-interface DocumentAvailble{
-    available:boolean,
-    reason:string | null,
-    code:string | null
 }
 
-export interface ExamActions {
-    codes: {
-        can:boolean,
-        availability:DocumentAvailble
-    },
-    protocol: {
-        can:boolean,
-        availability:DocumentAvailble
-    },
-    results: {
-        can:boolean,
-        availability:DocumentAvailble
-    },
-    list: {
-        can:boolean,
-        availability:DocumentAvailble
-    }
-
-    enrollments: {
-        view: {
-            can:boolean
-        }
-        statement: {
-            can:boolean
-        }
-        payment: {
-            can:boolean
-        }
+export interface ExamDocument {
+    url:string,
+    availability:{
+        disabled: boolean,
+        code: string | null
     }
 }

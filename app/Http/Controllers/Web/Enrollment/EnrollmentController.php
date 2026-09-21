@@ -6,7 +6,12 @@ use App\Modules\Enrollment\ChangePaymentStatus;
 use App\Modules\Enrollment\CreateEnrollment;
 use App\Http\Requests\Enrollment\EnrollmentStoreRequest;
 use App\Models\Enrollment;
+use App\Modules\Shared\CenterData;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
+use Inertia\Inertia;
 
 class EnrollmentController
 {
@@ -31,9 +36,29 @@ class EnrollmentController
     public function changePayment(
         Enrollment $enrollment,
         ChangePaymentStatus $changePaymentStatus
-    ): JsonResponse {
+    ): RedirectResponse {
         $changePaymentStatus->execute($enrollment);
 
-        return response()->json();
+        return Inertia::back();
+    }
+
+    public function statement(
+        Enrollment $enrollment,
+    ): Response {
+        
+        $enrollment->load([
+            'foreignNational',
+            'exam.type',
+            'creator'
+        ]);
+
+        $statementPdf = Pdf::loadView('pdf.enrollment.enrollment-full', [
+            'enrollment' => $enrollment,
+            'center' => new CenterData()
+        ]);
+
+        $fileName = "Заявление_согласие_{$enrollment->foreignNational->full_name}.pdf";
+        
+        return $statementPdf->stream($fileName);
     }
 }

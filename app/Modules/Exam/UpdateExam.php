@@ -37,10 +37,6 @@ final class UpdateExam
                 $this->getAttributes($exam, $examDto)
             );
             $examinersChanges = $exam->examiners()->sync($examDto->examiners);
-            $exam->save();
-
-            // $exam->load(['examiners', 'type', 'address']);
-            // $exam->loadCount('enrollments');
 
             $this->logger->log($exam, [
                 'examiners' => $examinersChanges

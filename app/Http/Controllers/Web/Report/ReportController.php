@@ -9,8 +9,10 @@ use App\Modules\Report\MinistryEducationReportGenerator;
 use App\Http\Requests\Report\FlatTableRequest;
 use App\Http\Requests\Report\FrdoReportRequest;
 use App\Http\Requests\Report\MinistryEducationReportRequest;
+use App\Navigation\ReportNavigation;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -42,7 +44,7 @@ class ReportController
         }, 200, $headers);
     }
 
-    public function availableFrdo(
+    public function availabilityFrdo(
         FrdoReportRequest $request,
         EnsureFrdoGenerationAvailable $ensureFrdoGenerationAvailable
     ): JsonResponse {
@@ -65,7 +67,8 @@ class ReportController
     ): StreamedResponse {
         $dateFrom = Carbon::parse($request->validated('dateFrom'));
         $dateTo = Carbon::parse($request->validated('dateTo'));
-        $fileName = 'Плоская_таблица'.'_'.$dateFrom->format('d.m.Y').'_'.$dateTo->format('d.m.Y').'.csv';
+        
+        $fileName = "Плоская_таблица_{$dateFrom->format('d.m.Y')}_{$dateTo->format('d.m.Y')}.csv";
 
         return response()->streamDownload(function () use (
             $flatTableGenerator,
@@ -128,23 +131,22 @@ class ReportController
         );
     }
 
-    public function resolve(Request $request)
+    public function resolve(
+        Request $request, 
+        ReportNavigation $navigation
+    ): RedirectResponse
     {
         $employee = $request->user();
-        $route = match(true){
-            $employee->can('reports.frdo') => 'reports.frdo',
-            $employee->can('reports.flat-table') => 'reports.flat-table',
-            $employee->can('reports.ministry-education') => 'reports.ministry-education',
-            default => null
-        };
 
-        if(! $route){
+        $allowedRoutes = $navigation->resolve($employee);
+
+        if($allowedRoutes->isEmpty()){
             Log::warning('UNEXPECTED: reports route not resolved ', [
-                'route' => $route
+                'employee' => $employee->id,
+                'route' => $request->route()
             ]);
             abort(403);
         }
-
-        return redirect()->route($route);
+        return redirect($allowedRoutes->first()['url']);
     }
 }

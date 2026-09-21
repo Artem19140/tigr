@@ -31,7 +31,8 @@ class MyExamController
             ->get();
         
         $route = 'my-exams.index';
-        return Inertia::render('Exam/MyExams', [
+
+        return Inertia::render('MyExams/Index', [
             'exams' => ExamIndexResource::collection($exams),
             'current' => $now->copy()->format('d.m.Y'),
             'links' => [

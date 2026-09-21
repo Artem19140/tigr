@@ -24,114 +24,134 @@ function required (v:any) {
 </script>
 
 <template>
-  <div class="space-y-4 p-6 ">
-    <div v-if="hasEnrollment" class="mb-6 text-grey ">Редактирование некоторых полей невозможно, так как эти данные занесены в заявления иностранных граждан</div>
-    <v-autocomplete
-      label="Тип экзамена"
-      :rules="[required]"
-      item-title="name"
-      item-value="id"
-      :items="examTypes"
-      v-model="form.examTypeId"
-      :error-messages="form.errors.examTypeId"
-      :disabled="hasEnrollment"
-      clearable
-      variant="outlined"
-      density="comfortable"
-      :prepend-inner-icon="mdiSchoolOutline"
-    />
+    <div class="space-y-6">
+        <!-- Основные параметры -->
+        <div>
+            <div class="mb-4 text-sm font-semibold text-gray-700">
+                Основные параметры
+            </div>
 
-    <div class="grid grid-cols-2 gap-4">
-      <v-text-field
-        type="date"
-        label="Дата"
-        :rules="[required]"
-        v-model="form.date"
-        :disabled="hasEnrollment"
-        :error-messages="form.errors.date"
-        variant="outlined"
-        density="comfortable"
-      />
+            <div class="space-y-5">
+                <v-autocomplete
+                    v-model="form.examTypeId"
+                    label="Тип экзамена"
+                    :rules="[required]"
+                    item-title="name"
+                    item-value="id"
+                    :items="examTypes"
+                    :error-messages="form.errors.examTypeId"
+                    :disabled="hasEnrollment"
+                    clearable
+                    variant="outlined"
+                    density="comfortable"
+                    :prepend-inner-icon="mdiSchoolOutline"
+                />
 
-      <v-text-field
-        type="time"
-        label="Время"
-        :rules="[required]"
-        v-model="form.time"
-        :disabled="hasEnrollment"
-        :error-messages="form.errors.time"
-        variant="outlined"
-        density="comfortable"
-      />
+                <div class="grid grid-cols-1 items-start gap-5 sm:grid-cols-2">
+                    <v-date-input
+                        v-model="form.date"
+                        label="Дата"
+                        :rules="[required]"
+                        :disabled="hasEnrollment"
+                        :error-messages="form.errors.date"
+                        variant="outlined"
+                        density="comfortable"
+                    />
+
+                    <v-text-field
+                        v-model="form.time"
+                        type="time"
+                        label="Время"
+                        :rules="[required]"
+                        :disabled="hasEnrollment"
+                        :error-messages="form.errors.time"
+                        variant="outlined"
+                        density="comfortable"
+                    />
+                </div>
+
+                <v-number-input
+                    v-model="form.capacity"
+                    label="Вместимость"
+                    :rules="[required]"
+                    :min="0"
+                    :error-messages="form.errors.capacity"
+                    :prepend-inner-icon="mdiAccountGroupOutline"
+                    control-variant="hidden"
+                    variant="outlined"
+                    density="comfortable"
+                />
+            </div>
+        </div>
+
+        <!-- Место и экзаменаторы -->
+        <div>
+            <div class="mb-4 text-sm font-semibold text-gray-700">
+                Место и экзаменаторы
+            </div>
+
+            <div class="space-y-5">
+                <v-autocomplete
+                    v-model="form.addressId"
+                    label="Адрес"
+                    item-title="address"
+                    item-value="id"
+                    :items="addresses"
+                    :rules="[required]"
+                    :disabled="hasEnrollment"
+                    :error-messages="form.errors.addressId"
+                    clearable
+                    variant="outlined"
+                    density="comfortable"
+                    :prepend-inner-icon="mdiMapMarkerOutline"
+                />
+
+                <v-autocomplete
+                    v-model="form.examiners"
+                    label="Экзаменаторы"
+                    item-title="fullName"
+                    item-value="id"
+                    :items="examiners"
+                    :rules="[required]"
+                    :error-messages="form.errors.examiners"
+                    multiple
+                    chips
+                    closable-chips
+                    clearable
+                    variant="outlined"
+                    density="comfortable"
+                    :prepend-inner-icon="mdiAccountTieOutline"
+                />
+            </div>
+        </div>
+
+        <!-- Дополнительно -->
+        <div>
+            <div class="mb-4 text-sm font-semibold text-gray-700">
+                Дополнительно
+            </div>
+
+            <v-textarea
+                v-model="form.comment"
+                label="Комментарий"
+                :error-messages="form.errors.comment"
+                hint="Максимум 256 символов"
+                maxlength="256"
+                counter
+                rows="2"
+                auto-grow
+                variant="outlined"
+                density="comfortable"
+                :prepend-inner-icon="mdiTextBoxOutline"
+            />
+
+            <div
+                v-if="hasEnrollment"
+                class="mt-4 rounded-lg bg-gray-50 px-4 py-3 text-sm leading-relaxed text-gray-500"
+            >
+                Тип экзамена, дата, время и адрес нельзя изменить после
+                первой записи на экзамен.
+            </div>
+        </div>
     </div>
-
-    <v-number-input
-      label="Вместимость"
-      v-model="form.capacity"
-      :rules="[required]"
-      :min="0"
-      :error-messages="form.errors.capacity"
-      :prepend-inner-icon="mdiAccountGroupOutline"
-      control-variant="hidden"
-      density="comfortable"
-    />
-
-  </div>
-
-  <div class="space-y-4 p-6 ">
-
-    <v-autocomplete
-      label="Адрес"
-      item-title="address"
-      item-value="id"
-      :items="addresses"
-      :rules="[required]"
-      v-model="form.addressId"
-      :disabled="hasEnrollment"
-      :error-messages="form.errors.addressId"
-      clearable
-      density="comfortable"
-      :prepend-inner-icon="mdiMapMarkerOutline"
-    />
-
-    <v-autocomplete
-      label="Экзаменаторы"
-      item-title="fullName"
-      item-value="id"
-      :items="examiners"
-      :rules="[required]"
-      v-model="form.examiners"
-      :error-messages="form.errors.examiners"
-      multiple
-      chips
-      closable-chips
-      clearable
-      density="comfortable"
-      :prepend-inner-icon="mdiAccountTieOutline"
-    />
-
-  </div>
-
-  <div class="space-y-4 p-6 ">
-
-    <div class="mb-4 text-xs uppercase tracking-wider text-gray-400">
-      Дополнительно
-    </div>
-
-    <v-textarea
-      label="Комментарий"
-      v-model="form.comment"
-      :error-messages="form.errors.comment"
-      hint="Максимум 256 символов"
-      maxlength="256"
-      counter
-      rows="2"
-      auto-grow
-      variant="outlined"
-      density="comfortable"
-      :prepend-inner-icon="mdiTextBoxOutline"
-    />
-
-  </div>
-
 </template>

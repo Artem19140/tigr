@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Enrollment;
 
-use App\Http\Resources\Attempt\AttemptMonitoringResource;
+use App\Http\Resources\Attempt\AttemptConductResource;
 use App\Http\Resources\ForeignNational\ForeignNationalResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -19,7 +19,7 @@ class EnrollmentConductResource extends JsonResource
         return [
             'id' => $this->resource->id,
             'foreignNational' => new ForeignNationalResource($this->whenLoaded('foreignNational')),
-            'attempt' => new AttemptMonitoringResource($this->whenLoaded('attempt')),
+            'attempt' => new AttemptConductResource($this->whenLoaded('attempt')),
         ];
     }
 }

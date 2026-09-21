@@ -72,7 +72,7 @@ class RateAttemptAnswerTest extends TestCase
         $this->hasLog();
     }
 
-    public function test_fail_task_no_manual_check(): void
+    public function test_fail_task_no_manual_review(): void
     {
         $this->attempt->finish();
         $this->task->type = collect(TaskType::autoCheckTypes())->random();

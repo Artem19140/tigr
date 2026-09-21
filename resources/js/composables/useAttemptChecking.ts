@@ -1,8 +1,8 @@
-import { AttemptChecking, AttemptMonitoring } from "@/interfaces/Attempt";
+import { AttemptChecking, AttemptConduct } from "@/interfaces/Attempt";
 import { AttemptAnswer } from "@/interfaces/Task";
 import { ref } from "vue";
 
-const attempt = ref<AttemptChecking | AttemptMonitoring | null>(null)
+const attempt = ref<AttemptChecking | AttemptConduct | null>(null)
 
 export const useAttemptChecking = () => {
     const rated = (taskId: number, attemptAnswer:AttemptAnswer) => {

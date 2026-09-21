@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Enums\CounterKey;
 use App\Enums\EmployeeRole;
+use App\Models\Center;
 use App\Models\Counter;
 use App\Models\Employee;
 use App\Models\Role;
@@ -28,6 +29,24 @@ class DatabaseSeeder extends Seeder
             RvpSeeder::class,
             VnzhSeeder::class,
         ]);
+
+        Center::firstOrCreate(
+            [
+                'ogrn' => '1021801503382',
+                'inn' => '1833010750',
+            ], 
+            [
+                'name' => 'Федеральное государственное бюджетное образовательное учреждение высшего образования «Удмуртский государственный университет»',
+                'time_zone' => 'Europe/Samara',
+                'director_fio' => 'Рязанова Анна Юрьевна',
+                'certificates_issue_address' => 'Удмуртская республика, г. Ижевск, ул. Университетская, д.1',
+                'ogrn' => '1021801503382',
+                'inn' => '1833010750',
+                'short_name' => 'ФГБОУ ВО «УдГУ»',
+                'address' => 'Удмуртская Республика, г. Ижевск, улица Университетская',
+                'name_genitive' => 'федеральному государственному бюджетному образовательному учреждению высшего образования «Удмуртский государственный университет»',
+                'commission_chairman' => 'Иванов Иван Иванович',
+            ]);
         
         $counters = CounterKey::cases();
 

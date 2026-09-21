@@ -2,8 +2,8 @@
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { useConfirmationOptionsDialog } from '@/composables/useConfirmationOptionsDialog';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
-import PlatformAdminLayout from '@/layouts/PlatformAdminLayout.vue';
 import { useHttp } from '@inertiajs/vue3';
+import PlatformAdminLayout from './PlatformAdminLayout.vue';
 
 defineOptions({
   layout: [EmployeeLayout, PlatformAdminLayout],

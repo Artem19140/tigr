@@ -34,6 +34,15 @@ final readonly  class RuleResult
         return app(CodeTranslator::class)->translate($this->code, $this->params); 
     }
 
+    public function code(): string|null
+    {        
+        if($this->code instanceof AvailabilityCode){
+            return $this->code->value;
+        }
+        return $this->code;
+    }
+    
+
     public function isNotAvailable():bool
     {
         return ! $this->available;

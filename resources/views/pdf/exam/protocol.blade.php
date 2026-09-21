@@ -92,28 +92,6 @@
                 </div>
                 @endif
             </div>
-
-            <div>
-                @if($attemptWithViolations->isNotEmpty())
-                    @foreach ( $attemptWithViolations as $attempt )
-                        <div class="mt-10 violation-section-content">
-                            <div >
-                                За сдающим {{ $attempt->foreignNational->full_name_short }}
-                                (паспорт: {{ $attempt->foreignNational->full_passport }})
-                                зафиксированы нарушения:
-                            </div>
-
-                            <ol style="margin-top: 0px;">
-                                @foreach ($attempt->violations as $violation)
-                                    <li>
-                                        {{ $violation->comment }} ( {{ $violation->created_at_local->format('H:i') }} );
-                                    </li>
-                                @endforeach
-                            </ol>
-                        </div>
-                    @endforeach
-                @endif
-            </div>
         </div>
         <div>{{ !$exam->protocol_comment && $annulledAttempts->isEmpty() ?  'Нарушения отсутствуют' : '' }}</div>
     </div>

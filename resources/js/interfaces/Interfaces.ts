@@ -23,3 +23,9 @@ export interface PeriodDate{
     dateTo:string | null,
     dateFrom:string | null
 }
+
+export interface Action{
+    url: string,
+    method: string,
+    disabled?: boolean
+}

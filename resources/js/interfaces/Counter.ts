@@ -1,5 +1,7 @@
 export interface Counter{
-    id:number,
-    key:string,
-    value:number
+    id: number,
+    key: string,
+    value: number,
+    nextValue: number,
+    updateUrl: string
 }

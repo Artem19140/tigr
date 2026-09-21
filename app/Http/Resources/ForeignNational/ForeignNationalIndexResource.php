@@ -19,6 +19,9 @@ class ForeignNationalIndexResource extends JsonResource
             'patronymic' => $this->resource->patronymic,
             'fullName' => $this->full_name_short,
             'fullPassport' => $this->full_passport,
+            'showUrl' => route('foreign-nationals.show', [
+                'foreign_national' => $this->resource
+            ], false)
         ];
     }
 }

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
-import PlatformAdminLayout from '@/layouts/PlatformAdminLayout.vue';
 import { useHttp } from '@inertiajs/vue3';
 import { RedirectUrl } from '@/interfaces/Interfaces';
+import PlatformAdminLayout from './PlatformAdminLayout.vue';
 
 defineOptions({
   layout: [EmployeeLayout, PlatformAdminLayout],

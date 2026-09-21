@@ -1,148 +1,131 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useAuth } from '@composables/useAuth';
 import { router, usePage } from '@inertiajs/vue3'
-import { useConfirmDialog } from '@/composables/useConfirmDialog';
+import { useConfirm } from '@/composables/useConfirm';
 import BaseThreeDotDropdown from '@/components/BaseComponents/BaseThreeDotDropdown/BaseThreeDotDropdown.vue';
-import { useModals } from '@/composables/useModals';
 import BaseLayout from './BaseLayout.vue';
 import { mdiPaw, mdiAccountGroup, mdiFileChartOutline, 
   mdiOfficeBuilding, mdiCog, mdiLogout, mdiClipboardText, mdiFileSign } from '@mdi/js'
+import LogoutAllDevicesModal from './LogoutAllDevicesModal.vue';
 
 const page = usePage<any>()
-const can =  computed(() => page.props?.auth?.can)
-
-const go = (url:string) => {
-  router.visit(url)
-}
+const navigation =  computed(() => page.props?.auth?.navigation)
 
 const logout = async () => {
-  const {confirmOpen} = useConfirmDialog()
+  const {confirmOpen} = useConfirm()
   const ok = await confirmOpen('Выйти из аккаунта?')
   if(!ok) return 
-  router.post('/logout')
+  router.post(navigation.value.auth.logout.url)
 }
-const {user} = useAuth()
+const user = page.props?.auth?.user ?? null
 
 const employeeName = `${user?.surname} ${user?.name}`
-const activeItem = ref('')
+const activeItem = ref(page.url ?? '')
 
-const {open} = useModals()
-
-const menu: Array<MenuElem> = [
-  {
-    title:"Иностранные граждане" ,
-    prependIcon: mdiAccountGroup,
-    url:'/foreign-nationals',
-    value:"foreignNationals",
-    allowed:can.value.foreignNationals
+const menuProps = {
+  foreignNationals: {
+	icon: mdiAccountGroup,
+	label: 'Иностранные граждане'
   },
-  {
-    title:"Экзамены" ,
-    prependIcon: mdiClipboardText,
-    url:'/exams',
-    value:"exams",
-    allowed:can.value.exams
+  exams: {
+	icon: mdiClipboardText,
+	label: 'Экзамены'
   },
-  {
-    title:"Мои экзамены" ,
-    prependIcon: mdiFileSign,
-    url:'/my-exams',
-    value:"myExams",
-    allowed:can.value.myExams
+  myExams: {
+	icon:mdiFileSign,
+	label:'Мои экзамены'
   },
-  {
-    title:"Отчеты" ,
-    prependIcon: mdiFileChartOutline,
-    url: '/reports',
-    value: "reports",
-    allowed:can.value.reports
+  reports: {
+	icon: mdiFileChartOutline,
+	label: 'Отчеты'
   },
-  {
-    title:"Центр" ,
-    prependIcon: mdiOfficeBuilding ,
-    url:`/employees`,
-    value:"center",
-    allowed:can.value.center
+  center: {
+	icon: mdiOfficeBuilding,
+	label: 'Центр'
   },
-  {
-    title:"Панель админа" ,
-    prependIcon:mdiCog ,
-    url:'/admin/logs',
-    value:"admin",
-    allowed:can.value.adminPanel
-  }
-]
-
-interface MenuElem{
-  title:string,
-  prependIcon:string,
-  url:string,
-  value:string,
-  allowed:boolean
-}
-
-const visibleItems = computed(() =>
-  menu.filter(item => item.allowed)
-)
+  admin: {
+	icon: mdiCog, 
+	label: 'Админ панель'
+  },
+} 
+type MenuKey = keyof typeof menuProps
+const logoutAll = ref<boolean>(false)
 </script>
 
 <template>
-	<BaseLayout>
-		<v-navigation-drawer 
-			expand-on-hover
-			permanent
-			rail
-		>
-			<div class="d-flex flex-column fill-height">
-				<v-list>
-					<v-list-item
-						:subtitle="user?.job_title"
-						:title="employeeName"
-						:prepend-icon="mdiPaw" 
-					/>
-					
-				</v-list>
+    <BaseLayout>
+        <v-navigation-drawer
+            permanent
+            rail
+            expand-on-hover
+            class="border-r border-gray-200"
+        >
+            <div class="flex h-full flex-col">
+                <!-- User -->
+                <div class="px-2 py-3">
+                    <v-list-item
+                        :title="employeeName"
+                        :subtitle="user?.job_title"
+                        :prepend-icon="mdiPaw"
+                        class="rounded-lg"
+                    />
+                </div>
 
-				<v-divider></v-divider>
+                <div class="px-3">
+                    <div class="border-t border-gray-200" />
+                </div>
 
-				<v-list density="compact" nav v-model="activeItem">
-					<v-list-item
-						v-for="(item, index) in visibleItems"
-						:key="index"
-						:title="item.title"
-						:prepend-icon="item.prependIcon"
-						@click="() => go(item.url)"
-						:value="item.value"
-					/>
-				</v-list>
-			
-				<v-list density="compact" nav class="mt-auto">
-					<v-list-item
-						:prepend-icon="mdiLogout" 
-						title="Выйти из аккаунта" 
-						@click="logout"
-					>
-						<template #append>
-							<BaseThreeDotDropdown nav>
-								<v-list-item
-									title="Выйти с других устройств"
-									@click="open('logoutAll')"
-								/>
-							</BaseThreeDotDropdown>
-						</template>
-					</v-list-item>
-				</v-list>
-			</div>
-		</v-navigation-drawer >
-		<slot />
-	</BaseLayout>
+                <!-- Navigation -->
+                <v-list
+                    v-model="activeItem"
+                    density="comfortable"
+                    nav
+                    class="px-2 pt-3"
+                >
+                    <v-list-item
+                        v-for="(item, key) in navigation.menu"
+                        :key="key"
+                        :value="item.url"
+                        :title="menuProps[key].label"
+                        :prepend-icon="menuProps[key].icon"
+                        class="mb-1 rounded-lg"
+                        color="primary"
+                        @click="router.visit(item.url)"
+                    />
+                </v-list>
+
+                <!-- Logout -->
+                <div class="mt-auto px-2 pb-3">
+                    <v-list
+                        density="comfortable"
+                        nav
+                        class="pa-0"
+                    >
+                        <v-list-item
+                            title="Выйти из аккаунта"
+                            :prepend-icon="mdiLogout"
+                            class="rounded-lg"
+                            @click="logout"
+                        >
+                            <template #append>
+                                <BaseThreeDotDropdown nav>
+                                    <v-list-item
+                                        title="Выйти с других устройств"
+                                        @click="logoutAll = true"
+                                    />
+                                </BaseThreeDotDropdown>
+                            </template>
+                        </v-list-item>
+                    </v-list>
+                </div>
+            </div>
+        </v-navigation-drawer>
+
+        <slot />
+    </BaseLayout>
+
+    <LogoutAllDevicesModal
+        v-model="logoutAll"
+        :url="navigation.auth.logoutAll.url"
+    />
 </template>
-
-
-
-<style>
-html {
-  overflow-y: scroll;
-}
-</style>

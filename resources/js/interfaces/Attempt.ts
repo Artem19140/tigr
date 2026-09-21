@@ -1,7 +1,6 @@
 import { Exam } from "./Exam";
 import { ForeignNational } from "./ForeignNational";
 import { Task } from "./Task";
-import { Violation } from "./Violation";
 
 export interface Attempt{
     id:number,
@@ -18,10 +17,11 @@ export interface Attempt{
     serverNow:number,
     minDurationMinutes:number,
     tasksCount:number,
-    checkedAt:string
+    checkedAt:string,
+    checkUrl: string
 }
 
-export interface AttemptChecking{
+export interface AttemptReview{
     id:number,
     status:string,
     expiredAt:string,
@@ -29,7 +29,7 @@ export interface AttemptChecking{
     checkedAt:string
 }
 
-export interface AttemptMonitoring{
+export interface AttemptConduct{
     id:number, 
     startedAt:string,
     finishedAt:string | null,
@@ -41,10 +41,14 @@ export interface AttemptMonitoring{
     speakingStartedAt: string | null,
     tasks: Task[],
     checkedAt:string,
-    availability:{
-        annul:boolean,
-        violations:boolean,
-        speaking:boolean
-    },
-    violations:Array<Violation>
+    actions:{
+        destroy:{
+            url: string,
+            disabled:boolean
+        },
+        speaking:{
+            url: string,
+            disabled:boolean
+        },
+    }
 }

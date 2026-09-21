@@ -33,18 +33,21 @@ class ForeignNationalController
 
         $employee = $request->user();
 
-        return Inertia::render('ForeignNationals/ForeignNationals', [
+        return Inertia::render('ForeignNationals/Index', [
             'foreignNationals' => ForeignNationalIndexResource::collection($foreignNationals),
-            'permissions' => [
-                'create' => $employee->can('create', ForeignNational::class)
-            ],
+            'createUrl' =>  $employee->can('create', ForeignNational::class)
+                ? route('foreign-nationals.create', [], false)
+                : null
         ]);
     }
 
     public function create() {
         Gate::authorize('create', ForeignNational::class);
 
-        return Inertia::render('ForeignNationals/ForeignNationalCreate');
+        return Inertia::render('ForeignNationals/Create', [
+            'backUrl' => route('foreign-nationals.index', [], false),
+            'storeUrl' => route('foreign-nationals.store', [], false)
+        ]);
     }
 
     public function store(
@@ -81,8 +84,13 @@ class ForeignNationalController
             $request->user()
         );
 
-        return Inertia::render('ForeignNationals/ForeignNationalView', [
-            'foreignNational' => new ForeignNationalProfileResource($buildedForeignNational)
+        return Inertia::render('ForeignNationals/View', [
+            'foreignNational' => new ForeignNationalProfileResource($buildedForeignNational),
+            'editUrl' => $request->user()->can('update', $foreignNational) 
+                ? route('foreign-nationals.edit', [
+                    'foreign_national' => $foreignNational
+                ], false) 
+                : null
         ]);
     }
 
@@ -91,8 +99,14 @@ class ForeignNationalController
     ) {
         Gate::authorize('update', $foreignNational);
 
-        return Inertia::render('ForeignNationals/ForeignNationalEdit', [
-            'foreignNational' => new ForeignNationalProfileResource($foreignNational)
+        return Inertia::render('ForeignNationals/Edit', [
+            'foreignNational' => new ForeignNationalProfileResource($foreignNational),
+            'updateUrl' => route('foreign-nationals.update', [
+                'foreign_national' => $foreignNational
+            ], false), 
+            'backUrl' => route('foreign-nationals.show', [
+                'foreign_national' => $foreignNational
+            ], false) 
         ]);
     }
 

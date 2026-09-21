@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import BaseThreeDotDropdown from '@/components/BaseComponents/BaseThreeDotDropdown/BaseThreeDotDropdown.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { useSnackbarQueue } from '@/composables/useSnackbarQueue';
 import { router, useHttp } from '@inertiajs/vue3';
-import { mdiFileDocumentOutline } from '@mdi/js';
+import { mdiDownload, mdiFileDocumentOutline, mdiPencil } from '@mdi/js';
 import { ref } from 'vue';
 
 const props = defineProps<{
@@ -47,82 +46,100 @@ const clear = () => {
 </script>
 
 <template>
-  <v-list class="bg-transparent">
-    <div
-      v-for="doc in documents"
-      :key="doc.id"
-      class="rounded-xl px-3 py-2"
-    >
-      <v-list-item class="px-0">
-        <template #prepend>
-          <v-avatar
-            size="40"
-            rounded="lg"
-            class="bg-slate-100 text-slate-600"
-          >
-            <v-icon :icon="mdiFileDocumentOutline" />
-          </v-avatar>
-        </template>
-		
-        <v-list-item-title class="text-sm font-medium text-slate-900">
-          {{ getLabel(doc.type) }}
-        </v-list-item-title>
+    <v-list class="bg-transparent">
+        <div
+            v-for="doc in documents"
+            :key="doc.id"
+            class="border-b border-gray-100 last:border-0"
+        >
+            <v-list-item class="px-0 py-3">
+                <template #prepend>
+                    <div class="mr-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-500">
+                        <v-icon
+                            :icon="mdiFileDocumentOutline"
+                            size="20"
+                        />
+                    </div>
+                </template>
 
-        <v-list-item-subtitle class="text-xs text-slate-500">
-          {{ doc.createdAt }}
-        </v-list-item-subtitle>
+                <v-list-item-title class="text-sm font-medium text-gray-900">
+                    {{ getLabel(doc.type) }}
+                </v-list-item-title>
 
-        <template #append>
-          <div class="opacity-60 hover:opacity-100 transition">
-            <BaseThreeDotDropdown>
-              <v-list-item
-                class="text-sm"
-                @click="() => open(doc.id)"
-              >
-                Открыть
-              </v-list-item>
+                <v-list-item-subtitle class="mt-0.5 text-xs text-gray-500">
+                    {{ doc.createdAt }}
+                </v-list-item-subtitle>
 
-              <v-list-item
-                v-if="doc.permissions.update"
-                class="text-sm"
-                @click="updatedId = doc.id"
-              >
-                Заменить
-              </v-list-item>
-            </BaseThreeDotDropdown>
-          </div>
-        </template>
-      </v-list-item>
+                <template #append>
+                    <div class="flex items-center gap-1">
+                        <v-tooltip text="Скачать" location="top">
+                            <template #activator="{ props }">
+                                <v-btn
+                                    v-bind="props"
+                                    :icon="mdiDownload"
+                                    variant="text"
+                                    density="comfortable"
+                                    size="small"
+                                    color="grey-darken-1"
+                                    @click="open(doc.id)"
+                                />
+                            </template>
+                        </v-tooltip>
 
-      <div
-        v-if="updatedId === doc.id"
-        class="mt-3 rounded-lg border border-dashed border-slate-200 bg-white/60 p-3 backdrop-blur"
-      >
-        <v-file-upload
-          density="compact"
-          v-model="http.document"
-          :error-messages="http.errors.document"
-          :readonly="http.processing"
-          class="mb-3"
-        />
+                        <v-tooltip
+                            v-if="doc.permissions.update"
+                            text="Заменить"
+                            location="top"
+                        >
+                            <template #activator="{ props }">
+                                <v-btn
+                                    v-bind="props"
+                                    :icon="mdiPencil"
+                                    variant="text"
+                                    density="comfortable"
+                                    size="small"
+                                    color="grey-darken-1"
+                                    @click="updatedId = doc.id"
+                                />
+                            </template>
+                        </v-tooltip>
+                    </div>
+                </template>
+            </v-list-item>
 
-        <div class="flex items-center justify-end gap-3">
-          <v-btn
-            variant="text"
-            class="text-slate-500"
-            @click="clear"
-          >
-            Отмена
-          </v-btn>
+            <div
+                v-if="updatedId === doc.id"
+                class="mb-3 rounded-xl border border-gray-200 bg-gray-50 p-4"
+            >
+                <div class="mb-3 text-sm font-medium text-gray-700">
+                    Заменить документ
+                </div>
 
-          <AppPrimaryButton
-            text="Загрузить"
-            :loading="http.processing"
-            :disabled="http.processing || !http.document"
-            @click="() => update(doc.id)"
-          />
+                <v-file-upload
+                    v-model="http.document"
+                    density="compact"
+                    :error-messages="http.errors.document"
+                    :readonly="http.processing"
+                    class="mb-4"
+                />
+
+                <div class="flex justify-end gap-2">
+                    <v-btn
+                        variant="text"
+                        :disabled="http.processing"
+                        @click="clear"
+                    >
+                        Отмена
+                    </v-btn>
+
+                    <AppPrimaryButton
+                        text="Загрузить"
+                        :loading="http.processing"
+                        :disabled="http.processing || !http.document"
+                        @click="update(doc.id)"
+                    />
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </v-list>
+    </v-list>
 </template>

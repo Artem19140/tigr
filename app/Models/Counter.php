@@ -54,4 +54,14 @@ class Counter extends Model
     {
         $this->last_increment_at = Carbon::now();
     }
+
+    public function regexValidaton():string
+    {
+        return match ($this->key) {
+            CounterKey::RegNum  => '/^' . Carbon::now()->format('y') . '\d{4}$/',
+            CounterKey::Group   => '/^[1-9]\d*$/',
+            CounterKey::Session => '/^[1-9]\d*$/',
+            default       => throw new CounterNotFoundException($this->key),
+        };
+    }
 }

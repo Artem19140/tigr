@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { AttemptChecking, AttemptMonitoring } from '@/interfaces/Attempt';
+import { AttemptReview, AttemptConduct } from '@/interfaces/Attempt';
 import { Task } from '@/interfaces/Task';
 import { onMounted, ref } from 'vue';
 import { mdiCheck, mdiClose} from '@mdi/js'
 
 const props = defineProps<{
-  attempt: AttemptChecking | AttemptMonitoring
+  attempt: AttemptReview | AttemptConduct
 }>()
 
 const getParams = (checkedAt:string | null) => {
@@ -51,38 +51,40 @@ onMounted(() => {
 </script>
 
 <template>
-	<v-navigation-drawer
-		location="right"
-		width="100"
-	>
-		<div class="flex flex-column items-center">
-			<v-list 
-				density="compact" 
-				nav
-			>
-				<v-list-item
-					v-for="task in attempt.tasks"
-					:key="task.id"
-					:active="currentTaskId === task.id"
-					@click="scrollToTask(task.id)"
-				>
-					<template #prepend>
-						<v-avatar
-							size="24"
-							:color="taskParams(task).color"
-						>
-							<v-icon
-								:icon="taskParams(task).icon "
-								size="14"
-							/>
-						</v-avatar>
-					</template>
+    <aside class="sticky top-6 w-[120px] shrink-0">
+        <div class="rounded-xl border border-gray-200 bg-white p-3">
+            <div class="mb-3 text-center text-xs font-medium text-gray-500">
+                Задания
+            </div>
 
-					<v-list-item-title>
-						{{ task.order }}
-					</v-list-item-title>
-				</v-list-item>
-			</v-list>
-		</div>
-	</v-navigation-drawer>
+            <div class="grid grid-cols-2 gap-2">
+                <button
+                    v-for="task in attempt.tasks"
+                    :key="task.id"
+                    type="button"
+                    class="flex h-9 items-center justify-center rounded-lg border text-xs font-semibold transition-colors"
+                    :class="
+                        currentTaskId === task.id
+                            ? 'border-primary bg-primary text-white'
+                            : 'border-gray-200 bg-white text-gray-700 hover:bg-gray-50'
+                    "
+                    @click="scrollToTask(task.id)"
+                >
+                    <v-icon
+                        :icon="taskParams(task).icon"
+                        size="14"
+                        :color="
+                            currentTaskId === task.id
+                                ? 'white'
+                                : taskParams(task).color
+                        "
+                    />
+
+                    <span class="ml-1">
+                        {{ task.order }}
+                    </span>
+                </button>
+            </div>
+        </div>
+    </aside>
 </template>

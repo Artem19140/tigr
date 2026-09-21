@@ -128,11 +128,6 @@ class Attempt extends Model
         return $this->hasMany(AttemptAnswer::class, 'attempt_id');
     }
 
-    public function violations(): HasMany
-    {
-        return $this->hasMany(Violation::class, 'attempt_id');
-    }
-
     public function enrollment(): BelongsTo
     {
         return $this->belongsTo(Enrollment::class, 'enrollment_id');
@@ -236,10 +231,4 @@ class Attempt extends Model
             },
         );
     }
-
-    public function canEditViolation():bool
-    {
-        return $this->finished_at === null;
-    }
-
 }

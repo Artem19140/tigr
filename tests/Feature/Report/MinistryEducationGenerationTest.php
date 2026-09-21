@@ -30,7 +30,7 @@ class MinistryEducationGenerationTest extends TestCase
     public function test_success_last_week(): void
     {
         $response = $this->actingAs($this->actor)
-            ->getJson(route('reports.ministry-education.available', [
+            ->getJson(route('reports.ministry-education.availability', [
                 'lastWeek' => true,
             ]));
         $response->assertStatus(200)
@@ -52,7 +52,7 @@ class MinistryEducationGenerationTest extends TestCase
     public function test_success_period(): void
     {
         $response = $this->actingAs($this->actor)
-            ->getJson(route('reports.ministry-education.available', [
+            ->getJson(route('reports.ministry-education.availability', [
                 'lastWeek' => false,
                 'dateFrom' => Carbon::now()->subWeek()->format('Y-m-d'),
                 'dateTo' => Carbon::now()->subDays(4)->format('Y-m-d'),
@@ -78,7 +78,7 @@ class MinistryEducationGenerationTest extends TestCase
     public function test_fail_no_last_week(): void
     {
         $response = $this->actingAs($this->actor)
-            ->getJson(route('reports.ministry-education.available', [
+            ->getJson(route('reports.ministry-education.availability', [
             ]));
         $response->assertStatus(422);
     }
@@ -86,7 +86,7 @@ class MinistryEducationGenerationTest extends TestCase
     public function test_fail_no_period_with_false_last_week(): void
     {
         $response = $this->actingAs($this->actor)
-            ->getJson(route('reports.ministry-education.available', [
+            ->getJson(route('reports.ministry-education.availability', [
                 'lastWeek' => false,
                 'dateFrom' => null,
                 'dateTo' => null,

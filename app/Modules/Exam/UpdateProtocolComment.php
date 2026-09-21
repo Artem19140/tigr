@@ -25,9 +25,11 @@ class UpdateProtocolComment
         }
 
         $oldValue = $exam->protocol_comment ?? '';
-        $exam->protocol_comment = $protocolComment;
+        
+        $exam->update([
+            'protocol_comment' => $protocolComment
+        ]);
 
-        $exam->save();
         $this->audit->log(
             'update_protocol_comment',
             $exam, 
@@ -38,10 +40,5 @@ class UpdateProtocolComment
                 ],
             ]
         );
-    }
-
-    protected function log(Exam $exam, string $oldValue)
-    {
-        
     }
 }

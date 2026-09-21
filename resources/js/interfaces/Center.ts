@@ -1,5 +1,3 @@
-import { Employee } from "./Employee"
-
 export interface Center {
   id:number,
   name: string
@@ -9,6 +7,5 @@ export interface Center {
   certificatesIssueAddress: string
   directorFio: string
   nameGenitive: string
-  commissionChairman:string,
-  employees:Employee[]
+  commissionChairman:string
 }

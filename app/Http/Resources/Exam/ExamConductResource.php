@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Exam;
 
-use App\Modules\Exam\ProtocolCommentRules;
 use App\Http\Resources\Enrollment\EnrollmentConductResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -23,13 +22,7 @@ class ExamConductResource extends JsonResource
             'enrollmentsCount' => $this->whenCounted('enrollments_count'),
             'protocolComment' => $this->protocol_comment,
             'hasSpeakingTasks' => $this->whenLoaded('type', fn () => $this->type->has_speaking_tasks),
-            'shortName' => $this->whenLoaded('type', fn () => $this->type->short_name),
-            'polling' => $this->isGoing(),
-            'actions' => [
-                'protocolComment' => [
-                    'available' =>  app(ProtocolCommentRules::class)->check($this->resource)->available
-                ]
-            ]
+            'shortName' => $this->whenLoaded('type', fn () => $this->type->short_name)
         ];
     }
 }

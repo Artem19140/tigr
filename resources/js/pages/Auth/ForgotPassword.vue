@@ -17,40 +17,53 @@ const page = usePage()
     <Head>
         <title>Сброс пароля</title>
     </Head>
+
     <BaseEntryCard>
         <template #title>
-            <div class="text-h6 font-weight-medium">
-            Восстановление пароля
-            </div>
+            <div class="text-center">
+                <div class="text-xl font-semibold tracking-tight text-gray-900">
+                    Восстановление пароля
+                </div>
 
-            <div class="text-body-2 text-medium-emphasis mt-2 mb-4">
-                Введите адрес электронной почты, указанный при регистрации.
-                Мы отправим ссылку для сброса пароля.
+                <div class="mt-2 text-sm leading-relaxed text-gray-500">
+                    Введите адрес электронной почты, указанный при регистрации.
+                    Мы отправим ссылку для сброса пароля.
+                </div>
             </div>
         </template>
 
-        <v-text-field 
-            v-model="form.email"
-            :error-messages="form.errors.email || page.props.errors.status"
-            :disabled="form.processing"
-            label="email"
-            placeholder="example@mail.ru"
-            :rules="emailRules"
-        />
+        <div class="space-y-4">
+            <v-text-field
+                v-model="form.email"
+                label="E-mail"
+                placeholder="example@mail.ru"
+                type="email"
+                :error-messages="form.errors.email || page.props.errors.status"
+                :disabled="form.processing"
+                :rules="emailRules"
+                variant="outlined"
+                density="comfortable"
+                hide-details="auto"
+            />
+        </div>
 
         <template #actions>
-            <div class="flex flex-column gap-2">
-                <AppPrimaryButton 
+            <div class="flex flex-col gap-2">
+                <AppPrimaryButton
                     text="Прислать ссылку"
-                    :disabled="form.processing || ! form.email"
+                    :disabled="form.processing || !form.email"
                     :loading="form.processing"
-                    @click="() => form.post('/forgot-password')"
+                    class="w-full"
+                    @click="form.post('/forgot-password')"
                 />
+
                 <v-btn
                     variant="text"
+                    class="w-full"
+                    :disabled="form.processing"
                     @click="router.visit('/login')"
                 >
-                    Страница входа
+                    Вернуться к входу
                 </v-btn>
             </div>
         </template>

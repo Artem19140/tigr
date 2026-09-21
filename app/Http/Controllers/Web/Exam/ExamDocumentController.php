@@ -40,10 +40,11 @@ class ExamDocumentController
         event(new ExamDocumentGenerated($exam, ExamDocument::List, [
             'enrollments_ids' => $exam->enrollments->pluck('id')->toArray()
         ]));
-
-        $fileName = "Список_{$exam->type->short_name}_{$exam->begin_time_local->format('H-i_d.m.Y')}.pdf";
         
-        return $pdf->stream($fileName);
+        return $pdf->stream(ExamDocument::List->fileName(
+            $exam->type->short_name,
+            $exam->begin_time_local
+        ));
     }
 
     public function listAvailable(Exam $exam): JsonResponse
@@ -56,7 +57,7 @@ class ExamDocumentController
         }
 
         return response()->json([
-            'redirectUrl' => route('exam.documents.list', [
+            'redirectUrl' => route('exams.documents.list', [
                 'exam' => $exam,
             ]),
         ]);
@@ -72,9 +73,13 @@ class ExamDocumentController
         if($result->isNotAvailable()){
             throw new BusinessException($result->message());
         }
-        $fileName = "Кода_{$exam->type->short_name}_{$exam->begin_time_local->format('H-i_d.m.Y')}.pdf";
+
         $pdf = $examCodesGenerator->execute($exam);
-        return $pdf->stream($fileName);
+        
+        return $pdf->stream(ExamDocument::Codes->fileName(
+            $exam->type->short_name,
+            $exam->begin_time_local
+        ));
     }
 
     public function codesAvailable(Exam $exam): JsonResponse
@@ -87,7 +92,7 @@ class ExamDocumentController
         }
 
         return response()->json([
-            'redirectUrl' => route('exam.documents.codes', [
+            'redirectUrl' => route('exams.documents.codes', [
                 'exam' => $exam,
             ]),
         ]);
@@ -97,16 +102,18 @@ class ExamDocumentController
         Exam $exam,
         ExamProtocolGenerator $examProtocolGenerator
     ): Response {
-        $fileName= "Протокол_{$exam->type->short_name}_{$exam->begin_time_local->format('H-i_d.m.Y')}.pdf";
         
         $pdf =  $examProtocolGenerator->execute($exam);
-        return $pdf->stream($fileName);
+        return $pdf->stream(ExamDocument::Protocol->fileName(
+            $exam->type->short_name,
+            $exam->begin_time_local
+        ));
     }
 
     public function protocolAvailable(Exam $exam): JsonResponse
     {
         return response()->json([
-            'redirectUrl' => route('exam.documents.protocol', [
+            'redirectUrl' => route('exams.documents.protocol', [
                 'exam' => $exam,
             ]),
         ]);
@@ -117,9 +124,11 @@ class ExamDocumentController
         ExamResultsGenerator $examResultsGenerator
     ): Response {
         $resultsPdf = $examResultsGenerator->execute($exam);
-        $fileName = "Результаты_{$exam->type->short_name}_{$exam->begin_time->format('H-i_d.m.Y')}.pdf";
 
-        return $resultsPdf->stream($fileName);
+        return $resultsPdf->stream(ExamDocument::Results->fileName(
+            $exam->type->short_name,
+            $exam->begin_time_local
+        ));
     }
 
     public function resultsAvailable(
@@ -127,7 +136,7 @@ class ExamDocumentController
     ): JsonResponse {
 
         return response()->json([
-            'redirectUrl' => route('exam.documents.results', [
+            'redirectUrl' => route('exams.documents.results', [
                 'exam' => $exam,
             ]),
         ]);

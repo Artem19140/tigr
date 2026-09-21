@@ -3,7 +3,6 @@
 use App\Http\Controllers\Web\Exam\ExamController;
 use App\Http\Controllers\Web\Exam\ExamDocumentController;
 use App\Http\Controllers\Web\Exam\ExamEnrollmentController;
-use App\Http\Controllers\Web\Exam\ExamViewController;
 use App\Http\Controllers\Web\Exam\MyExamController;
 use App\Models\Enrollment;
 use App\Models\Exam;
@@ -14,7 +13,7 @@ Route::resource('exams', ExamController::class)
     ->middleware(['meta'])
     ->where(['exam' => '[0-9]+']);
 
-Route::get('exams/{exam}', [ExamViewController::class, 'show'])
+Route::get('exams/{exam}', [ExamController::class, 'show'])
     ->can('view', 'exam')
     ->name('exams.show')
     ->where(['exam' => '[0-9]+']);
@@ -30,48 +29,39 @@ Route::prefix('exams')
     Route::get('available', [ExamEnrollmentController::class, 'available'])
         ->can('create', Enrollment::class);
 
-    Route::get('create/data', [ExamController::class, 'createData'])
-        ->can('create', Exam::class);
-
     Route::get('types', function () {
         return ExamType::cached();
     });
 
-    Route::middleware('can:examiner,exam')
-        ->group(function () {
+    Route::get('{exam}/documents/codes', [ExamDocumentController::class, 'codes'])
+        ->can('can:codes,exam')
+        ->name('exams.documents.codes');
 
-            Route::get('{exam}/check', [ExamViewController::class, 'check'])
-                ->name('exam.show.check');
-
-            Route::get('{exam}/conduct', [ExamViewController::class, 'conduct'])->name('exams.show.conduct');
-            Route::put('{exam}/monitoring/protocol-comments', [ExamController::class, 'protocolComment']);
-
-            Route::get('{exam}/documents/codes', [ExamDocumentController::class, 'codes'])
-                ->name('exam.documents.codes');
-
-            Route::get('{exam}/documents/codes/available', [ExamDocumentController::class, 'codesAvailable'])
-                ->name('exam.documents.codes.available');
-        });
+    Route::get('{exam}/documents/codes/availability', [ExamDocumentController::class, 'codesAvailable'])
+        ->can('can:codes,exam')
+        ->name('exams.documents.codes.availability');
 
     Route::get('{exam}/documents/results', [ExamDocumentController::class, 'results'])
         ->middleware('can:results,exam')
-        ->name('exam.documents.results');
+        ->name('exams.documents.results');
         
-    Route::get('{exam}/documents/results/available', [ExamDocumentController::class, 'resultsAvailable'])
+    Route::get('{exam}/documents/results/availability', [ExamDocumentController::class, 'resultsAvailable'])
+        ->name('exams.documents.results.availability')
         ->middleware('can:results,exam');
 
     Route::get('{exam}/documents/protocol', [ExamDocumentController::class, 'protocol'])
         ->middleware('can:protocol,exam')
-        ->name('exam.documents.protocol');
+        ->name('exams.documents.protocol');
         
-    Route::get('{exam}/documents/protocol/available', [ExamDocumentController::class, 'protocolAvailable'])
+    Route::get('{exam}/documents/protocol/availability', [ExamDocumentController::class, 'protocolAvailable'])
+        ->name('exams.documents.protocol.availability')
         ->middleware('can:protocol,exam');
 
     Route::get('{exam}/documents/list', [ExamDocumentController::class, 'list'])
-        ->name('exam.documents.list')
+        ->name('exams.documents.list')
         ->can('list', 'exam');
 
-    Route::get('{exam}/documents/list/available', [ExamDocumentController::class, 'listAvailable'])
+    Route::get('{exam}/documents/list/availability', [ExamDocumentController::class, 'listAvailable'])
+        ->name('exams.documents.list.availability')
         ->can('list', 'exam');
-    
 });

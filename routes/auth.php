@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\Auth\LoginController;
+use App\Http\Controllers\Web\Auth\LogoutController;
 use App\Http\Controllers\Web\Auth\PasswordController;
 use Inertia\Inertia;
 
@@ -23,7 +24,19 @@ Route::middleware([
         Inertia::render('Auth/ForgotPassword', [])
     )->name('password.forgot');
 
-    Route::post('/forgot-password', [PasswordController::class, 'forgot'])->name('password.email');
+    Route::post('/forgot-password', [PasswordController::class, 'forgot'])
+        ->name('password.email');
 
     Route::post('password/reset', [PasswordController::class, 'change']);
+});
+
+Route::middleware([
+    'meta',
+    'auth'
+])->group(function(){
+    Route::post('logout', [LogoutController::class, 'logout'])
+        ->name('logout');
+        
+    Route::post('logout/all', [LogoutController::class, 'logoutAll'])
+        ->name('logout.all');
 });

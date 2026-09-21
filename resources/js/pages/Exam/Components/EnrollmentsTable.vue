@@ -28,9 +28,13 @@ const search = ref('')
 
 <template>
     <div class="flex align-center justify-space-between p-4">
-        <div>
-            <span>{{`${exam.enrollments?.length} / ${exam?.capacity}` }} </span>
-        </div>
+        <span
+            :class="(exam.enrollments?.length ?? 0) >= exam?.capacity
+            ? 'rounded-full bg-red-500 px-2 py-1 text-white'
+            : ''"
+        >
+            {{ `${exam.enrollments?.length} / ${exam?.capacity}` }}
+        </span>
         <v-text-field
             v-model="search"
             density="compact"
@@ -75,7 +79,6 @@ const search = ref('')
 
         <template 
             #item.actions="{ item }" 
-            v-if="exam.actions.enrollments.payment.can || exam.actions.enrollments.statement.can"
         >
             <EnrollmentDropDown
                 :enrollment="item"

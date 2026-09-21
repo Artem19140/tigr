@@ -43,10 +43,9 @@ const checking = <boolean>inject('checking')
             <v-textarea
                 v-model="answer"
                 label="Введите текст"
-                rows="4"
+                rows="5"
                 :readonly="checking"
-                variant="outlined"
-                rounnded="lg"
+                auto-grow
             />
         </template>
     </BaseTask>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SidePanel from './Components/SidePanel.vue';
 import TasksList from './Components/tasks/TasksList.vue';
-import { useConfirmDialog } from '@composables/useConfirmDialog';
+import { useConfirm } from '@composables/useConfirm';
 import { Head, useForm } from '@inertiajs/vue3';
 import { useAttempt } from '@/composables/useAttempt';
 import { Attempt } from '@/interfaces/Attempt';
@@ -26,7 +26,7 @@ startTimer()
 const form = useForm()
 
 const finish = async () => {
-    const {confirmOpen} = useConfirmDialog()
+    const {confirmOpen} = useConfirm()
     const ok = await confirmOpen("Вы уверены, что хотите завершить попытку?")
     if(!ok) return
     form.put(`/attempts/${props.attempt.data.id}/finish`,{
@@ -39,32 +39,36 @@ onUnmounted(() => stopTimer())
 </script>
 
 <template>
-    <Head>
-        <title>Экзамен </title>
-    </Head>
-        <v-navigation-drawer 
-            location="right"
-            permanent
-            width="300"
-            
-        >
-            <SidePanel v-if="examAttempt" :attempt="examAttempt"/>
-        </v-navigation-drawer >
-        
-        <v-container 
-            class="flex flex-column items-center gap-10"
-            max-width="1000"
-        >
-            <TasksList 
-                v-if="examAttempt" 
-                :attempt="examAttempt"
-            />
+    <Head title="Экзамен" />
 
-            <AppPrimaryButton
-                text="Завершить"
-                @click="finish"
-                :disabled="form.processing || ! canFinish"
-                :loading="form.processing"
-            />
-        </v-container>
+    <v-container class="py-6">
+        <div class="mx-auto max-w-7xl">
+            <div class="flex items-start gap-5">
+  
+                <main class="min-w-0 flex-1" v-if="examAttempt">
+                    <v-card-text class="px-6 py-6">
+                        <TasksList :attempt="examAttempt" />
+                    </v-card-text>
+
+                    <div class="flex justify-center pt-5">
+                        <AppPrimaryButton
+                            text="Завершить"
+                            :disabled="form.processing || !canFinish"
+                            :loading="form.processing"
+                            @click="finish"
+                        />
+                    </div>
+                </main>
+
+                <aside
+                    v-if="examAttempt"
+                    class="sticky top-6 w-[260px] shrink-0"
+                >
+                    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white">
+                        <SidePanel :attempt="examAttempt" />
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </v-container>
 </template>

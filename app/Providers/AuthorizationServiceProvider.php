@@ -3,7 +3,10 @@
 namespace App\Providers;
 
 use App\Enums\EmployeeRole;
+use App\Models\Address;
 use App\Models\Attempt;
+use App\Models\Center;
+use App\Models\Counter;
 use App\Models\Employee;
 use App\Models\ForeignNational;
 use Illuminate\Support\Facades\Gate;
@@ -24,10 +27,6 @@ class AuthorizationServiceProvider extends ServiceProvider
         ) 
         {
             return $foreignNational->id === $attempt->foreign_national_id;
-        });
-
-        Gate::define('statistics', function (Employee $employee) {
-            return $employee->hasAnyRole(EmployeeRole::Director);
         });
 
         Gate::define('reports.frdo', function (Employee $employee) {
@@ -55,7 +54,12 @@ class AuthorizationServiceProvider extends ServiceProvider
         });
 
         Gate::define('center-manage', function (Employee $employee) {
-            return $employee->hasAnyRole(EmployeeRole::CenterAdmin);
+            return 
+                $employee->can('view', Center::class) ||
+                $employee->can('viewAny', Address::class) ||
+                $employee->can('viewAny', Employee::class) ||
+                $employee->can('viewAny', Counter::class)
+            ;
         });
 
         Gate::define('attempts.employee-access', function (Employee $employee, Attempt $attempt) {
@@ -72,6 +76,7 @@ class AuthorizationServiceProvider extends ServiceProvider
             if ($user instanceof ForeignNational) {
                 return null;
             }
+            
             if ($user->isPlatformAdmin()) {
                 return true;
             }

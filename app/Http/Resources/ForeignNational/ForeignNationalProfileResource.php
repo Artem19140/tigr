@@ -51,7 +51,6 @@ class ForeignNationalProfileResource extends JsonResource
             
             'permissions' => [
                 'enroll' => $employee->can('create', Enrollment::class),
-                'edit' => $employee->can('update', $this->resource),
                 'documents' => $employee->can('viewAny', Document::class),
                 'enrollments' => $employee->can('viewAny', Enrollment::class)
             ],

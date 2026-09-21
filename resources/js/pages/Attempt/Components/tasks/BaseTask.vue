@@ -29,73 +29,74 @@ provide<Task>('task', props.task)
 </script>
 
 <template>
-  <v-card-title 
-    class="d-flex flex-column align-start ga-1"
-  >
-    <div class="flex items-center gap-2">
-      <v-chip 
-        size="small" 
-        :text="`Задание ${task?.order}`"
-        color="primary"
-      />
-      <div 
-        v-if="saving.has(task.id)" 
-        class="flex items-center gap-2 text-grey text-caption"
-        style="font-size: 12px;"
-      >
-        <v-progress-circular
-          indeterminate
-          color="primary"
-          size="20"
-        />
-        <span>Идет сохранение ответа...</span>
-      </div>
-    </div>
-  </v-card-title>
-  
-  <div class="font-weight-bold  pl-6 pr-4">
-    {{ 
-      task?.description && task.description.trim() !== "" 
-        ? task.description 
-        : getDefaultDescription(task.type) 
-    }}
-  </div>
+    <v-card variant="text">
+        <!-- Header -->
+        <div class="px-5 pt-5">
+            <div class="flex items-center justify-between gap-4">
+                <div class="flex min-w-0 items-center gap-3">
+                    <v-chip
+                        size="small"
+                        color="primary"
+                        variant="tonal"
+                        :text="`Задание ${task?.order}`"
+                    />
 
-  <v-card-text>
-    <v-sheet
-      rounded="lg"
-      class="pa-2"
-    >
-      <RenderBlocks 
-        :content="task.content" 
-      />
-    </v-sheet>
-  </v-card-text>
+                    <div
+                        v-if="saving.has(task.id)"
+                        class="flex items-center gap-2 text-xs text-gray-500"
+                    >
+                        <v-progress-circular
+                            indeterminate
+                            color="primary"
+                            size="16"
+                            width="2"
+                        />
+                        <span>Сохранение ответа...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  <div class=" pl-6 " v-if="task.postscriptum">
-    {{ task.postscriptum }}
-  </div>
+        <!-- Description -->
+        <div class="px-5 pt-4">
+            <div class="text-base font-semibold leading-relaxed text-gray-900">
+                {{
+                    task?.description?.trim()
+                        ? task.description
+                        : getDefaultDescription(task.type)
+                }}
+            </div>
+        </div>
 
-  <div class="px-4">
-    <slot name="answers" /> 
-  </div>
+        <div class="px-5 pt-4">
+            <div class=" p-4">
+                <RenderBlocks :content="task.content" />
+            </div>
+        </div>
 
-  <v-card-text
-    v-if="errors.has(task.id)"
-  >
-    <AppRetryAlert 
-      text="Ошибка сохранения, пожалуйста, повторите действие"
-      :onRetry="() => emit('retry')"
-    />
-  </v-card-text>
+        <div
+            v-if="task.postscriptum"
+            class="px-5 pt-4"
+        >
+            <div class="text-sm leading-relaxed text-gray-500">
+                {{ task.postscriptum }}
+            </div>
+        </div>
+
+        <!-- Answers -->
+        <div class="px-5 pb-5 pt-5">
+            <slot name="answers" />
+        </div>
+
+        <!-- Error -->
+        <div
+            v-if="errors.has(task.id)"
+            class="border-t border-gray-100 px-5 py-4"
+        >
+            <AppRetryAlert
+                text="Ошибка сохранения. Пожалуйста, повторите действие."
+                :onRetry="() => emit('retry')"
+            />
+        </div>
+    </v-card>
 </template>
-
-<style scoped>
-.v-card {
-  transition: all 0.2s ease;
-}
-
-.v-card:hover {
-  transform: translateY(-2px);
-}
-</style>

@@ -6,12 +6,23 @@ export interface Employee{
     name:string,
     patronymic:string | null,
     email:string,
-    roles:Array<Role>,
-    fullName:string
+    fullName:string,
+    
 }
 
 export interface EmployeeFormI extends Omit<Employee, 'id' | 'roles' | 'fullName'>{
     roles:Array<number | undefined>
+}
+
+export interface EmployeeEdit extends Omit
+    <Employee, 'fullName'>
+{
+
+}
+
+export interface EmployeeIndex extends Omit<Employee, 'surname' | 'name' | 'patronymic'>{
+    destroyUrl:string,
+    editUrl:string
 }
 
 export interface Role{

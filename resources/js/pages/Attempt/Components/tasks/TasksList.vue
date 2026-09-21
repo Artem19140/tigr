@@ -4,7 +4,7 @@ import EssayTask from './EssayTask.vue';
 import SingleInputTask from './SingleInputTask.vue';
 import { TaskTypes } from '@/constants/TaskTypes';
 import { AttemptAnswer } from '@/interfaces/Task';
-import { Attempt, AttemptChecking, AttemptMonitoring } from '@/interfaces/Attempt';
+import { Attempt, AttemptChecking, AttemptConduct } from '@/interfaces/Attempt';
 import { useAttempt } from '@/composables/useAttempt';
 import { useHttp } from '@inertiajs/vue3';
 import MultynputTask from './MultyInputTask.vue';
@@ -14,7 +14,7 @@ import TaskRatingBlock from './TaskRatingBlock.vue';
 import { mdiClipboardTextOffOutline } from '@mdi/js'
 
 const props = defineProps<{
-    attempt: Attempt | AttemptMonitoring | AttemptChecking,
+    attempt: Attempt | AttemptConduct | AttemptChecking,
     checking?:boolean,
     mode?:string
 }>()

@@ -6,7 +6,6 @@ use App\Enums\ExamDocument;
 use App\Events\ExamDocumentGenerated;
 use App\Models\Attempt;
 use App\Models\Exam;
-use App\Models\Violation;
 use App\Modules\Shared\CenterData;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -22,22 +21,19 @@ class ExamProtocolGenerator
         $annulledAttempts = $this->getAnnulledAttempts($exam);
         $beginTimeReal = $this->getBeginTimeReal($exam);
         $endTimeReal = $this->getEndTimeReal($exam);
-        $attemptsWithViolations = $this->getAttemptsWithViolations($exam);
 
         $pdf = Pdf::loadView(ExamDocument::Protocol->templatePath(), [
             'exam' => $exam,
             'center' => new CenterData(),
             'annulledAttempts' => $annulledAttempts,
             'beginTimeReal' => $beginTimeReal,
-            'endTimeReal' => $endTimeReal,
-            'attemptWithViolations' => $attemptsWithViolations,
+            'endTimeReal' => $endTimeReal
         ]);
         
         event(new ExamDocumentGenerated($exam, ExamDocument::Protocol,[
             'annulled_attempts_count' => $annulledAttempts->count(),
             'begin_time_real' => $beginTimeReal?->format('H:i'),
             'end_time_real' => $endTimeReal?->format('H:i'),
-            'attempt_with_violations_count' => $attemptsWithViolations->count()
         ]));
 
         return $pdf;
@@ -64,20 +60,5 @@ class ExamProtocolGenerator
             ->max('finished_at');
 
         return $max ? Carbon::parse($max, 'UTC')->setTimezone($exam->time_zone) : null;
-    }
-
-    protected function getAttemptsWithViolations(Exam $exam): Collection
-    {
-        $attempts = $exam->attempts()
-            ->whereHas('violations')
-            ->with(['foreignNational', 'violations'])
-            ->get();
-
-        $attempts->each(function(Attempt $attempt){
-            $attempt->violations->each(function(Violation $violation)use($attempt){
-                return $violation->setRelation('attempt', $attempt);
-            });
-        });
-        return $attempts;
     }
 }

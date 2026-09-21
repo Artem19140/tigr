@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import {useHttp} from '@inertiajs/vue3';
-import AppTooltip from '@components/UI/AppTooltip/AppTooltip.vue';
 import { ExamIndex, ExamType } from '@/interfaces/Exam';
 
 const examId = defineModel<number | null>('examId', {default:null})
@@ -52,35 +51,38 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="mb-3">
-    Выберите экзамен для записи
-    <AppTooltip 
-      text="Запись закрывается за 10 минут до начала экзамена"
-    />
-  </div>
-  <V-autocomplete
-    v-model="http.examTypeId"
-    :items="examTypes"
-    item-title="name"
-    item-value="id"
-    :error-messages="http.errors.examTypeId"
-    label="Тип экзамена"
-    :loading="examTypesHttp.processing"
-    :disabled="examTypesHttp.processing"
-  />
+    <div class="space-y-5">
+        <v-autocomplete
+            v-model="http.examTypeId"
+            :items="examTypes"
+            item-title="name"
+            item-value="id"
+            label="Тип экзамена"
+            :error-messages="http.errors.examTypeId"
+            :loading="examTypesHttp.processing"
+            :disabled="examTypesHttp.processing"
+            hide-details="auto"
+        />
 
-  <V-autocomplete
-    v-model="examId"
-    :items="examDates"
-    :disabled="http.processing"
-    :loading="http.processing"
-    :error-messages="examValidationErrors"
-    item-title="beginTime"
-    item-value="id"
-    label="Дата и время"
-  />
-  <v-checkbox
-    v-model="hasPayment" 
-    label="Есть оплата"
-  />
+        <v-autocomplete
+            v-model="examId"
+            :items="examDates"
+            item-title="beginTime"
+            item-value="id"
+            label="Дата и время"
+            :error-messages="examValidationErrors"
+            :loading="http.processing"
+            :disabled="http.processing"
+            hide-details="auto"
+        />
+
+        <div class="rounded-lg px-4 py-3">
+            <v-checkbox
+                v-model="hasPayment"
+                label="Есть оплата"
+                density="comfortable"
+                hide-details
+            />
+        </div>
+    </div>
 </template>

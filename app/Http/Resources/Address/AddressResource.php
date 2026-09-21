@@ -19,7 +19,7 @@ class AddressResource extends JsonResource
             'id' => $this->id,
             'capacity' => $this->capacity,
             'examsExists' => $this->examsExists ?? null,
-            'isActive' => $this->is_active,
+            'isActive' => $this->is_active
         ];
     }
 }

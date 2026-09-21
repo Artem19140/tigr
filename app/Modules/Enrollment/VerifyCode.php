@@ -66,8 +66,9 @@ class VerifyCode
 
     protected function makeCodeUsed(Enrollment $enrollment): void
     {
-        $enrollment->exam_code = null;
-        $enrollment->exam_code_used_at = Carbon::now();
-        $enrollment->save();
+        $enrollment->update([
+            'exam_code' => null,
+            'exam_code_used_at' => Carbon::now()
+        ]);
     }
 }

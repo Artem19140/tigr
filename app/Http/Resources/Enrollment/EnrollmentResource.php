@@ -27,11 +27,19 @@ class EnrollmentResource extends JsonResource
             'examResult' => app(ExamResultResolver::class)->execute($this->resource),
             'actions' => [
                 'payment' => [
-                    'can' => $request->user()->can('paymentAny', Enrollment::class),
-                    'available' => app(EnrollmentPaymentRules::class)->check($this->resource)->available
+                    'disabled' => ! app(EnrollmentPaymentRules::class)->check($this->resource)->available,
+                    'url' => $request->user()->can('paymentAny', Enrollment::class)
+                        ? route('enrollments.payment-change', [
+                            'enrollment' => $this->resource
+                        ], false)
+                        : null
                 ],
                 'statement' => [
-                    'can' => $request->user()->can('statementAny', Enrollment::class),
+                    'url' => $request->user()->can('statementAny', Enrollment::class)
+                        ? route('enrollments.statements', [
+                            'enrollment' => $this->resource
+                        ], false)
+                        : null
                 ]
             ]
         ];

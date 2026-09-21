@@ -22,6 +22,33 @@ class ExamDocumentRules
         );
     }
 
+    public function resolve1(
+        Exam $exam, 
+        Employee $employee
+    ): array 
+    {
+        $actions = [];
+
+        if($employee->can('codes', $exam)){
+            $actions['codes1'] = $this->codes($exam)->toArray();
+        }
+
+        if($employee->can('protocol', $exam)){
+            $actions['protocol1'] = $this->protocol($exam)->toArray();
+        }
+
+        if($employee->can('results', $exam)){
+            $actions['results1'] = $this->results($exam)->toArray();
+        }
+
+        if($employee->can('list', $exam)){
+            $actions['list1'] = $this->list($exam)->toArray();
+        }
+
+        return $actions;
+    }
+    
+
     public function resolve(
         Exam $exam, 
         Employee $employee
@@ -59,7 +86,7 @@ class ExamDocumentRules
         return RuleResult::success();
     }
 
-    public function codes(Exam $exam):RuleResult
+    public function codes(Exam $exam): RuleResult
     {
         if($exam->isCancelled()){
             return RuleResult::fail(

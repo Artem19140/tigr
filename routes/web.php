@@ -1,19 +1,13 @@
 <?php
 
-use App\Http\Controllers\Web\Auth\LogoutController;
 use App\Http\Controllers\Web\Enrollment\EnrollmentController;
-use App\Http\Controllers\Web\Enrollment\EnrollmentDocumentController;
 use App\Http\Controllers\Web\Document\DocumentController;
 use App\Http\Controllers\Web\ForeignNational\ForeignNationalController;
 use App\Http\Controllers\Web\ForeignNational\ForeignNationalExportController;
-use App\Http\Controllers\Web\Statistics\StatisticsController;
 use App\Http\RedirectResolver;
 use App\Models\Enrollment;
 use App\Models\ForeignNational;
 use Illuminate\Support\Facades\Route;
-
-// Route::inertia('attempts/finish', 'Attempt/AfterAttempt')
-//     ->name('attempts.finish.after');
 
 Route::middleware([
     'meta',
@@ -30,9 +24,9 @@ Route::middleware([
 
         Route::put('enrollments/{enrollment}/payment', [EnrollmentController::class, 'changePayment'])
             ->middleware('can:payment,enrollment')
-            ->name('enrollments.change.payment');
+            ->name('enrollments.payment-change');
 
-        Route::get('enrollments/{enrollment}/statements', [EnrollmentDocumentController::class, 'statement'])
+        Route::get('enrollments/{enrollment}/statements', [EnrollmentController::class, 'statement'])
             ->middleware('can:statement,enrollment')
             ->name('enrollments.statements');
 
@@ -42,17 +36,16 @@ Route::middleware([
 
         Route::get('foreign-nationals/export/available', [ForeignNationalExportController::class, 'exportAvailable'])
             ->can('export', ForeignNational::class);
-            
-        Route::get('statistics', [StatisticsController::class, 'index'])
-            ->can('statistics');
 
         require __DIR__.'/reports.php';
 
-        require __DIR__.'/center_manage.php';
+        require __DIR__.'/center_management.php';
 
         require __DIR__.'/exams.php';
 
-        require __DIR__.'/attempts_manage.php';
+        require __DIR__.'/exams_review.php';
+
+        require __DIR__.'/exams_conduct.php';
 
 
         Route::get('documents/{document}', [DocumentController::class, 'show']);
@@ -60,13 +53,12 @@ Route::middleware([
         Route::put('documents/{document}', [DocumentController::class, 'update'])
             ->can('update','document');
 
-        Route::post('logout', [LogoutController::class, 'logout'])->name('logout');
-        Route::post('logout/all', [LogoutController::class, 'logoutAll'])->name('logout.all');
+        
     });
 
 require __DIR__.'/auth.php';
-require __DIR__.'/attempts_passing.php';
-require __DIR__.'/platform_manage.php';
+require __DIR__.'/exams_session.php';
+require __DIR__.'/platform_management.php';
 
 Route::get('/', function(){
     return redirect('login');

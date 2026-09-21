@@ -13,7 +13,6 @@ final class ClearExpiredExamCodes
     ){}
     public function execute(): void
     {
-
         $count = Enrollment::where('exam_code_expired_at', '<', Carbon::now())
             ->whereNotNull('exam_code')
             ->update(['exam_code' => null]);

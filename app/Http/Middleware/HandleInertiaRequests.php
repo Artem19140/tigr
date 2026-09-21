@@ -2,15 +2,23 @@
 
 namespace App\Http\Middleware;
 
-
-use App\Models\Employee;
-use App\Models\Exam;
 use App\Models\ForeignNational;
+use App\Navigation\CenterManageNavigation;
+use App\Navigation\ExamNavigation;
+use App\Navigation\MainMenuNavigation;
+use App\Models\Employee;
+use App\Navigation\ReportNavigation;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
 {
+    public function __construct(
+        private MainMenuNavigation $menuNavigation,
+        private ReportNavigation $reportNavigation,
+        protected CenterManageNavigation $centerManageNavigation,
+        private ExamNavigation $examNavigation
+    ){}
     /**
      * The root template that's loaded on the first page visit.
      *
@@ -39,31 +47,66 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $user = $request->user();
+        
         return array_merge(parent::share($request), [
             'flash' => [
                 'success' => session('success'),
                 'error' => session('error'),
             ],
-            'auth.user' => fn () => $request->user() instanceof Employee ?
-                array_merge(
-                    $request->user()->only('id', 'surname', 'name', 'email')
-                )
-                : null,
-            'auth.can' => fn () => $request->user() instanceof Employee ?
-                $this->menuPermissions($request->user())
-                 : null,
+
+            'auth.user' => fn () => $user ?  $this->resolveUser($user) : null,
+
+            'auth.navigation' => fn () => $user ? $this->resolveNavigation($user) : null
         ]);
     }
 
-    protected function menuPermissions(Employee $employee): array
+    protected function resolveUser(Employee |  ForeignNational $user): array | null
     {
-        return [
-            'foreignNationals' => $employee->can('viewAny', ForeignNational::class),
-            'exams' => $employee->can('viewAny', Exam::class),
-            'center' => $employee->can('center-manage'),
-            'reports' => $employee->can('reports.viewAny'),
-            'myExams' => $employee->can('conductAny', Exam::class),
-            'adminPanel' => $employee->can('platform-manage'),
+        if ($user instanceof ForeignNational){
+            return null;
+        }
+        return $user->only('id', 'surname', 'name', 'email');
+    }
+
+    protected function resolveNavigation(Employee |  ForeignNational $user): array | null
+    {
+        if ($user instanceof ForeignNational){
+            return null;
+        }
+        
+        $navigation = [];
+
+        $navigation['menu'] = $this->menuNavigation->resolve($user);
+
+        $navigation['auth'] = [
+            'logout' => [
+                'url' => route('logout', [], false)
+            ],
+            'logoutAll' => [
+                'url' => route('logout.all', [], false)
+            ]
         ];
+
+        if(request()->routeIs('reports*')){
+            $navigation['reports'] = $this->reportNavigation->resolve($user);
+        }
+
+        if(request()->is('center-manage*')){
+            $navigation['centerManage'] = $this->centerManageNavigation->resolve($user);
+        }
+
+        if(request()->routeIs(
+            'exams.show',
+            'exams.conduct',
+            'exams.review'
+        )){
+            $navigation['exam'] = $this->examNavigation->resolve(
+                $user, 
+                request()->route('exam')
+            );
+        }
+
+        return $navigation; 
     }
 }

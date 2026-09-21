@@ -18,7 +18,7 @@ const props = defineProps<{
 const form = useForm()
 
 const begin = () => {   
-    form.put(`/attempts/${props.exam.attemptId}`)
+  form.put(`/attempts/${props.exam.attemptId}`)
 }
 </script>
 
@@ -73,7 +73,6 @@ const begin = () => {
         </div>
       </div>
 
-      <!-- WARNING -->
       <div class="warning mb-8">
         <div class="warning-title">Внимание</div>
         <div class="warning-text">
@@ -81,12 +80,10 @@ const begin = () => {
         </div>
       </div>
 
-      <!-- SETTINGS -->
       <div class="settings mb-8">
         <SoundSettings />
       </div>
 
-      <!-- ACTION -->
       <div class="actions">
         <AppPrimaryButton
           @click="begin"

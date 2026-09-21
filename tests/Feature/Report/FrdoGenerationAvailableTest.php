@@ -34,7 +34,7 @@ class FrdoGenerationAvailableTest extends TestCase
     protected function getFrdo(string $type): TestResponse
     {
         return $this->actingAs($this->actor)
-            ->getJson(route('reports.frdo.available', [
+            ->getJson(route('reports.frdo.availability', [
                 'type' => $type,
                 'examDate' => Carbon::now()->format('Y-m-d'),
             ]));

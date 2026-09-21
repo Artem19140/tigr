@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class FinishAttempt
 {
     public function __construct(
-        protected FinilizeAttemptChecking $finilizeAttemptChecking
+        protected FinilizeAttemptReview $finilizeAttemptReview
     ) {}
 
     public function execute(Attempt $attempt): void
@@ -23,7 +23,7 @@ class FinishAttempt
             $attempt->finish();
 
             if ($attempt->canBeAutomaticallyFinalized()) {
-                $this->finilizeAttemptChecking->execute($attempt);
+                $this->finilizeAttemptReview->execute($attempt);
             }
 
             $attempt->save();

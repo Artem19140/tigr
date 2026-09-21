@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class AnnulAttempt
 {
     public function __construct(
-        protected FinilizeAttemptChecking $finilizeAttemptChecking,
+        protected FinilizeAttemptReview $finilizeAttemptReview,
         protected AttemptAnnulledRules $attemptAnnulledRules
     ) {}
 
@@ -43,7 +43,7 @@ class AnnulAttempt
         $attempt->finish();
 
         if ($attempt->canBeAutomaticallyFinalized()) {
-            $this->finilizeAttemptChecking->execute($attempt);
+            $this->finilizeAttemptReview->execute($attempt);
         }
     }
 }

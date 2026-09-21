@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\DB;
 class SessionNumberGenerator
 {
 
-    public function execute():int
+    public function execute(bool $rollback = false):int
     {
-        return DB::transaction(function () {
+        return DB::transaction(function () use( $rollback ) {
             $sessionCounter = Counter::findLockedOrFail(
                 CounterKey::Session,
             );
@@ -20,6 +20,11 @@ class SessionNumberGenerator
             if($sessionCounter->notInitialized()){ 
                 $sessionCounter->initialize();
                 $sessionCounter->save();
+
+                if($rollback){
+                    return $this->rollback($sessionCounter->value);
+                }
+
                 return $sessionCounter->value;
             }
 
@@ -28,6 +33,10 @@ class SessionNumberGenerator
                 :   $this->incrementIfNeeded($sessionCounter);
                 
             $sessionCounter->save();
+
+            if($rollback){
+                return $this->rollback($sessionCounter->value);
+            }
 
             return $sessionCounter->value;
         });
@@ -51,5 +60,11 @@ class SessionNumberGenerator
         }
 
         $counter->incrementValue();
+    }
+
+    protected function rollback(int $value)
+    {
+        DB::rollBack();
+        return $value;
     }
 }

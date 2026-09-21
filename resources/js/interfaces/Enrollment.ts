@@ -1,4 +1,4 @@
-import { Attempt, AttemptMonitoring } from "./Attempt";
+import { Attempt, AttemptConduct } from "./Attempt";
 import { Exam } from "./Exam";
 import { ForeignNationalEnrollment } from "./ForeignNational";
 
@@ -7,34 +7,33 @@ export interface Enrollment{
     foreignNational:ForeignNationalEnrollment,
     hasPayment:boolean,
     isLoading?: boolean,
-    exam:Exam,
+    exam: Exam,
     attempt:Attempt | null,
     examResult:string,
     actions:{
         payment:{
-            can:boolean
-            available:boolean
+            url: string | null
+            disabled: boolean
         }
         statement:{
-            can:boolean
+            url: string | null
         }
     }
-    
 }
+
 
 export interface EnrollmentAvailability{
     payment:boolean,
     annul:boolean,
-    violations:boolean,
     speaking:boolean
 }
 
-export interface EnrollmentMonitoring{
+export interface EnrollmentConduct{
     id:number,
     foreignNational:ForeignNationalEnrollment,
     hasPayment:boolean,
     isLoading?: boolean,
-    attempt:AttemptMonitoring | null,
+    attempt:AttemptConduct | null,
     availability:{
         payment:boolean
     }

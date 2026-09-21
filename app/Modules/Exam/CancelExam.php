@@ -26,9 +26,10 @@ class CancelExam
             throw new BusinessException($result->message());
         }
 
-        $exam->cancelled_reason = $reason;
-        $exam->cancelled_at = Carbon::now();
-        $exam->save();
+        $exam->update([
+            'cancelled_reason' => $reason,
+            'cancelled_at' => Carbon::now()
+        ]);
         
         $this->audit->log(
             'delete',

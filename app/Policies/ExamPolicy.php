@@ -40,9 +40,26 @@ class ExamPolicy
         return $employee->hasAnyRole(EmployeeRole::Examiner);
     }
 
-    public function checkingAny(Employee $employee):bool
+    public function conduct(Employee $employee, Exam $exam):bool
     {
-        return $employee->hasAnyRole(EmployeeRole::Examiner);
+        if (! $employee->hasAnyRole(
+            EmployeeRole::Examiner
+        )) {
+            return false;
+        }
+
+        return $this->examiner($employee, $exam);
+    }
+
+    public function review(Employee $employee, Exam $exam):bool
+    {
+        if (! $employee->hasAnyRole(
+            EmployeeRole::Examiner
+        )) {
+            return false;
+        }
+
+        return $this->examiner($employee, $exam);
     }
 
     public function create(Employee $employee): bool
@@ -79,6 +96,17 @@ class ExamPolicy
             EmployeeRole::Director
         )) {
             return true;
+        }
+
+        return $this->examiner($employee, $exam);
+    }
+
+    public function codes(Employee $employee, Exam $exam): bool
+    {
+        if (! $employee->hasAnyRole(
+            EmployeeRole::Examiner
+        )) {
+            return false;
         }
 
         return $this->examiner($employee, $exam);
