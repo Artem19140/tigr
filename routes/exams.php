@@ -34,28 +34,28 @@ Route::prefix('exams')
     });
 
     Route::get('{exam}/documents/codes', [ExamDocumentController::class, 'codes'])
-        ->can('can:codes,exam')
+        ->can('codes', 'exam')
         ->name('exams.documents.codes');
 
     Route::get('{exam}/documents/codes/availability', [ExamDocumentController::class, 'codesAvailable'])
-        ->can('can:codes,exam')
+        ->can('codes', 'exam')
         ->name('exams.documents.codes.availability');
 
     Route::get('{exam}/documents/results', [ExamDocumentController::class, 'results'])
-        ->middleware('can:results,exam')
+        ->can('results', 'exam')
         ->name('exams.documents.results');
         
     Route::get('{exam}/documents/results/availability', [ExamDocumentController::class, 'resultsAvailable'])
         ->name('exams.documents.results.availability')
-        ->middleware('can:results,exam');
+        ->can('results', 'exam');
 
     Route::get('{exam}/documents/protocol', [ExamDocumentController::class, 'protocol'])
-        ->middleware('can:protocol,exam')
+        ->can('protocol', 'exam')
         ->name('exams.documents.protocol');
         
     Route::get('{exam}/documents/protocol/availability', [ExamDocumentController::class, 'protocolAvailable'])
         ->name('exams.documents.protocol.availability')
-        ->middleware('can:protocol,exam');
+        ->can('protocol', 'exam');
 
     Route::get('{exam}/documents/list', [ExamDocumentController::class, 'list'])
         ->name('exams.documents.list')

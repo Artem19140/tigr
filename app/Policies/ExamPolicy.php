@@ -42,23 +42,11 @@ class ExamPolicy
 
     public function conduct(Employee $employee, Exam $exam):bool
     {
-        if (! $employee->hasAnyRole(
-            EmployeeRole::Examiner
-        )) {
-            return false;
-        }
-
         return $this->examiner($employee, $exam);
     }
 
     public function review(Employee $employee, Exam $exam):bool
     {
-        if (! $employee->hasAnyRole(
-            EmployeeRole::Examiner
-        )) {
-            return false;
-        }
-
         return $this->examiner($employee, $exam);
     }
 
@@ -103,12 +91,6 @@ class ExamPolicy
 
     public function codes(Employee $employee, Exam $exam): bool
     {
-        if (! $employee->hasAnyRole(
-            EmployeeRole::Examiner
-        )) {
-            return false;
-        }
-
         return $this->examiner($employee, $exam);
     }
 
