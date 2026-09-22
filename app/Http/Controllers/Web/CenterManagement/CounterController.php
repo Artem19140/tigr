@@ -37,8 +37,9 @@ class CounterController
             ]);
         }
 
-        $counter->value = $request->input('value');
-        $counter->save();
+        $counter->update([
+            'value' => $request->input('value')
+        ]);
 
         $this->logger->log($counter);
 

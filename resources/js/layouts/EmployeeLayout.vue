@@ -75,7 +75,6 @@ const logoutAll = ref<boolean>(false)
                     <div class="border-t border-gray-200" />
                 </div>
 
-                <!-- Navigation -->
                 <v-list
                     v-model="activeItem"
                     density="comfortable"

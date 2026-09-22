@@ -20,6 +20,7 @@ defineOptions({
 
 const form = useForm({
     name: props.center.data.name,
+    shortName: props.center.data.shortName,
     ogrn: props.center.data.ogrn,
     inn: props.center.data.inn,
     address: props.center.data.address,
@@ -61,19 +62,25 @@ const cancel = async () => {
                         v-model="form.name"
                         label="Название"
                         placeholder="Введите название центра"
-                        variant="outlined"
-                        density="comfortable"
                         auto-grow
                         rows="1"
                         :error-messages="form.errors.name"
                     />
 
                     <v-textarea
+                        v-model="form.shortName"
+                        label="Сокращенное азвание"
+                        placeholder="Введите сокращенное название центра"
+
+                        auto-grow
+                        rows="1"
+                        :error-messages="form.errors.shortName"
+                    />
+
+                    <v-textarea
                         v-model="form.ogrn"
                         label="ОГРН"
                         placeholder="Введите ОГРН"
-                        variant="outlined"
-                        density="comfortable"
                         auto-grow
                         rows="1"
                         :error-messages="form.errors.ogrn"
@@ -83,8 +90,6 @@ const cancel = async () => {
                         v-model="form.inn"
                         label="ИНН"
                         placeholder="Введите ИНН"
-                        variant="outlined"
-                        density="comfortable"
                         auto-grow
                         rows="1"
                         :error-messages="form.errors.inn"
@@ -94,8 +99,6 @@ const cancel = async () => {
                         v-model="form.address"
                         label="Адрес центра"
                         placeholder="Введите адрес центра"
-                        variant="outlined"
-                        density="comfortable"
                         auto-grow
                         rows="1"
                         :error-messages="form.errors.address"
@@ -105,8 +108,6 @@ const cancel = async () => {
                         v-model="form.certificatesIssueAddress"
                         label="Адрес выдачи сертификатов"
                         placeholder="Введите адрес"
-                        variant="outlined"
-                        density="comfortable"
                         auto-grow
                         rows="1"
                         :error-messages="form.errors.certificatesIssueAddress"
@@ -116,8 +117,6 @@ const cancel = async () => {
                         v-model="form.directorFio"
                         label="Директор"
                         placeholder="Введите ФИО директора"
-                        variant="outlined"
-                        density="comfortable"
                         auto-grow
                         rows="1"
                         :error-messages="form.errors.directorFio"
@@ -127,8 +126,6 @@ const cancel = async () => {
                         v-model="form.commissionChairman"
                         label="Председатель комиссии"
                         placeholder="Введите ФИО председателя комиссии"
-                        variant="outlined"
-                        density="comfortable"
                         auto-grow
                         rows="1"
                         :error-messages="form.errors.commissionChairman"
@@ -138,8 +135,6 @@ const cancel = async () => {
                         v-model="form.nameGenitive"
                         label="Название в родительном падеже"
                         placeholder="Название для документов"
-                        variant="outlined"
-                        density="comfortable"
                         auto-grow
                         rows="1"
                         :error-messages="form.errors.nameGenitive"

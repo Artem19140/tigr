@@ -12,7 +12,7 @@ return [
     AvailabilityCode::AttemptExists->value => 'Существует попытка экзамена',
     AvailabilityCode::ExamAlreadyStarted->value => 'Экзамен уже начался',
     AvailabilityCode::AttemptAnnulled->value => 'Попытка аннулирована',
-    'exam_on_checking' => 'Идет проверка результатов',
+    AvailabilityCode::ExamOnReview->value => 'Идет проверка результатов',
     'codes_available_only_on_exam_day' => 'Кода доступны только в день экзамена',
     'codes_ttl_expired'=>'Срок действия кодов истек',
     'attempt_can_be_annuled_only_on_attempt_day' => 'Аннулировать попытку возможно только в день ее прохождения',

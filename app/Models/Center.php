@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Center extends Model
 {
+    public const string  CACHE_KEY = 'center.data';
+
     protected $fillable = [
         'name',
         'director_fio',

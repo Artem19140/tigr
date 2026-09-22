@@ -22,6 +22,13 @@ const props = defineProps<{
                         {{ enrollment.exam.shortName }}
                     </div>
 
+                    <span
+                        v-if="enrollment.exam.cancelledAt !== null"
+                        class="text-xs font-medium text-red-600"
+                    >
+                        Отменён
+                    </span>
+
                     <v-progress-circular
                         v-if="enrollment.isLoading"
                         indeterminate
@@ -37,7 +44,7 @@ const props = defineProps<{
                     </span>
 
                     <span
-                        v-if="!enrollment.hasPayment"
+                        v-if="! enrollment.hasPayment"
                         class="font-medium text-red-600"
                     >
                         Нет оплаты
@@ -52,13 +59,6 @@ const props = defineProps<{
                 <ExamResultStatusChip
                     :status="enrollment.examResult"
                 />
-
-                <span
-                    v-if="enrollment.exam.cancelledAt !== null"
-                    class="rounded-full bg-red-50 px-2.5 py-1 text-xs font-medium text-red-600"
-                >
-                    Отменён
-                </span>
 
                 <EnrollmentDropDown
                     :enrollment="enrollment"

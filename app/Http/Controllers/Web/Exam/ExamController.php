@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Exam;
 
+use App\Enums\AvailabilityCode;
 use App\Http\Resources\Exam\ExamEditResource;
 use App\Http\Resources\Exam\ExamResource;
 use App\Modules\Exam\CancelExam;
@@ -84,7 +85,8 @@ class ExamController
                     'disabled' => ! app(ExamCancellRules::class)->check($exam)->available
                 ]
             ],
-            'documents' => app(ExamDocumentBuilder::class)->build($exam, $request->user())
+            'documents' => app(ExamDocumentBuilder::class)->build($exam, $request->user()),
+            'reviewStatus' => AvailabilityCode::ExamOnReview->value
         ]);
         
     }

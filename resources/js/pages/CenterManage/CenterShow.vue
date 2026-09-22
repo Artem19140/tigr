@@ -18,6 +18,7 @@ defineOptions({
 
 const centerData = [
   {label:'Название', value: props.center.data.name},
+  {label:'Короткое название', value: props.center.data.shortName},
   {label:'ОГРН', value: props.center.data.ogrn},
   {label:'ИНН', value: props.center.data.inn},
   {label:'Адрес центра', value: props.center.data.address},

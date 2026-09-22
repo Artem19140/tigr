@@ -29,7 +29,8 @@ const props = defineProps<{
     list: ExamDocument,
     results: ExamDocument,
     protocol: ExamDocument
-  }
+  },
+  reviewStatus: string
 }>()
 
 
@@ -75,7 +76,6 @@ const isOpen = ref<boolean>(false)
 
         <v-container>
             <div class="space-y-5">
-                <!-- Информация -->
                 <v-card class="overflow-hidden rounded-xl">
                     <v-card-text class="px-6 pt-6">
                         <div class="text-lg font-semibold text-gray-900">
@@ -92,7 +92,6 @@ const isOpen = ref<boolean>(false)
                     </v-card-text>
                 </v-card>
 
-                <!-- Документы -->
                 <v-card class="overflow-hidden rounded-xl">
                     <v-card-text class="px-6 pt-6">
                         <div class="text-lg font-semibold text-gray-900">
@@ -106,6 +105,12 @@ const isOpen = ref<boolean>(false)
 
                     <v-card-text class="px-6 pb-6">
                         <ExamDocuments :documents="documents" />
+                        <div
+                            v-if="documents.results?.availability.code === reviewStatus"
+                            class="text-center p-4 bg-gray-50 mt-8 rounded-xl"
+                        >
+                            Экзамен находится на проверке, результаты будут доступны после ее окончания
+                        </div>
                     </v-card-text>
                 </v-card>
 

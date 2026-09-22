@@ -9,8 +9,6 @@ const props = defineProps<{
     exam: Exam
 }>()
 
-const exam = ref<Exam>(props.exam)
-
 const headers = [
     {title : "ФИО",sortable: false, key: 'foreignNational.fullName', align: 'start' },
     {title : "Паспорт",sortable: false, key: 'foreignNational.fullPassport', align: 'start' },
@@ -82,7 +80,6 @@ const search = ref('')
         >
             <EnrollmentDropDown
                 :enrollment="item"
-                :actions="exam.actions.enrollments"
             />
         </template>
     </v-data-table>

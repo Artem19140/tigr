@@ -6,7 +6,6 @@ use App\Http\Dto\EmployeeDto;
 use App\Models\Employee;
 use App\Support\Audit;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Password;
 
 class CreateEmployee
 {
@@ -36,10 +35,6 @@ class CreateEmployee
                 $employee,
                 ['roles' => $roles]
             );
-
-            // Password::sendResetLink([
-            //     'email' => $employee->email
-            // ]);
             
             return $employee;
         });

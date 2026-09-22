@@ -17,6 +17,7 @@ class CenterResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'shortName' => $this->short_name,
             'directorFio' => $this->director_fio,
             'certificatesIssueAddress' => $this->certificates_issue_address,
             'ogrn' => $this->ogrn,

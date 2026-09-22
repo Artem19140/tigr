@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Exam;
 
-use App\Modules\ExamDocument\ExamDocumentRules;
 use App\Http\Resources\Employee\EmployeeResource;
 use App\Http\Resources\Enrollment\EnrollmentExamShowResource;
 use Illuminate\Http\Request;
@@ -34,7 +33,6 @@ class ExamResource extends JsonResource
             'name' => $this->whenLoaded('type', fn () => $this->type->name),
             'shortName' => $this->whenLoaded('type', fn () => $this->type->short_name),
             'address' => $this->whenLoaded('address', fn () => $this->address->address),
-            'actions' => app(ExamDocumentRules::class)->resolve($this->resource,  $employee),
         ];
     }
 }

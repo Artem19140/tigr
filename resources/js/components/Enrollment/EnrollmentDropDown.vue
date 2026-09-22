@@ -24,12 +24,11 @@ const changePayment = async () => {
     const form = useForm()
     props.enrollment.isLoading = true
     form.put(props.enrollment.actions.payment.url,{
-        onSuccess:() => {
-            props.enrollment.hasPayment = !props.enrollment.hasPayment
-        },
         onFinish:() => {
             props.enrollment.isLoading = false
-        }
+        },
+        preserveScroll:true,
+        preserveState:true
     })
 }
 </script>

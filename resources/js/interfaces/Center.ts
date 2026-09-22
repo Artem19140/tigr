@@ -1,6 +1,7 @@
 export interface Center {
   id:number,
   name: string
+  shortName: string
   ogrn: string
   inn: string
   address: string

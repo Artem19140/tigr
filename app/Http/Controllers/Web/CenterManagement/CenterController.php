@@ -6,6 +6,7 @@ use App\Http\Resources\Center\CenterResource;
 use App\Models\Center;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 
 class CenterController
@@ -38,6 +39,7 @@ class CenterController
     {
         $request->validate([
             'name' => ['required', 'string'],
+            'shortName' => ['required', 'string'],
             'ogrn' => ['required', 'string'],
             'inn' => ['required', 'string'],
             'address' => ['required', 'string'],
@@ -49,6 +51,7 @@ class CenterController
     
         $center->update([
             'name' => $request->input('name'),
+            'short_name' => $request->input('shortName'),
             'ogrn' => $request->input('ogrn'),
             'inn' => $request->input('inn'),
             'address' => $request->input('address'),
@@ -57,7 +60,9 @@ class CenterController
             'commission_chairman' => $request->input('commissionChairman'),
             'name_genitive' => $request->input('nameGenitive')
         ]);
+        
+        Cache::forget(Center::CACHE_KEY);
 
-        return redirect()->route('centers.show', ['center' => $center]);
+        return redirect()->route('centers.show');
     }
 }

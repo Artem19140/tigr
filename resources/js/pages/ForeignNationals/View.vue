@@ -14,7 +14,7 @@ const props = defineProps<{
 	foreignNational:{
 		data: ForeignNational
 	},
-  editUrl: string
+    editUrl: string
 }>()
 
 defineOptions({

@@ -22,58 +22,6 @@ class ExamDocumentRules
         );
     }
 
-    public function resolve1(
-        Exam $exam, 
-        Employee $employee
-    ): array 
-    {
-        $actions = [];
-
-        if($employee->can('codes', $exam)){
-            $actions['codes1'] = $this->codes($exam)->toArray();
-        }
-
-        if($employee->can('protocol', $exam)){
-            $actions['protocol1'] = $this->protocol($exam)->toArray();
-        }
-
-        if($employee->can('results', $exam)){
-            $actions['results1'] = $this->results($exam)->toArray();
-        }
-
-        if($employee->can('list', $exam)){
-            $actions['list1'] = $this->list($exam)->toArray();
-        }
-
-        return $actions;
-    }
-    
-
-    public function resolve(
-        Exam $exam, 
-        Employee $employee
-    ): array {
-        $actions = [];
-        $actions['codes'] = [
-            'can' => $employee->can('examiner', $exam),
-            'availability' => $this->codes($exam)->toArray()
-        ];
-        $actions['protocol'] = [
-            'can' => $employee->can('protocol', $exam),
-            'availability' => $this->protocol($exam)->toArray()
-        ];
-        $actions['results'] = [
-            'can' => $employee->can('results', $exam),
-            'availability' => $this->results($exam)->toArray()
-        ];
-        $actions['list'] = [
-            'can' => $employee->can('list', $exam),
-            'availability' => $this->list($exam)->toArray()
-        ];
-
-        return $actions;
-    }
-
     public function list(Exam $exam):RuleResult
     {
 
@@ -184,7 +132,7 @@ class ExamDocumentRules
 
         if($this->hasUncheckedAttemtps($exam)){
             return RuleResult::fail(
-                'exam_on_checking'
+                AvailabilityCode::ExamOnReview
             );
         }
 

@@ -24,7 +24,6 @@ class ForeignNationalController
         ForeignNationalIndexRequest $request,
         GetForeignNationals $getForeignNationals
     ): Response {
-
         Gate::authorize('viewAny', ForeignNational::class);
         $dto = $request->toDto();
         $foreignNationals = $getForeignNationals->execute($dto);

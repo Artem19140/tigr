@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import BaseThreeDotDropdown from '@/components/BaseComponents/BaseThreeDotDropdown/BaseThreeDotDropdown.vue';
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { useSnackbarQueue } from '@/composables/useSnackbarQueue';
 import { router, useHttp } from '@inertiajs/vue3';
-import { mdiDownload, mdiFileDocumentOutline, mdiPencil } from '@mdi/js';
+import { mdiFileDocumentOutline } from '@mdi/js';
 import { ref } from 'vue';
 
 const props = defineProps<{
@@ -71,39 +72,18 @@ const clear = () => {
                 </v-list-item-subtitle>
 
                 <template #append>
-                    <div class="flex items-center gap-1">
-                        <v-tooltip text="Скачать" location="top">
-                            <template #activator="{ props }">
-                                <v-btn
-                                    v-bind="props"
-                                    :icon="mdiDownload"
-                                    variant="text"
-                                    density="comfortable"
-                                    size="small"
-                                    color="grey-darken-1"
-                                    @click="open(doc.id)"
-                                />
-                            </template>
-                        </v-tooltip>
+                    <BaseThreeDotDropdown nav>
+                        <v-list-item
+                            @click="open(doc.id)"
+                            title="Скачать"
+                        />
 
-                        <v-tooltip
+                        <v-list-item
                             v-if="doc.permissions.update"
-                            text="Заменить"
-                            location="top"
-                        >
-                            <template #activator="{ props }">
-                                <v-btn
-                                    v-bind="props"
-                                    :icon="mdiPencil"
-                                    variant="text"
-                                    density="comfortable"
-                                    size="small"
-                                    color="grey-darken-1"
-                                    @click="updatedId = doc.id"
-                                />
-                            </template>
-                        </v-tooltip>
-                    </div>
+                            @click="updatedId = doc.id"
+                            title="Заменить"
+                        />
+                    </BaseThreeDotDropdown>
                 </template>
             </v-list-item>
 

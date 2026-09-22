@@ -73,7 +73,11 @@ class AddressController
         }
 
         $address->capacity = $request->input('capacity');
-        $address->save();
+
+        $address->update([
+            'capacity' => $request->input('capacity')
+        ]);
+
         $logger->log($address);
         return redirect()->route('addresses.index');
     }
@@ -82,8 +86,9 @@ class AddressController
         Address $address
     ): RedirectResponse {
 
-        $address->is_active = false;
-        $address->save();
+        $address->update([
+            'is_active' => false
+        ]);
 
         $this->audit->log('delete', $address);
 

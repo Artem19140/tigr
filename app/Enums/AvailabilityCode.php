@@ -13,4 +13,5 @@ enum AvailabilityCode: string
     case AttemptsNotExists = 'attempts_not_exists';
     case ActiveAttemptsExists = 'active_attemtps_exists';
     case AttemptAnnulled = 'attempt_annulled';
+    case ExamOnReview = 'exam_on_review';
 }
