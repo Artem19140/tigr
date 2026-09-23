@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { useForm } from '@inertiajs/vue3';
 import SoundSettings from './Components/SoundSettings.vue';
 
@@ -12,13 +11,14 @@ const props = defineProps<{
         tasksCount : number,
         minTimeFromStartToFinish: number
     },
-    fullName:string
+    fullName:string,
+    startUrl: string
 }>()
 
 const form = useForm()
 
 const begin = () => {   
-  form.put(`/attempts/${props.exam.attemptId}`)
+  form.post(props.startUrl)
 }
 </script>
 
@@ -85,13 +85,13 @@ const begin = () => {
       </div>
 
       <div class="actions">
-        <AppPrimaryButton
+        <v-btn
           @click="begin"
           :disabled="form.processing"
           :loading="form.processing"
-          text="Начать экзамен"
+          color="primary"
           size="large"
-        />
+        >Начать экзамен</v-btn>
       </div>
     </v-card>
   </div>

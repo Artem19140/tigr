@@ -84,5 +84,11 @@ onUnmounted(() => {
                 hide-details
             />
         </div>
+
+        <div
+          class="text-center bg-gray-50 p-4 rounded-lg border"
+        >
+          Запись заканчивается за 10 минут до начала экзамена
+        </div>
     </div>
 </template>

@@ -13,19 +13,20 @@ const progress = computed(() => {
   return (solved.value  / props.attempt.tasks.length) * 100
 })
 
-const solved = computed(() =>  props.attempt.tasks.filter(item => item?.attemptAnswer?.answer !== null).length)
+const solved = computed(
+    () =>  props.attempt.tasks.filter(item => item?.attemptAnswer?.answer !== null).length
+)
 </script>
 
 <template>
     <div class="p-4">
-        <!-- Timer -->
+        
         <div class="flex items-center justify-center">
             <Timer />
         </div>
 
         <div class="my-4 border-t border-gray-200" />
 
-        <!-- Exam info -->
         <div>
             <div class="text-sm font-semibold leading-snug text-gray-900">
                 {{ attempt.examName }}
@@ -38,7 +39,6 @@ const solved = computed(() =>  props.attempt.tasks.filter(item => item?.attemptA
 
         <div class="my-4 border-t border-gray-200" />
 
-        <!-- Progress -->
         <div class="mb-2 flex items-center justify-between">
             <div class="text-xs font-medium text-gray-700">
                 Задания
@@ -57,7 +57,6 @@ const solved = computed(() =>  props.attempt.tasks.filter(item => item?.attemptA
             class="mb-5"
         />
 
-        <!-- Tasks -->
         <TaskSideList :tasks="attempt.tasks" />
     </div>
 </template>

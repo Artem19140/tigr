@@ -3,7 +3,7 @@
 namespace App\Http\Resources\Exam;
 
 use App\Http\Resources\Employee\EmployeeResource;
-use App\Http\Resources\Enrollment\EnrollmentExamShowResource;
+use App\Http\Resources\Enrollment\EnrollmentResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,15 +16,13 @@ class ExamResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $employee = $request->user();
-
         return [
             'id' => $this->id,
             'cancelledReason' => $this->when($this->isCancelled(), $this->cancelled_reason),
             'cancelledAt' => $this->resource->cancelled_at,
             'beginTime' => $this->begin_time_local->copy()->toIso8601String(),
             'endTime' => $this->end_time_local->copy()->toIso8601String(),
-            'enrollments' => EnrollmentExamShowResource::collection($this->whenLoaded('enrollments')),
+            'enrollments' => EnrollmentResource::collection($this->whenLoaded('enrollments')),
             'sessionNumber' => $this->session,
             'capacity' => $this->capacity,
             'comment' => $this->comment,

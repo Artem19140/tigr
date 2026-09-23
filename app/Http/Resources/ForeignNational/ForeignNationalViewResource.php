@@ -6,7 +6,7 @@ use App\Http\Resources\Enrollment\EnrollmentResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ForeignNationalProfileResource extends JsonResource
+class ForeignNationalViewResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

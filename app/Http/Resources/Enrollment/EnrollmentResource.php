@@ -22,7 +22,7 @@ class EnrollmentResource extends JsonResource
         return [
             'id' => $this->id,
             'hasPayment' => $this->has_payment,
-            'exam' => new ExamShortResource($this->whenLoaded('exam')),
+            'exam' => $this->when($request->routeIs('foreign-nationals.show'), new ExamShortResource($this->whenLoaded('exam'))) ,
             'foreignNational' => new ForeignNationalResource($this->whenLoaded('foreignNational')),
             'examResult' => app(ExamResultResolver::class)->execute($this->resource),
             'actions' => [

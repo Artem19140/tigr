@@ -21,13 +21,11 @@ class ForeignNationalDocumentResource extends JsonResource
                 'downloadUrl' => $request->user()->can('view', $this->resource)
                     ? route('foreign-nationals.documents.show', [
                         'foreign_national_document' => $this->resource,
-                        //'foreign_national' => $this->resource->foreign_national_id
                     ]) 
                     : null,
                 'updateUrl' => $request->user()->can('update', $this->resource)
                     ? route('foreign-nationals.documents.update', [
                         'foreign_national_document' => $this->resource,
-                        //'foreign_national' => $this->resource->foreign_national_id
                     ]) 
                     : null,
             ],

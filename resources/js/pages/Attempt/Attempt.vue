@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import SidePanel from './Components/SidePanel.vue';
 import TasksList from './Components/tasks/TasksList.vue';
-import { useConfirm } from '@composables/useConfirm';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import { useAttempt } from '@/composables/useAttempt';
 import { Attempt } from '@/interfaces/Attempt';
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { useTimer } from '@/composables/useTimer.js';
-import { onUnmounted } from 'vue';
+import { onUnmounted, ref } from 'vue';
+import FinishModal from './Components/FinishModal.vue';
 
 const props = defineProps<{
     attempt:{
         data:Attempt
-    }
+    },
+    finishUrl: string
 }>()
 
 const {examAttempt} = useAttempt()
@@ -23,17 +23,7 @@ const { startTimer, canFinish, stopTimer} = useTimer()
 
 startTimer()
 
-const form = useForm()
-
-const finish = async () => {
-    const {confirmOpen} = useConfirm()
-    const ok = await confirmOpen("Вы уверены, что хотите завершить попытку?")
-    if(!ok) return
-    form.put(`/attempts/${props.attempt.data.id}/finish`,{
-        preserveState:true,
-        preserveScroll:true
-    })
-}
+const isOpen = ref<boolean>(false)
 
 onUnmounted(() => stopTimer())
 </script>
@@ -47,16 +37,17 @@ onUnmounted(() => stopTimer())
   
                 <main class="min-w-0 flex-1" v-if="examAttempt">
                     <v-card-text class="px-6 py-6">
-                        <TasksList :attempt="examAttempt" />
+                        <TasksList 
+                            :attempt="examAttempt" 
+                        />
                     </v-card-text>
 
                     <div class="flex justify-center pt-5">
-                        <AppPrimaryButton
-                            text="Завершить"
-                            :disabled="form.processing || !canFinish"
-                            :loading="form.processing"
-                            @click="finish"
-                        />
+                        <v-btn
+                            color="primary"
+                            :disabled="!canFinish"
+                            @click="isOpen = true"
+                        >Завершить</v-btn>
                     </div>
                 </main>
 
@@ -71,4 +62,9 @@ onUnmounted(() => stopTimer())
             </div>
         </div>
     </v-container>
+
+    <FinishModal 
+        :url="finishUrl"
+        v-model="isOpen"
+    />
 </template>

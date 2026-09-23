@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\ForeignNational;
 
+use App\Http\Resources\ForeignNational\ForeignNationalEditResource;
 use App\Models\Enrollment;
 use App\Modules\ForeignNational\CreateForeignNationalWithEnrollment;
 use App\Modules\ForeignNational\UpdateForeignNational;
@@ -11,7 +12,7 @@ use App\Http\Requests\ForeignNational\ForeignNationalIndexRequest;
 use App\Http\Requests\ForeignNational\ForeignNationalPostRequest;
 use App\Http\Requests\ForeignNational\ForeignNationalUpdateRequest;
 use App\Http\Resources\ForeignNational\ForeignNationalIndexResource;
-use App\Http\Resources\ForeignNational\ForeignNationalProfileResource;
+use App\Http\Resources\ForeignNational\ForeignNationalViewResource;
 use App\Models\ForeignNational;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -90,7 +91,7 @@ class ForeignNationalController
         );
 
         return Inertia::render('ForeignNationals/View', [
-            'foreignNational' => new ForeignNationalProfileResource($buildedForeignNational),
+            'foreignNational' => new ForeignNationalViewResource($buildedForeignNational),
             'editUrl' => $request->user()->can('update', $foreignNational) 
                 ? route('foreign-nationals.edit', [
                     'foreign_national' => $foreignNational
@@ -110,7 +111,7 @@ class ForeignNationalController
         Gate::authorize('update', $foreignNational);
 
         return Inertia::render('ForeignNationals/Edit', [
-            'foreignNational' => new ForeignNationalProfileResource($foreignNational),
+            'foreignNational' => new ForeignNationalEditResource($foreignNational),
             'updateUrl' => route('foreign-nationals.update', [
                 'foreign_national' => $foreignNational
             ], false), 

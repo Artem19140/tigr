@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import BaseEntryCard from '@/components/BaseComponents/BaseEntryCard/BaseEntryCard.vue';
-import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { router } from '@inertiajs/vue3';
 import { onMounted, onUnmounted } from 'vue';
 
-const loginUrl = '/login';
+const props = defineProps<{
+    redirectUrl: string
+}>()
 
 let redirectTimer: ReturnType<typeof setTimeout>;
 
 onMounted(() => {
     redirectTimer = setTimeout(() => {
-        router.visit(loginUrl);
+        router.visit(props.redirectUrl);
     }, 15_000);
 });
 
@@ -35,10 +36,10 @@ onUnmounted(() => {
 
         <template #actions>
             <div class="flex justify-center">
-                <AppPrimaryButton
-                    text="На главную"
-                    @click="router.visit(loginUrl)"
-                />
+                <v-btn
+                    color="primary"
+                    @click="router.visit(redirectUrl)"
+                >На главную</v-btn>
             </div>
         </template>
     </BaseEntryCard>

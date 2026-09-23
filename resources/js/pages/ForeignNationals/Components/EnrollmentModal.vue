@@ -5,10 +5,10 @@ import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.v
 import {  RedirectUrl } from '@interfaces/Interfaces';
 import { router, useHttp } from '@inertiajs/vue3';
 import { useConfirm } from '@composables/useConfirm';
-import { ForeignNational } from '@/interfaces/ForeignNational';
+import { ForeignNationalView } from '@/interfaces/ForeignNational';
 
 const props = defineProps<{
-    foreignNational: ForeignNational | null,
+    foreignNational: ForeignNationalView | null,
     enrollUrl: string
 }>()
 

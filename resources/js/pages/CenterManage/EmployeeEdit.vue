@@ -22,7 +22,7 @@ const form = useForm<EmployeeFormI>({
     surname: props.employee.data.surname,
     name: props.employee.data.name,
     patronymic: props.employee.data.patronymic,
-    roles:props.employee.data.roles ? props.employee.data.roles.map(r => r.id) : [],
+    roles:props.employee.data.roles,
     email: props.employee.data.email
 })
 

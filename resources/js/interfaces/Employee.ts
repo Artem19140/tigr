@@ -1,5 +1,3 @@
-import { Roles } from "@/constants/Roles"
-
 export interface Employee{
     id:number,
     surname:string,
@@ -17,7 +15,7 @@ export interface EmployeeFormI extends Omit<Employee, 'id' | 'roles' | 'fullName
 export interface EmployeeEdit extends Omit
     <Employee, 'fullName'>
 {
-
+    roles:Array<number | undefined>
 }
 
 export interface EmployeeIndex extends Omit<Employee, 'surname' | 'name' | 'patronymic'>{
@@ -26,6 +24,6 @@ export interface EmployeeIndex extends Omit<Employee, 'surname' | 'name' | 'patr
 }
 
 export interface Role{
-    id:number,
-    name:Roles
+    id: number,
+    name: string
 }

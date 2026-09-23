@@ -15,12 +15,12 @@ final class ExamSettings{
 
     public static function attemptMinDurationMinutes():int
     {
-        return config('exam.min_time_from_start_to_finish');
+        return app()->isProduction() ? config('exam.min_time_from_start_to_finish') : 0;
     }
 
     public static function enrollmentCloseBeforeExamMinutes(): int
     {
-        return config('exam.enrollment_window_closed_before_exam');
+        return app()->isProduction() ? config('exam.enrollment_window_closed_before_exam') : 0;
     }
 
     public static function minAgeYear():int
@@ -30,7 +30,7 @@ final class ExamSettings{
 
     public static function minTimeBeforeCreateMinutes():int
     {
-        return config('exam.min_time_before_exam_creating');
+        return app()->isProduction() ? config('exam.min_time_before_exam_creating') : 0;
     }
 
 }

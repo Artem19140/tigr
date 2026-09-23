@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ExamEnrollment from '@/components/Exam/ExamEnrollment.vue';
-import { ForeignNationalFormI } from '@/interfaces/ForeignNational';
+import { ForeignNationalCreate } from '@/interfaces/ForeignNational';
 import { Head, router, useHttp } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import ForeignNationalForm from './Components/ForeignNationalForm.vue';
@@ -18,7 +18,7 @@ defineOptions({
   layout: [EmployeeLayout]
 })
 
-const form = useHttp<ForeignNationalFormI & {hasPayment:boolean, examId: number | null}, RedirectUrl>({
+const form = useHttp<ForeignNationalCreate, RedirectUrl>({
   surname: '', 
   name:'',
   patronymic:"",

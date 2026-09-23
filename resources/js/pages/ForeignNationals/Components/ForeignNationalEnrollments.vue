@@ -40,7 +40,7 @@ const props = defineProps<{
 
                 <div class="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500">
                     <span>
-                        {{ new DateFormatter(enrollment.exam.beginTime).format('H:i, d.m.Y') }}
+                        {{ new DateFormatter(enrollment.exam.beginTime).format('H:i • d.m.Y') }}
                     </span>
 
                     <span

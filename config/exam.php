@@ -35,7 +35,7 @@ return [
     |
     */
 
-    'enrollment_window_closed_before_exam' => 0,
+    'enrollment_window_closed_before_exam' => 10,
 
     /*
     |--------------------------------------------------------------------------
@@ -48,7 +48,7 @@ return [
     |
     */
 
-    'min_time_before_exam_creating' => 0,
+    'min_time_before_exam_creating' => 180,
 
     /*
     |--------------------------------------------------------------------------
@@ -60,7 +60,7 @@ return [
     |
     */
 
-    'min_time_from_start_to_finish' => 1,
+    'min_time_from_start_to_finish' => 10,
 
     /*
     |--------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { DateFormatter } from '@/helpers/DateFormatter';
-import { ForeignNational, ForeignNationalEditForm } from '@/interfaces/ForeignNational';
+import {  ForeignNationalEdit, ForeignNationalEditForm } from '@/interfaces/ForeignNational';
 import { Head, router, useForm } from '@inertiajs/vue3';
 import ForeignNationalForm from './Components/ForeignNationalForm.vue';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
@@ -11,13 +11,13 @@ import { useConfirm } from '@/composables/useConfirm.js';
 
 const props = defineProps<{
     foreignNational:{
-        data:ForeignNational
+        data:ForeignNationalEdit
     },
     updateUrl: string,
     backUrl: string
 }>()
 
-const foreignNational = ref<ForeignNational>(props.foreignNational.data)
+const foreignNational = ref<ForeignNationalEdit>(props.foreignNational.data)
 
 defineOptions({
   layout: [EmployeeLayout]

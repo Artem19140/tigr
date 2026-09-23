@@ -39,15 +39,20 @@ class AttemptTakingController
                     'minTimeFromStartToFinish' => ExamSettings::attemptMinDurationMinutes(),
                     'name' => $exam->type->name
                 ],
-                'fullName' => $attempt->foreignNational->full_name_short
-                
+                'fullName' => $attempt->foreignNational->full_name_short,
+                'startUrl' => route('attempts.start', [
+                    'attempt' => $attempt
+                ], false)
             ]);
         }
 
         $attempt = $builder->build($attempt);
 
         return Inertia::render('Attempt/Attempt', [
-            'attempt' => new AttemptExamSessionResource($attempt)
+            'attempt' => new AttemptExamSessionResource($attempt),
+            'finishUrl' => route('attempts.finish', [
+                'attempt' => $attempt
+            ], false)
         ]);
     }
 

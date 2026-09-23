@@ -1,5 +1,3 @@
-import { Attempt } from "./Attempt"
-import { Employee } from "./Employee"
 import { Enrollment } from "./Enrollment"
 
 export interface ForeignNational{
@@ -7,68 +5,79 @@ export interface ForeignNational{
   name:string,
   surname:string,
   patronymic:string | undefined,
-  nameLatin:string,
-  surnameLatin:string,
-  patronymicLatin:string | undefined,
-  passportNumber:string | undefined,
-  passportSeries:string | undefined,
-  issuedBy:string | null,
-  issuedDate:string | null,
-  phone: string | null,
-  creator?:Employee | null,
-  passport?:string | null,
-  citizenship:string | null,
-  dateBirth:string | null,
-  attempts?:Array<Attempt> | null,
-  fullName:string,
-  fullNameLatin:string,
-  fullPassport:string,
-  passportTranslate?:string | null,
+  nameLatin:string
+  surnameLatin:string
+  patronymicLatin:string | undefined
+  passportNumber:string | undefined
+  passportSeries:string | undefined
+  issuedBy:string | null
+  issuedDate:string | null
+  phone: string | null
+  citizenship:string | null
+  dateBirth:string | null
   comment:''
-  gender:string | null,
-  enrollments:Array<Enrollment>,
-  creatorFullName:string,
+  gender:string | null
   addressReg:string,
+}
+
+export interface ForeignNationalView {
+  id:number
+  fullName:string
+  fullNameLatin:string
+  fullPassport:string
+  enrollments:Array<Enrollment>,
   documents: Array<ForeignNationalDocument>
+  creatorFullName:string
+  issuedBy:string | null
+  issuedDate:string | null
+  phone: string | null
+  dateBirth:string | null
+  citizenship:string | null
+}
+
+export interface ForeignNationalEdit extends ForeignNational{
+  id:number
+  fullName:string
+  fullNameLatin:string
+  fullPassport:string
+  documents: Array<ForeignNationalDocument>
+  issuedBy:string | null
+  issuedDate:string | null
+  phone: string | null
+  dateBirth:string | null
+  citizenship:string | null
+}
+
+export interface ForeignNationalCreate extends Omit<ForeignNational,
+    'id' | 'fullName' | 'fullNameLatin'
+>{
+  issuedBy:string | null
+  issuedDate:string | null
+  phone: string | null
+  dateBirth:string | null
+  citizenship:string | null
+  hasPayment:boolean 
+  examId: number | null
+  passportTranslate: File | null
+  passport: File | null
+  noPatronymic: boolean
+  noPassportNumber: boolean
+  noPassportSeries: boolean
+  noPatronymicLatin:boolean,
+  noPhone:boolean
 }
 
 export interface ForeignNationalEnrollment{
-  id:number,
-  fullName:string,
-  fullPassport:string,
-  isLoading?: boolean,
+  id:number
+  fullName:string
+  fullPassport:string
+  isLoading?: boolean
 }
 
 export interface ForeignNationalIndex{
   id:number,
   fullName:string,
   fullPassport:string,
-}
-
-export type ForeignNationalFormI = Omit<
-  ForeignNational,
-  'id' | 'creator' | 'exams' | 'createdAt' | 'attempts' | 'exam' | 'fullName' | 'fullPassport' | 
-  'passportTranslate' | 'passport' | 'creatorFullName' | 'enrollments'  | 'fullNameLatin' | 'permissions' | 'documents'
-> & {
-  passport: File | null
-  passportTranslate: File | null
-  noPassportNumber: boolean
-  noPassportSeries: boolean
-  noPatronymic: boolean
-  noPatronymicLatin:boolean,
-  noPhone:boolean
-}
-
-export type ForeignNationalEditForm = Omit<
-  ForeignNational,
-  'id' | 'creator' | 'exams' | 'createdAt' | 'attempts' | 'exam' | 'fullName' | 'fullPassport' | 
-  'passportTranslate' | 'passport' | 'creatorFullName' | 'enrollments'  | 'fullNameLatin' | 'permissions' | 'documents'
-> & {
-  noPassportNumber: boolean
-  noPassportSeries: boolean
-  noPatronymic: boolean
-  noPatronymicLatin:boolean,
-  noPhone:boolean
 }
 
 export type ForeignNationalFilters= {

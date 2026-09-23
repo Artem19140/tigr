@@ -5,13 +5,18 @@ use App\Http\Controllers\Web\ExamSession\AttemptTakingController;
 use App\Http\Controllers\Web\ExamSession\VerifyCodeController;
 use App\Support\AppMiddleware;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::middleware([
         'meta',
         'guest:web,foreignNationals'
     ])->group(function () {
         
-        Route::inertia('attempts/finish', 'Attempt/AfterAttempt')
+        Route::get('attempts/finish', function(){
+            return Inertia::render('Attempt/AfterAttempt', [
+                'redirectUrl' => route('login', [], false)
+            ]);
+        })
             ->name('attempts.finish.after');
 
         Route::post('exam-codes/verify', [VerifyCodeController::class, 'verify'])
@@ -26,13 +31,13 @@ Route::prefix('attempts')
         AppMiddleware::ENSURE_ATTEMPT_VALID_STATUS,
     ])
     ->group(function () {
-        Route::put('{attempt}/finish', [AttemptTakingController::class, 'finish'])
+        Route::post('{attempt}/finish', [AttemptTakingController::class, 'finish'])
             ->name('attempts.finish');
 
         Route::get('{attempt}', [AttemptTakingController::class, 'show'])
             ->name('attempts.show');
 
-        Route::put('{attempt}', [AttemptTakingController::class, 'start'])
+        Route::post('{attempt}', [AttemptTakingController::class, 'start'])
             ->name('attempts.start');
 
         Route::put('{attempt}/answers/{attemptAnswer}', [AnswerController::class, 'update'])

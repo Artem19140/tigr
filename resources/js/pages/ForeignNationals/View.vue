@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { DateFormatter } from '@/helpers/DateFormatter';
-import { ForeignNational } from '@/interfaces/ForeignNational';
+import { ForeignNationalView } from '@/interfaces/ForeignNational';
 import countries from '@data/countries.json'
 import ForeignNationalEnrollments from './Components/ForeignNationalEnrollments.vue';
 import ForeignNationalsDocuments from './Components/ForeignNationalsDocuments.vue';
@@ -12,7 +12,7 @@ import { Head, router } from '@inertiajs/vue3';
 
 const props = defineProps<{
 	foreignNational:{
-		data: ForeignNational
+		data: ForeignNationalView
 	},
     editUrl: string,
     enrollUrl: string

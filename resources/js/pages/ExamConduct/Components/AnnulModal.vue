@@ -36,7 +36,6 @@ const cancel = () => {
         max-width="600"
     >
         <v-card class="overflow-hidden rounded-xl">
-            <!-- Header -->
             <v-card-text class="px-6 pt-6">
                 <div class="text-xl font-semibold text-gray-900">
                     Аннулирование попытки
@@ -72,7 +71,6 @@ const cancel = () => {
                 </div>
             </v-card-text>
 
-            <!-- Form -->
             <v-card-text class="px-6">
                 <v-textarea
                     v-model="form.annulledReason"

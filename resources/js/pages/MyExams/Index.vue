@@ -84,7 +84,7 @@ const visit = (url :string) => {
             
 
             <template #item.beginTime="{ item }">
-                {{ new DateFormatter(item.beginTime).format('d M Y,  H:i') }}
+                {{ new DateFormatter(item.beginTime).format('H:i • d M Y') }}
             </template>
         
         </BaseTable>
