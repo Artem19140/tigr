@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useConfirmationOptionsDialog } from '@/composables/useConfirmationOptionsDialog';
-import AppPrimaryButton from '../UI/AppPrimaryButton/AppPrimaryButton.vue';
 
 const {isOpen, confirmation, confirmationError, message, close, ok} = useConfirmationOptionsDialog()
 </script>
@@ -40,11 +39,11 @@ const {isOpen, confirmation, confirmationError, message, close, ok} = useConfirm
                         Отмена
                     </v-btn>
 
-                    <AppPrimaryButton
-                        text="Подтвердить"
+                    <v-btn
+                        color="primary"
                         :disabled="!confirmation"
                         @click="ok"
-                    />
+                    >Подтвердить</v-btn>
                 </div>
             </v-card-text>
         </v-card>

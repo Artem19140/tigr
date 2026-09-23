@@ -2,7 +2,6 @@
 import { useHttp } from '@inertiajs/vue3';
 import { useSnackbarQueue } from '@/composables/useSnackbarQueue';
 import AppPasswordInput from '@/components/UI/AppPasswordInput/AppPasswordInput.vue';
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 
 const props = defineProps<{
     url: string
@@ -61,12 +60,12 @@ const logout = () => {
                         Отмена
                     </v-btn>
 
-                    <AppPrimaryButton
-                        text="Выйти"
+                    <v-btn
+                        color="primary"
                         :loading="http.processing"
                         :disabled="!http.isDirty || http.processing"
                         @click="logout"
-                    />
+                    >Выйти</v-btn>
                 </div>
             </v-card-text>
         </v-card>

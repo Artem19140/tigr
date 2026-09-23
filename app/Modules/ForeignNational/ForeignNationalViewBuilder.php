@@ -7,7 +7,6 @@ use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\ForeignNational;
 use App\Modules\Enrollment\EnrollmentPaymentRules;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class ForeignNationalViewBuilder
 {
@@ -24,6 +23,7 @@ class ForeignNationalViewBuilder
         $foreignNational->enrollments = $foreignNational
             ->enrollments
             ->sortByDesc('exam.begin_time');
+            
         return $foreignNational;
     }
 
@@ -52,10 +52,10 @@ class ForeignNationalViewBuilder
     protected function documentsRelations(): array
     {
         return [
-            'documents' => function(MorphMany $query){
+            'documents' => function( $query){
                     return $query->whereNull('deleted_at');
                 },
-            'documents.creator', 'documents.documentable'
+            'documents.creator'
         ];
     }
 

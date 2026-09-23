@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { router } from '@inertiajs/vue3';
 import { mdiFilterVariant, mdiClose, mdiMagnify } from '@mdi/js'
 
@@ -120,13 +119,13 @@ function cleanFilters(data: Record<string, any>) {
                         Очистить
                     </v-btn>
 
-                    <AppPrimaryButton
+                    <v-btn
                         :prepend-icon="mdiMagnify"
-                        text="Найти"
+                        color="primary"
                         :disabled="form.processing"
                         :loading="form.processing"
                         @click="find"
-                    />
+                    >Найти</v-btn>
                 </div>
             </div>
         </v-card>

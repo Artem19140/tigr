@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import BaseThreeDotDropdown from '@/components/BaseComponents/BaseThreeDotDropdown/BaseThreeDotDropdown.vue';
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
-import { useSnackbarQueue } from '@/composables/useSnackbarQueue';
-import { router, useHttp } from '@inertiajs/vue3';
+import { ForeignNationalDocument } from '@/interfaces/ForeignNational';
+import { useForm } from '@inertiajs/vue3';
 import { mdiFileDocumentOutline } from '@mdi/js';
 import { ref } from 'vue';
 
 const props = defineProps<{
-    documents:any
+    documents: Array<ForeignNationalDocument>
 }>()
 
 const getLabel = (type: string) => {
@@ -21,28 +20,24 @@ const getLabel = (type: string) => {
 
 const updatedId = ref<number | null>(null)
 
-const open = (docId :number) => {
-    window.open(`/documents/${docId}`)
+const open = (url: string) => {
+    window.open(url)
 }
 
-const http = useHttp<{document : File | null}>({
+const form = useForm<{document : File | null}>({
   	document:  null
 })
 
-const update = (docId :number) => {
-  	http.put(`/documents/${docId}`, {
-		onSuccess(response, httpResponse) {
-			const {add} = useSnackbarQueue()
-			add('Документ обновлен', 'green')
-			clear()
-			router.reload()
-		},
-	})
+const update = (url: string) => {
+  	form.put(url, {
+        preserveScroll: true,
+        preserveState: true
+    })
 }
 
 const clear = () => {
 	updatedId.value = null
-	http.document = null
+	form.document = null
 }
 </script>
 
@@ -68,18 +63,18 @@ const clear = () => {
                 </v-list-item-title>
 
                 <v-list-item-subtitle class="mt-0.5 text-xs text-gray-500">
-                    {{ doc.createdAt }}
+                    {{ doc.updatedAt }}
                 </v-list-item-subtitle>
 
                 <template #append>
                     <BaseThreeDotDropdown nav>
                         <v-list-item
-                            @click="open(doc.id)"
+                            @click="() => open(doc.actions.downloadUrl)"
                             title="Скачать"
                         />
 
                         <v-list-item
-                            v-if="doc.permissions.update"
+                            v-if="doc"
                             @click="updatedId = doc.id"
                             title="Заменить"
                         />
@@ -96,28 +91,28 @@ const clear = () => {
                 </div>
 
                 <v-file-upload
-                    v-model="http.document"
+                    v-model="form.document"
                     density="compact"
-                    :error-messages="http.errors.document"
-                    :readonly="http.processing"
+                    :error-messages="form.errors.document"
+                    :readonly="form.processing"
                     class="mb-4"
                 />
 
                 <div class="flex justify-end gap-2">
                     <v-btn
                         variant="text"
-                        :disabled="http.processing"
+                        :disabled="form.processing"
                         @click="clear"
                     >
                         Отмена
                     </v-btn>
 
-                    <AppPrimaryButton
-                        text="Загрузить"
-                        :loading="http.processing"
-                        :disabled="http.processing || !http.document"
-                        @click="update(doc.id)"
-                    />
+                    <v-btn
+                        color="primary"
+                        :loading="form.processing"
+                        :disabled="form.processing || !form.document"
+                        @click="update(doc.actions.updateUrl)"
+                    >Загрузить</v-btn>
                 </div>
             </div>
         </div>

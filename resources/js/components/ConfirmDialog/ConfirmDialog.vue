@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useConfirm } from '@/composables/useConfirm';
-import AppPrimaryButton from '../UI/AppPrimaryButton/AppPrimaryButton.vue';
 
 const {isOpen, message, confirmOk, confirmClose} = useConfirm()
 </script>
@@ -32,10 +31,10 @@ const {isOpen, message, confirmOk, confirmClose} = useConfirm()
                         Отмена
                     </v-btn>
 
-                    <AppPrimaryButton
-                        text="Подтвердить"
+                    <v-btn
+                        color="primary"
                         @click="confirmOk"
-                    />
+                    >Подтвердить</v-btn>
                 </div>
             </v-card-text>
         </v-card>

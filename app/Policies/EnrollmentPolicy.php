@@ -21,11 +21,6 @@ class EnrollmentPolicy
         return false;
     }
 
-    public function view(Employee $employee, Enrollment $enrollment): bool
-    {
-        return false;
-    }
-
     public function create(Employee $employee): bool
     {
         return $employee->hasAnyRole(EmployeeRole::Operator);
@@ -38,6 +33,7 @@ class EnrollmentPolicy
         )) {
             return true;
         }
+        
         return $employee->can('examiner', $enrollment->exam);
 
     }
@@ -56,7 +52,10 @@ class EnrollmentPolicy
 
     }
 
-    public function statement(Employee $employee, Enrollment $enrollment): bool
+    public function statement(
+        Employee $employee, 
+        Enrollment $enrollment
+    ): bool
     {
         return $employee->hasAnyRole(EmployeeRole::Operator);
     }

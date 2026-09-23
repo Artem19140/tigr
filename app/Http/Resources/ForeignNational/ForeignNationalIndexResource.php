@@ -16,7 +16,6 @@ class ForeignNationalIndexResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
-            'patronymic' => $this->resource->patronymic,
             'fullName' => $this->full_name_short,
             'fullPassport' => $this->full_passport,
             'showUrl' => route('foreign-nationals.show', [

@@ -9,7 +9,10 @@ use App\Models\ForeignNational;
 class ForeignNationalPolicy
 {
 
-    public function view(Employee $employee, ForeignNational $foreignNational): bool
+    public function view(
+        Employee $employee, 
+        ForeignNational $foreignNational
+    ): bool
     {
         if ($employee->hasAnyRole(
             EmployeeRole::Operator,
@@ -18,14 +21,7 @@ class ForeignNationalPolicy
         {
             return true;
         }
-
-        if ($employee->hasRole(EmployeeRole::Examiner->value)) 
-        {
-            return $foreignNational->exams()
-                ->examiner($employee)
-                ->exists();
-        }
-
+        
         return false;
     }
 
@@ -46,7 +42,10 @@ class ForeignNationalPolicy
         return $employee->hasAnyRole(EmployeeRole::Operator);
     }
 
-    public function update(Employee $employee, ForeignNational $foreignNational): bool
+    public function update(
+        Employee $employee, 
+        ForeignNational $foreignNational
+    ): bool
     {
         return $employee->hasAnyRole(EmployeeRole::Operator);
     }

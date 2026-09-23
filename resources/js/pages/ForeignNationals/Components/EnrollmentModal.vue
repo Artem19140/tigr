@@ -8,13 +8,14 @@ import { useConfirm } from '@composables/useConfirm';
 import { ForeignNational } from '@/interfaces/ForeignNational';
 
 const props = defineProps<{
-    foreignNational: ForeignNational | null
+    foreignNational: ForeignNational | null,
+    enrollUrl: string
 }>()
 
 const isOpen = defineModel<boolean>()
 
 const enroll = async () => {
-    http.post(`/enrollments`,{
+    http.post(props.enrollUrl,{
         onSuccess: (response) => {
             if(response.redirectUrl){
                 isOpen.value = false
@@ -56,6 +57,7 @@ const close  = async () => {
     <v-dialog
         v-model="isOpen"
         max-width="500"
+        persistent
     >
         <v-card class="overflow-hidden rounded-xl">
             <v-card-text class="px-6 pt-6">

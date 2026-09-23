@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\ForeignNational;
 
+use App\Models\Enrollment;
 use App\Modules\ForeignNational\CreateForeignNationalWithEnrollment;
 use App\Modules\ForeignNational\UpdateForeignNational;
 use App\Modules\ForeignNational\ForeignNationalViewBuilder;
@@ -13,6 +14,7 @@ use App\Http\Resources\ForeignNational\ForeignNationalIndexResource;
 use App\Http\Resources\ForeignNational\ForeignNationalProfileResource;
 use App\Models\ForeignNational;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
@@ -23,8 +25,10 @@ class ForeignNationalController
     public function index(
         ForeignNationalIndexRequest $request,
         GetForeignNationals $getForeignNationals
-    ): Response {
+    ): Response 
+    {
         Gate::authorize('viewAny', ForeignNational::class);
+
         $dto = $request->toDto();
         $foreignNationals = $getForeignNationals->execute($dto);
 
@@ -40,7 +44,8 @@ class ForeignNationalController
         ]);
     }
 
-    public function create() {
+    public function create(): Response 
+    {
         Gate::authorize('create', ForeignNational::class);
 
         return Inertia::render('ForeignNationals/Create', [
@@ -53,6 +58,7 @@ class ForeignNationalController
         ForeignNationalPostRequest $request,
         CreateForeignNationalWithEnrollment $createForeignNationalWithEnrollment
     ) : JsonResponse {
+
         Gate::authorize('create', ForeignNational::class);
         
         $enrollement = $createForeignNationalWithEnrollment
@@ -89,13 +95,18 @@ class ForeignNationalController
                 ? route('foreign-nationals.edit', [
                     'foreign_national' => $foreignNational
                 ], false) 
-                : null
+                : null,
+
+            'enrollUrl' =>  $request->user()->can('create', Enrollment::class) 
+                ? route('enrollments.store', [], false)
+                : null, 
         ]);
     }
 
     public function edit(
         ForeignNational $foreignNational
-    ) {
+    ): Response 
+    {
         Gate::authorize('update', $foreignNational);
 
         return Inertia::render('ForeignNationals/Edit', [
@@ -113,8 +124,10 @@ class ForeignNationalController
         ForeignNationalUpdateRequest $request,
         ForeignNational $foreignNational,
         UpdateForeignNational $updateForeignNational
-    ) {
+    ) : RedirectResponse 
+    {
         Gate::authorize('update', $foreignNational);
+        
         $updateForeignNational->execute(
             $request->toDto(),
             $foreignNational

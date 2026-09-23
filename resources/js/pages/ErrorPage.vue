@@ -2,7 +2,6 @@
 import { computed, ref } from 'vue'
 import { router } from '@inertiajs/vue3'
 import { mdiAlertCircle, mdiServerOff, mdiFileQuestion, mdiLockAlert, mdiAlert } from '@mdi/js'
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 
 const props = defineProps<{
   status: number
@@ -96,12 +95,12 @@ const home = () => {
                 </div>
 
                 <div class="mt-7 flex justify-center">
-                    <AppPrimaryButton
-                        text="В систему"
+                    <v-btn
+                        color="primary"
                         :loading="loading"
                         :disabled="loading"
                         @click="home"
-                    />
+                    >В систему</v-btn>
                 </div>
             </div>
         </div>

@@ -14,7 +14,8 @@ const props = defineProps<{
 	foreignNational:{
 		data: ForeignNational
 	},
-    editUrl: string
+    editUrl: string,
+    enrollUrl: string
 }>()
 
 defineOptions({
@@ -107,7 +108,7 @@ const personalData = computed(() => [
                     </v-btn>
 
                     <AppPrimaryButton
-                        v-if="foreignNational.data.permissions.enroll"
+                        v-if="enrollUrl"
                         text="Записать"
                         @click="isOpen = true"
                     />
@@ -136,9 +137,7 @@ const personalData = computed(() => [
                 </v-card-text>
             </v-card>
 
-            <!-- Documents -->
             <v-card
-                v-if="foreignNational.data.permissions.documents"
                 class="overflow-hidden rounded-xl"
             >
                 <v-card-text class="px-6 pt-6">
@@ -158,9 +157,7 @@ const personalData = computed(() => [
                 </v-card-text>
             </v-card>
 
-            <!-- Enrollments -->
             <v-card
-                v-if="foreignNational.data.permissions.enrollments"
                 class="overflow-hidden rounded-xl"
             >
                 <v-card-text class="px-6 pt-6">
@@ -188,5 +185,6 @@ const personalData = computed(() => [
     <EnrollmentModal
         v-model="isOpen"
         :foreign-national="foreignNational.data"
+        :enrollUrl="enrollUrl"
     />
 </template>

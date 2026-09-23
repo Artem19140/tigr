@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -76,9 +75,9 @@ class ForeignNational extends Authenticatable
         return $this->belongsTo(Employee::class, 'creator_id');
     }
 
-    public function documents(): MorphMany
+    public function documents(): HasMany
     {
-        return $this->morphMany(Document::class, 'documentable');
+        return $this->hasMany(ForeignNationalDocument::class);
     }
 
     public function latestAttempt(): HasOne

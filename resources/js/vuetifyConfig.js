@@ -67,6 +67,9 @@ export const vuetify = createVuetify({
         rounded:'lg',
         prependIcon:'',
         prependInnerIcon:"$calendar"
+    },
+    VBtn:{
+      rounded:'lg'
     }
   }
 })

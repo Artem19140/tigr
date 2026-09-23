@@ -29,10 +29,7 @@ export interface ForeignNational{
   enrollments:Array<Enrollment>,
   creatorFullName:string,
   addressReg:string,
-  documents: {
-    id:number
-  },
-  permissions: ForeignNationalActionsPermissions
+  documents: Array<ForeignNationalDocument>
 }
 
 export interface ForeignNationalEnrollment{
@@ -83,9 +80,12 @@ export type ForeignNationalFilters= {
   id: number | null,
 }
 
-export interface ForeignNationalActionsPermissions{
-  edit: boolean,
-  enroll: boolean,
-  documents:boolean,
-  enrollments:boolean
+export interface ForeignNationalDocument {
+  id: number,
+  updatedAt: string,
+  type: string,
+  actions: {
+    downloadUrl: string,
+    updateUrl: string
+  }
 }

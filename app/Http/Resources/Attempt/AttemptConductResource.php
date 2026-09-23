@@ -3,9 +3,7 @@
 namespace App\Http\Resources\Attempt;
 
 use App\Modules\Attempt\AttemptAnnulledRules;
-use App\Http\Resources\AttemptAnswer\AttemptAnswerResource;
 use App\Http\Resources\ForeignNational\ForeignNationalResource;
-use App\Http\Resources\TaskVariant\TaskVariantResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Modules\Attempt\AttemptSpeakingRules;
@@ -27,8 +25,6 @@ class AttemptConductResource extends JsonResource
             'speakingFinishedAt' => $this->resource->speaking_finished_at,
             'speakingStartedAt' => $this->resource->speaking_started_at,
             'annulledAt' => $this->annulled_at,
-            // 'tasks' => TaskVariantResource::collection($this->whenLoaded('taskVariants', fn () => $this->taskVariants)),
-            // 'answers' => AttemptAnswerResource::collection($this->whenLoaded('answers')),
             'availability' => [
                 'annul' =>  app(AttemptAnnulledRules::class)->check($this->resource)->available,
                 'speaking' => app(AttemptSpeakingRules::class)->get($this->resource)->available

@@ -68,7 +68,13 @@ function required (v:any) {
                         variant="outlined"
                         density="comfortable"
                     />
+
+                    
                 </div>
+
+                <!-- <div
+                    class="text-center p-4 bg-gray-50 border rounded-lg border-grey-1"
+                >Минимальное время </div> -->
 
                 <v-number-input
                     v-model="form.capacity"
