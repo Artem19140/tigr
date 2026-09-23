@@ -40,12 +40,22 @@ export interface ForeignNationalEdit extends ForeignNational{
   fullName:string
   fullNameLatin:string
   fullPassport:string
-  documents: Array<ForeignNationalDocument>
   issuedBy:string | null
   issuedDate:string | null
   phone: string | null
   dateBirth:string | null
   citizenship:string | null
+  noPatronymic: boolean
+  noPassportNumber: boolean
+  noPassportSeries: boolean
+  noPatronymicLatin:boolean,
+  noPhone:boolean
+}
+
+export interface ForeignNationalEditForm extends Omit<ForeignNationalEdit, 
+    'fullName' | 'fullNameLatin' | 'id' | 'fullPassport'
+>{
+
 }
 
 export interface ForeignNationalCreate extends Omit<ForeignNational,

@@ -23,7 +23,7 @@ defineOptions({
   layout: [EmployeeLayout]
 })
 
-const form = useForm<Omit<ForeignNationalEditForm, 'hasPayment' | 'examId'>>({
+const form = useForm<ForeignNationalEditForm>({
     surname: foreignNational.value.surname, 
     name: foreignNational.value.name,
     patronymic: foreignNational.value.patronymic ?? "",
