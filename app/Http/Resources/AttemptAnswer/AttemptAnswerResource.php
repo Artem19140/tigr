@@ -28,7 +28,11 @@ class AttemptAnswerResource extends JsonResource
                 'mark' => $this->mark,
                 'rateUrl' => $this->rateUrl(),
             ]),
-            $this->mergeWhen($request->routeIs('attempts.show'),[
+
+            $this->mergeWhen($request->routeIs(
+                'attempts.show', 
+                'attempts.answers.update'
+            ),[
                 'updateUrl' =>   $this->updateUrl(),
                 'audioPlayedUrl' => $this->audioPlayedUrl(),
                 'audioPlayedAt' => $this->audio_played_at,

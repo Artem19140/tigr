@@ -63,8 +63,8 @@ class ExamResultsGenerator
                 });
  
             $filteredSubblocksCount = $filteredSubblocks->count();
-
-            if( $filteredSubblocksCount > 1 ){
+            $subblockCount = $block->subblocks->count();
+            if( $subblockCount > 1 ){
                 $filteredSubblocks->push(['name' => 'Сум.']);
             }
 
@@ -72,7 +72,7 @@ class ExamResultsGenerator
                 'id' => $block->id,
                 'name' => $block->name,
                 'subblocks' => $filteredSubblocks,
-                'colspan' => $filteredSubblocksCount > 1 ? $filteredSubblocksCount + 1 : 1
+                'colspan' => $subblockCount > 1 ? $filteredSubblocksCount + 1 : 1
             ];
         });
     }

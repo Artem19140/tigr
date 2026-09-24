@@ -17,6 +17,10 @@
             border-collapse: collapse;
         }
 
+        .border-black{
+            border: 1px solid black;
+        }
+
         .no-border {
             border: none;
         }
@@ -76,6 +80,16 @@
 
         .mb-20{
             margin-bottom: 20px;
+        }
+
+        .px-5{
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .py-5{
+            padding-bottom: 5px;
+            padding-top: 5px;
         }
         @stack('style')  
     </style>

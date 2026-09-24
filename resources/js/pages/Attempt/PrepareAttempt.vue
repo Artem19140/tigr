@@ -23,6 +23,7 @@ const begin = () => {
 </script>
 
 <template>
+  <form @submit.prevent="begin">
   <div class="exam-page">
     <v-card
       class="exam-card mx-auto pa-8"
@@ -85,16 +86,18 @@ const begin = () => {
       </div>
 
       <div class="actions">
-        <v-btn
-          @click="begin"
-          :disabled="form.processing"
-          :loading="form.processing"
-          color="primary"
-          size="large"
-        >Начать экзамен</v-btn>
+        
+          <v-btn
+            type="submit"
+            :disabled="form.processing"
+            :loading="form.processing"
+            color="primary"
+            size="large"
+          >Начать экзамен</v-btn>
       </div>
     </v-card>
   </div>
+  </form>
 </template>
 
 <style lang="css" scoped>

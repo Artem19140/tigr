@@ -71,9 +71,6 @@ class AttemptTakingController
 
         return redirect()->route('attempts.show', [
             'attempt' => $startedAttempt->id,
-            'finishUrl' => route('attempts.finish', [
-                'attempt' => $attempt
-            ], false)
         ]);
     }
 

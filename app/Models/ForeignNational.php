@@ -112,6 +112,15 @@ class ForeignNational extends Authenticatable
         });
     }
 
+    protected function fullNameLatinShort(): Attribute
+    {
+        return Attribute::get(function () {
+            return trim(
+                ($this->surname_latin ?? '').' '.(mb_strtoupper(mb_substr($this->name_latin, 0, 1)).'.' ?? '').' '.(mb_strtoupper(mb_substr($this->patronymic_latin ?? '', 0, 1)))
+            );
+        });
+    }
+
     protected function fullNameLatin(): Attribute
     {
         return Attribute::get(function () {

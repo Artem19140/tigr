@@ -14,7 +14,7 @@ final class ExamCodesGenerator
 {
     public function execute(Exam $exam)
     {
-        $exam->load('enrollments.foreignNational');
+        $exam->load(['enrollments.foreignNational']);
 
         $this->generateCodesForExam($exam);
 
