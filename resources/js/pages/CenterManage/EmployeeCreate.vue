@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { EmployeeFormI } from '@/interfaces/Employee'
+import { EmployeeCreate } from '@/interfaces/Employee'
 import { Head, router, useForm } from '@inertiajs/vue3'
 import EmployeeForm from './Components/EmployeeForm.vue'
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue'
@@ -15,12 +15,12 @@ defineOptions({
   layout:[EmployeeLayout]
 })
 
-const form = useForm<EmployeeFormI>({
-    surname:'',
-    name:'',
-    patronymic:'',
+const form = useForm<EmployeeCreate>({
+    surname: null,
+    name:null,
+    patronymic:null,
     roles:[],
-    email:''
+    email:null
 })
 
 const cancel = async () => {
@@ -31,6 +31,7 @@ const cancel = async () => {
     }
     router.visit(props.backUrl)
 }
+
 </script>
 
 <template>

@@ -15,7 +15,7 @@ class Task extends Model
         'subblock_id',
         'order',
         'mark',
-        'checking_mode'
+        'review_mode'
     ];
 
     protected $casts = [
@@ -32,18 +32,18 @@ class Task extends Model
         return $this->belongsTo(Subblock::class, 'subblock_id');
     }
 
-    public function autoCheck(): bool
+    public function autoReview(): bool
     {
-        if(! $this->checking_mode){
-            return $this->type->autoCheck();
+        if(! $this->review_mode){
+            return $this->type->autoReview();
         }
 
-        return $this->checking_mode !== 'manual';
+        return $this->review_mode !== 'manual';
     }
 
     public function scopeManualReview(Builder $query)
     {
         return $query->whereIn('type', TaskType::manualReviewTypes())
-            ->orWhere('checking_mode', 'manual');
+            ->orWhere('review_mode', 'manual');
     }
 }

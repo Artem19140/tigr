@@ -70,8 +70,10 @@ class SpeakingController
             throw new BusinessException($result->message());
         }
         
-        $attempt->speaking_started_at = Carbon::now();
-        $attempt->save();
+        $attempt->update([
+            'speaking_started_at' => Carbon::now()
+        ]);
+
         return redirect()->route('attempts.speaking.show', [
             'attempt' => $attempt
         ]);

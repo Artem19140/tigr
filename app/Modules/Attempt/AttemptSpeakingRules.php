@@ -67,7 +67,7 @@ class AttemptSpeakingRules
 
         if($this->isNotToday($attempt)){
             return  RuleResult::fail(
-                'speaking_available_on_attempt_passing_day'
+                'speaking_available_on_attempt_taking_day'
             );
         }
 

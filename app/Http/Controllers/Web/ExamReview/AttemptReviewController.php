@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Web\ExamReview;
 
-use App\Http\Resources\AttemptAnswer\AttemptAnswerResource;
 use App\Models\AttemptAnswer;
 use App\Modules\Attempt\FinishManualReview;
 use App\Enums\TaskType;
@@ -11,7 +10,6 @@ use App\Models\Attempt;
 use App\Modules\AttemptAnswer\RateAttemptAnswer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -69,7 +67,7 @@ class AttemptReviewController
         Attempt $attempt,
         AttemptAnswer $attemptAnswer,
         RateAttemptAnswer $rateAttemptAnswer
-    ) {
+    ): RedirectResponse {
 
         $request->validate([
             'mark' => ['required', 'integer', 'min:0'],
@@ -80,9 +78,6 @@ class AttemptReviewController
             $request->input('mark')
         );
 
-        return response()->json([
-            'attemptAnswer' => new AttemptAnswerResource($attemptAnswer),
-        ]);
+        return back();
     }
-    
 }

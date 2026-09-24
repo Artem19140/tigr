@@ -190,7 +190,7 @@ class RvpSeeder extends Seeder
                     'description' => 'Прочитайте объявление и напишите заявление.',
                     'mark' => 2,
                     'variants' => json_decode(file_get_contents(base_path($this->path.'task15.json')), true),
-                    'checking_mode' => 'manual'
+                    'review_mode' => 'manual'
                 ],
                 [
                     'type' => TaskType::Essay,

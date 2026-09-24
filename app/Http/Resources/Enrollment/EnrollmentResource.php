@@ -24,13 +24,17 @@ class EnrollmentResource extends JsonResource
             'hasPayment' => $this->has_payment,
             'exam' => $this->when($request->routeIs('foreign-nationals.show'), new ExamShortResource($this->whenLoaded('exam'))) ,
             'foreignNational' => new ForeignNationalResource($this->whenLoaded('foreignNational')),
-            'examResult' => app(ExamResultResolver::class)->execute($this->resource),
+            'examResult' => app(ExamResultResolver::class)->execute(
+                $this->resource->attempt,
+                $this->resource->exam
+            ),
             'actions' => [
                 'payment' => [
                     'disabled' => ! app(EnrollmentPaymentRules::class)->check($this->resource)->available,
                     'url' => $request->user()->can('paymentAny', Enrollment::class)
                         ? route('enrollments.payment-change', [
-                            'enrollment' => $this->resource
+                            'enrollment' => $this->resource,
+                            'status' => ! $this->resource->has_payment
                         ], false)
                         : null
                 ],
@@ -41,7 +45,7 @@ class EnrollmentResource extends JsonResource
                         ], false)
                         : null
                 ]
-            ]
+            ],
         ];
     }
 }

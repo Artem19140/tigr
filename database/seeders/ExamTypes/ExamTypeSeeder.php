@@ -59,7 +59,7 @@ class ExamTypeSeeder
                             'type' => $task['type'],
                             'mark' => $task['mark'],
                             'description' => $task['description'] ?? null,
-                            'checking_mode' => $task['checking_mode'] ?? null
+                            'review_mode' => $task['review_mode'] ?? null
                         ]
                     );
                     foreach ($task['variants'] as $variant) {

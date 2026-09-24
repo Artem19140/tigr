@@ -18,6 +18,20 @@ class ExamDocumentBuilder
     {
         $docs = [];
 
+        $exam->loadExists([
+            'enrollments',
+            'attempts',
+            'enrollments as enrollments_with_no_attempts_exists' => function($query){
+                return $query->whereDoesntHave('attempt');
+            },
+            'attempts as active_attempts_exists' => function ($query) {
+                $query->active();
+            },
+            'attempts as unchecked_attempts_exists' => function ($query) {
+                return $query->unchecked();
+            }
+        ]);
+
         if($employee->can('codes', $exam)){
             $result =  $this->rules->codes($exam);
             $docs['codes'] = [

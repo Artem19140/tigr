@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\AttemptStatus;
 use App\Modules\Shared\CenterData;
 use Carbon\Carbon;
 use Database\Factories\AttemptFactory;
@@ -224,10 +223,10 @@ class Attempt extends Model
     {
         return Attribute::make(
             get: fn () => match (true) {
-                $this->isAnnulled() => AttemptStatus::Annulled,
-                $this->isFinished() => AttemptStatus::Finished,
-                $this->isStarted() => AttemptStatus::Active,
-                default => AttemptStatus::Pending,
+                $this->isAnnulled() => 'annulled',
+                $this->isFinished() => 'finished',
+                $this->isStarted() => 'active',
+                default => 'pending',
             },
         );
     }

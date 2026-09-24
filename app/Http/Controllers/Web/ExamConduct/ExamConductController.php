@@ -25,7 +25,16 @@ class ExamConductController
             'type'
         ]);
 
-        $exam->loadState(); //Для поллинга
+        $exam->loadExists([
+            'attempts as active_attempts_exists' => function ($query) {
+                $query->active();
+            },
+            'attempts',
+            'enrollments',
+            'enrollments as enrollments_with_no_attempts_exists' => function($query){
+                return $query->whereDoesntHave('attempt');
+            }
+        ]);
         
         $exam->enrollments->each(function(Enrollment $enrollment) use (
             $exam

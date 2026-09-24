@@ -6,6 +6,7 @@ use App\Models\Document;
 use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\ForeignNational;
+use App\Models\ForeignNationalDocument;
 use App\Modules\Enrollment\EnrollmentPaymentRules;
 
 class ForeignNationalViewBuilder
@@ -34,7 +35,7 @@ class ForeignNationalViewBuilder
     {
         $relations = [];
 
-        if($employee->can('viewAny', Document::class)){
+        if($employee->can('viewAny', ForeignNationalDocument::class)){
             $relations = [...$relations, 
                 ...$this->documentsRelations()
             ];

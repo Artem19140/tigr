@@ -8,7 +8,7 @@ use App\Models\Enrollment;
 
 class EnrollmentPaymentRules
 {
-    public function check(Enrollment $enrollment):RuleResult
+    public function check(Enrollment $enrollment): RuleResult
     {
         $exam = $enrollment->exam;
 
@@ -24,11 +24,12 @@ class EnrollmentPaymentRules
             );
         }
 
-        if($exam->isFinished()){
+        if($exam->codesTtlExpired()){
             return RuleResult::fail( 
-                AvailabilityCode::ExamAlreadyFinished
+                AvailabilityCode::ExamCodeExpired
             );
         }
+
         return RuleResult::success();
     }
 }

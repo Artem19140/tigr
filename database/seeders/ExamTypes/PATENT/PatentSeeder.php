@@ -125,7 +125,7 @@ class PatentSeeder extends Seeder
                     'description' => 'Прочитайте текст и вставьте пропущенное слово.',
                     'mark' => 1,
                     'variants' => json_decode(file_get_contents(base_path($this->path.'task7.json')), true),
-                    'checking_mode' => 'auto'
+                    'review_mode' => 'auto'
                 ],
             ],
         ];

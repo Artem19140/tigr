@@ -26,7 +26,7 @@ class RateAttemptAnswer
         }
 
         $this->ensureAttemptNotChecked($attempt);
-        $this->ensureTaskIsNotAutoCheck($task);
+        $this->ensureTaskIsNotAutoReview($task);
         $this->ensureMarkIsValid($mark, $task);
 
         $this->rate($attemptAnswer, $mark);
@@ -55,9 +55,9 @@ class RateAttemptAnswer
         }
     }
 
-    protected function ensureTaskIsNotAutoCheck(Task $task): void
+    protected function ensureTaskIsNotAutoReview(Task $task): void
     {
-        if ($task->autoCheck()) {
+        if ($task->autoReview()) {
             $this->log([
                 'reason' => 'trying to manual check answer, where task with auto checking type',
                 'task_id' => $task->id

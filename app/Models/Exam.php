@@ -151,6 +151,10 @@ class Exam extends Model
 
     public function needPolling():bool
     {
+        if($this->isCancelled()){
+            return false;
+        }
+
         if($this->begin_time->isFuture()){
             return false;
         }
@@ -159,7 +163,11 @@ class Exam extends Model
             return false;
         }
     
-        if(! $this->codesTtlExpired()){
+        if(
+            $this->enrollments_with_no_attempts_exists
+                &&
+            ! $this->codesTtlExpired()
+        ){
             return true;
         }
         
@@ -172,19 +180,8 @@ class Exam extends Model
 
     public function codesTtlExpired():bool
     {
-        return $this->begin_time->copy()->addMinutes(ExamSettings::codesTtlMinutes())->isPast();
-    }
-
-    public function loadState(){
-        $this->loadExists([
-            'attempts as unchecked_attempts_exists' => function ($query) {
-                $query->unchecked();
-            },
-            'attempts as active_attempts_exists' => function ($query) {
-                $query->active();
-            },
-            'attempts',
-            'enrollments'
-        ]);
+        return $this->begin_time->copy()->addMinutes(
+            ExamSettings::codesTtlMinutes()
+        )->isPast();
     }
 }

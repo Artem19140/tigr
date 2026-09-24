@@ -25,3 +25,7 @@ export interface Answer{
     id:number,
     content:Object,
 }
+
+export interface TaskReview{
+    
+}

@@ -36,7 +36,6 @@ class ExamViewBuilder
                 $enrollment->setRelation('exam', $exam);
             });
         }
-        $exam->loadState();
         
         return $exam;
     }

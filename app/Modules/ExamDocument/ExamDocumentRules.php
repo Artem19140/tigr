@@ -83,6 +83,16 @@ class ExamDocumentRules
             );
         }
 
+        if(
+            $exam->enrollments_with_no_attempts_exists
+                &&
+            ! $exam->codesTtlExpired()
+        ){
+            return RuleResult::fail(
+                AvailabilityCode::ExamCodeAliveAndEnrollmentsWithNoAttemptsExists
+            );
+        }
+
         if($this->hasNoAttempts($exam)){
             return RuleResult::fail(
                 AvailabilityCode::AttemptsNotExists
@@ -115,6 +125,16 @@ class ExamDocumentRules
         if($this->hasNoEnrollment($exam)){
             return RuleResult::fail(
                 AvailabilityCode::EnrollmentNotExists
+            );
+        }
+
+        if(
+            $exam->enrollments_with_no_attempts_exists
+                &&
+            ! $exam->codesTtlExpired()
+        ){
+           return RuleResult::fail(
+                AvailabilityCode::ExamCodeAliveAndEnrollmentsWithNoAttemptsExists
             );
         }
 

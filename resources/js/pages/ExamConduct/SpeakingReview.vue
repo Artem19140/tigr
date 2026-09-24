@@ -6,7 +6,6 @@ import { AttemptConduct } from '@/interfaces/Attempt';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import TasksList from '../Attempt/Components/tasks/TasksList.vue';
-import { ref } from 'vue';
 import { AttemptAnswer } from '@/interfaces/Task.js';
 import { mdiArrowLeft } from '@mdi/js'
 
@@ -21,10 +20,8 @@ const props = defineProps<{
     backUrl:string
 }>()
 
-const attempt = ref<AttemptConduct>(props.attempt.data)
-
 const rated = (value: AttemptAnswer) => {
-    const task = attempt.value?.tasks.find(t => t.attemptAnswer.id === value.id)
+    const task = props.attempt.data?.tasks.find(t => t.attemptAnswer.id === value.id)
     if(!task) return
     task.attemptAnswer = {...value}
 }
@@ -37,7 +34,7 @@ const back = useForm()
         <title>Говорение — проверка</title>
     </Head>
 
-    <AttemptCheckHeader :attempt="attempt" />
+    <AttemptCheckHeader :attempt="attempt.data" />
 
     <v-container class="py-6">
         <div class="mx-auto max-w-7xl">
@@ -57,10 +54,9 @@ const back = useForm()
             </div>
 
             <div class="flex items-start gap-5">
-                <!-- Content -->
                 <main class="min-w-0 flex-1">
                     <TasksList
-                        :attempt="attempt"
+                        :attempt="attempt.data"
                         :checking="true"
                         class="mb-5"
                         @rated="rated"
@@ -80,9 +76,8 @@ const back = useForm()
                     </div>
                 </main>
 
-                <!-- Side panel -->
                 <AttemptCheckingSidePanel
-                    :attempt="attempt"
+                    :attempt="attempt.data"
                 />
             </div>
         </div>

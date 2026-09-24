@@ -53,7 +53,7 @@ class Enrollment extends Model
 
     public function attempt(): HasOne
     {
-        return $this->hasOne(Attempt::class, 'enrollment_id');
+        return $this->hasOne(Attempt::class, 'enrollment_id')->latest();
     }
 
     public function scopeVisibleFor(Builder $query, Employee $employee): Builder

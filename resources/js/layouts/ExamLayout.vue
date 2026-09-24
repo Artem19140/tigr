@@ -67,7 +67,7 @@ const menuProps = {
                         :key="key"
                         :value="tab.url"
                         class="text-sm"
-                        @click="router.visit(tab.url)"
+                        @click="router.visit(tab.url, {replace:true})"
                     >
                         {{ menuProps[key].label }}
                     </v-tab>

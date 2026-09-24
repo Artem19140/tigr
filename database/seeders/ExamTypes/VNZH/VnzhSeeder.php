@@ -116,7 +116,7 @@ class VnzhSeeder extends Seeder
                     'description' => 'Прослушайте диалог и дополните предложение в соответствии с информацией в тексте.',
                     'mark' => 1,
                     'variants' => json_decode(file_get_contents(base_path($path.'task6.json')), true),
-                    'checking_mode' => 'manual'
+                    'review_mode' => 'manual'
                 ],
                 [
                     'type' => TaskType::SingleChoice,

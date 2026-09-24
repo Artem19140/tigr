@@ -5,7 +5,14 @@ export interface Employee{
     patronymic:string | null,
     email:string,
     fullName:string,
-    
+}
+
+export interface EmployeeCreate{
+    surname:string | null,
+    name:string | null,
+    patronymic:string | null,
+    email:string | null,
+    roles:Array<number | undefined>
 }
 
 export interface EmployeeFormI extends Omit<Employee, 'id' | 'roles' | 'fullName'>{

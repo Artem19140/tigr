@@ -10,7 +10,7 @@ enum TaskType: string
     case MultyInput = 'multy-input';
     case Speaking = 'speaking';
 
-    public function autoCheck(): bool
+    public function autoReview(): bool
     {
         return match ($this) {
             self::SingleChoice => true,
@@ -26,11 +26,11 @@ enum TaskType: string
         };
     }
 
-    public static function autoCheckTypes(): array
+    public static function autoReviewTypes(): array
     {
         return array_map(
             fn ($case) => $case->value,
-            array_filter(self::cases(), fn ($case) => $case->autoCheck())
+            array_filter(self::cases(), fn ($case) => $case->autoReview())
         );
     }
 
@@ -38,7 +38,7 @@ enum TaskType: string
     {
         return array_map(
             fn ($case) => $case->value,
-            array_filter(self::cases(), fn ($case) => ! $case->autoCheck())
+            array_filter(self::cases(), fn ($case) => ! $case->autoReview())
         );
     }
 }

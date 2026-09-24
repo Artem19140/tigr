@@ -14,7 +14,10 @@ class ChangePaymentStatus
         protected ModelChangesLogger $logger
     ) {}
 
-    public function execute(Enrollment $enrollment): void
+    public function execute(
+        Enrollment $enrollment,
+        bool $status
+    ): void
     {
         $result = $this->enrollmentPaymentRules->check(
             $enrollment
@@ -25,7 +28,7 @@ class ChangePaymentStatus
         }
 
         $enrollment->update([
-            'has_payment' =>  ! $enrollment->has_payment
+            'has_payment' =>  $status
         ]);
 
         $this->logger->log($enrollment);

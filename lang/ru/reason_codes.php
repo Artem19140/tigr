@@ -8,7 +8,7 @@ return [
     AvailabilityCode::ExamPending->value => 'Экзамен еще не начался',
     AvailabilityCode::AttemptsNotExists->value => 'Нет попыток экзамена',
     AvailabilityCode::ActiveAttemptsExists->value => 'Существуют активные попытки экзамена',
-    AvailabilityCode::ExamAlreadyFinished->value => 'Экзамен завершен',
+    AvailabilityCode::ExamCodeExpired->value => 'Код для начала экзамена не был использован',
     AvailabilityCode::AttemptExists->value => 'Существует попытка экзамена',
     AvailabilityCode::ExamAlreadyStarted->value => 'Экзамен уже начался',
     AvailabilityCode::AttemptAnnulled->value => 'Попытка аннулирована',
@@ -20,6 +20,6 @@ return [
     'speaking_not_started_yet' => 'Говорение не начато',
     'attempt_has_no_speaking' => 'У данной попытки нет заданий на говорение',
     'speaking_already_finished' => 'Говорение уже завершено',
-    'speaking_available_on_attempt_passing_day' => 'Говорение доступно в день прохождения попытки',
+    'speaking_available_on_attempt_taking_day' => 'Говорение доступно в день прохождения попытки',
     'protocol_comment_edit_available_only_on_exam_day' => 'Редактировать комментарий возможно только в день экзамена'
 ];

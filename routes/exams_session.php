@@ -16,8 +16,7 @@ Route::middleware([
             return Inertia::render('Attempt/AfterAttempt', [
                 'redirectUrl' => route('login', [], false)
             ]);
-        })
-            ->name('attempts.finish.after');
+        })->name('attempts.finish.after');
 
         Route::post('exam-codes/verify', [VerifyCodeController::class, 'verify'])
             ->middleware(['throttle:10']); 
@@ -40,15 +39,20 @@ Route::prefix('attempts')
         Route::post('{attempt}', [AttemptTakingController::class, 'start'])
             ->name('attempts.start');
 
-        Route::put('{attempt}/answers/{attemptAnswer}', [AnswerController::class, 'update'])
+        Route::put('{attempt}/answers/{attempt_answer}', [AnswerController::class, 'update'])
             ->scopeBindings()
             ->name('attempts.answers.update');
 
-        Route::put('{attempt}/answers/{attemptAnswer}/audio', [AttemptTakingController::class, 'audioPlayed'])
+        Route::put('{attempt}/answers/{attempt_answer}/audio', [AttemptTakingController::class, 'audioPlayed'])
             ->scopeBindings()
-            ->name('attempts.answers.update.audio');
+            ->name('attempts.answers.audio.update');
+
+        // Route::get('{attempt}/answers/{attempt_answer}/media', [AttemptTakingController::class, 'audioPlayed'])
+        //     ->scopeBindings()
+        //     ->name('attempts.media');
+
     });
 
 
 
-    
+      

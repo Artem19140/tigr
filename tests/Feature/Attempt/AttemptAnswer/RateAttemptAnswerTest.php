@@ -75,7 +75,7 @@ class RateAttemptAnswerTest extends TestCase
     public function test_fail_task_no_manual_review(): void
     {
         $this->attempt->finish();
-        $this->task->type = collect(TaskType::autoCheckTypes())->random();
+        $this->task->type = collect(TaskType::autoReviewTypes())->random();
         $this->expectException(ValidationException::class);
         $this->action->execute($this->attemptAnswer, $this->mark);
         $this->hasLog();
@@ -85,7 +85,7 @@ class RateAttemptAnswerTest extends TestCase
     {
         $this->attempt->finish();
         $this->task->type =
-            collect(TaskType::autoCheckTypes())
+            collect(TaskType::autoReviewTypes())
                 ->filter(function ($type) {
                     return $type !== TaskType::Speaking;
                 })

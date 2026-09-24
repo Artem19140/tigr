@@ -31,8 +31,8 @@ enum ExamDocument: string
          return match($this){
             self::Codes => "Кода_{$name}_{$date->format('H-i_d.m.Y')}.pdf",
             self::List => "Список_{$name}_{$date->format('H-i_d.m.Y')}.pdf", 
-            self::Protocol => "Результаты_{$name}_{$date->format('H-i_d.m.Y')}.pdf",
-            self::Results => 'pdf.exam.results',
+            self::Protocol => "Протокол_{$name}_{$date->format('H-i_d.m.Y')}.pdf",
+            self::Results => "Результаты_{$name}_{$date->format('H-i_d.m.Y')}.pdf",
             default => throw new TemplateNotFoundException($this->value)
         };
     }

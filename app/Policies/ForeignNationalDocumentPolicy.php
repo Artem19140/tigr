@@ -11,6 +11,11 @@ class ForeignNationalDocumentPolicy
 {
     public function viewAny(Employee $employee): bool
     {
+        if($employee->hasAnyRole(
+            EmployeeRole::Operator
+        )){
+            return true;
+        }
         return false;
     }
 

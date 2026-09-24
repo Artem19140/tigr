@@ -6,8 +6,7 @@ import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import AttemptCheckHeader from '@/components/Attempt/AttemptCheckHeader.vue';
 import AttemptCheckingSidePanel from '@/components/Attempt/AttemptCheckingSidePanel.vue';
 import TasksList from '../Attempt/Components/tasks/TasksList.vue';
-import { computed, ref } from 'vue';
-import { AttemptAnswer } from '@/interfaces/Task.js';
+import { computed } from 'vue';
 import { mdiArrowLeft } from '@mdi/js'
 
 defineOptions({
@@ -23,24 +22,13 @@ const props = defineProps<{
 }>()
 
 const form = useForm()
-const attempt = ref<AttemptReview>(props.attempt.data)
 
 const finishChecking = async () => {
-    form.post(props.finishUrl,{
-        onSuccess:()=>{
-            router.reload()
-        }
-    })
-}
-
-const rated = (value: AttemptAnswer) => {
-    const task = attempt.value?.tasks.find(t => t.attemptAnswer.id === value.id)
-    if(!task) return
-    task.attemptAnswer = {...value}
+    form.post(props.finishUrl)
 }
 
 const hasUncheckedTasks = computed(
-    () => attempt.value.tasks.some(task => task.attemptAnswer.checkedAt === null)
+    () => props.attempt.data.tasks.some(task => task.attemptAnswer.checkedAt === null)
 )
 </script>
 
@@ -48,11 +36,11 @@ const hasUncheckedTasks = computed(
     <Head>
         <title>Проверка</title>
     </Head>
-    <AttemptCheckHeader :attempt="attempt" />
+    
+    <AttemptCheckHeader :attempt="attempt.data" />
 
     <v-container class="py-6">
         <div class="mx-auto max-w-7xl">
-            <!-- Back -->
             <div class="mb-4">
                 <v-btn
                     variant="text"
@@ -66,18 +54,15 @@ const hasUncheckedTasks = computed(
             </div>
 
             <div class="flex items-start gap-5">
-                <!-- Content -->
                 <main class="min-w-0 flex-1">
                     <TasksList
-                        :attempt="attempt"
+                        :attempt="attempt.data"
                         :checking="true"
                         class="mb-5"
-                        @rated="rated"
                     />
 
-                    <!-- Finish checking -->
                     <div
-                        v-if="attempt.checkedAt === null"
+                        v-if="attempt.data.checkedAt === null"
                         class="flex flex-col items-center gap-3 border-t border-gray-200 pt-5"
                     >
                         <div class="text-center text-sm text-gray-500">
@@ -87,7 +72,7 @@ const hasUncheckedTasks = computed(
                         <AppPrimaryButton
                             text="Завершить проверку"
                             :loading="form.processing"
-                            :disabled="form.processing || attempt.checkedAt || hasUncheckedTasks"
+                            :disabled="form.processing || attempt.data.checkedAt || hasUncheckedTasks"
                             @click="finishChecking"
                         />
                     </div>
@@ -105,7 +90,7 @@ const hasUncheckedTasks = computed(
                 </main>
 
                 <AttemptCheckingSidePanel
-                    :attempt="attempt"
+                    :attempt="attempt.data"
                 />
             </div>
         </div>

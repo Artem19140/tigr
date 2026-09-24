@@ -2,35 +2,42 @@
 
 namespace App\Modules\Exam;
 
-use App\Enums\ExamResultStatus;
-use App\Models\Enrollment;
+use App\Models\Attempt;
+use App\Models\Exam;
 
 class ExamResultResolver
 {
     public function execute(
-        Enrollment $enrollment,
-        
-    ): ?ExamResultStatus {
-        $exam = $enrollment->exam;
-        $attempt = $enrollment->attempt;
-        if ((! $exam->isFinished() || $exam->isCancelled()) && ! $attempt) {
+        ?Attempt $attempt,
+        Exam $exam,
+    ): ?string {
+
+        if($exam->isCancelled()){
             return null;
         }
 
-        if (! $attempt) {
-            return ExamResultStatus::Absent;
+        if($exam->isPending()){
+            return null;
+        }
+
+        if (! $exam->codesTtlExpired()  && ! $attempt) {
+            return null;
+        }
+
+        if ($exam->codesTtlExpired()  && ! $attempt) {
+            return 'absent';
         }
 
         if ($attempt->isAnnulled()) {
-            return ExamResultStatus::Annulled;
+            return 'annulled';
         }
 
         if ($attempt->is_passed === true) {
-            return ExamResultStatus::Passed;
+            return 'passed';
         }
 
         if ($attempt->is_passed === false) {
-            return ExamResultStatus::Failed;
+            return 'failed';
         }
 
         return null;

@@ -3,7 +3,7 @@ import SingleChoiceTask from './SingleChoiceTask.vue';
 import EssayTask from './EssayTask.vue';
 import SingleInputTask from './SingleInputTask.vue';
 import { TaskTypes } from '@/constants/TaskTypes';
-import { AttemptAnswer } from '@/interfaces/Task';
+import { Answer, AttemptAnswer, Task } from '@/interfaces/Task';
 import { Attempt, AttemptReview, AttemptConduct } from '@/interfaces/Attempt';
 import { useAttempt } from '@/composables/useAttempt';
 import { useHttp } from '@inertiajs/vue3';
@@ -17,10 +17,6 @@ const props = defineProps<{
     attempt: Attempt | AttemptConduct | AttemptReview,
     checking?:boolean,
     mode?:string
-}>()
-
-const emit = defineEmits<{
-    (e:'rated', value:AttemptAnswer):void
 }>()
 
 const resolveTaskComponent = (type: string) => {
@@ -46,10 +42,13 @@ const http = useHttp<{answer:any}, {data:AttemptAnswer}>({
 
 const {updateAnswer, setError, removeError, setSaving, removeSaving } = useAttempt()
 
-const update = (value:any) => {
+const update = (value: {
+    task: Task,
+    answer: Answer
+}) => {
     http.answer = value.answer
     setSaving(value.task.id)
-    http.put(`/attempts/${props.attempt.id}/answers/${value.task.attemptAnswer.id}`,{
+    http.put(value.task.attemptAnswer.updateUrl,{
         onSuccess:(response) => {
             updateAnswer(value.task.id, response.data)
         },
@@ -103,7 +102,6 @@ const groupedTasks =  computed(() =>{
                     
                     <v-card-text v-if="checking">
                         <task-rating-block
-                            @rated="(value :AttemptAnswer) => emit('rated', value)"
                             :task="task"
                             :readonly="Boolean(attempt.checkedAt)"
                         />

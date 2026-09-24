@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { AttemptAnswer, Task } from '@/interfaces/Task';
-import { useHttp } from '@inertiajs/vue3';
+import { Task } from '@/interfaces/Task';
+import { useForm } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import { mdiCheckCircle, mdiRefresh } from '@mdi/js'
 
@@ -9,16 +9,7 @@ const props = defineProps<{
     readonly:boolean
 }>()
 
-const emit = defineEmits<{
-    (e:'rated', value:AttemptAnswer):void
-}>()
-
-const answerId = props.task?.attemptAnswer?.id
-
-const http = useHttp<
-    {mark: number | null}, 
-    {attemptAnswer: AttemptAnswer}
->({
+const form = useForm({
     mark: props.task.attemptAnswer.mark
 })
 
@@ -26,15 +17,9 @@ const error = ref<boolean>(false)
 
 const rate = () => {
     error.value = false
-    http.put(`/attempts/${props.task.attemptAnswer.attemptId}/answers/${answerId}/rate`,{
-        onSuccess:(response)=>{
-            emit('rated', response.attemptAnswer)
-        },
-        onFinish() {
-            if(!http.wasSuccessful){
-                error.value = true
-            }
-        },
+    form.put(props.task.attemptAnswer.rateUrl,{
+        preserveScroll:true,
+        preserveState: true
     })
 }
 
@@ -53,13 +38,13 @@ const marks = computed(() =>
 <template>
     <div>
         <v-autocomplete
-            v-model="http.mark"
+            v-model="form.mark"
             :label="`Выберите балл от 0 до ${task.mark}`"
             :items="marks"
             item-title="mark"
-            :disabled="http.processing"
+            :disabled="form.processing"
             :readonly="readonly"
-            :error-messages="http.errors.mark"
+            :error-messages="form.errors.mark"
             variant="outlined"
             density="comfortable"
             hide-details="auto"
@@ -67,7 +52,7 @@ const marks = computed(() =>
         />
 
         <div class="mt-2 flex min-h-6 items-center gap-2 px-1">
-            <template v-if="http.processing">
+            <template v-if="form.processing">
                 <v-progress-circular
                     indeterminate
                     size="16"
@@ -102,7 +87,7 @@ const marks = computed(() =>
                     variant="tonal"
                     color="error"
                     :prepend-icon="mdiRefresh"
-                    :disabled="http.processing"
+                    :disabled="form.processing"
                     @click="rate"
                 >
                     Повторить

@@ -40,7 +40,6 @@ class ExamResultsGenerator
             ],
             'enrollments' => [
                 'attempt.attemptAnswers.taskVariant.task',
-                'attempt',
                 'foreignNational',
             ],
         ]);

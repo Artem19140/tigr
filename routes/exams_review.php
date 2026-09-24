@@ -22,7 +22,8 @@ Route::middleware(
 ->prefix('attempts')
 ->group(function () {
 
-    Route::put('{attempt}/answers/{attemptAnswer}/rate', [AttemptReviewController::class, 'rateAnswer'])
+    Route::put('{attempt}/answers/{attempt_answer}/rate', [AttemptReviewController::class, 'rateAnswer'])
+        ->name('attempts.answers.rate')
         ->scopeBindings();
 
     Route::get('{attempt}/review', [AttemptReviewController::class, 'show'])
