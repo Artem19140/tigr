@@ -21,12 +21,16 @@ class RateAttemptAnswer
         $task = $attemptAnswer->taskVariant->task;
         $attempt = $attemptAnswer->attempt;
 
-        if ($task->type !== TaskType::Speaking) {
+        if ( $task->type !== TaskType::Speaking ) {
             $this->ensureAttemptFinished($attempt);
         }
 
+        if ( $task->type === TaskType::Speaking ){
+            $this->ensureSpeakingFinished($attempt);
+        }
+
         $this->ensureAttemptNotChecked($attempt);
-        $this->ensureTaskIsNotAutoReview($task);
+        $this->ensureTaskIsNotAutoReview($task, $attempt);
         $this->ensureMarkIsValid($mark, $task);
 
         $this->rate($attemptAnswer, $mark);
@@ -43,11 +47,40 @@ class RateAttemptAnswer
         $attemptAnswer->save();
     }
 
+    protected function ensureAttemptFinished(Attempt $attempt): void
+    {
+        if (! $attempt->isFinished()) {
+            $this->log([
+                'reason' => 'trying to rate answer with not finished attempt',
+                'attempt_status' => $attempt->status,
+                'attempt_id' => $attempt->id
+            ]);
+            throw ValidationException::withMessages([
+                'mark' => 'Задание возможно оценить только при завершенной попытке',
+            ]);
+        }
+    }
+    protected function ensureSpeakingFinished(Attempt $attempt): void
+    {
+        if (! $attempt->speaking_finished_at) {
+            $this->log([
+                'reason' => 'trying to rate speaking answer with not finished speaking',
+                'attempt_status' => $attempt->status,
+                'attempt_id' => $attempt->id
+            ]);
+
+            throw ValidationException::withMessages([
+                'mark' => 'Задание возможно оценить только при завершенном говорении',
+            ]);
+        }
+    }
+
     protected function ensureAttemptNotChecked(Attempt $attempt): void
     {
         if ($attempt->isChecked()) {
             $this->log([
                 'reason' => 'trying to manual check answer, where attempt is already checked',
+                'attempt_id' => $attempt->id
             ]);
             throw ValidationException::withMessages([
                 'mark' => 'Попытка уже проверена, оценка недоступна',
@@ -55,12 +88,16 @@ class RateAttemptAnswer
         }
     }
 
-    protected function ensureTaskIsNotAutoReview(Task $task): void
+    protected function ensureTaskIsNotAutoReview(
+        Task $task,
+        Attempt $attempt
+    ): void
     {
         if ($task->autoReview()) {
             $this->log([
                 'reason' => 'trying to manual check answer, where task with auto checking type',
-                'task_id' => $task->id
+                'task_id' => $task->id,
+                'attempt_id' => $attempt->id
             ]);
             throw ValidationException::withMessages([
                 'mark' => 'Задание проверяется автоматически',
@@ -81,19 +118,6 @@ class RateAttemptAnswer
             ]);
             throw ValidationException::withMessages([
                 'mark' => 'Выставленный балл больше чем максимально возможный',
-            ]);
-        }
-    }
-
-    protected function ensureAttemptFinished(Attempt $attempt): void
-    {
-        if (! $attempt->isFinished() && ! $attempt->isAnnulled()) {
-            $this->log([
-                'reason' => 'trying to rate answer with not finished attempt',
-                'attempt_status' => $attempt->status,
-            ]);
-            throw ValidationException::withMessages([
-                'mark' => 'Задание возможно оценить только при завершенной попытке',
             ]);
         }
     }
