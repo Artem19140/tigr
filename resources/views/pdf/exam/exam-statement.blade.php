@@ -30,7 +30,7 @@
             @endif
             
             @foreach ($statementTable['headers'] as $block)
-                <th colspan="{{ count($block['subblocks']) }}">
+                <th colspan="{{ $block['colspan'] }}">
                     {{ $block['name'] }}
                 </th>
             @endforeach
@@ -67,13 +67,24 @@
             <td>{{ $row['fullPassport'] }}</td>
             <td>{{ $row['startedAt'] ?? ''}}</td>
             <td>{{ $row['finishedAt']  ?? ''}}</td> 
+
             @if ($exam->hasSpeaking())
             <td>{{ $row['speakingStartedAt'] ?? ''}}</td>
             <td>{{ $row['speakingFinishedAt']  ?? ''}}</td>  
             @endif 
-            @foreach ($row['subblockMarks'] as $marks)
-                <td>{{ $marks['sum'] !== null ? $marks['sum'] : ''}}</td>   
+
+            @foreach ($row['marksByBlocks'] as $block)
+
+                @foreach ($block['marksBySubblocks'] as $subblock)
+                    <td>{{ $subblock['total'] }}</td> 
+                @endforeach
+
+                @if ( isset($block['total']) )
+                    <td> {{ $block['total']  }} </td>
+                @endif
+                
             @endforeach
+
             <td>{{ $row['totalMark']  ?? ''}}</td>
             <td>{{ $row['result']  ?? ''}}</td>
         </tr>

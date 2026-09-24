@@ -249,6 +249,7 @@ class RvpSeeder extends Seeder
             'subblocks' => [
                 [
                     'name' => '',
+                    'min_mark' => 3,
                     'tasks' => [
                         [
                             'type' => TaskType::SingleChoice,
@@ -306,6 +307,7 @@ class RvpSeeder extends Seeder
             'subblocks' => [
                 [
                     'name' => '',
+                    'min_mark' => 3,
                     'tasks' => [
                         [
                             'type' => TaskType::SingleChoice,
