@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { EmployeeEdit } from '@/interfaces/Employee'
 import EmployeeForm from './Components/EmployeeForm.vue'
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue'
 import { Head, router, useForm } from '@inertiajs/vue3'
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import { useConfirm } from '@/composables/useConfirm.js';
@@ -70,12 +69,12 @@ const cancel = async () => {
                             Отмена
                         </v-btn>
 
-                        <AppPrimaryButton
-                            text="Сохранить"
+                        <v-btn
+                            color="primary"
                             :loading="form.processing"
                             :disabled="form.processing || !form.isDirty"
                             @click="form.put(updateUrl)"
-                        />
+                        >Сохранить</v-btn>
                     </div>
                 </v-card-text>
             </v-card>

@@ -18,9 +18,6 @@ watch(() => checkbox.value, () => {
 <template>
     <div class="flex flex-column pag-0">
         <v-text-field
-            rounded="lg"
-            variant="outlined"
-            density="comfortable"
             :disabled="checkbox"
             v-model="input"
             v-bind="inputAttr"

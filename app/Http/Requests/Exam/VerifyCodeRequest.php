@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Exam;
 
+use App\Modules\Shared\ExamSettings;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -26,7 +27,7 @@ class VerifyCodeRequest extends FormRequest
             'code' => [
                 'required',
                 'string',
-                'size:6',
+                'size:' . ExamSettings::codesLength(),
             ],
         ];
     }

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { DateFormatter } from '@/helpers/DateFormatter';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
@@ -111,12 +110,12 @@ const back = () => {
                         Отмена
                     </v-btn>
 
-                    <app-primary-button
-                        text="Подтвердить отмену"
+                    <v-btn
+                        color="primary"
                         :disabled="!form.reason || form.processing || ! confirmation"
                         :loading="form.processing"
                         @click="cancel"
-                    />
+                    >Подтвердить отмену</v-btn>
                 </div>
             </v-card-text>
         </v-card>

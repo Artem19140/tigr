@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { useConfirm } from '@/composables/useConfirm'
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import { Head, router, useForm } from '@inertiajs/vue3'
@@ -89,8 +88,8 @@ const close = async () => {
                         Отмена
                     </v-btn>
 
-                    <AppPrimaryButton
-                        text="Добавить"
+                    <v-btn
+                        color="primary"
                         :loading="form.processing"
                         :disabled="
                             form.processing ||
@@ -98,7 +97,7 @@ const close = async () => {
                             !form.capacity
                         "
                         @click="form.post(storeUrl)"
-                    />
+                    >Добавить</v-btn>
                 </div>
             </v-card-text>
         </v-card>

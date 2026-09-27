@@ -61,11 +61,11 @@ export interface ExamForm{
 }
 
 export interface ExamFilters  {
-    dateFrom: string | undefined,
-    cancelled: boolean | null,
-    examTypeId: number | null,
-    dateTo: string | null,
-    id:number | null
+    dateFrom?: string ,
+    cancelled?: boolean,
+    examTypeId?: number,
+    dateTo?: string,
+    id?:number 
 }
 
 export interface ExamConduct  {

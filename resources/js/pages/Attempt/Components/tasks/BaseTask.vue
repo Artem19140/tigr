@@ -2,9 +2,9 @@
 import RenderBlocks from './TaskContentBlocks/RenderBlocks.vue';
 import { Task } from '@/interfaces/Task';
 import { TaskTypes } from '@/constants/TaskTypes';
-import AppRetryAlert from '@/components/UI/AppRetryAlert/AppRetryAlert.vue';
 import { useAttempt } from '@/composables/useAttempt';
 import { provide } from 'vue';
+import { mdiRefresh } from '@mdi/js';
 
 const props = defineProps<{
   task:Task
@@ -30,7 +30,6 @@ provide<Task>('task', props.task)
 
 <template>
     <v-card variant="text">
-        <!-- Header -->
         <div class="px-5 pt-5">
             <div class="flex items-center justify-between gap-4">
                 <div class="flex min-w-0 items-center gap-3">
@@ -57,7 +56,6 @@ provide<Task>('task', props.task)
             </div>
         </div>
 
-        <!-- Description -->
         <div class="px-5 pt-4">
             <div class="text-base font-semibold leading-relaxed text-gray-900">
                 {{
@@ -83,20 +81,39 @@ provide<Task>('task', props.task)
             </div>
         </div>
 
-        <!-- Answers -->
         <div class="px-5 pb-5 pt-5">
             <slot name="answers" />
         </div>
 
-        <!-- Error -->
         <div
             v-if="errors.has(task.id)"
             class="border-t border-gray-100 px-5 py-4"
         >
-            <AppRetryAlert
-                text="Ошибка сохранения. Пожалуйста, повторите действие."
-                :onRetry="() => emit('retry')"
-            />
+            <div class="mt-4">
+                <v-alert
+                    density="compact"
+                    variant="tonal"
+                    type="error"
+                    prominent
+                >
+                <div class="flex items-center justify-between" >
+                    <span>
+                        Ошибка сохранения. Пожалуйста, повторите действие.
+                    </span>
+                    <v-btn 
+                        icon
+                        variant="text"
+                        @click="emit('retry')"
+                    >
+                        <v-icon 
+                            :icon="mdiRefresh"
+                            icon-size="25"
+                        />
+                    </v-btn>        
+                </div>
+                </v-alert>
+            </div>
+
         </div>
     </v-card>
 </template>

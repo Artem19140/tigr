@@ -11,16 +11,16 @@ const page = usePage<{
     }
 }>()
 
-const filters = computed<ExamFilters>(() =>
-    page.flash.filters 
+const filters = computed(() =>
+    page.flash.filters as ExamFilters
 )
 
 const form = useForm<ExamFilters>({
     dateFrom: filters.value?.dateFrom,
-    cancelled: Boolean(filters.value?.cancelled) ?? null,
+    cancelled: Boolean(filters.value?.cancelled) ?? undefined,
     examTypeId:filters.value?.examTypeId ? Number(filters.value?.examTypeId) : filters.value?.examTypeId,
     dateTo:filters.value?.dateTo,
-    id: filters.value?.id ?  Number(filters.value.id) : null,
+    id: filters.value?.id ?  Number(filters.value.id) : undefined,
 })
 
 const loading = defineModel<boolean>({default:false})

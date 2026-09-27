@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useForm } from '@inertiajs/vue3'
-import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.vue'
 
 const form = useForm<{code:string | null}>({
   code: null,
@@ -46,8 +45,8 @@ const submit = () => {
                 {{ form.errors.code }}
             </div>
 
-            <AppPrimaryButton
-                text="Войти"
+            <v-btn
+                color="primary"
                 type="submit"
                 block
                 :loading="form.processing"
@@ -56,7 +55,7 @@ const submit = () => {
                     (form.code?.length ?? 0) < 6
                 "
                 class="w-full"
-            />
+            >Войти</v-btn>
         </div>
     </v-form>
 </template>

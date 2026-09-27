@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { Head, useForm } from '@inertiajs/vue3'
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import BaseEntryCard from '@/components/BaseComponents/BaseEntryCard/BaseEntryCard.vue';
 import AppPasswordInput from '@/components/UI/AppPasswordInput/AppPasswordInput.vue';
 
 const props=defineProps<{
   token:string,
-  email:string
+  email:string,
+  resetUrl: string
 }>()
 
 interface PasswordChange{
@@ -31,14 +31,14 @@ const change = () => {
     form.errors.password_confirmation = 'Пароли не совпадают!'
     return
   }
-  form.post('/password/reset', {
+  form.post(props.resetUrl, {
     preserveScroll: true,
     preserveState: true
   })
 }
 </script>
 
-
+```vue
 <template>
     <Head>
         <title>Смена пароля</title>
@@ -47,45 +47,47 @@ const change = () => {
     <BaseEntryCard>
         <template #title>
             <div class="text-center">
-                <div class="text-xl font-semibold tracking-tight text-gray-900">
+                <h1 class="text-xl font-semibold tracking-tight text-gray-900">
                     Смена пароля
-                </div>
+                </h1>
 
-                <div class="mt-2 text-sm leading-relaxed text-gray-500">
-                    Вам необходимо сменить временный пароль.
-                    Придумайте новый пароль длиной не менее 8 символов.
-                </div>
+                <p class="mx-auto mt-2 max-w-sm text-sm leading-6 text-gray-500">
+                    Временный пароль необходимо заменить.
+                    Новый пароль должен содержать не менее 8 символов.
+                </p>
             </div>
         </template>
 
         <form
-            class="space-y-4"
+            class="mt-6 space-y-5"
             @submit.prevent="change"
         >
-            <AppPasswordInput
-                v-model="form.password"
-                :error-messages="form.errors.password"
-            />
+            <div class="space-y-4">
+                <AppPasswordInput
+                    v-model="form.password"
+                    :error-messages="form.errors.password"
+                />
 
-            <AppPasswordInput
-                v-model="form.password_confirmation"
-                :error-messages="form.errors.password_confirmation"
-            />
-
-            <div class="pt-2">
-                <AppPrimaryButton
-                    type="submit"
-                    text="Сменить пароль"
-                    block
-                    :loading="form.processing"
-                    :disabled="
-                        !form.password ||
-                        !form.password_confirmation ||
-                        form.processing
-                    "
-                    class="w-full"
+                <AppPasswordInput
+                    v-model="form.password_confirmation"
+                    :error-messages="form.errors.password_confirmation"
                 />
             </div>
+
+            <v-btn
+                type="submit"
+                color="primary"
+                block
+                :loading="form.processing"
+                :disabled="
+                    !form.password ||
+                    !form.password_confirmation ||
+                    form.processing
+                "
+                class="!mt-6 !h-11 !rounded-lg text-sm font-medium normal-case shadow-sm"
+            >
+                Сменить пароль
+            </v-btn>
         </form>
     </BaseEntryCard>
 </template>

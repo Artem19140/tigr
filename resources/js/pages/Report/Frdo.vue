@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { RedirectUrl } from '@/interfaces/Interfaces';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import { Head, useHttp } from '@inertiajs/vue3';
@@ -87,8 +86,8 @@ const items = [
                     </div>
 
                     <div class="mt-4 flex justify-end">
-                        <AppPrimaryButton
-                            text="Сформировать"
+                        <v-btn
+                            color="primary"
                             :disabled="
                                 !http.date ||
                                 http.type === null ||
@@ -96,7 +95,7 @@ const items = [
                             "
                             :loading="http.processing"
                             @click="download"
-                        />
+                        ></v-btn>
                     </div>
                 </v-card-text>
             </v-card>

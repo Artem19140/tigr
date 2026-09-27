@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import BaseEntryCard from '@/components/BaseComponents/BaseEntryCard/BaseEntryCard.vue';
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { Head, router, useForm, usePage } from '@inertiajs/vue3';
+
+const props = defineProps<{
+    loginUrl: string,
+    forgotUrl: string
+}>()
 
 const form = useForm({
     email:null
@@ -49,19 +53,19 @@ const page = usePage()
 
         <template #actions>
             <div class="flex flex-col gap-2">
-                <AppPrimaryButton
-                    text="Прислать ссылку"
+                <v-btn
+                    color="primary"
                     :disabled="form.processing || !form.email"
                     :loading="form.processing"
                     class="w-full"
-                    @click="form.post('/forgot-password')"
-                />
+                    @click="form.post(forgotUrl)"
+                >Прислать ссылку</v-btn>
 
                 <v-btn
                     variant="text"
                     class="w-full"
                     :disabled="form.processing"
-                    @click="router.visit('/login')"
+                    @click="router.visit(loginUrl)"
                 >
                     Вернуться к входу
                 </v-btn>

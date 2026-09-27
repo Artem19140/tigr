@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { DateFormatter } from '@/helpers/DateFormatter';
 import {  ForeignNationalEdit, ForeignNationalEditForm } from '@/interfaces/ForeignNational';
 import { Head, router, useForm } from '@inertiajs/vue3';
@@ -98,21 +97,35 @@ const update = () => {
                 :loading="form.processing"
             />
 
-            <div class="flex justify-end gap-2 pb-6">
-                <v-btn
-                    variant="text"
-                    :disabled="form.processing"
-                    @click="cancel"
+            <div class="flex justify-between">
+                <div
+                    v-if="form.hasErrors"
+                    class="text-sm text-red-600"
                 >
-                    Отмена
-                </v-btn>
+                    Есть ошибки. Проверьте заполненные поля.
+                </div>
 
-                <AppPrimaryButton
-                    text="Сохранить"
-                    :loading="form.processing"
-                    :disabled="form.processing || !form.isDirty"
-                    @click="update"
+                <div
+                    v-else
+                    class="flex-1"
                 />
+           
+                <div class="flex justify-end gap-2 pb-6">
+                    <v-btn
+                        variant="text"
+                        :disabled="form.processing"
+                        @click="cancel"
+                    >
+                        Отмена
+                    </v-btn>
+
+                    <v-btn
+                        color="primary"
+                        :loading="form.processing"
+                        :disabled="form.processing || !form.isDirty"
+                        @click="update"
+                    >Сохранить</v-btn>
+                </div>
             </div>
         </div>
     </v-container>

@@ -9,7 +9,7 @@ export interface Enrollment{
     isLoading?: boolean,
     exam: Exam,
     attempt:Attempt | null,
-    examResult:string,
+    examResult:ExamStatus,
     actions:{
         payment:{
             url: string | null
@@ -20,6 +20,8 @@ export interface Enrollment{
         }
     }
 }
+
+type ExamStatus = 'absent' | 'annulled' | 'failed' | 'passed'
 
 export interface EnrollmentConduct{
     id:number,

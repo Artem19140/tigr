@@ -26,6 +26,7 @@ class MinistryEducationReportRequest extends FormRequest
     {
         return [
             'dateTo.before_or_equal' => 'Конец периода не может быть позже сегодняшнего дня.',
+            'dateFrom.before_or_equal' => 'Дата начала не может быть позже даты окончания.',
         ];
     }
 
@@ -38,7 +39,12 @@ class MinistryEducationReportRequest extends FormRequest
     {
         return [
             'lastWeek' => ['required', 'bool'],
-            'dateFrom' => ['required_if_declined:lastWeek', 'nullable', 'date'],
+            'dateFrom' => [
+                'required_if_declined:lastWeek', 
+                'nullable', 
+                'date', 
+                'before_or_equal:dateTo'
+            ],
             'dateTo' => [
                 'required_if_declined:lastWeek',
                 'nullable', 

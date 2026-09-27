@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import AttemptCheckHeader from '@/components/Attempt/AttemptCheckHeader.vue';
 import AttemptCheckingSidePanel from '@/components/Attempt/AttemptCheckingSidePanel.vue';
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { AttemptConduct } from '@/interfaces/Attempt';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
@@ -38,7 +37,6 @@ const back = useForm()
 
     <v-container class="py-6">
         <div class="mx-auto max-w-7xl">
-            <!-- Back -->
             <div class="mb-4">
                 <v-btn
                     variant="text"
@@ -67,12 +65,12 @@ const back = useForm()
                             Выставить баллы возможно будет позднее.
                         </div>
 
-                        <AppPrimaryButton
-                            text="Экран экзамена"
+                        <v-btn
+                            color="primary"
                             :disabled="back.processing"
                             :loading="back.processing"
                             @click="back.get(backUrl)"
-                        />
+                        >Экран экзамена</v-btn>
                     </div>
                 </main>
 

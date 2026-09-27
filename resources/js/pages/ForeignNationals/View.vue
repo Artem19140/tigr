@@ -5,7 +5,6 @@ import countries from '@data/countries.json'
 import ForeignNationalEnrollments from './Components/ForeignNationalEnrollments.vue';
 import ForeignNationalsDocuments from './Components/ForeignNationalsDocuments.vue';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import EnrollmentModal from './Components/EnrollmentModal.vue';
 import { computed, ref } from 'vue';
 import { Head, router } from '@inertiajs/vue3';
@@ -107,11 +106,11 @@ const personalData = computed(() => [
                         Редактировать
                     </v-btn>
 
-                    <AppPrimaryButton
+                    <v-btn
+                        color="primary"
                         v-if="enrollUrl"
-                        text="Записать"
                         @click="isOpen = true"
-                    />
+                    >Записать</v-btn>
                 </div>
             </div>
 

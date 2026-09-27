@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppAddButton from '@/components/UI/AppAddButton/AppAddButton.vue';
 import { AddressIndex } from '@/interfaces/Address';
 import { Head, router } from '@inertiajs/vue3';
 import { mdiClipboardTextOffOutline } from '@mdi/js'
@@ -37,10 +36,11 @@ defineOptions({
                 </div>
             </div>
 
-            <AppAddButton
+            <v-btn
+                color="add"
                 v-if="addresses.data.length > 0 && createUrl"
                 @click="router.visit(createUrl)"
-            />
+            >Добавить</v-btn>
         </div>
 
         <div
@@ -61,10 +61,11 @@ defineOptions({
             text="Добавьте первый экзаменационный адрес."
             class="py-10"
         >
-            <AppAddButton
+            <v-btn
+                color="add"
                 v-if="createUrl"
                 @click="router.visit(createUrl)"
-            />
+            >Добавить</v-btn>
         </v-empty-state>
     </v-container>
 </template>

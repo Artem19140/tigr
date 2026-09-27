@@ -3,7 +3,6 @@ import { Center } from '@/interfaces/Center';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import CenterManagementLayout from './CenterManagementLayout.vue';
 import { Head, router, useForm } from '@inertiajs/vue3';
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { useConfirm } from '@/composables/useConfirm.js';
 
 const props = defineProps<{
@@ -162,12 +161,12 @@ const cancel = async () => {
                         Отмена
                     </v-btn>
 
-                    <app-primary-button
-                        text="Сохранить"
+                    <v-btn
+                        color="primary"
                         :loading="form.processing"
                         :disabled="form.processing || !form.isDirty"
                         @click="form.put(updateUrl)"
-                    />
+                    >Сохранить</v-btn>
                 </div>
             </v-card-text>
         </v-card>

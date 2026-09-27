@@ -5,7 +5,6 @@ import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import { Head, useHttp } from '@inertiajs/vue3';
 import { computed, watch } from 'vue';
 import ReportLayout from './ReportLayout.vue';
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 
 const props=defineProps<{
     availabilityUrl: string
@@ -88,15 +87,14 @@ const disabled = computed(() =>
                     </div>
                 </v-card-text>
 
-                <!-- Actions -->
                 <v-card-text class="px-6 pb-6">
                     <div class="flex justify-end">
-                        <AppPrimaryButton
-                            text="Сформировать"
+                        <v-btn
+                            color="primary"
                             :loading="loading"
                             :disabled="disabled"
                             @click="download"
-                        />
+                        >Сформировать</v-btn>
                     </div>
                 </v-card-text>
             </v-card>

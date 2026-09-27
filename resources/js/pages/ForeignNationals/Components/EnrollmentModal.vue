@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {  ref } from 'vue';
 import ExamEnrollment from '@components/Exam/ExamEnrollment.vue';
-import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import {  RedirectUrl } from '@interfaces/Interfaces';
 import { router, useHttp } from '@inertiajs/vue3';
 import { useConfirm } from '@composables/useConfirm';
@@ -88,12 +87,12 @@ const close  = async () => {
                         Отмена
                     </v-btn>
 
-                    <AppPrimaryButton
-                        text="Записать"
+                    <v-btn
+                        color="primary"
                         :loading="http.processing"
                         :disabled="http.processing || !http.examId"
                         @click="enroll"
-                    />
+                    >Записать</v-btn>
                 </div>
             </v-card-text>
         </v-card>

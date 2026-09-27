@@ -3,7 +3,6 @@ import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { EmployeeIndex } from '@/interfaces/Employee';
 import { Head, router } from '@inertiajs/vue3';
 import BaseTable from '@/components/BaseComponents/BaseTable/BaseTable.vue';
-import AppAddButton from '@/components/UI/AppAddButton/AppAddButton.vue';
 import CenterManagementLayout from './CenterManagementLayout.vue';
 import EmployeeActions from './Components/EmployeeActions.vue';
 
@@ -35,11 +34,11 @@ const headers = [
             hide-default-footer
         >
             <template #header-actions>
-                <AppAddButton
+                <v-btn
+                    color="add"
                     v-if="createUrl"
-                    text="Добавить"
                     @click="router.visit(createUrl)"
-                />
+                >Добавить</v-btn>
             </template>
 
             <template #item.actions="{ item }">

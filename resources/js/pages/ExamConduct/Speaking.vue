@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { Head, router, useForm } from '@inertiajs/vue3';
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
+import { Head, useForm } from '@inertiajs/vue3';
 import { AttemptConduct } from '@/interfaces/Attempt';
 import TasksList from '../Attempt/Components/tasks/TasksList.vue';
 import { useConfirm } from '@/composables/useConfirm';
@@ -32,7 +31,6 @@ const finish = async () => {
 
     <v-container class="py-6">
         <div class="mx-auto max-w-5xl">
-            <!-- Back -->
             <div class="mb-4">
                 <v-btn
                     variant="text"
@@ -47,17 +45,15 @@ const finish = async () => {
                 </v-btn>
             </div>
 
-            <!-- Tasks -->
             <TasksList :attempt="attempt.data" />
 
-            <!-- Actions -->
             <div class="mt-5 flex justify-end pb-6">
-                <AppPrimaryButton
-                    text="Завершить"
+                <v-btn
+                    color="primary"
                     :loading="form.processing"
                     :disabled="form.processing"
                     @click="finish"
-                />
+                >Завершить</v-btn>
             </div>
         </div>
     </v-container>

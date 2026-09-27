@@ -16,7 +16,8 @@ class FlatTableRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'dateTo.before_or_equal' => 'Конец периода не может быть позже сегодняшнего дня.',
+            'dateTo.before_or_equal' => 'Дата конца не может быть позже сегодняшнего дня.',
+            'dateFrom.before_or_equal' => 'Дата начала не может быть позже даты окончания.',
         ];
     }
 
@@ -28,7 +29,11 @@ class FlatTableRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'dateFrom' => ['required', 'date'],
+            'dateFrom' => [
+                'required', 
+                'date',
+                'before_or_equal:dateTo'
+            ],
             'dateTo' => [
                 'required', 
                 'date', 

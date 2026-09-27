@@ -6,7 +6,6 @@ import { Exam, ExamForm, ExamType } from '@/interfaces/Exam';
 import { router, useForm } from '@inertiajs/vue3';
 import ExamCreateForm from './Components/ExamCreateForm.vue';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { useConfirm } from '@/composables/useConfirm.js';
 
 const props = defineProps<{
@@ -96,12 +95,12 @@ const cancel = async () => {
                             Отмена
                         </v-btn>
 
-                        <AppPrimaryButton
-                            text="Сохранить"
+                        <v-btn
+                            color="primary"
                             :disabled="!form.isDirty || form.processing"
                             :loading="form.processing"
                             @click="form.put(updateUrl)"
-                        />
+                        >Сохранить</v-btn>
                     </div>
                 </v-card-text>
             </v-card>

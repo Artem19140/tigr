@@ -3,7 +3,6 @@ import { Center } from '@/interfaces/Center';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import CenterManagementLayout from './CenterManagementLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 
 const props = defineProps<{
   center : {
@@ -68,10 +67,10 @@ const centerData = [
 
             <v-card-text class="px-6 pb-6">
                 <div class="flex justify-end">
-                    <app-primary-button
-                        text="Редактировать"
+                    <v-btn
+                        color="primary"
                         @click="router.visit(editUrl)"
-                    />
+                    >Редактировать</v-btn>
                 </div>
             </v-card-text>
         </v-card>

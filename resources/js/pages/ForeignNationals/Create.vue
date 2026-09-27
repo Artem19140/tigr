@@ -6,7 +6,6 @@ import { ref } from 'vue';
 import ForeignNationalForm from './Components/ForeignNationalForm.vue';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import { useConfirm } from '@/composables/useConfirm.js';
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { RedirectUrl } from '@/interfaces/Interfaces.js';
 
 const props = defineProps<{
@@ -84,7 +83,6 @@ const cancel = async () => {
     <v-container>
         <div class="mx-auto max-w-4xl space-y-5">
 
-            <!-- Экзамен -->
             <v-card class="overflow-hidden rounded-xl">
                 <v-card-text class="px-6 pt-6">
                     <div class="text-xl font-semibold text-gray-900">
@@ -184,12 +182,12 @@ const cancel = async () => {
                         Отмена
                     </v-btn>
 
-                    <AppPrimaryButton
-                        text="Добавить"
+                    <v-btn
+                        color="primary"
                         :disabled="form.processing"
                         :loading="form.processing"
                         @click="create"
-                    />
+                    >Добавить</v-btn>
                 </div>
             </div>
         </div>

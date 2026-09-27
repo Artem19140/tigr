@@ -47,7 +47,6 @@ const deleteAddress = async () => {
                     </div>
                 </div>
 
-                <!-- Actions -->
                 <div class="flex shrink-0 items-center gap-1">
                     <v-tooltip
                         v-if="address.editUrl"

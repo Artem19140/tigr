@@ -20,7 +20,6 @@ class AnswerController
         HandleAttemptAnswer $handleAttemptAnswer
     ): JsonResource {
         $foreignNationalAnswer = $request->input('answer');
-
         $updatedAnswer = DB::transaction(function () use (
             $foreignNationalAnswer, 
             $attempt, 

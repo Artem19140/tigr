@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import { useHttp } from '@inertiajs/vue3';
 import { RedirectUrl } from '@/interfaces/Interfaces';
@@ -33,38 +32,102 @@ const audit = () => {
 </script>
 
 <template>
-    <v-container>
-        <v-card>
-            <v-card-text>
-                <v-text-field
-                    v-model="http.date"
-                    :error-messages="http.errors.date"
-                    type="date"
-                    label="Дата лога"
-                />
-                <AppPrimaryButton
-                    @click="getLog"
-                    :disabled="!http.date || http.processing"
-                    :loading="http.processing"
-                    text="Выгрузить"
-                />
-            </v-card-text>
+    <v-container class="py-8">
+        <v-card
+            class="mx-auto max-w-2xl overflow-hidden rounded-xl border border-gray-200 shadow-sm"
+        >
+            <v-card-title class="px-6 pt-6">
+                <div>
+                    <div class="text-lg font-semibold text-gray-900">
+                        Логи системы
+                    </div>
 
-            <v-card-text>
-                <AppPrimaryButton
-                    @click="audit"
-                    :disabled="!http.date || http.processing"
-                    :loading="http.processing"
-                    text="Выгрузить аудит"
-                />
-            </v-card-text>
+                    <div class="mt-1 text-sm font-normal text-gray-500">
+                        Выберите дату и нужный тип выгрузки
+                    </div>
+                </div>
+            </v-card-title>
 
-            <v-card-text>
-                <AppPrimaryButton 
-                    text="гит лог"
-                    :disabled="!http.date || http.processing"
-                    @click="gitLog"
-                />
+            <v-card-text class="space-y-6 px-6 pb-6">
+                <!-- Лог -->
+                <div class="space-y-3">
+                    <div class="text-sm font-medium text-gray-700">
+                        Лог за день
+                    </div>
+
+                    <div class="flex flex-col gap-3 sm:flex-row sm:items-start">
+                        <v-text-field
+                            v-model="http.date"
+                            :error-messages="http.errors.date"
+                            type="date"
+                            label="Дата"
+                            variant="outlined"
+                            density="comfortable"
+                            hide-details="auto"
+                            class="sm:flex-1"
+                        />
+
+                        <v-btn
+                            color="primary"
+                            :disabled="!http.date || http.processing"
+                            :loading="http.processing"
+                            class="!h-11 sm:mt-0"
+                            @click="getLog"
+                        >
+                            Выгрузить
+                        </v-btn>
+                    </div>
+                </div>
+
+                <v-divider />
+
+                <!-- Аудит -->
+                <div class="flex items-center justify-between gap-4">
+                    <div>
+                        <div class="text-sm font-medium text-gray-700">
+                            Аудит
+                        </div>
+
+                        <div class="mt-1 text-sm text-gray-500">
+                            Выгрузить записи аудита за выбранную дату
+                        </div>
+                    </div>
+
+                    <v-btn
+                        color="primary"
+                        :disabled="!http.date || http.processing"
+                        :loading="http.processing"
+                        class="shrink-0"
+                        @click="audit"
+                    >
+                        Выгрузить
+                    </v-btn>
+                </div>
+
+                <v-divider />
+
+                <!-- Git -->
+                <div class="flex items-center justify-between gap-4">
+                    <div>
+                        <div class="text-sm font-medium text-gray-700">
+                            Git log
+                        </div>
+
+                        <div class="mt-1 text-sm text-gray-500">
+                            Просмотреть историю изменений
+                        </div>
+                    </div>
+
+                    <v-btn
+                        color="primary"
+                        :disabled="http.processing"
+                        :loading="http.processing"
+                        class="shrink-0"
+                        @click="gitLog"
+                    >
+                        Открыть
+                    </v-btn>
+                </div>
             </v-card-text>
         </v-card>
     </v-container>

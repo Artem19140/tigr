@@ -91,12 +91,12 @@ export interface ForeignNationalIndex{
 }
 
 export type ForeignNationalFilters= {
-  surname: string | null,
-  name: string | null,
-  patronymic: string | null,
-  passportSeries: string | null,
-  passportNumber: string | null,
-  id: number | null,
+  surname?: string ,
+  name?: string ,
+  patronymic?: string ,
+  passportSeries?: string ,
+  passportNumber?: string ,
+  id?: number ,
 }
 
 export interface ForeignNationalDocument {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\ExamReview;
 
+use App\Exceptions\BusinessException;
 use App\Models\AttemptAnswer;
 use App\Modules\Attempt\FinishManualReview;
 use App\Enums\TaskType;
@@ -68,7 +69,6 @@ class AttemptReviewController
         AttemptAnswer $attemptAnswer,
         RateAttemptAnswer $rateAttemptAnswer
     ): RedirectResponse {
-
         $request->validate([
             'mark' => ['required', 'integer', 'min:0'],
         ]);
@@ -77,6 +77,10 @@ class AttemptReviewController
             $attemptAnswer, 
             $request->input('mark')
         );
+        
+        Inertia::flash([
+            'status' => 'ok'
+        ]);
 
         return back();
     }

@@ -6,7 +6,6 @@ import { Head, router } from '@inertiajs/vue3';
 import { DateFormatter } from '@/helpers/DateFormatter.js';
 import BasePaginatedTable from '@/components/BaseComponents/BasePaginatedTable/BasePaginatedTable.vue';
 import ExamTableFilter from './Components/ExamTableFilter.vue';
-import AppAddButton from '@/components/UI/AppAddButton/AppAddButton.vue';
 import { ref } from 'vue';
 
 defineOptions({
@@ -46,11 +45,11 @@ const loading = ref<boolean>(false)
       </template>
       
       <template #header-actions>
-        <AppAddButton
-          text="Добавить"
+        <v-btn
+          color="add"
           @click="() => router.visit(createUrl)"
           v-if="createUrl"
-        />
+        >Добавить</v-btn>
       </template>
 
       <template #item.enrollmentsCount="{ item }">

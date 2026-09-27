@@ -3,7 +3,6 @@ import { EmployeeCreate } from '@/interfaces/Employee'
 import { Head, router, useForm } from '@inertiajs/vue3'
 import EmployeeForm from './Components/EmployeeForm.vue'
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue'
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue'
 import { useConfirm } from '@/composables/useConfirm.js'
 
 const props = defineProps<{
@@ -76,12 +75,12 @@ const cancel = async () => {
                             Отмена
                         </v-btn>
 
-                        <AppPrimaryButton
-                            text="Добавить"
+                        <v-btn
+                            color="primary"
                             :loading="form.processing"
                             :disabled="form.processing || !form.isDirty"
                             @click="form.post(storeUrl)"
-                        />
+                        >Добавить</v-btn>
                     </div>
                 </v-card-text>
             </v-card>

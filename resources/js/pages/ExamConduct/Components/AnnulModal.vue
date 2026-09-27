@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { ForeignNationalEnrollment } from '@/interfaces/ForeignNational';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
@@ -99,7 +98,6 @@ const cancel = () => {
                 </v-alert>
             </v-card-text>
 
-            <!-- Actions -->
             <v-card-text class="px-6 pb-6">
                 <div class="flex justify-end gap-2">
                     <v-btn
@@ -110,8 +108,8 @@ const cancel = () => {
                         Отмена
                     </v-btn>
 
-                    <app-primary-button
-                        text="Аннулировать"
+                    <v-btn
+                        color="primary"
                         :loading="form.processing"
                         :disabled="
                             !confirmation ||
@@ -119,7 +117,7 @@ const cancel = () => {
                             !form.reason
                         "
                         @click="annul"
-                    />
+                    >Аннулировать</v-btn>
                 </div>
             </v-card-text>
         </v-card>

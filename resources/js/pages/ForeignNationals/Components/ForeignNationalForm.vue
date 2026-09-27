@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import countries from '@data/countries.json'
 import AppOptionalInput from '@/components/UI/AppOptionalInput/AppOptionalInput.vue';
-import { ForeignNationalEditForm, ForeignNationalFormI } from '@/interfaces/ForeignNational';
+import { ForeignNationalCreate, ForeignNationalEditForm } from '@/interfaces/ForeignNational';
 
 const props = defineProps<{
     errors:any,
     loading:boolean
 }>()
 
-const form = defineModel<ForeignNationalFormI | ForeignNationalEditForm>('form',{
+const form = defineModel<ForeignNationalEditForm| ForeignNationalCreate>('form',{
   required: true
 })
 
@@ -18,6 +18,11 @@ const readonly = computed(() => props.loading)
 function required (v:any) {
     return !!v || 'Поле обязательно'
 }
+
+watch(() => form.value.noPhone, () => {
+    if(!form.value.noPhone) return
+    form.value.phone = null
+})
 </script>
 
 <template>
@@ -76,7 +81,6 @@ function required (v:any) {
                 </div>
             </v-card-text>
 
-            <!-- Паспорт -->
             <v-card-text class="px-6">
                 <div class="mb-4 text-sm font-semibold text-gray-700">
                     Паспортные данные
@@ -223,13 +227,14 @@ function required (v:any) {
                 </div>
 
                 <div class="max-w-md">
-                    <v-text-field
+                    <v-number-input
                         v-model="form.phone"
                         label="Номер телефона"
                         placeholder="0123456789"
                         prefix="+7"
                         maxlength="10"
                         :readonly="readonly"
+                        control-variant="hidden"
                         :disabled="form.noPhone"
                         :error-messages="errors.phone"
                     />

@@ -6,7 +6,6 @@ import { Head, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import BasePaginatedTable from '@/components/BaseComponents/BasePaginatedTable/BasePaginatedTable.vue';
 import ForeignNationalTableFilters from './Components/ForeignNationalTableFilters.vue';
-import AppAddButton from '@/components/UI/AppAddButton/AppAddButton.vue';
 
 defineOptions({
   layout: [EmployeeLayout]
@@ -45,11 +44,11 @@ const loading = ref<boolean>(false)
 				/>
 			</template>
 			<template #header-actions>
-				<AppAddButton
-					text="Добавить"
+				<v-btn
+					color="add"
 					@click="() => router.visit(createUrl)"
 					v-if="createUrl"
-				/>
+				>Добавить</v-btn>
 			</template>
 		</BasePaginatedTable>
 	</v-container> 

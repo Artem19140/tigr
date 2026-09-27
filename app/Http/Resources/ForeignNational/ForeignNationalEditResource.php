@@ -33,7 +33,7 @@ class ForeignNationalEditResource extends JsonResource
             'issuedBy' => $this->resource->issued_by,
             'issuedDate' => $this->issued_date,
 
-            'phone' => $this->resource->phone ?? null,
+            'phone' => $this->resource->phone ? $this->resource->phone : null,
             'addressReg' => $this->address_reg,
             'comment' =>  $this->comment,
             'gender' => $this->gender,

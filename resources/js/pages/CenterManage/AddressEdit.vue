@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { useConfirm } from '@/composables/useConfirm';
 import { AddressEdit } from '@/interfaces/Address';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
@@ -99,8 +98,8 @@ const close = async () => {
                         Отмена
                     </v-btn>
 
-                    <AppPrimaryButton
-                        text="Сохранить"
+                    <v-btn
+                        color="primary"
                         :loading="form.processing"
                         :disabled="
                             form.processing ||
@@ -109,7 +108,7 @@ const close = async () => {
                             !form.isDirty
                         "
                         @click="form.patch(updateUrl)"
-                    />
+                    >Сохранить</v-btn>
                 </div>
             </v-card-text>
         </v-card>

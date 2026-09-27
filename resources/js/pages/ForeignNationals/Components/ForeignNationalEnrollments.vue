@@ -14,7 +14,7 @@ const props = defineProps<{
         <div
             v-for="enrollment in enrollments"
             :key="enrollment.id"
-            class="flex items-center justify-between gap-4 border-b border-gray-100 px-5 py-4 last:border-b-0"
+            class="flex items-center justify-between gap-4 border-b border-gray-100 py-4 last:border-b-0"
         >
             <div class="min-w-0 flex-1">
                 <div class="flex items-center gap-2">

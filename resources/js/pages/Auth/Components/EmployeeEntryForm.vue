@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppPrimaryButton from '@components/UI/AppPrimaryButton/AppPrimaryButton.vue'
 import {  router, useForm } from '@inertiajs/vue3';
 import AppPasswordInput from '@components/UI/AppPasswordInput/AppPasswordInput.vue';
 
@@ -51,9 +50,9 @@ const submit = () => {
         />
 
         <div class="pt-2">
-            <AppPrimaryButton
+            <v-btn
                 type="submit"
-                text="Войти"
+                color="primary"
                 block
                 class="w-full"
                 :loading="form.processing"
@@ -62,7 +61,7 @@ const submit = () => {
                     !form.password ||
                     form.processing
                 "
-            />
+            >Войти</v-btn>
         </div>
 
         <div class="pt-1 text-center">

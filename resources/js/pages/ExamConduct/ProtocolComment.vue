@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { useConfirm } from '@/composables/useConfirm';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import { router, useForm } from '@inertiajs/vue3';
@@ -80,12 +79,12 @@ const cancel = async () => {
                         Отмена
                     </v-btn>
 
-                    <AppPrimaryButton
-                        text="Сохранить"
+                    <v-btn
+                        color="primary"
                         :disabled="form.processing || !form.isDirty"
                         :loading="form.processing"
                         @click="form.put(updateUrl)"
-                    />
+                    >Сохранить</v-btn>
                 </div>
             </v-card-text>
         </v-card>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Head, router, useForm } from '@inertiajs/vue3';
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { AttemptReview } from '@/interfaces/Attempt';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import AttemptCheckHeader from '@/components/Attempt/AttemptCheckHeader.vue';
@@ -64,12 +63,12 @@ const finishChecking = async () => {
                             После завершения изменения будут недоступны.
                         </div>
 
-                        <AppPrimaryButton
-                            text="Завершить проверку"
+                        <v-btn
+                            color="primary"
                             :loading="form.processing"
                             :disabled="form.processing || attempt.data.reviewedAt"
                             @click="finishChecking"
-                        />
+                        >Завершить проверку</v-btn>
                     </div>
 
 
@@ -77,10 +76,10 @@ const finishChecking = async () => {
                         v-else
                         class="flex justify-end border-t border-gray-200 pt-5"
                     >
-                        <AppPrimaryButton
-                            text="Список"
+                        <v-btn
+                            color="primary"
                             @click="router.visit(backUrl)"
-                        />
+                        >Список</v-btn>
                     </div>
                 </main>
 

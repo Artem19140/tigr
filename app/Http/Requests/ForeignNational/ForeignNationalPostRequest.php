@@ -26,6 +26,13 @@ class ForeignNationalPostRequest extends FormRequest
     {
         return [
             'issuedDate.before_or_equal' => 'Дата выдачи не может быть позже сегодняшнего дня.',
+            'dateBirth.before_or_equal' => 'Дата рождения не может быть позже сегодняшнего дня.',
+            'surnameLatin.regex' => 'фамилия на латинице должна содержать только латинские буквы. Допускаются пробел, дефис и апостроф.',
+            'nameLatin.regex' => 'имя на латинице должно содержать только латинские буквы. Допускаются пробел, дефис и апостроф.',
+            'patronymicLatin.regex' => 'отчество на латинице должно содержать только латинские буквы. Допускаются пробел, дефис и апостроф.',
+            'surname.regex' => 'фамилия должна содержать только кириллические буквы. Допускаются пробел, дефис и апостроф.',
+            'name.regex' => 'имя должно содержать только кириллические буквы. Допускаются пробел, дефис и апостроф.',
+            'patronymic.regex' => 'отчество должно содержать только кириллические буквы. Допускаются пробел, дефис и апостроф.',
         ];
     }
 
@@ -75,18 +82,23 @@ class ForeignNationalPostRequest extends FormRequest
                 'required_if_declined:noPatronymicLatin',
                 'nullable',
                 'string',
+                'regex:/^[A-Za-z]+(?:[ -\'][A-Za-z]+)*$/'
             ],
             'dateBirth' => [
                 'required',
                 'date',
+                Rule::date()->format('Y-m-d'),
+                'before_or_equal:today'
             ],
             'surnameLatin' => [
                 'required',
                 'string',
+                'regex:/^[A-Za-z]+(?:[ -\'][A-Za-z]+)*$/'
             ],
             'nameLatin' => [
                 'required',
                 'string',
+                'regex:/^[A-Za-z]+(?:[ -\'][A-Za-z]+)*$/'
             ],
             'passportNumber' => [
                 'prohibited_if_accepted:noPassportNumber',

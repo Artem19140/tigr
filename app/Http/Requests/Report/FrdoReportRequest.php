@@ -29,7 +29,11 @@ class FrdoReportRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => ['required', 'string', 'in:certificates,references',],
+            'type' => [
+                'required', 
+                'string', 
+                'in:certificates,references'
+            ],
             'date' => [
                 'required', 
                 'date',

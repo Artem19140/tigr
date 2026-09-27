@@ -19,7 +19,14 @@ const rate = () => {
     error.value = false
     form.put(props.task.attemptAnswer.rateUrl,{
         preserveScroll:true,
-        preserveState: true
+        preserveState: true,
+        onSuccess: (page) => {
+            if(page.flash.status !== 'ok'){
+                error.value = true
+            } else {
+                error.value = false
+            }
+        }
     })
 }
 

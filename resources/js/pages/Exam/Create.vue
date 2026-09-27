@@ -3,7 +3,6 @@ import { ExamForm, ExamType } from '@/interfaces/Exam.js';
 import ExamCreateForm from './Components/ExamCreateForm.vue';
 import { Head, router, useHttp } from '@inertiajs/vue3';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { ref } from 'vue';
 import { Address } from '@/interfaces/Address.js';
 import { Employee } from '@/interfaces/Employee.js';
@@ -90,12 +89,12 @@ const back = () => {
                             Отмена
                         </v-btn>
 
-                        <AppPrimaryButton
-                            text="Добавить"
+                        <v-btn
+                            color="primary"
                             :disabled="http.processing"
                             :loading="http.processing"
                             @click="create"
-                        />
+                        >Добавить</v-btn>
                     </div>
                 </v-card-text>
             </v-card>

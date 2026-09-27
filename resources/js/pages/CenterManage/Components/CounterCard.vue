@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue';
 import { Counter } from '@/interfaces/Counter';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
@@ -110,12 +109,12 @@ const cancelEdit = () => {
                         Отмена
                     </v-btn>
 
-                    <AppPrimaryButton
-                        text="Обновить"
+                    <v-btn
+                        color="primary"
                         :disabled="form.processing"
                         :loading="form.processing"
                         @click="change"
-                    />
+                    >Обновить</v-btn>
                 </template>
             </div>
         </v-card-text>

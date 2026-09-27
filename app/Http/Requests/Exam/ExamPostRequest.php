@@ -26,7 +26,10 @@ class ExamPostRequest extends FormRequest
             'date' => [
                 'required',
                 'date',
-                Rule::date()->afterOrEqual(Carbon::now()->addMinutes(ExamSettings::minTimeBeforeCreateMinutes())),
+                'date_format:Y-m-d',
+                Rule::date()->afterOrEqual(
+                    Carbon::now()->addMinutes(ExamSettings::minTimeBeforeCreateMinutes())
+                ),
             ],
             'addressId' => [
                 'required',
@@ -47,6 +50,7 @@ class ExamPostRequest extends FormRequest
                 'string',
                 'max:256',
             ],
+            
             'capacity' => [
                 'required',
                 'integer',
