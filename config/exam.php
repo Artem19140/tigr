@@ -48,7 +48,7 @@ return [
     |
     */
 
-    'min_time_before_exam_creating' => 180,
+    'min_time_before_exam_creating' => 0,
 
     /*
     |--------------------------------------------------------------------------
