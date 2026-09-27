@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests\Report;
 
+use App\Http\Dto\MinistryEducationDto;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Carbon;
+use Illuminate\Validation\Rule;
 
 class MinistryEducationReportRequest extends FormRequest
 {
@@ -19,6 +22,13 @@ class MinistryEducationReportRequest extends FormRequest
         ]);
     }
 
+    public function messages(): array
+    {
+        return [
+            'dateTo.before_or_equal' => 'Конец периода не может быть позже сегодняшнего дня.',
+        ];
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -29,7 +39,23 @@ class MinistryEducationReportRequest extends FormRequest
         return [
             'lastWeek' => ['required', 'bool'],
             'dateFrom' => ['required_if_declined:lastWeek', 'nullable', 'date'],
-            'dateTo' => ['required_if_declined:lastWeek', 'nullable', 'date'],
+            'dateTo' => [
+                'required_if_declined:lastWeek',
+                'nullable', 
+                'date',
+                Rule::date()->format('Y-m-d'),
+                'before_or_equal:today'
+            ],
         ];
     }
+
+    public function toDto(): MinistryEducationDto 
+    {
+        return new MinistryEducationDto(
+            Carbon::parse($this->input('dateFrome')),
+            Carbon::parse($this->input('dateTo')),
+            $this->boolean($this->input('lastWeek'))
+        );
+    }
+    
 }

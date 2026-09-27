@@ -45,11 +45,13 @@ class ExamCancelTest extends TestCase
             ]);
 
         $response = $this->actingAs($actor)
-            ->deleteJson(route('exams.destroy', ['exam' => $exam]),
-                ['cancelledReason' => 'Отменен']
+            ->delete(route('exams.destroy', ['exam' => $exam]),
+                ['reason' => 'Отменен']
             );
 
-        $response->assertNoContent();
+        $response->assertRedirectToRoute('exams.show', [
+            'exam' => $exam
+        ]);
     }
 
     public function test_fail_cancel_repeat(): void
@@ -66,7 +68,7 @@ class ExamCancelTest extends TestCase
     public function test_fail_cancel_not_pending_exam(): void
     {
         $exam = new Exam([
-            'begin_time' => '2026-01-01 09:30:00',
+            'begin_time' => Carbon::now()->subHour(),
         ]);
 
         $action = app(CancelExam::class);

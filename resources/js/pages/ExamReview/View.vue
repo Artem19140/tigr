@@ -54,7 +54,7 @@ const openAttempt =  (item : Enrollment) => {
 
             <template #item.status="{ item }">
                 <v-chip 
-                    v-if="item.attempt?.checkedAt"
+                    v-if="item.attempt?.reviewedAt"
                     color="green"
                     text="Проверено"
                 />

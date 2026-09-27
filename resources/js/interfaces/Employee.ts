@@ -15,15 +15,15 @@ export interface EmployeeCreate{
     roles:Array<number | undefined>
 }
 
-export interface EmployeeFormI extends Omit<Employee, 'id' | 'roles' | 'fullName'>{
-    roles:Array<number | undefined>
-}
 
-export interface EmployeeEdit extends Omit
-    <Employee, 'fullName'>
-{
+export interface EmployeeEdit {
+    surname:string,
+    name:string,
+    patronymic:string | null,
+    email:string,
     roles:Array<number | undefined>
 }
+    
 
 export interface EmployeeIndex extends Omit<Employee, 'surname' | 'name' | 'patronymic'>{
     destroyUrl:string,

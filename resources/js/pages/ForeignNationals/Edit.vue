@@ -61,6 +61,14 @@ const cancel = async () => {
     form.resetAndClearErrors()
     router.visit(props.backUrl, {replace:true})
 }
+
+const update = () => {
+    form.put(props.updateUrl, { 
+        replace: true,
+        preserveScroll:true,
+        preserveState: true
+    })
+}
 </script>
 
 <template>
@@ -103,7 +111,7 @@ const cancel = async () => {
                     text="Сохранить"
                     :loading="form.processing"
                     :disabled="form.processing || !form.isDirty"
-                    @click="form.put(updateUrl, { replace: true })"
+                    @click="update"
                 />
             </div>
         </div>

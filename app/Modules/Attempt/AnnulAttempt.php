@@ -17,10 +17,10 @@ class AnnulAttempt
 
     public function execute(
         Attempt $attempt,
-        string $annulledReason,
+        string $reason,
         Employee $employee
     ): void {
-        DB::transaction(function () use ($attempt, $annulledReason, $employee) {
+        DB::transaction(function () use ($attempt, $reason, $employee) {
 
             $result = $this->attemptAnnulledRules->check($attempt);
 
@@ -29,7 +29,7 @@ class AnnulAttempt
             }
 
             $this->finishAndIfNeededFinilize($attempt);
-            $attempt->annul($annulledReason, $employee->id);
+            $attempt->annul($reason, $employee->id);
             $attempt->save();
         });
     }

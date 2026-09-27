@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Enrollment;
 
+use App\Models\Center;
 use App\Models\Employee;
 use App\Models\Enrollment;
 use Carbon\Carbon;
@@ -17,9 +18,11 @@ class EnrollmentStatementGenerationTest extends TestCase
     {
         parent::setUp();
         $this->seed(RolesSeeder::class);
+        Center::factory()->create();
         $this->actor = Employee::factory()
             ->operator()
             ->create();
+
         Carbon::setTestNow(now());
     }
 
@@ -32,13 +35,15 @@ class EnrollmentStatementGenerationTest extends TestCase
     public function test_success_enrollment_statement_generating(): void
     {
 
-        $enrollment = Enrollment::factory()->create();
+        $enrollment = Enrollment::factory()
+            ->create();
 
         $response = $this->actingAs($this->actor)
-            ->getJson(route('enrollments.statements', ['enrollment' => $enrollment]));
+            ->getJson(route('enrollments.statements', [
+                'enrollment' => $enrollment
+            ]));
 
         $response->assertOk();
         $response->assertHeader('Content-Type', 'application/pdf');
-        $response->assertStatus(200);
     }
 }

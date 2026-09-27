@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('amount_in_words');
             $table->unsignedTinyInteger('tasks_count');
             $table->unsignedTinyInteger('min_mark');
-            $table->boolean('need_human_check');
+            $table->boolean('need_human_review');
             $table->boolean('has_speaking_tasks');
             $table->timestamps();
         });

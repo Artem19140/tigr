@@ -58,7 +58,6 @@ const disabled = computed(() =>
     <v-container>
         <div class="mx-auto max-w-xl">
             <v-card class="overflow-hidden rounded-xl">
-                <!-- Header -->
                 <v-card-text class="px-6 pt-6">
                     <div class="text-xl font-semibold text-gray-900">
                         МинОбрНауки
@@ -69,7 +68,6 @@ const disabled = computed(() =>
                     </div>
                 </v-card-text>
 
-                <!-- Form -->
                 <v-card-text class="px-6">
                     <div class="space-y-4">
                         <v-checkbox
@@ -84,6 +82,7 @@ const disabled = computed(() =>
                             <AppPeriodDate
                                 v-model:date-from="http.dateFrom"
                                 v-model:date-to="http.dateTo"
+                                :errors="http.errors"
                             />
                         </div>
                     </div>

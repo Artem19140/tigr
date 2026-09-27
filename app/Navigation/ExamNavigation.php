@@ -22,7 +22,7 @@ class ExamNavigation
             
             'review' => [
                 'url' => route('exams.review', ['exam' => $exam], false),
-                'can' => $employee->can('review', $exam) && $exam->type->need_human_check
+                'can' => $employee->can('review', $exam) && $exam->type->need_human_review
             ]
         ])->filter(function($item){
             return $item['can'];

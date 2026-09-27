@@ -7,7 +7,7 @@ import { Head, useHttp } from '@inertiajs/vue3';
 import ReportLayout from './ReportLayout.vue';
 
 const props=defineProps<{
-    downloadUrl: string
+    availabilityUrl: string
 }>()
 
 defineOptions({
@@ -25,7 +25,13 @@ interface FlatTable{
 }
 
 const download = () => {
-    window.open(`${props.downloadUrl}?dateFrom=${http.dateFrom}&dateTo=${http.dateTo}`)
+    http.get(props.availabilityUrl, {
+        onSuccess:(response) => {
+            if(response.redirectUrl){
+                window.open(response.redirectUrl)
+            }     
+        }
+    })
 }
 </script>
 

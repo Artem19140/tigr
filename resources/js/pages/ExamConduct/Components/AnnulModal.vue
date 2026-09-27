@@ -13,7 +13,7 @@ const isOpen = defineModel<boolean>({default:false})
 const confirmation = ref<boolean>(false)
 
 const form = useForm({
-    annulledReason: null
+    reason: null
 })
 
 const annul = () => {
@@ -23,7 +23,7 @@ const annul = () => {
 }
 
 const cancel = () => {
-    form.annulledReason = null
+    form.reason = null
     isOpen.value = false
     confirmation.value = false
 }
@@ -73,13 +73,13 @@ const cancel = () => {
 
             <v-card-text class="px-6">
                 <v-textarea
-                    v-model="form.annulledReason"
+                    v-model="form.reason"
                     label="Причина аннулирования"
                     placeholder="Укажите причину..."
                     auto-grow
                     rows="3"
                     variant="outlined"
-                    :error-messages="form.errors.annulledReason"
+                    :error-messages="form.errors.reason"
                     hide-details="auto"
                 />
 
@@ -116,7 +116,7 @@ const cancel = () => {
                         :disabled="
                             !confirmation ||
                             form.processing ||
-                            !form.annulledReason
+                            !form.reason
                         "
                         @click="annul"
                     />

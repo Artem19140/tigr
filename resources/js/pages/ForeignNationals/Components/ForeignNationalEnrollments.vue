@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { DateFormatter } from '@helpers/DateFormatter';
-import ExamResultStatusChip from '@/components/Exam/ExamResultStatusChip.vue';
+import ExamResultStatus from '@/components/Exam/ExamResultStatus.vue';
 import { Enrollment } from '@/interfaces/Enrollment';
 import EnrollmentDropDown from '@/components/Enrollment/EnrollmentDropDown.vue';
 
@@ -10,7 +10,7 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white">
+    <div class="overflow-hidden">
         <div
             v-for="enrollment in enrollments"
             :key="enrollment.id"
@@ -56,7 +56,7 @@ const props = defineProps<{
                 class="flex shrink-0 items-center gap-2"
                 @click.stop
             >
-                <ExamResultStatusChip
+                <ExamResultStatus
                     :status="enrollment.examResult"
                 />
 

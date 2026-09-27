@@ -24,7 +24,7 @@ const rate = () => {
 }
 
 const isRated = computed(
-    () => props.task.attemptAnswer.checkedAt !== null
+    () => props.task.attemptAnswer.reviewedAt !== null
 )
 
 const marks = computed(() =>

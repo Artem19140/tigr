@@ -22,9 +22,10 @@ class AttemptAnswerResource extends JsonResource
         return [
             'id' => $this->id,
             'answer' => $this->answer,
-            
+            'audioPlayedAt' => $this->audio_played_at,
+
             $this->mergeWhen($needReview, [
-                'checkedAt' => $this->checked_at,
+                'reviewedAt' => $this->reviewed_at,
                 'mark' => $this->mark,
                 'rateUrl' => $this->rateUrl(),
             ]),
@@ -35,7 +36,6 @@ class AttemptAnswerResource extends JsonResource
             ),[
                 'updateUrl' =>   $this->updateUrl(),
                 'audioPlayedUrl' => $this->audioPlayedUrl(),
-                'audioPlayedAt' => $this->audio_played_at,
             ])
         ];
     }

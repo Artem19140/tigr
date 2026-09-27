@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Web\Report;
 
+use App\Modules\Report\EnsureFlatTableAvailable;
 use App\Modules\Report\EnsureFrdoGenerationAvailable;
+use App\Modules\Report\EnsureMinistryEducationAvailable;
 use App\Modules\Report\FlatTableGenerator;
 use App\Modules\Report\FRDOReportsGenerator;
 use App\Modules\Report\MinistryEducationReportGenerator;
@@ -25,12 +27,12 @@ class ReportController
     ): StreamedResponse {
 
         $type = $request->validated('type');
-        $examDate = Carbon::parse($request->validated('examDate'));
+        $date = Carbon::parse($request->validated('date'));
         $writer = $frdoGenerator->execute(
-            $examDate,
+            $date,
             $type
         );
-        $stringDate = $examDate->format('d.m.Y');
+        $stringDate = $date->format('d.m.Y');
         $fileName = $type === 'certificates' ? "Сертификаты_ФРДО_$stringDate.xlsx" : "Справки_ФРДО_$stringDate.xlsx";
 
         $headers = [
@@ -49,13 +51,13 @@ class ReportController
         EnsureFrdoGenerationAvailable $ensureFrdoGenerationAvailable
     ): JsonResponse {
         $ensureFrdoGenerationAvailable->execute(
-            $request->input('examDate'), 
+            $request->input('date'), 
             $request->input('type')
         );
 
         return response()->json([
             'redirectUrl' => route('reports.frdo.download', [
-                'examDate' => $request->validated('examDate'),
+                'date' => $request->validated('date'),
                 'type' => $request->validated('type'),
             ]),
         ]);
@@ -63,10 +65,16 @@ class ReportController
 
     public function flatTable(
         FlatTableRequest $request,
-        FlatTableGenerator $flatTableGenerator
+        FlatTableGenerator $flatTableGenerator,
+        EnsureFlatTableAvailable $ensureFlatTableAvailable
     ): StreamedResponse {
         $dateFrom = Carbon::parse($request->validated('dateFrom'));
         $dateTo = Carbon::parse($request->validated('dateTo'));
+
+        $ensureFlatTableAvailable->execute(
+            $dateFrom, 
+            $dateTo
+        );
         
         $fileName = "Плоская_таблица_{$dateFrom->format('d.m.Y')}_{$dateTo->format('d.m.Y')}.csv";
 
@@ -86,9 +94,44 @@ class ReportController
             ]);
     }
 
-    public function availableMinistryEducation(
-        MinistryEducationReportRequest $request
+    public function availabilityFlatTable(
+        FlatTableRequest $request,
+        EnsureFlatTableAvailable $ensureFlatTableAvailable
     ): JsonResponse {
+
+        $ensureFlatTableAvailable->execute(
+            Carbon::parse($request->input('dateFrom')), 
+            Carbon::parse($request->input('dateTo'))
+        );
+
+        return response()->json([
+            'redirectUrl' => route('reports.flat-table.download', [
+                'dateFrom' => $request->validated('dateFrom'),
+                'dateTo' => $request->validated('dateTo'),
+            ]),
+        ]);
+    }
+
+    public function availabilityMinistryEducation(
+        MinistryEducationReportRequest $request,
+        EnsureMinistryEducationAvailable $ensureMinistryEducationAvailable
+    ): JsonResponse {
+        $dateFrom = '';
+        $dateTo = '';
+
+        if ($request->validated('lastWeek')) {
+            $dateFrom = Carbon::now()->subWeek()->startOfWeek();
+            $dateTo = Carbon::now()->subWeek()->endOfWeek();
+        } else {
+            $dateFrom = Carbon::parse($request->validated('dateFrom'))->startOfDay();
+            $dateTo = Carbon::parse($request->validated('dateTo'))->endOfDay();
+        }
+
+        $ensureMinistryEducationAvailable->execute(
+            $dateFrom,
+            $dateTo
+        );
+
         return response()->json([
             'redirectUrl' => route('reports.ministry-education.download', [
                 'lastWeek' => $request->validated('lastWeek'),
@@ -100,7 +143,8 @@ class ReportController
 
     public function ministryEducation(
         MinistryEducationReportRequest $request,
-        MinistryEducationReportGenerator $ministryEducationReportGenerator
+        MinistryEducationReportGenerator $ministryEducationReportGenerator,
+        EnsureMinistryEducationAvailable $ensureMinistryEducationAvailable
     ): StreamedResponse {
         $dateFrom = '';
         $dateTo = '';
@@ -111,6 +155,11 @@ class ReportController
             $dateFrom = Carbon::parse($request->validated('dateFrom'))->startOfDay();
             $dateTo = Carbon::parse($request->validated('dateTo'))->endOfDay();
         }
+
+        $ensureMinistryEducationAvailable->execute(
+            $dateFrom,
+            $dateTo
+        );
 
         $fileName = 'Отчет_минобрнауки_'.$dateFrom->copy()->format('d.m.Y').'_'.$dateTo->copy()->format('d.m.Y').'.csv';
 

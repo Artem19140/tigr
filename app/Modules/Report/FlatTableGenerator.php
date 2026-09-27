@@ -33,7 +33,7 @@ class FlatTableGenerator
                 $dateTo->copy()->setTimezone(CenterData::timeZome())->endOfDay()->utc(),
             ])
 
-            ->whereNotNull('checked_at')
+            ->whereNotNull('reviewed_at')
 
             ->chunkById(300, function ($attempts) use (&$strNumber) {
                 foreach ($attempts as $attempt) {

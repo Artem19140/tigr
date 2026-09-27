@@ -21,13 +21,6 @@ export interface Enrollment{
     }
 }
 
-
-export interface EnrollmentAvailability{
-    payment:boolean,
-    annul:boolean,
-    speaking:boolean
-}
-
 export interface EnrollmentConduct{
     id:number,
     foreignNational:ForeignNationalEnrollment,

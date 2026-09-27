@@ -27,8 +27,8 @@ class ExamDocumentBuilder
             'attempts as active_attempts_exists' => function ($query) {
                 $query->active();
             },
-            'attempts as unchecked_attempts_exists' => function ($query) {
-                return $query->unchecked();
+            'attempts as unreviewed_attempts_exists' => function ($query) {
+                return $query->unreviewed();
             }
         ]);
 

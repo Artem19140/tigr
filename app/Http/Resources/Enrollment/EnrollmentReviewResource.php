@@ -19,7 +19,7 @@ class EnrollmentReviewResource extends JsonResource
             'regNum' => $this->reg_number,
             'attempt' => $this->whenLoaded('attempt', fn () => [
                 'id' => $this->attempt->id,
-                'checkedAt' => $this->attempt->checked_at,
+                'reviewedAt' => $this->attempt->reviewed_at,
                 'checkUrl' => route('attempts.review', [
                     'attempt' => $this->attempt
                 ], false)

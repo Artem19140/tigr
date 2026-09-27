@@ -56,6 +56,7 @@ class EmployeeController
         CreateEmployee $createEmployee
     ): RedirectResponse {
         Gate::authorize('create', Employee::class);
+        
         $createEmployee->execute(
             $request->toDto(),
             $request->user()
@@ -104,7 +105,7 @@ class EmployeeController
         ]);
 
         $audit->log('employee_fired', $employee);
-        return back();
+        return redirect()->route('employees.index');
     }
 
     public function rolesShow(Request $request): AnonymousResourceCollection

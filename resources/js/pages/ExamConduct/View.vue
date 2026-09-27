@@ -4,7 +4,7 @@ import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { computed, onMounted, onUnmounted, ref} from 'vue';
 import { DateFormatter } from '@helpers/DateFormatter';
 import { ExamConduct } from '@/interfaces/Exam';
-import { mdiCheckCircle , mdiMagnify } from '@mdi/js'
+import { mdiCancel, mdiCheckCircle , mdiMagnify } from '@mdi/js'
 import ExamLayout from '@/layouts/ExamLayout.vue';
 import EnrollmentConductActions from './Components/EnrollmentConductActions.vue';
 
@@ -74,13 +74,10 @@ const search = ref<string>('')
     </Head>
 
     <v-container>
-        <v-card
-            rounded="xl"
-        >
+        <v-card>
             <v-card-text class="d-flex justify-space-between align-center py-4">
                 <div class="min-w-0">
                     <div class="d-flex align-center ga-2 flex-wrap">
-
                         <v-chip 
                             color="green"
                             text="В процессе"
@@ -137,16 +134,22 @@ const search = ref<string>('')
                 </template>
 
                 <template #item.foreignNational.fullName="{ item }">
-                    <div class="d-flex align-center ga-2">
-                        {{ item.foreignNational.fullName }}
-                        <v-chip
-                            v-if="item.attempt?.annulledAt"
-                            color="red"
-                            size="x-small"
-                            variant="tonal"
-                        >
-                            Анн.
-                        </v-chip>
+                    <div class="flex items-center gap-2">
+                        <span>
+                            {{ item.foreignNational.fullName }}
+                        </span>
+                        
+                        <v-tooltip text="Попытка аннулирована">
+                            <template #activator="{ props }">
+                                <v-icon
+                                    v-if="item.attempt?.annulledAt"
+                                    v-bind="props"
+                                    :icon="mdiCancel"
+                                    color="error"
+                                    size="18"
+                                />
+                            </template>
+                        </v-tooltip>
                     </div>
                 </template>
 
@@ -162,6 +165,7 @@ const search = ref<string>('')
                     <v-icon
                         :icon="mdiCheckCircle"
                         color="success"
+                        size="18"
                         v-if="item.attempt?.speakingFinishedAt"
                     />
                 </template>

@@ -41,7 +41,7 @@ return new class extends Migration
                 ->constrained('employees')
                 ->cascadeOnDelete();
 
-            $table->datetime('checked_at')->nullable()->default(null);
+            $table->datetime('reviewed_at')->nullable()->default(null);
             $table->unsignedTinyInteger('mark')->nullable()->default(null);
             $table->jsonb('answer')->nullable()->default(null);
 

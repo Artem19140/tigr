@@ -36,12 +36,20 @@ class AddressDeleteTest extends TestCase
 
     public function test_success(): void
     {
-        $address = Address::factory()->active()->create();
+        $address = Address::factory()
+            ->active()
+            ->create();
+
         $response = $this
             ->actingAs($this->employee)
-            ->deleteJson(route('addresses.destroy', ['address' => $address]));
-        $response->assertNoContent();
+            ->delete(route('addresses.destroy', [
+                'address' => $address
+            ]));
+
+        $response->assertRedirectToRoute('addresses.index');
+
         $address->refresh();
+
         $this->assertFalse($address->is_active);
     }
 }

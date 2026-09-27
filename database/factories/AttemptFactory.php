@@ -57,7 +57,7 @@ class AttemptFactory extends Factory
                 'started_at' => now(),
                 'last_activity_at' => now(),
                 'finished_at' => now(),
-                'checked_at' => now(),
+                'reviewed_at' => now(),
             ];
         });
     }
@@ -90,7 +90,7 @@ class AttemptFactory extends Factory
                 'last_activity_at' => now(),
                 'annulled_at' => now(),
                 'finished_at' => now(),
-                'checked_at' => now(),
+                'reviewed_at' => now(),
             ];
         });
     }

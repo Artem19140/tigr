@@ -17,7 +17,7 @@ class ExamType extends Model
         'is_active',
         'has_speaking_tasks',
         'tasks_count',
-        'need_human_check',
+        'need_human_review',
         'min_mark',
         'protocol_name',
         'amount_in_words'
@@ -26,7 +26,7 @@ class ExamType extends Model
     protected $casts = [
         'is_active' => 'boolean',
         'has_speaking_tasks' => 'boolean',
-        'need_human_check' => 'boolean',
+        'need_human_review' => 'boolean',
     ];
 
     public function exams(): HasMany

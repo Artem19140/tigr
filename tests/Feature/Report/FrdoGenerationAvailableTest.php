@@ -36,7 +36,7 @@ class FrdoGenerationAvailableTest extends TestCase
         return $this->actingAs($this->actor)
             ->getJson(route('reports.frdo.availability', [
                 'type' => $type,
-                'examDate' => Carbon::now()->format('Y-m-d'),
+                'date' => Carbon::now()->format('Y-m-d'),
             ]));
     }
 
@@ -71,7 +71,7 @@ class FrdoGenerationAvailableTest extends TestCase
         $response->assertBadRequest();
     }
 
-    public function test_fail_not_checked_attempts(): void
+    public function test_fail_not_reviewed_attempts(): void
     {
         Attempt::factory(5)
             ->passed()

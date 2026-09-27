@@ -1,19 +1,18 @@
 <script setup lang="ts">
 
-import { Roles } from '@/constants/Roles';
 import { computed, onMounted, ref } from 'vue';
 import { useHttp } from '@inertiajs/vue3';
-import { EmployeeFormI } from '@/interfaces/Employee';
+import { EmployeeCreate, EmployeeEdit} from '@/interfaces/Employee';
 
 const props = defineProps<{
-    errors: Partial<Record<keyof EmployeeFormI, string>>,
+    errors: any,
     loading:boolean
 }>()
 
-const form = defineModel<EmployeeFormI>('form', {required:true})
+const form = defineModel<EmployeeEdit | EmployeeCreate>('form', {required:true})
 const readOnly = computed(() => props.loading)
 
-const rolesList = ref<Roles[]>()
+const rolesList = ref<[]>()
 
 const http = useHttp()
 
@@ -28,7 +27,6 @@ onMounted(() => {
 
 <template>
     <div class="space-y-5">
-        <!-- ФИО -->
         <div>
             <div class="mb-4 text-sm font-semibold text-gray-700">
                 Личные данные
@@ -67,7 +65,6 @@ onMounted(() => {
             </div>
         </div>
 
-        <!-- Доступ -->
         <div>
             <div class="mb-4 text-sm font-semibold text-gray-700">
                 Доступ

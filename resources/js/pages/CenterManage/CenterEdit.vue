@@ -11,7 +11,8 @@ const props = defineProps<{
     data: Center
   }
   backUrl:string,
-  updateUrl:string
+  updateUrl:string,
+  timeZones: Array<string>
 }>()
 
 defineOptions({
@@ -27,7 +28,8 @@ const form = useForm({
     certificatesIssueAddress: props.center.data.certificatesIssueAddress,
     directorFio: props.center.data.directorFio,
     commissionChairman: props.center.data.commissionChairman,
-    nameGenitive: props.center.data.nameGenitive
+    nameGenitive: props.center.data.nameGenitive,
+    timeZone: props.center.data.timeZone
 })
 
 const cancel = async () => {
@@ -138,6 +140,14 @@ const cancel = async () => {
                         auto-grow
                         rows="1"
                         :error-messages="form.errors.nameGenitive"
+                    />
+
+                    <v-autocomplete
+                        v-model="form.timeZone"
+                        :items="timeZones"
+                        label="Временная зона"
+                        placeholder="Выберите временную зону работы центра"
+                        :error-messages="form.errors.timeZone"
                     />
                 </div>
             </v-card-text>

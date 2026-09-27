@@ -21,7 +21,9 @@ class EnrollmentChangePaymentTest extends TestCase
     {
         parent::setUp();
         $this->seed(RolesSeeder::class);
-        $this->employee = Employee::factory()->operator()->create();
+        $this->employee = Employee::factory()
+            ->operator()
+            ->create();
         Carbon::setTestNow(now());
     }
 
@@ -31,63 +33,78 @@ class EnrollmentChangePaymentTest extends TestCase
         Carbon::setTestNow();
     }
 
-    protected function putPayment(int $enrollmentId, ?Employee $user = null)
+    protected function putPayment(
+        int $enrollmentId,
+        bool $status
+    )
     {
         return $this->actingAs($employee ?? $this->employee)
-            ->putJson("/enrollments/$enrollmentId/payment");
+            ->put(route('enrollments.payment-change', [
+                'enrollment' => $enrollmentId,
+                'status' => $status
+            ]));
     }
 
     public function test_success(): void
     {
+        $paymentStatus = true;
+        $expectedPaymentStatus = false;
+
         $this->withoutExceptionHandling();
+
         $exam = Exam::factory()->inFuture()->create();
+
         $enrollment = Enrollment::factory()->create([
             'exam_id' => $exam->id,
+            'has_payment' => $paymentStatus
         ]);
 
-        $response = $this->putPayment($enrollment->id);
 
-        $response->assertStatus(200);
-    }
+        $response = $this->putPayment(
+            $enrollment->id, 
+            $expectedPaymentStatus
+        );
 
-    public function test_success_attached_examiner(): void
-    {
-        $exam = Exam::factory()->inFuture()->create();
+        $enrollment->refresh();
 
-        $enrollment = Enrollment::factory()->create([
-            'exam_id' => $exam->id
-        ]);
-        $employee = Employee::factory()
-            ->examiner()
-            ->create();
-        $exam->examiners()->attach($employee);
-        $response = $this->putPayment($enrollment->id, $employee);
+        $this->assertEquals($expectedPaymentStatus, $enrollment->has_payment);
 
-        $response->assertOk();
+        $response->assertRedirectBack();
     }
 
     public function test_fail_has_attempt(): void
     {
-        $exam = Exam::factory()->inFuture()->create();
-
+        $paymentStatus = true;
+        
         $enrollment = Enrollment::factory()
             ->has(Attempt::factory())
             ->create([
-                'exam_id' => $exam->id
+                'has_payment' => $paymentStatus
             ]);
-        $response = $this->putPayment($enrollment->id);
 
-        $response->assertBadRequest();
+        $response = $this->putPayment($enrollment->id, ! $paymentStatus);
+
+        $response->assertRedirectBack();
+
+        $this->assertEquals($paymentStatus, $enrollment->has_payment);
     }
 
     public function test_fail_past_exam(): void
     {
-        $exam = Exam::factory()->inPast()->create();
-        $enrollment = Enrollment::factory()->create([
-            'exam_id' => $exam->id
-        ]);
-        $response = $this->putPayment($enrollment->id);
+        $paymentStatus = true;
+        $exam = Exam::factory()
+            ->inPast()
+            ->create();
 
-        $response->assertBadRequest();
+        $enrollment = Enrollment::factory()->create([
+            'exam_id' => $exam->id,
+            'has_payment' => $paymentStatus
+        ]);
+
+        $response = $this->putPayment($enrollment->id, !  $paymentStatus);
+
+        $response->assertRedirectBack();
+
+        $this->assertEquals($paymentStatus, $enrollment->has_payment);
     }
 }

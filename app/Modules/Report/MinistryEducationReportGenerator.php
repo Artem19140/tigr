@@ -2,7 +2,6 @@
 
 namespace App\Modules\Report;
 
-use App\Exceptions\BusinessException;
 use App\Enums\ReportType;
 use App\Events\ReportGenerated;
 use App\Models\Attempt;
@@ -19,7 +18,6 @@ class MinistryEducationReportGenerator
         Carbon $dateFrom,
         Carbon $dateTo
     ) {
-        //$this->ensureHasDataForReport($dateFrom, $dateTo);
         $this->csvWriter->setHeaders($this->headers());
         $this->writeRows($dateFrom, $dateTo);
         event(new ReportGenerated(ReportType::MinEducation, [
@@ -63,21 +61,5 @@ class MinistryEducationReportGenerator
                     ]);
                 }
             });
-    }
-    protected function ensureHasDataForReport(
-        Carbon $dateFrom,
-        Carbon $dateTo
-    ):void
-    {
-        $hasNoData = ! Attempt::query()
-            ->whereBetween('created_at', [
-                $dateFrom,
-                $dateTo,
-            ])
-            ->exists();
-        $period = "с {$dateFrom->copy()->format('d.m.Y')} по {$dateTo->copy()->format('d.m.Y')}";
-        if($hasNoData){
-            throw new BusinessException("Данных для отчета $period нету");
-        }
     }
 }

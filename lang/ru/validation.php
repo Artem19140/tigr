@@ -24,8 +24,8 @@ return [
     'any_of' => 'The :attribute field is invalid.',
     'array' => 'Поле :attribute должно быть массивом.',
     'ascii' => 'The :attribute field must only contain single-byte alphanumeric characters and symbols.',
-    'before' => 'The :attribute field must be a date before :date.',
-    'before_or_equal' => 'The :attribute field must be a date before or equal to :date.',
+    'before' => 'Поле :attribute должно быть датой до :date.',
+    'before_or_equal' => 'Поле :attribute должно содержать дату, предшествующую :date или равную ей.',
     'between' => [
         'array' => 'The :attribute field must have between :min and :max items.',
         'file' => 'The :attribute field must be between :min and :max kilobytes.',
@@ -230,8 +230,6 @@ return [
         'mark' => 'балл',
         'address' => 'адрес',
         'sublockId' => 'подблока',
-        'annulledReason' => 'причина аннулирования',
-        'cancelledReason' => 'причина отмены',
         'date' => 'дата',
         'newPassword' => 'новый пароль',
         'noPassportNumber' => 'нет номера',
@@ -251,7 +249,9 @@ return [
         'noPatronymicLatin' => 'нет отчества на лат',
         'code' => 'код',
         'addressReg' => 'адрес регистрации',
-        'value' => 'значение'
+        'value' => 'значение',
+        'reason' => 'причина',
+        
     ],
 
 ];

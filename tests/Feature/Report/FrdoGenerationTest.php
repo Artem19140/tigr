@@ -41,7 +41,7 @@ class FrdoGenerationTest extends TestCase
         $response = $this->actingAs($this->actor)
             ->getJson(route('reports.frdo.download', [
                 'type' => 'certificates',
-                'examDate' => Carbon::now()->format('Y-m-d'),
+                'date' => Carbon::now()->format('Y-m-d'),
             ]));
 
         $this->assertStringContainsString(
@@ -63,7 +63,7 @@ class FrdoGenerationTest extends TestCase
         $response = $this->actingAs($this->actor)
             ->getJson(route('reports.frdo.download', [
                 'type' => 'references',
-                'examDate' => Carbon::now()->format('Y-m-d'),
+                'date' => Carbon::now()->format('Y-m-d'),
             ]));
 
         $this->assertStringContainsString(

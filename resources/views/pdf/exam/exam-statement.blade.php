@@ -85,7 +85,7 @@
                 
             @endforeach
 
-            <td>{{ $row['totalMark']  ?? ''}}</td>
+            <td>{{ $row['totalMark'] }}</td>
             <td>{{ $row['result']  ?? ''}}</td>
         </tr>
         @endforeach     

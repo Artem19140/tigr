@@ -21,20 +21,20 @@ class FRDOReportsGenerator
     ) {}
 
     public function execute(
-        string $examDate,
+        string $date,
         string $type
     ): IWriter {
-        $examDate = Carbon::parse($examDate)->setTimezone(
+        $date = Carbon::parse($date)->setTimezone(
             CenterData::timeZome()
         );
         
         $success = $type === 'certificates';
 
-        $this->ensureFrdoGenerationAvailable->execute($examDate, $success);
-        $spreadsheet = $this->generateReport($examDate, $success);
+        $this->ensureFrdoGenerationAvailable->execute($date, $success);
+        $spreadsheet = $this->generateReport($date, $success);
         
         event(new ReportGenerated(ReportType::Frdo, [
-            'date' => $examDate->copy()->format('d.m.Y'),
+            'date' => $date->copy()->format('d.m.Y'),
             'type' => $success ? 'certificates' : 'references'
         ]));
 
@@ -42,14 +42,14 @@ class FRDOReportsGenerator
     }
 
     protected function attemptsForReport(
-        Carbon $examDate,
+        Carbon $date,
         bool $success
     ): Collection {
         $attempts = Attempt::query()
             ->with(['exam.type', 'foreignNational', 'exam.address'])
             ->whereBetween('created_at', [
-                $examDate->copy()->startOfDay()->utc(),
-                $examDate->copy()->endOfDay()->utc(),
+                $date->copy()->startOfDay()->utc(),
+                $date->copy()->endOfDay()->utc(),
             ])
             ->when($success, function(Builder $query){
                 $query->passed();
@@ -57,17 +57,17 @@ class FRDOReportsGenerator
             ->when(!$success, function(Builder $query){
                 $query->failed();
             })
-            ->whereNotNull('checked_at')
+            ->whereNotNull('reviewed_at')
             ->get();
 
         return $attempts;
     }
 
     protected function generateReport(
-        Carbon $examDate,
+        Carbon $date,
         bool $success
     ): Spreadsheet {
-        $attempts = $this->attemptsForReport($examDate, $success);
+        $attempts = $this->attemptsForReport($date, $success);
         if ($success) {
             $templatePath = storage_path('app/public/templates/certificates_frdo.xlsx');
         } else {

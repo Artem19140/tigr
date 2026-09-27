@@ -63,7 +63,7 @@ class RateAttemptAnswerTest extends TestCase
         $this->hasLog();
     }
 
-    public function test_fail_mark_checked_attempt(): void
+    public function test_fail_mark_reviewed_attempt(): void
     {
         $this->attempt->finish();
         $this->attempt->markAsChecked();

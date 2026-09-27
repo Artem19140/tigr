@@ -20,7 +20,7 @@ class RvpSeeder extends Seeder
             [
                 'name' => 'Разрешение на временное проживание в РФ',
                 'short_name' => 'РВП',
-                'need_human_check' => true,
+                'need_human_review' => true,
                 'tasks_count' => 34,
                 'duration' => 90,
                 'level' => 2,

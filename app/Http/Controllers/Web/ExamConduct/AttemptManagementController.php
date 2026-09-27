@@ -16,12 +16,12 @@ class AttemptManagementController
     ): RedirectResponse {
 
         $request->validate([
-            'annulledReason' => ['required', 'string'],
+            'reason' => ['required', 'string'],
         ]);
 
         $annulAttempt->execute(
             $attempt, 
-            $request->input('annulledReason'), 
+            $request->input('reason'), 
             $request->user()
         );
 

@@ -4,6 +4,7 @@ namespace App\Modules\Shared;
 
 use App\Models\Center;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class CenterData
 {
@@ -14,7 +15,14 @@ class CenterData
         if (self::$center === null) {
             self::$center = Cache::rememberForever(
                 Center::CACHE_KEY,
-                fn () => Center::firstOrFail()
+                function ()  {
+                    $center = Center::first();
+                    if(! $center){
+                        Log::critical('center_not_found');
+                        abort(500); 
+                    }
+                    return $center;
+                }
             );
         }
 
@@ -42,7 +50,7 @@ class CenterData
 
     public static function timeZome():string
     {
-        return config('center.time_zome');
+        return self::get()->time_zone;
     }
 
     public static function commissionChairman():string

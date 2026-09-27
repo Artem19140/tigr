@@ -34,7 +34,7 @@ class CloseAbandonedAttemptsTest extends TestCase
     {
         $examType = ExamType::factory()
             ->create([
-                'need_human_check' => true,
+                'need_human_review' => true,
             ]);
         $exam = Exam::factory()
             ->create([
@@ -56,7 +56,7 @@ class CloseAbandonedAttemptsTest extends TestCase
             'expired_at' => $attempt->expired_at,
             'last_activity_at' => $attempt->last_activity_at,
             'finished_at' => $attempt->last_activity_at,
-            'checked_at' => null,
+            'reviewed_at' => null,
         ]);
 
         $attempt->refresh();
@@ -66,7 +66,7 @@ class CloseAbandonedAttemptsTest extends TestCase
     {
         $examType = ExamType::factory()
             ->create([
-                'need_human_check' => false,
+                'need_human_review' => false,
             ]);
 
         $exam = Exam::factory()
@@ -90,7 +90,7 @@ class CloseAbandonedAttemptsTest extends TestCase
             'finished_at' => '2026-01-01 09:50:00',
         ]);
         $attempt->refresh();
-        $this->assertNotNull($attempt->checked_at);
+        $this->assertNotNull($attempt->reviewed_at);
     }
 
     public function test_does_not_close_active_atempt(): void
@@ -110,7 +110,7 @@ class CloseAbandonedAttemptsTest extends TestCase
         $attempt->refresh();
 
         $this->assertNull($attempt->finished_at);
-        $this->assertNull($attempt->checked_at);
+        $this->assertNull($attempt->reviewed_at);
     }
 
     public function test_does_not_close_annulled_attempt(): void
@@ -124,7 +124,7 @@ class CloseAbandonedAttemptsTest extends TestCase
 
         $oldAnnulledAt = $attempt->annulled_at;
         $oldFinidhedAt = $attempt->finished_at;
-        $oldCheckedAt = $attempt->checked_at;
+        $oldreviewedAt = $attempt->reviewed_at;
 
         $this->action->execute();
 
@@ -132,6 +132,6 @@ class CloseAbandonedAttemptsTest extends TestCase
 
         $this->assertEquals($oldAnnulledAt, $attempt->annulled_at);
         $this->assertEquals($oldFinidhedAt, $attempt->finished_at);
-        $this->assertEquals($oldCheckedAt, $attempt->checked_at);
+        $this->assertEquals($oldreviewedAt, $attempt->reviewed_at);
     }
 }

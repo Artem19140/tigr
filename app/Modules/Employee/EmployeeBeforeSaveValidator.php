@@ -7,6 +7,7 @@ use App\Exceptions\Employee\EmployeeValidationExcepion;
 use App\Http\Dto\EmployeeDto;
 use App\Models\Employee;
 use App\Models\Role;
+use Illuminate\Support\Facades\Log;
 
 class EmployeeBeforeSaveValidator
 {
@@ -26,12 +27,13 @@ class EmployeeBeforeSaveValidator
 
         $hasPlatformAdminRole = \in_array($platformAdminRole->id, $rolesIds);
         if ( $hasPlatformAdminRole ) {
-            throw new EmployeeValidationExcepion(
+            Log::critical(
                 'ANUTHORIZED: employee_validation - roles has platform admin role', 
                 [
                     'rolesIds' => $rolesIds
                 ]
             );
+            abort(404);
         }
     }
 

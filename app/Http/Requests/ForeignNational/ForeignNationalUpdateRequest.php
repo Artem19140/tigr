@@ -26,6 +26,13 @@ class ForeignNationalUpdateRequest extends FormRequest
         ]);
     }
 
+    public function messages(): array
+    {
+        return [
+            'issuedDate.before_or_equal' => 'Дата выдачи не может быть позже сегодняшнего дня.',
+        ];
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -108,6 +115,8 @@ class ForeignNationalUpdateRequest extends FormRequest
             'issuedDate' => [
                 'required',
                 'date',
+                Rule::date()->format('Y-m-d'),
+                'before_or_equal:today'
             ],
 
             'citizenship' => [

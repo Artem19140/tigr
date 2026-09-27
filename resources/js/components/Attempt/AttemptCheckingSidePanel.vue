@@ -8,9 +8,9 @@ const props = defineProps<{
   attempt: AttemptReview | AttemptConduct
 }>()
 
-const getParams = (checkedAt:string | null) => {
-  if(checkedAt === null) return {icon:'', color:'grey'}
-  return checkedAt ? {icon:mdiCheck, color:'success'} : {icon:mdiClose, color:'error'} 
+const getParams = (reviewedAt:string | null) => {
+  if(reviewedAt === null) return {icon:'', color:'grey'}
+  return reviewedAt ? {icon:mdiCheck, color:'success'} : {icon:mdiClose, color:'error'} 
 }
 
 const scrollToTask = (id: number) => {
@@ -22,7 +22,7 @@ const scrollToTask = (id: number) => {
 }
 
 const taskParams = (task: Task) =>
-  getParams(task.attemptAnswer.checkedAt)
+  getParams(task.attemptAnswer.reviewedAt)
 
 const currentTaskId = ref<number | null>(null)
 

@@ -22,6 +22,13 @@ class ForeignNationalPostRequest extends FormRequest
         ]);
     }
 
+    public function messages(): array
+    {
+        return [
+            'issuedDate.before_or_equal' => 'Дата выдачи не может быть позже сегодняшнего дня.',
+        ];
+    }
+
     public function rules(): array
     {
         $countries = collect(json_decode(file_get_contents(storage_path('app/public/countries.json')), true))
@@ -95,11 +102,13 @@ class ForeignNationalPostRequest extends FormRequest
             ],
             'issuedBy' => [
                 'required',
-                'string',
+                'string'
             ],
             'issuedDate' => [
                 'required',
                 'date',
+                Rule::date()->format('Y-m-d'),
+                'before_or_equal:today'
             ],
             'citizenship' => [
                 'required',

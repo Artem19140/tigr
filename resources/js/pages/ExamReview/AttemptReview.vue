@@ -6,7 +6,6 @@ import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import AttemptCheckHeader from '@/components/Attempt/AttemptCheckHeader.vue';
 import AttemptCheckingSidePanel from '@/components/Attempt/AttemptCheckingSidePanel.vue';
 import TasksList from '../Attempt/Components/tasks/TasksList.vue';
-import { computed } from 'vue';
 import { mdiArrowLeft } from '@mdi/js'
 
 defineOptions({
@@ -26,10 +25,6 @@ const form = useForm()
 const finishChecking = async () => {
     form.post(props.finishUrl)
 }
-
-const hasUncheckedTasks = computed(
-    () => props.attempt.data.tasks.some(task => task.attemptAnswer.checkedAt === null)
-)
 </script>
 
 <template>
@@ -62,7 +57,7 @@ const hasUncheckedTasks = computed(
                     />
 
                     <div
-                        v-if="attempt.data.checkedAt === null"
+                        v-if="attempt.data.reviewedAt === null"
                         class="flex flex-col items-center gap-3 border-t border-gray-200 pt-5"
                     >
                         <div class="text-center text-sm text-gray-500">
@@ -72,7 +67,7 @@ const hasUncheckedTasks = computed(
                         <AppPrimaryButton
                             text="Завершить проверку"
                             :loading="form.processing"
-                            :disabled="form.processing || attempt.data.checkedAt || hasUncheckedTasks"
+                            :disabled="form.processing || attempt.data.reviewedAt"
                             @click="finishChecking"
                         />
                     </div>

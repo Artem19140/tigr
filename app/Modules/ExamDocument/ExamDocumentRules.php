@@ -150,7 +150,7 @@ class ExamDocumentRules
             );
         }
 
-        if($this->hasUncheckedAttemtps($exam)){
+        if($this->hasUnreviewdAttemtps($exam)){
             return RuleResult::fail(
                 AvailabilityCode::ExamOnReview
             );
@@ -169,9 +169,9 @@ class ExamDocumentRules
         return ! $exam->attempts_exists;
     }
 
-    protected function hasUncheckedAttemtps(Exam $exam): bool
+    protected function hasUnreviewdAttemtps(Exam $exam): bool
     {
-        return $exam->unchecked_attempts_exists;
+        return $exam->unreviewed_attempts_exists;
     }
 
     protected function hasActiveAttempts(Exam $exam): bool

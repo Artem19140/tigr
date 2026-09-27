@@ -14,8 +14,8 @@ class ExamReviewController
     public function show(
         Exam $exam
     ): \Inertia\Response | RedirectResponse {
-         if (! $exam->type->need_human_check) {
-            Log::warning('UNEXPECTED: try to check exam with no human checking',[
+         if (! $exam->type->need_human_review) {
+            Log::warning('UNEXPECTED: try to manual review exam with only auto review',[
                 'exam_id' => $exam->id
             ]);
             Inertia::flash('error', 'Данный экзамен проверяется автоматически');

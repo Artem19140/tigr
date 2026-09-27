@@ -25,9 +25,9 @@ class RateAttemptAnswer
             $this->ensureAttemptFinished($attempt);
         }
 
-        if ( $task->type === TaskType::Speaking ){
-            $this->ensureSpeakingFinished($attempt);
-        }
+        // if ( $task->type === TaskType::Speaking ){
+        //     $this->ensureSpeakingFinished($attempt);
+        // }
 
         $this->ensureAttemptNotChecked($attempt);
         $this->ensureTaskIsNotAutoReview($task, $attempt);
@@ -43,8 +43,9 @@ class RateAttemptAnswer
         int $mark,
     ): void {
         $attemptAnswer->mark = $mark;
-        $attemptAnswer->checked_at = Carbon::now();
-        $attemptAnswer->save();
+        $attemptAnswer->update([
+            'reviewed_at' => Carbon::now()
+        ]);
     }
 
     protected function ensureAttemptFinished(Attempt $attempt): void
@@ -77,9 +78,9 @@ class RateAttemptAnswer
 
     protected function ensureAttemptNotChecked(Attempt $attempt): void
     {
-        if ($attempt->isChecked()) {
+        if ($attempt->isReviewed()) {
             $this->log([
-                'reason' => 'trying to manual check answer, where attempt is already checked',
+                'reason' => 'trying to manual review answer, where attempt is already reviewed',
                 'attempt_id' => $attempt->id
             ]);
             throw ValidationException::withMessages([

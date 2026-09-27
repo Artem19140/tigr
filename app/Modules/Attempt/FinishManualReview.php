@@ -25,7 +25,7 @@ class FinishManualReview
 
     protected function ensureNotChecked(Attempt $attempt): void
     {
-        if ($attempt->isChecked()) {
+        if ($attempt->isReviewed()) {
             Log::warning('trying to repeat to finish attempt Review', [
                 'attempt_id' => $attempt->id,
             ]);
@@ -36,7 +36,7 @@ class FinishManualReview
     protected function ensureAllManualReviewTasksChecked(Attempt $attempt): void
     {
         $notAllManualReviewTypes = $attempt->attemptAnswers()
-            ->whereNull('checked_at')
+            ->whereNull('reviewed_at')
             ->whereHas('taskVariant', function (Builder $query) {
                 $query->whereHas('task', function (Builder $q) {
                     $q->manualReview();

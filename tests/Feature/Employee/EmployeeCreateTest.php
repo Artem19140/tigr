@@ -54,7 +54,7 @@ class EmployeeCreateTest extends TestCase
     protected function postEmployee(Employee $actingAs, array $overrrides = [])
     {
         return $this->actingAs($actingAs)
-            ->postJson("employees", $this->employeeBody($overrrides));
+            ->post("employees", $this->employeeBody($overrrides));
     }
 
     public function test_success(): void
@@ -65,7 +65,7 @@ class EmployeeCreateTest extends TestCase
 
         $response = $this->postEmployee($this->actor, ['roles' => [$role->id]]);
 
-        $response->assertStatus(200);
+        $response->assertRedirectToRoute('employees.index');
     }
 
     public function test_success_org_admin_creating(): void
@@ -77,7 +77,8 @@ class EmployeeCreateTest extends TestCase
         $response = $this->postEmployee($platformAdmin, [
             'roles' => [ $this->orgAdminRole->id ]
         ]);
-        $response->assertOk();
+
+        $response->assertRedirectToRoute('employees.index');
     }
 
     public function test_fail_center_admin_creating_with_no_role_platform_admin(): void
@@ -88,14 +89,16 @@ class EmployeeCreateTest extends TestCase
         $response = $this->postEmployee($operator,[
             'roles' => [$this->orgAdminRole->id]
         ]);
-        $response->assertStatus(403);
+
+        $response->assertForbidden();
     }
 
-    public function test_fail_403_platform_admin_creating(): void
+    public function test_fail_unauthorized_platform_admin_creating(): void
     {
         $response = $this->postEmployee($this->actor, [
             'roles' => [$this->platformAdminRole->id]
         ]);
+        
         $response->assertNotFound();
     }
 }

@@ -127,7 +127,7 @@ class ExamResultsGenerator
 
                 'marksByBlocks' => $marksByBlocks,
                 
-                'totalMark' => $attempt?->total_mark,
+                'totalMark' => $attempt?->total_mark ?? 0,
 
                 'result' => $this->getAttemptResultStatus($attempt),
             ];

@@ -19,7 +19,7 @@ class PatentSeeder extends Seeder
             ['level' => 1],
             [
                 'name' => 'Разрешение на работу (патент)',
-                'need_human_check' => false,
+                'need_human_review' => false,
                 'tasks_count' => 22,
                 'short_name' => 'ПАТЕНТ',
                 'amount' => 3800,

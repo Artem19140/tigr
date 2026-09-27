@@ -21,7 +21,7 @@ class VnzhSeeder extends Seeder
             [
                 'name' => 'Вид на жительство',
                 'short_name' => 'ВНЖ',
-                'need_human_check' => true,
+                'need_human_review' => true,
                 'tasks_count' => 38,
                 'min_mark' => 21,
                 'duration' => 90,
@@ -132,13 +132,11 @@ class VnzhSeeder extends Seeder
                 ],
                 [
                     'type' => TaskType::SingleChoice,
-                    'description' => 'Прослушайте аудиозапись из заданиия 8. Укажите номер правильного ответа.',
                     'mark' => 1,
                     'variants' => json_decode(file_get_contents(base_path($path.'task9.json')), true),
                 ],
                 [
                     'type' => TaskType::SingleChoice,
-                    'description' => 'Прослушайте аудиозапись из заданиия 8. Укажите номер правильного ответа.',
                     'mark' => 1,
                     'variants' => json_decode(file_get_contents(base_path($this->path.'task10.json')), true),
                 ],
@@ -171,25 +169,22 @@ class VnzhSeeder extends Seeder
                 ],
                 [
                     'type' => TaskType::SingleChoice,
-                    'description' => 'Прочитайте текст из задания 13. Укажите номер правильного ответа.',
                     'mark' => 1,
                     'variants' => json_decode(file_get_contents(base_path($this->path.'task14.json')), true),
                 ],
                 [
                     'type' => TaskType::SingleChoice,
-                    'description' => 'Прочитайте текст из задания 13. Укажите номер правильного ответа.',
                     'mark' => 1,
                     'variants' => json_decode(file_get_contents(base_path($this->path.'task15.json')), true),
                 ],
                 [
                     'type' => TaskType::SingleChoice,
-                    'description' => 'Прочитайте текст из задания 13. Укажите номер правильного ответа.',
+
                     'mark' => 1,
                     'variants' => json_decode(file_get_contents(base_path($this->path.'task16.json')), true),
                 ],
                 [
                     'type' => TaskType::SingleChoice,
-                    'description' => 'Прочитайте текст из задания 13. Укажите номер правильного ответа.',
                     'mark' => 1,
                     'variants' => json_decode(file_get_contents(base_path($this->path.'task17.json')), true),
                 ],

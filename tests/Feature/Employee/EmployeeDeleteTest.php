@@ -37,14 +37,14 @@ class EmployeeDeleteTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $response = $this->actingAs($this->actor)
-            ->deleteJson(route('employees.destroy', ['employee' => $this->activeEmployee]));
+            ->delete(route('employees.destroy', ['employee' => $this->activeEmployee]));
 
         $this->assertDatabaseHas('employees', [
             'id' => $this->activeEmployee->id,
             'is_active' => false,
         ]);
 
-        $response->assertNoContent();
+        $response->assertRedirectToRoute('employees.index');
     }
 
     public function test_fail_delete_not_active(): void
@@ -54,13 +54,13 @@ class EmployeeDeleteTest extends TestCase
             ->create();
 
         $response = $this->actingAs($this->actor)
-            ->deleteJson(route('employees.destroy', ['employee' => $notActiveEmployee]));
+            ->delete(route('employees.destroy', ['employee' => $notActiveEmployee]));
 
         $this->assertDatabaseHas('employees', [
             'id' => $notActiveEmployee->id,
             'is_active' => $notActiveEmployee->is_active,
         ]);
 
-        $response->assertBadRequest();
+        $response->assertRedirectBack();
     }
 }

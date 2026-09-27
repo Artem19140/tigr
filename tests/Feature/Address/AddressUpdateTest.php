@@ -38,20 +38,21 @@ class AddressUpdateTest extends TestCase
     public function test_success(): void
     {
         $address = Address::factory()->create();
+
         $response = $this
             ->actingAs($this->employee)
-            ->patchJson(route('addresses.update', ['address' => $address]), [
+            ->patch(route('addresses.update', ['address' => $address]), [
                 'address' => fake()->streetAddress,
                 'capacity' => $address->capacity + 1,
             ]);
 
-        $response->assertStatus(200);
+        $response->assertRedirectToRoute('addresses.index');
     }
 
     public function test_fail_has_exam(): void
     {
         $address = Address::factory()
-            ->has(Exam::factory(10))
+            ->has(Exam::factory(2))
             ->create();
 
         $oldAddress = $address->address;
@@ -59,15 +60,16 @@ class AddressUpdateTest extends TestCase
 
         $response = $this
             ->actingAs($this->employee)
-            ->patchJson(route('addresses.update', ['address' => $address]), [
+            ->patch(route('addresses.update', ['address' => $address]), [
                 'address' => fake()->streetAddress,
                 'capacity' => $newCapacity,
             ]);
+
         $address->refresh();
 
         $this->assertEquals($oldAddress, $address->address);
 
         $this->assertEquals($newCapacity, $address->capacity);
-        $response->assertOk();
+        $response->assertRedirectToRoute('addresses.index');
     }
 }

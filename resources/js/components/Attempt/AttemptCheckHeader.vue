@@ -9,7 +9,7 @@ const props = defineProps<{
 
 <template>
     <div
-        v-if="!attempt.checkedAt"
+        v-if="!attempt.reviewedAt"
         class="sticky top-0 z-10 border-b border-gray-200 bg-[#F7F9FC]/95 px-4 py-2 text-center text-xs text-gray-500 backdrop-blur"
     >
         Баллы сохраняются автоматически

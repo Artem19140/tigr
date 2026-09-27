@@ -15,7 +15,7 @@ export interface Task{
 export interface AttemptAnswer{
     id:number,
     answer:any,
-    checkedAt:string,
+    reviewedAt:string,
     mark:number | null,
     audioPlayedAt:string | null,
     attemptId:number

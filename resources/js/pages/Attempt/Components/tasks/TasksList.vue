@@ -103,7 +103,7 @@ const groupedTasks =  computed(() =>{
                     <v-card-text v-if="checking">
                         <task-rating-block
                             :task="task"
-                            :readonly="Boolean(attempt.checkedAt)"
+                            :readonly="Boolean(attempt.reviewedAt)"
                         />
                     </v-card-text>
 

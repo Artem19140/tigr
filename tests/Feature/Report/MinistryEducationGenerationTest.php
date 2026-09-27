@@ -33,6 +33,7 @@ class MinistryEducationGenerationTest extends TestCase
             ->getJson(route('reports.ministry-education.availability', [
                 'lastWeek' => true,
             ]));
+
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'redirectUrl',

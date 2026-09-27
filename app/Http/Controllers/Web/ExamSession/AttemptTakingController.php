@@ -30,7 +30,7 @@ class AttemptTakingController
                 'type',
             ])->find($attempt->exam_id);
 
-            return Inertia::render('Attempt/PrepareAttempt', [
+            return Inertia::render('Attempt/TestPreparing', [
                 'exam' => [
                     'duration' => $exam->type->duration,
                     'minMark' => $exam->type->min_mark,
@@ -48,7 +48,7 @@ class AttemptTakingController
 
         $attempt = $builder->build($attempt);
 
-        return Inertia::render('Attempt/Attempt', [
+        return Inertia::render('Attempt/Test', [
             'attempt' => new AttemptExamSessionResource($attempt),
             'finishUrl' => route('attempts.finish', [
                 'attempt' => $attempt

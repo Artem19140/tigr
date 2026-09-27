@@ -17,13 +17,13 @@ class AttemptAnswer extends Model
         'mark',
         'answer',
         'answer_id',
-        'checked_at',
+        'reviewed_at',
         'audio_played_at',
     ];
 
     protected $casts = [
         'answer' => 'array',
-        'checked_at' => 'datetime',
+        'reviewed_at' => 'datetime',
         'audio_played_at' => 'datetime',
     ];
 

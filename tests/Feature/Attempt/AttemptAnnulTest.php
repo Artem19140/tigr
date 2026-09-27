@@ -49,8 +49,8 @@ class AttemptAnnulTest extends TestCase
             ]);
 
         $response = $this->actingAs($this->actor)
-            ->putJson(route('attempts.destroy', ['attempt' => $attempt]), [
-                'annulledReason' => 'Есть',
+            ->delete(route('attempts.destroy', ['attempt' => $attempt]), [
+                'reason' => 'Есть',
             ]);
             
         $attempt->refresh();
@@ -58,7 +58,7 @@ class AttemptAnnulTest extends TestCase
         $this->assertNotNull($attempt->finished_at);
         $this->assertNotNull($attempt->annulled_at);
 
-        $response->assertNoContent();
+        $response->assertRedirectToRoute('exams.conduct', ['exam' => $exam]);
     }
 
     public function test_fail_annul_repeated(): void
@@ -77,13 +77,13 @@ class AttemptAnnulTest extends TestCase
             ]);
 
         $response = $this->actingAs($this->actor)
-            ->putJson(route('attempts.destroy', [
+            ->delete(route('attempts.destroy', [
                 'attempt' => $attempt,
             ]),
                 [
-                    'annulledReason' => 'Есть',
+                    'reason' => 'Есть',
                 ]);
 
-        $response->assertBadRequest();
+        $response->assertRedirectBack();
     }
 }

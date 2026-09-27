@@ -31,7 +31,7 @@ class Attempt extends Model
         'solved',
         'enrollment_id',
         'annulled_at',
-        'checked_at',
+        'reviewed_at',
         'last_activity_at',
         'speaking_finished_at',
         'speaking_started_at',
@@ -43,7 +43,7 @@ class Attempt extends Model
         'started_at' => 'datetime',
         'is_passed' => 'boolean',
         'annulled_at' => 'datetime',
-        'checked_at' => 'datetime',
+        'reviewed_at' => 'datetime',
         'last_activity_at' => 'datetime',
         'speaking_finished_at' => 'datetime',
         'speaking_started_at' => 'datetime',
@@ -80,7 +80,7 @@ class Attempt extends Model
 
     public function markAsChecked(): void
     {
-        $this->checked_at = Carbon::now();
+        $this->reviewed_at = Carbon::now();
     }
 
     public function isStarted(): bool
@@ -88,9 +88,9 @@ class Attempt extends Model
         return $this->started_at !== null;
     }
 
-    public function isChecked(): bool
+    public function isReviewed(): bool
     {
-        return $this->checked_at !== null;
+        return $this->reviewed_at !== null;
     }
 
     public function isAnnulled(): bool
@@ -134,7 +134,7 @@ class Attempt extends Model
 
     public function canBeAutomaticallyFinalized(): bool
     {
-        return ! $this->exam->type->need_human_check;
+        return ! $this->exam->type->need_human_review;
     }
 
     public function taskVariants(): BelongsToMany
@@ -142,12 +142,12 @@ class Attempt extends Model
         return $this->belongsToMany(TaskVariant::class, 'attempt_answers');
     }
 
-    public function scopeUnchecked(Builder $query): Builder
+    public function scopeUnreviewed(Builder $query): Builder
     {
         return $query
             ->whereNotNull('started_at')
             ->whereNotNull('finished_at')
-            ->whereNull('checked_at');
+            ->whereNull('reviewed_at');
     }
 
     public function scopeActive(Builder $query): Builder
@@ -156,7 +156,7 @@ class Attempt extends Model
             ->whereNotNull('started_at')
             ->whereNull('annulled_at')
             ->whereNull('finished_at')
-            ->whereNull('checked_at');
+            ->whereNull('reviewed_at');
     }
 
     public function scopePassed(Builder $query):Builder

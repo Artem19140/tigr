@@ -40,7 +40,7 @@ class ExamResultsGenerationTest extends TestCase
         $exam->examiners()->attach($this->actor);
         $response = $this
             ->actingAs($this->actor)
-            ->getJson(route('exam.documents.results', ['exam' => $exam]));
+            ->getJson(route('exams.documents.results', ['exam' => $exam]));
         $response->assertOk();
         $response->assertHeader('Content-Type', 'application/pdf');
     }

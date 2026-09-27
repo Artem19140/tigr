@@ -22,8 +22,4 @@ class CheckPassingTresholdsTest extends TestCase
         parent::tearDown();
         Carbon::setTestNow();
     }
-    // public function test_passed_tresholds(): void
-    // {
-
-    // }
 }

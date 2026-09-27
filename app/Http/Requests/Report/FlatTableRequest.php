@@ -4,15 +4,20 @@ namespace App\Http\Requests\Report;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class FlatTableRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
+    }
+
+    public function messages(): array
+    {
+        return [
+            'dateTo.before_or_equal' => 'Конец периода не может быть позже сегодняшнего дня.',
+        ];
     }
 
     /**
@@ -24,7 +29,12 @@ class FlatTableRequest extends FormRequest
     {
         return [
             'dateFrom' => ['required', 'date'],
-            'dateTo' => ['required', 'date'],
+            'dateTo' => [
+                'required', 
+                'date', 
+                Rule::date()->format('Y-m-d'),
+                'before_or_equal:today'
+            ],
         ];
     }
 }

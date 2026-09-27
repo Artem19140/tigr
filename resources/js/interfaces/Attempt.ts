@@ -17,7 +17,7 @@ export interface Attempt{
     serverNow:number,
     minDurationMinutes:number,
     tasksCount:number,
-    checkedAt:string,
+    reviewedAt:string,
     checkUrl: string
 }
 
@@ -26,7 +26,7 @@ export interface AttemptReview{
     status:string,
     expiredAt:string,
     tasks: Task[],
-    checkedAt:string
+    reviewedAt:string
 }
 
 export interface AttemptConduct{
@@ -40,7 +40,7 @@ export interface AttemptConduct{
     speakingFinishedAt: string | null,
     speakingStartedAt: string | null,
     tasks: Task[],
-    checkedAt:string,
+    reviewedAt:string,
     actions:{
         destroy:{
             url: string,

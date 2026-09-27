@@ -21,7 +21,11 @@ Route::prefix('reports')->group(function () {
         ->can('reports.flat-table')
         ->name('reports.flat-table.download');
 
-    Route::get('ministry-education/available', [ReportController::class, 'availableMinistryEducation'])
+    Route::get('flat-table/availability', [ReportController::class, 'availabilityFlatTable'])
+        ->can('reports.flat-table')
+        ->name('reports.flat-table.availability');
+
+    Route::get('ministry-education/availability', [ReportController::class, 'availabilityMinistryEducation'])
         ->can('reports.ministry-education')
         ->name('reports.ministry-education.availability');
 
@@ -47,7 +51,7 @@ Route::prefix('reports')->group(function () {
 
     Route::get('flat-table', function(){
         return  Inertia::render('Report/FlatTable', [
-            'downloadUrl' => route('reports.flat-table.download')
+            'availabilityUrl' => route('reports.flat-table.availability')
         ]);
     })
         ->can('reports.flat-table')

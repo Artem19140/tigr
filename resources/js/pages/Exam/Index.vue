@@ -56,7 +56,7 @@ const loading = ref<boolean>(false)
       <template #item.enrollmentsCount="{ item }">
         <span
           :class="item?.enrollmentsCount >= item?.capacity
-            ? 'rounded-full bg-red-500 px-2 py-1 text-white'
+            ? 'text-red-500 px-2 py-1'
             : ''"
         >
           {{ `${item?.enrollmentsCount} / ${item?.capacity}` }}

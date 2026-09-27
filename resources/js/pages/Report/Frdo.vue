@@ -14,11 +14,11 @@ defineOptions({
 })
 
 const http = useHttp<FrdoExport, RedirectUrl>({
-    examDate:null,
+    date:null,
     type:null
 })
 
-const  download = async () => {
+const  download = () => {
     http.get(props.availabilityUrl, {
         onSuccess:(response) => {
             if(response.redirectUrl){
@@ -29,7 +29,7 @@ const  download = async () => {
 }
 
 interface FrdoExport{
-    examDate:string | null,
+    date:string | null,
     type: string | null
 }
 
@@ -70,9 +70,9 @@ const items = [
                         />
 
                         <v-date-input
-                            v-model="http.examDate"
+                            v-model="http.date"
                             label="Дата"
-                            :error-messages="http.errors.examDate"
+                            :error-messages="http.errors.date"
                             :disabled="http.type === null"
                             variant="outlined"
                             density="comfortable"
@@ -90,7 +90,7 @@ const items = [
                         <AppPrimaryButton
                             text="Сформировать"
                             :disabled="
-                                !http.examDate ||
+                                !http.date ||
                                 http.type === null ||
                                 http.processing
                             "

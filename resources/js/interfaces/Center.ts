@@ -8,5 +8,6 @@ export interface Center {
   certificatesIssueAddress: string
   directorFio: string
   nameGenitive: string
-  commissionChairman:string
+  commissionChairman:string,
+  timeZone: string
 }

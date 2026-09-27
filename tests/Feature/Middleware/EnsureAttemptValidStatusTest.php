@@ -21,8 +21,10 @@ class EnsureAttemptValidStatusTest extends TestCase
         parent::setUp();
         $this->actor = ForeignNational::factory()
             ->create();
+
         Route::get('/_test/attempt/{attempt}', function (Attempt $attempt) {
             return response()->json(['ok' => true]);
+
         })->middleware(
             SubstituteBindings::class,
             AppMiddleware::ENSURE_ATTEMPT_VALID_STATUS
@@ -42,7 +44,7 @@ class EnsureAttemptValidStatusTest extends TestCase
             ->getJson("/_test/attempt/{$attempt->id}");
     }
 
-    public function test_success_redirect(): void
+    public function test_success(): void
     {
         $this->withoutExceptionHandling();
         $attempt = Attempt::factory()
@@ -57,7 +59,7 @@ class EnsureAttemptValidStatusTest extends TestCase
             ->assertOk();
     }
 
-    public function test_redirect_finished_attempt(): void
+    public function test_finished_attempt(): void
     {
         $attempt = Attempt::factory()
             ->finished()
@@ -66,10 +68,10 @@ class EnsureAttemptValidStatusTest extends TestCase
                 'finished_at' => '2026-01-01 09:50:00',
             ]);
         $this->getAttempt($attempt)
-            ->assertUnauthorized();
+            ->assertBadRequest();
     }
 
-    public function test_redirect_annulled_attempt(): void
+    public function test_annulled_attempt(): void
     {
         $attempt = Attempt::factory()
             ->annulled()
@@ -79,10 +81,10 @@ class EnsureAttemptValidStatusTest extends TestCase
             ]);
 
         $this->getAttempt($attempt)
-            ->assertUnauthorized();
+            ->assertBadRequest();
     }
 
-    public function test_redirect_expired(): void
+    public function test_expired_attempt(): void
     {
         $attempt = Attempt::factory()
             ->active()
@@ -90,8 +92,10 @@ class EnsureAttemptValidStatusTest extends TestCase
                 'foreign_national_id' => $this->actor->id,
                 'expired_at' => '2026-01-01 09:59:59',
             ]);
+        $this->actingAs($this->actor)
+            ->getJson("/_test/attempt/{$attempt->id}");
 
         $this->getAttempt($attempt)
-            ->assertUnauthorized();
+            ->assertBadRequest();
     }
 }

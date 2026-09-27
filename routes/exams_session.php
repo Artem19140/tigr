@@ -13,7 +13,7 @@ Route::middleware([
     ])->group(function () {
         
         Route::get('attempts/finish', function(){
-            return Inertia::render('Attempt/AfterAttempt', [
+            return Inertia::render('Attempt/AfterTest', [
                 'redirectUrl' => route('login', [], false)
             ]);
         })->name('attempts.finish.after');

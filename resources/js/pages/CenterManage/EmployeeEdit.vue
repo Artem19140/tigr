@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { EmployeeEdit, EmployeeFormI } from '@/interfaces/Employee'
+import { EmployeeEdit } from '@/interfaces/Employee'
 import EmployeeForm from './Components/EmployeeForm.vue'
 import AppPrimaryButton from '@/components/UI/AppPrimaryButton/AppPrimaryButton.vue'
 import { Head, router, useForm } from '@inertiajs/vue3'
@@ -18,7 +18,7 @@ defineOptions({
   layout:[EmployeeLayout]
 })
 
-const form = useForm<EmployeeFormI>({
+const form = useForm<EmployeeEdit>({
     surname: props.employee.data.surname,
     name: props.employee.data.name,
     patronymic: props.employee.data.patronymic,

@@ -29,7 +29,6 @@ const begin = () => {
       class="exam-card mx-auto pa-8"
       max-width="720"
       elevation="0"
-      rounded="xl"
     >
 
       <div class="mb-8 text-center">

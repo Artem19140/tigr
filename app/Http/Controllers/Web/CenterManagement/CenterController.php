@@ -29,6 +29,10 @@ class CenterController
             'updateUrl' => route('centers.update', [
                 'center' => $center
             ], false),
+            'timeZones' => [
+                'Europe/Moscow',
+                'Europe/Samara'
+            ]
         ]);
     }
 
@@ -46,7 +50,8 @@ class CenterController
             'certificatesIssueAddress' => ['required', 'string'],
             'directorFio' => ['required', 'string'],
             'commissionChairman' => ['required', 'string'],
-            'nameGenitive' => ['required', 'string']
+            'nameGenitive' => ['required', 'string'],
+            'timeZone' => ['required', 'string', 'in:Europe/Moscow,Europe/Samara']
         ]);
     
         $center->update([
@@ -58,7 +63,8 @@ class CenterController
             'certificates_issue_address' => $request->input('certificatesIssueAddress'),
             'director_fio' => $request->input('directorFio'),
             'commission_chairman' => $request->input('commissionChairman'),
-            'name_genitive' => $request->input('nameGenitive')
+            'name_genitive' => $request->input('nameGenitive'),
+            'time_zone' => $request->input('timeZone')
         ]);
         
         Cache::forget(Center::CACHE_KEY);

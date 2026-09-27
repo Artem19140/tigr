@@ -25,7 +25,8 @@ const centerData = [
   {label:'Адрес выдачи сертификатов', value: props.center.data.certificatesIssueAddress},
   {label:'Директор', value:props.center.data.directorFio},
   {label:'Председатель комиссии', value:props.center.data.commissionChairman},
-  {label:'Название (в родительном падеже)', value:props.center.data.nameGenitive}
+  {label:'Название (в родительном падеже)', value:props.center.data.nameGenitive},
+  {label:'Временная зона', value:props.center.data.timeZone}
 ]
 </script>
 
@@ -45,7 +46,7 @@ const centerData = [
             </v-card-text>
 
             <v-card-text class="px-6">
-                <div class="overflow-hidden rounded-xl border border-gray-200">
+                <div class="overflow-hidden rounded-xl ">
                     <div
                         v-for="(data, index) in centerData"
                         :key="index"

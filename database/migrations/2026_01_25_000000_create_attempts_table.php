@@ -37,7 +37,7 @@ return new class extends Migration
             $table->dateTime('last_activity_at')->nullable()->default(null);
             $table->dateTime('started_at')->nullable()->default(null)->index();
             $table->dateTime('finished_at')->nullable()->default(null)->index();
-            $table->dateTime('checked_at')->nullable()->default(null)->index();
+            $table->dateTime('reviewed_at')->nullable()->default(null)->index();
             $table->dateTime('expired_at')->nullable()->default(null)->index();
 
             $table->dateTime('speaking_started_at')->nullable()->default(null);

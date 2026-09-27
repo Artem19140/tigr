@@ -43,7 +43,7 @@ class ExamProtocolGenerationTest extends TestCase
 
         $response = $this
             ->actingAs($this->actor)
-            ->getJson(route('exam.documents.protocol', ['exam' => $exam]));
+            ->getJson(route('exams.documents.protocol', ['exam' => $exam]));
         $response->assertOk();
         $response->assertHeader('Content-Type', 'application/pdf');
     }

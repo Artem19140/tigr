@@ -40,7 +40,7 @@ class AddressCreateTest extends TestCase
                 'capacity' => 12,
             ]);
 
-        $response->assertStatus(201);
+        $response->isRedirect('address.index');
     }
 
     public function test_fail_less_zero_capacity(): void

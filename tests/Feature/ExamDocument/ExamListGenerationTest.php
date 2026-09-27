@@ -18,7 +18,11 @@ class ExamListGenerationTest extends TestCase
     {
         parent::setUp();
         $this->seed(RolesSeeder::class);
-        $this->actor = Employee::factory()->examiner()->create();
+
+        $this->actor = Employee::factory()
+            ->operator()
+            ->create();
+        
         Carbon::setTestNow(now());
     }
 
@@ -31,13 +35,17 @@ class ExamListGenerationTest extends TestCase
     public function test_success_list_generation(): void
     {
         $enrollment = Enrollment::factory()->create();
+
         $exam = Exam::factory()
             ->create();
         $exam->enrollments()->save($enrollment);
-        $exam->examiners()->attach($this->actor);
+
         $response = $this
             ->actingAs($this->actor)
-            ->getJson(route('exam.documents.list', ['exam' => $exam]));
+            ->getJson(route('exams.documents.list', [
+                'exam' => $exam
+            ]));
+
         $response->assertOk();
         $response->assertHeader('Content-Type', 'application/pdf');
     }

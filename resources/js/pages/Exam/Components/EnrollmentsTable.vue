@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import EnrollmentDropDown from '@/components/Enrollment/EnrollmentDropDown.vue';
-import ExamResultStatusChip from '@/components/Exam/ExamResultStatusChip.vue';
+import ExamResultStatus from '@/components/Exam/ExamResultStatus.vue';
 import { Exam } from '@/interfaces/Exam';
-import { mdiCheckCircle, mdiMagnify } from '@mdi/js'
+import { mdiCheckCircle, mdiMagnify, mdiMinus } from '@mdi/js'
 
 const props = defineProps<{
     exam: Exam
@@ -28,7 +28,7 @@ const search = ref('')
     <div class="flex align-center justify-space-between p-4">
         <span
             :class="(exam.enrollments?.length ?? 0) >= exam?.capacity
-            ? 'rounded-full bg-red-500 px-2 py-1 text-white'
+            ? 'text-red-500 px-2 py-1'
             : ''"
         >
             {{ `${exam.enrollments?.length} / ${exam?.capacity}` }}
@@ -56,21 +56,31 @@ const search = ref('')
         hide-default-footer
     >
         <template #item.hasPayment="{ item }">
-            <v-icon 
-                :icon="mdiCheckCircle" 
-                color="green" 
-                v-if="!item.isLoading && item.hasPayment"
-            />
-            
             <v-progress-circular
-                indeterminate
-                color="primary"
                 v-if="item.isLoading"
+                indeterminate
+                size="16"
+                width="2"
+                color="primary"
+            />
+
+            <v-icon
+                v-else-if="item.hasPayment"
+                :icon="mdiCheckCircle"
+                size="18"
+                color="success"
+            />
+
+            <v-icon
+                v-else
+                :icon="mdiMinus"
+                size="18"
+                color="grey-lighten-1"
             />
         </template>
 
         <template #item.results="{ item }">
-            <ExamResultStatusChip
+            <ExamResultStatus
                 :status="item.examResult"
             />
         </template>
