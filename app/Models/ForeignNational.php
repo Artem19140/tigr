@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\CountryProvider;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -140,11 +141,14 @@ class ForeignNational extends Authenticatable
     private function formatPhone(string $phone): string
     {
         $cleaned = preg_replace('/[^0-9]/', '', $phone);
-
-        // if (\strlen($cleaned) !== 10) {
-        //     throw new \InvalidArgumentException("Некорректный формат телефона. Должно быть 10 цифр.");
-        // }
         
         return '+7 (' . substr($cleaned, 0, 3) . ') ' . substr($cleaned, 3, 3) . '-' . substr($cleaned, 6, 2) . '-' . substr($cleaned, 8, 2);
+    }
+
+    protected function countryName(): Attribute
+    {
+        return Attribute::get(function () {
+            return CountryProvider::getList()->firstWhere('value', $this->citizenship)['text'] ?? '';
+        });
     }
 }

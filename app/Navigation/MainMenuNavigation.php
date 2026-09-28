@@ -20,7 +20,7 @@ class MainMenuNavigation
                 'can' => $employee->can('viewAny', Exam::class)
             ],
 
-            'myExams' => [
+            'myExams' => [    
                 'url' => route('my-exams.index', [], false),
                 'can' => $employee->can('conductAny', Exam::class)
             ],
@@ -41,6 +41,10 @@ class MainMenuNavigation
             ]
         ])->filter(function($item){
             return $item['can'];
-        })->toArray();
+        })->map(function(array $item){
+            unset($item['can']);
+
+            return $item;
+        });
     }
 }

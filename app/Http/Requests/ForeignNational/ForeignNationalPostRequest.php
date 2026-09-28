@@ -3,8 +3,10 @@
 namespace App\Http\Requests\ForeignNational;
 
 use App\Http\Dto\ForeignNationalStoreDto;
+use App\Support\CountryProvider;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\File;
 
@@ -38,9 +40,8 @@ class ForeignNationalPostRequest extends FormRequest
 
     public function rules(): array
     {
-        $countries = collect(json_decode(file_get_contents(storage_path('app/public/countries.json')), true))
-            ->pluck('value')
-            ->toArray();
+        $countries = CountryProvider::getList()
+            ->pluck('value')->toArray();
 
         return [
             'hasPayment' => [

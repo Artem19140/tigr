@@ -1,13 +1,19 @@
 <script setup lang="ts">
-import { Task } from '@/interfaces/Task';
+import { Task } from '@/interfaces/Task'
 import { computed, inject, ref } from 'vue'
-import { useAttempt } from '@/composables/useAttempt';
-import { useSnackbarQueue } from '@/composables/useSnackbarQueue';
-import { useHttp } from '@inertiajs/vue3';
-import { mdiPause, mdiPlay } from '@mdi/js'
+import { useAttempt } from '@/composables/useAttempt'
+import { useSnackbarQueue } from '@/composables/useSnackbarQueue'
+import { useHttp } from '@inertiajs/vue3'
+import {
+  mdiCheck,
+  mdiHeadphones,
+  mdiPause,
+  mdiPlay,
+  mdiVolumeOff,
+} from '@mdi/js'
 
-const props = defineProps<{ 
-  value: string 
+const props = defineProps<{
+  value: string | null
 }>()
 
 const task = inject<Task>('task')
@@ -18,44 +24,70 @@ const currentTime = ref(0)
 const duration = ref(0)
 
 const playedTime = computed(() => {
-    return (currentTime.value / duration.value) * 100
+  if (!duration.value) return 0
+
+  return (currentTime.value / duration.value) * 100
 })
 
-const audioPlayed = ref<boolean>(task?.attemptAnswer?.audioPlayedAt !== null)
+const audioPlayed = ref<boolean>(
+  task?.attemptAnswer?.audioPlayedAt !== null
+)
 
-const {audioPlaying, audioStartPlaying, audioStopPlaying, examAttempt} = useAttempt()
+const {
+  audioPlayingId,
+  audioStartPlaying,
+  audioStopPlaying,
+  examAttempt,
+} = useAttempt()
+
 const http = useHttp()
 
+const isCurrentAudioPlaying = computed(() => {
+  return audioPlayingId.value === task?.id
+})
+
+const isAnotherAudioPlaying = computed(() => {
+  return !!audioPlayingId.value && !isCurrentAudioPlaying.value
+})
+
 const togglePlay = () => {
-    
-  if(!audioPlaying.value){
-    audioStartPlaying()
-  }else{
-    const {add} = useSnackbarQueue()
-    add('Воспроизводится другая аудиозапись', 'red')
+  if (isAnotherAudioPlaying.value) {
+    const { add } = useSnackbarQueue()
+
+    add('Сначала завершите текущее прослушивание', 'red')
+
     return
   }
 
-  if (!audioRef.value) return
+  if (!audioRef.value || audioPlayed.value) return
+
+  audioStartPlaying(task?.id)
+
   audioRef.value.play()
-  
-  if(!examAttempt.value) return
-    http.put(`/attempts/${examAttempt.value?.id}/answers/${task?.attemptAnswer.id}/audio`,{
-  })
+
+  if (!examAttempt.value) return
+
+  http.put(
+    `/attempts/${examAttempt.value.id}/answers/${task?.attemptAnswer.id}/audio`,
+    {}
+  )
 }
 
 const onTimeUpdate = () => {
   if (!audioRef.value) return
+
   currentTime.value = audioRef.value.currentTime
 }
 
 const onLoaded = () => {
   if (!audioRef.value) return
+
   duration.value = audioRef.value.duration
 }
 
 const onEnded = () => {
   audioStopPlaying()
+
   currentTime.value = 0
   audioPlayed.value = true
 }
@@ -63,22 +95,83 @@ const onEnded = () => {
 function format(time: number) {
   const m = Math.floor(time / 60)
   const s = Math.floor(time % 60)
+
   return `${m}:${s.toString().padStart(2, '0')}`
 }
 </script>
 
 <template>
-  <div v-if="value" class="audio">
+  <div
+    v-if="value"
+    class="w-full rounded-2xl bg-white p-4"
+  >
+    <!-- Header -->
+    <div class="mb-4 flex items-start gap-3">
+      <div
+        class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
+        :class="
+          audioPlayed
+            ? 'bg-slate-100 text-slate-500'
+            : isAnotherAudioPlaying
+              ? 'bg-slate-100 text-slate-400'
+              : 'bg-blue-50 text-blue-600'
+        "
+      >
+        <v-icon size="17">
+          {{
+            audioPlayed
+              ? mdiCheck
+              : isAnotherAudioPlaying
+                ? mdiVolumeOff
+                : mdiHeadphones
+          }}
+        </v-icon>
+      </div>
 
-    <div class="audio__status">
-      <span v-if="!audioPlayed" class="audio__hint">
-        Однократное прослушивание
-      </span>
-      <span v-else class="audio__done">
-        Прослушано
-      </span>
+      <div class="min-w-0 flex-1">
+        <div
+          class="text-sm font-medium"
+          :class="
+            audioPlayed
+              ? 'text-slate-500'
+              : isAnotherAudioPlaying
+                ? 'text-slate-500'
+                : 'text-slate-800'
+          "
+        >
+          {{
+            audioPlayed
+              ? 'Прослушано'
+              : isAnotherAudioPlaying
+                ? 'Аудио недоступно'
+                : 'Однократное прослушивание'
+          }}
+        </div>
+
+        <!-- Другой audio играет -->
+        <div
+          v-if="isAnotherAudioPlaying"
+          class="mt-0.5 flex items-center gap-1.5 text-xs text-slate-400"
+        >
+          <span
+            class="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-blue-400"
+          />
+
+          Сейчас воспроизводится другая запись
+        </div>
+
+        <!-- Обычная подсказка -->
+        <div
+          v-else-if="!audioPlayed"
+          class="mt-0.5 text-xs leading-4 text-slate-400"
+        >
+          Не закрывайте и не перезагружайте страницу до окончания
+          прослушивания.
+        </div>
+      </div>
     </div>
 
+    <!-- Native audio -->
     <audio
       ref="audioRef"
       :src="value"
@@ -88,26 +181,50 @@ function format(time: number) {
       @ended="onEnded"
     />
 
-    <div class="audio__row" :class="{ disabled: audioPlayed }">
-
-      <button
-        class="audio__btn"
-        :disabled="audioPlayed"
+    <!-- Player -->
+    <div
+      class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition-all"
+      :class="
+        audioPlayed || isAnotherAudioPlaying
+          ? 'bg-slate-50'
+          : 'bg-slate-50'
+      "
+    >
+      <!-- Play / Pause -->
+      <v-btn
+        icon
+        variant="flat"
+        size="40"
+        :disabled="audioPlayed || isAnotherAudioPlaying"
+        class="!shrink-0 !rounded-full transition-all"
+        :class="
+          isAnotherAudioPlaying
+            ? '!bg-slate-200 !text-slate-400'
+            : '!bg-slate-900 !text-white'
+        "
         @click="togglePlay"
-        v-if="! audioPlayed && !audioPlaying"
       >
         <v-icon size="20">
-          {{ currentTime > 0 && !audioPlayed ? mdiPause : mdiPlay }}
+          {{ isCurrentAudioPlaying ? mdiPause : mdiPlay }}
         </v-icon>
-      </button>
+      </v-btn>
 
-      <div class="audio__main">
-
-        <div class="audio__bar">
-          <div class="audio__fill" :style="{ width: playedTime + '%' }" />
+      <div
+        class="min-w-0 flex-1"
+        :class="{ 'opacity-50': isAnotherAudioPlaying || audioPlayed }"
+      >
+        <div
+          class="relative h-1.5 w-full overflow-hidden rounded-full bg-slate-200"
+        >
+          <div
+            class="absolute inset-y-0 left-0 rounded-full bg-blue-500 transition-[width] duration-100"
+            :style="{ width: `${playedTime}%` }"
+          />
         </div>
 
-        <div class="audio__meta">
+        <div
+          class="mt-1.5 flex justify-between text-[11px] font-medium text-slate-400"
+        >
           <span>{{ format(currentTime) }}</span>
           <span>{{ format(duration) }}</span>
         </div>
@@ -115,81 +232,3 @@ function format(time: number) {
     </div>
   </div>
 </template>
-
-<style lang="css" scoped>
-.audio {
-  padding: 12px 14px;
-  border-radius: 12px;
-  background: #fff;
-
-}
-
-.audio__status {
-  font-size: 12px;
-  margin-bottom: 8px;
-  color: #888;
-}
-
-.audio__hint {
-  color: #a16207;
-}
-
-.audio__done {
-  color: #6b7280;
-}
-
-.audio__row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.audio__row.disabled {
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-.audio__btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: none;
-  background: #f3f4f6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: 0.15s ease;
-}
-
-.audio__btn:hover {
-  background: #e5e7eb;
-}
-
-.audio__main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.audio__bar {
-  height: 3px;
-  background: #eee;
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.audio__fill {
-  height: 100%;
-  background: #3b82f6;
-  transition: width 0.1s linear;
-}
-
-.audio__meta {
-  display: flex;
-  justify-content: space-between;
-  font-size: 11px;
-  color: #9ca3af;
-}
-</style>

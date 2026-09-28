@@ -7,9 +7,6 @@ use App\Models\Employee;
 
 class EmployeePolicy
 {
-    /**
-     * Determine whether the user can view any models.
-     */
     public function viewAny(Employee $employee): bool
     {
         if($employee->hasAnyRole(

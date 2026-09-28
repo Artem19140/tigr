@@ -95,7 +95,7 @@ const items = [
                             "
                             :loading="http.processing"
                             @click="download"
-                        ></v-btn>
+                        >Выгрузить</v-btn>
                     </div>
                 </v-card-text>
             </v-card>

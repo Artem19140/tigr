@@ -6,14 +6,15 @@ const props = defineProps<{
 
 </script>
 
+
 <template>
-    <v-card 
-        class="mt-2 mb-2" 
-        variant="outlined"
-        rounded="lg"
-    >
-        <v-card-text>
-            <RenderBlocks :content="value" />
-        </v-card-text>
-    </v-card>
+  <v-card
+    variant="flat"
+    class="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-[0_1px_3px_rgba(15,23,42,0.04)]"
+  >
+    <v-card-text class="!px-5 !py-4 sm:!px-6 sm:!py-5">
+      <RenderBlocks :content="value" />
+    </v-card-text>
+  </v-card>
 </template>
+

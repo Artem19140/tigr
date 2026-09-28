@@ -31,24 +31,17 @@
         <td>Отчество (при наличии,латиница): <span class="data">{{ $enrollment->foreignNational->patronymic_latin }}</span></td>
     </tr>
 
-    @php
-        $countries = collect(json_decode(file_get_contents(storage_path('app/public/countries.json')), true));
-        $countryName = $countries->firstWhere('value', $enrollment->foreignNational->citizenship)['text'] ?? '';
-    @endphp
     <tr>
         <td>
             Пол: <input style="vertical-align: -4px;" type="checkbox" {{ $enrollment->foreignNational->gender === 'M' ? 'checked' : '' }}>М <input style="vertical-align: -4px;" type="checkbox" {{ $enrollment->foreignNational->gender === 'F' ? 'checked' : '' }}>Ж
         </td>
-        <td>Гражданство: <span class="data">{{ $countryName }}</span></td>
+        <td>Гражданство: <span class="data">{{ $enrollment->foreignNational->country_name }}</span></td>
     </tr>
     <tr>
         <td>Дата рождения: <span class="data">{{ $enrollment->foreignNational->date_birth->format('d.m.Y') }}</span></td>
         <td>Место сдачи экзамена: <span class="data">{{ $enrollment->exam->address->address }}</span></td>
     </tr>
-    {{-- <tr>
-        <td>Контактный телефон: <span class="data">{{ $enrollment->foreignNational->phone }}</span></td>
-        <td>Родной язык: <span class="data"></span></td>
-    </tr> --}}
+
     <tr>
 
         <td>

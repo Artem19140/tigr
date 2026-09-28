@@ -22,20 +22,14 @@ $headers = [
         @endforeach
     </tr>
 
-    @php
-        $countries = collect(json_decode(file_get_contents(storage_path('app/public/countries.json')), true));
-    @endphp
 
     @foreach ($foreignNationals as $f)
-        @php
-            $countryName = $countries->firstWhere('value', $f->citizenship)['text'] ?? '';
-        @endphp
         <tr>
             <td class="text-center border-black">{{ $f->full_name_short }}</td>
             <td class="text-center border-black">{{ $f->full_name_latin_short }}</td>
             <td class="text-center border-black">{{ $f->full_passport }}</td>
             <td class="text-center border-black">{{ $f->date_birth->format('d.m.Y') }}</td>
-            <td class="text-center border-black">{{ $countryName }}</td>
+            <td class="text-center border-black">{{ $f->country_name }}</td>
         </tr>
     @endforeach
 

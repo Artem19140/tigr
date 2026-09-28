@@ -25,6 +25,10 @@ class ReportNavigation
             ]
         ])->filter(function($item){
             return $item['can'];
+        })->map(function(array $item){
+            unset($item['can']);
+
+            return $item;
         });
     }
 }

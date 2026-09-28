@@ -5,7 +5,6 @@ namespace App\Modules\AttemptAnswer\Handlers;
 use App\Enums\TaskType;
 use App\Exceptions\Attempt\AttemptAnswerValidationException;
 use App\Models\AttemptAnswer;
-use Illuminate\Support\Facades\Log;
 
 class MultyInputTaskHandler
 {
@@ -18,6 +17,14 @@ class MultyInputTaskHandler
         mixed $foreignNationalAnswer,
         AttemptAnswer $attemptAnswer
     ): array {
+        if(! \is_array($foreignNationalAnswer)){
+            throw new AttemptAnswerValidationException([
+                'type' => TaskType::MultyInput->value,
+                'message' => 'answer not array',
+                'foreign_national_answer' => $foreignNationalAnswer,
+                'attempt_answer_id' => $attemptAnswer->id
+            ]);
+        }
         $etalonAnswers = $this->getEtalonAnswers($attemptAnswer);
 
         $normalizedEtalonKeys = $this->getAndNormalizeKeys($etalonAnswers);

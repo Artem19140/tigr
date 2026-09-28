@@ -36,14 +36,16 @@ class MultyInputTaskHandlerTest extends TestCase
 
         $task->mark = $this->mark;
 
-        $this->taskVariant = new TaskVariant(['id' => 1]);
+        $this->taskVariant = new TaskVariant([
+            'id' => 1,
+            'content' => $this->content()
+        ]);
 
         $this->taskVariant->setRelation('task', $task);
 
         $this->answer = new Answer([
             'task_variant_id' => $this->taskVariant->id,
-            'id' => 1,
-            'content' => $this->content(),
+            'id' => 1
         ]);
 
         $this->answer->setRelation(
@@ -77,6 +79,7 @@ class MultyInputTaskHandlerTest extends TestCase
             $this->content(),
             $this->attemptAnswer
         );
+        
         $this->assertTrue(true);
     }
 

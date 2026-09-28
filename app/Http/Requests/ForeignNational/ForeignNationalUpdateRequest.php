@@ -3,11 +3,11 @@
 namespace App\Http\Requests\ForeignNational;
 
 use App\Http\Dto\ForeignNationalUpdateDto;
+use App\Support\CountryProvider;
 use Carbon\Carbon;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Cache;
 
 class ForeignNationalUpdateRequest extends FormRequest
 {
@@ -47,12 +47,8 @@ class ForeignNationalUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $countries = Cache::rememberForever('countries_list', function () {
-            return collect(json_decode(file_get_contents(storage_path('app/public/countries.json')), true))
-                    ->pluck('value')
-                    ->toArray();
-        });
-
+        $countries = CountryProvider::getList()
+            ->pluck('value')->toArray();
 
         return [
             'noPatronymic' => [
