@@ -12,7 +12,7 @@ class PatentSeeder extends Seeder
     public function __construct(
         protected ExamTypeSeeder $seeder
     ){}
-    private string $path = 'resources/data/PATENT/tasks/variants/';
+    private string $path = 'resources/data/PATENT/';
     public function run(): void
     {
         $examType = ExamType::firstOrCreate(

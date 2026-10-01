@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { Task } from '@/interfaces/Task'
-import { computed, inject, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useAttempt } from '@/composables/useAttempt'
 import { useSnackbarQueue } from '@/composables/useSnackbarQueue'
 import { useHttp } from '@inertiajs/vue3'
@@ -13,10 +12,9 @@ import {
 } from '@mdi/js'
 
 const props = defineProps<{
-  value: string | null
+  url: string | null
+  audioPlayUrl: string | null
 }>()
-
-const task = inject<Task>('task')
 
 const audioRef = ref<HTMLAudioElement | null>(null)
 
@@ -30,24 +28,23 @@ const playedTime = computed(() => {
 })
 
 const audioPlayed = ref<boolean>(
-  task?.attemptAnswer?.audioPlayedAt !== null
+  props.url === null
 )
 
 const {
-  audioPlayingId,
+  audioPlayingUrl,
   audioStartPlaying,
   audioStopPlaying,
-  examAttempt,
 } = useAttempt()
 
 const http = useHttp()
 
 const isCurrentAudioPlaying = computed(() => {
-  return audioPlayingId.value === task?.id
+  return audioPlayingUrl.value === props.url
 })
 
 const isAnotherAudioPlaying = computed(() => {
-  return !!audioPlayingId.value && !isCurrentAudioPlaying.value
+  return !!audioPlayingUrl.value && !isCurrentAudioPlaying.value
 })
 
 const togglePlay = () => {
@@ -59,17 +56,18 @@ const togglePlay = () => {
     return
   }
 
-  if (!audioRef.value || audioPlayed.value) return
+  if (! audioRef.value || audioPlayed.value) return
 
-  audioStartPlaying(task?.id)
+  if ( ! props.url ) return
+
+  audioStartPlaying(props.url)
 
   audioRef.value.play()
 
-  if (!examAttempt.value) return
+  if (! props.audioPlayUrl ) return
 
   http.put(
-    `/attempts/${examAttempt.value.id}/answers/${task?.attemptAnswer.id}/audio`,
-    {}
+    props.audioPlayUrl
   )
 }
 
@@ -102,10 +100,8 @@ function format(time: number) {
 
 <template>
   <div
-    v-if="value"
     class="w-full rounded-2xl bg-white p-4"
   >
-    <!-- Header -->
     <div class="mb-4 flex items-start gap-3">
       <div
         class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
@@ -148,9 +144,8 @@ function format(time: number) {
           }}
         </div>
 
-        <!-- Другой audio играет -->
         <div
-          v-if="isAnotherAudioPlaying"
+          v-if="isAnotherAudioPlaying && ! audioPlayed"
           class="mt-0.5 flex items-center gap-1.5 text-xs text-slate-400"
         >
           <span
@@ -160,7 +155,6 @@ function format(time: number) {
           Сейчас воспроизводится другая запись
         </div>
 
-        <!-- Обычная подсказка -->
         <div
           v-else-if="!audioPlayed"
           class="mt-0.5 text-xs leading-4 text-slate-400"
@@ -168,20 +162,26 @@ function format(time: number) {
           Не закрывайте и не перезагружайте страницу до окончания
           прослушивания.
         </div>
+
+        <div
+          v-else-if="audioPlayed"
+          class="mt-0.5 text-xs leading-4 text-slate-400"
+        >
+          Аудиозапись больше не доступна.
+        </div>
       </div>
     </div>
 
-    <!-- Native audio -->
     <audio
       ref="audioRef"
-      :src="value"
+      :src="url"
       preload="auto"
+      v-if="url"
       @timeupdate="onTimeUpdate"
       @loadedmetadata="onLoaded"
       @ended="onEnded"
     />
 
-    <!-- Player -->
     <div
       class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition-all"
       :class="
@@ -190,7 +190,7 @@ function format(time: number) {
           : 'bg-slate-50'
       "
     >
-      <!-- Play / Pause -->
+
       <v-btn
         icon
         variant="flat"

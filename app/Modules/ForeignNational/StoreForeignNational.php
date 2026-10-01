@@ -40,6 +40,7 @@ final class StoreForeignNational
                     'mime_type' =>  $passportTranslate->getMimeType(),
                     'size_bytes' => $passportTranslate->getSize(),
                     'document_type' => 'passport_translate',
+                    'disk' => config('filesystems.default'),
                     'creator_id' => auth()->user()->id,
                     'original_name' => $passportTranslate->getClientOriginalName()
                 ],
@@ -48,6 +49,7 @@ final class StoreForeignNational
                     'mime_type' =>  $passport->getMimeType(),
                     'size_bytes' => $passport->getSize(),
                     'document_type' => 'passport',
+                    'disk' => config('filesystems.default'),
                     'creator_id' => auth()->user()->id,
                     'original_name' => $passport->getClientOriginalName()
                 ]

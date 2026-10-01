@@ -26,6 +26,9 @@ return new class extends Migration
             $table->string('name_genitive')->nullable()->default(null);
             $table->string('time_zone')->nullable()->default(null);
             $table->string('commission_chairman')->nullable()->default(null);
+
+            $table->boolean('has_migration_card')->default(false);
+            $table->boolean('has_photo')->default(false);
             
             $table->timestamps();
         });

@@ -31,29 +31,31 @@ onUnmounted(() => stopTimer())
 <template>
     <Head title="Экзамен" />
 
-    <v-container class="py-6">
-        <div class="mx-auto max-w-7xl">
-            <div class="flex items-start gap-5">
-  
-                <main class="min-w-0 flex-1" v-if="examAttempt">
-                    <v-card-text class="px-6 py-6">
-                        <TasksList 
-                            :attempt="examAttempt" 
-                        />
+    <v-container class="py-4 sm:py-6">
+        <div class="mx-auto w-full max-w-7xl px-2 sm:px-4">
+            <div
+                v-if="examAttempt"
+                class="flex flex-col gap-6 lg:flex-row lg:items-start"
+            >
+                <main class="min-w-0 flex-1">
+                    <v-card-text class="px-2 py-4 sm:px-6 sm:py-6">
+                        <TasksList :attempt="examAttempt" />
                     </v-card-text>
 
-                    <div class="flex justify-center pt-5">
+                    <div class="flex justify-center pt-4 sm:pt-5">
                         <v-btn
                             color="primary"
                             :disabled="!canFinish"
                             @click="isOpen = true"
-                        >Завершить</v-btn>
+                            class="w-full sm:w-auto"
+                        >
+                            Завершить
+                        </v-btn>
                     </div>
                 </main>
 
                 <aside
-                    v-if="examAttempt"
-                    class="sticky top-6 w-[260px] shrink-0"
+                    class="w-full shrink-0 lg:sticky lg:top-6 lg:w-[260px]"
                 >
                     <div class="overflow-hidden rounded-xl border border-gray-200 bg-white">
                         <SidePanel :attempt="examAttempt" />

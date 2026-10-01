@@ -3,7 +3,7 @@ import { AttemptAnswer } from "@/interfaces/Task";
 import { ref } from "vue";
 
 const examAttempt = ref<Attempt | null>(null)
-const audioPlayingId = ref<number | null>(null)
+const audioPlayingUrl = ref<string | null>(null)
 const errors = ref<Set<number>>(new Set())
 const saving = ref<Set<number>>(new Set())
 
@@ -39,29 +39,19 @@ export const useAttempt = ()  => {
         saving.value.delete(taskId)
     }
 
-    const audioPlayed = (taskId: number) => {
-        if (!examAttempt.value) return
-        const index = examAttempt.value.tasks.findIndex(t => t.id === taskId)
-        if (index === -1) return
-        examAttempt.value.tasks[index].attemptAnswer.audioPlayed = true
-        examAttempt.value.tasks[index] = {
-            ...examAttempt.value.tasks[index]
-        }
-    }
-
-    const audioStartPlaying = (id: number) => {
-        audioPlayingId.value = id
+    const audioStartPlaying = (url: string) => {
+        audioPlayingUrl.value = url
         
     }
 
     const audioStopPlaying = () => {
-        audioPlayingId.value = null
+        audioPlayingUrl.value = null
     }
     
     return {
             updateAnswer, 
             examAttempt, 
-            audioPlayingId, 
+            audioPlayingUrl, 
             errors, 
             audioStartPlaying, 
             audioStopPlaying,
@@ -70,7 +60,6 @@ export const useAttempt = ()  => {
             saving,
             setSaving,
             removeSaving,
-            loading,
-            audioPlayed
+            loading
         }
 }

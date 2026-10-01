@@ -3,7 +3,6 @@ import RenderBlocks from './TaskContentBlocks/RenderBlocks.vue';
 import { Task } from '@/interfaces/Task';
 import { TaskTypes } from '@/constants/TaskTypes';
 import { useAttempt } from '@/composables/useAttempt';
-import { provide } from 'vue';
 import { mdiRefresh } from '@mdi/js';
 
 const props = defineProps<{
@@ -25,7 +24,6 @@ const getDefaultDescription = (type:string) => {
 }
 
 const {errors, saving} = useAttempt()
-provide<Task>('task', props.task)
 </script>
 
 <template>

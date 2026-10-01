@@ -16,7 +16,20 @@ class CenterData
             self::$center = Cache::rememberForever(
                 Center::CACHE_KEY,
                 function ()  {
-                    $center = Center::first();
+                    $center = Center::query()
+                        ->select([
+                            'ogrn',
+                            'inn',
+                            'name',
+                            'short_name',
+                            'time_zone',
+                            'commission_chairman',
+                            'certificates_issue_address',
+                            'name_genitive',
+                            'address',
+                            'director_fio',
+                        ])->first();
+
                     if(! $center){
                         Log::critical('center_not_found');
                         abort(500); 

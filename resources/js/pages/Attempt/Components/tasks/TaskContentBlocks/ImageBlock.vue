@@ -19,7 +19,7 @@ const zoomIfCan = () => {
 <template>
   <div class="relative mb-5 overflow-hidden rounded-2xl">
     <v-img
-      :src="value"
+      :src="`/storage/${value}`"
       min-width="250"
       class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50"
       :class="zoom ? 'cursor-zoom-in' : ''"
@@ -55,7 +55,7 @@ const zoomIfCan = () => {
       class="overflow-hidden rounded-2xl bg-white"
     >
       <v-img
-        :src="value"
+        :src="`/storage/${value}`"
         max-height="85vh"
         contain
         class="bg-slate-950"

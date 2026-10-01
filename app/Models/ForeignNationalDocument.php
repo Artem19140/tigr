@@ -19,6 +19,7 @@ class ForeignNationalDocument extends Model
         'size_bytes',
         'mime_type',
         'document_type',
+        'disk',
         'deleted_at'
     ];
 

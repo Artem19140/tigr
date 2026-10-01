@@ -40,7 +40,13 @@ const http = useHttp<{answer:any}, {data:AttemptAnswer}>({
     answer:null
 })
 
-const {updateAnswer, setError, removeError, setSaving, removeSaving } = useAttempt()
+const {
+    updateAnswer, 
+    setError,
+    removeError, 
+    setSaving, 
+    removeSaving 
+} = useAttempt()
 
 const update = (value: {
     task: Task,
@@ -52,8 +58,11 @@ const update = (value: {
         onSuccess:(response) => {
             updateAnswer(value.task.id, response.data)
         },
+        
         onFinish() {
-            http.wasSuccessful ? removeError(value.task.id) : setError(value.task.id)
+            http.wasSuccessful 
+                ? removeError(value.task.id) 
+                : setError(value.task.id)
             removeSaving(value.task.id)
         },
     })
@@ -84,9 +93,7 @@ const groupedTasks =  computed(() =>{
             v-for="(tasks, index) in groupedTasks"
             :key="index"
         >   
-            <v-card  
-                rounded="xl"
-            >
+            <v-card>
                 <div
                     v-for="task in tasks"
                     :key="task.id"

@@ -19,7 +19,13 @@ class AttemptReviewResource extends JsonResource
             'id' => $this->id,
             'expiredAt' => $this->expired_at,
             'status' => $this->status,
-            'tasks' => TaskVariantResource::collection($this->whenLoaded('taskVariants', fn () => $this->taskVariants)),
+
+            'tasks' => TaskVariantResource::collection(
+                $this->whenLoaded(
+                    'taskVariants', 
+                    fn () => $this->taskVariants)
+                ),
+                
             'reviewedAt' => $this->reviewed_at,
         ];
     }

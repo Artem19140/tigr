@@ -13,7 +13,7 @@ class EnsureFrdoGenerationAvailable
     public function execute(string $date, string $type): void
     {
         $date = Carbon::parse($date)->setTimezone(CenterData::timeZome());
-
+        //Что все экзамены проведены!
         $this->ensureAttemptsExists($date);
         $this->ensureNoActiveAttempts($date);
         $this->ensureAllAttemptsReviewed($date);

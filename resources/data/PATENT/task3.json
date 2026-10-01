@@ -3,197 +3,16 @@
     "content": [
       {
         "type": "audio",
-        "value": "/storage/audios/A7B6CE.mp3"
+        "value": "/audios/1AE94C.mp3"
       },
       {
         "type": "text",
-        "value": "Они говорят"
+        "value": "Объявление можно услышать"
       }
     ],
-    "fipi_number": "B6CC45",
-    "group_number": "A7B6CE",
+    "fipi_number": "EC6ACA",
+    "group_number": "1AE94C",
     "answers": [
-      {
-        "is_correct": false,
-        "content": [
-          {
-            "type": "text",
-            "value": "в магазине"
-          }
-        ]
-      },
-      {
-        "is_correct": false,
-        "content": [
-          {
-            "type": "text",
-            "value": "в автомастерской"
-          }
-        ]
-      },
-      {
-        "is_correct": true,
-        "content": [
-          {
-            "type": "text",
-            "value": "в центре тестирования"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "content": [
-      {
-        "type": "audio",
-        "value": "/storage/audios/BF6366.mp3"
-      },
-      {
-        "type": "text",
-        "value": "Они говорят"
-      }
-    ],
-    "fipi_number": "B45F75",
-    "group_number": "BF6366",
-    "answers": [
-      {
-        "is_correct": false,
-        "content": [
-          {
-            "type": "text",
-            "value": "на улице"
-          }
-        ]
-      },
-      {
-        "is_correct": false,
-        "content": [
-          {
-            "type": "text",
-            "value": "на остановке"
-          }
-        ]
-      },
-      {
-        "is_correct": true,
-        "content": [
-          {
-            "type": "text",
-            "value": "в автобусе"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "content": [
-      {
-        "type": "audio",
-        "value": "/storage/audios/9172AE.mp3"
-      },
-      {
-        "type": "text",
-        "value": "Они говорят"
-      }
-    ],
-    "fipi_number": "7D3944",
-    "group_number": "9172AE",
-    "answers": [
-      {
-        "is_correct": false,
-        "content": [
-          {
-            "type": "text",
-            "value": "в кинотеатре"
-          }
-        ]
-      },
-      {
-        "is_correct": false,
-        "content": [
-          {
-            "type": "text",
-            "value": "в магазине"
-          }
-        ]
-      },
-      {
-        "is_correct": true,
-        "content": [
-          {
-            "type": "text",
-            "value": "в гостинице"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "content": [
-      {
-        "type": "audio",
-        "value": "/storage/audios/671409.mp3"
-      },
-      {
-        "type": "text",
-        "value": "Вы слышите разговор"
-      }
-    ],
-    "fipi_number": "5862CE",
-    "group_number": "671409",
-    "answers": [
-      {
-        "is_correct": true,
-        "content": [
-          {
-            "type": "text",
-            "value": "друзей"
-          }
-        ]
-      },
-      {
-        "is_correct": false,
-        "content": [
-          {
-            "type": "text",
-            "value": "незнакомых людей"
-          }
-        ]
-      },
-      {
-        "is_correct": false,
-        "content": [
-          {
-            "type": "text",
-            "value": "папы и сына"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "content": [
-      {
-        "type": "audio",
-        "value": "/storage/audios/4E58BC.mp3"
-      },
-      {
-        "type": "text",
-        "value": "Они говорят"
-      }
-    ],
-    "fipi_number": "9E6636",
-    "group_number": "4E58BC",
-    "answers": [
-      {
-        "is_correct": true,
-        "content": [
-          {
-            "type": "text",
-            "value": "в магазине"
-          }
-        ]
-      },
       {
         "is_correct": false,
         "content": [
@@ -204,126 +23,6 @@
         ]
       },
       {
-        "is_correct": false,
-        "content": [
-          {
-            "type": "text",
-            "value": "в кафе"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "content": [
-      {
-        "type": "audio",
-        "value": "/storage/audios/685DEA.mp3"
-      },
-      {
-        "type": "text",
-        "value": "Они говорят"
-      }
-    ],
-    "fipi_number": "29ADAA",
-    "group_number": "685DEA",
-    "answers": [
-      {
-        "is_correct": false,
-        "content": [
-          {
-            "type": "text",
-            "value": "на почте"
-          }
-        ]
-      },
-      {
-        "is_correct": false,
-        "content": [
-          {
-            "type": "text",
-            "value": "в гостинице"
-          }
-        ]
-      },
-      {
-        "is_correct": true,
-        "content": [
-          {
-            "type": "text",
-            "value": "в банке"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "content": [
-      {
-        "type": "audio",
-        "value": "/storage/audios/090744.mp3"
-      },
-      {
-        "type": "text",
-        "value": "Они говорят"
-      }
-    ],
-    "fipi_number": "EA93A0",
-    "group_number": "090744",
-    "answers": [
-      {
-        "is_correct": true,
-        "content": [
-          {
-            "type": "text",
-            "value": "в аптеке"
-          }
-        ]
-      },
-      {
-        "is_correct": false,
-        "content": [
-          {
-            "type": "text",
-            "value": "в поликлинике"
-          }
-        ]
-      },
-      {
-        "is_correct": false,
-        "content": [
-          {
-            "type": "text",
-            "value": "в магазине"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "content": [
-      {
-        "type": "audio",
-        "value": "/storage/audios/2F994E.mp3"
-      },
-      {
-        "type": "text",
-        "value": "Они говорят"
-      }
-    ],
-    "fipi_number": "95BEEE",
-    "group_number": "2F994E",
-    "answers": [
-      {
-        "is_correct": false,
-        "content": [
-          {
-            "type": "text",
-            "value": "в метро"
-          }
-        ]
-      },
-      {
         "is_correct": true,
         "content": [
           {
@@ -337,7 +36,7 @@
         "content": [
           {
             "type": "text",
-            "value": "в аптеке"
+            "value": "в библиотеке"
           }
         ]
       }
@@ -347,58 +46,15 @@
     "content": [
       {
         "type": "audio",
-        "value": "/storage/audios/A79867.mp3"
+        "value": "/audios/53B443.mp3"
       },
       {
         "type": "text",
-        "value": "Они говорят"
+        "value": "Объявление можно услышать"
       }
     ],
-    "fipi_number": "634E27",
-    "group_number": "A79867",
-    "answers": [
-      {
-        "is_correct": false,
-        "content": [
-          {
-            "type": "text",
-            "value": "в банке"
-          }
-        ]
-      },
-      {
-        "is_correct": false,
-        "content": [
-          {
-            "type": "text",
-            "value": "в кассе"
-          }
-        ]
-      },
-      {
-        "is_correct": true,
-        "content": [
-          {
-            "type": "text",
-            "value": "на улице"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "content": [
-      {
-        "type": "audio",
-        "value": "/storage/audios/999A1E.mp3"
-      },
-      {
-        "type": "text",
-        "value": "Они говорят"
-      }
-    ],
-    "fipi_number": "5DA9DD",
-    "group_number": "999A1E",
+    "fipi_number": "1FD052",
+    "group_number": "53B443",
     "answers": [
       {
         "is_correct": true,
@@ -414,7 +70,7 @@
         "content": [
           {
             "type": "text",
-            "value": "в магазине «Сумки»"
+            "value": "в банке"
           }
         ]
       },
@@ -423,7 +79,7 @@
         "content": [
           {
             "type": "text",
-            "value": "в отделении банка"
+            "value": "в спортзале"
           }
         ]
       }
@@ -433,18 +89,61 @@
     "content": [
       {
         "type": "audio",
-        "value": "/storage/audios/75B100.mp3"
+        "value": "/audios/CC0848.mp3"
       },
       {
         "type": "text",
-        "value": "Они говорят"
+        "value": "В новом магазине можно купить одежду"
       }
     ],
-    "fipi_number": "4DAB6F",
-    "group_number": "75B100",
+    "fipi_number": "C9FC34",
+    "group_number": "CC0848",
     "answers": [
       {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "для мужчин"
+          }
+        ]
+      },
+      {
         "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "для детей"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "для женщин"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/audios/F3AB1D.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Вы можете услышать это объявление"
+      }
+    ],
+    "fipi_number": "7D4778",
+    "group_number": "F3AB1D",
+    "answers": [
+      {
+        "is_correct": true,
         "content": [
           {
             "type": "text",
@@ -453,11 +152,11 @@
         ]
       },
       {
-        "is_correct": true,
+        "is_correct": false,
         "content": [
           {
             "type": "text",
-            "value": "на улице"
+            "value": "в школе"
           }
         ]
       },
@@ -466,50 +165,7 @@
         "content": [
           {
             "type": "text",
-            "value": "в аптеке"
-          }
-        ]
-      }
-    ]
-  },
-   {
-    "content": [
-      {
-        "type": "audio",
-        "value": "/storage/audios/C67CDD.mp3"
-      },
-      {
-        "type": "text",
-        "value": "Вы слышите разговор"
-      }
-    ],
-    "fipi_number": "A766BC",
-    "group_number": "C67CDD",
-    "answers": [
-      {
-        "is_correct": true,
-        "content": [
-          {
-            "type": "text",
-            "value": "друзей"
-          }
-        ]
-      },
-      {
-        "is_correct": false,
-        "content": [
-          {
-            "type": "text",
-            "value": "незнакомых людей"
-          }
-        ]
-      },
-      {
-        "is_correct": false,
-        "content": [
-          {
-            "type": "text",
-            "value": "родственников"
+            "value": "в больнице"
           }
         ]
       }
@@ -519,22 +175,22 @@
     "content": [
       {
         "type": "audio",
-        "value": "/storage/audios/39D8F2.mp3"
+        "value": "/audios/034315.mp3"
       },
       {
         "type": "text",
-        "value": "Они говорят"
+        "value": "Детский праздник будет"
       }
     ],
-    "fipi_number": "FC90DC",
-    "group_number": "39D8F2",
+    "fipi_number": "317D7A",
+    "group_number": "034315",
     "answers": [
       {
         "is_correct": false,
         "content": [
           {
             "type": "text",
-            "value": "на автовокзале"
+            "value": "в воскресенье"
           }
         ]
       },
@@ -543,7 +199,7 @@
         "content": [
           {
             "type": "text",
-            "value": "в аэропорту"
+            "value": "в пятницу"
           }
         ]
       },
@@ -552,7 +208,7 @@
         "content": [
           {
             "type": "text",
-            "value": "на железнодорожном вокзале"
+            "value": "в субботу"
           }
         ]
       }
@@ -562,22 +218,108 @@
     "content": [
       {
         "type": "audio",
-        "value": "/storage/audios/D2315E.mp3"
+        "value": "/audios/51C9DE.mp3"
       },
       {
         "type": "text",
-        "value": "Они говорят"
+        "value": "Вы слышите объявление"
       }
     ],
-    "fipi_number": "5609C3",
-    "group_number": "D2315E",
+    "fipi_number": "19EA75",
+    "group_number": "51C9DE",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "о работе"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "об учёбе"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "об отдыхе"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/audios/6975AA.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Этот банк"
+      }
+    ],
+    "fipi_number": "D594FE",
+    "group_number": "6975AA",
     "answers": [
       {
         "is_correct": false,
         "content": [
           {
             "type": "text",
-            "value": "в аптеке"
+            "value": "открылся"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "закрылся"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "изменил часы работы"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/audios/43F3C9.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Вы можете услышать это объявление"
+      }
+    ],
+    "fipi_number": "DF3519",
+    "group_number": "43F3C9",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в торговом центре"
           }
         ]
       },
@@ -591,7 +333,7 @@
         ]
       },
       {
-        "is_correct": true,
+        "is_correct": false,
         "content": [
           {
             "type": "text",
@@ -605,22 +347,22 @@
     "content": [
       {
         "type": "audio",
-        "value": "/storage/audios/A8E14F.mp3"
+        "value": "/audios/2F7CCD.mp3"
       },
       {
         "type": "text",
-        "value": "Они говорят"
+        "value": "Вы можете услышать это объявление"
       }
     ],
-    "fipi_number": "149B28",
-    "group_number": "A8E14F",
+    "fipi_number": "02AF01",
+    "group_number": "2F7CCD",
     "answers": [
       {
         "is_correct": true,
         "content": [
           {
             "type": "text",
-            "value": "на автовокзале"
+            "value": "в магазине"
           }
         ]
       },
@@ -629,7 +371,7 @@
         "content": [
           {
             "type": "text",
-            "value": "в аэропорту"
+            "value": "в полиции"
           }
         ]
       },
@@ -638,7 +380,7 @@
         "content": [
           {
             "type": "text",
-            "value": "на железнодорожном вокзале"
+            "value": "в больнице"
           }
         ]
       }
@@ -648,16 +390,283 @@
     "content": [
       {
         "type": "audio",
-        "value": "/storage/audios/1CA3AF.mp3"
+        "value": "/audios/9EB6E2.mp3"
       },
       {
         "type": "text",
-        "value": "Они говорят"
+        "value": "Поезд едет"
       }
     ],
-    "fipi_number": "42C3CA",
-    "group_number": "1CA3AF",
+    "fipi_number": "D9F80E",
+    "group_number": "9EB6E2",
     "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "из Казани"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "из Саратова"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "из Самары"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/audios/6C3C8D.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Самолёт летит"
+      }
+    ],
+    "fipi_number": "C4634B",
+    "group_number": "6C3C8D",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "из Казани"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "из Екатеринбурга"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "из Москвы"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/audios/C990C5.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Объявление можно услышать"
+      }
+    ],
+    "fipi_number": "FF1A14",
+    "group_number": "C990C5",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в торговом центре"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в автобусе"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в метро"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/audios/5DEBB3.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Объявление можно услышать"
+      }
+    ],
+    "fipi_number": "42DB2C",
+    "group_number": "5DEBB3",
+    "answers": [
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в школе"
+          }
+        ]
+      },
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в торговом центре"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в банке"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/audios/D22F66.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Вы можете услышать это объявление"
+      }
+    ],
+    "fipi_number": "443CC8",
+    "group_number": "D22F66",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в торговом центре"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в больнице"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в спортивном зале"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/audios/47D833.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Вы можете услышать это объявление"
+      }
+    ],
+    "fipi_number": "3C23DA",
+    "group_number": "47D833",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "на железнодорожном вокзале"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в банке"
+          }
+        ]
+      },
+      {
+        "is_correct": false,
+        "content": [
+          {
+            "type": "text",
+            "value": "в торговом центре"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "content": [
+      {
+        "type": "audio",
+        "value": "/audios/73B160.mp3"
+      },
+      {
+        "type": "text",
+        "value": "Вы можете услышать это объявление"
+      }
+    ],
+    "fipi_number": "CFDFE1",
+    "group_number": "73B160",
+    "answers": [
+      {
+        "is_correct": true,
+        "content": [
+          {
+            "type": "text",
+            "value": "в поликлинике"
+          }
+        ]
+      },
       {
         "is_correct": false,
         "content": [
@@ -672,16 +681,7 @@
         "content": [
           {
             "type": "text",
-            "value": "в банке"
-          }
-        ]
-      },
-      {
-        "is_correct": true,
-        "content": [
-          {
-            "type": "text",
-            "value": "в поликлинике"
+            "value": "в поезде"
           }
         ]
       }

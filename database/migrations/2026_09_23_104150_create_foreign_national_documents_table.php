@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(ForeignNational::class);
 
             $table->string('document_type');
+            $table->string('disk');
             $table->string('mime_type');
             $table->bigInteger('size_bytes');
             $table->dateTime('deleted_at')->nullable()->default(null);

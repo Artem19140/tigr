@@ -20,7 +20,8 @@ class ForeignNationalDocumentsController
     {
         $audit->log('view', $foreignNationalDocument);
 
-        return Storage::disk('local')->response($foreignNationalDocument->path);
+        return Storage::disk($foreignNationalDocument->disk)
+            ->response($foreignNationalDocument->path);
     }
 
     public function update(
@@ -52,7 +53,8 @@ class ForeignNationalDocumentsController
                     'size_bytes' => $document->getSize(),
                     'document_type' => $foreignNationalDocument->document_type,
                     'creator_id' => auth()->user()->id,
-                    'original_name' => $document->getClientOriginalName()
+                    'original_name' => $document->getClientOriginalName(),
+                    'disk' => config('filesystems.default')
                 ]
             );
 

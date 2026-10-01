@@ -19,15 +19,32 @@ class AttemptExamSessionResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
+
             'endsAt' => $this->expired_at->timestamp,
             'startedAt' => $this->started_at->timestamp,
             'serverNow' => now()->timestamp,
-            'tasks' => TaskVariantResource::collection($this->whenLoaded('taskVariants', fn () => $this->taskVariants)),
+
             'expiredAt' => $this->resource->expired_at,
-            'foreignNational' => new ForeignNationalResource($this->whenLoaded('foreignNational')),
-            'examName' => $this->whenLoaded('exam', fn () => $this->exam->type->short_name),
+
+            'tasks' => TaskVariantResource::collection(
+                $this->whenLoaded('taskVariants',
+                fn () => $this->taskVariants)
+            ),
+            
+            'foreignNational' => new ForeignNationalResource(
+                $this->whenLoaded('foreignNational')
+            ),
+            
+            'examName' => $this->whenLoaded(
+                'exam', 
+                fn () => $this->exam->type->short_name
+            ),
+
             'minDurationMinutes' => ExamSettings::attemptMinDurationMinutes(),
-            'tasksCount' => $this->whenLoaded('exam', fn () => $this->exam->type->tasks_count),
+            'tasksCount' => $this->whenLoaded(
+                'exam', 
+                fn () => $this->exam->type->tasks_count
+            ),
         ];
     }
 }

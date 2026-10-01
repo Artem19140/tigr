@@ -195,7 +195,11 @@
     "content": [
         {
             "type": "image",
-            "value": "/storage/images/RVP/dont_feed_animal.jpg"
+            "value": "/images/RVP/dont_feed_animal.jpg"
+        },
+        {
+          "type":"text",
+          "value": "Такое объявление можно прочитать"
         }
     ],
     "fipi_number": "99128E",

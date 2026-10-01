@@ -44,10 +44,10 @@ const taskBlocks = (type: string) => {
         v-bind="block"
         :class="block.margin ? 'mb-5' : ''"
     />
-    <div 
+    <!-- <div 
         v-for="(block, index) in content"
         :key="index"
     >
         {{ block?.key }}
-    </div>
+    </div> -->
 </template>
