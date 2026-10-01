@@ -80,9 +80,9 @@ class ContentTransformer
             );
         }
 
-        if ($this->isImageBlock($block)) {
-            $this->transformImageBlock($block);
-        }
+        // if ($this->isImageBlock($block)) {
+        //     $this->transformImageBlock($block);
+        // }
     }
 
     protected function isAudioBlock(array $block): bool
