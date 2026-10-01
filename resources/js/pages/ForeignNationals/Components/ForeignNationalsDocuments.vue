@@ -90,11 +90,20 @@ const clear = () => {
                     Заменить документ
                 </div>
 
+                <div class="rounded-lg bg-gray-50 px-4 py-3 text-sm text-gray-500">
+                    Допустимы файлы формата
+                    <span class="font-medium text-gray-700">PDF</span>.
+                    Максимальный размер —
+                    <span class="font-medium text-gray-700">20 MB</span>.
+                </div>
+
                 <v-file-upload
                     v-model="form.document"
                     density="compact"
                     :error-messages="form.errors.document"
                     :readonly="form.processing"
+                    clearable
+                    accept=".pdf,application/pdf"
                     class="mb-4"
                 />
 

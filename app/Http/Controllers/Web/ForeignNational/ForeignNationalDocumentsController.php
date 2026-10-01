@@ -8,8 +8,9 @@ use DB;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
-use Storage;
+use Illuminate\Validation\Rules\File;
 
 class ForeignNationalDocumentsController
 {
@@ -31,7 +32,13 @@ class ForeignNationalDocumentsController
     ): RedirectResponse
     {
         $request->validate([
-            'document' => ['required', 'file']
+            'document' => [
+                'required', 
+                'file', 
+                'mimes:pdf',
+                File::types(['pdf'])
+                    ->max('20mb')
+            ]
         ]);
 
         DB::transaction(function() use(
