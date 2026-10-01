@@ -39,7 +39,10 @@ onUnmounted(() => stopTimer())
             >
                 <main class="min-w-0 flex-1">
                     <v-card-text class="px-2 py-4 sm:px-6 sm:py-6">
-                        <TasksList :attempt="examAttempt" />
+                        <TasksList 
+                            :attempt="examAttempt" 
+                            :checking="false"
+                        />
                     </v-card-text>
 
                     <div class="flex justify-center pt-4 sm:pt-5">

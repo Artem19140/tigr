@@ -6,7 +6,8 @@ const props = defineProps<{
     hint?:string,
     width?:number,
     prepend?:string,
-    append?:string
+    append?:string,
+    sd: string
 }>()
 
 const form = inject<Record<string, any>>('form')
@@ -14,28 +15,29 @@ const checking = inject<boolean>('checking')
 </script>
 
 <template>
-    <div class="flex mx-1">
-        <div class="flex flex-column w-full">
-            <div class="flex items-center gap-1">
+    <div class="mx-1 min-w-0">
+        <div class="flex w-full flex-col">
+            <div class="flex min-w-0 items-center gap-1">
+                <span class="shrink-0">{{ prepend }}</span>
 
-                <span>{{ prepend }}</span>
-
-                <v-text-field
+                <v-textarea
                     v-if="form"
                     v-model="form[field_id]"
                     :name="field_id"
                     :readonly="checking"
-                    :width="width"
+                    rows="1"
+                    auto-grow
                     hide-details
-                    class="flex-grow-1"
+                    class="min-w-0 flex-grow-1"
                 />
 
-                <span>{{ append }}</span>
+                <span class="shrink-0">{{ append }}</span>
             </div>
-        
-            <div class="my-1 text-xs text-grey text-center">{{ hint }}</div>
+
+            <div class="my-1 text-center text-xs text-grey">
+                {{ hint }}
+            </div>
         </div>
-        
     </div>
 </template>
 

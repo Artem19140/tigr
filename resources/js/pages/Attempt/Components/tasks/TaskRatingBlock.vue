@@ -5,8 +5,8 @@ import { computed, ref } from 'vue';
 import { mdiCheckCircle, mdiRefresh } from '@mdi/js'
 
 const props = defineProps<{
-    task:Task,
-    readonly:boolean
+    task: Task,
+    readonly: boolean
 }>()
 
 const form = useForm({

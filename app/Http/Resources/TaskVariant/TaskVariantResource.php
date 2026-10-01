@@ -7,6 +7,7 @@ use App\Http\Resources\AttemptAnswer\AttemptAnswerResource;
 use App\Models\AttemptAnswer;
 use App\Models\Employee;
 use App\Models\ForeignNational;
+use App\Modules\TaskVariant\ContentTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
@@ -22,11 +23,18 @@ class TaskVariantResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'content' => $this->transformAudioContentBlocks(
-                $this->content,
-                $this->attemptAnswers,
-                $request->user()
-            ),
+            // 'content' => $this->transformContent(
+            //     $this->content,
+            //     $this->attemptAnswers,
+            //     $request->user()
+            // ),
+
+            'content' =>app(ContentTransformer::class)
+                ->transform(
+                    $this->content,
+                    $this->attemptAnswers,
+                    $request->user()
+                ),
 
             'order' => $this->whenLoaded('task', fn () => $this->task->order),
             'type' => $this->whenLoaded('task', fn () => $this->task->type),
@@ -49,7 +57,7 @@ class TaskVariantResource extends JsonResource
         ];
     }
 
-    protected function transformAudioContentBlocks(
+    protected function transformContent(
         array $content,
         AttemptAnswer $attemptAnswer,
         Employee|ForeignNational $actor
@@ -68,7 +76,9 @@ class TaskVariantResource extends JsonResource
             if ($isExaminer) {
 
                 $block['audioPlayUrl'] = null;
-                $block['url'] = Storage::disk('public')->url($block['value']);
+
+                $block['url'] = Storage::disk('public')
+                    ->url($block['value']);
 
             } else {
 
@@ -85,7 +95,7 @@ class TaskVariantResource extends JsonResource
 
             }
 
-            $block = $this->transformAudioContentBlocks(
+            $block = $this->transformContent(
                 $block,
                 $attemptAnswer,
                 $actor

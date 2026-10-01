@@ -4,7 +4,7 @@ import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { computed, onMounted, onUnmounted, ref} from 'vue';
 import { DateFormatter } from '@helpers/DateFormatter';
 import { ExamConduct } from '@/interfaces/Exam';
-import { mdiCancel, mdiCheckCircle , mdiMagnify } from '@mdi/js'
+import { mdiCancel, mdiCheckCircle , mdiMagnify, mdiMinus } from '@mdi/js'
 import ExamLayout from '@/layouts/ExamLayout.vue';
 import EnrollmentConductActions from './Components/EnrollmentConductActions.vue';
 
@@ -167,6 +167,13 @@ const search = ref<string>('')
                         color="success"
                         size="18"
                         v-if="item.attempt?.speakingFinishedAt"
+                    />
+
+                    <v-icon
+                        v-else
+                        :icon="mdiMinus"
+                        size="18"
+                        color="grey-lighten-1"
                     />
                 </template>
             </v-data-table>

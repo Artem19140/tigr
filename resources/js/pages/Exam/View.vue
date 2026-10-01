@@ -114,7 +114,6 @@ const isOpen = ref<boolean>(false)
                     </v-card-text>
                 </v-card>
 
-                <!-- Записи -->
                 <v-card
                     class="overflow-hidden rounded-xl"
                 >

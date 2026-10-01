@@ -195,7 +195,7 @@ function format(time: number) {
         icon
         variant="flat"
         size="40"
-        :disabled="audioPlayed || isAnotherAudioPlaying"
+        :disabled="audioPlayed || isAnotherAudioPlaying || isCurrentAudioPlaying"
         class="!shrink-0 !rounded-full transition-all"
         :class="
           isAnotherAudioPlaying
@@ -205,7 +205,7 @@ function format(time: number) {
         @click="togglePlay"
       >
         <v-icon size="20">
-          {{ isCurrentAudioPlaying ? mdiPause : mdiPlay }}
+          {{ isCurrentAudioPlaying ? '' : mdiPlay }}
         </v-icon>
       </v-btn>
 

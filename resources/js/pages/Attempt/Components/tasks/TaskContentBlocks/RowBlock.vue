@@ -14,20 +14,17 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div class="mb-4 mt-4 w-100" 
-    >
-        <div 
-            class="flex" 
+    <div class="my-4 w-full">
+        <div
+            class="flex min-w-0"
             :class="{
                 'justify-between': justify === 'between',
-                'flex-col': direction === 'column' ,
-                'items-end' : align === 'end'
+                'flex-col': direction === 'column',
+                'items-end': align === 'end',
             }"
-            :style="{gap: `${gap}px` }"
+            :style="{ gap: `${gap}px` }"
         >
-            <RenderBlocks
-                :content="children"
-            />
+            <RenderBlocks :content="children" />
         </div>
     </div>
 </template>

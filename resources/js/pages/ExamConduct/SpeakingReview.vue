@@ -19,12 +19,6 @@ const props = defineProps<{
     backUrl:string
 }>()
 
-const rated = (value: AttemptAnswer) => {
-    const task = props.attempt.data?.tasks.find(t => t.attemptAnswer.id === value.id)
-    if(!task) return
-    task.attemptAnswer = {...value}
-}
-
 const back = useForm()
 </script>
 
@@ -57,7 +51,6 @@ const back = useForm()
                         :attempt="attempt.data"
                         :checking="true"
                         class="mb-5"
-                        @rated="rated"
                     />
 
                     <div class="flex flex-col items-center gap-3 border-t border-gray-200 pt-5">

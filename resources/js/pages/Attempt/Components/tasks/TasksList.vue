@@ -16,7 +16,6 @@ import { mdiClipboardTextOffOutline } from '@mdi/js'
 const props = defineProps<{
     attempt: Attempt | AttemptConduct | AttemptReview,
     checking?:boolean,
-    mode?:string
 }>()
 
 const resolveTaskComponent = (type: string) => {
@@ -99,7 +98,6 @@ const groupedTasks =  computed(() =>{
                     :key="task.id"
                     :id="`task-${task.id}`"
                 >
-
                     <component 
                         :key="task.id"
                         :is="resolveTaskComponent(task.type)"

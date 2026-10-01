@@ -22,7 +22,6 @@ class AttemptAnswerResource extends JsonResource
         return [
             'id' => $this->id,
             'answer' => $this->answer,
-            'audioPlayedAt' => $this->audio_played_at,
 
             $this->mergeWhen($needReview, [
                 'reviewedAt' => $this->reviewed_at,
@@ -34,8 +33,7 @@ class AttemptAnswerResource extends JsonResource
                 'attempts.show', 
                 'attempts.answers.update'
             ),[
-                'updateUrl' =>   $this->updateUrl(),
-                'audioPlayedUrl' => $this->audioPlayedUrl(),
+                'updateUrl' => $this->updateUrl(),
             ])
         ];
     }
@@ -52,13 +50,5 @@ class AttemptAnswerResource extends JsonResource
             'attempt' => $this->resource->attempt_id,
             'attempt_answer' => $this->resource->id
         ], false);
-    }
-
-    protected function audioPlayedUrl(): string {
-        return route('attempts.answers.audio.update', [
-            'attempt' => $this->resource->attempt_id,
-            'attempt_answer' => $this->resource->id
-        ], false);
-    }
-    
+    }    
 }
