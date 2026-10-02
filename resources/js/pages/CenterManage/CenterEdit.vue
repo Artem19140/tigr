@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Center } from '@/interfaces/Center';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
-import CenterManagementLayout from './CenterManagementLayout.vue';
 import { Head, router, useForm } from '@inertiajs/vue3';
 import { useConfirm } from '@/composables/useConfirm.js';
 
@@ -15,7 +14,7 @@ const props = defineProps<{
 }>()
 
 defineOptions({
-  layout: [EmployeeLayout, CenterManagementLayout],
+  layout: [EmployeeLayout],
 })
 
 const form = useForm({

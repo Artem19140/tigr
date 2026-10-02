@@ -26,9 +26,10 @@ class ExamNavigation
             ]
         ])->filter(function($item){
             return $item['can'];
-        })->map(function(array $item){
+        })->map(function(array $item, $key){
             unset($item['can']);
 
+            $item['label'] = __("navigation.exams.$key");
             return $item;
         });
     }

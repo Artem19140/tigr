@@ -3,7 +3,6 @@ import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { EmployeeIndex } from '@/interfaces/Employee';
 import { Head, router } from '@inertiajs/vue3';
 import BaseTable from '@/components/BaseComponents/BaseTable/BaseTable.vue';
-import CenterManagementLayout from './CenterManagementLayout.vue';
 import EmployeeActions from './Components/EmployeeActions.vue';
 
 const props = defineProps<{
@@ -14,7 +13,7 @@ const props = defineProps<{
 }>()
 
 defineOptions({
-  layout:[EmployeeLayout, CenterManagementLayout]
+  layout:[EmployeeLayout]
 })
 
 const headers = [
@@ -29,6 +28,7 @@ const headers = [
 
     <v-container>
         <BaseTable
+            title="Сотрудники"
             :elements="employees.data"
             :headers="headers"
             hide-default-footer

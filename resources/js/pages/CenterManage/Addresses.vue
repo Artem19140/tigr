@@ -3,7 +3,6 @@ import { AddressIndex } from '@/interfaces/Address';
 import { Head, router } from '@inertiajs/vue3';
 import { mdiClipboardTextOffOutline } from '@mdi/js'
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
-import CenterManagementLayout from './CenterManagementLayout.vue';
 import AddressCard from './Components/AddressCard.vue';
 
 const props = defineProps<{
@@ -14,7 +13,7 @@ const props = defineProps<{
 }>()
 
 defineOptions({
-  layout: [EmployeeLayout, CenterManagementLayout],
+  layout: [EmployeeLayout],
 })
 
 </script>

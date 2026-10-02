@@ -82,7 +82,7 @@ const personalData = computed(() => [
     <v-container>
         <div class="mx-auto max-w-4xl space-y-5">
 
-            <div class="flex items-start justify-between gap-6">
+            <div class="flex items-start justify-between gap-6 max-sm:flex-col">
                 <div class="min-w-0">
                     <h1 class="text-2xl font-semibold tracking-tight text-gray-900">
                         {{ foreignNational.data.fullName }}
@@ -97,7 +97,7 @@ const personalData = computed(() => [
                     </div>
                 </div>
 
-                <div class="flex shrink-0 items-center gap-2">
+                <div class="flex shrink-0 items-center gap-2  max-sm:justify-center">
                     <v-btn
                         v-if="editUrl"
                         variant="text"

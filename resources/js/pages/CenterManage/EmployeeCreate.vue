@@ -39,7 +39,7 @@ const cancel = async () => {
     <v-container>
         <div class="mx-auto max-w-2xl">
             <v-card class="overflow-hidden rounded-xl">
-                <!-- Header -->
+
                 <v-card-text class="px-6 pt-6">
                     <div class="text-xl font-semibold text-gray-900">
                         Добавление сотрудника
@@ -50,7 +50,6 @@ const cancel = async () => {
                     </div>
                 </v-card-text>
 
-                <!-- Form -->
                 <v-card-text class="px-6">
                     <EmployeeForm
                         v-model:form="form"
@@ -64,7 +63,6 @@ const cancel = async () => {
                     </div>
                 </v-card-text>
 
-                <!-- Actions -->
                 <v-card-text class="px-6 pb-6">
                     <div class="flex justify-end gap-2">
                         <v-btn

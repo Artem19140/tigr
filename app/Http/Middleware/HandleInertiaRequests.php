@@ -88,14 +88,6 @@ class HandleInertiaRequests extends Middleware
             ]
         ];
 
-        if(request()->routeIs('reports*')){
-            $navigation['reports'] = $this->reportNavigation->resolve($user);
-        }
-
-        if(request()->is('center-manage*')){
-            $navigation['centerManage'] = $this->centerManageNavigation->resolve($user);
-        }
-
         if(request()->routeIs(
             'exams.show',
             'exams.conduct',

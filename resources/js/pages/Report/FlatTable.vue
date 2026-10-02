@@ -2,15 +2,14 @@
 import AppPeriodDate from '@/components/UI/AppPeriodDate/AppPeriodDate.vue';
 import { RedirectUrl } from '@/interfaces/Interfaces';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
-import { Head, useHttp } from '@inertiajs/vue3';
-import ReportLayout from './ReportLayout.vue';
+import { Head, useHttp } from '@inertiajs/vue3';;
 
 const props=defineProps<{
     availabilityUrl: string
 }>()
 
 defineOptions({
-  layout: [EmployeeLayout, ReportLayout],
+  layout: [EmployeeLayout],
 })
 
 const http = useHttp<FlatTable, RedirectUrl>({

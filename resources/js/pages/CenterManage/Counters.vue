@@ -3,7 +3,6 @@ import { Counter } from '@/interfaces/Counter';
 import { Head } from '@inertiajs/vue3';
 import { mdiCounter } from '@mdi/js'
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
-import CenterManagementLayout from './CenterManagementLayout.vue';
 import CounterCard from './Components/CounterCard.vue';
 
 const props = defineProps<{
@@ -13,7 +12,7 @@ const props = defineProps<{
 }>()
 
 defineOptions({
-  layout: [EmployeeLayout, CenterManagementLayout],
+  layout: [EmployeeLayout],
 })
 </script>
 

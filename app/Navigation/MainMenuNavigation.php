@@ -8,6 +8,11 @@ use App\Models\ForeignNational;
 
 class MainMenuNavigation
 {
+    public function __construct(
+        protected ReportNavigation $reportNavigation,
+        protected CenterManageNavigation $centerManageNavigation
+    ) {}
+    
     public function resolve(Employee $employee)
     {
         return collect([
@@ -15,6 +20,7 @@ class MainMenuNavigation
                 'url' => route('foreign-nationals.index', [], false),
                 'can' => $employee->can('viewAny', ForeignNational::class),
             ],
+
             'exams' => [
                 'url' => route('exams.index', [], false),
                 'can' => $employee->can('viewAny', Exam::class)
@@ -27,12 +33,15 @@ class MainMenuNavigation
 
             'reports' => [
                 'url' => route('reports.resolver', [], false),
-                'can' => $employee->can('reports.viewAny')
+                'can' => $employee->can('reports.viewAny'),
+                'submenu' => $this->reportNavigation->resolve($employee)
+                
             ],
 
             'center' => [
                 'url' => route('center-manage.resolver', [], false),
-                'can' => $employee->can('center-manage')
+                'can' => $employee->can('center-manage'),
+                'submenu' => $this->centerManageNavigation->resolve($employee)
             ],
 
             'admin' => [
@@ -41,9 +50,10 @@ class MainMenuNavigation
             ]
         ])->filter(function($item){
             return $item['can'];
-        })->map(function(array $item){
+        })->map(function(array $item, $key){
             unset($item['can']);
 
+            $item['label'] = __("navigation.menu.$key");
             return $item;
         });
     }

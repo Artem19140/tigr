@@ -21,31 +21,26 @@ const user = page.props?.auth?.user ?? null
 
 const employeeName = `${user?.surname} ${user?.name}`
 const activeItem = ref(page.url ?? '')
+const opened = ref([])
 
 const menuProps = {
   foreignNationals: {
-	icon: mdiAccountGroup,
-	label: 'Иностранные граждане'
+	icon: mdiAccountGroup
   },
   exams: {
-	icon: mdiClipboardText,
-	label: 'Экзамены'
+	icon: mdiClipboardText
   },
   myExams: {
-	icon:mdiFileSign,
-	label:'Мои экзамены'
+	icon:mdiFileSign
   },
   reports: {
-	icon: mdiFileChartOutline,
-	label: 'Отчеты'
+	icon: mdiFileChartOutline
   },
   center: {
-	icon: mdiOfficeBuilding,
-	label: 'Центр'
+	icon: mdiOfficeBuilding
   },
   admin: {
-	icon: mdiCog, 
-	label: 'Админ панель'
+	icon: mdiCog
   },
 } 
 type MenuKey = keyof typeof menuProps
@@ -61,8 +56,7 @@ const logoutAll = ref<boolean>(false)
             class="border-r border-gray-200"
         >
             <div class="flex h-full flex-col">
-                <!-- User -->
-                <div class="px-2 py-3">
+                <div class="py-3">
                     <v-list-item
                         :title="employeeName"
                         :subtitle="user?.job_title"
@@ -76,24 +70,54 @@ const logoutAll = ref<boolean>(false)
                 </div>
 
                 <v-list
-                    v-model="activeItem"
+                    v-model:selected="activeItem"
+                    v-model:opened="opened"
                     density="comfortable"
                     nav
                     class="px-2 pt-3"
                 >
-                    <v-list-item
+                    <template 
                         v-for="(item, key) in navigation.menu"
                         :key="key"
-                        :value="item.url"
-                        :title="menuProps[key].label"
-                        :prepend-icon="menuProps[key].icon"
-                        class="mb-1 rounded-lg"
-                        color="primary"
-                        @click="router.visit(item.url)"
-                    />
+                    >
+                        <v-list-group
+                            v-if="item.submenu"
+                            :value="item.url"
+                        >
+                            <template #activator="{ props }">
+                                <v-list-item
+                                    v-bind="props"
+                                    :title="item.label"
+                                    :prepend-icon="menuProps[key].icon"
+                                    class="mb-1 rounded-lg"
+                                    color="primary"
+                                />
+                            </template>
+
+                            <v-list-item
+                                v-for="(subItem, subKey) in item.submenu"
+                                :key="subKey"
+                                :value="subItem.url"
+                                :title="subItem.label"
+                                class="mb-1 rounded-lg"
+                                color="primary"
+                                @click.stop="router.visit(subItem.url)"
+                            />
+                        </v-list-group>
+                        
+                        <v-list-item
+                            v-else
+                            :value="item.url"
+                            :title="item.label"
+                            :prepend-icon="menuProps[key].icon"
+                            class="mb-1 rounded-lg"
+                            color="primary"
+                            @click="router.visit(item.url)"
+                        />
+                    </template>
+                    
                 </v-list>
 
-                <!-- Logout -->
                 <div class="mt-auto px-2 pb-3">
                     <v-list
                         density="comfortable"

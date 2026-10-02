@@ -4,14 +4,13 @@ import { RedirectUrl } from '@/interfaces/Interfaces';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import { Head, useHttp } from '@inertiajs/vue3';
 import { computed, watch } from 'vue';
-import ReportLayout from './ReportLayout.vue';
 
 const props=defineProps<{
     availabilityUrl: string
 }>()
 
 defineOptions({
-  layout: [EmployeeLayout, ReportLayout],
+  layout: [EmployeeLayout],
 })
 
 interface MinistryEducation{

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Center } from '@/interfaces/Center';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
-import CenterManagementLayout from './CenterManagementLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
 
 const props = defineProps<{
@@ -12,7 +11,7 @@ const props = defineProps<{
 }>()
 
 defineOptions({
-  layout: [EmployeeLayout, CenterManagementLayout],
+  layout: [EmployeeLayout],
 })
 
 const centerData = [

@@ -12,25 +12,13 @@ const page = usePage<any>()
 const menu =  computed(() => page.props?.auth?.navigation.exam)
 
 const activeItem = ref(page.url ?? '')
-
-const menuProps = {
-    view: {
-        label: 'Основное'
-    },
-    conduct: {
-        label: 'Проведение'
-    },
-    review: {
-        label: 'Проверка'
-    }
-}
 </script>
 
 <template>
     <v-container>
         <div class="mx-auto max-w-5xl">
             <div class="border-b border-gray-200">
-                <div class="flex items-start justify-between gap-6 py-4">
+                <div class="flex items-start justify-between gap-6 py-4 max-sm:flex-col">
                     <div class="min-w-0">
                         <div class="flex items-center gap-2">
                             <h1 class="truncate text-xl font-semibold tracking-tight text-gray-900">
@@ -69,7 +57,7 @@ const menuProps = {
                         class="text-sm"
                         @click="router.visit(tab.url, {replace:true})"
                     >
-                        {{ menuProps[key].label }}
+                        {{ tab.label }}
                     </v-tab>
                 </v-tabs>
             </div>
