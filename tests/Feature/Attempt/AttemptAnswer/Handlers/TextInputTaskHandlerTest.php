@@ -3,7 +3,7 @@
 namespace Tests\Feature\Attempt\AttemptAnswer\Handlers;
 
 use App\Modules\AttemptAnswer\Handlers\SingleInputTaskHandler;
-use App\Exceptions\Attempt\AttemptAnswerValidationException;
+use App\Exceptions\AttemptAnswerValidationException;
 use App\Models\Answer;
 use App\Models\AttemptAnswer;
 use App\Models\Task;

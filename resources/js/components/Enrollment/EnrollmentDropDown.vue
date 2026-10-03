@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import BaseThreeDotDropdown from '@components/BaseComponents/BaseThreeDotDropdown/BaseThreeDotDropdown.vue';
 import { Enrollment } from '@/interfaces/Enrollment';
-import { useConfirmationOptionsDialog } from '@/composables/useConfirmationOptionsDialog.js';
-import { useForm } from '@inertiajs/vue3';
+import PaymentConfirmationModal from './PaymentConfirmationModal.vue';
+import { ref } from 'vue';
 
 const props = defineProps<{
     enrollment: Enrollment
@@ -13,24 +13,7 @@ const download = () => {
     window.open(props.enrollment.actions.statement.url)
 }
 
-const changePayment = async () => {
-    if(! props.enrollment.actions.payment.url) return 
-
-    const {open} = useConfirmationOptionsDialog()
-    const action = props.enrollment.hasPayment ?  'Отменить' : 'Подтвердить'
-    const ok = await open(`${action} оплату ${props.enrollment.foreignNational?.fullName ?? ''}`)
-    if(!ok) return
-
-    const form = useForm()
-    props.enrollment.isLoading = true
-    form.put(props.enrollment.actions.payment.url,{
-        onFinish:() => {
-            props.enrollment.isLoading = false
-        },
-        preserveScroll:true,
-        preserveState:true
-    })
-}
+const isOpen = ref<boolean>(false)
 </script>
 
 <template>
@@ -38,7 +21,7 @@ const changePayment = async () => {
         v-if="enrollment.actions.payment.url || enrollment.actions.statement.url"
     >
         <v-list-item
-            @click="changePayment"
+            @click="() => isOpen = true"
             :title="enrollment.hasPayment ? 'Отменить оплату' : 'Подтвердить оплату'"
             :disabled="enrollment.actions.payment.disabled"
             v-if="enrollment.actions.payment.url"
@@ -49,4 +32,13 @@ const changePayment = async () => {
             @click="download"
         />
     </BaseThreeDotDropdown>
+
+    <PaymentConfirmationModal
+        v-if="props.enrollment.actions.payment.url"
+        :url="props.enrollment.actions.payment.url"
+        :foreign-national="enrollment.foreignNational"
+        :exam="enrollment.exam"
+        v-model="isOpen"
+        :has-payment="enrollment.hasPayment"
+    />
 </template>

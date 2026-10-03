@@ -3,7 +3,7 @@
 namespace App\Http\Resources\Counter;
 
 use App\Enums\CounterKey;
-use App\Exceptions\Counter\CounterNotFoundException;
+use App\Exceptions\CounterNotFoundException;
 use App\Modules\Counter\GroupNumberGenerator;
 use App\Modules\Counter\RegNumberGenerator;
 use App\Modules\Counter\SessionNumberGenerator;

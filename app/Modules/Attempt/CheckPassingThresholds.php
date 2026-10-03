@@ -2,7 +2,6 @@
 
 namespace App\Modules\Attempt;
 
-use App\Exceptions\BusinessException;
 use App\Models\Attempt;
 use App\Models\AttemptAnswer;
 use Illuminate\Support\Collection;
@@ -65,7 +64,7 @@ class CheckPassingThresholds
                     'attempt_id' => $attempt->id,
                     'items' => $items
                 ]);
-                throw new BusinessException('Произошла ошибка во время подсчета результатов');
+                abort(400, 'Произошла ошибка во время подсчета результатов');
             }
             $answersSumMark = $answers->sum('mark');
             if ($item->min_mark > $answersSumMark) {

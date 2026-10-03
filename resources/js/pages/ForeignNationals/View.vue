@@ -14,7 +14,11 @@ const props = defineProps<{
 		data: ForeignNationalView
 	},
     editUrl: string,
-    enrollUrl: string
+    enrollUrl: string,
+    documentConstraints: {
+        mimes: Array<string>,
+        maxSizeMb: number
+    }
 }>()
 
 defineOptions({
@@ -152,6 +156,8 @@ const personalData = computed(() => [
                 <v-card-text class="px-6 pb-6">
                     <ForeignNationalsDocuments
                         :documents="foreignNational.data.documents"
+                        :allowed-mimes="documentConstraints.mimes"
+                        :max-size-mb="documentConstraints.maxSizeMb"
                     />
                 </v-card-text>
             </v-card>

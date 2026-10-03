@@ -10,7 +10,11 @@ import { RedirectUrl } from '@/interfaces/Interfaces.js';
 
 const props = defineProps<{
 	backUrl: string,
-	storeUrl: string
+	storeUrl: string,
+    documentConstraints: {
+        mimes: Array<string>,
+        maxSizeMb: number
+    }
 }>()
 
 defineOptions({
@@ -40,7 +44,7 @@ const form = useHttp<ForeignNationalCreate, RedirectUrl>({
   examId:null,
   gender:"",
   hasPayment:false,
-  comment:'',
+  comment:null,
   addressReg:'',
   noPhone:false
 })
@@ -125,9 +129,9 @@ const cancel = async () => {
                 <v-card-text class="px-6">
                     <div class="rounded-lg bg-gray-50 px-4 py-3 text-sm text-gray-500">
                         Допустимы файлы формата
-                        <span class="font-medium text-gray-700">PDF</span>.
+                        <span class="font-medium text-gray-700">{{ documentConstraints.mimes.join().toUpperCase() }}</span>.
                         Максимальный размер —
-                        <span class="font-medium text-gray-700">20 MB</span>.
+                        <span class="font-medium text-gray-700">{{ documentConstraints.maxSizeMb }} MB</span>.
                     </div>
                 </v-card-text>
 

@@ -1,14 +1,18 @@
 <?php
 
+use App\Exceptions\BusinessException;
 use App\Http\Middleware\EnsureEmployeeActive;
 use App\Http\Middleware\EnsureValidAttemptStatus;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\LogContext;
 use App\Http\Middleware\RequestTimeMeasure;
+use App\Modules\Shared\CodeTranslator;
 use App\Support\AppMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -41,5 +45,28 @@ return Application::configure(basePath: dirname(__DIR__))
     })
 
     ->withExceptions(function (Exceptions $exceptions): void {
-        
+        $exceptions->dontReport([
+            BusinessException::class,
+        ]);
+
+        $exceptions->render(function (BusinessException $e, Request $request) {
+            $translator = new CodeTranslator();
+
+            $message = $translator->translate(
+                $e->reasonCode, 
+                $e->params
+            );
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => $message,
+                    'code' => $e->reasonCode
+                ], 400);
+            }
+
+            return Inertia::flash([
+                'error' => $message,
+                'code' => $e->reasonCode
+            ])->back();
+        });
     })->create();

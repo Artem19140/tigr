@@ -6,7 +6,6 @@ export interface Enrollment{
     id:number,
     foreignNational:ForeignNationalEnrollment,
     hasPayment:boolean,
-    isLoading?: boolean,
     exam: Exam,
     attempt:Attempt | null,
     examResult:ExamStatus,
@@ -27,7 +26,6 @@ export interface EnrollmentConduct{
     id:number,
     foreignNational:ForeignNationalEnrollment,
     hasPayment:boolean,
-    isLoading?: boolean,
     attempt:AttemptConduct | null,
     availability:{
         payment:boolean

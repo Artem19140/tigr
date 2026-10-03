@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Enums\CounterKey;
-use App\Exceptions\Counter\CounterNotFoundException;
+use App\Exceptions\CounterNotFoundException;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 

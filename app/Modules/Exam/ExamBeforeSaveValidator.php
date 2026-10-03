@@ -2,6 +2,7 @@
 
 namespace App\Modules\Exam;
 
+use App\Enums\BusinessCode;
 use App\Exceptions\BusinessException;
 use App\Http\Dto\ExamDto;
 use App\Models\Address;
@@ -142,7 +143,14 @@ class ExamBeforeSaveValidator
         if ($conflictExam) {
             $examConflictName = $conflictExam->type->short_name;
             $time = $conflictExam->begin_time_local->format('H:i');
-            throw new BusinessException("В это время по данному адресу уже проводится экзамен по $examConflictName в $time");
+            throw new BusinessException(
+                
+                BusinessCode::ExamsConflict,
+                [
+                    'name' => $examConflictName,
+                    'time' => $time
+                ]
+            );
         }
     }
 }

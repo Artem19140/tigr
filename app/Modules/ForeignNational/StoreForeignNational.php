@@ -30,7 +30,6 @@ final class StoreForeignNational
         ]);
 
         $passportTranslate = $dto->passportTranslate;
-
         $passport = $dto->passport;
 
         $foreignNational->documents()->createMany(

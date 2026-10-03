@@ -3,7 +3,7 @@
 namespace Tests\Feature\Attempt\AttemptAnswer\Handlers;
 
 use App\Modules\AttemptAnswer\Handlers\EssayTaskHandler;
-use App\Exceptions\Attempt\AttemptAnswerValidationException;
+use App\Exceptions\AttemptAnswerValidationException;
 use App\Models\AttemptAnswer;
 use App\Models\TaskVariant;
 use Carbon\Carbon;

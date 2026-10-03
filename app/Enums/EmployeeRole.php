@@ -5,7 +5,6 @@ namespace App\Enums;
 enum EmployeeRole: string
 {
     case Operator = 'operator';
-    case Scheduler = 'scheduler';
     case Examiner = 'examiner';
     case Director = 'director';
     case CenterAdmin = 'center_admin';

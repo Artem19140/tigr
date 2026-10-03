@@ -38,7 +38,10 @@ export const useHttpErrorHandler = () => {
 }
 
     const addSnackBar = (text:string) =>{
-        add(text, 'red')
+        add(text, 'error')
     }
-    return {handle}
+
+    return {
+        handle
+    }
 }

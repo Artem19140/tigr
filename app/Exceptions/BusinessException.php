@@ -2,6 +2,13 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Contracts\Debug\ShouldntReport;
-
-class BusinessException extends BaseException implements ShouldntReport {}
+use App\Enums\BusinessCode;
+  
+class BusinessException extends \Exception {
+    public function __construct(
+        public BusinessCode  $reasonCode,
+        public array $params = []
+    ){
+        parent::__construct($reasonCode->value);
+    }
+}

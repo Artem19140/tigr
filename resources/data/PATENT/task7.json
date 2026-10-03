@@ -274,7 +274,7 @@
     "fipi_number": "F6CC3D",
     "answers": [
       {
-        "content":"двадцать ",
+        "content":"двадцать",
         "is_correct": true
       }
     ]
@@ -307,7 +307,7 @@
     "fipi_number": "1233BE",
     "answers": [
       {
-        "content":"повара ",
+        "content":"повара",
         "is_correct": true
       }
     ]
@@ -513,7 +513,7 @@
             },
             {
               "type": "text",
-              "value": "Меня зовут Толибов Фозил"
+              "value": "Меня зовут Толибов Фозил."
             }
           ],
           [

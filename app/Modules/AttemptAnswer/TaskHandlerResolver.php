@@ -7,7 +7,7 @@ use App\Modules\AttemptAnswer\Handlers\MultyInputTaskHandler;
 use App\Modules\AttemptAnswer\Handlers\SingleChoiceTaskHandler;
 use App\Modules\AttemptAnswer\Handlers\SingleInputTaskHandler;
 use App\Enums\TaskType;
-use App\Exceptions\Task\TaskHandlerNotFoundException;
+use App\Exceptions\TaskHandlerNotFoundException;
 use App\Models\Task;
 
 class TaskHandlerResolver

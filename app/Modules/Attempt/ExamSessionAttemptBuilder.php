@@ -2,6 +2,7 @@
 
 namespace App\Modules\Attempt;
 
+use App\Enums\BusinessCode;
 use App\Enums\TaskType;
 use App\Exceptions\BusinessException;
 use App\Models\Attempt;
@@ -14,7 +15,9 @@ class ExamSessionAttemptBuilder
     public function build(Attempt $attempt): Attempt
     {
         if (! $attempt->isStarted()) {
-            throw new BusinessException('Попытка еще не начата ');
+            throw new BusinessException(
+                BusinessCode::AttemptNotStarted
+            );
         }
 
         $attempt->load([

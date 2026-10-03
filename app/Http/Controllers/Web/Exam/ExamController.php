@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Exam;
 
-use App\Enums\AvailabilityCode;
+use App\Enums\BusinessCode;
 use App\Http\Resources\Exam\ExamEditResource;
 use App\Http\Resources\Exam\ExamResource;
 use App\Modules\Exam\CancelExam;
@@ -86,7 +86,7 @@ class ExamController
                 ]
             ],
             'documents' => app(ExamDocumentBuilder::class)->build($exam, $request->user()),
-            'reviewStatus' => AvailabilityCode::ExamOnReview->value
+            'reviewStatus' => BusinessCode::ExamOnReview->value
         ]);
         
     }

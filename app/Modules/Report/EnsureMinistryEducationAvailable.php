@@ -2,6 +2,7 @@
 
 namespace App\Modules\Report;
 
+use App\Enums\BusinessCode;
 use App\Exceptions\BusinessException;
 use App\Models\Attempt;
 use Carbon\Carbon;
@@ -19,9 +20,11 @@ class EnsureMinistryEducationAvailable
                 $dateTo,
             ])
             ->exists();
-        $period = "с {$dateFrom->copy()->format('d.m.Y')} по {$dateTo->copy()->format('d.m.Y')}";
+
         if($hasNoData){
-            throw new BusinessException("Данных для отчета $period нету");
+            throw new BusinessException(
+                BusinessCode::NoData
+            );
         }
     }
 }

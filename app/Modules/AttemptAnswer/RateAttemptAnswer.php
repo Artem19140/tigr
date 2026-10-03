@@ -25,10 +25,6 @@ class RateAttemptAnswer
             $this->ensureAttemptFinished($attempt);
         }
 
-        // if ( $task->type === TaskType::Speaking ){
-        //     $this->ensureSpeakingFinished($attempt);
-        // }
-
         $this->ensureAttemptNotChecked($attempt);
         $this->ensureTaskIsNotAutoReview($task, $attempt);
         $this->ensureMarkIsValid($mark, $task);
@@ -61,21 +57,6 @@ class RateAttemptAnswer
             ]);
         }
     }
-    protected function ensureSpeakingFinished(Attempt $attempt): void
-    {
-        if (! $attempt->speaking_finished_at) {
-            $this->log([
-                'reason' => 'trying to rate speaking answer with not finished speaking',
-                'attempt_status' => $attempt->status,
-                'attempt_id' => $attempt->id
-            ]);
-
-            throw ValidationException::withMessages([
-                'mark' => 'Задание возможно оценить только при завершенном говорении',
-            ]);
-        }
-    }
-
     protected function ensureAttemptNotChecked(Attempt $attempt): void
     {
         if ($attempt->isReviewed()) {

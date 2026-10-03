@@ -6,7 +6,9 @@ import { mdiFileDocumentOutline } from '@mdi/js';
 import { ref } from 'vue';
 
 const props = defineProps<{
-    documents: Array<ForeignNationalDocument>
+    documents: Array<ForeignNationalDocument>,
+    allowedMimes?: Array<string>,
+    maxSizeMb?: number
 }>()
 
 const getLabel = (type: string) => {
@@ -31,7 +33,13 @@ const form = useForm<{document : File | null}>({
 const update = (url: string) => {
   	form.put(url, {
         preserveScroll: true,
-        preserveState: true
+        preserveState: true,
+        onSuccess: (page)=> {
+            if(page.flash.success){
+                form.document = null
+                form.resetAndClearErrors()
+            }
+        }
     })
 }
 
@@ -92,9 +100,9 @@ const clear = () => {
 
                 <div class="rounded-lg bg-gray-50 px-4 py-3 text-sm text-gray-500">
                     Допустимы файлы формата
-                    <span class="font-medium text-gray-700">PDF</span>.
+                    <span class="font-medium text-gray-700">{{ allowedMimes?.join().toUpperCase() }}</span>.
                     Максимальный размер —
-                    <span class="font-medium text-gray-700">20 MB</span>.
+                    <span class="font-medium text-gray-700">{{ maxSizeMb }} MB</span>.
                 </div>
 
                 <v-file-upload

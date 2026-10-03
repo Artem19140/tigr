@@ -120,7 +120,6 @@ class Employee extends Authenticatable
     {
         return match (true) {
             $this->hasRole(EmployeeRole::Operator->value) => route('foreign-nationals.index'),
-            $this->hasRole(EmployeeRole::Scheduler->value) => route('exams.index'),
             $this->hasRole(EmployeeRole::Director->value) => route('foreign-nationals.index'),
             $this->hasRole(EmployeeRole::Examiner->value) => route('exams.index'),
             $this->hasRole(EmployeeRole::CenterAdmin->value) => route('employees.index'),

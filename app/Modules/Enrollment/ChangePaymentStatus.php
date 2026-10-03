@@ -24,7 +24,7 @@ class ChangePaymentStatus
         );
 
         if($result->isNotAvailable()){
-            throw new BusinessException($result->message());
+            throw new BusinessException($result->code());
         }
 
         $enrollment->update([

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\ForeignNational;
 
 use App\Http\Resources\ForeignNational\ForeignNationalEditResource;
 use App\Models\Enrollment;
+use App\Models\ForeignNationalDocument;
 use App\Modules\ForeignNational\CreateForeignNationalWithEnrollment;
 use App\Modules\ForeignNational\UpdateForeignNational;
 use App\Modules\ForeignNational\ForeignNationalViewBuilder;
@@ -51,7 +52,11 @@ class ForeignNationalController
 
         return Inertia::render('ForeignNationals/Create', [
             'backUrl' => route('foreign-nationals.index', [], false),
-            'storeUrl' => route('foreign-nationals.store', [], false)
+            'storeUrl' => route('foreign-nationals.store', [], false),
+            'documentConstraints' => [
+                'mimes' => ForeignNationalDocument::allowedMimes(),
+                'maxSizeMb' => ForeignNationalDocument::MAX_SIZE_MB
+            ]
         ]);
     }
 
@@ -101,6 +106,10 @@ class ForeignNationalController
             'enrollUrl' =>  $request->user()->can('create', Enrollment::class) 
                 ? route('enrollments.store', [], false)
                 : null, 
+            'documentConstraints' => [
+                'mimes' => ForeignNationalDocument::allowedMimes(),
+                'maxSizeMb' => ForeignNationalDocument::MAX_SIZE_MB
+            ]
         ]);
     }
 

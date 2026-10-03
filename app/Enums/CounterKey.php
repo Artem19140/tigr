@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-use App\Exceptions\Counter\CounterNotFoundException;
+use App\Exceptions\CounterNotFoundException;
 use Illuminate\Support\Carbon;
 
 enum CounterKey: string

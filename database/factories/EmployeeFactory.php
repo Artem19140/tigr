@@ -92,12 +92,6 @@ class EmployeeFactory extends Factory
     {
         return $this->withRole(EmployeeRole::Director);
     }
-
-    public function scheduler()
-    {
-        return $this->withRole(EmployeeRole::Scheduler);
-    }
-
     public function examiner()
     {
         return $this->withRole(EmployeeRole::Examiner);

@@ -23,7 +23,9 @@ class CancelExam
         $result = $this->examCancellRules->check($exam);
 
         if($result->isNotAvailable()){
-            throw new BusinessException($result->message());
+            throw new BusinessException(
+                $result->code()
+            );
         }
 
         $exam->update([

@@ -3,31 +3,17 @@
 namespace App\Modules\ExamDocument;
 
 use App\Modules\Shared\RuleResult;
-use App\Enums\AvailabilityCode;
-use App\Models\Employee;
+use App\Enums\BusinessCode;
 use App\Models\Exam;
 
 class ExamDocumentRules
 {
-    protected function available():RuleResult
-    {
-        return RuleResult::success();
-    }
-
-    protected function blocked(
-        AvailabilityCode | string $code,
-    ): RuleResult {
-        return RuleResult::fail(
-            $code
-        );
-    }
-
     public function list(Exam $exam):RuleResult
     {
 
         if ($this->hasNoEnrollment($exam)) {
             return RuleResult::fail(
-                AvailabilityCode::EnrollmentNotExists
+                BusinessCode::EnrollmentNotExists
             );
         }
 
@@ -38,25 +24,25 @@ class ExamDocumentRules
     {
         if($exam->isCancelled()){
             return RuleResult::fail(
-                AvailabilityCode::ExamCancelled
+                BusinessCode::ExamCancelled
             );
         }
 
         if($this->hasNoEnrollment($exam)){
             return RuleResult::fail(
-                AvailabilityCode::EnrollmentNotExists
+                BusinessCode::EnrollmentNotExists
             );
         }
 
         if(! $exam->begin_time->isToday()){
             return RuleResult::fail(
-                'codes_available_only_on_exam_day'
+                BusinessCode::CodesUnavailable
             );
         }
 
         if($exam->codesTtlExpired()){
             return RuleResult::fail(
-                'codes_ttl_expired'
+                BusinessCode::CodesTtlExpired
             );
         }
 
@@ -67,19 +53,19 @@ class ExamDocumentRules
     {
         if($exam->isCancelled()){
             return RuleResult::fail(
-                AvailabilityCode::ExamCancelled
+                BusinessCode::ExamCancelled
             );
         }
 
         if($exam->isPending()){
             return RuleResult::fail(
-                AvailabilityCode::ExamPending
+                BusinessCode::ExamPending
             );
         }
 
         if($this->hasNoEnrollment($exam)){
             return RuleResult::fail(
-                AvailabilityCode::EnrollmentNotExists
+                BusinessCode::EnrollmentNotExists
             );
         }
 
@@ -89,19 +75,19 @@ class ExamDocumentRules
             ! $exam->codesTtlExpired()
         ){
             return RuleResult::fail(
-                AvailabilityCode::ExamCodeAliveAndEnrollmentsWithNoAttemptsExists
+                BusinessCode::ExamCodeAliveAndEnrollmentsWithNoAttemptsExists
             );
         }
 
         if($this->hasNoAttempts($exam)){
             return RuleResult::fail(
-                AvailabilityCode::AttemptsNotExists
+                BusinessCode::AttemptsNotExists
             );
         }
 
         if($this->hasActiveAttempts($exam)){
             return RuleResult::fail(
-                AvailabilityCode::ActiveAttemptsExists
+                BusinessCode::ActiveAttemptsExists
             );
         }
 
@@ -112,19 +98,19 @@ class ExamDocumentRules
     {
         if($exam->isCancelled()){
             return RuleResult::fail(
-                AvailabilityCode::ExamCancelled
+                BusinessCode::ExamCancelled
             );
         }
 
         if($exam->isPending()){
             return RuleResult::fail(
-                AvailabilityCode::ExamPending
+                BusinessCode::ExamPending
             );
         }
 
         if($this->hasNoEnrollment($exam)){
             return RuleResult::fail(
-                AvailabilityCode::EnrollmentNotExists
+                BusinessCode::EnrollmentNotExists
             );
         }
 
@@ -134,25 +120,25 @@ class ExamDocumentRules
             ! $exam->codesTtlExpired()
         ){
            return RuleResult::fail(
-                AvailabilityCode::ExamCodeAliveAndEnrollmentsWithNoAttemptsExists
+                BusinessCode::ExamCodeAliveAndEnrollmentsWithNoAttemptsExists
             );
         }
 
         if($this->hasNoAttempts($exam)){
             return RuleResult::fail(
-                AvailabilityCode::AttemptsNotExists
+                BusinessCode::AttemptsNotExists
             );
         }
 
         if($this->hasActiveAttempts($exam)){
             return RuleResult::fail(
-                AvailabilityCode::ActiveAttemptsExists
+                BusinessCode::ActiveAttemptsExists
             );
         }
 
         if($this->hasUnreviewdAttemtps($exam)){
             return RuleResult::fail(
-                AvailabilityCode::ExamOnReview
+                BusinessCode::ExamOnReview
             );
         }
 

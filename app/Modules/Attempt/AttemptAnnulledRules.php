@@ -3,7 +3,7 @@
 namespace App\Modules\Attempt;
 
 use App\Modules\Shared\RuleResult;
-use App\Enums\AvailabilityCode;
+use App\Enums\BusinessCode;
 use App\Models\Attempt;
 
 class AttemptAnnulledRules
@@ -12,13 +12,13 @@ class AttemptAnnulledRules
     {
         if($attempt->isAnnulled()){
             return  RuleResult::fail(
-                AvailabilityCode::AttemptAnnulled
+                BusinessCode::AttemptAnnulled
             );
         }
 
         if(! $attempt->created_at->isToday()){
             return  RuleResult::fail(
-                'attempt_can_be_annuled_only_on_attempt_day'
+                BusinessCode::AttemptAnnulmentUnavailable
             );
         }
 

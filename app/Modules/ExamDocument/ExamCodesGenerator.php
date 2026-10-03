@@ -8,6 +8,7 @@ use App\Models\Enrollment;
 use App\Models\Exam;
 use App\Modules\Shared\ExamSettings;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 
 final class ExamCodesGenerator
@@ -41,9 +42,16 @@ final class ExamCodesGenerator
         Enrollment $enrollment,
         Exam $exam
     ): void {
+        $expiredTime = $exam->begin_time->copy()->addMinutes(
+            ExamSettings::codesTtlMinutes()
+        );
         while (true) {
             try {
-                $this->saveCode($enrollment, $this->generateCode(), $exam);
+                $this->saveCode(
+                    $enrollment, 
+                    $this->generateCode(), 
+                    $expiredTime
+                );
 
                 return;
             } catch (QueryException $e) {
@@ -72,10 +80,11 @@ final class ExamCodesGenerator
     protected function saveCode(
         Enrollment $enrollment,
         string $code,
-        Exam $exam
+        Carbon $expiredTime
     ): void {
-        $enrollment->exam_code = $code;
-        $enrollment->exam_code_expired_at = $exam->begin_time->copy()->addMinutes(ExamSettings::codesTtlMinutes());
-        $enrollment->save();
+        $enrollment->update([
+            'exam_code_expired_at' => $expiredTime,
+            'exam_code' => $code
+        ]);
     }
 }

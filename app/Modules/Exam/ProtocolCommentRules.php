@@ -3,7 +3,7 @@
 namespace App\Modules\Exam;
 
 use App\Modules\Shared\RuleResult;
-use App\Enums\AvailabilityCode;
+use App\Enums\BusinessCode;
 use App\Models\Exam;
 
 class ProtocolCommentRules
@@ -12,19 +12,19 @@ class ProtocolCommentRules
     {
         if($exam->isCancelled()){
             return RuleResult::fail(
-                AvailabilityCode::ExamCancelled
+                BusinessCode::ExamCancelled
             );
         }
 
         if($exam->isPending()){
             return RuleResult::fail(
-                AvailabilityCode::ExamPending
+                BusinessCode::ExamPending
             );
         }
 
         if(! $exam->begin_time->isToday()){
             return RuleResult::fail(
-                'protocol_comment_edit_available_only_on_exam_day'
+                BusinessCode::ProtocolCommentEditUnavailable
             );
         }
 

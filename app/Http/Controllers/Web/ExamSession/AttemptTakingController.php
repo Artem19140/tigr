@@ -6,7 +6,6 @@ use App\Models\AttemptAnswer;
 use App\Modules\Attempt\FinishAttempt;
 use App\Modules\Attempt\StartAttempt;
 use App\Modules\Attempt\ExamSessionAttemptBuilder;
-use App\Exceptions\BusinessException;
 use App\Http\Resources\Attempt\AttemptExamSessionResource;
 use App\Models\Attempt;
 use App\Models\Exam;
@@ -64,7 +63,7 @@ class AttemptTakingController
             Log::warning('trying to start not pending attempt', [
                 'attempt_id' => $attempt->id
             ]);
-            throw new BusinessException('Начать возможно только неначатую попытку');
+            abort(500);
         }
 
         $startedAttempt = $startAttempt->execute($attempt);
@@ -96,8 +95,9 @@ class AttemptTakingController
         AttemptAnswer $attemptAnswer,
     ): Response {
 
-        $attemptAnswer->audio_played_at = Carbon::now();
-        $attemptAnswer->save();
+        $attemptAnswer->update([
+            'audio_played_at' => Carbon::now()
+        ]);
 
         return response()->noContent();
     }

@@ -18,10 +18,13 @@ class UpdateProtocolComment
         Exam $exam,
         string $protocolComment
     ){
-        $result = $this->protocolCommentRules->check($exam);
+        $result = $this->protocolCommentRules
+            ->check($exam);
 
         if($result->isNotAvailable()){
-            throw new BusinessException($result->message());
+            throw new BusinessException(
+                $result->code()
+            );
         }
 
         $oldValue = $exam->protocol_comment ?? '';

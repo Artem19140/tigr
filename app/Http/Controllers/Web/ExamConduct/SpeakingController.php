@@ -24,7 +24,7 @@ class SpeakingController
         $result = $this->attemptSpeakingRules->get($attempt);
 
         if($result->isNotAvailable()){
-            throw new BusinessException($result->message());
+            throw new BusinessException($result->code());
         }
 
         if($attempt->speaking_started_at === null){
@@ -67,7 +67,7 @@ class SpeakingController
         $result = $this->attemptSpeakingRules->start($attempt);
 
         if($result->isNotAvailable()){
-            throw new BusinessException($result->message());
+            throw new BusinessException($result->code());
         }
         
         $attempt->update([
@@ -85,7 +85,7 @@ class SpeakingController
         $result = $this->attemptSpeakingRules->finish($attempt);
 
         if($result->isNotAvailable()){
-            throw new BusinessException($result->message());
+            throw new BusinessException($result->code());
         }
         
         $attempt->update([

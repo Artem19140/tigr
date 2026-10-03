@@ -2,6 +2,7 @@
 
 namespace App\Modules\Attempt;
 
+use App\Enums\BusinessCode;
 use App\Exceptions\BusinessException;
 use App\Models\Attempt;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,9 @@ class StartAttempt
             Log::warning('trying to start an exam once it has passed', [
                 'attempt_id' => $attempt->id
             ]);
-            throw new BusinessException('Экзамен уже прошел');
+            throw new BusinessException(
+                BusinessCode::ExamAlreadyFinished
+            );
         }
 
         return DB::transaction(function () use ($attempt) {

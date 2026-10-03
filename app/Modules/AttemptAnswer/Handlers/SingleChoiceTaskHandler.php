@@ -3,7 +3,7 @@
 namespace App\Modules\AttemptAnswer\Handlers;
 
 use App\Enums\TaskType;
-use App\Exceptions\Attempt\AttemptAnswerValidationException;
+use App\Exceptions\AttemptAnswerValidationException;
 use App\Models\Answer;
 use App\Models\AttemptAnswer;
 use App\Models\TaskVariant;

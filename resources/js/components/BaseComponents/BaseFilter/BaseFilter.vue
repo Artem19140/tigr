@@ -14,7 +14,7 @@ const loading = defineModel<boolean>({default:false})
     
 const filledCount = computed(() => {
     if(!props.filters) return 0
-    return Object.values(props.filters).some(value => value !== null) 
+    return Object.values(props.filters).some(value => value !== null)
 })
 
 const find = () => {
@@ -75,7 +75,7 @@ function cleanFilters(data: Record<string, any>) {
                 class="rounded-lg"
             >
                 <v-badge
-                    :content="filledCount"
+                    
                     color="error"
                     :model-value="filledCount"
                     dot

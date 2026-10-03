@@ -4,7 +4,7 @@
         {
             "type": "image",
             "value": "/images/VNZH/E96AF9.jpg",
-            "zoom":true
+            "zoom": true
         },
         {
             "type": "text",
@@ -12,27 +12,27 @@
         },
         {
             "type": "text",
-            "value": "– Что изображено на рисунке (место, время года и т.д.)?"
+            "value": "- Что изображено на рисунке (место, время года и т.д.)?"
         },
         {
             "type": "text",
-            "value": "– Кто изображён на рисунке?"
+            "value": "- Кто изображён на рисунке?"
         },
         {
             "type": "text",
-            "value": "– Что они делают?"
+            "value": "- Что они делают?"
         },
         {
             "type": "text",
-            "value": "– Расскажите подробнее о любом человеке, изображённом на рисунке."
+            "value": "- Расскажите подробнее о любом человеке, изображённом на рисунке."
         },
         {
             "type": "text",
-            "value": "– А Вы любите путешествовать?"
+            "value": "- А Вы любите путешествовать?"
         },
         {
             "type": "text",
-            "value": "– Где Вы уже побывали?"
+            "value": "- Где Вы уже побывали?"
         }
     ],
     "fipi_number": "E96AF9",
@@ -43,7 +43,7 @@
         {
             "type": "image",
             "value": "/images/VNZH/B7A844.jpg",
-            "zoom":true
+            "zoom": true
         },
         {
             "type": "text",
@@ -82,7 +82,7 @@
         {
             "type": "image",
             "value": "/images/VNZH/163ED7.jpg",
-            "zoom":true
+            "zoom": true
         },
         {
             "type": "text",
@@ -121,7 +121,7 @@
         {
             "type": "image",
             "value": "/images/VNZH/04A98E.jpg",
-            "zoom":true
+            "zoom": true
         },
         {
             "type": "text",
@@ -160,7 +160,7 @@
         {
             "type": "image",
             "value": "/images/VNZH/D956D9.jpg",
-            "zoom":true
+            "zoom": true
         },
         {
             "type": "text",
@@ -199,7 +199,7 @@
         {
             "type": "image",
             "value": "/images/VNZH/801412.jpg",
-            "zoom":true
+            "zoom": true
         },
         {
             "type": "text",
@@ -238,7 +238,7 @@
         {
             "type": "image",
             "value": "/images/VNZH/DBA351.jpg",
-            "zoom":true
+            "zoom": true
         },
         {
             "type": "text",
@@ -277,7 +277,7 @@
         {
             "type": "image",
             "value": "/images/VNZH/999815.jpg",
-            "zoom":true
+            "zoom": true
         },
         {
             "type": "text",
@@ -316,7 +316,7 @@
         {
             "type": "image",
             "value": "/images/VNZH/E55828.jpg",
-            "zoom":true
+            "zoom": true
         },
         {
             "type": "text",
@@ -355,7 +355,7 @@
         {
             "type": "image",
             "value": "/images/VNZH/C82E69.jpg",
-            "zoom":true
+            "zoom": true
         },
         {
             "type": "text",
@@ -394,7 +394,7 @@
         {
             "type": "image",
             "value": "/images/VNZH/6C7C3A.jpg",
-            "zoom":true
+            "zoom": true
         },
         {
             "type": "text",
@@ -433,7 +433,7 @@
         {
             "type": "image",
             "value": "/images/VNZH/F250F1.jpg",
-            "zoom":true
+            "zoom": true
         },
         {
             "type": "text",
@@ -472,7 +472,7 @@
         {
             "type": "image",
             "value": "/images/VNZH/F8090F.jpg",
-            "zoom":true
+            "zoom": true
         },
         {
             "type": "text",
@@ -511,7 +511,7 @@
         {
             "type": "image",
             "value": "/images/VNZH/0CA9EB.jpg",
-            "zoom":true
+            "zoom": true
         },
         {
             "type": "text",
@@ -550,7 +550,7 @@
         {
             "type": "image",
             "value": "/images/VNZH/A7396E.jpg",
-            "zoom":true
+            "zoom": true
         },
         {
             "type": "text",
@@ -589,7 +589,7 @@
         {
             "type": "image",
             "value": "/images/VNZH/58A338.jpg",
-            "zoom":true
+            "zoom": true
         },
         {
             "type": "text",

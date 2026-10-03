@@ -4,7 +4,7 @@ namespace Tests\Feature\Attempt\Task;
 
 use App\Modules\AttemptAnswer\TaskHandlerResolver;
 use App\Enums\TaskType;
-use App\Exceptions\Task\TaskHandlerNotFoundException;
+use App\Exceptions\TaskHandlerNotFoundException;
 use App\Models\Task;
 use Illuminate\Support\Facades\Log;
 use Tests\TestCase;

@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-use App\Exceptions\System\TemplateNotFoundException;
+use App\Exceptions\TemplateNotFoundException;
 use Carbon\Carbon;
 
 enum ExamDocument: string

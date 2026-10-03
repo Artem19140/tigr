@@ -9,10 +9,8 @@ use App\Models\Enrollment;
 use App\Modules\Shared\CenterData;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Inertia\Inertia;
 
 class EnrollmentController
 {
@@ -38,7 +36,7 @@ class EnrollmentController
         Request $request,
         Enrollment $enrollment,
         ChangePaymentStatus $changePaymentStatus
-    ): RedirectResponse {
+    ): Response {
         $request->validate([
             'status' => ['required', 'boolean']
         ]);
@@ -47,8 +45,7 @@ class EnrollmentController
             $enrollment,
             $request->boolean('status')
         );
-
-        return Inertia::back();
+        return response()->noContent();
     }
 
     public function statement(

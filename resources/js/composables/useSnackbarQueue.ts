@@ -9,15 +9,11 @@ export const useSnackbarQueue = () => {
         prependIcon?:string,
         timeout = 5000,
     ) => {
-
-        // if(queue.value?.clear){
-        //     queue.value?.clear()
-        // }
         
         messages.value.push({
-            text:text,
-            color:color,
-            timeout:timeout,
+            text,
+            color,
+            timeout,
             prependIcon:prependIcon ?? ''
         })
     }

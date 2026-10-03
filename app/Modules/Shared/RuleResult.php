@@ -2,13 +2,13 @@
 
 namespace App\Modules\Shared;
 
-use App\Enums\AvailabilityCode;
+use App\Enums\BusinessCode;
 
-final readonly  class RuleResult
+final readonly class RuleResult
 {
     protected function __construct(
         public bool $available,
-        protected AvailabilityCode | string | null $code = null,
+        protected BusinessCode | null $code = null,
         protected array $params = []
     ){}
 
@@ -18,7 +18,7 @@ final readonly  class RuleResult
     }
 
     public static function fail(
-        AvailabilityCode | string $code,
+        BusinessCode | string $code,
         array $params = []
     ):self
     {
@@ -34,11 +34,8 @@ final readonly  class RuleResult
         return app(CodeTranslator::class)->translate($this->code, $this->params); 
     }
 
-    public function code(): string|null
+    public function code(): BusinessCode | null
     {        
-        if($this->code instanceof AvailabilityCode){
-            return $this->code->value;
-        }
         return $this->code;
     }
     

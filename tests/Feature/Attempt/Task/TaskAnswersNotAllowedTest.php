@@ -4,7 +4,7 @@ namespace Tests\Feature\Attempt\Task;
 
 use App\Modules\AttemptAnswer\HandleAttemptAnswer;
 use App\Enums\TaskType;
-use App\Exceptions\Task\TaskAnswersNotAllowedException;
+use App\Exceptions\TaskAnswersNotAllowedException;
 use App\Models\Attempt;
 use App\Models\AttemptAnswer;
 use App\Models\Task;

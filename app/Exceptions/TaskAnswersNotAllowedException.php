@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Exceptions\Task;
+namespace App\Exceptions;
 
 use App\Exceptions\BaseException;
 use Illuminate\Support\Facades\Log;
 
-class TaskHandlerNotFoundException extends BaseException
+class TaskAnswersNotAllowedException extends BaseException
 {
     public function __construct(
         public array $context,
@@ -16,6 +16,9 @@ class TaskHandlerNotFoundException extends BaseException
 
     public function report(): void
     {
-        Log::channel('single')->critical('UNEXPECTED: handler for task type not found', $this->context);
+        Log::critical(
+            'UNEXPECTED: trying load answer to task, where not allowed answers', 
+            $this->context
+        );
     }
 }

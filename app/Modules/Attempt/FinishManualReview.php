@@ -2,6 +2,7 @@
 
 namespace App\Modules\Attempt;
 
+use App\Enums\BusinessCode;
 use App\Modules\Attempt\FinilizeAttemptReview;
 use App\Exceptions\BusinessException;
 use App\Models\Attempt;
@@ -26,10 +27,13 @@ class FinishManualReview
     protected function ensureNotChecked(Attempt $attempt): void
     {
         if ($attempt->isReviewed()) {
-            Log::warning('trying to repeat to finish attempt Review', [
+            Log::warning(BusinessCode::AttemptAlreadyReviwed->value, [
                 'attempt_id' => $attempt->id,
             ]);
-            throw new BusinessException('Попытка уже проверена');
+            
+            throw new BusinessException(
+                BusinessCode::AttemptAlreadyReviwed
+            );
         }
     }
 
@@ -44,7 +48,9 @@ class FinishManualReview
             })
             ->exists();
         if ($notAllManualReviewTypes) {
-            throw new BusinessException('Существуют непроверенные задания, завершение невозможно');
+            throw new BusinessException(
+                BusinessCode::UnreviewedAnswersExists
+            );
         }
     }
 }

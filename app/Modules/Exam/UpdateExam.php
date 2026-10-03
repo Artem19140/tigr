@@ -26,7 +26,9 @@ final class UpdateExam
         $result = $this->examEditRules->check($exam);
         
         if($result->isNotAvailable()){
-            throw new BusinessException($result->message());
+            throw new BusinessException(
+                $result->code()
+            );
         }
 
         $this->examBeforeSaveValidator->execute($examDto, $exam->id);
@@ -36,7 +38,8 @@ final class UpdateExam
             $exam->update(
                 $this->getAttributes($exam, $examDto)
             );
-            $examinersChanges = $exam->examiners()->sync($examDto->examiners);
+            $examinersChanges = $exam->examiners()
+                ->sync($examDto->examiners);
 
             $this->logger->log($exam, [
                 'examiners' => $examinersChanges

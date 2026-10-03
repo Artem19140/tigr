@@ -2,6 +2,7 @@
 
 namespace App\Modules\Enrollment;
 
+use App\Enums\BusinessCode;
 use App\Modules\Counter\RegNumberGenerator;
 use App\Exceptions\BusinessException;
 use App\Models\Employee;
@@ -45,7 +46,9 @@ final class CreateEnrollment
         ForeignNational $foreignNational
     ): void {
         if($exam->isCancelled()){
-            throw new BusinessException('Экзамен отменен');
+            throw new BusinessException(
+                BusinessCode::ExamCancelled
+            );
         }
         $this->ensureEnrollementWindowNotClosed($exam);
         $this->ensureEnrollmentNotExists($exam, $foreignNational);
@@ -58,9 +61,13 @@ final class CreateEnrollment
         $closeBeforeMinutes = ExamSettings::enrollmentCloseBeforeExamMinutes();
         $enrollmentEnded = Carbon::now()
             ->greaterThan($exam->begin_time->subMinutes($closeBeforeMinutes));
+
         if ($enrollmentEnded) {
             throw new BusinessException(
-                "Запись закрывается за $closeBeforeMinutes минут до начала экзамена"
+                BusinessCode::EnrollmentWindowClosed,
+                [
+                    'min' => $closeBeforeMinutes
+                ]
             );
         }
     }
@@ -79,7 +86,9 @@ final class CreateEnrollment
             ->exists();
 
         if ($parallellEnrollmentsExists) {
-            throw new BusinessException('ИГ имеет парралельные записи на экзамен');
+            throw new BusinessException(
+                BusinessCode::EnrollmentsConflict
+            );
         }
     }
 
@@ -88,7 +97,9 @@ final class CreateEnrollment
     ): void {
         $enrollmentsCount = $exam->enrollments()->count();
         if ($exam->capacity <= $enrollmentsCount) {
-            throw new BusinessException('Запись на экзамен полная');
+            throw new BusinessException(
+                BusinessCode::EnrollmentFull
+            );
         }
     }
 
@@ -102,7 +113,9 @@ final class CreateEnrollment
             ->exists();
 
         if ($exists) {
-            throw new BusinessException('Запись на экзамен уже сущестует');
+            throw new BusinessException(
+                BusinessCode::EnrollmentAlreadyExists
+            );
         }
     }
 }

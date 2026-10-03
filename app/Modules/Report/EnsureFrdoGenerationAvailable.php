@@ -2,6 +2,7 @@
 
 namespace App\Modules\Report;
 
+use App\Enums\BusinessCode;
 use App\Exceptions\BusinessException;
 use App\Models\Attempt;
 use App\Modules\Shared\CenterData;
@@ -10,9 +11,15 @@ use Illuminate\Database\Eloquent\Builder;
 
 class EnsureFrdoGenerationAvailable
 {
-    public function execute(string $date, string $type): void
-    {
-        $date = Carbon::parse($date)->setTimezone(CenterData::timeZome());
+    public function execute(
+        string $date, 
+        string $type
+    ): void {
+        
+        $date = Carbon::parse($date)->setTimezone(
+            CenterData::timeZome()
+        );
+
         //Что все экзамены проведены!
         $this->ensureAttemptsExists($date);
         $this->ensureNoActiveAttempts($date);
@@ -26,8 +33,9 @@ class EnsureFrdoGenerationAvailable
             ->exists();
 
         if (! $attemptsExists) {
-            $formattedDate = $date->copy()->format('d.m.Y');
-            throw new BusinessException("Попыток экзамена за $formattedDate нет");
+            throw new BusinessException(
+                BusinessCode::NoData
+            );
         }
 
     }
@@ -39,8 +47,9 @@ class EnsureFrdoGenerationAvailable
             ->exists();
 
         if ($activeAttemptsExists) {
-            $formattedDate = $date->copy()->format('d.m.Y');
-            throw new BusinessException("Некоторые попытки за $formattedDate еще активны");
+            throw new BusinessException(
+                BusinessCode::ActiveAttemptsExists
+            );
         }
 
     }
@@ -52,8 +61,9 @@ class EnsureFrdoGenerationAvailable
             ->exists();
 
         if ($unreviewedAttemptsExists) {
-            $formattedDate = $date->copy()->format('d.m.Y');
-            throw new BusinessException("Не все попытки за $formattedDate проверены");
+            throw new BusinessException(
+                BusinessCode::UnreviewedAttemptsExists
+            );
         }
 
     }
@@ -74,7 +84,13 @@ class EnsureFrdoGenerationAvailable
         if (! $attemptsForReportExists) {
             $reportName = $type === 'certificates' ? 'сертификатов' : 'справок';
             $date = $date->copy()->format('d.m.Y');
-            throw new BusinessException("Данных для $reportName за $date нет");
+
+            throw new BusinessException(
+                BusinessCode::NoDataForReport,
+                [
+                    'report' => $reportName
+                ]
+            );
         }
     }
 

@@ -36,7 +36,7 @@ class ExamCancelTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $actor = Employee::factory()
-            ->scheduler()
+            ->operator()
             ->create();
 
         $exam = Exam::factory()

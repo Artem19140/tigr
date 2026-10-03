@@ -27,7 +27,7 @@ class ExamDocumentController
         $result = $this->examDocumentRules->list($exam);
 
         if($result->isNotAvailable()){
-            throw new BusinessException($result->message());
+            throw new BusinessException($result->code());
         }
 
         $exam->load(['foreignNationals', 'type']);
@@ -53,7 +53,7 @@ class ExamDocumentController
         $result = $this->examDocumentRules->list($exam);
         
         if($result->isNotAvailable()){
-            throw new BusinessException($result->message());
+            throw new BusinessException($result->code());
         }
 
         return response()->json([
@@ -71,7 +71,7 @@ class ExamDocumentController
         $result = $this->examDocumentRules->codes($exam);
         
         if($result->isNotAvailable()){
-            throw new BusinessException($result->message());
+            throw new BusinessException($result->code());
         }
 
         $pdf = $examCodesGenerator->execute($exam);
@@ -88,7 +88,7 @@ class ExamDocumentController
         $result = $this->examDocumentRules->codes($exam);
         
         if($result->isNotAvailable()){
-            throw new BusinessException($result->message());
+            throw new BusinessException($result->code());
         }
 
         return response()->json([

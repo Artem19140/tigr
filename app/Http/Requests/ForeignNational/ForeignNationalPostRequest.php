@@ -3,6 +3,7 @@
 namespace App\Http\Requests\ForeignNational;
 
 use App\Http\Dto\ForeignNationalStoreDto;
+use App\Models\ForeignNationalDocument;
 use App\Support\CountryProvider;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
@@ -163,20 +164,27 @@ class ForeignNationalPostRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'passportTranslate' => [
-                'required',
-                'mimes:pdf',
-                File::types(['pdf'])
-                    ->max('20mb'),
-            ],
-            'passport' => [
-                'required',
-                'mimes:pdf',
-                File::types(['pdf'])
-                    ->max('20mb'),
-            ],
+            'passportTranslate' => $this->fileRules(),
+
+            'passport' => $this->fileRules(),
         ];
     }
+
+    public function fileRules(): array 
+    {
+        $allowedMimes = ForeignNationalDocument::allowedMimes();
+        $allowedMimesImploded = implode(',', $allowedMimes);
+        
+        $maxSizeMb = ForeignNationalDocument::MAX_SIZE_MB;
+        return [
+            'required',
+            'file',
+            "mimes:$allowedMimesImploded",
+            File::types($allowedMimes)
+                ->max("{$maxSizeMb}mb"),
+        ];
+    }
+    
 
     public function toDto(): ForeignNationalStoreDto
     {

@@ -3,7 +3,7 @@
 namespace App\Modules\Exam;
 
 use App\Modules\Shared\RuleResult;
-use App\Enums\AvailabilityCode;
+use App\Enums\BusinessCode;
 use App\Models\Exam;
 
 class ExamCancellRules{
@@ -11,13 +11,13 @@ class ExamCancellRules{
     {
         if($exam->isCancelled()){
             return RuleResult::fail(
-                AvailabilityCode::ExamCancelled
+                BusinessCode::ExamCancelled
             );
         }
 
         if(! $exam->isPending()){
             return RuleResult::fail(
-                AvailabilityCode::ExamAlreadyStarted
+                BusinessCode::ExamAlreadyStarted
             );
         }
 

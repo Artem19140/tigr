@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\CenterManagement;
 
+use App\Enums\BusinessCode;
 use App\Http\Resources\Employee\EmployeeIndexResource;
 use App\Http\Resources\Employee\EmployeeResource;
 use App\Modules\Employee\CreateEmployee;
@@ -97,7 +98,9 @@ class EmployeeController
         Audit $audit
     ) : RedirectResponse {
         if (! $employee->isActive()) {
-            throw new BusinessException('Сотрудник уже уволен');
+            throw new BusinessException(
+                BusinessCode::EmployeeAlreadyFired
+            );
         }
 
         $employee->update([

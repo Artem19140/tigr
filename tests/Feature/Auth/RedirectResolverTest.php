@@ -50,12 +50,4 @@ class RedirectResolverTest extends TestCase
             ->create();
         $this->assertEquals(route('foreign-nationals.index'), $employee->resolveRedirect());
     }
-
-    public function test_scheduler(): void
-    {
-        $employee = Employee::factory()
-            ->scheduler()
-            ->create();
-        $this->assertEquals(route('exams.index'), $employee->resolveRedirect());
-    }
 }

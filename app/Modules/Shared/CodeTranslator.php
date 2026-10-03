@@ -2,26 +2,28 @@
 
 namespace App\Modules\Shared;
 
-use App\Enums\AvailabilityCode;
+use App\Enums\BusinessCode;
 
 class CodeTranslator{
     public function translate(
-        AvailabilityCode | string | null $code,
+        BusinessCode | null $code,
         array $params = []
     ):?string {
         if(!$code){
             return null;
         }
 
-        if($code instanceof AvailabilityCode){
+        if($code instanceof BusinessCode){
             return $this->translationKey($code->value, $params);
         }
 
         return $this->translationKey($code, $params); 
     }
 
-    protected function translationKey(string $key , array $params = []):string
-    {
-        return __("reason_codes.{$key}", $params);
+    protected function translationKey(
+        string $key , 
+        array $params = []
+    ):string {
+        return __("business_codes.{$key}", $params);
     }
 }

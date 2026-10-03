@@ -13,16 +13,10 @@ import { mdiClose } from '@mdi/js'
     location="bottom center"
     closable
     timeout
-    variant="flat"
-    timer="bottom"
     transition="bouncy-slide-auto"
-    prepend-icon="$success"
   >
     <template v-slot:actions="{ props }">
       <v-btn
-        class="px-3"
-        density="comfortable"
-        rounded="lg"
         variant="text"
         :icon="mdiClose"
         v-bind="props"

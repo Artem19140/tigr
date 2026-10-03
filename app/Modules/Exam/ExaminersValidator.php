@@ -2,6 +2,7 @@
 
 namespace App\Modules\Exam;
 
+use App\Enums\BusinessCode;
 use App\Enums\EmployeeRole;
 use App\Exceptions\BusinessException;
 use App\Models\Employee;
@@ -93,8 +94,11 @@ class ExaminersValidator
             ->implode('full_name_short', ', ');
 
         throw new BusinessException(
-            "Выбранные экзаменаторы недоступны в указанное время: $names"
-        );
+            BusinessCode::ExaminersBusy,
+            [
+                'names' => $names
+            ]
+        ); 
     }
 
     protected function ensureAllExaminersActive(Collection $examiners): void
@@ -108,7 +112,12 @@ class ExaminersValidator
                 'ids' => $notActive->pluck('id')->toArray(),
             ]);
             $names = $notActive->implode('full_name', ', ');
-            throw new BusinessException("$names уже не работает(-ют) в организации");
+            
+            throw new BusinessException(
+                BusinessCode::ExaminersNotWork, [
+                    'names' => $names
+                ]
+            );
         }
     }
 
@@ -122,8 +131,14 @@ class ExaminersValidator
             Log::warning('trying to select examiners, but they have no role examiner', [
                 'ids' => $noRoleExaminer->pluck('id')->toArray(),
             ]);
+            
             $names = $noRoleExaminer->implode('full_name', ', ');
-            throw new BusinessException("$names не имеет(-ют) роли экзаменатора");
+            throw new BusinessException(
+                BusinessCode::HasNoRoleExaminer,
+                [
+                    'names' => $names
+                ]
+            );
         }
     }
 }

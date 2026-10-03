@@ -30,7 +30,7 @@ class ExamCreateTest extends TestCase
             ->examiner()->create();
 
         $this->actor = Employee::factory()
-            ->scheduler()
+            ->operator()
             ->create();
 
         $this->examType = ExamType::factory()->create();

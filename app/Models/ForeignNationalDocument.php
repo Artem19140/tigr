@@ -7,9 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ForeignNationalDocument extends Model
-{
+{ 
     /** @use HasFactory<\Database\Factories\ForeignNationalDocumentsFactory> */
     use HasFactory;
+
+    public const int MAX_SIZE_MB = 20;
+
+    public static function allowedMimes():array
+    {
+        return ['pdf'];
+    }
 
     protected $fillable = [
         'path',

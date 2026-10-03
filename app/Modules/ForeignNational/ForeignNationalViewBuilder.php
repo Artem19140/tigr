@@ -2,7 +2,6 @@
 
 namespace App\Modules\ForeignNational;
 
-use App\Models\Document;
 use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\ForeignNational;
@@ -19,7 +18,10 @@ class ForeignNationalViewBuilder
         Employee $employee
     ): ForeignNational
     {
-        $this->loadAllowedRelations($foreignNational, $employee);
+        $this->loadAllowedRelations(
+            $foreignNational, 
+            $employee
+        );
 
         $foreignNational->enrollments = $foreignNational
             ->enrollments
@@ -31,8 +33,7 @@ class ForeignNationalViewBuilder
     protected function loadAllowedRelations(
         ForeignNational $foreignNational,
         Employee $employee
-    )
-    {
+    ):void {
         $relations = [];
 
         if($employee->can('viewAny', ForeignNationalDocument::class)){

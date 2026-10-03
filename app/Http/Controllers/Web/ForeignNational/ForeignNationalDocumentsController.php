@@ -31,13 +31,18 @@ class ForeignNationalDocumentsController
         Audit $audit
     ): RedirectResponse
     {
+        $allowedMimes = ForeignNationalDocument::allowedMimes();
+        $allowedMimesImploded = implode(',', $allowedMimes);
+        
+        $maxSizeMb = ForeignNationalDocument::MAX_SIZE_MB;
+        
         $request->validate([
             'document' => [
-                'required', 
-                'file', 
-                'mimes:pdf',
-                File::types(['pdf'])
-                    ->max('20mb')
+                'required',
+                'file',
+                "mimes:$allowedMimesImploded",
+                File::types($allowedMimes)
+                    ->max("{$maxSizeMb}mb"),
             ]
         ]);
 

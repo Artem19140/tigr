@@ -15,7 +15,7 @@ export interface ForeignNational{
   phone: string | null
   citizenship:string | null
   dateBirth:string | null
-  comment:''
+  comment:string | null
   gender:string | null
   addressReg:string,
 }
@@ -81,7 +81,6 @@ export interface ForeignNationalEnrollment{
   id:number
   fullName:string
   fullPassport:string
-  isLoading?: boolean
 }
 
 export interface ForeignNationalIndex{

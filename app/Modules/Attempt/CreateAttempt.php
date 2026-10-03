@@ -2,6 +2,7 @@
 
 namespace App\Modules\Attempt;
 
+use App\Enums\BusinessCode;
 use App\Models\Task;
 use App\Modules\Enrollment\VerifyCode;
 use App\Modules\Counter\GroupNumberGenerator;
@@ -68,7 +69,9 @@ class CreateAttempt
                 'enrollment_id' => $enrollment->id,
                 'exam_id' => $enrollment->exam_id,
             ]);
-            throw new BusinessException('Сущестует текущая попытка экзамен');
+            throw new BusinessException(
+                BusinessCode::ActiveAttemptsExists
+            );
         }
 
         return Attempt::create([

@@ -14,7 +14,6 @@ class ExamPolicy
             EmployeeRole::Operator,
             EmployeeRole::Director,
             EmployeeRole::Examiner,
-            EmployeeRole::Scheduler
         )) {
             return true;
         }
@@ -26,8 +25,7 @@ class ExamPolicy
     {
         if ($employee->hasAnyRole(
             EmployeeRole::Operator,
-            EmployeeRole::Director,
-            EmployeeRole::Scheduler
+            EmployeeRole::Director
         )) {
             return true;
         }
@@ -52,17 +50,17 @@ class ExamPolicy
 
     public function create(Employee $employee): bool
     {
-        return $employee->hasAnyRole(EmployeeRole::Scheduler);
+        return $employee->hasAnyRole(EmployeeRole::Operator);
     }
 
     public function update(Employee $employee, Exam $exam): bool
     {
-        return $employee->hasAnyRole(EmployeeRole::Scheduler);
+        return $employee->hasAnyRole(EmployeeRole::Operator);
     }
 
     public function delete(Employee $employee, Exam $exam): bool
     {
-        return $employee->hasAnyRole(EmployeeRole::Scheduler);
+        return $employee->hasAnyRole(EmployeeRole::Operator);
     }
 
     public function examiner(Employee $employee, Exam $exam): bool

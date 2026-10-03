@@ -27,6 +27,8 @@ class BaseException extends Exception
             ], 400);
         }
 
-        return Inertia::flash(['error' => $this->getMessage()])->back();
+        return Inertia::flash([
+            'error' => $this->getMessage()
+        ])->back();
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Modules\Attempt;
 
 use App\Modules\Shared\RuleResult;
-use App\Enums\AvailabilityCode;
+use App\Enums\BusinessCode;
 use App\Models\Attempt;
 
 class AttemptSpeakingRules
@@ -18,7 +18,7 @@ class AttemptSpeakingRules
 
         if($this->speakingStarted($attempt)){
             return RuleResult::fail(
-                'speaking_already_started'
+                BusinessCode::SpeakingAlreadyStarted
             );
         }
         return RuleResult::success();
@@ -34,13 +34,13 @@ class AttemptSpeakingRules
 
         if(! $this->speakingStarted($attempt)){
             return  RuleResult::fail(
-                'speaking_not_started_yet'
+                BusinessCode::SpeakingNotStarted
             );
         }
 
         if($this->speakingFinished($attempt)){
             return  RuleResult::fail(
-                'speaking_already_finished'
+                BusinessCode::SpeakingAlreadyFinished
             );
         }
         return  RuleResult::success();
@@ -61,19 +61,19 @@ class AttemptSpeakingRules
     {
         if($this->hasNoSpeaking($attempt)){
             return  RuleResult::fail(
-                'attempt_has_no_speaking'
+                BusinessCode::AttemptHasNoSpeaking
             );
         }
 
         if($this->isNotToday($attempt)){
             return  RuleResult::fail(
-                'speaking_available_on_attempt_taking_day'
+                BusinessCode::SpeakingUnavailable
             );
         }
 
         if($attempt->isAnnulled()){
             return  RuleResult::fail(
-                AvailabilityCode::AttemptAnnulled
+                BusinessCode::AttemptAnnulled
             );
         }
         return null;

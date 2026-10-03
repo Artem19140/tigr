@@ -3,7 +3,7 @@
 namespace App\Modules\AttemptAnswer;
 
 use App\Modules\AttemptAnswer\TaskHandlerResolver;
-use App\Exceptions\Task\TaskAnswersNotAllowedException;
+use App\Exceptions\TaskAnswersNotAllowedException;
 use App\Models\AttemptAnswer;
 use App\Models\Task;
 

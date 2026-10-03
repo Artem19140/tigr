@@ -2,6 +2,7 @@
 
 namespace App\Modules\Attempt;
 
+use App\Enums\BusinessCode;
 use App\Exceptions\BusinessException;
 use App\Models\Attempt;
 use App\Modules\Shared\ExamSettings;
@@ -33,17 +34,25 @@ class FinishAttempt
     protected function canFinish(Attempt $attempt)
     {
         if ($attempt->isFinished()) {
-            throw new BusinessException('Попытка уже завершена');
+            throw new BusinessException(
+                BusinessCode::AttemptAlreadyFinished
+            );
         }
         
         $minTimeMinutes = ExamSettings::attemptMinDurationMinutes();
         $now = Carbon::now();
 
-        $attemptCanBeFinished = $attempt->started_at->copy()->addMinutes($minTimeMinutes);
+        $attemptCanBeFinished = $attempt->started_at->copy()
+            ->addMinutes($minTimeMinutes);
 
         $tooEarlyToFinish = $now->lte($attemptCanBeFinished);
+
         if ($tooEarlyToFinish) {
-            throw new BusinessException("Попытку возможно завершить минимум через  $minTimeMinutes минут после начала");
+            throw new BusinessException(
+                BusinessCode::AttemptEarlyFinish,[
+                    'min' => $minTimeMinutes
+                ]
+            );
         }
     }
 }

@@ -18,11 +18,11 @@ const { add } = useSnackbarQueue()
 
 router.on('flash', (event) => {
   if(event.detail.flash.success){
-    add(String(event.detail.flash.success), 'green')
+    add(String(event.detail.flash.success), 'success')
   }
 
   if(event.detail.flash.error){
-    add(String(event.detail.flash.error), 'red')
+    add(String(event.detail.flash.error), 'error')
   }
 })
 

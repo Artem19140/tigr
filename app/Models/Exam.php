@@ -138,7 +138,6 @@ class Exam extends Model
         if($employee->hasAnyRole(
             EmployeeRole::Operator,
             EmployeeRole::Director,
-            EmployeeRole::Scheduler,
             EmployeeRole::PlatformAdmin
         )){
             return $query;

@@ -32,14 +32,13 @@ class MainMenuNavigation
             ],
 
             'reports' => [
-                'url' => route('reports.resolver', [], false),
+                'url' => null,
                 'can' => $employee->can('reports.viewAny'),
                 'submenu' => $this->reportNavigation->resolve($employee)
-                
             ],
 
             'center' => [
-                'url' => route('center-manage.resolver', [], false),
+                'url' => null,
                 'can' => $employee->can('center-manage'),
                 'submenu' => $this->centerManageNavigation->resolve($employee)
             ],

@@ -3,7 +3,7 @@
 namespace App\Modules\Enrollment;
 
 use App\Modules\Shared\RuleResult;
-use App\Enums\AvailabilityCode;
+use App\Enums\BusinessCode;
 use App\Models\Enrollment;
 
 class EnrollmentPaymentRules
@@ -14,19 +14,19 @@ class EnrollmentPaymentRules
 
         if($enrollment->attempt){
             return RuleResult::fail(
-                AvailabilityCode::AttemptExists
+                BusinessCode::AttemptExists
             );
         }
 
         if($exam->isCancelled()){
             return RuleResult::fail(
-                AvailabilityCode::ExamCancelled
+                BusinessCode::ExamCancelled
             );
         }
 
         if($exam->codesTtlExpired()){
             return RuleResult::fail( 
-                AvailabilityCode::ExamCodeExpired
+                BusinessCode::ExamCodeExpired
             );
         }
 

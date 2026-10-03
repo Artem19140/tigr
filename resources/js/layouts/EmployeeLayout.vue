@@ -9,7 +9,9 @@ import { mdiPaw, mdiAccountGroup, mdiFileChartOutline,
 import LogoutAllDevicesModal from './LogoutAllDevicesModal.vue';
 
 const page = usePage<any>()
-const navigation =  computed(() => page.props?.auth?.navigation)
+const navigation =  computed(
+    () => page.props?.auth?.navigation
+)
 
 const logout = async () => {
   const {confirmOpen} = useConfirm()
@@ -20,8 +22,8 @@ const logout = async () => {
 const user = page.props?.auth?.user ?? null
 
 const employeeName = `${user?.surname} ${user?.name}`
-const activeItem = ref(page.url ?? '')
-const opened = ref([])
+const activeItem = ref([page.url ?? ''])
+const opened = ref([page.url ?? ''])
 
 const menuProps = {
   foreignNationals: {
@@ -45,6 +47,13 @@ const menuProps = {
 } 
 type MenuKey = keyof typeof menuProps
 const logoutAll = ref<boolean>(false)
+
+const visit = (url: string) => {
+    router.visit(url, {
+        preserveScroll:true,
+        preserveState:true
+    })
+}
 </script>
 
 <template>
@@ -59,9 +68,7 @@ const logoutAll = ref<boolean>(false)
                 <div class="py-3">
                     <v-list-item
                         :title="employeeName"
-                        :subtitle="user?.job_title"
                         :prepend-icon="mdiPaw"
-                        class="rounded-lg"
                     />
                 </div>
 
@@ -77,13 +84,14 @@ const logoutAll = ref<boolean>(false)
                     class="px-2 pt-3"
                 >
                     <template 
-                        v-for="(item, key) in navigation.menu"
+                        v-for="(item, key, index) in navigation.menu"
                         :key="key"
                     >
                         <v-list-group
                             v-if="item.submenu"
-                            :value="item.url"
+                            :value="index"
                         >
+                        
                             <template #activator="{ props }">
                                 <v-list-item
                                     v-bind="props"
@@ -95,13 +103,13 @@ const logoutAll = ref<boolean>(false)
                             </template>
 
                             <v-list-item
-                                v-for="(subItem, subKey) in item.submenu"
-                                :key="subKey"
+                                v-for="(subItem, index) in item.submenu"
+                                :key="subItem.url"
                                 :value="subItem.url"
                                 :title="subItem.label"
                                 class="mb-1 rounded-lg"
                                 color="primary"
-                                @click.stop="router.visit(subItem.url)"
+                                @click.stop="() => visit(subItem.url)"
                             />
                         </v-list-group>
                         
@@ -112,7 +120,7 @@ const logoutAll = ref<boolean>(false)
                             :prepend-icon="menuProps[key].icon"
                             class="mb-1 rounded-lg"
                             color="primary"
-                            @click="router.visit(item.url)"
+                            @click="() => visit(item.url)"
                         />
                     </template>
                     

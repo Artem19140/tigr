@@ -34,7 +34,7 @@ class ExamPolicyTest extends TestCase
     public function test_scheduler_base_access(): void
     {
         $scheduler = Employee::factory()
-            ->scheduler()
+            ->operator()
             ->create();
         $this->assertTrue($scheduler->can('delete', $this->exam));
         $this->assertTrue($scheduler->can('create', Exam::class));

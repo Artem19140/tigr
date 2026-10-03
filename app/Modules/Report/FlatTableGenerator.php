@@ -23,15 +23,21 @@ class FlatTableGenerator
         $this->csvWriter->setHeaders($this->headers());
         $strNumber = 1;
 
+        $period = $this->getPeriod(
+            $dateFrom,
+            $dateTo
+        );
+
         Attempt::query()
-            ->with(['foreignNational', 'exam.type', 'attemptAnswers' => [
-                'taskVariant.task',
-                'answer',
-            ]])
-            ->whereBetween('created_at', [
-                $dateFrom->copy()->setTimezone(CenterData::timeZome())->startOfDay()->utc(),
-                $dateTo->copy()->setTimezone(CenterData::timeZome())->endOfDay()->utc(),
+            ->with([
+                'foreignNational', 
+                'exam.type', 
+                'attemptAnswers' => [
+                    'taskVariant.task',
+                    'answer',
+                ]
             ])
+            ->whereBetween('created_at', $period)
 
             ->whereNotNull('reviewed_at')
 
@@ -91,6 +97,17 @@ class FlatTableGenerator
             'Mark',
             'TotalMark',
             'Resolution',
+        ];
+    }
+
+    protected function getPeriod(
+        Carbon $dateFrom,
+        Carbon $dateTo
+    ): array {
+        $timeZone = CenterData::timeZome();
+        return [
+            $dateFrom->copy()->setTimezone($timeZone)->startOfDay()->utc(),
+            $dateTo->copy()->setTimezone($timeZone)->endOfDay()->utc(),
         ];
     }
 }

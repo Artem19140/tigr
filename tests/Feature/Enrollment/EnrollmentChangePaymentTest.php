@@ -39,7 +39,7 @@ class EnrollmentChangePaymentTest extends TestCase
     )
     {
         return $this->actingAs($employee ?? $this->employee)
-            ->put(route('enrollments.payment-change', [
+            ->putJson(route('enrollments.payment-change', [
                 'enrollment' => $enrollmentId,
                 'status' => $status
             ]));
@@ -69,7 +69,7 @@ class EnrollmentChangePaymentTest extends TestCase
 
         $this->assertEquals($expectedPaymentStatus, $enrollment->has_payment);
 
-        $response->assertRedirectBack();
+        $response->assertNoContent();
     }
 
     public function test_fail_has_attempt(): void
@@ -84,7 +84,7 @@ class EnrollmentChangePaymentTest extends TestCase
 
         $response = $this->putPayment($enrollment->id, ! $paymentStatus);
 
-        $response->assertRedirectBack();
+        $response->assertBadRequest();
 
         $this->assertEquals($paymentStatus, $enrollment->has_payment);
     }
@@ -103,7 +103,7 @@ class EnrollmentChangePaymentTest extends TestCase
 
         $response = $this->putPayment($enrollment->id, !  $paymentStatus);
 
-        $response->assertRedirectBack();
+        $response->assertBadRequest();
 
         $this->assertEquals($paymentStatus, $enrollment->has_payment);
     }
