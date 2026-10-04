@@ -22,7 +22,7 @@ const form = useForm({
     shortName: props.center.data.shortName,
     ogrn: props.center.data.ogrn,
     inn: props.center.data.inn,
-    address: props.center.data.address,
+    registeredAddress: props.center.data.registeredAddress,
     certificatesIssueAddress: props.center.data.certificatesIssueAddress,
     directorFio: props.center.data.directorFio,
     commissionChairman: props.center.data.commissionChairman,
@@ -96,12 +96,12 @@ const cancel = async () => {
                     />
 
                     <v-textarea
-                        v-model="form.address"
-                        label="Адрес центра"
+                        v-model="form.registeredAddress"
+                        label="Юридический адрес"
                         placeholder="Введите адрес центра"
                         auto-grow
                         rows="1"
-                        :error-messages="form.errors.address"
+                        :error-messages="form.errors.registeredAddress"
                     />
 
                     <v-textarea

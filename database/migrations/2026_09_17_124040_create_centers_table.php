@@ -19,10 +19,9 @@ return new class extends Migration
 
             $table->string('director_fio')->nullable()->default(null);
             $table->string('certificates_issue_address')->nullable()->default(null);
-            $table->boolean('is_active')->default(true);
             $table->string('ogrn')->nullable()->default(null);
             $table->string('inn')->nullable()->default(null);
-            $table->string('address')->nullable()->default(null);
+            $table->string('registered_address')->nullable()->default(null);
             $table->string('name_genitive')->nullable()->default(null);
             $table->string('time_zone')->nullable()->default(null);
             $table->string('commission_chairman')->nullable()->default(null);

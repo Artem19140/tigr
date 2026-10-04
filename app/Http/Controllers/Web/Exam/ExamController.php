@@ -115,7 +115,8 @@ class ExamController
             'addresses' => AddressResource::collection($createData['addresses']),
             'examTypes' => ExamTypeResource::collection($createData['examTypes']),
             'examiners' => EmployeeResource::collection($createData['examiners']),
-            'backUrl' => url()->previous(route('exams.index', [], false)) 
+            'backUrl' => url()->previous(route('exams.index', [], false)),
+            'storeUrl' => route('exams.store', [], false)
         ]);
     }
 

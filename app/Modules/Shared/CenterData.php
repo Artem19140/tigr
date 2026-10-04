@@ -26,7 +26,7 @@ class CenterData
                             'commission_chairman',
                             'certificates_issue_address',
                             'name_genitive',
-                            'address',
+                            'registered_address',
                             'director_fio',
                         ])->first();
 
@@ -83,7 +83,7 @@ class CenterData
 
     public static function address():string
     {
-        return self::get()->address;
+        return self::get()->registered_address;
     }
 
     public static function directorFio():string

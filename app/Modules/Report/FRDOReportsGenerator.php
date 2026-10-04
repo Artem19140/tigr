@@ -45,12 +45,8 @@ class FRDOReportsGenerator
         string $type
     ): Spreadsheet {
         $attempts = $this->attemptsForReport($date, $type);
-        if ($type === 'certificates') {
-            $templatePath = storage_path('app/public/templates/certificates_frdo.xlsx');
-        } else {
-            $templatePath = storage_path('app/public/templates/references_frdo.xlsx');
-        }
-
+        
+        $templatePath = $this->getPath($type);
         $spreadsheet = IOFactory::load($templatePath);
         $sheet = $spreadsheet->getActiveSheet();
         $templateRow = 3;
@@ -180,5 +176,14 @@ class FRDOReportsGenerator
             и основ законодательства Российской Федерации на уровне, 
             соответствующем цели получения $certificateName
         ";
+    }
+
+    protected function getPath(
+        string $type
+    ): string {
+        return $type === 'certificates' 
+            ?   storage_path('app/public/templates/certificates_frdo.xlsx')
+            :   storage_path('app/public/templates/references_frdo.xlsx');
+        
     }
 }

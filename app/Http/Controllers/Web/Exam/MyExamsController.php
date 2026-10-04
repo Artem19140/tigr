@@ -9,7 +9,7 @@ use App\Models\Exam;
 use Illuminate\Support\Carbon;
 use Inertia\Inertia;
 
-class MyExamController
+class MyExamsController
 {
     public function index(Request $request): \Inertia\Response
     {

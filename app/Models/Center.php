@@ -16,7 +16,7 @@ class Center extends Model
         'certificates_issue_address',
         'ogrn',
         'inn',
-        'address',
+        'registered_address',
         'name_genitive',
         'time_zone',
         'commission_chairman',

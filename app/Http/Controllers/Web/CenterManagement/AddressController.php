@@ -40,7 +40,7 @@ class AddressController
 
     public function store(
         Request $request
-    ) {
+    ): RedirectResponse {
 
         $request->validate([
             'address' => ['required', 'string'],

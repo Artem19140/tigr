@@ -4,7 +4,7 @@ export interface Center {
   shortName: string
   ogrn: string
   inn: string
-  address: string
+  registeredAddress: string
   certificatesIssueAddress: string
   directorFio: string
   nameGenitive: string

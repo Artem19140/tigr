@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Web\Exam\ExamController;
 use App\Http\Controllers\Web\Exam\AvailableExamsController;
-use App\Http\Controllers\Web\Exam\MyExamController;
+use App\Http\Controllers\Web\Exam\MyExamsController;
 use App\Http\Controllers\Web\ExamDocument\CodesController;
 use App\Http\Controllers\Web\ExamDocument\ListController;
 use App\Http\Controllers\Web\ExamDocument\ProtocolController;
@@ -21,7 +21,7 @@ Route::get('exams/{exam}', [ExamController::class, 'show'])
     ->name('exams.show')
     ->where(['exam' => '[0-9]+']);
 
-Route::get('my-exams', [MyExamController::class, 'index'])
+Route::get('my-exams', [MyExamsController::class, 'index'])
     ->name('my-exams.index')
     ->can('conductAny', Exam::class);
 

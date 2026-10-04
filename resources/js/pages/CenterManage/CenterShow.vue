@@ -19,7 +19,7 @@ const centerData = [
   {label:'Короткое название', value: props.center.data.shortName},
   {label:'ОГРН', value: props.center.data.ogrn},
   {label:'ИНН', value: props.center.data.inn},
-  {label:'Адрес центра', value: props.center.data.address},
+  {label:'Юридический адрес', value: props.center.data.registeredAddress},
   {label:'Адрес выдачи сертификатов', value: props.center.data.certificatesIssueAddress},
   {label:'Директор', value:props.center.data.directorFio},
   {label:'Председатель комиссии', value:props.center.data.commissionChairman},

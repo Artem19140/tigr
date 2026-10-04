@@ -427,7 +427,7 @@
     "fipi_number": "0AAD03",
     "answers": [
       {
-        "is_correct": true,
+        "is_correct": false,
         "content": [
           {
             "type": "text",
@@ -436,7 +436,7 @@
         ]
       },
       {
-        "is_correct": false,
+        "is_correct": true,
         "content": [
           {
             "type": "text",

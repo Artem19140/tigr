@@ -17,7 +17,8 @@ const props = defineProps<{
     examTypes:{
         data:ExamType[]
     },
-    backUrl: string
+    backUrl: string,
+    storeUrl: string
 }>()
 
 defineOptions({
@@ -39,7 +40,7 @@ const create = async () => {
     const {valid} = await  form.value.validate()
     if(!valid) return
 
-    http.post('/exams', {
+    http.post(props.storeUrl, {
         onSuccess: () => back(),
     })   
 }
@@ -55,7 +56,6 @@ const back = () => {
     <v-container>
         <div class="mx-auto max-w-2xl">
             <v-card class="overflow-hidden rounded-xl">
-                <!-- Header -->
                 <v-card-text class="px-6 pt-6">
                     <div class="text-xl font-semibold text-gray-900">
                         Создание экзамена
@@ -66,7 +66,6 @@ const back = () => {
                     </div>
                 </v-card-text>
 
-                <!-- Form -->
                 <v-card-text class="px-6">
                     <v-form ref="form">
                         <ExamCreateForm
@@ -78,7 +77,6 @@ const back = () => {
                     </v-form>
                 </v-card-text>
 
-                <!-- Actions -->
                 <v-card-text class="px-6 pb-6">
                     <div class="flex justify-end gap-2">
                         <v-btn

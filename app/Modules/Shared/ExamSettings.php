@@ -2,18 +2,19 @@
 
 namespace App\Modules\Shared;
 
-final class ExamSettings{
-    public static function codesLength():int
+final class ExamSettings
+{
+    public static function codesLength(): int
     {
         return config('exam.codes_length');
     }
 
-    public static function codesTtlMinutes():int
+    public static function codesTtlMinutes(): int
     {
         return config('exam.codes_ttl');
     }
 
-    public static function attemptMinDurationMinutes():int
+    public static function attemptMinDurationMinutes(): int
     {
         return app()->isProduction() ? config('exam.min_time_from_start_to_finish') : 0;
     }
@@ -23,12 +24,12 @@ final class ExamSettings{
         return app()->isProduction() ? config('exam.enrollment_window_closed_before_exam') : 0;
     }
 
-    public static function minAgeYear():int
+    public static function minAgeYear(): int
     {
         return config('exam.min_age');
     }
 
-    public static function minTimeBeforeCreateMinutes():int
+    public static function minTimeBeforeCreateMinutes(): int
     {
         return app()->isProduction() ? config('exam.min_time_before_exam_creating') : 0;
     }
