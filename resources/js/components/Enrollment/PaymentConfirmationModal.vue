@@ -106,7 +106,7 @@ const back = () => {
                 <v-checkbox
                     v-model="confirmation"
                     class="mt-2"
-                    label="Подтверждаю оплату"
+                    :label="`Подтверждаю {{ hasPayment ? 'отмену' : 'оплату' }}`"
                     hide-details
                 />
 
