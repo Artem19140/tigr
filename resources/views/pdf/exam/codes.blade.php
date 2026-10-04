@@ -5,7 +5,7 @@
 
 @section('content')
 
-<h2 class="text-center">{{ $exam->type->short_name }} • {{ $exam->begin_time_local->format('H:i, d.m.Y') }}</h2>
+<h2 class="text-center">{{ $exam->type->short_name }} • {{ $exam->beginTimeLocal()->format('H:i, d.m.Y') }}</h2>
 <table class="table">
     <tr>
         <th class="text-center border-black">ФИО</th>

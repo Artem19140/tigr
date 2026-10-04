@@ -5,6 +5,8 @@ namespace App\Modules\Report;
 use App\Enums\BusinessCode;
 use App\Exceptions\BusinessException;
 use App\Models\Attempt;
+use App\Models\Enrollment;
+use App\Models\Exam;
 use App\Modules\Shared\CenterData;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -20,15 +22,55 @@ class EnsureFrdoGenerationAvailable
             CenterData::timeZome()
         );
 
-        //Что все экзамены проведены!
+        $this->ensureAllExamsConducted($date);
         $this->ensureAttemptsExists($date);
         $this->ensureNoActiveAttempts($date);
         $this->ensureAllAttemptsReviewed($date);
         $this->ensureHasDataForReportType($date, $type);
     }
 
-    protected function ensureAttemptsExists(Carbon $date): void
-    {
+    protected function ensureAllExamsConducted(
+        Carbon $date
+    ): void {
+
+        $start = Carbon::now();
+        $end = Carbon::now()
+            ->setTimezone(
+                CenterData::timeZome()
+            )
+            ->endOfDay()
+            ->utc();
+
+        $pendingExamsExists = Exam::query()
+            ->notCancelled()
+            ->whereBetween('begin_time', [
+                $start,
+                $end
+            ])
+            ->exists();
+        
+        $enrollmentsWithNotExpiredCodeExists = Enrollment::query()
+            ->whereNotNull('exam_code')
+            ->whereBetween('exam_code_expired_at', [
+                $start,
+                $end
+            ])->exists();
+
+        $notAllExamsConducted = $pendingExamsExists || $enrollmentsWithNotExpiredCodeExists;
+
+        if($notAllExamsConducted){
+            throw new BusinessException(
+                BusinessCode::PendingExamsExists,
+                [
+                    'date' => $date->copy()->format('d.m.Y')
+                ]
+            );
+        }
+    }
+
+    protected function ensureAttemptsExists(
+        Carbon $date
+    ): void {
         $attemptsExists = $this->query($date)
             ->exists();
 
@@ -40,8 +82,9 @@ class EnsureFrdoGenerationAvailable
 
     }
 
-    protected function ensureNoActiveAttempts(Carbon $date): void
-    {
+    protected function ensureNoActiveAttempts(
+        Carbon $date
+    ): void {
         $activeAttemptsExists = $this->query($date)
             ->active()
             ->exists();
@@ -54,8 +97,9 @@ class EnsureFrdoGenerationAvailable
 
     }
 
-    protected function ensureAllAttemptsReviewed(Carbon $date): void
-    {
+    protected function ensureAllAttemptsReviewed(
+        Carbon $date
+    ): void {
         $unreviewedAttemptsExists = $this->query($date)
             ->unreviewed()
             ->exists();

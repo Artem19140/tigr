@@ -13,7 +13,7 @@
 </div>
 
 <div class="text-small">
-    Дата и время: {{ $exam->begin_time_local->format('d.m.Y, H:i') }}
+    Дата и время: {{ $exam->beginTimeLocal()->format('d.m.Y, H:i') }}
 </div>
 <table class="table">
     <thead >

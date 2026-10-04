@@ -22,8 +22,9 @@ class ExamProtocolGenerationTest extends TestCase
             ->examiner()
             ->create();
 
-        Carbon::setTestNow(now());
-
+        Carbon::setTestNow(
+            Carbon::parse('2026-01-01 10:00:00')
+        );
     }
 
     protected function tearDown(): void
@@ -34,10 +35,14 @@ class ExamProtocolGenerationTest extends TestCase
 
     public function test_success_exam_protocol_generation(): void
     {
+        $this->withoutExceptionHandling();
         $enrollment = Enrollment::factory()->create();
         $exam = Exam::factory()
-            ->inFuture()
-            ->create();
+            ->create(
+                [
+                    'begin_time' => Carbon::now()->subMinutes(200)
+                ]
+            );
         $exam->enrollments()->save($enrollment);
         $exam->examiners()->attach($this->actor);
 

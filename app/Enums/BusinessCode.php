@@ -9,6 +9,7 @@ enum BusinessCode: string
     case ExamAlreadyFinished = 'exam_already_finished';
     case ExamCodeExpired = 'exam_code_expired';
     case ExamPending = 'exam_pending';
+    case PendingExamsExists = 'exam_pending_exists';
     case ExamsConflict = 'exams_conflict';
     case ExamOnReview = 'exam_on_review';
     case ProtocolCommentEditUnavailable = 'protocol_comment_edit_unavailable';

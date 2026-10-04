@@ -35,7 +35,7 @@ const headers = [
         >
             <template #header-actions>
                 <v-btn
-                    color="add"
+                    color="create"
                     v-if="createUrl"
                     @click="router.visit(createUrl)"
                 >Добавить</v-btn>

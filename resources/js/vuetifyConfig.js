@@ -25,7 +25,7 @@ export const vuetify = createVuetify({
           primary:'#0176ff', 
           'on-surface': '#1e293b',
           'on-background': '#1e293b',
-          'add' : '#10b767'
+          'create' : '#10b767'
         }
       }
     }

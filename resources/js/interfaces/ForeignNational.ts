@@ -87,6 +87,7 @@ export interface ForeignNationalIndex{
   id:number,
   fullName:string,
   fullPassport:string,
+  showUrl: string
 }
 
 export type ForeignNationalFilters= {

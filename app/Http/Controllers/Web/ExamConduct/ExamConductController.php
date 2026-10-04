@@ -67,7 +67,7 @@ class ExamConductController
                 'id' => $exam->id,
                 'comment' => $exam->protocol_comment,
                 'shortName' => $exam->type->short_name,
-                'date' => $exam->begin_time_local->format('H:i d.m.Y')
+                'date' => $exam->beginTimeLocal()->format('H:i d.m.Y')
             ],
             
             'updateUrl' => route('exams.protocol-comments.update', [

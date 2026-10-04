@@ -36,7 +36,7 @@ defineOptions({
             </div>
 
             <v-btn
-                color="add"
+                color="create"
                 v-if="addresses.data.length > 0 && createUrl"
                 @click="router.visit(createUrl)"
             >Добавить</v-btn>
@@ -61,7 +61,7 @@ defineOptions({
             class="py-10"
         >
             <v-btn
-                color="add"
+                color="create"
                 v-if="createUrl"
                 @click="router.visit(createUrl)"
             >Добавить</v-btn>

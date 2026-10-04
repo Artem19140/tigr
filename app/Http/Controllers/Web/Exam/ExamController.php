@@ -37,15 +37,15 @@ class ExamController
 
         $employee = $request->user();
         $dto = $request->toDto();
+
         $exams = $getExams->execute(
             $dto,
             $employee
         );
+        
         Inertia::flash([
             'filters' => $dto->toFilters()
         ]);
-
-        $employee = $request->user();
         
         return Inertia::render('Exam/Index', [
             'createUrl' => $employee->can('create', Exam::class)
@@ -115,6 +115,7 @@ class ExamController
             'addresses' => AddressResource::collection($createData['addresses']),
             'examTypes' => ExamTypeResource::collection($createData['examTypes']),
             'examiners' => EmployeeResource::collection($createData['examiners']),
+            'backUrl' => url()->previous(route('exams.index', [], false)) 
         ]);
     }
 

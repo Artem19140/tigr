@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\Web\Exam\ExamController;
-use App\Http\Controllers\Web\Exam\ExamDocumentController;
-use App\Http\Controllers\Web\Exam\ExamEnrollmentController;
+use App\Http\Controllers\Web\Exam\AvailableExamsController;
 use App\Http\Controllers\Web\Exam\MyExamController;
+use App\Http\Controllers\Web\ExamDocument\CodesController;
+use App\Http\Controllers\Web\ExamDocument\ListController;
+use App\Http\Controllers\Web\ExamDocument\ProtocolController;
+use App\Http\Controllers\Web\ExamDocument\ResultsController;
 use App\Models\Enrollment;
 use App\Models\Exam;
 use App\Models\ExamType;
@@ -26,42 +29,42 @@ Route::prefix('exams')
     ->middleware(['meta'])
     ->group(function () {
 
-    Route::get('available', [ExamEnrollmentController::class, 'available'])
+    Route::get('available', [AvailableExamsController::class, 'index'])
         ->can('create', Enrollment::class);
 
     Route::get('types', function () {
         return ExamType::cached();
     });
 
-    Route::get('{exam}/documents/codes', [ExamDocumentController::class, 'codes'])
+    Route::get('{exam}/documents/codes', [CodesController::class, 'generate'])
         ->can('codes', 'exam')
         ->name('exams.documents.codes');
 
-    Route::get('{exam}/documents/codes/availability', [ExamDocumentController::class, 'codesAvailable'])
+    Route::get('{exam}/documents/codes/availability', [CodesController::class, 'availability'])
         ->can('codes', 'exam')
         ->name('exams.documents.codes.availability');
 
-    Route::get('{exam}/documents/results', [ExamDocumentController::class, 'results'])
+    Route::get('{exam}/documents/results', [ResultsController::class, 'generate'])
         ->can('results', 'exam')
         ->name('exams.documents.results');
         
-    Route::get('{exam}/documents/results/availability', [ExamDocumentController::class, 'resultsAvailable'])
+    Route::get('{exam}/documents/results/availability', [ResultsController::class, 'availability'])
         ->name('exams.documents.results.availability')
         ->can('results', 'exam');
 
-    Route::get('{exam}/documents/protocol', [ExamDocumentController::class, 'protocol'])
+    Route::get('{exam}/documents/protocol', [ProtocolController::class, 'generate'])
         ->can('protocol', 'exam')
         ->name('exams.documents.protocol');
         
-    Route::get('{exam}/documents/protocol/availability', [ExamDocumentController::class, 'protocolAvailable'])
+    Route::get('{exam}/documents/protocol/availability', [ProtocolController::class, 'availability'])
         ->name('exams.documents.protocol.availability')
         ->can('protocol', 'exam');
 
-    Route::get('{exam}/documents/list', [ExamDocumentController::class, 'list'])
+    Route::get('{exam}/documents/list', [ListController::class, 'generate'])
         ->name('exams.documents.list')
         ->can('list', 'exam');
 
-    Route::get('{exam}/documents/list/availability', [ExamDocumentController::class, 'listAvailable'])
+    Route::get('{exam}/documents/list/availability', [ListController::class, 'availability'])
         ->name('exams.documents.list.availability')
         ->can('list', 'exam');
 });

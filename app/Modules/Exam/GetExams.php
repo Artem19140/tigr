@@ -5,6 +5,7 @@ namespace App\Modules\Exam;
 use App\Http\Dto\ExamIndexDto;
 use App\Models\Employee;
 use App\Models\Exam;
+use App\Modules\Shared\CenterData;
 use Illuminate\Contracts\Pagination\Paginator;
 
 class GetExams
@@ -35,10 +36,22 @@ class GetExams
         $query->when($examTypeId, fn ($q) => $q->where('exam_type_id', $examTypeId)
         );
 
-        $query->when($dateFrom, fn ($q) => $q->where('begin_time', '>=', $dateFrom->copy()->startOfDay()->utc())
+        $query->when($dateFrom, fn ($q) => $q->where('begin_time', '>=', $dateFrom->copy()
+                ->setTimezone(
+                    CenterData::timeZome()
+                )
+                ->startOfDay()
+                ->utc()
+            )
         );
 
-        $query->when($dateTo, fn ($q) => $q->where('begin_time', '<', $dateTo->copy()->endOfDay()->utc())
+        $query->when($dateTo, fn ($q) => $q->where('begin_time', '<', $dateTo->copy()
+                ->setTimezone(
+                    CenterData::timeZome()
+                )
+                ->endOfDay()
+                ->utc()
+            )
         );
 
         $query->when($addressId, fn ($q) => $q->where('address_id', $addressId)

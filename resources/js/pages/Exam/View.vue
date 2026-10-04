@@ -3,7 +3,7 @@ import { Exam, ExamDocument } from '@/interfaces/Exam';
 import ExamInfo from './Components/ExamInfo.vue';
 import EnrollmentsTable from './Components/EnrollmentsTable.vue';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
-import { Head, router, useHttp } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import ExamDocuments from './Components/ExamDocuments.vue';
 import { DateFormatter } from '@/helpers/DateFormatter.js';
 import ExamLayout from '@/layouts/ExamLayout.vue';

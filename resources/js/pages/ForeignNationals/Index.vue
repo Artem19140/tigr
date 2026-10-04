@@ -45,7 +45,7 @@ const loading = ref<boolean>(false)
 			</template>
 			<template #header-actions>
 				<v-btn
-					color="add"
+					color="create"
 					@click="() => router.visit(createUrl)"
 					v-if="createUrl"
 				>Добавить</v-btn>

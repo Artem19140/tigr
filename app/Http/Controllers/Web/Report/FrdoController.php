@@ -24,15 +24,17 @@ class FrdoController
 
         $this->ensureGenerationAvailable->execute(
             $request->input('date'), 
-            $request->input('type')
+            $type
         );
 
         $writer = $frdoGenerator->execute(
-            $date,
+            $request->validated('date'),
             $type
         );
-        $stringDate = $date->format('d.m.Y');
-        $fileName = $type === 'certificates' ? "Сертификаты_ФРДО_$stringDate.xlsx" : "Справки_ФРДО_$stringDate.xlsx";
+
+        $fileName = $type === 'certificates' 
+            ? "Сертификаты_ФРДО_{$date->format('d.m.Y')}.xlsx" 
+            : "Справки_ФРДО_{$date->format('d.m.Y')}.xlsx";
 
         $headers = [
             'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',

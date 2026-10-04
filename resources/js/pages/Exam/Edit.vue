@@ -2,7 +2,7 @@
 import { DateFormatter } from '@/helpers/DateFormatter';
 import { Address } from '@/interfaces/Address';
 import { Employee } from '@/interfaces/Employee';
-import { Exam, ExamForm, ExamType } from '@/interfaces/Exam';
+import { ExamEdit, ExamForm, ExamType } from '@/interfaces/Exam';
 import { router, useForm } from '@inertiajs/vue3';
 import ExamCreateForm from './Components/ExamCreateForm.vue';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
@@ -10,7 +10,7 @@ import { useConfirm } from '@/composables/useConfirm.js';
 
 const props = defineProps<{
     exam:{
-        data:Exam
+        data:ExamEdit
     },
     addresses:{
         data:Address[]
@@ -35,7 +35,7 @@ const form = useForm<ExamForm>({
     comment:props.exam.data.comment ?? '',
     examiners: props.exam.data.examiners.map(e => e.id),
     time: new DateFormatter(props.exam.data.beginTime ?? '').format('H:i'),
-    date:new DateFormatter(props.exam.data.beginTime ?? '').format('Y-m-d'),
+    date: new DateFormatter(props.exam.data.beginTime ?? '').format('Y-m-d'),
     capacity:props.exam.data.capacity
 })
 

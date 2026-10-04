@@ -17,7 +17,7 @@ class ExamEditResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'beginTime' => $this->begin_time_local->copy()->toIso8601String(),
+            'beginTime' => $this->beginTimeLocal()->toIso8601String(),
             'capacity' => $this->capacity,
             'comment' => $this->comment,
             'examTypeId' =>  $this->type->id,

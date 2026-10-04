@@ -1,15 +1,15 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 import AppPaginator from '@/components/UI/AppPaginator/AppPaginator.vue';
 import { Paginated } from '@interfaces/Interfaces';
 const props = defineProps<{
-    elements?: Paginated<any>,
-    headers: Array<any>,
+    elements?: Paginated<T>,
+    headers: Array<Object>,
     title?:string
     loading?:boolean,
 }>()
 
 const emit = defineEmits<{
-    (e: 'row-click', item: any): void
+    (e: 'row-click', item: T): void
 }>()
 </script>
 

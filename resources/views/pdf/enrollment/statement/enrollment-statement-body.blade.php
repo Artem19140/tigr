@@ -67,7 +67,7 @@
         <td colspan="2">
             ДОСТОВЕРНОСТЬ ПРЕДОСТАВЛЕННЫХ СВЕДЕНИЙ ПОДТВЕРЖДАЮ<br>
             @include('pdf.components.signature-section', [
-                'date' =>  $enrollment->exam?->begin_time_local->format('d.m.Y'), 
+                'date' =>  $enrollment->exam?->beginTimeLocal()->format('d.m.Y'), 
                 'fio' => $enrollment->foreignNational?->full_name, 
             ])
             <p class="small" style="margin-bottom: 0; font-style: italic;">Согласие на использование средств видеофиксации.</p> 
@@ -115,8 +115,8 @@
 <br><br>
 <div style="border: 1px #000 solid; padding: 5px;">
     <p>
-        Дата экзамена: <span class="data">{{ $enrollment->exam->begin_time_local->format('d.m.Y') }}</span><br>
-        Время экзамена: <span class="data">{{ $enrollment->exam->begin_time_local->format('H:i')}}</span><br>
+        Дата экзамена: <span class="data">{{ $enrollment->exam->beginTimeLocal()->format('d.m.Y') }}</span><br>
+        Время экзамена: <span class="data">{{ $enrollment->exam->beginTimeLocal()->format('H:i')}}</span><br>
         Адрес проведения экзамена: <span class="data">{{ $enrollment->exam->address->address }}</span>
     </p>
 </div>

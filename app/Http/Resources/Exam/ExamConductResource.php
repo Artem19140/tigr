@@ -17,7 +17,7 @@ class ExamConductResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'beginTime' => $this->begin_time_local->copy()->toIso8601String(),
+            'beginTime' => $this->resource->beginTimeLocal()->toIso8601String(),
             'enrollments' => EnrollmentConductResource::collection($this->whenLoaded('enrollments')),
             'enrollmentsCount' => $this->whenCounted('enrollments_count'),
             'protocolComment' => $this->protocol_comment,

@@ -1,10 +1,8 @@
 import { Employee } from "./Employee"
 import { Enrollment } from "./Enrollment"
-import { ForeignNational } from "./ForeignNational"
 
 export interface Exam{
     id:number,
-    name:string,
     shortName:string,
     beginTime:string,
     endTime:string,
@@ -14,27 +12,35 @@ export interface Exam{
     comment:string,
     examiners:Array<Employee>,
     address:string,
-    creator:Employee | null,
     createdAt:string | null,
     cancelledReason:string | null,
     status:string
-    foreignNationals:Array<ForeignNational>,
     enrollments: Array<Enrollment>,
     enrollmentsCount:number,
     cancelledAt:string,
     documents:{
         id:number
-    },
-    hasEnrollment:boolean
+    }
+}
+
+export interface ExamEdit{
+    examTypeId: number
+    addressId: number
+    comment: string
+    examiners: Array<Employee>
+    beginTime: string,
+    capacity: number,
+    hasEnrollment: boolean
 }
 
 export interface ExamIndex{
-    id:number,
-    name:string,
-    shortName:string,
-    beginTime:string,
-    status:string
-    enrollmentsCount:number,
+    id: number,
+    name: string,
+    shortName: string,
+    beginTime: string,
+    status: string
+    enrollmentsCount: number,
+    showUrl: string
 }
 
 export interface ExamType{
@@ -53,11 +59,11 @@ export interface ExamReview{
 export interface ExamForm{
     examTypeId: number | null,
     addressId: number | null,
-    comment:string,
+    comment: string,
     examiners: Array<number | Employee>,
-    time:string | null,
-    date:string | null,
-    capacity:number | null
+    time: string | null,
+    date: string | null,
+    capacity: number | null
 }
 
 export interface ExamFilters  {

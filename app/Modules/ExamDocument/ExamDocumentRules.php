@@ -11,7 +11,7 @@ class ExamDocumentRules
     public function list(Exam $exam):RuleResult
     {
 
-        if ($this->hasNoEnrollment($exam)) {
+        if ($exam->hasNoEnrollment()) {
             return RuleResult::fail(
                 BusinessCode::EnrollmentNotExists
             );
@@ -28,7 +28,7 @@ class ExamDocumentRules
             );
         }
 
-        if($this->hasNoEnrollment($exam)){
+        if($exam->hasNoEnrollment()){
             return RuleResult::fail(
                 BusinessCode::EnrollmentNotExists
             );
@@ -63,7 +63,7 @@ class ExamDocumentRules
             );
         }
 
-        if($this->hasNoEnrollment($exam)){
+        if($exam->hasNoEnrollment()){
             return RuleResult::fail(
                 BusinessCode::EnrollmentNotExists
             );
@@ -79,13 +79,13 @@ class ExamDocumentRules
             );
         }
 
-        if($this->hasNoAttempts($exam)){
+        if($exam->hasNoAttempts()){
             return RuleResult::fail(
                 BusinessCode::AttemptsNotExists
             );
         }
 
-        if($this->hasActiveAttempts($exam)){
+        if($exam->hasActiveAttempts()){
             return RuleResult::fail(
                 BusinessCode::ActiveAttemptsExists
             );
@@ -108,7 +108,7 @@ class ExamDocumentRules
             );
         }
 
-        if($this->hasNoEnrollment($exam)){
+        if($exam->hasNoEnrollment()){
             return RuleResult::fail(
                 BusinessCode::EnrollmentNotExists
             );
@@ -124,44 +124,24 @@ class ExamDocumentRules
             );
         }
 
-        if($this->hasNoAttempts($exam)){
+        if($exam->hasNoAttempts()){
             return RuleResult::fail(
                 BusinessCode::AttemptsNotExists
             );
         }
 
-        if($this->hasActiveAttempts($exam)){
+        if($exam->hasActiveAttempts()){
             return RuleResult::fail(
                 BusinessCode::ActiveAttemptsExists
             );
         }
 
-        if($this->hasUnreviewdAttemtps($exam)){
+        if($exam->hasUnreviewdAttemtps()){
             return RuleResult::fail(
                 BusinessCode::ExamOnReview
             );
         }
 
         return RuleResult::success();
-    }
-
-    protected function hasNoEnrollment(Exam $exam): bool
-    {
-        return ! $exam->enrollments_exists;
-    }
-
-    protected function hasNoAttempts(Exam $exam): bool
-    {
-        return ! $exam->attempts_exists;
-    }
-
-    protected function hasUnreviewdAttemtps(Exam $exam): bool
-    {
-        return $exam->unreviewed_attempts_exists;
-    }
-
-    protected function hasActiveAttempts(Exam $exam): bool
-    {
-        return $exam->active_attempts_exists;
     }
 }

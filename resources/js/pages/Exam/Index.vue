@@ -36,7 +36,7 @@ const loading = ref<boolean>(false)
       :elements="exams"
       title="Экзамены"
       :loading="loading"
-      @row-click="(item) => router.visit(`/exams/${item.id}`)"
+      @row-click="(item) => router.visit(item.showUrl)"
     >
       <template #header-left>
         <ExamTableFilter 
@@ -46,7 +46,7 @@ const loading = ref<boolean>(false)
       
       <template #header-actions>
         <v-btn
-          color="add"
+          color="create"
           @click="() => router.visit(createUrl)"
           v-if="createUrl"
         >Добавить</v-btn>

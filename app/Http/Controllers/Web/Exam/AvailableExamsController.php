@@ -6,9 +6,9 @@ use App\Modules\Exam\GetAvailableExams;
 use App\Http\Requests\Enrollment\EnrollmentAvailableRequest;
 use App\Models\Exam;
 
-class ExamEnrollmentController
+class AvailableExamsController
 {
-    public function available(
+    public function index(
         EnrollmentAvailableRequest $request,
         GetAvailableExams $getAvailableExams
     ) {
@@ -21,7 +21,7 @@ class ExamEnrollmentController
         return $exams->map(function (Exam $exam) {
             return [
                 'id' => $exam->id,
-                'beginTime' => $exam->begin_time_local->format('H:i d.m.Y'),
+                'beginTime' => $exam->beginTimeLocal()->format('H:i d.m.Y'),
             ];
         });
     }

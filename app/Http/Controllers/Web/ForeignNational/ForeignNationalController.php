@@ -49,9 +49,9 @@ class ForeignNationalController
     public function create(): Response 
     {
         Gate::authorize('create', ForeignNational::class);
-
+        $indexUrl = route('foreign-nationals.index', [], false);
         return Inertia::render('ForeignNationals/Create', [
-            'backUrl' => route('foreign-nationals.index', [], false),
+            'backUrl' => url()->previous($indexUrl),
             'storeUrl' => route('foreign-nationals.store', [], false),
             'documentConstraints' => [
                 'mimes' => ForeignNationalDocument::allowedMimes(),

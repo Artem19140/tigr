@@ -38,7 +38,7 @@
             <td class="label">Дата проведения экзамена:</td>
             <td class="value">
                 <span>
-                    {{ $exam->begin_time_local->format('d.m.Y') }}
+                    {{ $exam->beginTimeLocal()->format('d.m.Y') }}
                 </span>
             </td>
         </tr>

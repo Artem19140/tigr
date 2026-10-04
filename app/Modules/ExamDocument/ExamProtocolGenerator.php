@@ -13,9 +13,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ExamProtocolGenerator
 {
-    public function __construct(
-        protected ExamDocumentRules $examDocumentRules
-    ){}
     public function execute(Exam $exam)
     {   
         $annulledAttempts = $this->getAnnulledAttempts($exam);

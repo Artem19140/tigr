@@ -16,10 +16,13 @@ class ExamIndexResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'beginTime' => $this->begin_time_local->toIso8601String(),
+            'beginTime' => $this->resource->beginTimeLocal()->toIso8601String(),
             'capacity' => $this->capacity,
             'shortName' => $this->whenLoaded('type', fn () => $this->type->short_name),
-            'enrollmentsCount' => $this->whenCounted('enrollments_count')
+            'enrollmentsCount' => $this->whenCounted('enrollments_count'),
+            'showUrl' => route('exams.show', [
+                'exam' => $this->resource
+            ], false)
         ];
     }
 }

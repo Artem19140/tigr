@@ -17,7 +17,7 @@ class ExamShortResource extends JsonResource
         return [
             'id' => $this->id,
             'shortName' => $this->whenLoaded('type', fn () => $this->type->short_name),
-            'beginTime' => $this->begin_time_local->toIso8601String(),
+            'beginTime' => $this->resource->beginTimeLocal()->toIso8601String(),
             'cancelledAt' => $this->cancelled_at
         ];
     }

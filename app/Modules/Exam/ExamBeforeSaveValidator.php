@@ -142,7 +142,7 @@ class ExamBeforeSaveValidator
 
         if ($conflictExam) {
             $examConflictName = $conflictExam->type->short_name;
-            $time = $conflictExam->begin_time_local->format('H:i');
+            $time = $conflictExam->beginTimeLocal()->format('H:i');
             throw new BusinessException(
                 
                 BusinessCode::ExamsConflict,

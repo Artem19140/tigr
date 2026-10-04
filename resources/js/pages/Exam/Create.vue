@@ -8,7 +8,6 @@ import { Address } from '@/interfaces/Address.js';
 import { Employee } from '@/interfaces/Employee.js';
 
 const props = defineProps<{
-    date?:string,
     addresses:{
         data:Address[]
     },
@@ -17,7 +16,8 @@ const props = defineProps<{
     },
     examTypes:{
         data:ExamType[]
-    }
+    },
+    backUrl: string
 }>()
 
 defineOptions({
@@ -26,12 +26,12 @@ defineOptions({
 
 const http = useHttp<ExamForm>({
     examTypeId: null,
-    addressId:null,
+    addressId: null,
     comment:'',
-    examiners:[],
-    time:null,
-    date:props.date ?? null,
-    capacity:null
+    examiners: [],
+    time: null,
+    date: null,
+    capacity: null
 })
 const form = ref()
 
@@ -45,7 +45,7 @@ const create = async () => {
 }
 
 const back = () => {
-    router.visit('/exams')
+    router.visit(props.backUrl)
 }
 </script>
 

@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Exam;
 
 use App\Http\Dto\ExamIndexDto;
-use App\Modules\Shared\CenterData;
 use Carbon\Carbon;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -47,8 +46,8 @@ class ExamIndexRequest extends FormRequest
             id: $this->id,
             addressId: $this->addressId,
             examTypeId: $this->examTypeId,
-            dateFrom: $this->dateFrom ? Carbon::parse($this->dateFrom)->setTimezone(CenterData::timeZome()) : null,
-            dateTo: $this->dateFrom ? Carbon::parse($this->dateTo)->setTimezone(CenterData::timeZome()) : null,
+            dateFrom: $this->dateFrom ? Carbon::parse($this->dateFrom) : null,
+            dateTo: $this->dateFrom ? Carbon::parse($this->dateTo): null,
             cancelled: $this->cancelled
         );
     }

@@ -16,7 +16,6 @@ use PhpOffice\PhpSpreadsheet\Writer\IWriter;
 class FRDOReportsGenerator
 {
     public function __construct(
-        protected EnsureFrdoGenerationAvailable $ensureFrdoGenerationAvailable,
         protected CenterData $center 
     ) {}
 
@@ -27,48 +26,26 @@ class FRDOReportsGenerator
         $date = Carbon::parse($date)->setTimezone(
             CenterData::timeZome()
         );
-        
-        $success = $type === 'certificates';
-
-        $this->ensureFrdoGenerationAvailable->execute($date, $success);
-        $spreadsheet = $this->generateReport($date, $success);
+    
+        $spreadsheet = $this->generateReport(
+            $date, 
+            $type
+        );
         
         event(new ReportGenerated(ReportType::Frdo, [
             'date' => $date->copy()->format('d.m.Y'),
-            'type' => $success ? 'certificates' : 'references'
+            'type' => $type
         ]));
 
         return IOFactory::createWriter($spreadsheet, 'Xlsx');
     }
 
-    protected function attemptsForReport(
-        Carbon $date,
-        bool $success
-    ): Collection {
-        $attempts = Attempt::query()
-            ->with(['exam.type', 'foreignNational', 'exam.address'])
-            ->whereBetween('created_at', [
-                $date->copy()->startOfDay()->utc(),
-                $date->copy()->endOfDay()->utc(),
-            ])
-            ->when($success, function(Builder $query){
-                $query->passed();
-            })
-            ->when(!$success, function(Builder $query){
-                $query->failed();
-            })
-            ->whereNotNull('reviewed_at')
-            ->get();
-
-        return $attempts;
-    }
-
     protected function generateReport(
         Carbon $date,
-        bool $success
+        string $type
     ): Spreadsheet {
-        $attempts = $this->attemptsForReport($date, $success);
-        if ($success) {
+        $attempts = $this->attemptsForReport($date, $type);
+        if ($type === 'certificates') {
             $templatePath = storage_path('app/public/templates/certificates_frdo.xlsx');
         } else {
             $templatePath = storage_path('app/public/templates/references_frdo.xlsx');
@@ -81,7 +58,7 @@ class FRDOReportsGenerator
 
         foreach ($attempts as $attempt) {
             if ($row > $templateRow) {
-                $lastColumn = $success ? 'O' : 'Q';
+                $lastColumn = $type === 'certificates' ? 'O' : 'Q';
 
                 $sheet->duplicateStyle(
                     $sheet->getStyle("A{$templateRow}:{$lastColumn}{$templateRow}"),
@@ -91,8 +68,9 @@ class FRDOReportsGenerator
                 $sheet->getRowDimension($row)
                     ->setRowHeight($sheet->getRowDimension($templateRow)->getRowHeight());
             }
-            if ($success) {
-                $markUp = $this->certificateMarkup($attempt,$row);
+
+            if ($type === 'certificates') {
+                $markUp = $this->certificatesMarkup($attempt,$row);
             } else {
                 $markUp = $this->referencesMarkup($attempt, $row);
             }
@@ -107,7 +85,33 @@ class FRDOReportsGenerator
         return $spreadsheet;
     }
 
-    protected function certificateMarkup(
+    protected function attemptsForReport(
+        Carbon $date,
+        string $type
+    ): Collection {
+        $attempts = Attempt::query()
+            ->with([
+                'exam.type', 
+                'foreignNational', 
+                'exam.address'
+            ])
+            ->whereBetween('created_at', [
+                $date->copy()->startOfDay()->utc(),
+                $date->copy()->endOfDay()->utc(),
+            ])
+            ->when($type === 'certificates', function(Builder $query){
+                $query->passed();
+            })
+            ->when($type === 'references', function(Builder $query){
+                $query->failed();
+            })
+            ->whereNotNull('reviewed_at')
+            ->get();
+
+        return $attempts;
+    }
+
+    protected function certificatesMarkup(
         Attempt $attempt,
         int $row
     ): array {

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\EmployeeRole;
 use App\Modules\Shared\CenterData;
 use App\Modules\Shared\ExamSettings;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -85,11 +86,6 @@ class Exam extends Model
         return $this->belongsTo(Address::class, 'address_id');
     }
 
-    public function isFinished(): bool
-    {
-        return $this->end_time->isPast();
-    }
-
     public function isPending(): bool
     {
         return $this->begin_time->isFuture();
@@ -112,18 +108,18 @@ class Exam extends Model
         });
     }
 
-    protected function beginTimeLocal(): Attribute
+    public function beginTimeLocal(): Carbon
     {
-        return Attribute::get(function () {
-            return $this->begin_time->copy()->setTimezone(CenterData::timeZome());
-        });
+        return $this->begin_time->copy()->setTimezone(
+            CenterData::timeZome()
+        );
     }
 
-    protected function endTimeLocal(): Attribute
+    public function endTimeLocal(): Carbon
     {
-        return Attribute::get(function () {
-            return $this->end_time->copy()->setTimezone(CenterData::timeZome());
-        });
+        return $this->end_time->copy()->setTimezone(
+            CenterData::timeZome()
+        );
     }
 
     public function scopeNotCancelled(Builder $query): Builder
@@ -182,5 +178,27 @@ class Exam extends Model
         return $this->begin_time->copy()->addMinutes(
             ExamSettings::codesTtlMinutes()
         )->isPast();
+    }
+
+
+
+    public function hasNoEnrollment(): bool
+    {
+        return ! $this->enrollments_exists;
+    }
+
+    public function hasNoAttempts(): bool
+    {
+        return ! $this->attempts_exists;
+    }
+
+    public function hasUnreviewdAttemtps(): bool
+    {
+        return $this->unreviewed_attempts_exists;
+    }
+
+    public function hasActiveAttempts(): bool
+    {
+        return $this->active_attempts_exists;
     }
 }
