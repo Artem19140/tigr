@@ -124,33 +124,6 @@ const execute = async (number: number) => {
                     </v-btn>
                 </div>
 
-                <!-- Fresh seed -->
-                <div
-                    class="flex flex-col gap-4 rounded-lg border border-gray-100 p-4 transition-colors hover:bg-gray-50 sm:flex-row sm:items-center sm:justify-between"
-                >
-                    <div class="min-w-0">
-                        <div class="text-sm font-medium text-gray-900">
-                            Пересоздать базу
-                        </div>
-
-                        <code
-                            class="mt-1 block truncate text-xs text-gray-500"
-                        >
-                            php artisan migrate:fresh --seed
-                        </code>
-                    </div>
-
-                    <v-btn
-                        color="error"
-                        :loading="http.processing"
-                        :disabled="http.processing"
-                        class="shrink-0"
-                        @click="execute(4)"
-                    >
-                        Выполнить
-                    </v-btn>
-                </div>
-
                 <!-- Deploy -->
                 <div
                     class="flex flex-col gap-4 rounded-lg border border-gray-100 p-4 transition-colors hover:bg-gray-50 sm:flex-row sm:items-center sm:justify-between"
