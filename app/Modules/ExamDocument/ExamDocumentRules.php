@@ -33,8 +33,8 @@ class ExamDocumentRules
                 BusinessCode::EnrollmentNotExists
             );
         }
-
-        if(! $exam->begin_time->isToday()){
+        $examIsNotToday = ! $exam->begin_time->setTimezone($exam->time_zone)->isToday();
+        if( $examIsNotToday ){
             return RuleResult::fail(
                 BusinessCode::CodesUnavailable
             );

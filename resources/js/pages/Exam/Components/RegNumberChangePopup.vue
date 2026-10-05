@@ -17,6 +17,8 @@ const change = () => {
     form.put(props.enrollment.actions.changeRegNumber.url ?? '', {
         onSuccess: () => {
             isOpen.value = false
+            form.resetAndClearErrors()
+            form.newRegNumber = null
             router.reload()
         }
     })

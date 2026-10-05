@@ -124,6 +124,9 @@ const execute = async (number: number) => {
                     </v-btn>
                 </div>
 
+                <!-- Fresh seed -->
+                <!--  -->
+
                 <!-- Deploy -->
                 <div
                     class="flex flex-col gap-4 rounded-lg border border-gray-100 p-4 transition-colors hover:bg-gray-50 sm:flex-row sm:items-center sm:justify-between"
