@@ -1,7 +1,11 @@
 <?php
 
+use App\Enums\CounterKey;
 use App\Http\Controllers\Web\Enrollment\EnrollmentController;
+use App\Models\Counter;
 use App\Models\Enrollment;
+use App\Support\ModelChangesLogger;
+use Illuminate\Http\Request;
 
 
 Route::post('/enrollments', [EnrollmentController::class, 'store'])
@@ -15,3 +19,25 @@ Route::put('enrollments/{enrollment}/payment', [EnrollmentController::class, 'ch
 Route::get('enrollments/{enrollment}/statements', [EnrollmentController::class, 'statement'])
     ->middleware('can:statement,enrollment')
     ->name('enrollments.statements');
+
+Route::put('enrollments/{enrollment}/reg-number', function(
+    Enrollment $enrollment, 
+    Request $request,
+    ModelChangesLogger $logger
+){
+    $request->validate([
+        'newRegNumber' => [
+            'required', 
+            'integer', 
+            'regex:' . Counter::firstWhere(['key' => CounterKey::RegNum])->regexValidaton()
+        ]
+    ]);
+
+    $enrollment->update([
+        'reg_number' => $request->input('newRegNumber')
+    ]);
+
+    $logger->log($enrollment);
+
+    return response()->noContent();
+})->name('enrollments.update.reg-number');

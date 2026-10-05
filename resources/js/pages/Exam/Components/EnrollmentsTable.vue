@@ -4,6 +4,7 @@ import EnrollmentDropDown from '@/components/Enrollment/EnrollmentDropDown.vue';
 import ExamResultStatus from '@/components/Exam/ExamResultStatus.vue';
 import { Exam } from '@/interfaces/Exam';
 import { mdiCheckCircle, mdiMagnify, mdiMinus } from '@mdi/js'
+import RegNumberChangePopup from './RegNumberChangePopup.vue'
 
 const props = defineProps<{
     exam: Exam
@@ -12,14 +13,11 @@ const props = defineProps<{
 const headers = [
     {title : "ФИО",sortable: false, key: 'foreignNational.fullName', align: 'start' },
     {title : "Паспорт",sortable: false, key: 'foreignNational.fullPassport', align: 'start' },
+    {title : "Рег номер",sortable: false, key: 'regNumber', align: 'center' },
     {title : "Оплата",sortable: false, key: 'hasPayment', align: 'center' },
     {title : "Результаты",sortable: false, key: 'results', align: 'center' },
     {title : "",sortable: false, key: 'actions', align: 'end' },
 ]
-
-props.exam.enrollments?.forEach(fn => {
-    if (fn.isLoading === undefined) fn.isLoading = false
-})
 
 const search = ref('')
 </script>
@@ -76,6 +74,12 @@ const search = ref('')
                 :icon="mdiMinus"
                 size="18"
                 color="grey-lighten-1"
+            />
+        </template>
+
+        <template #item.regNumber="{ item }">
+            <RegNumberChangePopup
+                :enrollment="item"
             />
         </template>
 

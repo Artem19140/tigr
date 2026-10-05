@@ -25,8 +25,8 @@ $headers = [
 
     @foreach ($foreignNationals as $f)
         <tr>
-            <td class="text-center border-black">{{ $f->full_name_short }}</td>
-            <td class="text-center border-black">{{ $f->full_name_latin_short }}</td>
+            <td class="text-center border-black">{{ $f->full_name }}</td>
+            <td class="text-center border-black">{{ $f->full_name_latin }}</td>
             <td class="text-center border-black">{{ $f->full_passport }}</td>
             <td class="text-center border-black">{{ $f->date_birth->format('d.m.Y') }}</td>
             <td class="text-center border-black">{{ $f->country_name }}</td>

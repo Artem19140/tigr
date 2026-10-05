@@ -9,12 +9,16 @@ export interface Enrollment{
     exam: Exam,
     attempt:Attempt | null,
     examResult:ExamStatus,
+    regNumber: string,
     actions:{
         payment:{
             url: string | null
             disabled: boolean
         }
         statement:{
+            url: string | null
+        },
+        changeRegNumber:{
             url: string | null
         }
     }

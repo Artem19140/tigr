@@ -26,6 +26,14 @@ class EnrollmentPolicy
         return $employee->hasAnyRole(EmployeeRole::Operator);
     }
 
+    public function update(Employee $employee): bool
+    {
+        return $employee->hasAnyRole(
+            EmployeeRole::Operator, 
+            EmployeeRole::Director
+        );
+    }
+
     public function payment(Employee $employee, Enrollment $enrollment): bool
     {
         if ($employee->hasAnyRole(

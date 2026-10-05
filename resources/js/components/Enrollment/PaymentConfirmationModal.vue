@@ -46,73 +46,90 @@ const back = () => {
         max-width="600"
         persistent
     >
-        <v-card class="overflow-hidden">
-            <div class="px-6 pt-6">
-                <div class="text-lg font-semibold text-gray-900">
+        <v-card class="overflow-hidden rounded-xl">
+            <div class="border-b border-gray-100 px-6 py-5">
+                <h2 class="text-lg font-semibold leading-6 text-gray-900">
                     Подтверждение {{ hasPayment ? 'отмены' : '' }} оплаты
-                </div>
+                </h2>
 
-                <div class="mt-1 text-sm text-gray-500">
+                <p class="mt-1 text-sm leading-5 text-gray-500">
                     Проверьте данные и подтвердите действие.
-                </div>
+                </p>
             </div>
 
-            <v-card-text class="px-6">
-                <div class="flex flex-col gap-2 mt-4 rounded-lg bg-gray-50 px-4 py-3">
-                    <div class="flex items-center justify-between gap-4" v-if="exam">
+            <v-card-text class="!p-6">
+                <div
+                    class="divide-y divide-gray-200 rounded-lg border border-gray-200 bg-gray-50"
+                >
+                    <div
+                        v-if="exam"
+                        class="grid grid-cols-[120px_minmax(0,1fr)] items-center gap-4 px-4 py-3"
+                    >
                         <span class="text-sm text-gray-500">
                             Экзамен
                         </span>
 
-                        <span class="text-sm font-medium text-gray-900">
+                        <span class="min-w-0 text-right text-sm font-medium text-gray-900">
                             {{ exam.shortName }}
                         </span>
-                        
                     </div>
-                    
-                    <div class="flex items-center justify-between gap-4" v-if="exam">
+
+                    <div
+                        v-if="exam"
+                        class="grid grid-cols-[120px_minmax(0,1fr)] items-center gap-4 px-4 py-3"
+                    >
                         <span class="text-sm text-gray-500">
                             Дата
                         </span>
 
-                        <span class="text-sm font-medium text-gray-900">
+                        <span class="text-right text-sm font-medium text-gray-900">
                             {{ new DateFormatter(exam.beginTime).format('H:i • d.m.Y') }}
                         </span>
-                        
                     </div>
 
-                    <div class="mt-2 flex items-center justify-between gap-4" v-if="foreignNational">
+                    <div
+                        v-if="foreignNational"
+                        class="grid grid-cols-[120px_minmax(0,1fr)] items-center gap-4 px-4 py-3"
+                    >
                         <span class="text-sm text-gray-500">
                             ФИО
                         </span>
 
-                        <span class="text-sm font-medium text-gray-900">
+                        <span
+                            class="min-w-0 truncate text-right text-sm font-medium text-gray-900"
+                            :title="foreignNational.fullName"
+                        >
                             {{ foreignNational.fullName }}
                         </span>
                     </div>
 
-                    <div class="mt-2 flex items-center justify-between gap-4" v-if="foreignNational">
+                    <div
+                        v-if="foreignNational"
+                        class="grid grid-cols-[120px_minmax(0,1fr)] items-center gap-4 px-4 py-3"
+                    >
                         <span class="text-sm text-gray-500">
                             Паспорт
                         </span>
 
-                        <span class="text-sm font-medium text-gray-900">
+                        <span class="min-w-0 text-right text-sm font-medium text-gray-900">
                             {{ foreignNational.fullPassport }}
                         </span>
                     </div>
                 </div>
 
-
-                <v-checkbox
-                    v-model="confirmation"
-                    class="mt-2"
-                    :label="`Подтверждаю {{ hasPayment ? 'отмену' : 'оплату' }}`"
-                    hide-details
-                />
+                <div class="mt-4">
+                    <v-checkbox
+                        v-model="confirmation"
+                        :label="`Подтверждаю ${hasPayment ? 'отмену' : 'оплату'}`"
+                        hide-details
+                        density="compact"
+                        class="!m-0"
+                    />
+                </div>
 
                 <div
                     v-if="error"
-                    class="rounded-lg bg-red-50 px-4 py-3 text-center text-sm text-red-600"
+                    class="mt-3 rounded-lg border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-600"
                 >
                     {{ error }}
                 </div>
@@ -128,10 +145,12 @@ const back = () => {
 
                     <v-btn
                         color="primary"
-                        :disabled="form.processing || ! confirmation"
+                        :disabled="form.processing || !confirmation"
                         :loading="form.processing"
                         @click="change"
-                    >Подтвердить {{ hasPayment ? 'отмену' : 'оплату' }}</v-btn>
+                    >
+                        Подтвердить {{ hasPayment ? 'отмену' : 'оплату' }}
+                    </v-btn>
                 </div>
             </v-card-text>
         </v-card>

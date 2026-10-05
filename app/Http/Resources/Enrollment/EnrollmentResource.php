@@ -24,6 +24,7 @@ class EnrollmentResource extends JsonResource
             'hasPayment' => $this->has_payment,
             'exam' => $this->when($request->routeIs('foreign-nationals.show'), new ExamShortResource($this->whenLoaded('exam'))) ,
             'foreignNational' => new ForeignNationalResource($this->whenLoaded('foreignNational')),
+            'regNumber' => $this->reg_number,
             'examResult' => app(ExamResultResolver::class)->execute(
                 $this->resource->attempt,
                 $this->resource->exam
@@ -44,6 +45,13 @@ class EnrollmentResource extends JsonResource
                             'enrollment' => $this->resource
                         ], false)
                         : null
+                ],
+                'changeRegNumber' => [
+                    'url' => $request->user()->can('update', Enrollment::class)
+                        ?   route('enrollments.update.reg-number',[
+                            'enrollment' => $this->resource
+                        ])
+                        :   null
                 ]
             ],
         ];
