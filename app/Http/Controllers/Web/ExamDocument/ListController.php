@@ -22,7 +22,12 @@ class ListController
 
         $this->ensureGenerationAvailable($exam);
 
-        $exam->load(['foreignNationals', 'type']);
+        $exam->load([
+            'foreignNationals' => function($query){
+                $query->orderBy('surname_normalized');
+            }, 
+            'type'
+        ]);
 
         $pdf = Pdf::loadView(ExamDocument::List->templatePath(), [
             'foreignNationals' => $exam->foreignNationals,
