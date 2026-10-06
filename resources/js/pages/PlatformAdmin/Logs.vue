@@ -4,6 +4,12 @@ import { useHttp } from '@inertiajs/vue3';
 import { RedirectUrl } from '@/interfaces/Interfaces';
 import PlatformAdminLayout from './PlatformAdminLayout.vue';
 
+const props = defineProps<{
+    attemptMinDurationMin: number,
+    examMinTimeBefore: number,
+    enrollmentMinTimeBefore: number
+}>()
+
 defineOptions({
   layout: [EmployeeLayout, PlatformAdminLayout],
 })
@@ -128,6 +134,14 @@ const audit = () => {
                         Открыть
                     </v-btn>
                 </div>
+            </v-card-text>
+        </v-card>
+
+        <v-card class="mt-8">
+            <v-card-text>
+                <div>Попытка мин время: <strong>{{ attemptMinDurationMin }}</strong> мин</div>
+                <div>Экз мин время перед: <strong>{{ examMinTimeBefore }}</strong> мин</div>
+                <div>Запись мин время:  <strong>{{ enrollmentMinTimeBefore }}</strong> мин</div>
             </v-card-text>
         </v-card>
     </v-container>
