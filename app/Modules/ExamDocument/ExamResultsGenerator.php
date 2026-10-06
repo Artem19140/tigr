@@ -46,6 +46,9 @@ class ExamResultsGenerator
                 'foreignNational',
             ],
         ]);
+
+        $exam->enrollments = $exam->enrollments
+            ->sortBy('foreignNational.surname_normalized');
     }
 
     protected function getHeadersStatement(Exam $exam): Collection

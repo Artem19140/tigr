@@ -16,6 +16,9 @@ final class ExamCodesGenerator
     public function execute(Exam $exam)
     {
         $exam->load(['enrollments.foreignNational']);
+        
+        $exam->enrollments = $exam->enrollments
+            ->sortBy('foreignNational.surname_normalized');
 
         $this->generateCodesForExam($exam);
 

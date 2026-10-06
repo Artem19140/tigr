@@ -30,6 +30,9 @@ class ExamViewBuilder
                 ]
             ]);
 
+            $exam->enrollments = $exam->enrollments
+                ->sortBy('foreignNational.surname_normalized');
+
             $exam->enrollments->each(function(Enrollment $enrollment) use (
                 $exam
             ){

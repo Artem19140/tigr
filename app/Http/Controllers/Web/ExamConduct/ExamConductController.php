@@ -25,6 +25,9 @@ class ExamConductController
             'type'
         ]);
 
+        $exam->enrollments = $exam->enrollments
+            ->sortBy('foreignNational.surname_normalized');
+
         $exam->loadExists([
             'attempts as active_attempts_exists' => function ($query) {
                 $query->active();

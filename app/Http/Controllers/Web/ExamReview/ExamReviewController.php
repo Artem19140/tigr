@@ -27,6 +27,7 @@ class ExamReviewController
                 $query->whereHas('attempt', function( $q ){
                     return $q->whereNotNull('finished_at');
                 })
+                ->orderBy('reg_number')
                 ->with('attempt');
             },
         ]);
