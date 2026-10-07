@@ -58,7 +58,7 @@
 <div class="text-small mt-10">Ответственные по проведению экзамена (тесторы):</div>
 @foreach($exam->examiners as $examiner)
     @include('pdf.components.signature-section', [
-        'date' =>  \Carbon\Carbon::now()->format('d.m.Y'), 
+        'date' =>  $exam->beginTimeLocal()->format('d.m.Y'), 
         'fio' => $examiner->full_name, 
     ])
 @endforeach
@@ -69,7 +69,7 @@
             Председатель комиссии:
         </div>
         @include('pdf.components.signature-section', [
-            'date' =>  \Carbon\Carbon::now()->format('d.m.Y'), 
+            'date' => $exam->beginTimeLocal()->format('d.m.Y'), 
             'fio' => $center->commissionChairman(), 
         ])
     </div>

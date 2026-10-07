@@ -32,10 +32,11 @@
             @foreach ($statementTable['headers'] as $block)
                 <th colspan="{{ $block['colspan'] }}">
                     {{ $block['name'] }}
+                    {{-- (min {{$block['min_mark']}}) --}}
                 </th>
             @endforeach
-            <th rowspan="2">Сум.</th>
-            <th rowspan="2">Результат</th>
+            <th rowspan="2">Общ балл</th>
+            <th rowspan="2">Результат (документ)</th>
         </tr>
 
         <tr>
@@ -55,7 +56,10 @@
             @endif
             @foreach ($statementTable['headers'] as $block)
                 @foreach ($block['subblocks'] as $subblock)
-                    <th>{{ $subblock['name'] }}</th>
+                    <th>
+                        {{ $subblock['name'] }}
+                        {{-- {{ $subblock['min_mark'] }} --}}
+                    </th>
                 @endforeach
             @endforeach
         </tr>
@@ -63,7 +67,7 @@
     <tbody>
         @foreach ($statementTable['rows'] as $row)
         <tr>
-            <td >{{ $row['fullName'] }}</td>
+            <td style="padding-left: 10px; padding-right: 10px;">{{ $row['fullName'] }}</td>
             <td>{{ $row['fullPassport'] }}</td>
             <td>{{ $row['startedAt'] ?? ''}}</td>
             <td>{{ $row['finishedAt']  ?? ''}}</td> 
@@ -101,7 +105,7 @@
 
 @foreach($exam->examiners as $examiner)
     @include('pdf.components.signature-section', [
-        'date' =>  \Carbon\Carbon::now()->format('d.m.Y'), 
+        'date' =>  $exam->beginTimeLocal()->format('d.m.Y'), 
         'fio' => $examiner->full_name, 
     ])
 @endforeach
@@ -112,7 +116,7 @@
             Председатель комиссии:
         </div>
         @include('pdf.components.signature-section', [
-            'date' =>  \Carbon\Carbon::now()->format('d.m.Y'), 
+            'date' =>  $exam->beginTimeLocal()->format('d.m.Y'), 
             'fio' => $center->commissionChairman(), 
         ])
     </div>

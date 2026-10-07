@@ -103,7 +103,7 @@
             ПРОТОКОЛ СОСТАВЛЕН
         </div>
         <div >
-            @include('pdf.components.date-inline', ['date' => \Carbon\Carbon::now()])
+            @include('pdf.components.date-inline', ['date' => $exam->beginTimeLocal()])
         </div>
     </div>
     <div class="mt-10">
@@ -114,7 +114,7 @@
         <div class="mb-20">
             @foreach($exam->examiners as $examiner)
                 @include('pdf.components.signature-section', [
-                    'date' =>  \Carbon\Carbon::now()->format('d.m.Y'), 
+                    'date' =>  $exam->beginTimeLocal()->format('d.m.Y'), 
                     'fio' => $examiner->full_name, 
                 ])
             @endforeach

@@ -62,6 +62,7 @@ class ExamResultsGenerator
                     return [
                         'id' => $subblock->id,
                         'name' => $subblock->name,
+                        'min_mark' => $subblock->min_mark
                     ];
                 });
  
@@ -75,6 +76,7 @@ class ExamResultsGenerator
                 'id' => $block->id,
                 'name' => $block->name,
                 'subblocks' => $filteredSubblocks,
+                'min_mark' => $block->min_mark,
                 'colspan' => $subblockCount > 1 ? $filteredSubblocksCount + 1 : 1
             ];
         });
