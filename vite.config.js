@@ -15,6 +15,14 @@ export default defineConfig({
         tailwindcss(),
         vuetify({ autoImport: true })
     ],
+    server:{
+        host:'0.0.0.0',
+        port: 5173,
+        strictPort:true,
+        hmr: {
+            host:'0.0.0.0'
+        }
+    },
     resolve: {
         alias: {
             '@': fileURLToPath(new URL('./resources/js', import.meta.url)),
