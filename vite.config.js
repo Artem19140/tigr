@@ -16,11 +16,11 @@ export default defineConfig({
         vuetify({ autoImport: true })
     ],
     server:{
-        host:'0.0.0.0',
+        host:'localhost',
         port: 5173,
         strictPort:true,
         hmr: {
-            host:'0.0.0.0'
+            host:'localhost'
         }
     },
     resolve: {
