@@ -22,7 +22,7 @@ const props = defineProps<{
 	destroy: {
 		url:string,
 		disabled:boolean
-	}
+	},
   },
   documents:{
     codes: ExamDocument,
@@ -30,7 +30,8 @@ const props = defineProps<{
     results: ExamDocument,
     protocol: ExamDocument
   },
-  reviewStatus: string
+  reviewStatus: string,
+  updateCountersUrl: string | null
 }>()
 
 
@@ -88,7 +89,10 @@ const isOpen = ref<boolean>(false)
                     </v-card-text>
 
                     <v-card-text class="px-6 pb-6">
-                        <ExamInfo :exam="exam.data" />
+                        <ExamInfo 
+                            :exam="exam.data" 
+                            :updateCountersUrl="updateCountersUrl"
+                        />
                     </v-card-text>
                 </v-card>
 

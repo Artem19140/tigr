@@ -21,6 +21,11 @@ Route::get('exams/{exam}', [ExamController::class, 'show'])
     ->name('exams.show')
     ->where(['exam' => '[0-9]+']);
 
+Route::put('exams/{exam}/counters', [ExamController::class, 'updateCounters'])
+    ->can('view', 'exams')
+    ->name('exams.update.counters')
+    ->where(['exam' => '[0-9]+']);
+
 Route::get('my-exams', [MyExamsController::class, 'index'])
     ->name('my-exams.index')
     ->can('conductAny', Exam::class);

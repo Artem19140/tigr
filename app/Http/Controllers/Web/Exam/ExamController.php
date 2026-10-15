@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Exam;
 
 use App\Enums\BusinessCode;
+use App\Exceptions\BusinessException;
 use App\Http\Resources\Exam\ExamEditResource;
 use App\Http\Resources\Exam\ExamResource;
 use App\Modules\Exam\CancelExam;
@@ -21,6 +22,7 @@ use App\Http\Resources\Exam\ExamIndexResource;
 use App\Http\Resources\ExamType\ExamTypeResource;
 use App\Models\Exam;
 use App\Modules\ExamDocument\ExamDocumentBuilder;
+use App\Support\ModelChangesLogger;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -86,7 +88,12 @@ class ExamController
                 ]
             ],
             'documents' => app(ExamDocumentBuilder::class)->build($exam, $request->user()),
-            'reviewStatus' => BusinessCode::ExamOnReview->value
+            'reviewStatus' => BusinessCode::ExamOnReview->value,
+            'updateCountersUrl' => $exam->session && $exam->group 
+                ? route('exams.update.counters',[
+                    'exam' => $exam
+                ], false)
+                : null
         ]);
         
     }
@@ -176,5 +183,31 @@ class ExamController
         return redirect()->route('exams.show', [
             'exam' => $exam
         ]);
+    }
+
+    public function updateCounters(
+        Request $request,
+        Exam $exam,
+        ModelChangesLogger $logger
+    ){
+        $request->validate([
+            'session' => ['required', 'integer', 'min:1'],
+            'group' => ['required', 'integer', 'min:1']
+        ]);
+
+        if(!$exam->session || !$exam->group){
+            throw new BusinessException(
+                BusinessCode::ExamPending
+            );
+        }
+
+        $exam->update([
+            'session' => $request->input('session'),
+            'group' => $request->input('group')
+        ]);
+
+        $logger->log($exam);
+
+        return response()->noContent();
     }
 }

@@ -252,7 +252,9 @@ return [
         'value' => 'значение',
         'reason' => 'причина',
         'noPhone' => 'нет телефона',
-        'newRegNumber' => 'новый рег номер'
+        'newRegNumber' => 'новый рег номер',
+        'session' => 'сессия',
+        'group' => 'группа'
     ],
 
 ];

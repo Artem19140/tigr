@@ -3,9 +3,11 @@ import { Exam } from '@/interfaces/Exam';
 import { computed } from 'vue';
 import { mdiAlertCircleOutline, mdiPound, 
   mdiMapMarkerOutline, mdiAccountGroupOutline, mdiMessageTextOutline } from '@mdi/js'
+import SessionAndGroupChange from './Counters.vue';
 
 const props = defineProps<{
-  exam:Exam | null
+  exam:Exam
+  updateCountersUrl: string | null
 }>()
 
 const examiners = computed(() =>{
@@ -41,10 +43,16 @@ const examiners = computed(() =>{
                     size="18"
                 />
                 <span>Сессия / группа</span>
+                
             </div>
 
             <div class="text-sm font-medium text-gray-900">
-                {{ exam?.sessionNumber ?? '—' }} / {{ exam?.group ?? '—' }}
+                <!-- {{ exam?.sessionNumber ?? '—' }} / {{ exam?.group ?? '—' }} -->
+                <session-and-group-change
+                    :session="exam.sessionNumber"
+                    :group="exam.group"
+                    :update-url="updateCountersUrl"
+                />
             </div>
         </div>
 
