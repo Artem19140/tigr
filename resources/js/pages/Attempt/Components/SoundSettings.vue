@@ -20,9 +20,9 @@ const togglePlayPause = () => {
 </script>
 
 <template>
-  <div class="sound-card pa-6">
+  <div class=" py-6">
 
-    <div class="mb-4">
+    <!-- <div class="mb-4">
       <div class="text-subtitle-1 font-weight-medium text-slate">
         Проверка звука
       </div>
@@ -34,7 +34,7 @@ const togglePlayPause = () => {
 
     <div class="sound-info mb-5">
       Перед началом экзамена вы можете протестировать аудиовывод устройства.
-    </div>
+    </div> -->
 
     <audio ref="audioPlayer" loop>
       <source

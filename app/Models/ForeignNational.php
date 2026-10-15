@@ -56,6 +56,11 @@ class ForeignNational extends Authenticatable
         'issued_date' => 'date',
     ];
 
+    public function getAuthPassword(): string
+    {
+        return '';
+    }
+
     public function exams(): BelongsToMany
     {
         return $this->belongsToMany(Exam::class, 'enrollments')->withPivot('reg_number', 'has_payment');

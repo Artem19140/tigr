@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useForm } from '@inertiajs/vue3';
 import SoundSettings from './Components/SoundSettings.vue';
+import { ref } from 'vue';
+import { mdiCheckCircle, mdiHeadphones } from '@mdi/js';
 
 const props = defineProps<{
     exam:{
@@ -20,6 +22,8 @@ const form = useForm()
 const begin = () => {   
   form.post(props.startUrl)
 }
+
+const soundConfirmation = ref<boolean>(false)
 </script>
 
 <template>
@@ -80,19 +84,74 @@ const begin = () => {
         </div>
       </div>
 
-      <div class="settings mb-8">
-        <SoundSettings />
+      <div class="settings mb-4">
+        
+
+        <div
+            class="mt-5 rounded-xl border p-4 transition-colors"
+            :class="
+                soundConfirmation
+                    ? 'border-green-200 bg-green-50'
+                    : 'border-blue-200 bg-blue-50'
+            "
+        >
+            <div class="flex items-start gap-3">
+                <div
+                    class="flex size-9 shrink-0 items-center justify-center rounded-full"
+                    :class="
+                        soundConfirmation
+                            ? 'bg-green-100 text-green-700'
+                            : 'bg-blue-100 text-blue-700'
+                    "
+                >
+                    <v-icon>
+                        {{
+                            soundConfirmation
+                                ? mdiCheckCircle
+                                : mdiHeadphones
+                        }}
+                    </v-icon>
+                </div>
+
+                <div class="min-w-0 flex-1">
+                    <div class="text-sm font-semibold text-[#1D2939]">
+                        Проверьте звук в наушниках
+                    </div>
+
+                    <p class="mt-1 text-sm leading-5 text-[#475467]">
+                        Убедитесь, что звук слышен чётко и достаточно громко.
+                        Затем подтвердите проверку.
+                    </p>
+
+                    <SoundSettings />
+
+                    <v-checkbox
+                        v-model="soundConfirmation"
+                        class="mt-2"
+                        color="primary"
+                        hide-details
+                        label="Звук слышен чётко и достаточно громко"
+                    />
+                </div>
+            </div>
+        </div>
       </div>
 
       <div class="actions">
-        
+          <div 
+            v-if="! soundConfirmation"
+            class=""
+          >Для начала экзамена подтвердите слышимость звука</div>
+
           <v-btn
             type="submit"
-            :disabled="form.processing"
+            :disabled="form.processing || ! soundConfirmation"
             :loading="form.processing"
             color="primary"
             size="large"
           >Начать экзамен</v-btn>
+
+          
       </div>
     </v-card>
   </div>
@@ -165,6 +224,9 @@ const begin = () => {
 
 .actions {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  gap: 8px;
 }
 </style>

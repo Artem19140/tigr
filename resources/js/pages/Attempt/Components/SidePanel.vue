@@ -6,6 +6,11 @@ import { Attempt } from '@/interfaces/Attempt';
 
 const props = defineProps<{
   attempt:Attempt
+  canFinish:boolean
+}>()
+
+const emit = defineEmits<{
+    (e:'finish'): void
 }>()
 
 const progress = computed(() => {
@@ -58,5 +63,12 @@ const solved = computed(
         />
 
         <TaskSideList :tasks="attempt.tasks" />
+        <div class="text-center mt-4">
+            <v-btn
+                color="primary"
+                :disabled="! canFinish"
+                @click="emit('finish')"
+            >Завершить</v-btn>
+        </div>
     </div>
 </template>

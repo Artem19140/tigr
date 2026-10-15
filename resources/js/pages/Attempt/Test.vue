@@ -61,7 +61,11 @@ onUnmounted(() => stopTimer())
                     class="w-full shrink-0 lg:sticky lg:top-6 lg:w-[260px]"
                 >
                     <div class="overflow-hidden rounded-xl border border-gray-200 bg-white">
-                        <SidePanel :attempt="examAttempt" />
+                        <SidePanel 
+                            :attempt="examAttempt" 
+                            @finish="isOpen=true"
+                            :can-finish="canFinish"
+                        />
                     </div>
                 </aside>
             </div>

@@ -30,6 +30,7 @@ const send = () => {
 const debouncedSend = debounce(() => { send() }, 1000)
 
 watch(attemptAnswer, () => {
+    if(!attemptAnswer.value) return
     debouncedSend()
 })
 </script>
@@ -57,6 +58,14 @@ watch(attemptAnswer, () => {
                     </template>
                 </v-radio>
             </v-radio-group>
+
+            <v-btn
+                class="border"
+                variant='outlined'
+                @click="attemptAnswer = null"
+            >
+                Очистить мой выбор
+            </v-btn>
         </template>
     </BaseTask>   
 </template>

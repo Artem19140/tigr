@@ -24,6 +24,7 @@ class Exam extends Model
         'exam_type_id',
         'creator_id',
         'session_number',
+        'session',
         'capacity',
         'comment',
         'group',

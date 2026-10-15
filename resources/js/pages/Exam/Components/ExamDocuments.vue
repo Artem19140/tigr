@@ -25,7 +25,7 @@ const download = (url :string) => {
 }
 
 const label = {
-    codes : 'Кода',
+    codes : 'Коды',
     protocol: 'Протокол',
     results: 'Результаты',
     list: 'Список'

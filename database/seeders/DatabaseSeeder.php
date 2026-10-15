@@ -11,8 +11,6 @@ use App\Models\Role;
 use Database\Seeders\ExamTypes\PATENT\PatentSeeder;
 use Database\Seeders\ExamTypes\RVP\RvpSeeder;
 use Database\Seeders\ExamTypes\VNZH\VnzhSeeder;
-use Database\Seeders\Local\EmployeeSeeder;
-use Database\Seeders\Local\ForeignNationalSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -86,16 +84,5 @@ class DatabaseSeeder extends Seeder
         $platformAdminRole = Role::findByEnum(EmployeeRole::PlatformAdmin);
 
         $platformAdmin->roles()->syncWithoutDetaching([$platformAdminRole->id]);
-        
-        $this->call([
-            EmployeeSeeder::class
-        ]);
-
-        if (! app()->isProduction()) {
-            $this->call([
-                EmployeeSeeder::class,
-                ForeignNationalSeeder::class,
-            ]);
-        }
     }
 }
