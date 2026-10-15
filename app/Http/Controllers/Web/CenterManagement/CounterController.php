@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\CenterManagement;
 use App\Http\Resources\Counter\CounterResource;
 use App\Models\Counter;
 use App\Support\ModelChangesLogger;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -37,8 +38,13 @@ class CounterController
             ]);
         }
 
+        $inctementedAt = $counter->notInitialized() 
+            ? null
+            : Carbon::now();
+
         $counter->update([
-            'value' => $request->input('value')
+            'value' => $request->input('value'),
+            'last_increment_at' => $inctementedAt
         ]);
 
         $this->logger->log($counter);

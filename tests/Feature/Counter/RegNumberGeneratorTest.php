@@ -20,7 +20,7 @@ class RegNumberGeneratorTest extends TestCase
 
         $this->generator = app(RegNumberGenerator::class);
 
-        Carbon::setTestNow(Carbon::create(2025, 5, 1, 0, 0, 0));
+        Carbon::setTestNow(Carbon::create(2025, 5, 1, 10, 0, 0));
 
         Counter::create([
             'key' => CounterKey::RegNum,

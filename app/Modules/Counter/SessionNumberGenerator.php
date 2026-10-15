@@ -4,6 +4,7 @@ namespace App\Modules\Counter;
 
 use App\Enums\CounterKey;
 use App\Models\Counter;
+use App\Modules\Shared\CenterData;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -52,8 +53,13 @@ class SessionNumberGenerator
 
     protected function incrementIfNeeded(Counter $counter): void
     {
-        $today = Carbon::now()->toDateString();
-        $counterUpdatedDay = $counter->last_increment_at->toDateString();
+        $timeZone = CenterData::timeZome();
+        $today = Carbon::now()
+            ->setTimezone($timeZone)
+            ->toDateString();
+        $counterUpdatedDay = $counter->last_increment_at
+            ->setTimezone($timeZone)
+            ->toDateString();
 
         if($today === $counterUpdatedDay){
             return ;

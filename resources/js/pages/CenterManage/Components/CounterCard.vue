@@ -55,17 +55,19 @@ const cancelEdit = () => {
                 <div class="grid grid-cols-2 gap-6">
                     <div>
                         <div class="text-sm text-gray-500">
-                            Текущий номер
+                            Последний сгенерированный
                         </div>
 
                         <div class="mt-1 text-2xl font-semibold text-gray-900">
                             {{ form.value }}
                         </div>
+
+                        
                     </div>
 
                     <div>
                         <div class="text-sm text-gray-500">
-                            Следующий номер
+                            Следующий к генерации
                         </div>
 
                         <div class="mt-1 text-2xl font-semibold text-gray-900">
@@ -88,9 +90,10 @@ const cancelEdit = () => {
             </div>
         </v-card-text>
 
-        <!-- Actions -->
         <v-card-text class="px-6 pb-6">
-            <div class="flex justify-end gap-2">
+            
+            <div class="flex justify-between items-center">
+                <div class="text-xs text-grey">Последняя генерация: {{ counter.lastIncrementAt ?? ''}} </div>
                 <template v-if="mode === 'view'">
                     <v-btn
                         variant="text"
@@ -101,20 +104,22 @@ const cancelEdit = () => {
                 </template>
 
                 <template v-else>
-                    <v-btn
-                        variant="text"
-                        :disabled="form.processing"
-                        @click="cancelEdit"
-                    >
-                        Отмена
-                    </v-btn>
+                    <div>
+                        <v-btn
+                            variant="text"
+                            :disabled="form.processing"
+                            @click="cancelEdit"
+                        >
+                            Отмена
+                        </v-btn>
 
-                    <v-btn
-                        color="primary"
-                        :disabled="form.processing"
-                        :loading="form.processing"
-                        @click="change"
-                    >Обновить</v-btn>
+                        <v-btn
+                            color="primary"
+                            :disabled="form.processing"
+                            :loading="form.processing"
+                            @click="change"
+                        >Обновить</v-btn>
+                    </div>
                 </template>
             </div>
         </v-card-text>

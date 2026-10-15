@@ -4,4 +4,5 @@ export interface Counter{
     value: number,
     nextValue: number,
     updateUrl: string
+    lastIncrementAt: string | null
 }

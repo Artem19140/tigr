@@ -23,7 +23,9 @@ class ExamListGenerationTest extends TestCase
             ->operator()
             ->create();
         
-        Carbon::setTestNow(now());
+        Carbon::setTestNow(
+            Carbon::parse('2026-01-01 10:00:00')
+        );
     }
 
     protected function tearDown(): void

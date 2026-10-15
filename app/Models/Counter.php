@@ -37,6 +37,7 @@ class Counter extends Model
     public function reset():void
     {
         $this->value = $this->key->defaultValue();
+        $this->last_increment_at = Carbon::now();
     }
 
     public function incrementValue()

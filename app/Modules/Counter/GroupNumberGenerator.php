@@ -3,6 +3,7 @@
 namespace App\Modules\Counter;
 use App\Enums\CounterKey;
 use App\Models\Counter;
+use App\Modules\Shared\CenterData;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -42,8 +43,14 @@ class GroupNumberGenerator
 
     protected function shouldReset(Counter $counter): bool
     {
-        $today = Carbon::now()->toDateString();
-        $counterUpdatedAt = $counter->last_increment_at->toDateString();
+        $timeZone = CenterData::timeZome();
+        $today = Carbon::now()
+            ->setTimezone($timeZone)
+            ->toDateString();
+
+        $counterUpdatedAt = $counter->last_increment_at
+            ->setTimezone($timeZone)
+            ->toDateString();
 
         return $counterUpdatedAt !== $today;
     }

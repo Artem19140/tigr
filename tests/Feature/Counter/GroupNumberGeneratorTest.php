@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Counter;
 
+use App\Models\Center;
 use App\Modules\Counter\GroupNumberGenerator;
 use App\Enums\CounterKey;
 use App\Models\Counter;
@@ -19,8 +20,8 @@ class GroupNumberGeneratorTest extends TestCase
         parent::setUp();
 
         $this->generator = app(GroupNumberGenerator::class);
-
-        Carbon::setTestNow(Carbon::create(2025, 5, 1, 0, 0, 0));
+        Center::factory()->create();
+        Carbon::setTestNow(Carbon::create(2025, 5, 1, 10, 0, 0));
 
         Counter::create([
             'key' => CounterKey::Group,

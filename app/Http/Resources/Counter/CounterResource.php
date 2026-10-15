@@ -7,6 +7,7 @@ use App\Exceptions\CounterNotFoundException;
 use App\Modules\Counter\GroupNumberGenerator;
 use App\Modules\Counter\RegNumberGenerator;
 use App\Modules\Counter\SessionNumberGenerator;
+use App\Modules\Shared\CenterData;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -24,6 +25,7 @@ class CounterResource extends JsonResource
             'key' => $this->resource->key,
             'value' => $this->resource->value,
             'nextValue' => $this->nextValue($this->resource->key),
+            'lastIncrementAt' => $this->last_increment_at->setTimeZone(CenterData::timeZome())->format('H:i • d.m.Y'),
             'updateUrl' => $request->user()->can('update', $this->resource)
                 ? route('counters.update', ['counter' => $this->resource], false)
                 : null

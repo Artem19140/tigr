@@ -108,7 +108,7 @@ class ExaminersValidator
         });
 
         if ($notActive->isNotEmpty()) {
-            Log::warning('trying to select examiners, but they are not active', [
+            Log::warning(BusinessCode::ExaminersNotWork->value, [
                 'ids' => $notActive->pluck('id')->toArray(),
             ]);
             $names = $notActive->implode('full_name', ', ');
@@ -128,7 +128,7 @@ class ExaminersValidator
         });
 
         if ($noRoleExaminer->isNotEmpty()) {
-            Log::warning('trying to select examiners, but they have no role examiner', [
+            Log::warning(BusinessCode::HasNoRoleExaminer->value, [
                 'ids' => $noRoleExaminer->pluck('id')->toArray(),
             ]);
             

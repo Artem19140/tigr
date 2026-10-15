@@ -3,6 +3,7 @@
 namespace Tests\Feature\Counter;
 
 use App\Enums\CounterKey;
+use App\Models\Center;
 use App\Models\Counter;
 use App\Modules\Counter\SessionNumberGenerator;
 use Carbon\Carbon;
@@ -18,8 +19,8 @@ class SessionNumberGeneratorTest extends TestCase
         parent::setUp();
         $this->generator = app(SessionNumberGenerator::class);
 
-        Carbon::setTestNow(Carbon::create(2025, 5, 1, 0, 0, 0));
-
+        Carbon::setTestNow(Carbon::create(2025, 5, 1, 10, 0, 0));
+        Center::factory()->create();
         Counter::create([
             'key' => CounterKey::Session,
             'value' => CounterKey::Session->defaultValue()
