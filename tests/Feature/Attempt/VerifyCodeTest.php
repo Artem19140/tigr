@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Attempt;
 
-use App\Modules\Enrollment\VerifyCode;
+use App\Modules\ExamSession\ExamCodeVerifier;
 use App\Models\Enrollment;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -23,7 +23,7 @@ class VerifyCodeTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->service = app(VerifyCode::class);
+        $this->service = app(ExamCodeVerifier::class);
         $this->exception = ValidationException::class;
 
         Carbon::setTestNow('2026-01-01 10:00:00');

@@ -3,27 +3,22 @@
 namespace App\Http\Controllers\Web\ExamSession;
 
 use App\Http\Requests\Exam\VerifyCodeRequest;
-use App\Modules\Attempt\CreateAttempt;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
+use App\Modules\ExamSession\ExamCodeVerifier;
 
 class VerifyCodeController
 {
     public function verify(
         VerifyCodeRequest $request,
-        CreateAttempt $createAttempt
-    ): RedirectResponse {
-        $attempt = $createAttempt->execute(
+        ExamCodeVerifier $examCodeVerifier
+    ) {
+        $enrollment = $examCodeVerifier->execute(
             $request->validated('code')
         );
 
-        Auth::guard('foreignNationals')
-            ->login($attempt->foreignNational);
-
-        $request->session()->regenerate();
-
-        return redirect()->route('attempts.show', [
-            'attempt' => $attempt->id,
+        session([
+            'enrollment_id' => $enrollment->id
         ]);
+
+        return redirect()->route('exams-sessions.confirmation');
     }
 }

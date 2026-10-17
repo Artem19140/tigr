@@ -14,7 +14,7 @@ class ExamReviewController
     public function show(
         Exam $exam
     ): \Inertia\Response | RedirectResponse {
-         if (! $exam->type->need_human_review) {
+         if (! $exam->needHumanReview()) {
             Log::warning('UNEXPECTED: try to manual review exam with only auto review',[
                 'exam_id' => $exam->id
             ]);

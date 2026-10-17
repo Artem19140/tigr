@@ -4,7 +4,8 @@ use App\Enums\CounterKey;
 use App\Http\Controllers\Web\Enrollment\EnrollmentController;
 use App\Models\Counter;
 use App\Models\Enrollment;
-use App\Support\ModelChangesLogger;
+use App\Support\Audit;
+use App\Support\ModelAuditChangesBuilder;
 use Illuminate\Http\Request;
 
 
@@ -23,7 +24,8 @@ Route::get('enrollments/{enrollment}/statements', [EnrollmentController::class, 
 Route::put('enrollments/{enrollment}/reg-number', function(
     Enrollment $enrollment, 
     Request $request,
-    ModelChangesLogger $logger
+    Audit $audit,
+    ModelAuditChangesBuilder $builder
 ){
     $request->validate([
         'newRegNumber' => [
@@ -37,7 +39,13 @@ Route::put('enrollments/{enrollment}/reg-number', function(
         'reg_number' => $request->input('newRegNumber')
     ]);
 
-    $logger->log($enrollment);
+    $audit->log(
+        'update',
+        $enrollment,
+        [
+            'changes' => $builder->build($enrollment)
+        ]
+    );
 
     return response()->noContent();
 })->name('enrollments.update.reg-number');

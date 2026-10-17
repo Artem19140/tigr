@@ -43,7 +43,7 @@ class GroupNumberGenerator
 
     protected function shouldReset(Counter $counter): bool
     {
-        $timeZone = CenterData::timeZome();
+        $timeZone = CenterData::timeZone();
         $today = Carbon::now()
             ->setTimezone($timeZone)
             ->toDateString();

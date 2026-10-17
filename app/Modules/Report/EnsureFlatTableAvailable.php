@@ -31,7 +31,7 @@ class EnsureFlatTableAvailable
         Carbon $dateTo
     ): array
     {
-        $timeZone = CenterData::timeZome();
+        $timeZone = CenterData::timeZone();
 
         $begin = $dateFrom->copy()->setTimezone(
             $timeZone

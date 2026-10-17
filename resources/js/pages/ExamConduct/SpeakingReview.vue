@@ -4,7 +4,7 @@ import AttemptCheckingSidePanel from '@/components/Attempt/AttemptCheckingSidePa
 import { AttemptConduct } from '@/interfaces/Attempt';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
-import TasksList from '../Attempt/Components/tasks/TasksList.vue';
+import TasksList from '../ExamSession/Components/tasks/TasksList.vue';
 import { AttemptAnswer } from '@/interfaces/Task.js';
 import { mdiArrowLeft } from '@mdi/js'
 

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Web\CenterManagement;
 use App\Http\Resources\Address\AddressIndexResource;
 use App\Models\Address;
 use App\Support\Audit;
-use App\Support\ModelChangesLogger;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -60,8 +59,7 @@ class AddressController
 
     public function update(
         Request $request,
-        Address $address,
-        ModelChangesLogger $logger
+        Address $address
     ): RedirectResponse {
         $request->validate([
             'address' => ['required', 'string'],
@@ -78,7 +76,11 @@ class AddressController
             'capacity' => $request->input('capacity')
         ]);
 
-        $logger->log($address);
+        $this->audit->log(
+            'update',
+            $address
+        );
+
         return redirect()->route('addresses.index');
     }
 

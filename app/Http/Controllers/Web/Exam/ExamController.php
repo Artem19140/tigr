@@ -22,7 +22,8 @@ use App\Http\Resources\Exam\ExamIndexResource;
 use App\Http\Resources\ExamType\ExamTypeResource;
 use App\Models\Exam;
 use App\Modules\ExamDocument\ExamDocumentBuilder;
-use App\Support\ModelChangesLogger;
+use App\Support\Audit;
+use App\Support\ModelAuditChangesBuilder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -188,7 +189,8 @@ class ExamController
     public function updateCounters(
         Request $request,
         Exam $exam,
-        ModelChangesLogger $logger
+        Audit $audit,
+        ModelAuditChangesBuilder $builder
     ){
         $request->validate([
             'session' => ['required', 'integer', 'min:1'],
@@ -206,7 +208,13 @@ class ExamController
             'group' => $request->input('group')
         ]);
 
-        $logger->log($exam);
+        $audit->log(
+            'update',
+            $exam,
+            $builder->build(
+                $exam
+            )
+        );
 
         return response()->noContent();
     }

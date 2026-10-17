@@ -61,7 +61,7 @@ class CenterData
         return self::get()->short_name;
     }
 
-    public static function timeZome():string
+    public static function timeZone():string
     {
         return self::get()->time_zone;
     }

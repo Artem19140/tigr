@@ -2,11 +2,11 @@
 
 namespace App\Http\Resources\Attempt;
 
-use App\Modules\Attempt\AttemptAnnulledRules;
+use App\Modules\ExamConduct\AttemptAnnullRules;
 use App\Http\Resources\ForeignNational\ForeignNationalResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Modules\Attempt\AttemptSpeakingRules;
+use App\Modules\ExamConduct\AttemptSpeakingRules;
 
 class AttemptConductResource extends JsonResource
 {
@@ -31,7 +31,7 @@ class AttemptConductResource extends JsonResource
             'annulledAt' => $this->annulled_at,
 
             'availability' => [
-                'annul' =>  app(AttemptAnnulledRules::class)->check($this->resource)->available,
+                'annul' =>  app(AttemptAnnullRules::class)->check($this->resource)->available,
                 'speaking' => app(AttemptSpeakingRules::class)->get($this->resource)->available
             ],
 
@@ -40,7 +40,7 @@ class AttemptConductResource extends JsonResource
                     'url' => route('attempts.destroy',[
                         'attempt' => $this->resource
                     ], false),
-                    'disabled' => ! app(AttemptAnnulledRules::class)
+                    'disabled' => ! app(AttemptAnnullRules::class)
                         ->check($this->resource)->available
                 ],
                 'speaking' => [

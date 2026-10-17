@@ -4,7 +4,7 @@ import { AttemptReview } from '@/interfaces/Attempt';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import AttemptCheckHeader from '@/components/Attempt/AttemptCheckHeader.vue';
 import AttemptCheckingSidePanel from '@/components/Attempt/AttemptCheckingSidePanel.vue';
-import TasksList from '../Attempt/Components/tasks/TasksList.vue';
+import TasksList from '../ExamSession/Components/tasks/TasksList.vue';
 import { mdiArrowLeft } from '@mdi/js'
 
 defineOptions({

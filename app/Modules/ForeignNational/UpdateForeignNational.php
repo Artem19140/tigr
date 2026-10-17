@@ -4,13 +4,15 @@ namespace App\Modules\ForeignNational;
 
 use App\Http\Dto\ForeignNationalUpdateDto;
 use App\Models\ForeignNational;
-use App\Support\ModelChangesLogger;
+use App\Support\Audit;
+use App\Support\ModelAuditChangesBuilder;
 
 final class UpdateForeignNational
 {
     public function __construct(
         protected ForeignNationalBeforeSaveValidator $validator,
-        protected ModelChangesLogger $logger
+        protected Audit $audit,
+        protected ModelAuditChangesBuilder $builder
     ) {}
 
     public function execute(
@@ -25,11 +27,19 @@ final class UpdateForeignNational
             $foreignNational->id
         );
 
-        $foreignNational->update($dto->toArray());
+        $foreignNational->update(
+            $dto->toArray()
+        );
 
-        $foreignNational->save();
-        $this->logger->log($foreignNational);
+        $this->audit->log(
+            'update',
+            $foreignNational,
+            [
+                'changes' => $this->builder->build($foreignNational)
+            ]
+        );
 
         return $foreignNational;
     }
+    
 }

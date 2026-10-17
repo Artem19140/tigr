@@ -25,7 +25,7 @@ class CounterResource extends JsonResource
             'key' => $this->resource->key,
             'value' => $this->resource->value,
             'nextValue' => $this->nextValue($this->resource->key),
-            'lastIncrementAt' => $this->last_increment_at->setTimeZone(CenterData::timeZome())->format('H:i • d.m.Y'),
+            'lastIncrementAt' => $this->last_increment_at->setTimeZone(CenterData::timeZone())->format('H:i • d.m.Y'),
             'updateUrl' => $request->user()->can('update', $this->resource)
                 ? route('counters.update', ['counter' => $this->resource], false)
                 : null

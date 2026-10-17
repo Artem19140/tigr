@@ -94,7 +94,7 @@ class Employee extends Authenticatable
     protected function timeZone(): Attribute
     {
         return Attribute::get(function () {
-            return CenterData::timeZome();
+            return CenterData::timeZone();
         });
     }
 

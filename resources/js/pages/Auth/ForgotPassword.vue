@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import BaseEntryCard from '@/components/BaseComponents/BaseEntryCard/BaseEntryCard.vue';
 import { Head, router, useForm, usePage } from '@inertiajs/vue3';
 
 const props = defineProps<{
@@ -22,54 +21,56 @@ const page = usePage()
         <title>Сброс пароля</title>
     </Head>
 
-    <BaseEntryCard>
-        <template #title>
-            <div class="text-center">
-                <div class="text-xl font-semibold tracking-tight text-gray-900">
-                    Восстановление пароля
+    <v-container class="min-h-screen d-flex align-center justify-center">
+        <v-card 
+            class="w-100 max-w-md mx-auto"
+        >
+            <v-card-text class="space-y-8">
+                <div class="text-center">
+                    <div class="text-xl font-semibold tracking-tight text-gray-900">
+                        Восстановление пароля
+                    </div>
+
+                    <div class="mt-2 text-sm leading-relaxed text-gray-500">
+                        Введите адрес электронной почты, указанный при регистрации.
+                        Мы отправим ссылку для сброса пароля.
+                    </div>
                 </div>
 
-                <div class="mt-2 text-sm leading-relaxed text-gray-500">
-                    Введите адрес электронной почты, указанный при регистрации.
-                    Мы отправим ссылку для сброса пароля.
+                <div class="space-y-4">
+                    <v-text-field
+                        v-model="form.email"
+                        label="E-mail"
+                        placeholder="example@mail.ru"
+                        type="email"
+                        :error-messages="form.errors.email || page.props.errors.status"
+                        :disabled="form.processing"
+                        :rules="emailRules"
+                        variant="outlined"
+                        density="comfortable"
+                        hide-details="auto"
+                    />
                 </div>
-            </div>
-        </template>
 
-        <div class="space-y-4">
-            <v-text-field
-                v-model="form.email"
-                label="E-mail"
-                placeholder="example@mail.ru"
-                type="email"
-                :error-messages="form.errors.email || page.props.errors.status"
-                :disabled="form.processing"
-                :rules="emailRules"
-                variant="outlined"
-                density="comfortable"
-                hide-details="auto"
-            />
-        </div>
+                <div class="flex flex-col gap-2">
+                    <v-btn
+                        color="primary"
+                        :disabled="form.processing || !form.email"
+                        :loading="form.processing"
+                        class="w-full"
+                        @click="form.post(forgotUrl)"
+                    >Прислать ссылку</v-btn>
 
-        <template #actions>
-            <div class="flex flex-col gap-2">
-                <v-btn
-                    color="primary"
-                    :disabled="form.processing || !form.email"
-                    :loading="form.processing"
-                    class="w-full"
-                    @click="form.post(forgotUrl)"
-                >Прислать ссылку</v-btn>
-
-                <v-btn
-                    variant="text"
-                    class="w-full"
-                    :disabled="form.processing"
-                    @click="router.visit(loginUrl)"
-                >
-                    Вернуться к входу
-                </v-btn>
-            </div>
-        </template>
-    </BaseEntryCard>
+                    <v-btn
+                        variant="text"
+                        class="w-full"
+                        :disabled="form.processing"
+                        @click="router.visit(loginUrl)"
+                    >
+                        Вернуться к входу
+                    </v-btn>
+                </div>
+            </v-card-text>
+        </v-card>
+    </v-container>
 </template>

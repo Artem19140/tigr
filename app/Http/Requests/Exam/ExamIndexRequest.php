@@ -47,7 +47,7 @@ class ExamIndexRequest extends FormRequest
             addressId: $this->addressId,
             examTypeId: $this->examTypeId,
             dateFrom: $this->dateFrom ? Carbon::parse($this->dateFrom) : null,
-            dateTo: $this->dateFrom ? Carbon::parse($this->dateTo): null,
+            dateTo: $this->dateTo ? Carbon::parse($this->dateTo): null,
             cancelled: $this->cancelled
         );
     }

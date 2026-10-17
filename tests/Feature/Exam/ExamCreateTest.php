@@ -58,8 +58,8 @@ class ExamCreateTest extends TestCase
     {
         $minTimeBeforeCreating = ExamSettings::minTimeBeforeCreateMinutes();
         return array_merge([
-            'date' => Carbon::now()->setTimezone(CenterData::timeZome())->addMinutes($minTimeBeforeCreating )->format('Y-m-d'),
-            'time' => Carbon::now()->setTimezone(CenterData::timeZome())->addMinutes($minTimeBeforeCreating )->addMinute()->format('H:i'),
+            'date' => Carbon::now()->setTimezone(CenterData::timeZone())->addMinutes($minTimeBeforeCreating )->format('Y-m-d'),
+            'time' => Carbon::now()->setTimezone(CenterData::timeZone())->addMinutes($minTimeBeforeCreating )->addMinute()->format('H:i'),
             'examTypeId' => $this->examType->id,
             'addressId' => $this->address->id,
             'capacity' => $this->address->capacity,

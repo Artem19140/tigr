@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Attempt\AttemptAnswer;
 
-use App\Modules\AttemptAnswer\RateAttemptAnswer;
+use App\Modules\ExamReview\RateAttemptAnswer;
 use App\Enums\TaskType;
 use App\Models\Attempt;
 use App\Models\AttemptAnswer;

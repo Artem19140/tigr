@@ -2,16 +2,12 @@
 
 namespace App\Modules\Exam;
 
-use App\Modules\Enrollment\EnrollmentPaymentRules;
 use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\Exam;
 
 class ExamViewBuilder
 {
-    public function __construct(
-        protected EnrollmentPaymentRules $enrollmentPaymentRules
-    ){}
     public function execute(
         Exam $exam, 
         Employee $employee,

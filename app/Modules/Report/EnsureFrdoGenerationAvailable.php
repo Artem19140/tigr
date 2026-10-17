@@ -19,7 +19,7 @@ class EnsureFrdoGenerationAvailable
     ): void {
         
         $date = Carbon::parse($date)->setTimezone(
-            CenterData::timeZome()
+            CenterData::timeZone()
         );
 
         $this->ensureAllExamsConducted($date);
@@ -36,7 +36,7 @@ class EnsureFrdoGenerationAvailable
         $start = Carbon::now();
         $end = Carbon::now()
             ->setTimezone(
-                CenterData::timeZome()
+                CenterData::timeZone()
             )
             ->endOfDay()
             ->utc();

@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Web\ExamSession\AnswerController;
 use App\Http\Controllers\Web\ExamSession\AttemptTakingController;
+use App\Http\Controllers\Web\ExamSession\ExamSessionController;
+use App\Http\Controllers\Web\ExamSession\PersonConfirmationController;
 use App\Http\Controllers\Web\ExamSession\VerifyCodeController;
 use App\Support\AppMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -13,12 +15,13 @@ Route::middleware([
     ])->group(function () {
         
         Route::get('attempts/finish', function(){
-            return Inertia::render('Attempt/AfterTest', [
+            return Inertia::render('ExamSession/AfterTest', [
                 'redirectUrl' => route('login', [], false)
             ]);
         })->name('attempts.finish.after');
 
-        Route::post('exam-codes/verify', [VerifyCodeController::class, 'verify'])
+        Route::post('exams-codes/verification', [VerifyCodeController::class, 'verify'])
+            ->name('exams-codes.verification')
             ->middleware(['throttle:10']); 
     });
     
@@ -36,22 +39,50 @@ Route::prefix('attempts')
         Route::get('{attempt}', [AttemptTakingController::class, 'show'])
             ->name('attempts.show');
 
-        Route::post('{attempt}', [AttemptTakingController::class, 'start'])
-            ->name('attempts.start');
-
         Route::put('{attempt}/answers/{attempt_answer}', [AnswerController::class, 'update'])
             ->scopeBindings()
             ->name('attempts.answers.update');
 
-        Route::put('{attempt}/answers/{attempt_answer}/audio', [AttemptTakingController::class, 'audioPlayed'])
+        Route::put(
+            '{attempt}/answers/{attempt_answer}/audio', 
+            [AttemptTakingController::class, 'audioPlayed']
+        )
             ->scopeBindings()
             ->name('attempts.answers.audio.update');
 
-        // Route::get('{attempt}/answers/{attempt_answer}/media', [AttemptTakingController::class, 'audioPlayed'])
-        //     ->scopeBindings()
-        //     ->name('attempts.media');
-
     });
+
+    Route::prefix('exams-sessions')
+    ->middleware([
+        'meta'
+    ])->group(function () {
+        Route::get(
+            'confirmation', 
+            [PersonConfirmationController::class, 'confirm']
+        )
+            ->name('exams-sessions.confirmation');
+
+        Route::post(
+            'confirmation/rejection', 
+            [PersonConfirmationController::class, 'reject']
+        )
+            ->name('exams-sessions.confirmation-rejection');
+        
+        Route::get(
+            'enrollments/{enrollment}/start-info', 
+            [ExamSessionController::class, 'startInfo']
+        )
+            ->name('exams-sessions.start-info');
+
+        Route::post(
+            'enrollments/{enrollment}/attempts', 
+            [ExamSessionController::class, 'start']
+        )
+            ->name('exams-sessions.start');
+    });
+
+
+    
 
 
 

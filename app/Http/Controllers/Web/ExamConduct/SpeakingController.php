@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\RedirectResponse;
-use App\Modules\Attempt\AttemptSpeakingRules;
+use App\Modules\ExamConduct\AttemptSpeakingRules;
 use Inertia\Inertia;
 
 class SpeakingController

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Head, useForm } from '@inertiajs/vue3'
-import BaseEntryCard from '@/components/BaseComponents/BaseEntryCard/BaseEntryCard.vue';
 import AppPasswordInput from '@/components/UI/AppPasswordInput/AppPasswordInput.vue';
 
 const props=defineProps<{
@@ -38,56 +37,60 @@ const change = () => {
 }
 </script>
 
-```vue
 <template>
     <Head>
         <title>Смена пароля</title>
     </Head>
 
-    <BaseEntryCard>
-        <template #title>
-            <div class="text-center">
-                <h1 class="text-xl font-semibold tracking-tight text-gray-900">
-                    Смена пароля
-                </h1>
-
-                <p class="mx-auto mt-2 max-w-sm text-sm leading-6 text-gray-500">
-                    Временный пароль необходимо заменить.
-                    Новый пароль должен содержать не менее 8 символов.
-                </p>
-            </div>
-        </template>
-
-        <form
-            class="mt-6 space-y-5"
-            @submit.prevent="change"
+    <v-container class="min-h-screen d-flex align-center justify-center">
+        <v-card 
+            class="w-100 max-w-md mx-auto"
         >
-            <div class="space-y-4">
-                <AppPasswordInput
-                    v-model="form.password"
-                    :error-messages="form.errors.password"
-                />
+            <v-card-text>
 
-                <AppPasswordInput
-                    v-model="form.password_confirmation"
-                    :error-messages="form.errors.password_confirmation"
-                />
-            </div>
+            
+                <div class="text-center">
+                    <h1 class="text-xl font-semibold tracking-tight text-gray-900">
+                        Смена пароля
+                    </h1>
 
-            <v-btn
-                type="submit"
-                color="primary"
-                block
-                :loading="form.processing"
-                :disabled="
-                    !form.password ||
-                    !form.password_confirmation ||
-                    form.processing
-                "
-                class="!mt-6 !h-11 !rounded-lg text-sm font-medium normal-case shadow-sm"
-            >
-                Сменить пароль
-            </v-btn>
-        </form>
-    </BaseEntryCard>
+                    <p class="mx-auto mt-2 max-w-sm text-sm leading-6 text-gray-500">
+                        Временный пароль необходимо заменить.
+                        Новый пароль должен содержать не менее 8 символов.
+                    </p>
+                </div>
+
+                <form
+                    class="mt-6 space-y-5"
+                    @submit.prevent="change"
+                >
+                    <div >
+                        <AppPasswordInput
+                            v-model="form.password"
+                            :error-messages="form.errors.password"
+                        />
+
+                        <AppPasswordInput
+                            v-model="form.password_confirmation"
+                            :error-messages="form.errors.password_confirmation"
+                        />
+                    </div>
+
+                    <v-btn
+                        type="submit"
+                        color="primary"
+                        block
+                        :loading="form.processing"
+                        :disabled="
+                            !form.password ||
+                            !form.password_confirmation ||
+                            form.processing
+                        "
+                    >
+                        Сменить пароль
+                    </v-btn>
+                </form>
+            </v-card-text>
+        </v-card>
+    </v-container>
 </template>

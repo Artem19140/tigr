@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web\ExamConduct;
 
 use App\Models\Attempt;
-use App\Modules\Attempt\AnnulAttempt;
+use App\Modules\ExamConduct\AnnulAttempt;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 

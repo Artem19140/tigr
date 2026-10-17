@@ -87,7 +87,7 @@ class ExamPostRequest extends FormRequest
     public function toDto(): ExamDto
     {
         return new ExamDto(
-            Carbon::createFromFormat('Y-m-d H:i', $this->input('date').' '.$this->input('time'), CenterData::timeZome())->utc(),
+            Carbon::createFromFormat('Y-m-d H:i', $this->input('date').' '.$this->input('time'), CenterData::timeZone())->utc(),
             \intval($this->input('addressId')),
             \intval($this->input('examTypeId')),
             \strval($this->input('comment')),

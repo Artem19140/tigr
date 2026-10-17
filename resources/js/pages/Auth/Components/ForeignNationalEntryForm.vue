@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import { useForm } from '@inertiajs/vue3'
 
+const props = defineProps<{
+  codesLength: number,
+  url: string
+}>()
+
 const form = useForm<{code:string | null}>({
   code: null,
 })
 
 const submit = () => {
-  form.post('/exam-codes/verify', {
+  form.post(props.url, {
     preserveScroll: true,
+    preserveState: true
   })
 }
 </script>
@@ -15,7 +21,7 @@ const submit = () => {
 <template>
     <v-form @submit.prevent="submit">
         <div class="space-y-5">
-            <div class="flex justify-center">
+            <div class="">
                 <v-otp-input
                     v-model="form.code"
                     type="number"
@@ -36,7 +42,11 @@ const submit = () => {
                         </v-otp-group>
                     </template>
                 </v-otp-input>
+
+                <div class="text-center text-grey">Введите код из {{ codesLength }} цифр</div>
             </div>
+
+            
 
             <div
                 v-if="form.errors.code"

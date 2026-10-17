@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import {  router, useForm } from '@inertiajs/vue3';
 import AppPasswordInput from '@components/UI/AppPasswordInput/AppPasswordInput.vue';
+const props = defineProps<{
+    url: string,
+}>()
 
 interface LoginEntryForm{
   email: string | null,
@@ -15,7 +18,10 @@ const form = useForm<LoginEntryForm>({
 });
 
 const submit = () => {
-  form.post('/login', { preserveScroll: true });
+  form.post(props.url, { 
+    preserveScroll: true,
+    preserveState: true
+});
 };
 </script>
 

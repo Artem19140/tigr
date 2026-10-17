@@ -18,7 +18,7 @@ Schedule::call(function () {
 
 Schedule::call(function () {
     app(CloseAbandonedAttempts::class)->execute();
-})->everyFiveMinutes();
+})->everySecond();
 
 Artisan::command('deploy', function(){
     $result = Process::run('cd /var/www/tigr && /var/www/tigr/up.bash >> /var/www/tigr/git.log 2>&1');

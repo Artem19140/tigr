@@ -1,0 +1,140 @@
+<?php
+
+namespace App\Modules\ExamDocument;
+
+use App\Models\Attempt;
+use App\Models\Block;
+use App\Models\Exam;
+use App\Models\Subblock;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
+
+class ExamStatementDataBuilder
+{
+    public function build(
+        Exam $exam
+    ): ExamStatementDto {
+        $this->loadRelations($exam);
+        return new ExamStatementDto(
+            $exam,
+            $this->getHeadersStatement($exam)->values()->toArray(),
+            $this->getRowsStatement($exam)->values()->toArray()
+        );
+    }
+
+    public function loadRelations(Exam $exam): void
+    {
+        $exam->loadMissing([
+            'type' => [
+                'blocks' => fn (HasMany $q) => $q->orderBy('order'),
+                'blocks.subblocks' => fn (HasMany $q) => $q->orderBy('order'),
+            ],
+            'enrollments' => [
+                'attempt.attemptAnswers.taskVariant.task',
+                'foreignNational',
+            ],
+        ]);
+
+        $exam->enrollments = $exam->enrollments
+            ->sortBy('foreignNational.surname_normalized');
+    }
+
+    protected function getHeadersStatement(Exam $exam): Collection
+    {
+        return $exam->type->blocks->map(function ($block) {
+
+            $filteredSubblocks = $block->subblocks
+                ->whereNotNull('min_mark')
+                ->map(function ($subblock) {
+                    return [
+                        'id' => $subblock->id,
+                        'name' => $subblock->name,
+                        'min_mark' => $subblock->min_mark
+                    ];
+                });
+ 
+            $filteredSubblocksCount = $filteredSubblocks->count();
+            $subblockCount = $block->subblocks->count();
+            if( $subblockCount > 1 ){
+                $filteredSubblocks->push(['name' => 'Общий балл']);
+            }
+
+            return [
+                'id' => $block->id,
+                'name' => $block->name,
+                'subblocks' => $filteredSubblocks,
+                'min_mark' => $block->min_mark,
+                'colspan' => $subblockCount > 1 ? $filteredSubblocksCount + 1 : 1
+            ];
+        });
+    }
+
+    protected function getRowsStatement(Exam $exam): Collection
+    {        
+        return $exam->enrollments->map(function ($enrollment) use ($exam) {
+            $attempt = $enrollment->attempt;
+
+            $answers = $attempt?->attemptAnswers ?? collect();
+
+            $answersBySubblock = $answers->groupBy(
+                fn ($answer) => $answer->taskVariant?->task?->subblock_id
+            );
+
+            $marksByBlocks = $exam->type->blocks->map(function (Block $block) use ($answersBySubblock) {
+                $result = [];
+
+                $marksBySubblocks = $block->subblocks->map(function (Subblock $subblock) use ($answersBySubblock) {
+                    return [
+                        'total' => $answersBySubblock
+                            ->get($subblock->id, collect())
+                            ->sum('mark'),
+
+                        'min_mark' => $subblock->min_mark,
+                    ];
+                });
+
+                if ($block->subblocks->count() > 1) {
+                    $result['total'] = $marksBySubblocks->sum('total');
+                }
+
+                $result['marksBySubblocks'] = $marksBySubblocks
+                    ->whereNotNull('min_mark')
+                    ->values();
+
+                return $result;
+            });
+
+            return [
+                'fullName' => $enrollment->foreignNational->full_name,
+                
+                'foreignNationalId' => $enrollment->foreignNational->id,
+
+                'fullPassport' => $enrollment->foreignNational->full_passport,
+
+                'startedAt' => $attempt?->started_at_local?->format('H:i') ?? null,
+
+                'finishedAt' => $attempt?->finished_at_local?->format('H:i') ?? null,
+
+                'speakingStartedAt' => $attempt?->speaking_started_at_local?->format('H:i') ?? null,
+
+                'speakingFinishedAt' => $attempt?->speaking_finished_at_local?->format('H:i') ?? null,
+
+                'marksByBlocks' => $marksByBlocks,
+                
+                'totalMark' => $attempt?->total_mark ?? 0,
+
+                'result' => $this->getAttemptResultStatus($attempt),
+            ];
+        });
+    }
+
+    protected function getAttemptResultStatus(?Attempt $attempt): string
+    {
+        if (! $attempt) {
+            return 'н/я';
+        }
+
+        return $attempt->isPassed() ? 'Сертификат' : 'Справка';
+    }
+    
+}

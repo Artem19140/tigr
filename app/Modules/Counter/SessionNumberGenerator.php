@@ -53,7 +53,7 @@ class SessionNumberGenerator
 
     protected function incrementIfNeeded(Counter $counter): void
     {
-        $timeZone = CenterData::timeZome();
+        $timeZone = CenterData::timeZone();
         $today = Carbon::now()
             ->setTimezone($timeZone)
             ->toDateString();

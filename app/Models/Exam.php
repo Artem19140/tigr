@@ -7,7 +7,6 @@ use App\Modules\Shared\CenterData;
 use App\Modules\Shared\ExamSettings;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -87,6 +86,14 @@ class Exam extends Model
         return $this->belongsTo(Address::class, 'address_id');
     }
 
+    public function duration(): int{
+        return $this->type->duration;
+    }
+
+    public function tasksCount(): int{
+        return $this->type->tasks_count;
+    }
+
     public function isPending(): bool
     {
         return $this->begin_time->isFuture();
@@ -102,24 +109,28 @@ class Exam extends Model
         return $this->type->has_speaking_tasks;
     }
 
-    protected function timeZone(): Attribute
+    public function needHumanReview(): bool 
     {
-        return Attribute::get(function () {
-            return CenterData::timeZome();
-        });
+        return  $this->type->need_human_review;
+    }
+
+    public function timeZone(): string
+    {
+        return CenterData::timeZone();
+ 
     }
 
     public function beginTimeLocal(): Carbon
     {
         return $this->begin_time->copy()->setTimezone(
-            CenterData::timeZome()
+            $this->timeZone()
         );
     }
 
     public function endTimeLocal(): Carbon
     {
         return $this->end_time->copy()->setTimezone(
-            CenterData::timeZome()
+            $this->timeZone()
         );
     }
 
@@ -180,8 +191,6 @@ class Exam extends Model
             ExamSettings::codesTtlMinutes()
         )->isPast();
     }
-
-
 
     public function hasNoEnrollment(): bool
     {

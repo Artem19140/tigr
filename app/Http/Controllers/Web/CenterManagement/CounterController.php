@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Web\CenterManagement;
 
 use App\Http\Resources\Counter\CounterResource;
 use App\Models\Counter;
-use App\Support\ModelChangesLogger;
+use App\Support\Audit;
+use App\Support\ModelAuditChangesBuilder;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,7 +15,8 @@ use Inertia\Inertia;
 class CounterController
 {
     public function __construct(
-        protected ModelChangesLogger $logger
+        protected Audit $audit,
+        protected ModelAuditChangesBuilder $builder
     ){}
     public function index(): \Inertia\Response
     {
@@ -47,7 +49,13 @@ class CounterController
             'last_increment_at' => $inctementedAt
         ]);
 
-        $this->logger->log($counter);
+        $this->audit->log(
+            'update',
+            $counter,
+            $this->builder->build(
+                $counter
+            )
+        );
 
         return redirect()->route('counters.index');
     }

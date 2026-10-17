@@ -19,8 +19,10 @@ class LogContext
         Context::add([
             'actor_id' => $request->user()?->id,
             'ip' => $request->ip(),
+            'client_ip' => $request->getClientIp(),
             'user_agent' => request()->userAgent(),
-            'actor_type' => $request->user() ? $request->user()->getMorphClass() : null
+            'actor_type' => $request->user() ? $request->user()->getMorphClass() : null,
+            'url' => $request->url()
         ]);
 
         return $next($request);

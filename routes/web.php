@@ -21,6 +21,8 @@ Route::middleware([
         require __DIR__.'/exams_review.php';
 
         require __DIR__.'/exams_conduct.php';
+
+        require __DIR__.'/exams_documents.php';
      
     });
 

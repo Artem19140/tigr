@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head, useForm } from '@inertiajs/vue3';
 import { AttemptConduct } from '@/interfaces/Attempt';
-import TasksList from '../Attempt/Components/tasks/TasksList.vue';
+import TasksList from '../ExamSession/Components/tasks/TasksList.vue';
 import { useConfirm } from '@/composables/useConfirm';
 import { mdiArrowLeft } from '@mdi/js'
 

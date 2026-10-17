@@ -24,7 +24,7 @@ class FRDOReportsGenerator
         string $type
     ): IWriter {
         $date = Carbon::parse($date)->setTimezone(
-            CenterData::timeZome()
+            CenterData::timeZone()
         );
     
         $spreadsheet = $this->generateReport(

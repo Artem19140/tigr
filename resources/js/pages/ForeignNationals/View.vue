@@ -189,7 +189,7 @@ const personalData = computed(() => [
 
     <EnrollmentModal
         v-model="isOpen"
-        :foreign-national="foreignNational.data"
+        :foreign-national-id="foreignNational.data.id"
         :enrollUrl="enrollUrl"
     />
 </template>

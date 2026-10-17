@@ -3,16 +3,24 @@
 use App\Http\Controllers\Web\Auth\LoginController;
 use App\Http\Controllers\Web\Auth\LogoutController;
 use App\Http\Controllers\Web\Auth\PasswordController;
+use App\Modules\Shared\ExamSettings;
 use Inertia\Inertia;
 
 Route::middleware([
     'meta',
     'guest:web,foreignNationals'
 ])->group(function () {
-    Route::inertia('login', 'Auth/Login')
-        ->name('login');
+
+    Route::get('login', function(){
+        return Inertia::render('Auth/Login', [
+            'loginUrl' => route('employees.login', [], false),
+            'codesVerificationUrl' => route('exams-codes.verification', [], false),
+            'codesLength' => ExamSettings::codesLength()
+        ]);
+    })->name('login');
 
     Route::post('login', [LoginController::class, 'login'])
+        ->name('employees.login')
         ->middleware(['throttle:5']);
 
     Route::get('/reset-password/{token}', fn ($token) => Inertia::render('Auth/ChangePassword', [

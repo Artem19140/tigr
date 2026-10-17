@@ -63,7 +63,9 @@ class EnrollmentController
             'center' => new CenterData()
         ]);
 
-        $fileName = "Заявление_согласие_{$enrollment->foreignNational->full_name}.pdf";
+        $fullName = $enrollment->foreignNational->surname . '_' . $enrollment->foreignNational->name . '_' . $enrollment->foreignNational->patronymic;
+
+        $fileName = "Заявление_согласие_{$fullName}.pdf";
         
         return $statementPdf->stream($fileName);
     }

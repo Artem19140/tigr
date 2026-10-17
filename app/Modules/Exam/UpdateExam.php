@@ -7,7 +7,8 @@ use App\Modules\Exam\ExamBeforeSaveValidator;
 use App\Exceptions\BusinessException;
 use App\Http\Dto\ExamDto;
 use App\Models\Exam;
-use App\Support\ModelChangesLogger;
+use App\Support\Audit;
+use App\Support\ModelAuditChangesBuilder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -16,7 +17,8 @@ final class UpdateExam
     public function __construct(
         protected ExamEditRules $examEditRules,
         protected ExamBeforeSaveValidator $examBeforeSaveValidator,
-        protected ModelChangesLogger $logger
+        protected Audit $audit,
+        protected ModelAuditChangesBuilder $builder
     ) {}
 
     public function execute(
@@ -38,18 +40,30 @@ final class UpdateExam
             $exam->update(
                 $this->getAttributes($exam, $examDto)
             );
+
             $examinersChanges = $exam->examiners()
                 ->sync($examDto->examiners);
 
-            $this->logger->log($exam, [
+            $this->log($exam, [
                 'examiners' => $examinersChanges
             ]);
 
             return $exam;
         });
+    }
 
-        
-
+    protected function log(
+        Exam $exam, 
+        array $relations
+    ){
+        $this->audit->log(
+            'update',
+            $exam,
+            $this->builder->build(
+                $exam,
+                $relations
+            )
+        );
     }
 
     protected function getAttributes(Exam $exam, ExamDto $examDto): array
@@ -63,7 +77,8 @@ final class UpdateExam
                 'capacity' => $examDto->capacity,
                 'exam_type_id' => $examDto->examTypeId,
                 'comment' => $examDto->comment,
-                'end_time' => $examDto->beginTime->copy()->addMinutes($exam->type->duration),
+                'end_time' => $examDto->beginTime->copy()
+                    ->addMinutes($exam->duration()),
             ];
         } else {
             if ($exam->enrollments()->count() > $examDto->capacity) {

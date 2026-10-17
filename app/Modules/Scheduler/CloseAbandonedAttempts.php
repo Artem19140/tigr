@@ -3,7 +3,7 @@
 namespace App\Modules\Scheduler;
 
 use App\Models\Attempt;
-use App\Modules\Attempt\FinilizeAttemptReview;
+use App\Modules\ExamReview\FinilizeAttemptReview;
 use App\Support\Audit;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
@@ -24,7 +24,7 @@ class CloseAbandonedAttempts
             ->with(['exam.type'])
             ->active()
             ->get()
-            ->each(function ($attempt) {
+            ->each(function (Attempt $attempt) {
                 $this->close($attempt);
             });
     }

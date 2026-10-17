@@ -1,0 +1,1239 @@
+Note: Using configuration file C:\OSPanel\home\tigr.local\tigr\phpstan.neon.
+   0/220 [>---------------------------]   0%[1G[2K 220/220 [============================] 100%
+
+ ------ -------------------------------------------------------------------------------------------- 
+  Line   Enums\CounterKey.php                                                                        
+ ------ -------------------------------------------------------------------------------------------- 
+  18     Match arm comparison between $this(App\Enums\CounterKey)&App\Enums\CounterKey::Session and  
+         App\Enums\CounterKey::Session is always true.                                               
+         🪪  match.alwaysTrue                                                                        
+         💡  Remove remaining cases below this one and this error will disappear too.                
+ ------ -------------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------------ 
+  Line   Enums\ExamDocument.php                                                                          
+ ------ ------------------------------------------------------------------------------------------------ 
+  21     Match arm comparison between $this(App\Enums\ExamDocument)&App\Enums\ExamDocument::Results and  
+         App\Enums\ExamDocument::Results is always true.                                                 
+         🪪  match.alwaysTrue                                                                            
+         💡  Remove remaining cases below this one and this error will disappear too.                    
+  35     Match arm comparison between $this(App\Enums\ExamDocument)&App\Enums\ExamDocument::Results and  
+         App\Enums\ExamDocument::Results is always true.                                                 
+         🪪  match.alwaysTrue                                                                            
+         💡  Remove remaining cases below this one and this error will disappear too.                    
+ ------ ------------------------------------------------------------------------------------------------ 
+
+ ------ --------------------------------------------------------------------------- 
+  Line   Exceptions\BaseException.php                                               
+ ------ --------------------------------------------------------------------------- 
+  30     Method App\Exceptions\BaseException::render() should return                
+         Illuminate\Http\JsonResponse|Illuminate\Http\RedirectResponse but returns  
+         Symfony\Component\HttpFoundation\RedirectResponse.                         
+         🪪  return.type                                                            
+ ------ --------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  Line   Exceptions\CounterNotFoundException.php                                                                        
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  11     Property App\Exceptions\CounterNotFoundException::$code (int) overriding property Exception::$code should not  
+         have a native type.                                                                                            
+         🪪  property.extraNativeType (non-ignorable)                                                                   
+ ------ --------------------------------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------------------------ 
+  Line   Exceptions\TemplateNotFoundException.php                                                                    
+ ------ ------------------------------------------------------------------------------------------------------------ 
+  10     Property App\Exceptions\TemplateNotFoundException::$code (int) overriding property Exception::$code should  
+         not have a native type.                                                                                     
+         🪪  property.extraNativeType (non-ignorable)                                                                
+ ------ ------------------------------------------------------------------------------------------------------------ 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Http\Controllers\Web\Enrollment\EnrollmentController.php                               
+ ------ --------------------------------------------------------------------------------------- 
+  66     Access to an undefined property Illuminate\Database\Eloquent\Model::$full_name.        
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  Line   Http\Controllers\Web\ExamConduct\ExamConductController.php                                                     
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  28     Property App\Models\Exam::$enrollments is not writable.                                                        
+         🪪  assign.propertyReadOnly                                                                                    
+  42     Parameter #1 $callback of method Illuminate\Support\Collection<int,Illuminate\Database\Eloquent\Model>::each(  
+         ) expects callable(Illuminate\Database\Eloquent\Model, int): mixed, Closure(App\Models\Enrollment): void       
+         given.                                                                                                         
+         🪪  argument.type                                                                                              
+  72     Access to an undefined property Illuminate\Database\Eloquent\Model::$short_name.                               
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+ ------ --------------------------------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Http\Controllers\Web\ExamConduct\SpeakingController.php                                
+ ------ --------------------------------------------------------------------------------------- 
+  39     Access to an undefined property Illuminate\Database\Eloquent\Model::$fullName.         
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+  116    Property App\Models\Attempt::$taskVariants is not writable.                            
+         🪪  assign.propertyReadOnly                                                            
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Http\Controllers\Web\ExamDocument\CodesController.php                                  
+ ------ --------------------------------------------------------------------------------------- 
+  29     Access to an undefined property Illuminate\Database\Eloquent\Model::$short_name.       
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Http\Controllers\Web\ExamDocument\ListController.php                                   
+ ------ --------------------------------------------------------------------------------------- 
+  42     Access to an undefined property Illuminate\Database\Eloquent\Model::$short_name.       
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Http\Controllers\Web\ExamDocument\ProtocolController.php                               
+ ------ --------------------------------------------------------------------------------------- 
+  32     Access to an undefined property Illuminate\Database\Eloquent\Model::$short_name.       
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Http\Controllers\Web\ExamDocument\ResultsController.php                                
+ ------ --------------------------------------------------------------------------------------- 
+  32     Access to an undefined property Illuminate\Database\Eloquent\Model::$short_name.       
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------- 
+  Line   Http\Controllers\Web\ExamReview\AttemptReviewController.php  
+ ------ ------------------------------------------------------------- 
+  36     Property App\Models\Attempt::$taskVariants is not writable.  
+         🪪  assign.propertyReadOnly                                  
+ ------ ------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------- 
+  Line   Http\Controllers\Web\ExamSession\ExamSessionController.php                                 
+ ------ ------------------------------------------------------------------------------------------- 
+  28     Access to an undefined property Illuminate\Database\Eloquent\Model::$min_mark.             
+         🪪  property.notFound                                                                      
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property      
+  31     Access to an undefined property Illuminate\Database\Eloquent\Model::$name.                 
+         🪪  property.notFound                                                                      
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property      
+  33     Access to an undefined property Illuminate\Database\Eloquent\Model::$full_name_short.      
+         🪪  property.notFound                                                                      
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property      
+  52     Parameter #1 $user of method Illuminate\Auth\SessionGuard::login() expects                 
+         Illuminate\Contracts\Auth\Authenticatable, Illuminate\Database\Eloquent\Model|null given.  
+         🪪  argument.type                                                                          
+ ------ ------------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Http\Controllers\Web\ExamSession\PersonConfirmationController.php                      
+ ------ --------------------------------------------------------------------------------------- 
+  32     Access to an undefined property Illuminate\Database\Eloquent\Model::$full_name.        
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+  33     Access to an undefined property Illuminate\Database\Eloquent\Model::$date_birth.       
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------------------------- 
+  Line   Http\Controllers\Web\Exam\AvailableExamsController.php                                                   
+ ------ --------------------------------------------------------------------------------------------------------- 
+  21     Parameter #1 $callback of method                                                                         
+         Illuminate\Database\Eloquent\Collection<(int|string),Illuminate\Database\Eloquent\Model>::map() expects  
+         callable(Illuminate\Database\Eloquent\Model, int|string): array{id: int<0, max>, beginTime:              
+         non-falsy-string}, Closure(App\Models\Exam): array{id: int<0, max>, beginTime: non-falsy-string} given.  
+         🪪  argument.type                                                                                        
+ ------ --------------------------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------- 
+  Line   Http\Controllers\Web\Exam\MyExamsController.php  
+ ------ ------------------------------------------------- 
+  16     Expression on left side of ?? is not nullable.   
+         🪪  nullCoalesce.expr                            
+ ------ ------------------------------------------------- 
+
+ ------ ---------------------------------------------------------------------------------------- 
+  Line   Http\Controllers\Web\PlatformManage\LogsController.php                                  
+ ------ ---------------------------------------------------------------------------------------- 
+  64     Parameter #1 $reasonCode of class App\Exceptions\BusinessException constructor expects  
+         App\Enums\BusinessCode, string given.                                                   
+         🪪  argument.type                                                                       
+  76     Parameter #1 $reasonCode of class App\Exceptions\BusinessException constructor expects  
+         App\Enums\BusinessCode, string given.                                                   
+         🪪  argument.type                                                                       
+ ------ ---------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------- 
+  Line   Http\Dto\MinistryEducationDto.php                                                          
+ ------ ------------------------------------------------------------------------------------------- 
+  9      Constructor of class App\Http\Dto\MinistryEducationDto has an unused parameter $dateFrom.  
+         🪪  constructor.unusedParameter                                                            
+  9      Constructor of class App\Http\Dto\MinistryEducationDto has an unused parameter $dateTo.    
+         🪪  constructor.unusedParameter                                                            
+  9      Constructor of class App\Http\Dto\MinistryEducationDto has an unused parameter $lastWeek.  
+         🪪  constructor.unusedParameter                                                            
+ ------ ------------------------------------------------------------------------------------------- 
+
+ ------ ---------------------------------------------------------------------------------------------------- 
+  Line   Http\Middleware\HandleInertiaRequests.php                                                           
+ ------ ---------------------------------------------------------------------------------------------------- 
+  18     Property App\Http\Middleware\HandleInertiaRequests::$reportNavigation is never read, only written.  
+         🪪  property.onlyWritten                                                                            
+         💡  See: https://phpstan.org/developing-extensions/always-read-written-properties                   
+ ------ ---------------------------------------------------------------------------------------------------- 
+
+ ------ ---------------------------------------------------------------------------------------------- 
+  Line   Http\Resources\Address\AddressIndexResource.php                                               
+ ------ ---------------------------------------------------------------------------------------------- 
+  19     Access to an undefined property App\Http\Resources\Address\AddressIndexResource::$address.    
+         🪪  property.notFound                                                                         
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property         
+  20     Access to an undefined property App\Http\Resources\Address\AddressIndexResource::$id.         
+         🪪  property.notFound                                                                         
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property         
+  21     Access to an undefined property App\Http\Resources\Address\AddressIndexResource::$capacity.   
+         🪪  property.notFound                                                                         
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property         
+  23     Access to an undefined property App\Http\Resources\Address\AddressIndexResource::$is_active.  
+         🪪  property.notFound                                                                         
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property         
+ ------ ---------------------------------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------------------------- 
+  Line   Http\Resources\Address\AddressResource.php                                               
+ ------ ----------------------------------------------------------------------------------------- 
+  18     Access to an undefined property App\Http\Resources\Address\AddressResource::$address.    
+         🪪  property.notFound                                                                    
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property    
+  19     Access to an undefined property App\Http\Resources\Address\AddressResource::$id.         
+         🪪  property.notFound                                                                    
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property    
+  20     Access to an undefined property App\Http\Resources\Address\AddressResource::$capacity.   
+         🪪  property.notFound                                                                    
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property    
+  22     Access to an undefined property App\Http\Resources\Address\AddressResource::$is_active.  
+         🪪  property.notFound                                                                    
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property    
+ ------ ----------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Http\Resources\Answer\AnswerResource.php                                               
+ ------ --------------------------------------------------------------------------------------- 
+  18     Access to an undefined property App\Http\Resources\Answer\AnswerResource::$id.         
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+  19     Access to an undefined property App\Http\Resources\Answer\AnswerResource::$content.    
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  Line   Http\Resources\AttemptAnswer\AttemptAnswerResource.php                                                         
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  22     Method App\Http\Resources\AttemptAnswer\AttemptAnswerResource::toArray() should return array<string, mixed> b  
+         ut returns array<int|string, mixed>.                                                                           
+         🪪  return.type                                                                                                
+  23     Access to an undefined property App\Http\Resources\AttemptAnswer\AttemptAnswerResource::$id.                   
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  24     Access to an undefined property App\Http\Resources\AttemptAnswer\AttemptAnswerResource::$answer.               
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  27     Access to an undefined property App\Http\Resources\AttemptAnswer\AttemptAnswerResource::$reviewed_at.          
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  28     Access to an undefined property App\Http\Resources\AttemptAnswer\AttemptAnswerResource::$mark.                 
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+ ------ --------------------------------------------------------------------------------------------------------------- 
+
+ ------ -------------------------------------------------------------------------------------------------------- 
+  Line   Http\Resources\Attempt\AttemptConductResource.php                                                       
+ ------ -------------------------------------------------------------------------------------------------------- 
+  21     Access to an undefined property App\Http\Resources\Attempt\AttemptConductResource::$id.                 
+         🪪  property.notFound                                                                                   
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                   
+  27     Access to an undefined property App\Http\Resources\Attempt\AttemptConductResource::$started_at_local.   
+         🪪  property.notFound                                                                                   
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                   
+  28     Access to an undefined property App\Http\Resources\Attempt\AttemptConductResource::$finished_at_local.  
+         🪪  property.notFound                                                                                   
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                   
+  31     Access to an undefined property App\Http\Resources\Attempt\AttemptConductResource::$annulled_at.        
+         🪪  property.notFound                                                                                   
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                   
+ ------ -------------------------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------------------- 
+  Line   Http\Resources\Attempt\AttemptExamSessionResource.php                                                  
+ ------ ------------------------------------------------------------------------------------------------------- 
+  23     Access to an undefined property App\Http\Resources\Attempt\AttemptExamSessionResource::$expired_at.    
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  24     Access to an undefined property App\Http\Resources\Attempt\AttemptExamSessionResource::$started_at.    
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  32     Access to an undefined property App\Http\Resources\Attempt\AttemptExamSessionResource::$taskVariants.  
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  42     Access to an undefined property App\Http\Resources\Attempt\AttemptExamSessionResource::$exam.          
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  48     Access to an undefined property App\Http\Resources\Attempt\AttemptExamSessionResource::$exam.          
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+ ------ ------------------------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------------- 
+  Line   Http\Resources\Attempt\AttemptResource.php                                                       
+ ------ ------------------------------------------------------------------------------------------------- 
+  21     Access to an undefined property App\Http\Resources\Attempt\AttemptResource::$id.                 
+         🪪  property.notFound                                                                            
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property            
+  25     Access to an undefined property App\Http\Resources\Attempt\AttemptResource::$exam.               
+         🪪  property.notFound                                                                            
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property            
+  30     Access to an undefined property App\Http\Resources\Attempt\AttemptResource::$started_at_local.   
+         🪪  property.notFound                                                                            
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property            
+  31     Access to an undefined property App\Http\Resources\Attempt\AttemptResource::$finished_at_local.  
+         🪪  property.notFound                                                                            
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property            
+  32     Access to an undefined property App\Http\Resources\Attempt\AttemptResource::$reviewed_at.        
+         🪪  property.notFound                                                                            
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property            
+  34     Access to an undefined property App\Http\Resources\Attempt\AttemptResource::$is_passed.          
+         🪪  property.notFound                                                                            
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property            
+  38     Access to an undefined property App\Http\Resources\Attempt\AttemptResource::$taskVariants.       
+         🪪  property.notFound                                                                            
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property            
+ ------ ------------------------------------------------------------------------------------------------- 
+
+ ------ -------------------------------------------------------------------------------------------------- 
+  Line   Http\Resources\Attempt\AttemptReviewResource.php                                                  
+ ------ -------------------------------------------------------------------------------------------------- 
+  19     Access to an undefined property App\Http\Resources\Attempt\AttemptReviewResource::$id.            
+         🪪  property.notFound                                                                             
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property             
+  20     Access to an undefined property App\Http\Resources\Attempt\AttemptReviewResource::$expired_at.    
+         🪪  property.notFound                                                                             
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property             
+  21     Access to an undefined property App\Http\Resources\Attempt\AttemptReviewResource::$status.        
+         🪪  property.notFound                                                                             
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property             
+  26     Access to an undefined property App\Http\Resources\Attempt\AttemptReviewResource::$taskVariants.  
+         🪪  property.notFound                                                                             
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property             
+  29     Access to an undefined property App\Http\Resources\Attempt\AttemptReviewResource::$reviewed_at.   
+         🪪  property.notFound                                                                             
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property             
+ ------ -------------------------------------------------------------------------------------------------- 
+
+ ------ -------------------------------------------------------------------------------------------------------- 
+  Line   Http\Resources\Center\CenterResource.php                                                                
+ ------ -------------------------------------------------------------------------------------------------------- 
+  18     Access to an undefined property App\Http\Resources\Center\CenterResource::$id.                          
+         🪪  property.notFound                                                                                   
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                   
+  19     Access to an undefined property App\Http\Resources\Center\CenterResource::$name.                        
+         🪪  property.notFound                                                                                   
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                   
+  20     Access to an undefined property App\Http\Resources\Center\CenterResource::$short_name.                  
+         🪪  property.notFound                                                                                   
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                   
+  21     Access to an undefined property App\Http\Resources\Center\CenterResource::$director_fio.                
+         🪪  property.notFound                                                                                   
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                   
+  22     Access to an undefined property App\Http\Resources\Center\CenterResource::$certificates_issue_address.  
+         🪪  property.notFound                                                                                   
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                   
+  23     Access to an undefined property App\Http\Resources\Center\CenterResource::$ogrn.                        
+         🪪  property.notFound                                                                                   
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                   
+  24     Access to an undefined property App\Http\Resources\Center\CenterResource::$inn.                         
+         🪪  property.notFound                                                                                   
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                   
+  25     Access to an undefined property App\Http\Resources\Center\CenterResource::$registered_address.          
+         🪪  property.notFound                                                                                   
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                   
+  26     Access to an undefined property App\Http\Resources\Center\CenterResource::$name_genitive.               
+         🪪  property.notFound                                                                                   
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                   
+  27     Access to an undefined property App\Http\Resources\Center\CenterResource::$commission_chairman.         
+         🪪  property.notFound                                                                                   
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                   
+  28     Access to an undefined property App\Http\Resources\Center\CenterResource::$time_zone.                   
+         🪪  property.notFound                                                                                   
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                   
+ ------ -------------------------------------------------------------------------------------------------------- 
+
+ ------ -------------------------------------------------------------------------------------------------------------- 
+  Line   Http\Resources\Counter\CounterResource.php                                                                    
+ ------ -------------------------------------------------------------------------------------------------------------- 
+  28     Access to an undefined property App\Http\Resources\Counter\CounterResource::$last_increment_at.               
+         🪪  property.notFound                                                                                         
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                         
+  40     Match arm comparison between App\Enums\CounterKey::Session and App\Enums\CounterKey::Session is always true.  
+         🪪  match.alwaysTrue                                                                                          
+         💡  Remove remaining cases below this one and this error will disappear too.                                  
+ ------ -------------------------------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Http\Resources\Employee\EmployeeResource.php                                           
+ ------ --------------------------------------------------------------------------------------- 
+  24     Access to an undefined property App\Http\Resources\Employee\EmployeeResource::$roles.  
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------------- 
+  Line   Http\Resources\Enrollment\EnrollmentResource.php                                                 
+ ------ ------------------------------------------------------------------------------------------------- 
+  23     Access to an undefined property App\Http\Resources\Enrollment\EnrollmentResource::$id.           
+         🪪  property.notFound                                                                            
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property            
+  24     Access to an undefined property App\Http\Resources\Enrollment\EnrollmentResource::$has_payment.  
+         🪪  property.notFound                                                                            
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property            
+  27     Access to an undefined property App\Http\Resources\Enrollment\EnrollmentResource::$reg_number.   
+         🪪  property.notFound                                                                            
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property            
+ ------ ------------------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------------------ 
+  Line   Http\Resources\Enrollment\EnrollmentReviewResource.php                                                
+ ------ ------------------------------------------------------------------------------------------------------ 
+  18     Access to an undefined property App\Http\Resources\Enrollment\EnrollmentReviewResource::$id.          
+         🪪  property.notFound                                                                                 
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                 
+  19     Access to an undefined property App\Http\Resources\Enrollment\EnrollmentReviewResource::$reg_number.  
+         🪪  property.notFound                                                                                 
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                 
+  21     Access to an undefined property App\Http\Resources\Enrollment\EnrollmentReviewResource::$attempt.     
+         🪪  property.notFound                                                                                 
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                 
+  22     Access to an undefined property App\Http\Resources\Enrollment\EnrollmentReviewResource::$attempt.     
+         🪪  property.notFound                                                                                 
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                 
+  24     Access to an undefined property App\Http\Resources\Enrollment\EnrollmentReviewResource::$attempt.     
+         🪪  property.notFound                                                                                 
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                 
+ ------ ------------------------------------------------------------------------------------------------------ 
+
+ ------ ------------------------------------------------------------------------------------------------- 
+  Line   Http\Resources\Exam\ExamConductResource.php                                                      
+ ------ ------------------------------------------------------------------------------------------------- 
+  19     Access to an undefined property App\Http\Resources\Exam\ExamConductResource::$id.                
+         🪪  property.notFound                                                                            
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property            
+  23     Access to an undefined property App\Http\Resources\Exam\ExamConductResource::$protocol_comment.  
+         🪪  property.notFound                                                                            
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property            
+  24     Access to an undefined property App\Http\Resources\Exam\ExamConductResource::$type.              
+         🪪  property.notFound                                                                            
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property            
+  25     Access to an undefined property App\Http\Resources\Exam\ExamConductResource::$type.              
+         🪪  property.notFound                                                                            
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property            
+ ------ ------------------------------------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------------------------- 
+  Line   Http\Resources\Exam\ExamEditResource.php                                                 
+ ------ ----------------------------------------------------------------------------------------- 
+  19     Access to an undefined property App\Http\Resources\Exam\ExamEditResource::$id.           
+         🪪  property.notFound                                                                    
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property    
+  20     Call to an undefined method App\Http\Resources\Exam\ExamEditResource::beginTimeLocal().  
+         🪪  method.notFound                                                                      
+  21     Access to an undefined property App\Http\Resources\Exam\ExamEditResource::$capacity.     
+         🪪  property.notFound                                                                    
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property    
+  22     Access to an undefined property App\Http\Resources\Exam\ExamEditResource::$comment.      
+         🪪  property.notFound                                                                    
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property    
+  23     Access to an undefined property App\Http\Resources\Exam\ExamEditResource::$type.         
+         🪪  property.notFound                                                                    
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property    
+  24     Access to an undefined property App\Http\Resources\Exam\ExamEditResource::$address.      
+         🪪  property.notFound                                                                    
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property    
+  26     Access to an undefined property App\Http\Resources\Exam\ExamEditResource::$type.         
+         🪪  property.notFound                                                                    
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property    
+ ------ ----------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Http\Resources\Exam\ExamIndexResource.php                                              
+ ------ --------------------------------------------------------------------------------------- 
+  18     Access to an undefined property App\Http\Resources\Exam\ExamIndexResource::$id.        
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+  20     Access to an undefined property App\Http\Resources\Exam\ExamIndexResource::$capacity.  
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+  21     Access to an undefined property App\Http\Resources\Exam\ExamIndexResource::$type.      
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------ 
+  Line   Http\Resources\Exam\ExamResource.php                                                      
+ ------ ------------------------------------------------------------------------------------------ 
+  20     Access to an undefined property App\Http\Resources\Exam\ExamResource::$id.                
+         🪪  property.notFound                                                                     
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property     
+  21     Access to an undefined property App\Http\Resources\Exam\ExamResource::$cancelled_reason.  
+         🪪  property.notFound                                                                     
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property     
+  21     Call to an undefined method App\Http\Resources\Exam\ExamResource::isCancelled().          
+         🪪  method.notFound                                                                       
+  26     Access to an undefined property App\Http\Resources\Exam\ExamResource::$session.           
+         🪪  property.notFound                                                                     
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property     
+  27     Access to an undefined property App\Http\Resources\Exam\ExamResource::$capacity.          
+         🪪  property.notFound                                                                     
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property     
+  28     Access to an undefined property App\Http\Resources\Exam\ExamResource::$comment.           
+         🪪  property.notFound                                                                     
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property     
+  29     Access to an undefined property App\Http\Resources\Exam\ExamResource::$group.             
+         🪪  property.notFound                                                                     
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property     
+  31     Access to an undefined property App\Http\Resources\Exam\ExamResource::$type.              
+         🪪  property.notFound                                                                     
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property     
+  32     Access to an undefined property App\Http\Resources\Exam\ExamResource::$type.              
+         🪪  property.notFound                                                                     
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property     
+  33     Access to an undefined property App\Http\Resources\Exam\ExamResource::$address.           
+         🪪  property.notFound                                                                     
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property     
+ ------ ------------------------------------------------------------------------------------------ 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Http\Resources\Exam\ExamReviewResource.php                                             
+ ------ --------------------------------------------------------------------------------------- 
+  19     Access to an undefined property App\Http\Resources\Exam\ExamReviewResource::$id.       
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+  21     Access to an undefined property App\Http\Resources\Exam\ExamReviewResource::$type.     
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------- 
+  Line   Http\Resources\Exam\ExamShortResource.php                                                  
+ ------ ------------------------------------------------------------------------------------------- 
+  18     Access to an undefined property App\Http\Resources\Exam\ExamShortResource::$id.            
+         🪪  property.notFound                                                                      
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property      
+  19     Access to an undefined property App\Http\Resources\Exam\ExamShortResource::$type.          
+         🪪  property.notFound                                                                      
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property      
+  21     Access to an undefined property App\Http\Resources\Exam\ExamShortResource::$cancelled_at.  
+         🪪  property.notFound                                                                      
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property      
+ ------ ------------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Http\Resources\ForeignNational\ForeignNationalDocumentResource.php                     
+ ------ --------------------------------------------------------------------------------------- 
+  19     Access to an undefined property                                                        
+         App\Http\Resources\ForeignNational\ForeignNationalDocumentResource::$updated_at.       
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+  32     Access to an undefined property                                                        
+         App\Http\Resources\ForeignNational\ForeignNationalDocumentResource::$document_type.    
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  Line   Http\Resources\ForeignNational\ForeignNationalEditResource.php                                                 
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  34     Access to an undefined property App\Http\Resources\ForeignNational\ForeignNationalEditResource::$issued_date.  
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  37     Access to an undefined property App\Http\Resources\ForeignNational\ForeignNationalEditResource::$address_reg.  
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  38     Access to an undefined property App\Http\Resources\ForeignNational\ForeignNationalEditResource::$comment.      
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  39     Access to an undefined property App\Http\Resources\ForeignNational\ForeignNationalEditResource::$gender.       
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  41     Access to an undefined property App\Http\Resources\ForeignNational\ForeignNationalEditResource::$full_name.    
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  42     Access to an undefined property                                                                                
+         App\Http\Resources\ForeignNational\ForeignNationalEditResource::$full_passport.                                
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+ ------ --------------------------------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Http\Resources\ForeignNational\ForeignNationalIndexResource.php                        
+ ------ --------------------------------------------------------------------------------------- 
+  19     Access to an undefined property                                                        
+         App\Http\Resources\ForeignNational\ForeignNationalIndexResource::$full_name_short.     
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+  20     Access to an undefined property                                                        
+         App\Http\Resources\ForeignNational\ForeignNationalIndexResource::$full_passport.       
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  Line   Http\Resources\ForeignNational\ForeignNationalResource.php                                                     
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  20     Access to an undefined property App\Http\Resources\ForeignNational\ForeignNationalResource::$full_name_short.  
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  21     Access to an undefined property App\Http\Resources\ForeignNational\ForeignNationalResource::$full_passport.    
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+ ------ --------------------------------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  Line   Http\Resources\ForeignNational\ForeignNationalViewResource.php                                                 
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  22     Access to an undefined property App\Http\Resources\ForeignNational\ForeignNationalViewResource::$issued_date.  
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  26     Access to an undefined property App\Http\Resources\ForeignNational\ForeignNationalViewResource::$full_name.    
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  27     Access to an undefined property                                                                                
+         App\Http\Resources\ForeignNational\ForeignNationalViewResource::$full_name_latin.                              
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  28     Access to an undefined property                                                                                
+         App\Http\Resources\ForeignNational\ForeignNationalViewResource::$full_passport.                                
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  29     Access to an undefined property App\Http\Resources\ForeignNational\ForeignNationalViewResource::$creator.      
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+ ------ --------------------------------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Http\Resources\Role\RoleResource.php                                                   
+ ------ --------------------------------------------------------------------------------------- 
+  18     Access to an undefined property App\Http\Resources\Role\RoleResource::$id.             
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+  19     Access to an undefined property App\Http\Resources\Role\RoleResource::$name.           
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+  20     Access to an undefined property App\Http\Resources\Role\RoleResource::$name.           
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+  20     Access to an undefined property App\Http\Resources\Role\RoleResource::$name.           
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+  20     Expression on left side of ?? is not nullable.                                         
+         🪪  nullCoalesce.expr                                                                  
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------------------ 
+  Line   Http\Resources\TaskVariant\TaskVariantResource.php                                                    
+ ------ ------------------------------------------------------------------------------------------------------ 
+  25     Access to an undefined property App\Http\Resources\TaskVariant\TaskVariantResource::$id.              
+         🪪  property.notFound                                                                                 
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                 
+  34     Access to an undefined property App\Http\Resources\TaskVariant\TaskVariantResource::$content.         
+         🪪  property.notFound                                                                                 
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                 
+  35     Access to an undefined property App\Http\Resources\TaskVariant\TaskVariantResource::$attemptAnswers.  
+         🪪  property.notFound                                                                                 
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                 
+  39     Access to an undefined property App\Http\Resources\TaskVariant\TaskVariantResource::$task.            
+         🪪  property.notFound                                                                                 
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                 
+  40     Access to an undefined property App\Http\Resources\TaskVariant\TaskVariantResource::$task.            
+         🪪  property.notFound                                                                                 
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                 
+  41     Access to an undefined property App\Http\Resources\TaskVariant\TaskVariantResource::$task.            
+         🪪  property.notFound                                                                                 
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                 
+  49     Access to an undefined property App\Http\Resources\TaskVariant\TaskVariantResource::$attemptAnswers.  
+         🪪  property.notFound                                                                                 
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                 
+  52     Access to an undefined property App\Http\Resources\TaskVariant\TaskVariantResource::$task.            
+         🪪  property.notFound                                                                                 
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                 
+  53     Access to an undefined property App\Http\Resources\TaskVariant\TaskVariantResource::$task.            
+         🪪  property.notFound                                                                                 
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                 
+  55     Access to an undefined property App\Http\Resources\TaskVariant\TaskVariantResource::$group_number.    
+         🪪  property.notFound                                                                                 
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                 
+  56     Access to an undefined property App\Http\Resources\TaskVariant\TaskVariantResource::$fipi_number.     
+         🪪  property.notFound                                                                                 
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                 
+ ------ ------------------------------------------------------------------------------------------------------ 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Http\Resources\Task\TaskResource.php                                                   
+ ------ --------------------------------------------------------------------------------------- 
+  20     Access to an undefined property App\Http\Resources\Task\TaskResource::$order.          
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+  22     Access to an undefined property App\Http\Resources\Task\TaskResource::$postscriptum.   
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+  23     Access to an undefined property App\Http\Resources\Task\TaskResource::$description.    
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------------------------- 
+  Line   Listeners\LogPasswordReset.php                                                                               
+ ------ ------------------------------------------------------------------------------------------------------------- 
+  20     Parameter #2 $subject of method App\Support\Audit::log() expects Illuminate\Database\Eloquent\Model|string,  
+         Illuminate\Contracts\Auth\Authenticatable given.                                                             
+         🪪  argument.type                                                                                            
+ ------ ------------------------------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------------------------- 
+  Line   Listeners\LogSuccessfulLogin.php                                                                             
+ ------ ------------------------------------------------------------------------------------------------------------- 
+  19     Parameter #2 $subject of method App\Support\Audit::log() expects Illuminate\Database\Eloquent\Model|string,  
+         Illuminate\Contracts\Auth\Authenticatable given.                                                             
+         🪪  argument.type                                                                                            
+  24     Access to an undefined property Illuminate\Contracts\Auth\Authenticatable::$id.                              
+         🪪  property.notFound                                                                                        
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                        
+ ------ ------------------------------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------------------------- 
+  Line   Listeners\LogSuccessfullLogout.php                                                                           
+ ------ ------------------------------------------------------------------------------------------------------------- 
+  25     Parameter #2 $subject of method App\Support\Audit::log() expects Illuminate\Database\Eloquent\Model|string,  
+         Illuminate\Contracts\Auth\Authenticatable given.                                                             
+         🪪  argument.type                                                                                            
+ ------ ------------------------------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------ 
+  Line   Models\Attempt.php                                                                  
+ ------ ------------------------------------------------------------------------------------ 
+  80     Call to an undefined method Illuminate\Database\Eloquent\Model::duration().         
+         🪪  method.notFound                                                                 
+  141    Call to an undefined method Illuminate\Database\Eloquent\Model::needHumanReview().  
+         🪪  method.notFound                                                                 
+ ------ ------------------------------------------------------------------------------------ 
+
+ ------ -------------------------------------------------------------------------------------------------------------- 
+  Line   Models\Counter.php                                                                                            
+ ------ -------------------------------------------------------------------------------------------------------------- 
+  64     Match arm comparison between App\Enums\CounterKey::Session and App\Enums\CounterKey::Session is always true.  
+         🪪  match.alwaysTrue                                                                                          
+         💡  Remove remaining cases below this one and this error will disappear too.                                  
+ ------ -------------------------------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------ 
+  Line   Models\Employee.php                             
+ ------ ------------------------------------------------ 
+  105    Expression on left side of ?? is not nullable.  
+         🪪  nullCoalesce.expr                           
+  114    Expression on left side of ?? is not nullable.  
+         🪪  nullCoalesce.expr                           
+  114    Expression on left side of ?? is not nullable.  
+         🪪  nullCoalesce.expr                           
+ ------ ------------------------------------------------ 
+
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  Line   Models\Enrollment.php                                                                                          
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  63     Call to an undefined method Illuminate\Database\Eloquent\Builder<Illuminate\Database\Eloquent\Model>::visible  
+         For().                                                                                                         
+         🪪  method.notFound                                                                                            
+ ------ --------------------------------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------ 
+  Line   Models\Exam.php                                                                           
+ ------ ------------------------------------------------------------------------------------------ 
+  90     Access to an undefined property Illuminate\Database\Eloquent\Model::$duration.            
+         🪪  property.notFound                                                                     
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property     
+  94     Access to an undefined property Illuminate\Database\Eloquent\Model::$tasks_count.         
+         🪪  property.notFound                                                                     
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property     
+  109    Access to an undefined property Illuminate\Database\Eloquent\Model::$has_speaking_tasks.  
+         🪪  property.notFound                                                                     
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property     
+  114    Access to an undefined property Illuminate\Database\Eloquent\Model::$need_human_review.   
+         🪪  property.notFound                                                                     
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property     
+  169    Access to an undefined property App\Models\Exam::$enrollments_exists.                     
+         🪪  property.notFound                                                                     
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property     
+  174    Access to an undefined property App\Models\Exam::$enrollments_with_no_attempts_exists.    
+         🪪  property.notFound                                                                     
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property     
+  181    Access to an undefined property App\Models\Exam::$attempts_exists.                        
+         🪪  property.notFound                                                                     
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property     
+  185    Access to an undefined property App\Models\Exam::$active_attempts_exists.                 
+         🪪  property.notFound                                                                     
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property     
+  197    Access to an undefined property App\Models\Exam::$enrollments_exists.                     
+         🪪  property.notFound                                                                     
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property     
+  202    Access to an undefined property App\Models\Exam::$attempts_exists.                        
+         🪪  property.notFound                                                                     
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property     
+  207    Access to an undefined property App\Models\Exam::$unreviewed_attempts_exists.             
+         🪪  property.notFound                                                                     
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property     
+  212    Access to an undefined property App\Models\Exam::$active_attempts_exists.                 
+         🪪  property.notFound                                                                     
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property     
+ ------ ------------------------------------------------------------------------------------------ 
+
+ ------ -------------------------------------------------------------------------------------------------- 
+  Line   Models\ForeignNational.php                                                                        
+ ------ -------------------------------------------------------------------------------------------------- 
+  21     Method App\Models\ForeignNational::getRememberTokenName() should return string but returns null.  
+         🪪  return.type                                                                                   
+  116    Expression on left side of ?? is not nullable.                                                    
+         🪪  nullCoalesce.expr                                                                             
+  125    Expression on left side of ?? is not nullable.                                                    
+         🪪  nullCoalesce.expr                                                                             
+ ------ -------------------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------------------------- 
+  Line   Modules\AttemptAnswer\HandleAttemptAnswer.php                                                                
+ ------ ------------------------------------------------------------------------------------------------------------- 
+  22     Access to an undefined property Illuminate\Database\Eloquent\Model::$task.                                   
+         🪪  property.notFound                                                                                        
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                        
+  30     Parameter #2 $taskVariant of method                                                                          
+         App\Modules\AttemptAnswer\Handlers\SingleChoiceTaskHandler::calculateMark() expects App\Models\TaskVariant,  
+         Illuminate\Database\Eloquent\Model|null given.                                                               
+         🪪  argument.type                                                                                            
+ ------ ------------------------------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Modules\AttemptAnswer\Handlers\MultyInputTaskHandler.php                               
+ ------ --------------------------------------------------------------------------------------- 
+  44     Access to an undefined property Illuminate\Database\Eloquent\Model::$content.          
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Modules\AttemptAnswer\Handlers\SingleChoiceTaskHandler.php                             
+ ------ --------------------------------------------------------------------------------------- 
+  31     Access to an undefined property Illuminate\Database\Eloquent\Model::$answers.          
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+  50     Access to an undefined property Illuminate\Database\Eloquent\Model::$mark.             
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Modules\AttemptAnswer\Handlers\SingleInputTaskHandler.php                              
+ ------ --------------------------------------------------------------------------------------- 
+  52     Access to an undefined property Illuminate\Database\Eloquent\Model::$mark.             
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------ 
+  Line   Modules\Enrollment\EnrollmentPaymentRules.php                                       
+ ------ ------------------------------------------------------------------------------------ 
+  21     Call to an undefined method Illuminate\Database\Eloquent\Model::isCancelled().      
+         🪪  method.notFound                                                                 
+  27     Call to an undefined method Illuminate\Database\Eloquent\Model::codesTtlExpired().  
+         🪪  method.notFound                                                                 
+ ------ ------------------------------------------------------------------------------------ 
+
+ ------ -------------------------------------------------------------------------------- 
+  Line   Modules\ExamConduct\AttemptSpeakingRules.php                                    
+ ------ -------------------------------------------------------------------------------- 
+  84     Call to an undefined method Illuminate\Database\Eloquent\Model::hasSpeaking().  
+         🪪  method.notFound                                                             
+ ------ -------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------------------------- 
+  Line   Modules\ExamDocument\ExamCodesGenerator.php                                                                  
+ ------ ------------------------------------------------------------------------------------------------------------- 
+  20     Property App\Models\Exam::$enrollments is not writable.                                                      
+         🪪  assign.propertyReadOnly                                                                                  
+  37     Parameter #1 $enrollment of method App\Modules\ExamDocument\ExamCodesGenerator::codeWasGenerated() expects   
+         App\Models\Enrollment, Illuminate\Database\Eloquent\Model given.                                             
+         🪪  argument.type                                                                                            
+  40     Parameter #1 $enrollment of method App\Modules\ExamDocument\ExamCodesGenerator::generateAndSaveUniqueCode()  
+         expects App\Models\Enrollment, Illuminate\Database\Eloquent\Model given.                                     
+         🪪  argument.type                                                                                            
+  78     Parameter #1 $string of function str_pad expects string, int<0, max> given.                                  
+         🪪  argument.type                                                                                            
+ ------ ------------------------------------------------------------------------------------------------------------- 
+
+ ------ ---------------------------------------------------------------------------------------- 
+  Line   Modules\ExamDocument\ExamDocumentRules.php                                              
+ ------ ---------------------------------------------------------------------------------------- 
+  77     Access to an undefined property App\Models\Exam::$enrollments_with_no_attempts_exists.  
+         🪪  property.notFound                                                                   
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property   
+  122    Access to an undefined property App\Models\Exam::$enrollments_with_no_attempts_exists.  
+         🪪  property.notFound                                                                   
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property   
+ ------ ---------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  Line   Modules\ExamDocument\ExamResultsGenerator.php                                                                  
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  39     Parameter #1 $relations of method Illuminate\Database\Eloquent\Model::loadMissing() expects                    
+         array<'enrollments'|'type'|int, array<int|string, string>|(Closure(Illuminate\Database\Eloquent\Relations\Bel  
+         ongsTo|Illuminate\Database\Eloquent\Relations\HasMany): mixed)|string>|string, array{type: array{blocks:       
+         Closure(Illuminate\Database\Eloquent\Relations\HasMany): Illuminate\Database\Eloquent\Relations\HasMany,       
+         'blocks.subblocks': Closure(Illuminate\Database\Eloquent\Relations\HasMany):                                   
+         Illuminate\Database\Eloquent\Relations\HasMany}, enrollments: array{'attempt…', 'foreignNational'}} given.     
+         🪪  argument.type                                                                                              
+  50     Property App\Models\Exam::$enrollments is not writable.                                                        
+         🪪  assign.propertyReadOnly                                                                                    
+  57     Access to an undefined property Illuminate\Database\Eloquent\Model::$blocks.                                   
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  88     Access to an undefined property Illuminate\Database\Eloquent\Model::$attempt.                                  
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  90     Using nullsafe property access "?->attemptAnswers" on left side of ?? is unnecessary. Use -> instead.          
+         🪪  nullsafe.neverNull                                                                                         
+  96     Access to an undefined property Illuminate\Database\Eloquent\Model::$blocks.                                   
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  99     Parameter #1 $callback of method Illuminate\Database\Eloquent\Collection<int,Illuminate\Database\Eloquent\Mod  
+         el>::map() expects callable(Illuminate\Database\Eloquent\Model, int): array{total: mixed, min_mark: int<0, ma  
+         x>|null}, Closure(App\Models\Subblock): array{total: mixed, min_mark: int<0, max>|null} given.                 
+         🪪  argument.type                                                                                              
+  121    Access to an undefined property Illuminate\Database\Eloquent\Model::$foreignNational.                          
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  123    Access to an undefined property Illuminate\Database\Eloquent\Model::$foreignNational.                          
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  135    Using nullsafe property access "?->total_mark" on left side of ?? is unnecessary. Use -> instead.              
+         🪪  nullsafe.neverNull                                                                                         
+  155    Access to an undefined property Illuminate\Database\Eloquent\Model::$foreignNational.                          
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  156    Access to an undefined property Illuminate\Database\Eloquent\Model::$foreignNational.                          
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  157    Access to an undefined property Illuminate\Database\Eloquent\Model::$attempt.                                  
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  159    Using nullsafe property access "?->order" on left side of ?? is unnecessary. Use -> instead.                   
+         🪪  nullsafe.neverNull                                                                                         
+ ------ --------------------------------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  Line   Modules\ExamDocument\ExamStatementDataBuilder.php                                                              
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  10     Method App\Modules\ExamDocument\ExamStatementDataBuilder::build() should return                                
+         App\Modules\ExamDocument\ExamStatementDto but return statement is missing.                                     
+         🪪  return.missing (non-ignorable)                                                                             
+  18     Parameter #1 $relations of method Illuminate\Database\Eloquent\Model::loadMissing() expects                    
+         array<'enrollments'|'type'|int, array<int|string, string>|(Closure(Illuminate\Database\Eloquent\Relations\Bel  
+         ongsTo|Illuminate\Database\Eloquent\Relations\HasMany): mixed)|string>|string, array{type: array{blocks:       
+         Closure(Illuminate\Database\Eloquent\Relations\HasMany): Illuminate\Database\Eloquent\Relations\HasMany,       
+         'blocks.subblocks': Closure(Illuminate\Database\Eloquent\Relations\HasMany):                                   
+         Illuminate\Database\Eloquent\Relations\HasMany}, enrollments: array{'attempt…', 'foreignNational'}} given.     
+         🪪  argument.type                                                                                              
+  29     Property App\Models\Exam::$enrollments is not writable.                                                        
+         🪪  assign.propertyReadOnly                                                                                    
+ ------ --------------------------------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  Line   Modules\ExamReview\FinishManualReview.php                                                                      
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  46     Call to an undefined method Illuminate\Database\Eloquent\Builder<Illuminate\Database\Eloquent\Model>::manualR  
+         eview().                                                                                                       
+         🪪  method.notFound                                                                                            
+ ------ --------------------------------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  Line   Modules\ExamReview\RateAttemptAnswer.php                                                                       
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  21     Access to an undefined property Illuminate\Database\Eloquent\Model::$task.                                     
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  25     Parameter #1 $attempt of method App\Modules\ExamReview\RateAttemptAnswer::ensureAttemptFinished() expects      
+         App\Models\Attempt, Illuminate\Database\Eloquent\Model|null given.                                             
+         🪪  argument.type                                                                                              
+  28     Parameter #1 $attempt of method App\Modules\ExamReview\RateAttemptAnswer::ensureAttemptNotChecked() expects    
+         App\Models\Attempt, Illuminate\Database\Eloquent\Model|null given.                                             
+         🪪  argument.type                                                                                              
+  29     Parameter #2 $attempt of method App\Modules\ExamReview\RateAttemptAnswer::ensureTaskIsNotAutoReview() expects  
+         App\Models\Attempt, Illuminate\Database\Eloquent\Model|null given.                                             
+         🪪  argument.type                                                                                              
+  52     Access to an undefined property App\Models\Attempt::$status.                                                   
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+ ------ --------------------------------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  Line   Modules\ExamSession\CheckPassingThresholds.php                                                                 
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  28     Parameter #1 $groupBy of method Illuminate\Support\Collection<int,Illuminate\Database\Eloquent\Model>::groupB  
+         y() expects (callable(Illuminate\Database\Eloquent\Model, int): (int|string|Stringable|UnitEnum))|list<Closur  
+         e|string>|string, Closure(App\Models\AttemptAnswer): mixed given.                                              
+         🪪  argument.type                                                                                              
+         💡  Type #2 from the union: Closure(App\Models\AttemptAnswer): mixed is not a list.                            
+  29     Access to an undefined property Illuminate\Database\Eloquent\Model::$task.                                     
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  31     Access to an undefined property Illuminate\Database\Eloquent\Model::$type.                                     
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  42     Parameter #1 $groupBy of method Illuminate\Support\Collection<int,Illuminate\Database\Eloquent\Model>::groupB  
+         y() expects (callable(Illuminate\Database\Eloquent\Model, int): (int|string|Stringable|UnitEnum))|list<Closur  
+         e|string>|string, Closure(App\Models\AttemptAnswer): mixed given.                                              
+         🪪  argument.type                                                                                              
+         💡  Type #2 from the union: Closure(App\Models\AttemptAnswer): mixed is not a list.                            
+  43     Access to an undefined property Illuminate\Database\Eloquent\Model::$task.                                     
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+  45     Access to an undefined property Illuminate\Database\Eloquent\Model::$type.                                     
+         🪪  property.notFound                                                                                          
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                          
+ ------ --------------------------------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  Line   Modules\ExamSession\ExamSessionAttemptBuilder.php                                                              
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  23     Parameter #1 $relations of method Illuminate\Database\Eloquent\Model::load() expects                           
+         array<'taskVariants'|'taskVariants.answers'|'taskVariants…'|int, array<int|string, string>|(Closure(Illuminat  
+         e\Database\Eloquent\Relations\BelongsToMany): mixed)|string>|string, array{taskVariants:                       
+         Closure(Illuminate\Database\Eloquent\Relations\BelongsToMany): void, 0: 'taskVariants.task',                   
+         'taskVariants.answers': Closure(Illuminate\Database\Eloquent\Relations\HasMany):                               
+         Illuminate\Database\Eloquent\Relations\HasMany, 'taskVariants.attemptAnswers': Closure(mixed): void, 1:        
+         'exam.type', 2: 'foreignNational'} given.                                                                      
+         🪪  argument.type                                                                                              
+  37     Property App\Models\Attempt::$taskVariants is not writable.                                                    
+         🪪  assign.propertyReadOnly                                                                                    
+ ------ --------------------------------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Modules\ExamSession\ExamVariantGenerator.php                                           
+ ------ --------------------------------------------------------------------------------------- 
+  49     Access to an undefined property Illuminate\Database\Eloquent\Model::$group_number.     
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+  55     Access to an undefined property Illuminate\Database\Eloquent\Model::$id.               
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Modules\Exam\ExamBeforeSaveValidator.php                                               
+ ------ --------------------------------------------------------------------------------------- 
+  144    Access to an undefined property Illuminate\Database\Eloquent\Model::$short_name.       
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  Line   Modules\Exam\ExamViewBuilder.php                                                                               
+ ------ --------------------------------------------------------------------------------------------------------------- 
+  29     Property App\Models\Exam::$enrollments is not writable.                                                        
+         🪪  assign.propertyReadOnly                                                                                    
+  32     Parameter #1 $callback of method Illuminate\Support\Collection<int,Illuminate\Database\Eloquent\Model>::each(  
+         ) expects callable(Illuminate\Database\Eloquent\Model, int): mixed, Closure(App\Models\Enrollment): void       
+         given.                                                                                                         
+         🪪  argument.type                                                                                              
+ ------ --------------------------------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Modules\Exam\ExaminersValidator.php                                                    
+ ------ --------------------------------------------------------------------------------------- 
+  107    Access to an undefined property Illuminate\Database\Eloquent\Model::$is_active.        
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+  127    Call to an undefined method Illuminate\Database\Eloquent\Model::hasRole().             
+         🪪  method.notFound                                                                    
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ -------------------------------------------------------------------- 
+  Line   Modules\ForeignNational\ForeignNationalViewBuilder.php              
+ ------ -------------------------------------------------------------------- 
+  26     Property App\Models\ForeignNational::$enrollments is not writable.  
+         🪪  assign.propertyReadOnly                                         
+ ------ -------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------ 
+  Line   Modules\ForeignNational\GetForeignNationals.php                         
+ ------ ------------------------------------------------------------------------ 
+  44     Parameter #1 $string of function trim expects string, int|false given.  
+         🪪  argument.type                                                       
+ ------ ------------------------------------------------------------------------ 
+
+ ------ --------------------------------------------------------------------------------- 
+  Line   Modules\Report\EnsureFrdoGenerationAvailable.php                                 
+ ------ --------------------------------------------------------------------------------- 
+  89     Call to an undefined method Illuminate\Database\Eloquent\Builder::active().      
+         🪪  method.notFound                                                              
+  104    Call to an undefined method Illuminate\Database\Eloquent\Builder::unreviewed().  
+         🪪  method.notFound                                                              
+  122    Call to an undefined method Illuminate\Database\Eloquent\Builder::passed().      
+         🪪  method.notFound                                                              
+  125    Call to an undefined method Illuminate\Database\Eloquent\Builder::failed().      
+         🪪  method.notFound                                                              
+ ------ --------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------------------- 
+  Line   Modules\Report\FRDOReportsGenerator.php                                                                
+ ------ ------------------------------------------------------------------------------------------------------- 
+  69     Parameter #1 $attempt of method App\Modules\Report\FRDOReportsGenerator::certificatesMarkup() expects  
+         App\Models\Attempt, Illuminate\Database\Eloquent\Model given.                                          
+         🪪  argument.type                                                                                      
+  71     Parameter #1 $attempt of method App\Modules\Report\FRDOReportsGenerator::referencesMarkup() expects    
+         App\Models\Attempt, Illuminate\Database\Eloquent\Model given.                                          
+         🪪  argument.type                                                                                      
+  116    Access to an undefined property Illuminate\Database\Eloquent\Model::$surname.                          
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  117    Access to an undefined property Illuminate\Database\Eloquent\Model::$name.                             
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  118    Access to an undefined property Illuminate\Database\Eloquent\Model::$patronymic.                       
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  119    Access to an undefined property Illuminate\Database\Eloquent\Model::$date_birth.                       
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  120    Access to an undefined property Illuminate\Database\Eloquent\Model::$begin_time.                       
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  121    Access to an undefined property Illuminate\Database\Eloquent\Model::$type.                             
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  122    Access to an undefined property Illuminate\Database\Eloquent\Model::$surname_latin.                    
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  123    Access to an undefined property Illuminate\Database\Eloquent\Model::$name_latin.                       
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  124    Access to an undefined property Illuminate\Database\Eloquent\Model::$patronymic_latin.                 
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  125    Access to an undefined property Illuminate\Database\Eloquent\Model::$full_passport.                    
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  126    Access to an undefined property Illuminate\Database\Eloquent\Model::$citizenship.                      
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  127    Access to an undefined property Illuminate\Database\Eloquent\Model::$address.                          
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  147    Access to an undefined property Illuminate\Database\Eloquent\Model::$surname.                          
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  148    Access to an undefined property Illuminate\Database\Eloquent\Model::$name.                             
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  149    Access to an undefined property Illuminate\Database\Eloquent\Model::$patronymic.                       
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  150    Access to an undefined property Illuminate\Database\Eloquent\Model::$date_birth.                       
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  152    Access to an undefined property Illuminate\Database\Eloquent\Model::$type.                             
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  153    Access to an undefined property Illuminate\Database\Eloquent\Model::$surname_latin.                    
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  154    Access to an undefined property Illuminate\Database\Eloquent\Model::$name_latin.                       
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  155    Access to an undefined property Illuminate\Database\Eloquent\Model::$patronymic_latin.                 
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  157    Access to an undefined property Illuminate\Database\Eloquent\Model::$full_passport.                    
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  158    Access to an undefined property Illuminate\Database\Eloquent\Model::$citizenship.                      
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  159    Access to an undefined property Illuminate\Database\Eloquent\Model::$address.                          
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+  160    Access to an undefined property Illuminate\Database\Eloquent\Model::$begin_time.                       
+         🪪  property.notFound                                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                  
+ ------ ------------------------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Modules\Report\FlatTableGenerator.php                                                  
+ ------ --------------------------------------------------------------------------------------- 
+  46     Access to an undefined property Illuminate\Database\Eloquent\Model::$taskVariant.      
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+  48     Access to an undefined property Illuminate\Database\Eloquent\Model::$taskVariant.      
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+  58     Access to an undefined property Illuminate\Database\Eloquent\Model::$answer.           
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+  63     Access to an undefined property Illuminate\Database\Eloquent\Model::$type.             
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Modules\Report\MinistryEducationReportGenerator.php                                    
+ ------ --------------------------------------------------------------------------------------- 
+  58     Access to an undefined property Illuminate\Database\Eloquent\Model::$begin_time.       
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+  60     Access to an undefined property Illuminate\Database\Eloquent\Model::$type.             
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+ ------ --------------------------------------------------------------------------------------- 
+
+ ------ ---------------------------------------------------------------------------------------------------- 
+  Line   Modules\Shared\CodeTranslator.php                                                                   
+ ------ ---------------------------------------------------------------------------------------------------- 
+  16     Instanceof between App\Enums\BusinessCode and App\Enums\BusinessCode will always evaluate to true.  
+         🪪  instanceof.alwaysTrue                                                                           
+  20     Unreachable statement - code above always terminates.                                               
+         🪪  deadCode.unreachable                                                                            
+ ------ ---------------------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------- 
+  Line   Providers\AuthorizationServiceProvider.php                                                 
+ ------ ------------------------------------------------------------------------------------------- 
+  71     Call to an undefined method Illuminate\Database\Eloquent\Relations\BelongsTo::examiner().  
+         🪪  method.notFound                                                                        
+ ------ ------------------------------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------------------------------------- 
+  Line   Support\Audit.php                                                                      
+ ------ --------------------------------------------------------------------------------------- 
+  29     Access to an undefined property Illuminate\Database\Eloquent\Model::$id.               
+         🪪  property.notFound                                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property  
+ ------ --------------------------------------------------------------------------------------- 
+
+ [ERROR] Found 275 errors                                                                                              
+

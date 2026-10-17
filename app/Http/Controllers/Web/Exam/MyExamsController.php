@@ -14,7 +14,7 @@ class MyExamsController
     public function index(Request $request): \Inertia\Response
     {
         $now = Carbon::parse($request->input('date')) ?? Carbon::now();
-        $now->setTimezone(CenterData::timeZome());
+        $now->setTimezone(CenterData::timeZone());
         $start = $now->copy()->startOfDay()->utc();
         $end = $now->copy()->endOfDay()->utc();
 

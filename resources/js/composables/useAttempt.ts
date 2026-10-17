@@ -3,9 +3,7 @@ import { AttemptAnswer } from "@/interfaces/Task";
 import { ref } from "vue";
 
 const examAttempt = ref<Attempt | null>(null)
-const audioPlayingUrl = ref<string | null>(null)
 const errors = ref<Set<number>>(new Set())
-const saving = ref<Set<number>>(new Set())
 
 export const useAttempt = ()  => {
     const loading= ref<boolean>(true)
@@ -29,37 +27,13 @@ export const useAttempt = ()  => {
 
     const removeError = (taskId:number) => {
         errors.value.delete(taskId)
-    }
-
-    const setSaving = (taskId:number) => {
-        saving.value.add(taskId)
-    }
-
-    const removeSaving = (taskId:number) => {
-        saving.value.delete(taskId)
-    }
-
-    const audioStartPlaying = (url: string) => {
-        audioPlayingUrl.value = url
-        
-    }
-
-    const audioStopPlaying = () => {
-        audioPlayingUrl.value = null
-    }
-    
+    }    
     return {
             updateAnswer, 
             examAttempt, 
-            audioPlayingUrl, 
             errors, 
-            audioStartPlaying, 
-            audioStopPlaying,
             setError,
             removeError,
-            saving,
-            setSaving,
-            removeSaving,
             loading
         }
 }

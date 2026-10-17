@@ -4,10 +4,9 @@ import ExamEnrollment from '@components/Exam/ExamEnrollment.vue';
 import {  RedirectUrl } from '@interfaces/Interfaces';
 import { router, useHttp } from '@inertiajs/vue3';
 import { useConfirm } from '@composables/useConfirm';
-import { ForeignNationalView } from '@/interfaces/ForeignNational';
 
 const props = defineProps<{
-    foreignNational: ForeignNationalView | null,
+    foreignNationalId: number,
     enrollUrl: string
 }>()
 
@@ -33,7 +32,7 @@ interface EnrollmentData {
 }
 
 const http = useHttp<EnrollmentData, RedirectUrl>({
-    foreignNationalId:props.foreignNational?.id ?? null,
+    foreignNationalId:props.foreignNationalId,
     hasPayment:false,
     examId:null
 })
@@ -73,7 +72,7 @@ const close  = async () => {
                 <ExamEnrollment
                     v-model:exam-id="http.examId"
                     v-model:has-payment="http.hasPayment"
-                    :foreignNational-id="foreignNational?.id"
+                    :foreignNational-id="foreignNationalId"
                 />
             </v-card-text>
 

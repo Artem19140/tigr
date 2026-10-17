@@ -19,7 +19,7 @@ class ExamTypeSeeder
         $orderTask = 1;
         $orderBlock = 1;
         foreach ($blocks as $block) {
-            $blockCreated = Block::firstOrCreate(
+            $blockCreated = Block::updateOrCreate(
                 [
                     'order' => $orderBlock,
                     'exam_type_id' => $examType->id,
@@ -34,7 +34,7 @@ class ExamTypeSeeder
             $orderBlock += 1;
             $orderSubblock = 1;
             foreach ($block['subblocks'] as $subblock) {
-                $subblockCreated = Subblock::firstOrCreate(
+                $subblockCreated = Subblock::updateOrCreate(
                     [
                         'block_id' => $blockCreated->id,
                         'order' => $orderSubblock
@@ -48,7 +48,7 @@ class ExamTypeSeeder
                 );
                 $orderSubblock += 1;
                 foreach ($subblock['tasks'] as $task) {
-                    $taskCreated = Task::firstOrCreate(
+                    $taskCreated = Task::updateOrCreate(
                         [
                             'order' => $orderTask,
                             'subblock_id' => $subblockCreated->id,
@@ -59,11 +59,12 @@ class ExamTypeSeeder
                             'type' => $task['type'],
                             'mark' => $task['mark'],
                             'description' => $task['description'] ?? null,
-                            'review_mode' => $task['review_mode'] ?? null
+                            'review_mode' => $task['review_mode'] ?? null,
+                            'postscriptum' => $task['postscriptum'] ?? null
                         ]
                     );
                     foreach ($task['variants'] as $variant) {
-                        $taskVariantCreated = TaskVariant::firstOrCreate(
+                        $taskVariantCreated = TaskVariant::updateOrCreate(
                         [
                             'fipi_number' => $variant['fipi_number']
                         ],
@@ -75,7 +76,7 @@ class ExamTypeSeeder
                         ]);
                         $orderAnswer = 1;
                         foreach ($variant['answers'] ?? [] as $answer) {
-                            Answer::firstOrCreate(
+                            Answer::updateOrCreate(
                                 [
                                     'order' => $orderAnswer,
                                     'task_variant_id' => $taskVariantCreated->id

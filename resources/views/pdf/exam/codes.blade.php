@@ -14,8 +14,15 @@
 
     @foreach ($exam->enrollments as $enrollment)
     <tr>
-        <td class="py-5 text-center border-black">{{  $enrollment->foreignNational->full_name }} </td>
-        <td class="py-5 text-center border-black">{{ substr($enrollment?->exam_code, 0, 3) . "  " .  substr($enrollment?->exam_code, 3, 3) }}</td>
+        <td class="py-5 text-center border-black">
+            {{  $enrollment->foreignNational->full_name }} 
+        </td>
+        
+        <td class="py-5 text-center border-black" style="font-size: large;">
+            <strong>
+                {{ substr($enrollment?->exam_code, 0, 3) . "  " .  substr($enrollment?->exam_code, 3, 3) }}
+            </strong>
+        </td>
     </tr>
     @endforeach
 

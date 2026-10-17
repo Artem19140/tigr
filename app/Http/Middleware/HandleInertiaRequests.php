@@ -91,7 +91,8 @@ class HandleInertiaRequests extends Middleware
         if(request()->routeIs(
             'exams.show',
             'exams.conduct',
-            'exams.review'
+            'exams.review',
+            'exams.results'
         )){
             $navigation['exam'] = $this->examNavigation->resolve(
                 $user, 

@@ -27,8 +27,10 @@ class AttemptExamSessionResource extends JsonResource
             'expiredAt' => $this->resource->expired_at,
 
             'tasks' => TaskVariantResource::collection(
-                $this->whenLoaded('taskVariants',
-                fn () => $this->taskVariants)
+                $this->whenLoaded(
+                    'taskVariants',
+                    fn () => $this->taskVariants
+                )
             ),
             
             'foreignNational' => new ForeignNationalResource(
@@ -43,7 +45,7 @@ class AttemptExamSessionResource extends JsonResource
             'minDurationMinutes' => ExamSettings::attemptMinDurationMinutes(),
             'tasksCount' => $this->whenLoaded(
                 'exam', 
-                fn () => $this->exam->type->tasks_count
+                fn () => $this->exam->tasksCount()
             ),
         ];
     }

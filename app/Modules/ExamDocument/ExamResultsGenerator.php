@@ -53,7 +53,6 @@ class ExamResultsGenerator
 
     protected function getHeadersStatement(Exam $exam): Collection
     {
-        
         return $exam->type->blocks->map(function ($block) {
 
             $filteredSubblocks = $block->subblocks
@@ -69,7 +68,7 @@ class ExamResultsGenerator
             $filteredSubblocksCount = $filteredSubblocks->count();
             $subblockCount = $block->subblocks->count();
             if( $subblockCount > 1 ){
-                $filteredSubblocks->push(['name' => 'Сум.']);
+                $filteredSubblocks->push(['name' => 'Общий балл']);
             }
 
             return [

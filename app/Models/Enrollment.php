@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -61,5 +62,13 @@ class Enrollment extends Model
         return $query->whereHas('exam', function ($q) use ($employee) {
             $q->visibleFor($employee);
         });
+    }
+
+    public function makeExamCodeUsed()
+    {
+        $this->update([
+            'exam_code' => null,
+            'exam_code_used_at' => Carbon::now()
+        ]);
     }
 }

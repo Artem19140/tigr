@@ -73,8 +73,12 @@ class Attempt extends Model
     public function start(): void
     {
         $now = Carbon::now();
+        
         $this->started_at = $now;
-        $this->expired_at = $now->copy()->addMinutes($this->exam->type->duration);
+        $this->expired_at = $now->copy()
+            ->addMinutes(
+                $this->exam->duration()
+            );
         $this->last_activity_at = $now;
     }
 
@@ -134,7 +138,7 @@ class Attempt extends Model
 
     public function canBeAutomaticallyFinalized(): bool
     {
-        return ! $this->exam->type->need_human_review;
+        return ! $this->exam->needHumanReview();
     }
 
     public function taskVariants(): BelongsToMany
@@ -145,7 +149,6 @@ class Attempt extends Model
     public function scopeUnreviewed(Builder $query): Builder
     {
         return $query
-            ->whereNotNull('started_at')
             ->whereNotNull('finished_at')
             ->whereNull('reviewed_at');
     }
@@ -153,7 +156,6 @@ class Attempt extends Model
     public function scopeActive(Builder $query): Builder
     {
         return $query
-            ->whereNotNull('started_at')
             ->whereNull('annulled_at')
             ->whereNull('finished_at')
             ->whereNull('reviewed_at');
@@ -177,45 +179,43 @@ class Attempt extends Model
     }
 
 
-    protected function timeZone(): Attribute
+    public function timeZone():string
     {
-        return Attribute::get(function () {
-            return CenterData::timeZome();
-        });
+        return CenterData::timeZone();
     }
 
     protected function startedAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return $this->started_at?->copy()->setTimezone(CenterData::timeZome());
+            return $this->started_at?->copy()->setTimezone($this->timeZone());
         });
     }
 
     protected function finishedAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return $this->finished_at?->copy()->setTimezone(CenterData::timeZome());
+            return $this->finished_at?->copy()->setTimezone($this->timeZone());
         });
     }
 
     protected function speakingStartedAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return $this->speaking_started_at?->copy()->setTimezone(CenterData::timeZome());
+            return $this->speaking_started_at?->copy()->setTimezone($this->timeZone());
         });
     }
 
     protected function speakingFinishedAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return $this->speaking_finished_at?->copy()->setTimezone(CenterData::timeZome());
+            return $this->speaking_finished_at?->copy()->setTimezone($this->timeZone());
         });
     }
 
     protected function annulledAtLocal(): Attribute
     {
         return Attribute::get(function () {
-            return $this->annulled_at?->copy()->setTimezone(CenterData::timeZome());
+            return $this->annulled_at?->copy()->setTimezone($this->timeZone());
         });
     }
 

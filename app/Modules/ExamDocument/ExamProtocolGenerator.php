@@ -49,7 +49,7 @@ class ExamProtocolGenerator
             ->min('started_at');
 
         return $min ? Carbon::parse($min, 'UTC')
-            ->setTimezone($exam->time_zone) : null;
+            ->setTimezone($exam->timeZone()) : null;
     }
 
     protected function getEndTimeReal(Exam $exam): ?Carbon
@@ -58,6 +58,6 @@ class ExamProtocolGenerator
             ->max('finished_at');
 
         return $max ? Carbon::parse($max, 'UTC')
-            ->setTimezone($exam->time_zone) : null;
+            ->setTimezone($exam->timeZone()) : null;
     }
 }

@@ -104,7 +104,7 @@ class FlatTableGenerator
         Carbon $dateFrom,
         Carbon $dateTo
     ): array {
-        $timeZone = CenterData::timeZome();
+        $timeZone = CenterData::timeZone();
         return [
             $dateFrom->copy()->setTimezone($timeZone)->startOfDay()->utc(),
             $dateTo->copy()->setTimezone($timeZone)->endOfDay()->utc(),

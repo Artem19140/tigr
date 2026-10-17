@@ -23,9 +23,12 @@ class EmployeeBeforeSaveValidator
     protected function ensureHasNoRolePlatformAdmin(
         array $rolesIds
     ): void{
-        $platformAdminRole = Role::findByEnum(EmployeeRole::PlatformAdmin);
+        $platformAdminRole = Role::findByEnum(
+            EmployeeRole::PlatformAdmin
+        );
 
         $hasPlatformAdminRole = \in_array($platformAdminRole->id, $rolesIds);
+        
         if ( $hasPlatformAdminRole ) {
             Log::critical(
                 'ANUTHORIZED: employee_validation - roles has platform admin role', 

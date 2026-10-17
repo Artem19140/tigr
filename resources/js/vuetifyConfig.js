@@ -37,7 +37,7 @@ export const vuetify = createVuetify({
   },
   defaults:{
     VCard:{
-      rounded:'xl',
+      rounded:'xl'
     },
     VTextField:{
       density:"comfortable",
