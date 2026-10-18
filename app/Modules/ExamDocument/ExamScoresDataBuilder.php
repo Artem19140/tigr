@@ -53,7 +53,7 @@ class ExamScoresDataBuilder
 
     protected function getRows(Exam $exam): Collection
     {
-        return $exam->enrollments->map(function ($enrollment) {
+        return $exam->enrollments->map(function ($enrollment) use($exam) {
             $row = [
                 $enrollment->foreignNational->full_name,
                 //$enrollment->foreignNational->full_name_latin,
@@ -67,6 +67,18 @@ class ExamScoresDataBuilder
                 })
                 ->map(fn ($answer) =>  $answer->mark ?? 0);
 
+            if($marks === null){
+                
+                $empty = [];
+                for($i=1; $i <= $exam->tasksCount(); $i++){
+                    $empty[] = '';
+                }
+
+                return [
+                    ...$row,
+                    ...$empty
+                ];
+            }
             return [
                 ...$row,
                 ...$marks

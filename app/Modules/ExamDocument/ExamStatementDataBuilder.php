@@ -195,22 +195,24 @@ class ExamStatementDataBuilder
                 }
 
                 $marksByBlocks = $exam->type->blocks
-                    ->map(function (Block $block) use ($answersBySubblock) {
+                    ->map(function (Block $block) use ($answersBySubblock, $attempt) {
                         $result = [];
 
                         $subblocksMarks = $block->subblocks
-                            ->map(function (Subblock $subblock) use ($answersBySubblock) {
+                            ->map(function (Subblock $subblock) use ($answersBySubblock, $attempt) {
                                 return [
-                                    'total' => $answersBySubblock
-                                        ->get($subblock->id, collect())
-                                        ->sum('mark'),
+                                    'total' =>  $attempt 
+                                        ? $answersBySubblock
+                                            ->get($subblock->id, collect())
+                                            ->sum('mark')
+                                        : '',
 
                                     'min_mark' => $subblock->min_mark,
                                 ];
                             });
 
                         if ($block->subblocks->count() > 1) {
-                            $result['total'] = $subblocksMarks->sum('total');
+                            $result['total'] = $attempt ? $subblocksMarks->sum('total') : '';
                         }
 
                         $result['subblocksMarks'] = $subblocksMarks
@@ -240,7 +242,7 @@ class ExamStatementDataBuilder
                 $row = [
                     ...$row,
                     [
-                        'value' => $attempt?->total_mark ?? 0,
+                        'value' => $attempt ? ($attempt?->total_mark ?? 0) : '',
                         'shortVersion' => true,
                     ],
                     [
