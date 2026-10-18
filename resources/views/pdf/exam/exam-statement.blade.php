@@ -15,89 +15,42 @@
 <div class="text-small">
     Дата и время: {{ $exam->beginTimeLocal()->format('d.m.Y, H:i') }}
 </div>
+
 <table class="table">
-    <thead >
-        <tr >
-            <th rowspan="2">ФИО</th>
-            <th rowspan="2">ФИО латиница</th>
-            <th rowspan="2">Паспортные данные</th>
-            <th rowspan="2">Гражданство</th>
-            <th colspan="2">
-                Время экзамена
-            </th>
-            @if ($exam->hasSpeaking())
-                <th colspan="2">
-                    Время устной части
-                </th>
-            @endif
-            
-            @foreach ($statementTable['headers'] as $block)
-                <th 
-                    colspan="{{ $block['colspan'] }}"
-                    
+    <thead>
+        
+        <tr>
+            @foreach ($statementTable['headers'] as $header)
+                <th
+                    colspan="{{ $header['colspan'] ?? 1 }}"
+                    rowspan="{{ $header['rowspan'] ?? 1 }}"
                 >
-                    {{ $block['name'] }} 
+                    {{ $header['label'] }}
                 </th>
             @endforeach
-            <th rowspan="2">Общий балл</th>
-            <th rowspan="2">Результат (документ)</th>
         </tr>
 
         <tr>
-            <th>
-                Начала
-            </th>
-            <th>
-                Конца
-            </th>
-            @if ($exam->hasSpeaking())
-                <th>
-                    Начала
-                </th>
-                <th>
-                    Конца
-                </th>
-            @endif
-            @foreach ($statementTable['headers'] as $block)
-                @foreach ($block['subblocks'] as $subblock)
-                    <th>
-                        {{ $subblock['name'] }}
-                    </th>
+            @foreach ($statementTable['headers'] as $header)
+                @foreach ($header['childrens'] ?? [] as $child)
+                    <th>{{ $child['label'] }}</th>
                 @endforeach
             @endforeach
         </tr>
+
+
     </thead>
+
     <tbody>
         @foreach ($statementTable['rows'] as $row)
-        <tr>
-            <td >{{ $row['fullName'] }}</td>
-            <td >{{ $row['fullNameLatin'] }}</td>
-            <td>{{ $row['fullPassport'] }}</td>
-            <td>{{ $row['citizenship'] }}</td>
-            <td>{{ $row['startedAt'] ?? ''}}</td>
-            <td>{{ $row['finishedAt']  ?? ''}}</td> 
-
-            @if ($exam->hasSpeaking())
-            <td>{{ $row['speakingStartedAt'] ?? ''}}</td>
-            <td>{{ $row['speakingFinishedAt']  ?? ''}}</td>  
-            @endif 
-
-            @foreach ($row['marksByBlocks'] as $block)
-
-                @foreach ($block['marksBySubblocks'] as $subblock)
-                    <td>{{ $subblock['total'] }}</td> 
+            <tr>
+                @foreach ($row as $data)
+                    <td>
+                        {{ $data }}
+                    </td>
                 @endforeach
-
-                @if ( isset($block['total']) )
-                    <td> {{ $block['total']  }} </td>
-                @endif
-                
-            @endforeach
-
-            <td>{{ $row['totalMark'] }}</td>
-            <td>{{ $row['result']  ?? ''}}</td>
-        </tr>
-        @endforeach     
+            </tr>
+        @endforeach
     </tbody>
 </table>
 

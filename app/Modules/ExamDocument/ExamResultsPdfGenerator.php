@@ -26,8 +26,8 @@ class ExamResultsPdfGenerator
             'exam' => $exam,
             'center' => new CenterData(),
             'statementTable' => [
-                'headers' => $statementDto->headers, 
-                'rows' => $statementDto->rows, 
+                'headers' => $statementDto['headers'], 
+                'rows' => $statementDto['rows'], 
             ],
             'markTable' => [
                 'headers' => $sooresBuilder['headers'],

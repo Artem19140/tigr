@@ -34,8 +34,8 @@ Route::get('exams/{exam}/results', function(
     $rows = [];
 
     if($result->available){
-        $headers = $dto->headers->values()->toArray();
-        $rows = $dto->rows->values()->toArray();
+        $headers = $dto['headers'];
+        $rows = $dto['rows'];
     }
 
     return Inertia::render('Exam/Results', [
