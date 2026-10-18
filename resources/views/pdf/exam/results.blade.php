@@ -4,34 +4,20 @@
     Результаты
 @endsection
 
-@push('style')
-    
-    th, td {
-        border: 1px solid black;
-        text-align:center;
-        font-size:9px;
-    }
-
-    th {
-    white-space: normal;
-    word-break: normal;
-    overflow-wrap: break-word;
-}
-    
-@endpush
-
 @section('content')
 
-@include('pdf.exam.exam-statement', [
+@include('pdf.exam.statement-body', [
     'exam' => $exam, 
-    'statementTable' => $statementTable
+    'headers' => $statementTable['headers'],
+    'rows' => $statementTable['rows'],
 ])
 
 <div class="page-break"></div>
 
-@include('pdf.exam.exam-marks', [
+@include('pdf.exam.scores-body', [
     'exam' => $exam, 
-    'markTable' => $markTable
+    'headers' => $markTable['headers'],
+    'rows' => $markTable['rows'],
 ])
 
 @endsection

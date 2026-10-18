@@ -28,7 +28,9 @@ const label = {
     codes : 'Коды',
     protocol: 'Протокол',
     results: 'Результаты',
-    list: 'Список'
+    list: 'Список',
+    statement:'Ведомость',
+    scores:'Баллы'
 }
 
 type DocumentKey = keyof typeof label

@@ -16,14 +16,14 @@
     Дата и время: {{ $exam->beginTimeLocal()->format('d.m.Y, H:i') }}
 </div>
 
-<table class="table">
+<table class="table bordered-table">
     <thead>
-        
         <tr>
-            @foreach ($statementTable['headers'] as $header)
+            @foreach ($headers as $header)
                 <th
                     colspan="{{ $header['colspan'] ?? 1 }}"
                     rowspan="{{ $header['rowspan'] ?? 1 }}"
+                    class="text-xs"
                 >
                     {{ $header['label'] }}
                 </th>
@@ -31,9 +31,9 @@
         </tr>
 
         <tr>
-            @foreach ($statementTable['headers'] as $header)
+            @foreach ($headers as $header)
                 @foreach ($header['childrens'] ?? [] as $child)
-                    <th>{{ $child['label'] }}</th>
+                    <th class="text-small">{{ $child['label'] }}</th>
                 @endforeach
             @endforeach
         </tr>
@@ -42,11 +42,11 @@
     </thead>
 
     <tbody>
-        @foreach ($statementTable['rows'] as $row)
+        @foreach ($rows as $row)
             <tr>
                 @foreach ($row as $data)
-                    <td>
-                        {{ $data }}
+                    <td class="text-xs">
+                        {{ $data['value'] }}
                     </td>
                 @endforeach
             </tr>
@@ -62,20 +62,23 @@
 </div>
 
 @foreach($exam->examiners as $examiner)
-    @include('pdf.components.signature-section', [
-        'date' =>  $exam->beginTimeLocal()->format('d.m.Y'), 
-        'fio' => $examiner->full_name, 
-    ])
-@endforeach
+    <x-pdf.components.signature-section
+        :date="$exam->beginTimeLocal()->format('d.m.Y')"
+        :fio="$examiner->full_name"
+    />
+@endforeach  
+
+
 
 @if ($exam->hasSpeaking())
     <div class="break-avoid">
         <div class="text-small mt-10">
             Председатель комиссии:
         </div>
-        @include('pdf.components.signature-section', [
-            'date' =>  $exam->beginTimeLocal()->format('d.m.Y'), 
-            'fio' => $center->commissionChairman(), 
-        ])
+
+        <x-pdf.components.signature-section
+            :date="$exam->beginTimeLocal()->format('d.m.Y')"
+            :fio="$center->commissionChairman()"
+        />
     </div>
 @endif

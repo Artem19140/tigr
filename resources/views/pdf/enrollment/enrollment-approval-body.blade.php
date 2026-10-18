@@ -74,8 +74,8 @@
 </div>
 
 <div>
-    @include('pdf.components.signature-section', [
-        'date' => \Carbon\Carbon::now()->format('d.m.Y'),
-        'fio' => $foreignNational->full_name, 
-    ])
+    <x-pdf.components.signature-section
+        :date="now()->format('d.m.Y')"
+        :fio="$foreignNational->full_name"
+    />
 </div>

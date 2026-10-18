@@ -10,6 +10,8 @@ enum ExamDocument: string
     case Codes = 'codes';
     case Protocol = 'protocol';
     case Results = 'results';
+    case Scores = 'scores';
+    case Statement = 'statement';
 
     public  function templatePath():string
     {
@@ -17,7 +19,9 @@ enum ExamDocument: string
             self::Codes => 'pdf.exam.codes',
             self::List => 'pdf.exam.foreign_nationals-list', 
             self::Protocol => 'pdf.exam.protocol',
-            self::Results => 'pdf.exam.results'
+            self::Results => 'pdf.exam.results',
+            self::Scores => 'pdf.exam.scores',
+            self::Statement => 'pdf.exam.statement'
         };
     }
 
@@ -30,7 +34,9 @@ enum ExamDocument: string
             self::Codes => "Кода_{$name}_{$date->format('H-i_d.m.Y')}.pdf",
             self::List => "Список_{$name}_{$date->format('H-i_d.m.Y')}.pdf", 
             self::Protocol => "Протокол_{$name}_{$date->format('H-i_d.m.Y')}.pdf",
-            self::Results => "Результаты_{$name}_{$date->format('H-i_d.m.Y')}.pdf"
+            self::Results => "Результаты_{$name}_{$date->format('H-i_d.m.Y')}.pdf",
+            self::Scores => "Баллы_{$name}_{$date->format('H-i_d.m.Y')}.pdf",
+            self::Statement => "Ведомость_{$name}_{$date->format('H-i_d.m.Y')}.pdf",
         };
     }
 }

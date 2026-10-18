@@ -17,8 +17,8 @@ class ExamResultsPdfGenerator
     
     public function execute(Exam $exam): \Barryvdh\DomPDF\PDF
     {
-        $statementDto = $this->statementBuilder->build($exam);
-        $sooresBuilder = $this->scoresBuilder->build($exam);
+        $statementBuild = $this->statementBuilder->build($exam);
+        $scoresBuild = $this->scoresBuilder->build($exam);
 
         event(new ExamDocumentGenerated($exam, ExamDocument::Results));
 
@@ -26,12 +26,12 @@ class ExamResultsPdfGenerator
             'exam' => $exam,
             'center' => new CenterData(),
             'statementTable' => [
-                'headers' => $statementDto['headers'], 
-                'rows' => $statementDto['rows'], 
+                'headers' => $statementBuild['headers'], 
+                'rows' => $statementBuild['rows'], 
             ],
             'markTable' => [
-                'headers' => $sooresBuilder['headers'],
-                'rows' => $sooresBuilder['rows'],
+                'headers' => $scoresBuild['headers'],
+                'rows' => $scoresBuild['rows'],
             ],
         ])->setPaper('a4', 'landscape');
     }

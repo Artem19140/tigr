@@ -2,21 +2,6 @@
 @section('title')
     Протокол
 @endsection
-@push('style')
-    
-    .section {
-        margin-top: 20px;
-    }
-
-    .violation-section-content{
-        margin-left: 20px;
-    }
-
-    .violation-section-title{
-        margin-top: 5px;
-        margin-bottom: 5px;
-    }
-@endpush
 @section('content')
 <div>
 
@@ -29,14 +14,14 @@
         <span class="bold">{{ $exam->certificateName() }}</span>
     </div>
 
-    <div class="section">
+    <div class="mt-10 mb-10">
         <span class="bold">Учреждение:</span> {{ $center->name() }}
     </div>
 
-    <table class="section">
+    <table>
         <tr>
-            <td class="label">Дата проведения экзамена:</td>
-            <td class="value">
+            <td >Дата проведения экзамена:</td>
+            <td >
                 <span>
                     {{ $exam->beginTimeLocal()->format('d.m.Y') }}
                 </span>
@@ -81,7 +66,7 @@
         @endif
             <div>
                 @if($annulledAttempts->isNotEmpty())
-                <div class="violation-section-content">
+                <div style="margin-left:20px;">
                     @foreach ( $annulledAttempts as $attempt )
                         <div>
                             Cдающий {{ $attempt->foreignNational->full_name_short }}
@@ -113,10 +98,10 @@
         
         <div class="mb-20">
             @foreach($exam->examiners as $examiner)
-                @include('pdf.components.signature-section', [
-                    'date' =>  $exam->beginTimeLocal()->format('d.m.Y'), 
-                    'fio' => $examiner->full_name, 
-                ])
+                <x-pdf.components.signature-section
+                    :date="$exam->beginTimeLocal()->format('d.m.Y')"
+                    :fio="$examiner->full_name"
+                />
             @endforeach
         </div>
     </div>

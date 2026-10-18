@@ -60,8 +60,18 @@ class ExamDocumentBuilder
 
         if($employee->can('results', $exam)){
             $result =  $this->rules->results($exam);
-            $docs['results'] = [
-                'url' => route('exams.documents.results.availability', [
+            // $docs['results'] = [
+            //     'url' => route('exams.documents.results.availability', [
+            //         'exam' => $exam
+            //     ], false),
+            //     'availability' => [
+            //         'disabled' => $result->isNotAvailable(),
+            //         'code' => $result->code()
+            //     ]
+            // ];
+
+            $docs['statement'] = [
+                'url' => route('exams.documents.statement.availability', [
                     'exam' => $exam
                 ], false),
                 'availability' => [
@@ -69,6 +79,17 @@ class ExamDocumentBuilder
                     'code' => $result->code()
                 ]
             ];
+
+            $docs['scores'] = [
+                'url' => route('exams.documents.scores.availability', [
+                    'exam' => $exam
+                ], false),
+                'availability' => [
+                    'disabled' => $result->isNotAvailable(),
+                    'code' => $result->code()
+                ]
+            ];
+
         }
 
         if($employee->can('list', $exam)){

@@ -8,7 +8,7 @@ import { computed, ref } from 'vue';
 const props = defineProps<{
     exam: any,
     headers: Array<Header>,
-    rows: Array<Row>,
+    rows: Array<Array<Row>>,
     backUrl: string,
     availability: {
         available: boolean,
@@ -36,35 +36,25 @@ const sortedRows = computed(() => {
     if(selected.value === 'Все'){
         return props.rows
     }
-
+    
     return props.rows.filter(
-        row => row.result === selected.value
+        row => row.some(data => data.value === selected.value)
     )
+
 })
 
 interface Header{
-    id: number,
-    name: string,
-    min_mark: number,
-    subblocks: Array<Subblock>,
-    colspan: number
+    label: string,
+    colspan: number | undefined,
+    rowspan: number | undefined,
+    childrens: Array<{
+        label: string,
+    } | undefined>
 }
 
 interface Row{
-    fullName: string,
-    fullPassport: string,
-    result: typeof results,
-    totalMark: number,
-    foreignNationalId: number,
-    marksByBlock:{
-        marksBySubblocks: Object
-    }
-}
-interface Subblock{
-    id: number,
-    name: string,
-    min_mark: number,
-    colspan: number
+    value: string,
+    status: undefined
 }
 </script>
 
@@ -112,127 +102,75 @@ interface Subblock{
         </div>
     </div>
 
-
-        <v-table  class="p-4 rounded-xl" v-if="availability.available">
+    <div 
+        class="p-4 rounded-xl" 
+        v-if="availability.available"
+    >
+        <v-table>
             <thead>
                 <tr>
-                    <th rowspan="2" class="text-left font-semibold">
-                        ФИО
-                    </th>
-
-                    <th rowspan="2" class="text-left font-semibold">
-                        Паспорт
-                    </th>
-
                     <th
-                        v-for="header in headers"
-                        :key="header.id"
-                        :colspan="header.colspan"
-                        class="text-center font-semibold"
+                        v-for="header, index in headers"
+                        :key="index"
+                        :colspan="header.colspan ?? 1"
+                        :rowspan="header.rowspan ?? 1"
+                        class="text-center"
                     >
-                        {{ header.name }}
-                    </th>
-
-                    <th rowspan="2" class="text-center font-semibold">
-                        Общий балл
-                    </th>
-
-                    <th rowspan="2" class="text-center font-semibold">
-                        Результат
+                        {{ header.label }}
                     </th>
                 </tr>
 
                 <tr>
                     <template
-                        v-for="header in headers"
-                        :key="header.id"
+                        v-for="header, index in headers"
+                        :key="index"
                     >
                         <th
-                            v-for="subblock in header.subblocks"
-                            :key="subblock.id"
-                            class="text-center text-medium-emphasis"
+                            v-for="children, index in header.childrens"
+                            :key="index"
                         >
-                            {{ subblock.name }}
+                            {{ children?.label }}
                         </th>
                     </template>
+                    
                 </tr>
             </thead>
 
             <tbody >
                 <tr
-                    v-for="(row, rowIndex) in sortedRows"
-                    :key="row.fullPassport ?? rowIndex"
+                    v-for="row, index in sortedRows"
+                    :key="index"
                 >
-                    <td class="whitespace-nowrap font-medium">
-                        {{ row.fullName }}
-                    </td>
-
-                    <td class="whitespace-nowrap text-medium-emphasis">
-                        {{ row.fullPassport }}
-                    </td>
-
-                    <template
-                        v-for="(block, blockIndex) in row.marksByBlocks"
-                        :key="block.id ?? blockIndex"
-                    >
-                        <td
-                            v-for="(subblock, subIndex) in block.marksBySubblocks"
-                            :key="subblock.id ?? subIndex"
-                            class="text-center tabular-nums"
-
-                        >
-                            {{ subblock.total }}
-                        </td>
-
-                        <td
-                            v-if="block.total !== undefined"
-                            class="text-center font-medium tabular-nums"
-                        >
-                            {{ block.total }}
-                        </td>
-                    </template>
-
-                    <td class="text-center font-semibold tabular-nums">
-                        {{ row.totalMark }}
-                    </td>
-
-                    <td class="text-center">
-                        <span
-                            :class="{
-                                'font-medium text-success': row.result === 'Сертификат',
-                                'font-medium text-warning': row.result === 'Справка',
-                                'text-medium-emphasis': row.result === 'н/я',
-                            }"
-                        >
-                            {{ row.result }}
-                        </span>
-                    </td>
-                </tr>
-
-                <tr v-if="sortedRows.length === 0 && availability">
                     <td
-                        :colspan="2 + headers.reduce(
-                            (sum, header) => sum + header.colspan, 0
-                        ) + 2"
-                        class="!p-0"
+                       v-for="data, index in row"
+                       :key="index"
+                       class="text-center"
+                       :class="{
+                            'text-orange': data.value === 'Справка',
+                            'text-green': data.value === 'Сертификат'
+                       }"
                     >
-                        <v-empty-state
-                            :icon="mdiAccountSearchOutline"
-                            title="Участники не найдены"
-                            text="По выбранному фильтру нет результатов для отображения."
-                            class="py-8"
-                        />
+                        {{ data.value }}
                     </td>
                 </tr>
             </tbody>
+            
         </v-table>
+        <v-empty-state
+            v-if="sortedRows.length === 0 && availability"
+            :icon="mdiAccountSearchOutline"
+            title="Участники не найдены"
+            text="По выбранному фильтру нет результатов для отображения."
+            class="py-8"
+        />
+    </div>
 
         <v-empty-state
             v-else
             :icon="mdiFileSearchOutline"
             title="Данные недоступны"
             :text="availability.reason"
-            class="py-8 bg-white rounded-lg"
+            class="py-8"
         >
 
         </v-empty-state>

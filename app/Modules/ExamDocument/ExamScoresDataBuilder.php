@@ -12,7 +12,7 @@ class ExamScoresDataBuilder
         Exam $exam
     ) {
         $this->loadRelations($exam);
-
+;
         return [
             'headers' => $this->getHeaders($exam),
             'rows' => $this->getRows($exam)
@@ -40,6 +40,7 @@ class ExamScoresDataBuilder
     {
         $headers = [
             'ФИО',
+            //'ФИО латиница',
             'Паспортные данные',
             'Гражданство'
         ];
@@ -53,16 +54,24 @@ class ExamScoresDataBuilder
     protected function getRows(Exam $exam): Collection
     {
         return $exam->enrollments->map(function ($enrollment) {
-            return [
-                'fullName' => $enrollment->foreignNational->full_name,
-                'fullNameLatin' => $enrollment->foreignNational->full_name_latin,
-                'fullPassport' => $enrollment->foreignNational->full_passport,
-                'citizenship' =>  $enrollment->foreignNational->citizenship,
-                'answers' => $enrollment->attempt?->attemptAnswers
-                    ->sortBy(function ($answer) {
-                        return $answer->taskVariant?->task?->order ?? 0;
-                    }),
+            $row = [
+                $enrollment->foreignNational->full_name,
+                //$enrollment->foreignNational->full_name_latin,
+                $enrollment->foreignNational->full_passport,
+                $enrollment->foreignNational->citizenship
             ];
+
+            $marks = $enrollment->attempt?->attemptAnswers
+                ->sortBy(function ($answer) {
+                    return $answer->taskVariant?->task?->order ?? 0;
+                })
+                ->map(fn ($answer) =>  $answer->mark ?? 0);
+
+            return [
+                ...$row,
+                ...$marks
+            ];
+            
         });
     }
 }

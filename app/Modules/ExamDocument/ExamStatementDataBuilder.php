@@ -7,7 +7,6 @@ use App\Models\Block;
 use App\Models\Exam;
 use App\Models\Subblock;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Collection;
 
 class ExamStatementDataBuilder
 {
@@ -56,7 +55,8 @@ class ExamStatementDataBuilder
         $headers = [
             [
                 'label' => 'ФИО',
-                'rowspan' => 2
+                'rowspan' => 2,
+                'shortVersion' => true
             ],
             [
                 'label' => 'ФИО латиница',
@@ -64,7 +64,8 @@ class ExamStatementDataBuilder
             ],
             [
                 'label' => 'Паспортные данные',
-                'rowspan' => 2
+                'rowspan' => 2,
+                'shortVersion' => true
             ],
             [
                 'label' => 'Гражданство',
@@ -122,7 +123,8 @@ class ExamStatementDataBuilder
                 'colspan' => $hasMultipleSubblocks  
                     ?  $reportableSubblocks->count()
                     : 1,
-                'rowspan' => $hasMultipleSubblocks  ? 1 : 2
+                'rowspan' => $hasMultipleSubblocks  ? 1 : 2,
+                'shortVersion' => true
             ];
 
             
@@ -131,18 +133,20 @@ class ExamStatementDataBuilder
         $resultsHeaders = [
             [
                 'label' => 'Общий балл',
-                'rowspan' => 2
+                'rowspan' => 2,
+                'shortVersion' => true
             ],
             [
                 'label' => 'Результат (документ)',
-                'rowspan' => 2
+                'rowspan' => 2,
+                'shortVersion' => true
             ]
         ];
         
         return array_merge($headers, $blocksHeaders, $resultsHeaders);
     }
 
-    protected function getRows(Exam $exam)
+    protected function getRows(Exam $exam): array
     {        
         $rows = [];
 
@@ -158,18 +162,36 @@ class ExamStatementDataBuilder
                 );
 
                 $row = [
-                    $enrollment->foreignNational->full_name,
-                    $enrollment->foreignNational->full_name_latin,
-                    $enrollment->foreignNational->full_passport,
-                    $enrollment->foreignNational->citizenship,
-                    $attempt?->started_at_local?->format('H:i'),
-                    $attempt?->finished_at_local?->format('H:i'),
+                    [
+                        'value' => $enrollment->foreignNational->full_name, 
+                        'shortVersion' => true
+                    ],
+                    [
+                        'value' => $enrollment->foreignNational->full_name_latin
+                    ],
+                    [
+                        'value' => $enrollment->foreignNational->full_passport, 
+                        'shortVersion' => true
+                    ],
+                    [
+                        'value' => $enrollment->foreignNational->citizenship
+                    ],
+                    [
+                        'value' => $attempt?->started_at_local?->format('H:i')
+                    ],
+                    [
+                        'value' => $attempt?->finished_at_local?->format('H:i')
+                    ],
                 ];
 
-                if($exam->hasSpeaking()){
-                    $row[] = $attempt?->speaking_started_at_local?->format('H:i');
+                if ($exam->hasSpeaking()) {
+                    $row[] = [
+                        'value' => $attempt?->speaking_started_at_local?->format('H:i')
+                    ];
 
-                    $row[] = $attempt?->speaking_finished_at_local?->format('H:i');
+                    $row[] = [
+                        'value' => $attempt?->speaking_finished_at_local?->format('H:i'),
+                    ];
                 }
 
                 $marksByBlocks = $exam->type->blocks
@@ -199,28 +221,37 @@ class ExamStatementDataBuilder
                         return $result;
                     });
 
-                foreach($marksByBlocks as $block){
-                    
-                    foreach($block['subblocksMarks'] as $subblock){
-                        $row[] = $subblock['total'];
-                    
+                foreach ($marksByBlocks as $block) {
+                    foreach ($block['subblocksMarks'] as $subblock) {
+                        $row[] = [
+                            'value' => $subblock['total'],
+                            'shortVersion' => true,
+                        ];
                     }
 
-                    if( isset($block['total']) ){
-                        $row[] = $block['total'];
+                    if (isset($block['total'])) {
+                        $row[] = [
+                            'value' => $block['total'],
+                            'shortVersion' => true,
+                        ];
                     }
                 }
 
-                $row = [...$row, ...[
-                        $attempt?->total_mark ?? 0,
-
-                        $this->getAttemptResultStatus($attempt),
-                    ]
+                $row = [
+                    ...$row,
+                    [
+                        'value' => $attempt?->total_mark ?? 0,
+                        'shortVersion' => true,
+                    ],
+                    [
+                        'value' => $this->getAttemptResultStatus($attempt),
+                        'shortVersion' => true
+                    ],
                 ];
                 
                 return $row;
             });
-
-        return $rows;
+        
+        return $rows->toArray();
     }    
 }

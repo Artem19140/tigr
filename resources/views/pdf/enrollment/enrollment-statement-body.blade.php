@@ -65,11 +65,11 @@
     </tr>
     <tr>
         <td colspan="2">
-            ДОСТОВЕРНОСТЬ ПРЕДОСТАВЛЕННЫХ СВЕДЕНИЙ ПОДТВЕРЖДАЮ<br>
-            @include('pdf.components.signature-section', [
-                'date' =>  $enrollment->exam?->beginTimeLocal()->format('d.m.Y'), 
-                'fio' => $enrollment->foreignNational?->full_name, 
-            ])
+            <div>ДОСТОВЕРНОСТЬ ПРЕДОСТАВЛЕННЫХ СВЕДЕНИЙ ПОДТВЕРЖДАЮ</div>
+            <x-pdf.components.signature-section
+                :date="$enrollment->exam->begin_time->format('d.m.Y')"
+                :fio="$enrollment->foreignNational?->full_name"
+            />
             <p class="small" style="margin-bottom: 0; font-style: italic;">Согласие на использование средств видеофиксации.</p> 
             <p class="small" style="margin-top: 0;">Настоящим   даю   согласие  {{$center->nameGenitive()}}
                 (ИНН {{$center->inn()}} , ОГРН {{$center->ogrn()}}), 
@@ -78,10 +78,11 @@
                 экзамена   в   порядке   и   целях,   определяемых законодательством и заключаемом договором.
                 Проинформирован об использовании средств видеофиксации и хранении материаловпри проведении экзамена.
             </p>
-            @include('pdf.components.signature-section', [
-                'date' =>  $enrollment->exam->begin_time->format('d.m.Y'), 
-                'fio' => $enrollment->foreignNational?->full_name, 
-            ])
+
+            <x-pdf.components.signature-section
+                :date="$enrollment->exam->begin_time->format('d.m.Y')"
+                :fio="$enrollment->foreignNational?->full_name"
+            />
         </td>
     </tr>
 </table>
@@ -101,18 +102,24 @@
     <li>□ копия паспорта</li>
     <li>□ копия нотариально заверенного перевода паспорта</li>
 </ul>
-Заказчик:
-@include('pdf.components.signature-section', [
-    'date' =>  $enrollment->exam->begin_time->format('d.m.Y'), 
-    'fio' => $enrollment->foreignNational?->full_name, 
-])
-Исполнитель:
-@include('pdf.components.signature-section', [
-    'date' =>  $enrollment->exam->begin_time->format('d.m.Y'), 
-    'fio' =>  $enrollment->creator?->full_name, 
-])
+
+<span>Заказчик:</span>
+
+<x-pdf.components.signature-section
+    :date="$enrollment->exam->begin_time->format('d.m.Y')"
+    :fio="$enrollment->foreignNational?->full_name"
+/>
+
+<span>Исполнитель:</span>
+
+<x-pdf.components.signature-section
+    :date="$enrollment->exam->begin_time->format('d.m.Y')"
+    :fio="$enrollment->creator?->full_name"
+/>
+
 <p>Услуга оказана в полном объеме. Претензий к оказанию Услуги не имею.</p>
-<br><br>
+
+
 <div style="border: 1px #000 solid; padding: 5px;">
     <p>
         Дата экзамена: <span class="data">{{ $enrollment->exam->beginTimeLocal()->format('d.m.Y') }}</span><br>

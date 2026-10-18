@@ -17,6 +17,11 @@
             border-collapse: collapse;
         }
 
+        .bordered-table th, .bordered-table td {
+            border: 1px solid black;
+            text-align:center;
+        }
+
         .border-black{
             border: 1px solid black;
         }
@@ -32,6 +37,10 @@
 
         .text-small {
             font-size: 10px;
+        }
+
+        .text-xs {
+            font-size: 9px;
         }
 
         .text-center {
