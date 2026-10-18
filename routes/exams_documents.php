@@ -28,23 +28,26 @@ Route::get('exams/{exam}/results', function(
 
     $result = $rules->results($exam);
 
+
     $dto = $builder->build($exam);
-    
-    if($result->isNotAvailable()){
+    $headers = [];
+    $rows = [];
 
+    if($result->available){
+        $headers = $dto->headers->values()->toArray();
+        $rows = $dto->rows->values()->toArray();
     }
-
-    $rows = $result->isNotAvailable() 
-        ? []
-        : $dto->rows;
 
     return Inertia::render('Exam/Results', [
         'exam' => new ExamShortResource($exam),
-        'headers' => $dto->headers,
+        'headers' => $headers,
         'rows' => $rows,
         'backUrl' => route('exams.show', [
             'exam' => $exam
         ], false),
-        'availability' => $result->available
+        'availability' => [
+            'available' => $result->available,
+            'reason' => $result->message()
+        ]
     ]);
 })->name('exams.results');

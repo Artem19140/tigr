@@ -26,7 +26,7 @@
         проведения экзамена для иностранных граждан по русскому языку как иностранному,<br>
         истории России и основам законодательства Российской Федерации<br>
         на уровне, соответствующем цели получения<br>
-        <span class="bold">{{ $exam->type->certificate_name }}</span>
+        <span class="bold">{{ $exam->certificateName() }}</span>
     </div>
 
     <div class="section">
@@ -45,7 +45,7 @@
 
         <tr>
             <td>Место проведения (адрес):</td>
-            <td>{{ $exam->address->address }}</td>
+            <td>{{ $exam->addressName() }}</td>
         </tr>
 
         <tr>

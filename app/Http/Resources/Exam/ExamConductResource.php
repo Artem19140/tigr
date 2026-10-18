@@ -22,7 +22,7 @@ class ExamConductResource extends JsonResource
             'enrollmentsCount' => $this->whenCounted('enrollments_count'),
             'protocolComment' => $this->protocol_comment,
             'hasSpeakingTasks' => $this->whenLoaded('type', fn () => $this->type->has_speaking_tasks),
-            'shortName' => $this->whenLoaded('type', fn () => $this->type->short_name)
+            'shortName' => $this->whenLoaded('type', fn () => $this->shortName())
         ];
     }
 }

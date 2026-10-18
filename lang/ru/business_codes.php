@@ -19,6 +19,7 @@ return [
     BusinessCode::CodesUnavailable->value => 'Кода доступны только в день экзамена',
     BusinessCode::ExamCodeExpired->value => 'Код для начала экзамена не был использован',
     BusinessCode::CodesTtlExpired->value => 'Срок действия кодов истек',
+    BusinessCode::ExamCodesValid->value =>  'Срок действия кодов еще не истек и существуют неиспользованные коды',
 
 
     BusinessCode::EnrollmentNotExists->value => 'На экзамен отсутвует запись',

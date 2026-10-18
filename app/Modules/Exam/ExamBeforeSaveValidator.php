@@ -141,7 +141,7 @@ class ExamBeforeSaveValidator
             ->first();
 
         if ($conflictExam) {
-            $examConflictName = $conflictExam->type->short_name;
+            $examConflictName = $conflictExam->shortName();
             $time = $conflictExam->beginTimeLocal()->format('H:i');
             throw new BusinessException(
                 

@@ -40,7 +40,7 @@ class ExamSessionController
                 'minMark' => $exam->type->min_mark,
                 'tasksCount' => $exam->tasksCount(),
                 'minTimeFromStartToFinish' => ExamSettings::attemptMinDurationMinutes(),
-                'name' => $exam->type->name
+                'name' => $exam->fullName()
             ],
             'fullName' => $enrollment->foreignNational->full_name_short,
             'startUrl' => route('exams-sessions.start', [

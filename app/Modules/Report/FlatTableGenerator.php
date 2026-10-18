@@ -60,7 +60,7 @@ class FlatTableGenerator
 
                         $this->csvWriter->writeRow( [
                             $strNumber,
-                            $attempt->exam->type->level,
+                            $attempt->exam->level(),
                             $attempt->foreign_national_id,
                             $attempt->id,
                             $taskVariant->task->order,

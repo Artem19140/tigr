@@ -38,15 +38,15 @@
         <td>Гражданство: <span class="data">{{ $enrollment->foreignNational->country_name }}</span></td>
     </tr>
     <tr>
-        <td>Дата рождения: <span class="data">{{ $enrollment->foreignNational->date_birth->format('d.m.Y') }}</span></td>
-        <td>Место сдачи экзамена: <span class="data">{{ $enrollment->exam->address->address }}</span></td>
+        <td>Дата рождения: <span class="data">{{ $enrollment->foreignNational->formattedDateBirth() }}</span></td>
+        <td>Место сдачи экзамена: <span class="data">{{ $enrollment->exam->addressName() }}</span></td>
     </tr>
 
     <tr>
 
         <td>
             Наименование услуги и ее стоимость:
-            <p>{{ $enrollment->exam->type->name }}(уровень {{ $enrollment->exam->type->level }}) - стоимость <span class="data">{{ $enrollment->exam->type->amount}} рублей ({{ $enrollment->exam->type->amount_in_words }})</span></p>
+            <p>{{ $enrollment->exam->fullName() }}(уровень {{ $enrollment->exam->level() }}) - стоимость <span class="data">{{ $enrollment->exam->type->amount}} рублей ({{ $enrollment->exam->type->amount_in_words }})</span></p>
         </td>
         <td>
             Вид документа, удостоверяющего личность <br><span class="data">{{ $enrollment->foreignNational->document_type}}</span><br>
@@ -117,6 +117,6 @@
     <p>
         Дата экзамена: <span class="data">{{ $enrollment->exam->beginTimeLocal()->format('d.m.Y') }}</span><br>
         Время экзамена: <span class="data">{{ $enrollment->exam->beginTimeLocal()->format('H:i')}}</span><br>
-        Адрес проведения экзамена: <span class="data">{{ $enrollment->exam->address->address }}</span>
+        Адрес проведения экзамена: <span class="data">{{ $enrollment->exam->addressName() }}</span>
     </p>
 </div>

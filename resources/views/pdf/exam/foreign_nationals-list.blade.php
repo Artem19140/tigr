@@ -5,7 +5,7 @@
 
 @section('content')
 
-<h2 class="text-center"> {{ $exam->type->short_name }} • {{ $exam->beginTimeLocal()->format('H:i, d.m.Y') }}</h2>
+<h2 class="text-center"> {{ $exam->shortName() }} • {{ $exam->beginTimeLocal()->format('H:i, d.m.Y') }}</h2>
 @php
 $headers = [
     'ФИО',
@@ -28,7 +28,7 @@ $headers = [
             <td class="text-center border-black">{{ $f->full_name }}</td>
             <td class="text-center border-black">{{ $f->full_name_latin }}</td>
             <td class="text-center border-black">{{ $f->full_passport }}</td>
-            <td class="text-center border-black">{{ $f->date_birth->format('d.m.Y') }}</td>
+            <td class="text-center border-black">{{ $f->formattedDateBirth() }}</td>
             <td class="text-center border-black">{{ $f->country_name }}</td>
         </tr>
     @endforeach

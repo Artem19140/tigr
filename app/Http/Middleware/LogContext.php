@@ -22,7 +22,8 @@ class LogContext
             'client_ip' => $request->getClientIp(),
             'user_agent' => request()->userAgent(),
             'actor_type' => $request->user() ? $request->user()->getMorphClass() : null,
-            'url' => $request->url()
+            'url' => $request->url(),
+            'request_id' => uuid_create()
         ]);
 
         return $next($request);

@@ -39,7 +39,7 @@ class ListController
         ]));
         
         return $pdf->stream(ExamDocument::List->fileName(
-            $exam->type->short_name,
+            $exam->shortName(),
             $exam->beginTimeLocal()
         ));
     }

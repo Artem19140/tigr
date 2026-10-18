@@ -38,7 +38,7 @@ enum BusinessCode: string
     case AttemptEarlyFinish = 'attempt_early_finish';
 
 
-    case ExamCodeAliveAndEnrollmentsWithNoAttemptsExists = 'exam_codes_alive_and_exist_enrollments_with_no_attempt';
+    case ExamCodesValid = 'exam_codes_valid';
     
 
     case CodesUnavailable = 'codes_unavailable';

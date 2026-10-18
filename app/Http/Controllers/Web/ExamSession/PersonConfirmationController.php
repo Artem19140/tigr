@@ -27,7 +27,7 @@ class PersonConfirmationController
 
         return Inertia::render('ExamSession/PersonConfirmation', [
             'fullName' => $enrollment->foreignNational->full_name,
-            'dateBirth' => $enrollment->foreignNational->date_birth->format('d.m.Y'),
+            'dateBirth' => $enrollment->foreignNational->formattedDateBirth(),
             'confirmUrl' => route('exams-sessions.start-info', [
                 'enrollment' => $enrollment
             ], false),

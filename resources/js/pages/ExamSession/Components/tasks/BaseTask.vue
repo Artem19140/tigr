@@ -27,7 +27,7 @@ const {errors} = useAttempt()
 </script>
 
 <template>
-    <v-card variant="text">
+    <div>
 
         <div class="px-5 pt-4">
             <div class="text-base font-semibold leading-relaxed text-gray-900">
@@ -90,5 +90,5 @@ const {errors} = useAttempt()
             </div>
 
         </div>
-    </v-card>
+    </div>
 </template>

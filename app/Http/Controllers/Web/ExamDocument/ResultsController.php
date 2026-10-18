@@ -6,7 +6,7 @@ use App\Enums\ExamDocument;
 use App\Exceptions\BusinessException;
 use App\Models\Exam;
 use App\Modules\ExamDocument\ExamDocumentRules;
-use App\Modules\ExamDocument\ExamResultsGenerator;
+use App\Modules\ExamDocument\ExamResultsPdfGenerator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
@@ -18,7 +18,7 @@ class ResultsController
 
     public function generate(
         Exam $exam,
-        ExamResultsGenerator $examResultsGenerator
+        ExamResultsPdfGenerator $examResultsGenerator
     ): Response {
         $exam->loadExists(
             $this->relations()
@@ -29,7 +29,7 @@ class ResultsController
         $resultsPdf = $examResultsGenerator->execute($exam);
 
         return $resultsPdf->stream(ExamDocument::Results->fileName(
-            $exam->type->short_name,
+            $exam->shortName(),
             $exam->beginTimeLocal()
         ));
     }

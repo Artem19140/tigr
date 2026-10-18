@@ -6,11 +6,17 @@
 
 @push('style')
     
-    table, th, td {
+    th, td {
         border: 1px solid black;
         text-align:center;
-        font-size:8px;
+        font-size:9px;
     }
+
+    th {
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: break-word;
+}
     
 @endpush
 

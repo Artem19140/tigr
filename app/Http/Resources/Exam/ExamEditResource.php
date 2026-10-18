@@ -23,7 +23,7 @@ class ExamEditResource extends JsonResource
             'examTypeId' =>  $this->type->id,
             'addressId' => $this->address->id,
             'examiners' => EmployeeResource::collection($this->whenLoaded('examiners')),
-            'shortName' => $this->type->short_name,
+            'shortName' => $this->shortName(),
             'hasEnrollment' => $this->resource->enrollments()->exists()
         ];
     }

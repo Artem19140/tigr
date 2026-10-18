@@ -49,7 +49,7 @@ const marks = computed(() =>
             :label="`Выберите балл от 0 до ${task.mark}`"
             :items="marks"
             item-title="mark"
-            :disabled="form.processing"
+            :disabled="form.processing || readonly"
             :readonly="readonly"
             :error-messages="form.errors.mark"
             variant="outlined"
@@ -57,6 +57,12 @@ const marks = computed(() =>
             hide-details="auto"
             @update:model-value="rate"
         />
+        <div
+            class="text-xs text-grey mt-2"
+            v-if="readonly"
+        >
+            Попытка проверена, оценка недоступна
+        </div>
 
         <div class="mt-2 flex min-h-6 items-center gap-2 px-1">
             <template v-if="form.processing">

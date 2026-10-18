@@ -39,7 +39,7 @@ class AttemptExamSessionResource extends JsonResource
             
             'examName' => $this->whenLoaded(
                 'exam', 
-                fn () => $this->exam->type->short_name
+                fn () => $this->exam->shortName()
             ),
 
             'minDurationMinutes' => ExamSettings::attemptMinDurationMinutes(),

@@ -18,7 +18,7 @@ class ExamReviewResource extends JsonResource
         return [
             'id' => $this->id,
             'beginTime' => $this->resource->beginTimeLocal()->toIso8601String(),
-            'shortName' => $this->whenLoaded('type', fn () => $this->type->short_name),
+            'shortName' => $this->whenLoaded('type', fn () => $this->resource->shortName()),
             'enrollments' => EnrollmentReviewResource::collection($this->whenLoaded('enrollments')),
         ];
     }

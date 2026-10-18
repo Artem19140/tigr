@@ -26,7 +26,7 @@ class CodesController
         $pdf = $examCodesGenerator->execute($exam);
         
         return $pdf->stream(ExamDocument::Codes->fileName(
-            $exam->type->short_name,
+            $exam->shortName(),
             $exam->beginTimeLocal()
         ));
     }

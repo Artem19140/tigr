@@ -79,7 +79,7 @@ class ExamDocumentRules
             ! $exam->codesTtlExpired()
         ){
             return RuleResult::fail(
-                BusinessCode::ExamCodeAliveAndEnrollmentsWithNoAttemptsExists
+                BusinessCode::ExamCodesValid
             );
         }
 
@@ -124,7 +124,7 @@ class ExamDocumentRules
             ! $exam->codesTtlExpired()
         ){
            return RuleResult::fail(
-                BusinessCode::ExamCodeAliveAndEnrollmentsWithNoAttemptsExists
+                BusinessCode::ExamCodesValid
             );
         }
 

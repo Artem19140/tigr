@@ -69,7 +69,7 @@ class ExamConductController
             'exam' =>[
                 'id' => $exam->id,
                 'comment' => $exam->protocol_comment,
-                'shortName' => $exam->type->short_name,
+                'shortName' => $exam->shortName(),
                 'date' => $exam->beginTimeLocal()->format('H:i d.m.Y')
             ],
             

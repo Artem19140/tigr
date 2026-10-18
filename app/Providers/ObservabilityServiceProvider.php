@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Http\Kernel as HttpKernel;
 
 class ObservabilityServiceProvider extends ServiceProvider
 {
@@ -23,5 +24,12 @@ class ObservabilityServiceProvider extends ServiceProvider
                 ]);
             }
         });
+
+        $this->app[HttpKernel::class]->whenRequestLifecycleIsLongerThan(
+            1000,
+            function ($startedAt, $request, $response) {
+                Log::warning("A request took longer than 1 seconds.");
+            }
+        );
     }
 }

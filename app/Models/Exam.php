@@ -114,6 +114,26 @@ class Exam extends Model
         return  $this->type->need_human_review;
     }
 
+    public function addressName(): string{
+        return $this->address->address;
+    }
+
+    public function certificateName(): string{
+        return $this->type->certificate_name;
+    }
+
+    public function level(): string{
+        return $this->type->level;
+    }
+
+    public function shortName(): string{
+        return $this->type->short_name;
+    }
+
+    public function fullName(): string{
+        return $this->type->name;
+    }
+
     public function timeZone(): string
     {
         return CenterData::timeZone();

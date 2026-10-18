@@ -16,9 +16,8 @@ class ExamStatementDataBuilder
     ): ExamStatementDto {
         $this->loadRelations($exam);
         return new ExamStatementDto(
-            $exam,
-            $this->getHeadersStatement($exam)->values()->toArray(),
-            $this->getRowsStatement($exam)->values()->toArray()
+            $this->getHeadersStatement($exam),
+            $this->getRowsStatement($exam)
         );
     }
 
@@ -55,6 +54,7 @@ class ExamStatementDataBuilder
  
             $filteredSubblocksCount = $filteredSubblocks->count();
             $subblockCount = $block->subblocks->count();
+            
             if( $subblockCount > 1 ){
                 $filteredSubblocks->push(['name' => 'Общий балл']);
             }
@@ -64,7 +64,8 @@ class ExamStatementDataBuilder
                 'name' => $block->name,
                 'subblocks' => $filteredSubblocks,
                 'min_mark' => $block->min_mark,
-                'colspan' => $subblockCount > 1 ? $filteredSubblocksCount + 1 : 1
+                'colspan' => $subblockCount > 1 ? $filteredSubblocksCount + 1 : 1,
+                //'rowspan' => $subblockCount === 1 ? 2 : 1
             ];
         });
     }
@@ -106,8 +107,10 @@ class ExamStatementDataBuilder
 
             return [
                 'fullName' => $enrollment->foreignNational->full_name,
+
+                'fullNameLatin' => $enrollment->foreignNational->full_name_latin,
                 
-                'foreignNationalId' => $enrollment->foreignNational->id,
+                'citizenship' =>  $enrollment->foreignNational->citizenship,
 
                 'fullPassport' => $enrollment->foreignNational->full_passport,
 
@@ -134,7 +137,10 @@ class ExamStatementDataBuilder
             return 'н/я';
         }
 
+        if($attempt->isAnnulled()){
+            return 'Справка';
+        }
+
         return $attempt->isPassed() ? 'Сертификат' : 'Справка';
     }
-    
 }

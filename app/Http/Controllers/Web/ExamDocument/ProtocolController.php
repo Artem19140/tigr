@@ -29,7 +29,7 @@ class ProtocolController
         $pdf =  $examProtocolGenerator->execute($exam);
 
         return $pdf->stream(ExamDocument::Protocol->fileName(
-            $exam->type->short_name,
+            $exam->shortName(),
             $exam->beginTimeLocal()
         ));
     }

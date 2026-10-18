@@ -119,7 +119,7 @@ const updatingId = ref<number | null>(null)
                     </v-card-text>
 
                     <v-divider
-                        v-if="index !== tasks.length "
+                        v-if="index !== tasks.length - 1"
                     />
                 </div>
             </v-card>

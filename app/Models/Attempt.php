@@ -149,7 +149,7 @@ class Attempt extends Model
     public function scopeUnreviewed(Builder $query): Builder
     {
         return $query
-            ->whereNotNull('finished_at')
+            //->whereNotNull('finished_at')
             ->whereNull('reviewed_at');
     }
 

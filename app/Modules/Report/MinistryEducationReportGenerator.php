@@ -57,7 +57,7 @@ class MinistryEducationReportGenerator
                         ($foreignNational->passport_series ?? '').($foreignNational->passport_number ?? ''),
                         $exam->begin_time->format('d.m.Y'),
                         $attempt->isPassed() ? 'Сдал' : 'Не сдал',
-                        $exam->type->certificate_name,
+                        $exam->certificateName(),
                     ]);
                 }
             });

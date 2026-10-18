@@ -2,13 +2,12 @@
 
 namespace App\Modules\ExamDocument;
 
-use App\Models\Exam;
+use Illuminate\Support\Collection;
 
 final readonly class ExamStatementDto
 {
     public function __construct(
-        public Exam $exam,
-        public array $headers,
-        public array $rows,
+        public Collection $headers,
+        public Collection $rows,
     ){}
 }

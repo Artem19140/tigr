@@ -17,7 +17,6 @@ const examiners = computed(() =>{
 
 <template>
     <div class="overflow-hidden ">
-        <!-- Причина отмены -->
         <div
             v-if="exam?.cancelledAt"
             class="grid grid-cols-1 gap-2 border-b border-red-100 bg-red-50 px-5 py-4 sm:grid-cols-[180px_1fr] sm:gap-6"
@@ -35,7 +34,6 @@ const examiners = computed(() =>{
             </div>
         </div>
 
-        <!-- Сессия / группа -->
         <div class="grid grid-cols-1 gap-1 border-b border-gray-100 px-5 py-4 sm:grid-cols-[180px_1fr] sm:gap-6">
             <div class="flex items-center gap-2 text-sm font-medium text-gray-500">
                 <v-icon
@@ -71,7 +69,6 @@ const examiners = computed(() =>{
             </div>
         </div>
 
-        <!-- Экзаменаторы -->
         <div class="grid grid-cols-1 gap-1 border-b border-gray-100 px-5 py-4 sm:grid-cols-[180px_1fr] sm:gap-6">
             <div class="flex items-center gap-2 text-sm font-medium text-gray-500">
                 <v-icon
@@ -86,7 +83,6 @@ const examiners = computed(() =>{
             </div>
         </div>
 
-        <!-- Комментарий -->
         <div
             v-if="exam?.comment"
             class="grid grid-cols-1 gap-1 px-5 py-4 sm:grid-cols-[180px_1fr] sm:gap-6"

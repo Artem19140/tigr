@@ -22,7 +22,7 @@ class AttemptResource extends JsonResource
             
             'examName' => $this->whenLoaded(
                 'exam', 
-                fn () => $this->exam->type->short_name
+                fn () => $this->exam->shortName()
             ),
             
             'foreignNational' => new ForeignNationalResource($this->whenLoaded('foreignNational')),

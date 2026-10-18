@@ -5,7 +5,6 @@ use App\Http\Middleware\EnsureEmployeeActive;
 use App\Http\Middleware\EnsureValidAttemptStatus;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\LogContext;
-use App\Http\Middleware\RequestTimeMeasure;
 use App\Modules\Shared\CodeTranslator;
 use App\Support\AppMiddleware;
 use Illuminate\Foundation\Application;
@@ -33,8 +32,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->appendToGroup('meta', [
-            LogContext::class,
-            RequestTimeMeasure::class
+            LogContext::class
         ]);
 
         $middleware->trustProxies(

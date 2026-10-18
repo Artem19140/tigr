@@ -5,7 +5,7 @@
 
 @section('content')
 
-<h2 class="text-center">{{ $exam->type->short_name }} • {{ $exam->beginTimeLocal()->format('H:i, d.m.Y') }}</h2>
+<h2 class="text-center">{{ $exam->shortName() }} • {{ $exam->beginTimeLocal()->format('H:i, d.m.Y') }}</h2>
 <table class="table">
     <tr>
         <th class="text-center border-black">ФИО</th>
@@ -14,11 +14,11 @@
 
     @foreach ($exam->enrollments as $enrollment)
     <tr>
-        <td class="py-5 text-center border-black">
+        <td class="text-center border-black" style="font-size: medium;">
             {{  $enrollment->foreignNational->full_name }} 
         </td>
         
-        <td class="py-5 text-center border-black" style="font-size: large;">
+        <td class="text-center border-black" style="font-size: large;">
             <strong>
                 {{ substr($enrollment?->exam_code, 0, 3) . "  " .  substr($enrollment?->exam_code, 3, 3) }}
             </strong>

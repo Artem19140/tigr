@@ -7,10 +7,13 @@ import { computed, ref } from 'vue';
 
 const props = defineProps<{
     exam: any,
-    headers: Array<Block>,
+    headers: Array<Header>,
     rows: Array<Row>,
     backUrl: string,
-    availability: boolean
+    availability: {
+        available: boolean,
+        reason: string
+    }
 }>()
 
 defineOptions({
@@ -40,7 +43,11 @@ const sortedRows = computed(() => {
 })
 
 interface Header{
-    
+    id: number,
+    name: string,
+    min_mark: number,
+    subblocks: Array<Subblock>,
+    colspan: number
 }
 
 interface Row{
@@ -48,20 +55,15 @@ interface Row{
     fullPassport: string,
     result: typeof results,
     totalMark: number,
-    foreignNationalId: number
+    foreignNationalId: number,
+    marksByBlock:{
+        marksBySubblocks: Object
+    }
 }
 interface Subblock{
     id: number,
     name: string,
     min_mark: number,
-    colspan: number
-}
-
-interface Block{
-    id: number,
-    name: string,
-    min_mark: number,
-    subblocks: Array<Subblock>,
     colspan: number
 }
 </script>
@@ -105,12 +107,13 @@ interface Block{
                 variant="outlined"
                 density="comfortable"
                 hide-details
+                :disabled="! availability.available"
             />
         </div>
     </div>
 
 
-        <v-table  class="p-4 rounded-xl">
+        <v-table  class="p-4 rounded-xl" v-if="availability.available">
             <thead>
                 <tr>
                     <th rowspan="2" class="text-left font-semibold">
@@ -221,18 +224,17 @@ interface Block{
                         />
                     </td>
                 </tr>
-
-                <tr v-if="!availability">
-                    <td :colspan="headers.length + 4" class="!p-0">
-                        <v-empty-state
-                            :icon="mdiFileSearchOutline"
-                            title="Данные недоступны"
-                            text="Результаты экзамена пока недоступны или ещё не сформированы."
-                            class="py-8"
-                        />
-                    </td>
-                </tr>
             </tbody>
         </v-table>
+
+        <v-empty-state
+            v-else
+            :icon="mdiFileSearchOutline"
+            title="Данные недоступны"
+            :text="availability.reason"
+            class="py-8 bg-white rounded-lg"
+        >
+
+        </v-empty-state>
     </div>
 </template>

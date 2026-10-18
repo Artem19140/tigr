@@ -17,7 +17,7 @@ const download = (url :string) => {
     http.get(url,{
         onSuccess:(response) => {
             if(response.redirectUrl){
-                window.open(String(response.redirectUrl))
+                window.open(response.redirectUrl)
             }
         },
         onFinish:() => documentDownloading.value = null

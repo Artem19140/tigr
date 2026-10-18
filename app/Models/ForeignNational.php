@@ -143,6 +143,12 @@ class ForeignNational extends Authenticatable
         );
     }
 
+    public function formattedDateBirth(): string 
+    {
+        return $this->date_birth->copy()->format('d.m.Y');
+    }
+    
+
     private function formatPhone(string $phone): string
     {
         $cleaned = preg_replace('/[^0-9]/', '', $phone);

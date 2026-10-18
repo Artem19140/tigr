@@ -28,9 +28,9 @@ class ExamResource extends JsonResource
             'comment' => $this->comment,
             'group' => $this->group,
             'examiners' => EmployeeResource::collection($this->whenLoaded('examiners')),
-            'name' => $this->whenLoaded('type', fn () => $this->type->name),
-            'shortName' => $this->whenLoaded('type', fn () => $this->type->short_name),
-            'address' => $this->whenLoaded('address', fn () => $this->address->address),
+            'name' => $this->whenLoaded('type', fn () => $this->fullName()),
+            'shortName' => $this->whenLoaded('type', fn () => $this->shortName()),
+            'address' => $this->whenLoaded('address', fn () => $this->addressName()),
         ];
     }
 }
