@@ -15,7 +15,7 @@
     Дата и время: {{ $exam->beginTimeLocal()->format('d.m.Y, H:i') }}
 </div>   
 
-<table class="table bordered-table text-center">
+<table class="table bordered-table text-center" style="">
     <thead>
         <tr>
             @foreach ($headers as $header)

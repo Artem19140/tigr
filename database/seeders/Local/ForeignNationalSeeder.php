@@ -16,7 +16,7 @@ class ForeignNationalSeeder extends Seeder
 
     public function run(): void
     {
-        ForeignNational::factory(500)
+        ForeignNational::factory(10)
             ->withRandomCreator()
             ->create();
             

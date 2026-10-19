@@ -16,7 +16,7 @@
     Дата и время: {{ $exam->beginTimeLocal()->format('d.m.Y, H:i') }}
 </div>
 
-<table class="table bordered-table">
+<table class="small-table bordered-table">
     <thead>
         <tr>
             @foreach ($headers as $header)
@@ -33,7 +33,7 @@
         <tr>
             @foreach ($headers as $header)
                 @foreach ($header['childrens'] ?? [] as $child)
-                    <th class="text-small">{{ $child['label'] }}</th>
+                    <th class="text-xs">{{ $child['label'] }}</th>
                 @endforeach
             @endforeach
         </tr>

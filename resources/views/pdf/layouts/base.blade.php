@@ -100,6 +100,32 @@
             padding-bottom: 5px;
             padding-top: 5px;
         }
+
+        .small-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .small-table th,
+        .small-table td {
+            padding: 2px 3px;
+            font-size: 8px;
+            line-height: 1.05;
+            vertical-align: middle;
+        }
+
+        .small-table th {
+            font-size: 7px;
+            font-weight: bold;
+        }
+
+        .small-table thead {
+            display: table-header-group;
+        }
+
+        .small-table tr {
+            page-break-inside: avoid;
+        }
         @stack('style')  
     </style>
 </head>
