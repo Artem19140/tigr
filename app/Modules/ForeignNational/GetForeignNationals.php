@@ -22,15 +22,15 @@ class GetForeignNationals
         return ForeignNational::query()
             ->when($surname, function (Builder $query) use ($surname) {
                 $surname = mb_strtolower(trim($surname), 'UTF-8');
-                $query->where('surname_normalized', 'LIKE', $surname.'%');
+                $query->whereLike('surname_normalized' , $surname.'%');
             })
             ->when($name, function (Builder $query) use ($name) {
                 $name = mb_strtolower(trim($name), 'UTF-8');
-                $query->where('name_normalized', 'ILIKE', $name.'%');
+                $query->whereLike('name_normalized', $name.'%');
             })
             ->when($patronymic, function (Builder $query) use ($patronymic) {
                 $patronymic = mb_strtolower(trim($patronymic), 'UTF-8');
-                $query->where('patronymic_normalized', 'like', $patronymic.'%');
+                $query->whereLike('patronymic_normalized', $patronymic.'%');
             })
             ->when($passportSeries, function (Builder $query) use ($passportSeries) {
                 $passportSeries = mb_strtolower(trim($passportSeries), 'UTF-8');
