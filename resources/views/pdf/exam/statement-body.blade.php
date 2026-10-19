@@ -62,10 +62,14 @@
 </div>
 
 @foreach($exam->examiners as $examiner)
-    <x-pdf.components.signature-section
+    {{-- <x-pdf.components.signature-section
         :date="$exam->beginTimeLocal()->format('d.m.Y')"
         :fio="$examiner->full_name"
-    />
+    /> --}}
+    @include('pdf.components.signature-section', [
+        'date' =>  $exam?->beginTimeLocal()->format('d.m.Y'), 
+        'fio' => $examiner->full_name, 
+    ])
 @endforeach  
 
 
@@ -76,9 +80,13 @@
             Председатель комиссии:
         </div>
 
-        <x-pdf.components.signature-section
+        {{-- <x-pdf.components.signature-section
             :date="$exam->beginTimeLocal()->format('d.m.Y')"
             :fio="$center->commissionChairman()"
-        />
+        /> --}}
+        @include('pdf.components.signature-section', [
+            'date' =>  $exam?->beginTimeLocal()->format('d.m.Y'), 
+            'fio' => $center->commissionChairman(), 
+        ])
     </div>
 @endif
