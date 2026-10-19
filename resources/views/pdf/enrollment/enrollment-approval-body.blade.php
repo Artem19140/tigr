@@ -5,7 +5,7 @@
 </h4>
 
 <div style="float:right">
-    @include('pdf.components.date-inline', ['date' => \Carbon\Carbon::now()])
+    @include('pdf.components.date-inline', ['date' => $enrollment->exam?->beginTimeLocal()])
 </div>
 
 <p>
