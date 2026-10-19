@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Web\PlatformManage;
 
-use App\Exceptions\BusinessException;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -61,7 +60,7 @@ class LogsController
         $path = storage_path($type ? "logs/audit/audit-{$formattedDate}.log" : "logs/laravel-{$formattedDate}.log");
         
         if(! file_exists($path)){
-            throw new BusinessException('Лог недоступен');
+            abort(400, 'Лог недоступен');
         }
 
         return  $path;
@@ -73,7 +72,7 @@ class LogsController
 
         if (!file_exists($logPath)) {
             Log::critical('Git log file not found');
-            throw new BusinessException('Файл не найден');
+            abort(400, 'Файл не найден');
         }
 
         return response()->download($logPath, 'git_log_' . now()->format('Y-m-d_His') . '.txt');

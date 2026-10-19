@@ -6,7 +6,7 @@ use App\Models\Exam;
 use App\Modules\Counter\GroupNumberGenerator;
 use App\Modules\Counter\SessionNumberGenerator;
 
-class InitializeExamAttributesIfNeeded
+class ExamAttributesInitializer
 {
     public function __construct(
         protected GroupNumberGenerator $groupNumberGenerator,

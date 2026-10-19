@@ -2,6 +2,8 @@
 
 namespace App\Modules\ExamDocument;
 
+use App\Enums\ExamDocument;
+use App\Events\ExamDocumentGenerated;
 use App\Models\Exam;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
@@ -12,7 +14,7 @@ class ExamScoresDataBuilder
         Exam $exam
     ) {
         $this->loadRelations($exam);
-;
+        event(new ExamDocumentGenerated($exam, ExamDocument::Scores));
         return [
             'headers' => $this->getHeaders($exam),
             'rows' => $this->getRows($exam)

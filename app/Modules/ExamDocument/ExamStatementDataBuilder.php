@@ -2,6 +2,8 @@
 
 namespace App\Modules\ExamDocument;
 
+use App\Enums\ExamDocument;
+use App\Events\ExamDocumentGenerated;
 use App\Models\Attempt;
 use App\Models\Block;
 use App\Models\Exam;
@@ -14,6 +16,7 @@ class ExamStatementDataBuilder
         Exam $exam
     ): array {
         $this->loadRelations($exam);
+        event(new ExamDocumentGenerated($exam, ExamDocument::Statement));
         return [
             'headers' => $this->getHeaders($exam),
             'rows' => $this->getRows($exam)

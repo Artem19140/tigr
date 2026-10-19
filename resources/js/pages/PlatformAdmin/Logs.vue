@@ -2,7 +2,15 @@
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import { useHttp } from '@inertiajs/vue3';
 import { RedirectUrl } from '@/interfaces/Interfaces';
-import PlatformAdminLayout from './PlatformAdminLayout.vue';
+import { 
+    mdiCalendarOutline, 
+    mdiConsole, 
+    mdiDownload, 
+    mdiFileDocumentOutline, 
+    mdiOpenInNew, 
+    mdiShieldSearch, 
+    mdiSourceBranch, 
+    mdiTimerCogOutline } from '@mdi/js';
 
 const props = defineProps<{
     attemptMinDurationMin: number,
@@ -11,7 +19,7 @@ const props = defineProps<{
 }>()
 
 defineOptions({
-  layout: [EmployeeLayout, PlatformAdminLayout],
+  layout: [EmployeeLayout],
 })
 const http = useHttp<{date:string | null}, RedirectUrl>({
     date:null
@@ -37,31 +45,72 @@ const audit = () => {
 }
 </script>
 
+
 <template>
-    <v-container class="py-8">
-        <v-card
-            class="mx-auto max-w-2xl overflow-hidden rounded-xl border border-gray-200 shadow-sm"
-        >
-            <v-card-title class="px-6 pt-6">
+    <v-container class="mx-auto max-w-4xl py-6 sm:py-10">
+        <!-- Заголовок -->
+        <div class="mb-6">
+            <div class="mb-2 flex items-center gap-3">
+                <div
+                    class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"
+                >
+                    <v-icon :icon="mdiConsole" size="24" />
+                </div>
+
                 <div>
-                    <div class="text-lg font-semibold text-gray-900">
-                        Логи системы
+                    <h1 class="text-2xl font-bold tracking-tight text-gray-900">
+                        Системные инструменты
+                    </h1>
+
+                    <p class="mt-1 text-sm text-gray-500">
+                        Логи, аудит и параметры системы
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Логи -->
+        <v-card
+            class="overflow-hidden rounded-2xl border border-gray-200"
+            elevation="0"
+        >
+            <v-card-text class="space-y-6 p-4 sm:p-6">
+                <!-- Заголовок секции -->
+                <div class="flex items-start gap-3">
+                    <div
+                        class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600"
+                    >
+                        <v-icon :icon="mdiFileDocumentOutline" size="22" />
                     </div>
 
-                    <div class="mt-1 text-sm font-normal text-gray-500">
-                        Выберите дату и нужный тип выгрузки
+                    <div class="min-w-0">
+                        <h2 class="text-base font-semibold text-gray-900">
+                            Журналы системы
+                        </h2>
+
+                        <p class="mt-1 text-sm leading-relaxed text-gray-500">
+                            Выберите дату и тип данных для выгрузки
+                        </p>
                     </div>
                 </div>
-            </v-card-title>
 
-            <v-card-text class="space-y-6 px-6 pb-6">
-                <!-- Лог -->
-                <div class="space-y-3">
-                    <div class="text-sm font-medium text-gray-700">
-                        Лог за день
+                <v-divider />
+
+                <!-- Лог за день -->
+                <section class="space-y-3">
+                    <div class="flex items-center gap-2">
+                        <v-icon
+                            :icon="mdiCalendarOutline"
+                            size="18"
+                            color="medium-emphasis"
+                        />
+
+                        <h3 class="text-sm font-semibold text-gray-800">
+                            Лог за день
+                        </h3>
                     </div>
 
-                    <div class="flex flex-col gap-3 sm:flex-row sm:items-start">
+                    <div class="grid grid-cols-1 items-start gap-3 sm:grid-cols-[minmax(0,1fr)_auto]">
                         <v-text-field
                             v-model="http.date"
                             :error-messages="http.errors.date"
@@ -69,79 +118,186 @@ const audit = () => {
                             label="Дата"
                             variant="outlined"
                             density="comfortable"
+                            prepend-inner-icon="mdi-calendar"
                             hide-details="auto"
-                            class="sm:flex-1"
                         />
 
                         <v-btn
                             color="primary"
+                            variant="flat"
+                            size="large"
                             :disabled="!http.date || http.processing"
                             :loading="http.processing"
-                            class="!h-11 sm:mt-0"
+                            class="!h-11 w-full sm:w-auto"
                             @click="getLog"
                         >
-                            Выгрузить
+                            <v-icon :icon="mdiDownload" start />
+                            Выгрузить лог
                         </v-btn>
                     </div>
-                </div>
+                </section>
 
                 <v-divider />
 
                 <!-- Аудит -->
-                <div class="flex items-center justify-between gap-4">
-                    <div>
-                        <div class="text-sm font-medium text-gray-700">
-                            Аудит
+                <section
+                    class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+                >
+                    <div class="flex min-w-0 items-start gap-3">
+                        <div
+                            class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-600"
+                        >
+                            <v-icon :icon="mdiShieldSearch" size="22" />
                         </div>
 
-                        <div class="mt-1 text-sm text-gray-500">
-                            Выгрузить записи аудита за выбранную дату
+                        <div class="min-w-0">
+                            <h3 class="text-sm font-semibold text-gray-900">
+                                Аудит
+                            </h3>
+
+                            <p class="mt-1 text-sm leading-relaxed text-gray-500">
+                                Записи аудита за выбранную дату
+                            </p>
                         </div>
                     </div>
 
                     <v-btn
                         color="primary"
+                        variant="tonal"
                         :disabled="!http.date || http.processing"
                         :loading="http.processing"
-                        class="shrink-0"
+                        class="w-full shrink-0 sm:w-auto"
                         @click="audit"
                     >
+                        <v-icon :icon="mdiDownload" start />
                         Выгрузить
                     </v-btn>
-                </div>
+                </section>
 
                 <v-divider />
 
                 <!-- Git -->
-                <div class="flex items-center justify-between gap-4">
-                    <div>
-                        <div class="text-sm font-medium text-gray-700">
-                            Git log
+                <section
+                    class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+                >
+                    <div class="flex min-w-0 items-start gap-3">
+                        <div
+                            class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-purple-50 text-purple-600"
+                        >
+                            <v-icon :icon="mdiSourceBranch" size="22" />
                         </div>
 
-                        <div class="mt-1 text-sm text-gray-500">
-                            Просмотреть историю изменений
+                        <div class="min-w-0">
+                            <h3 class="text-sm font-semibold text-gray-900">
+                                Git log
+                            </h3>
+
+                            <p class="mt-1 text-sm leading-relaxed text-gray-500">
+                                История изменений исходного кода
+                            </p>
                         </div>
                     </div>
 
                     <v-btn
                         color="primary"
+                        variant="tonal"
                         :disabled="http.processing"
                         :loading="http.processing"
-                        class="shrink-0"
+                        class="w-full shrink-0 sm:w-auto"
                         @click="gitLog"
                     >
+                        <v-icon :icon="mdiOpenInNew" start />
                         Открыть
                     </v-btn>
-                </div>
+                </section>
             </v-card-text>
         </v-card>
 
-        <v-card class="mt-8">
-            <v-card-text>
-                <div>Попытка мин время: <strong>{{ attemptMinDurationMin }}</strong> мин</div>
-                <div>Экз мин время перед: <strong>{{ examMinTimeBefore }}</strong> мин</div>
-                <div>Запись мин время:  <strong>{{ enrollmentMinTimeBefore }}</strong> мин</div>
+        <!-- Параметры времени -->
+        <v-card
+            class="mt-5 overflow-hidden rounded-2xl border border-gray-200"
+            elevation="0"
+        >
+            <v-card-text class="p-4 sm:p-6">
+                <div class="mb-5 flex items-start gap-3">
+                    <div
+                        class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600"
+                    >
+                        <v-icon :icon="mdiTimerCogOutline" size="22" />
+                    </div>
+
+                    <div>
+                        <h2 class="text-base font-semibold text-gray-900">
+                            Временные параметры
+                        </h2>
+
+                        <p class="mt-1 text-sm text-gray-500">
+                            Минимальные временные интервалы системы
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                    <div
+                        class="rounded-xl border border-gray-200 bg-gray-50/70 p-4"
+                    >
+                        <div class="text-sm text-gray-500">
+                            Попытка
+                        </div>
+
+                        <div class="mt-2 flex items-baseline gap-1">
+                            <span class="text-2xl font-bold tracking-tight text-gray-900">
+                                {{ attemptMinDurationMin }}
+                            </span>
+
+                            <span class="text-sm text-gray-500">мин</span>
+                        </div>
+
+                        <div class="mt-1 text-xs text-gray-400">
+                            Минимальная длительность
+                        </div>
+                    </div>
+
+                    <div
+                        class="rounded-xl border border-gray-200 bg-gray-50/70 p-4"
+                    >
+                        <div class="text-sm text-gray-500">
+                            Экзамен
+                        </div>
+
+                        <div class="mt-2 flex items-baseline gap-1">
+                            <span class="text-2xl font-bold tracking-tight text-gray-900">
+                                {{ examMinTimeBefore }}
+                            </span>
+
+                            <span class="text-sm text-gray-500">мин</span>
+                        </div>
+
+                        <div class="mt-1 text-xs text-gray-400">
+                            Время до экзамена
+                        </div>
+                    </div>
+
+                    <div
+                        class="rounded-xl border border-gray-200 bg-gray-50/70 p-4"
+                    >
+                        <div class="text-sm text-gray-500">
+                            Запись
+                        </div>
+
+                        <div class="mt-2 flex items-baseline gap-1">
+                            <span class="text-2xl font-bold tracking-tight text-gray-900">
+                                {{ enrollmentMinTimeBefore }}
+                            </span>
+
+                            <span class="text-sm text-gray-500">мин</span>
+                        </div>
+
+                        <div class="mt-1 text-xs text-gray-400">
+                            Время до записи
+                        </div>
+                    </div>
+                </div>
             </v-card-text>
         </v-card>
     </v-container>

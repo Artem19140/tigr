@@ -8,7 +8,7 @@ use App\Models\Attempt;
 use App\Models\AttemptAnswer;
 use App\Models\Enrollment;
 use App\Models\Exam;
-use App\Modules\Exam\InitializeExamAttributesIfNeeded;
+use App\Modules\Exam\ExamAttributesInitializer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -17,7 +17,7 @@ use Illuminate\Validation\ValidationException;
 final class StartExamSession
 {
     public function __construct(
-        protected InitializeExamAttributesIfNeeded $initializeExamAttributesIfNeeded,
+        protected ExamAttributesInitializer $examAttributesInitializer,
         protected ExamVariantGenerator $examVariantGenerator
     ) {}
     public function execute(
@@ -43,7 +43,7 @@ final class StartExamSession
 
             AttemptAnswer::insert($examVariant);
 
-            $this->initializeExamAttributesIfNeeded->execute($exam);
+            $this->examAttributesInitializer->execute($exam);
 
             $enrollment->makeExamCodeUsed();
 

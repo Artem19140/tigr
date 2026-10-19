@@ -44,8 +44,18 @@ class MainMenuNavigation
             ],
 
             'admin' => [
-                'url' => route('platform-admin.logs', [], false),
-                'can' => $employee->can('platform-manage')
+                'url' => null,
+                'can' => $employee->can('platform-manage'),
+                'submenu' => [
+                    'logs' => [
+                        'url' => route('platform-admin.logs', [], false),
+                        'label' => 'Логи'
+                    ],
+                    'commands' => [
+                        'url' => route('platform-admin.commands', [], false),
+                        'label' => 'Команды'
+                    ],
+                ]
             ]
         ])->filter(function($item){
             return $item['can'];

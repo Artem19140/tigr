@@ -6,10 +6,13 @@ import ConfirmationOptionsModal from '@/components/Modals/ConfirmationOptionsMod
 import AppNoNetworkBanner from '@/components/UI/AppNoNetworkBanner/AppNoNetworkBanner.vue';
 </script>
 
+
 <template>
     <v-app>
+        <slot name="navigation" />
+
         <v-main class="app-main">
-            <div class="app-bg"></div>
+            <div class="app-bg" />
             <slot />
         </v-main>
 
@@ -19,6 +22,7 @@ import AppNoNetworkBanner from '@/components/UI/AppNoNetworkBanner/AppNoNetworkB
         <app-no-network-banner />
     </v-app>
 </template>
+
 
 <style scoped lang="css">
 .app-main {
