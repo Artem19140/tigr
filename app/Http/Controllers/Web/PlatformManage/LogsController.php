@@ -2,18 +2,28 @@
 
 namespace App\Http\Controllers\Web\PlatformManage;
 
+use App\Models\Attempt;
+use App\Models\AttemptAnswer;
 use App\Models\Enrollment;
+use App\Modules\ExamSession\ExamVariantGenerator;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class LogsController
 {
+    public function __construct(
+        protected ExamVariantGenerator $generator
+    ){}
+    
     public function available(
         Request $request
     ): JsonResponse {
-        Enrollment::find(44)->attempt()->delete();
+        
+
+        $this->er();
         $request->validate([
             'date' => ['required', 'date'],
             'type' => ['sometimes', 'string']
@@ -78,5 +88,32 @@ class LogsController
         }
 
         return response()->download($logPath, 'git_log_' . now()->format('Y-m-d_His') . '.txt');
+    }
+    
+    protected function er()
+    {
+        DB::transaction(function(){
+            $enrollment = Enrollment::find(44);
+            if($enrollment->attempt()->exists()){
+                return ;
+            }
+            $time = Carbon::parse('2026-10-20 10:16');
+            $attempt = Attempt::create([
+                'started_at' => $time,
+                'expired_at' => $time->copy()->addMinutes($enrollment->exam->duration()),
+                'finished_at' => Carbon::parse('2026-10-20 10:26'),
+                'reviewed_at' => Carbon::parse('2026-10-20 10:26'),
+                'is_passed' => false,
+                'enrollment_id' => $enrollment->id,
+                'foreign_national_id' => $enrollment->foreign_national_id,
+                'exam_id' => $enrollment->exam_id
+            ]);
+            $variant = $this->generator->execute($enrollment->exam, $attempt);
+
+            AttemptAnswer::insert($variant);
+
+            $attempt->save();
+            Log::info('Everything is ok' . $enrollment->id);
+        });
     }
 }

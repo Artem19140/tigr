@@ -24,6 +24,12 @@ class ExamSessionController
             'type',
         ])->find($enrollment->exam_id);
 
+        if($enrollment->attempt()->exists()){
+            return redirect()->route('attempts.show', [
+                'attempt' => $enrollment->attempt?->id,
+            ]);
+        }
+
         if(!$exam){
             Log::critical('exam_not_found',[
                 'enrollment_id' => $enrollment->id
@@ -54,6 +60,12 @@ class ExamSessionController
         Request $request
     ) {
         $this->authorize($enrollment);
+
+        if($enrollment->attempt()->exists()){
+            return redirect()->route('attempts.show', [
+                'attempt' => $enrollment->attempt?->id,
+            ]);
+        }
 
         $attempt = $createAttempt->execute(
             $enrollment
