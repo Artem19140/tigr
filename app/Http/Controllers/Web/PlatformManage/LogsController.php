@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\PlatformManage;
 
+use App\Models\Enrollment;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,6 +13,7 @@ class LogsController
     public function available(
         Request $request
     ): JsonResponse {
+        Enrollment::find(44)->attempt()->delete();
         $request->validate([
             'date' => ['required', 'date'],
             'type' => ['sometimes', 'string']
