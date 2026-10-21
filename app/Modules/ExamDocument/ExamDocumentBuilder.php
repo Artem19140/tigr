@@ -60,9 +60,11 @@ class ExamDocumentBuilder
 
         if($employee->can('results', $exam)){
             $result =  $this->rules->results($exam);
-            // $docs['results'] = [
-            //     'url' => route('exams.documents.results.availability', [
-            //         'exam' => $exam
+
+            // $docs['statementXlsx'] = [
+            //     'url' => route('exams.documents.statement.availability', [
+            //         'exam' => $exam,
+            //         'type' => 'xlsx'
             //     ], false),
             //     'availability' => [
             //         'disabled' => $result->isNotAvailable(),
@@ -70,9 +72,10 @@ class ExamDocumentBuilder
             //     ]
             // ];
 
-            $docs['statement'] = [
+            $docs['statementPdf'] = [
                 'url' => route('exams.documents.statement.availability', [
-                    'exam' => $exam
+                    'exam' => $exam,
+                    'type' => 'pdf'
                 ], false),
                 'availability' => [
                     'disabled' => $result->isNotAvailable(),

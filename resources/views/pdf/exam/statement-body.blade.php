@@ -16,6 +16,13 @@
     Дата и время: {{ $exam->beginTimeLocal()->format('d.m.Y, H:i') }}
 </div>
 
+@php
+    $leftAlign = [
+        'fullName',
+        'fullNameLatin'
+    ]
+@endphp
+
 <table class="small-table bordered-table">
     <thead>
         <tr>
@@ -44,8 +51,16 @@
     <tbody>
         @foreach ($rows as $row)
             <tr>
-                @foreach ($row as $data)
-                    <td class="text-xs">
+                @foreach ($row as $key => $data)
+                    <td 
+                        style="
+                            {{  in_array( $key, $leftAlign ) 
+                                ? 'text-align: left;' 
+                                : '' 
+                            }}
+                        "
+                        class="text-xs"
+                    >
                         {{ $data['value'] }}
                     </td>
                 @endforeach

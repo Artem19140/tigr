@@ -55,6 +55,9 @@ class MainMenuNavigation
                         'url' => route('platform-admin.commands', [], false),
                         'label' => 'Команды'
                     ],
+                    'templates' => [
+                        ''
+                    ]
                 ]
             ]
         ])->filter(function($item){

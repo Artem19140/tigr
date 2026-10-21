@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use App\Enums\EmployeeRole;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -14,6 +15,12 @@ class Audit
         array $context = []
     ): void
     {
+        if(auth()->user()?->hasAnyRole(
+            EmployeeRole::PlatformAdmin
+        )){
+            return ;
+        }
+        
         Log::channel('audit')
             ->info($action, [
                 ...$this->getSubjectInfo($subject),

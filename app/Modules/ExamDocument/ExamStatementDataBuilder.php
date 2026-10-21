@@ -165,24 +165,25 @@ class ExamStatementDataBuilder
                 );
 
                 $row = [
-                    [
+                    'fullName' => [
                         'value' => $enrollment->foreignNational->full_name, 
-                        'shortVersion' => true
+                        'shortVersion' => true,
                     ],
-                    [
-                        'value' => $enrollment->foreignNational->full_name_latin
+                    'fullNameLatin' => [
+                        'value' => $enrollment->foreignNational->full_name_latin,
+                        'key' => 'fullNameLatin'
                     ],
-                    [
+                    'fullPassport' => [
                         'value' => $enrollment->foreignNational->full_passport, 
                         'shortVersion' => true
                     ],
-                    [
+                    'citizenship' => [
                         'value' => $enrollment->foreignNational->citizenship
                     ],
-                    [
+                    'startedAt' => [
                         'value' => $attempt?->started_at_local?->format('H:i')
                     ],
-                    [
+                    'finishedAt' =>[
                         'value' => $attempt?->finished_at_local?->format('H:i')
                     ],
                 ];
@@ -244,11 +245,11 @@ class ExamStatementDataBuilder
 
                 $row = [
                     ...$row,
-                    [
+                    'totalMark' => [
                         'value' => $attempt ? ($attempt?->total_mark ?? 0) : '',
                         'shortVersion' => true,
                     ],
-                    [
+                    'result' => [
                         'value' => $this->getAttemptResultStatus($attempt),
                         'shortVersion' => true
                     ],

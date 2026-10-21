@@ -123,7 +123,7 @@ class Exam extends Model
         return $this->type->certificate_name;
     }
 
-    public function level(): string{
+    public function level(): int{
         return $this->type->level;
     }
 
