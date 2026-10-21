@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,12 +23,15 @@ class EnsureValidAttemptStatus
         $attempt = $request->route('attempt');
 
         if ($attempt->isAnnulled()) {
+            $this->log('Попытка аннулирована', $attempt->id);
             return $this->deny('Попытка аннулирована', $request);
         }
         if ($attempt->isFinished()) {
+            $this->log('Попытка завершена', $attempt->id);
             return $this->deny('Попытка завершена', $request);
         }
         if ($attempt->isExpired()) {
+            $this->log('Время попытки истекло', $attempt->id);
             return $this->deny('Время попытки истекло', $request);
         }
 
@@ -47,5 +51,14 @@ class EnsureValidAttemptStatus
         Inertia::flash(['error' => $message]);
         Auth::logout();
         return redirect()->route('login');
+    }
+
+    protected function log(
+        string $message,
+        int $attemptId
+    ){
+        Log::info($message, [
+            'attempt_id' => $attemptId
+        ]);
     }
 }

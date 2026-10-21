@@ -98,11 +98,6 @@
         
         <div class="mb-20">
             @foreach($exam->examiners as $examiner)
-                {{-- <x-pdf.components.signature-section
-                    :date="$exam->beginTimeLocal()->format('d.m.Y')"
-                    :fio="$examiner->full_name"
-                /> --}}
-
                 @include('pdf.components.signature-section', [
                     'date' =>  $exam?->beginTimeLocal()->format('d.m.Y'), 
                     'fio' => $examiner->full_name, 

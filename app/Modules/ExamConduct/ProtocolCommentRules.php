@@ -22,9 +22,12 @@ class ProtocolCommentRules
             );
         }
 
-        if(! $exam->begin_time->isToday()){
+        if($exam->protocolCommentEditTtlPast()){
             return RuleResult::fail(
-                BusinessCode::ProtocolCommentEditUnavailable
+                BusinessCode::ProtocolCommentEditUnavailable,
+                [
+                    'days' => Exam::PROTOCOL_COMMENT_EDIT_TTL_DAYS
+                ]
             );
         }
 

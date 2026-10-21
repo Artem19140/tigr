@@ -78,8 +78,4 @@
         'date' =>  $enrollment->exam?->beginTimeLocal()->format('d.m.Y'), 
         'fio' => $enrollment->foreignNational?->full_name, 
     ])
-    {{-- <x-pdf.components.signature-section
-        :date="now()->format('d.m.Y')"
-        :fio="$enrollment->exam->begin_time->format('d.m.Y')"
-    /> --}}
 </div>

@@ -12,7 +12,7 @@ return [
     BusinessCode::ExaminersBusy->value => 'Выбранные экзаменаторы недоступны в указанное время :names',
     BusinessCode::ExaminersNotWork->value => ':names уже не работает(-ют) в центре',
     BusinessCode::HasNoRoleExaminer->value => ':names не имеет(-ют) роли экзаменатора',
-    BusinessCode::ProtocolCommentEditUnavailable->value => 'Редактировать комментарий возможно только в день экзамена',
+    BusinessCode::ProtocolCommentEditUnavailable->value => "Редактировать комментарий возможно только в течении :days дней после экзамена",
     BusinessCode::PendingExamsExists->value => 'Не все экзамены :date проведены',
 
 

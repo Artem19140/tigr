@@ -17,6 +17,7 @@ use Illuminate\Notifications\Notifiable;
 class Exam extends Model
 {
     use HasFactory, Notifiable;
+    public const int PROTOCOL_COMMENT_EDIT_TTL_DAYS = 7;
 
     protected $fillable = [
         'begin_time',
@@ -230,5 +231,15 @@ class Exam extends Model
     public function hasActiveAttempts(): bool
     {
         return $this->active_attempts_exists;
+    }
+
+    public function protocolCommentEditTtlPast(): bool
+    {
+        return $this->begin_time->addDays(
+            self::PROTOCOL_COMMENT_EDIT_TTL_DAYS
+        )
+            ->copy()
+            ->endOfDay()
+            ->isPast();
     }
 }

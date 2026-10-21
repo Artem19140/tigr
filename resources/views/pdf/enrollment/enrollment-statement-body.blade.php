@@ -66,10 +66,6 @@
     <tr>
         <td colspan="2">
             <div>ДОСТОВЕРНОСТЬ ПРЕДОСТАВЛЕННЫХ СВЕДЕНИЙ ПОДТВЕРЖДАЮ</div>
-            {{-- <x-pdf.components.signature-section
-                :date="$enrollment->exam->begin_time->format('d.m.Y')"
-                :fio="$enrollment->foreignNational?->full_name"
-            /> --}}
 
             @include('pdf.components.signature-section', [
                 'date' =>  $enrollment->exam?->beginTimeLocal()->format('d.m.Y'), 
@@ -84,10 +80,6 @@
                 Проинформирован об использовании средств видеофиксации и хранении материаловпри проведении экзамена.
             </p>
 
-            {{-- <x-pdf.components.signature-section
-                :date="$enrollment->exam->begin_time->format('d.m.Y')"
-                :fio="$enrollment->foreignNational?->full_name"
-            /> --}}
 
             @include('pdf.components.signature-section', [
                 'date' =>  $enrollment->exam?->beginTimeLocal()->format('d.m.Y'), 
@@ -115,22 +107,12 @@
 
 <span>Заказчик:</span>
 
-{{-- <x-pdf.components.signature-section
-    :date="$enrollment->exam->begin_time->format('d.m.Y')"
-    :fio="$enrollment->foreignNational?->full_name"
-/> --}}
-
 @include('pdf.components.signature-section', [
     'date' =>  $enrollment->exam?->beginTimeLocal()->format('d.m.Y'), 
     'fio' => $enrollment->foreignNational?->full_name, 
 ])
 
 <span>Исполнитель:</span>
-
-{{-- <x-pdf.components.signature-section
-    :date="$enrollment->exam->begin_time->format('d.m.Y')"
-    :fio="$enrollment->creator?->full_name"
-/> --}}
 
 @include('pdf.components.signature-section', [
     'date' =>  $enrollment->exam?->beginTimeLocal()->format('d.m.Y'), 

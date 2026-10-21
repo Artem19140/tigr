@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Web\PlatformManage;
 
-use App\Modules\ExamSession\ExamVariantGenerator;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -10,10 +9,6 @@ use Illuminate\Support\Facades\Log;
 
 class LogsController
 {
-    public function __construct(
-        protected ExamVariantGenerator $generator
-    ){}
-    
     public function available(
         Request $request
     ): JsonResponse {
