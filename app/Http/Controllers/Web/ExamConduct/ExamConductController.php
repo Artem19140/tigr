@@ -79,7 +79,8 @@ class ExamConductController
 
             'backUrl' => route('exams.conduct', [
                 'exam' => $exam
-            ], false)
+            ], false),
+            'editTtlDays' => Exam::PROTOCOL_COMMENT_EDIT_TTL_DAYS
         ]);
     }
 
