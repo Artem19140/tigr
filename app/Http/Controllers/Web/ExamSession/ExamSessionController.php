@@ -7,8 +7,6 @@ use App\Models\Exam;
 use App\Modules\ExamSession\StartExamSession;
 use App\Modules\Shared\ExamSettings;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
@@ -16,13 +14,12 @@ class ExamSessionController
 {
 
     public function startInfo(
-        Request $request,
         Enrollment $enrollment
     ) {
         $exam = Exam::with([
             'type',
         ])->find($enrollment->exam_id);
-        Gate::authorize('examSession', $enrollment);
+
         if($enrollment->attempt()->exists()){
             Log::info('Redirecting to attempt from start info exam session', [
                 'enrollment_id' => $enrollment->id,
@@ -59,8 +56,7 @@ class ExamSessionController
     }
     public function start(
         Enrollment $enrollment,
-        StartExamSession $createAttempt
-       
+        StartExamSession $startExamSession
     ) {
         if($enrollment->attempt()->exists()){
             Log::info('Redirecting to attempt from starting exam session', [
@@ -73,7 +69,7 @@ class ExamSessionController
             ]);
         }
 
-        $attempt = $createAttempt->execute(
+        $attempt = $startExamSession->execute(
             $enrollment
         );
 

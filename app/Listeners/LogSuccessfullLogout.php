@@ -20,7 +20,6 @@ class LogSuccessfullLogout
      */
     public function handle(Logout $event): void
     {
-        //dd($event->user->getAuthIdentifier());
         $this->audit->log(
             "$event->guard:logout", 
             $event->user

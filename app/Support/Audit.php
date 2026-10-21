@@ -15,7 +15,9 @@ class Audit
         array $context = []
     ): void
     {
-        $this->skipIfAdmin();
+        if($this->isAdmin()){
+            return ;
+        }
         try{
             Log::channel('audit')
                 ->info($action, [
@@ -39,20 +41,18 @@ class Audit
         return ['subject_type' => $subject];
     }
 
-    protected function skipIfAdmin()
+    protected function isAdmin():bool
     {
         $user = auth()->user();
 
         if(! $user){
-            return ;
+            return false;
         }
 
         if($user instanceof ForeignNational){
-            return ;
+            return false;
         }
 
-        if(auth()->user()?->isPlatformAdmin()){
-            return ;
-        }
+        return auth()->user()?->isPlatformAdmin();
     }
 }
