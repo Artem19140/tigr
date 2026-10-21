@@ -136,7 +136,7 @@ return [
         'audit' => [
             'driver' => 'daily',
             'path' => storage_path('logs/audit/audit.log'),
-            'days' => 180,
+            'days' => 14,
         ],
 
     ],

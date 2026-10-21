@@ -2,7 +2,7 @@
 
 namespace App\Support;
 
-use App\Enums\EmployeeRole;
+use App\Models\ForeignNational;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -15,17 +15,18 @@ class Audit
         array $context = []
     ): void
     {
-        if(auth()->user()?->hasAnyRole(
-            EmployeeRole::PlatformAdmin
-        )){
+        if($this->isAdmin()){
             return ;
         }
-        
-        Log::channel('audit')
-            ->info($action, [
-                ...$this->getSubjectInfo($subject),
-                ...$context
-            ]);
+        try{
+            Log::channel('audit')
+                ->info($action, [
+                    ...$this->getSubjectInfo($subject),
+                    ...$context
+                ]);
+        }  catch (\Throwable $e) {
+            report($e);
+        }
     }
 
     protected function getSubjectInfo(Model | string $subject): array
@@ -38,5 +39,20 @@ class Audit
         }
 
         return ['subject_type' => $subject];
+    }
+
+    protected function isAdmin():bool
+    {
+        $user = auth()->user();
+
+        if(! $user){
+            return false;
+        }
+
+        if($user instanceof ForeignNational){
+            return false;
+        }
+
+        return auth()->user()?->isPlatformAdmin();
     }
 }

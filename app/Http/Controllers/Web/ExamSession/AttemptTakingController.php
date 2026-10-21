@@ -7,6 +7,7 @@ use App\Modules\ExamSession\FinishAttempt;
 use App\Modules\ExamSession\ExamSessionAttemptBuilder;
 use App\Http\Resources\Attempt\AttemptExamSessionResource;
 use App\Models\Attempt;
+use App\Support\Audit;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -50,12 +51,19 @@ class AttemptTakingController
     public function audioPlayed(
         Attempt $attempt,
         AttemptAnswer $attemptAnswer,
+        Audit $audit
     ): Response {
 
         $attemptAnswer->update([
             'audio_played_at' => Carbon::now()
         ]);
-
+        $audit->log(
+            'audio_played',
+            $attemptAnswer,
+            [
+                'attempt_id' => $attempt->id
+            ]
+        );
         return response()->noContent();
     }
 }
