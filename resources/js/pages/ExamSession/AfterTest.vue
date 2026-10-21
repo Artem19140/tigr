@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AppLogo from '@/components/UI/AppLogo/AppLogo.vue';
-import { router } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import { mdiArrowRight, mdiCheckCircleOutline, mdiInformationOutline } from '@mdi/js';
 import { onMounted, onUnmounted } from 'vue';
 
@@ -22,6 +22,7 @@ onUnmounted(() => {
 </script>
 
 <template>
+    <Head title="Завершение" />
     <v-container class="d-flex align-center justify-center fill-height py-10">
         <v-card
             max-width="440"

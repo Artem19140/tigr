@@ -6,7 +6,6 @@ use App\Http\Controllers\Web\ExamSession\ExamSessionController;
 use App\Http\Controllers\Web\ExamSession\PersonConfirmationController;
 use App\Http\Controllers\Web\ExamSession\VerifyCodeController;
 use App\Support\AppMiddleware;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::middleware([
@@ -58,13 +57,19 @@ Route::prefix('attempts')
     ])->group(function () {
         Route::get(
             'confirmation', 
-            [PersonConfirmationController::class, 'confirm']
+            [PersonConfirmationController::class, 'confirmationView']
         )
-            ->name('exams-sessions.confirmation');
+            ->name('exams-sessions.confirmation.show');
 
         Route::post(
+            'confirmation', 
+            [PersonConfirmationController::class, 'confirmation']
+        )
+            ->name('exams-sessions.confirmation');
+        
+        Route::post(
             'confirmation/rejection', 
-            [PersonConfirmationController::class, 'reject']
+            [PersonConfirmationController::class, 'rejection']
         )
             ->name('exams-sessions.confirmation-rejection');
         
@@ -72,12 +77,20 @@ Route::prefix('attempts')
             'enrollments/{enrollment}/start-info', 
             [ExamSessionController::class, 'startInfo']
         )
+            ->middleware([
+                'auth:foreignNationals',
+                'can:examSession,enrollment'
+            ])
             ->name('exams-sessions.start-info');
 
         Route::post(
             'enrollments/{enrollment}/attempts', 
             [ExamSessionController::class, 'start']
         )
+            ->middleware([
+                'auth:foreignNationals',
+                'can:examSession,enrollment'
+            ])
             ->name('exams-sessions.start');
     });
 

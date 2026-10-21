@@ -26,13 +26,20 @@ class AnswerController
             $attemptAnswer, 
             $handleAttemptAnswer
         ) {
-            $answer = $handleAttemptAnswer->execute($foreignNationalAnswer, $attemptAnswer);
+            $answer = $handleAttemptAnswer
+                ->execute(
+                    $foreignNationalAnswer, 
+                    $attemptAnswer
+                );
+                
             $attempt->update([
                 'last_activity_at' => Carbon::now()
             ]);
 
             return $answer;
         });
+
+        
 
         return new AttemptAnswerResource($updatedAnswer);
     }

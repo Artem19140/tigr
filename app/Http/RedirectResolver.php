@@ -9,28 +9,53 @@ class RedirectResolver
 {
     public function execute(): string
     {
-        if (Auth::guard('web')->check()) {
-            $employee = Auth::guard('web')->user();
+        $webGuard = Auth::guard('web');
+
+        if ($webGuard->check()) {
+            $employee = $webGuard->user();
 
             return $employee->resolveRedirect();
         }
 
-        if (Auth::guard('foreignNationals')->check()) {
-            $foreignNational = Auth::guard('foreignNationals')->user();
-            $attempt = $foreignNational->latestAttempt;
+        $foreignNationalGuard = Auth::guard('foreignNationals');
 
-            if (! $attempt) {
-                Log::warning('authorized foreiqn national without attempt', []);
-                Auth::guard('foreignNationals')->logout();
-
-                return route('login');
-            }
-
-            return route('attempts.show', ['attempt' => $attempt]);
+        if(!$foreignNationalGuard->check()){
+            Log::critical('No authenticated user in supported guards');
+            abort(500);
         }
 
-        Log::critical('UNEXPECTED: RedirectResolver end with no resolve', []);
+        $foreignNational = $foreignNationalGuard->user();
 
-        abort(500);
+        $enrollment = $foreignNational->latestEnrollment;
+
+        if(! $enrollment){
+            Log::critical('Foreign national has no enrollment', [
+                'foreign_national_id' => $foreignNational->id,
+            ]);
+
+            $foreignNationalGuard->logout();
+
+            return route('login');
+        }
+
+        $attempt = $enrollment->attempt;
+
+        if(! $attempt){
+            Log::info('Redirecting to exam session setup...', [
+                'enrollment_id' => $enrollment->id
+            ]);
+
+            return  route('exams-sessions.start-info', [
+                'enrollment' => $enrollment
+            ]);
+        }
+
+        Log::info('Redirect to attempt', [
+            'attempt_id' => $attempt->id,
+            'attempt_status' => $attempt->status,
+            'enrollment' => $enrollment->id
+        ]);
+
+        return route('attempts.show', ['attempt' => $attempt]);
     }
 }

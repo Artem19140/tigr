@@ -23,7 +23,7 @@ class SingleChoiceTaskHandler
             throw new AttemptAnswerValidationException([
                 'attempt_answer_id' => $attemptAnswer->id,
                 'type' => TaskType::SingleChoice->value,
-                'message' => 'not_valid_format',
+                'message' => 'Attempt answer unvalid format',
                 'answer' => $answerId
             ]);
         }
