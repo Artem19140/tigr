@@ -230,8 +230,4 @@ class Attempt extends Model
             },
         );
     }
-
-    public function getStatementResultStatus() {
-        
-    }
 }

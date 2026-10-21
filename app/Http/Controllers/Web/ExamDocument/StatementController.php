@@ -54,7 +54,6 @@ class StatementController
                 $writer->save('php://output');
             }, 200, $this->getXlsxHeaders($fileName));
         }
-        dd($type);
         return Pdf::loadView(ExamDocument::Statement->templatePath(), [
             'rows' => $build['rows'],
             'headers' => $build['headers'],

@@ -23,9 +23,6 @@ class StatementXlsxGenerator{
         
         $spreadsheet = IOFactory::load($templatePath);
         $sheet = $spreadsheet->getActiveSheet();
-        
-        // $sheet->getRowDimension(1)->setRowHeight(80);
-        // $sheet->getRowDimension(2)->setRowHeight(50);
 
         $sheet = $this->replaceVariables(
             $sheet,
@@ -53,11 +50,13 @@ class StatementXlsxGenerator{
         };
 
         if(! Storage::disk('local')->exists($path)){
-            abort(400, 'Ошибка при генерации документа');
-
             Log::warning('Template xlsx for exam not found', [
                 'exam' => $exam->id
             ]);
+            
+            abort(400, 'Ошибка при генерации документа');
+
+            
         }
 
         return Storage::disk('local')->path($path) ;
