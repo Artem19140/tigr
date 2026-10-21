@@ -26,17 +26,18 @@ enum ExamDocument: string
     }
 
     public function fileName(
-        string $name,
+        string $examName,
         Carbon $date,
+        string | null $extension = 'pdf'
     ): string
     {
          return match($this){
-            self::Codes => "Кода_{$name}_{$date->format('H-i_d.m.Y')}.pdf",
-            self::List => "Список_{$name}_{$date->format('H-i_d.m.Y')}.pdf", 
-            self::Protocol => "Протокол_{$name}_{$date->format('H-i_d.m.Y')}.pdf",
-            self::Results => "Результаты_{$name}_{$date->format('H-i_d.m.Y')}.pdf",
-            self::Scores => "Баллы_{$name}_{$date->format('H-i_d.m.Y')}.pdf",
-            self::Statement => "Ведомость_{$name}_{$date->format('H-i_d.m.Y')}.pdf",
+            self::Codes => "Кода_{$examName}_{$date->format('H-i_d.m.Y')}.$extension",
+            self::List => "Список_{$examName}_{$date->format('H-i_d.m.Y')}.$extension", 
+            self::Protocol => "Протокол_{$examName}_{$date->format('H-i_d.m.Y')}.$extension",
+            self::Results => "Результаты_{$examName}_{$date->format('H-i_d.m.Y')}.$extension",
+            self::Scores => "Баллы_{$examName}_{$date->format('H-i_d.m.Y')}.$extension",
+            self::Statement => "Ведомость_{$examName}_{$date->format('H-i_d.m.Y')}.$extension",
         };
     }
 }
