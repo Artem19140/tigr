@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useForm } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import SoundSettings from './Components/SoundSettings.vue';
 import { ref } from 'vue';
 import { mdiCheckCircle, mdiHeadphones } from '@mdi/js';
@@ -27,6 +27,7 @@ const soundConfirmation = ref<boolean>(false)
 </script>
 
 <template>
+  <Head title="Стартовый экран" />
   <form @submit.prevent="begin">
   <div class="exam-page">
     <v-card
