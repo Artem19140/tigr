@@ -11,7 +11,8 @@ const props = defineProps<{
         date: string
     },
     updateUrl: string,
-    backUrl: string
+    backUrl: string,
+    editTtlDays: number
 }>()
 
 defineOptions({
@@ -64,7 +65,7 @@ const cancel = async () => {
                 <div
                     class="mt-4 rounded-lg bg-gray-50 px-4 py-3 text-center text-sm text-gray-500"
                 >
-                    Комментарий можно редактировать в течение всего дня после
+                    Комментарий можно редактировать в течение {{ editTtlDays }} дней после
                     экзамена.
                 </div>
             </v-card-text>
