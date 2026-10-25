@@ -230,4 +230,22 @@ class Attempt extends Model
             },
         );
     }
+
+    public function isActive():bool 
+    {
+        if($this->isAnnulled()){
+            return false;
+        }
+
+        if($this->isFinished()){
+            return false;
+        }
+
+        if($this->isExpired()){
+            return false;
+        }
+
+        return true;
+    }
+    
 }

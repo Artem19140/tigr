@@ -20,6 +20,14 @@ class EnrollmentConductResource extends JsonResource
             'id' => $this->resource->id,
             'foreignNational' => new ForeignNationalResource($this->whenLoaded('foreignNational')),
             'attempt' => new AttemptConductResource($this->whenLoaded('attempt')),
+            'actions' => [
+                'recoveryCode' => [
+                    'url' => route('enrollments.show.recovery-codes',[
+                        'enrollment' => $this->resource,
+                        'exam' => $this->resource->exam_id
+                    ])
+                ]
+            ]
         ];
     }
 }

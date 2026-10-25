@@ -31,6 +31,9 @@ const loading = ref<boolean>(false)
 	</Head>
 	
 	<v-container>
+		<div
+			class="max-w-4xl m-auto"
+		>
 		<BasePaginatedTable
 			:loading="loading"
 			:headers="headers"
@@ -51,5 +54,6 @@ const loading = ref<boolean>(false)
 				>Добавить</v-btn>
 			</template>
 		</BasePaginatedTable>
+		</div>
 	</v-container> 
 </template>

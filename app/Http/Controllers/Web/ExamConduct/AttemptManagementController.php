@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class AttemptManagementController
 {
-    public function annul(
+    public function annulation(
         Request $request,
         Attempt $attempt,
         AnnulAttempt $annulAttempt

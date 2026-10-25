@@ -32,10 +32,11 @@ const cancel = () => {
     <v-dialog
         v-model="isOpen"
         persistent
-        max-width="600"
+        max-width="520"
+        width="calc(100%-32px)"
     >
-        <v-card class="overflow-hidden rounded-xl">
-            <v-card-text class="px-6 pt-6">
+        <v-card class="max-w-2xl m-auto">
+            <v-card-text>
                 <div class="text-xl font-semibold text-gray-900">
                     Аннулирование попытки
                 </div>
@@ -45,9 +46,8 @@ const cancel = () => {
                 </div>
             </v-card-text>
 
-            <!-- Foreign national -->
-            <v-card-text class="px-6">
-                <div class="rounded-xl bg-gray-50 px-5 py-4">
+            <v-card-text>
+                <div class="rounded-xl bg-gray-50 px-5 py-4 space-y-4">
                     <div>
                         <div class="text-xs font-medium uppercase tracking-wide text-gray-500">
                             ФИО
@@ -58,7 +58,7 @@ const cancel = () => {
                         </div>
                     </div>
 
-                    <div class="mt-4">
+                    <div>
                         <div class="text-xs font-medium uppercase tracking-wide text-gray-500">
                             Паспорт
                         </div>
@@ -70,13 +70,13 @@ const cancel = () => {
                 </div>
             </v-card-text>
 
-            <v-card-text class="px-6">
+            <v-card-text class="space-y-4">
                 <v-textarea
                     v-model="form.reason"
                     label="Причина аннулирования"
                     placeholder="Укажите причину..."
                     auto-grow
-                    rows="3"
+                    rows="1"
                     variant="outlined"
                     :error-messages="form.errors.reason"
                     hide-details="auto"
@@ -84,13 +84,11 @@ const cancel = () => {
 
                 <v-checkbox
                     v-model="confirmation"
-                    class="mt-2"
                     label="Подтверждаю аннулирование попытки"
                     hide-details
                 />
 
                 <v-alert
-                    class="mt-3"
                     type="warning"
                     variant="tonal"
                 >
@@ -98,7 +96,7 @@ const cancel = () => {
                 </v-alert>
             </v-card-text>
 
-            <v-card-text class="px-6 pb-6">
+            <v-card-text>
                 <div class="flex justify-end gap-2">
                     <v-btn
                         variant="text"

@@ -31,7 +31,9 @@ export interface EnrollmentConduct{
     foreignNational:ForeignNationalEnrollment,
     hasPayment:boolean,
     attempt:AttemptConduct | null,
-    availability:{
-        payment:boolean
+    actions: {
+        recoveryCode: {
+            url: string | null
+        }
     }
 }

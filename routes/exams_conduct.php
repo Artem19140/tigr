@@ -1,15 +1,17 @@
 <?php
 
+use App\Http\Controllers\Web\ExamConduct\GenerateAttemptRecoveryCodeController;
 use App\Http\Controllers\Web\ExamConduct\AttemptManagementController;
 use App\Http\Controllers\Web\ExamConduct\ExamConductController;
 use App\Http\Controllers\Web\ExamConduct\SpeakingController;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('attempts')->middleware([
     'meta',
     'can:attempts.employee-access,attempt'
 ])
 ->group(function () {
-    Route::delete('{attempt}', [AttemptManagementController::class, 'annul'])
+    Route::delete('{attempt}', [AttemptManagementController::class, 'annulation'])
         ->name('attempts.destroy');
 
     Route::get('{attempt}/speaking', [SpeakingController::class, 'show'])
@@ -35,4 +37,12 @@ Route::prefix('exams')->middleware([
 
     Route::put('{exam}/monitoring/protocol-comments', [ExamConductController::class, 'protocolCommentUpdate'])
         ->name('exams.protocol-comments.update');
+
+    Route::get('{exam}/enrollments/{enrollment}/recovery-code', [GenerateAttemptRecoveryCodeController::class, 'show'])
+        ->scopeBindings()
+        ->name('enrollments.show.recovery-codes');
+
+    Route::post('{exam}/enrollments/{enrollment}/recovery-code', [GenerateAttemptRecoveryCodeController::class, 'generation'])
+        ->scopeBindings()
+        ->name('enrollments.recovery-codes');
 });

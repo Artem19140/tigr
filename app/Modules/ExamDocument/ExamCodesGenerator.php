@@ -9,7 +9,8 @@ use App\Models\Exam;
 use App\Modules\Shared\ExamSettings;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
-use Illuminate\Database\QueryException;
+use Illuminate\Database\UniqueConstraintViolationException;
+use Illuminate\Support\Facades\Log;
 
 final class ExamCodesGenerator
 {
@@ -57,10 +58,10 @@ final class ExamCodesGenerator
                 );
 
                 return;
-            } catch (QueryException $e) {
-                if ($e->getCode() !== '23505') {
-                    throw $e;
-                }
+            } catch (UniqueConstraintViolationException $e) {
+                Log::info('Unique query exception during exam codes generation', [
+                    'exam_id' => $exam->id
+                ]);
             }
         }
     }

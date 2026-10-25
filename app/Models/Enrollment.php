@@ -71,4 +71,9 @@ class Enrollment extends Model
             'exam_code_used_at' => Carbon::now()
         ]);
     }
+
+    public function examCode(): string | null
+    {
+        return $this->exam_code;
+    }
 }
