@@ -9,9 +9,13 @@ use App\Modules\Shared\CenterData;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Writer\IWriter;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 
 class FRDOReportsGenerator
 {
@@ -46,35 +50,25 @@ class FRDOReportsGenerator
     ): Spreadsheet {
         $attempts = $this->attemptsForReport($date, $type);
         
-        $templatePath = $this->getPath($type);
+        $templatePath = $this->getTemplatePath($type);
         $spreadsheet = IOFactory::load($templatePath);
         $sheet = $spreadsheet->getActiveSheet();
-        $templateRow = 3;
         $row = 3;
 
         foreach ($attempts as $attempt) {
-            if ($row > $templateRow) {
-                $lastColumn = $type === 'certificates' ? 'O' : 'Q';
 
-                $sheet->duplicateStyle(
-                    $sheet->getStyle("A{$templateRow}:{$lastColumn}{$templateRow}"),
-                    "A{$row}:{$lastColumn}{$row}"
+            if($row > 3){
+                $sheet = $this->setRowStyles(
+                    $sheet,
+                    $row
                 );
-
-                $sheet->getRowDimension($row)
-                    ->setRowHeight($sheet->getRowDimension($templateRow)->getRowHeight());
             }
+            $sheet->fromArray(
+                $this->getRow($attempt, $type),
+                null,
+                "A$row"
+            );
 
-            if ($type === 'certificates') {
-                $markUp = $this->certificatesMarkup($attempt,$row);
-            } else {
-                $markUp = $this->referencesMarkup($attempt, $row);
-            }
-
-            foreach ($markUp as $key => $value) {
-                $sheet->setCellValue($key, $value);
-
-            }
             $row++;
         }
 
@@ -106,84 +100,90 @@ class FRDOReportsGenerator
 
         return $attempts;
     }
-
-    protected function certificatesMarkup(
-        Attempt $attempt,
-        int $row
-    ): array {
-        $columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'M', 'N', 'O'];
-        $values = [
-            mb_strtoupper($attempt->foreignNational->surname, 'UTF-8'),
-            mb_strtoupper($attempt->foreignNational->name, 'UTF-8'),
-            mb_strtoupper($attempt->foreignNational->patronymic, 'UTF-8'),
-            $attempt->foreignNational->formattedDateBirth(),
-            $attempt->exam->begin_time->year,
-            $this->certificateText($attempt->exam->certificateName()),
-            mb_strtoupper($attempt->foreignNational->surname_latin, 'UTF-8'),
-            mb_strtoupper($attempt->foreignNational->name_latin, 'UTF-8'),
-            mb_strtoupper($attempt->foreignNational->patronymic_latin, 'UTF-8'),
-            $attempt->foreignNational->full_passport,
-            $attempt->foreignNational->citizenship,
-            $this->center->certificatesIssueAddress(),//$attempt->exam->addressName(),
-            $this->center->certificatesIssueAddress(),
-            $this->center->directorFio(),
-        ];
-
-        $cells = [];
-        foreach ($values as $i => $value) {
-            $cells[$columns[$i].$row] = $value;
-        }
-
-        return $cells;
+    protected function certificateText(string $certificateName): string
+    {
+        return "Сертификат о владении русским языком, знании истории России и основ законодательства Российской Федерации на уровне, соответствующем цели получения $certificateName";
     }
 
-    protected function referencesMarkup(
-        Attempt $attempt,
-        int $row
-    ): array {
-        $columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'N', 'O', 'P', 'Q'];
+    protected function getTemplatePath(
+        string $type
+    ): string {
+        $path = "templates/{$type}_frdo.xlsx";
 
+        if(! Storage::disk('public')->exists($path)){
+            Log::warning("Template for {$type} does not exist");
+            abort(500, 'Ошибка при генерации отчета');
+        }
+
+        return Storage::disk('public')->path($path);        
+    }
+
+    protected function upperCase(string | null $string){
+        return mb_strtoupper($string ?? '', 'UTF-8');
+    }
+
+    protected function getRow(
+        Attempt $attempt,
+        string $type
+    ): array {
         $values = [
-            mb_strtoupper($attempt->foreignNational->surname, 'UTF-8'),
-            mb_strtoupper($attempt->foreignNational->name, 'UTF-8'),
-            mb_strtoupper($attempt->foreignNational->patronymic, 'UTF-8'),
+            $this->upperCase($attempt->foreignNational->surname),
+            $this->upperCase($attempt->foreignNational->name),
+            $this->upperCase($attempt->foreignNational->patronymic),
             $attempt->foreignNational->formattedDateBirth(),
             $attempt->started_at->year,
             $this->certificateText($attempt->exam->certificateName()),
-            mb_strtoupper($attempt->foreignNational->surname_latin, 'UTF-8'),
-            mb_strtoupper($attempt->foreignNational->name_latin, 'UTF-8'),
-            mb_strtoupper($attempt->foreignNational->patronymic_latin, 'UTF-8'),
-            'СПРАВКА',
-            $attempt->foreignNational->full_passport,
-            $attempt->foreignNational->citizenship,
-            $this->center->certificatesIssueAddress(),//$attempt->exam->addressName(),
-            $attempt->exam->begin_time->format('d.m.Y'),
-            'Неуспешно',
-            $this->center->directorFio(),
+            $this->upperCase($attempt->foreignNational->surname_latin),
+            $this->upperCase($attempt->foreignNational->name_latin),
+            $this->upperCase($attempt->foreignNational->patronymic_latin),
         ];
-        $cells = [];
-        foreach ($values as $index => $value) {
-            $cells[$columns[$index].$row] = $value;
+
+        if($type === 'references'){
+            $values[] = 'СПРАВКА';
         }
 
-        return $cells;
+        $values = [
+            ...$values,
+            $this->upperCase($attempt->foreignNational->full_passport),
+            $this->upperCase($attempt->foreignNational->citizenship),
+            '',
+            $this->center->certificatesIssueAddress()
+        ];
+
+        if($type === 'references'){
+            $values = [
+                ...$values,
+                $attempt->exam->begin_time->format('d.m.Y'),
+                'Неуспешно',
+            ];
+        }else{
+            $values[] = $this->center->certificatesIssueAddress();
+        }
+
+        $values[] = $this->center->directorFio();
+
+        return $values;
+
     }
 
-    protected function certificateText(string $certificateName): string
-    {
-        return "
-            Сертификат о владении русским языком, знании истории России 
-            и основ законодательства Российской Федерации на уровне, 
-            соответствующем цели получения $certificateName
-        ";
-    }
+    protected function setRowStyles(
+        Worksheet $sheet,
+        int $lineNumber
+    ): Worksheet{
+        $lastColumn = $sheet->getHighestDataColumn();
+        $previousRow = $lineNumber - 1;
 
-    protected function getPath(
-        string $type
-    ): string {
-        return $type === 'certificates' 
-            ?   storage_path('app/public/templates/certificates_frdo.xlsx')
-            :   storage_path('app/public/templates/references_frdo.xlsx');
-        
+        for ($column = 1; $column <= Coordinate::columnIndexFromString($lastColumn); $column++) {
+            $columnLetter = Coordinate::stringFromColumnIndex($column);
+
+            $source = "{$columnLetter}{$previousRow}";
+            $target = "{$columnLetter}{$lineNumber}";
+
+            $sheet->duplicateStyle(
+                $sheet->getStyle($source),
+                $target
+            );
+        }
+        return $sheet;
     }
 }
