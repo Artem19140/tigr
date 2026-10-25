@@ -89,6 +89,8 @@ class LogsController
 
         file_put_contents($logPath, '');
 
+        Log::info('Deploy logs succesfully cleared');
+        
         return response()->noContent();
     }
 }
