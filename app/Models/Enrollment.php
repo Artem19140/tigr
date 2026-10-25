@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Number;
 
 class Enrollment extends Model
 {
@@ -75,5 +76,10 @@ class Enrollment extends Model
     public function examCode(): string | null
     {
         return $this->exam_code;
+    }
+
+    public function amountInWords():string
+    {
+        return Number::spell($this->exam->amount(), 'ru');
     }
 }

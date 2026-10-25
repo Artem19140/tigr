@@ -20,6 +20,14 @@ class GetForeignNationals
         $perPage =$dto->perPage  ?? 10;
 
         return ForeignNational::query()
+            ->select([
+                'id',
+                'surname',
+                'name',
+                'patronymic',
+                'passport_series',
+                'passport_number'
+            ])
             ->when($surname, function (Builder $query) use ($surname) {
                 $surname = mb_strtolower(trim($surname), 'UTF-8');
                 $query->whereLike('surname_normalized' , $surname.'%');
