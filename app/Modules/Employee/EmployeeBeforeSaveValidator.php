@@ -3,7 +3,7 @@
 namespace App\Modules\Employee;
 
 use App\Enums\EmployeeRole;
-use App\Exceptions\Employee\EmployeeValidationExcepion;
+use App\Exceptions\EmployeeValidationExcepion;
 use App\Http\Dto\EmployeeDto;
 use App\Models\Employee;
 use App\Models\Role;
