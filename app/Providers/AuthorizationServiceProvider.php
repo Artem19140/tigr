@@ -24,9 +24,15 @@ class AuthorizationServiceProvider extends ServiceProvider
         Gate::define('attempts.foreign-national-access', function (
             ForeignNational $foreignNational, 
             Attempt $attempt
-        ) 
-        {
+        ) {
             return $foreignNational->id === $attempt->foreign_national_id;
+        });
+
+        Gate::define('viewPulse', function (Employee | ForeignNational $user) {
+            if($user instanceof ForeignNational){
+                return false;
+            }
+            return $user->isPlatformAdmin();
         });
 
         Gate::define('reports.frdo', function (Employee $employee) {

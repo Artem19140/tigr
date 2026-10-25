@@ -1,11 +1,8 @@
 <?php
 
-use App\Providers\AppServiceProvider;
-use App\Providers\AuthorizationServiceProvider;
-use App\Providers\ObservabilityServiceProvider;
-
 return [
-    AppServiceProvider::class,
-    AuthorizationServiceProvider::class,
-    ObservabilityServiceProvider::class,
+    App\Providers\AppServiceProvider::class,
+    App\Providers\AuthorizationServiceProvider::class,
+    App\Providers\ObservabilityServiceProvider::class,
+    //App\Providers\TelescopeServiceProvider::class,
 ];

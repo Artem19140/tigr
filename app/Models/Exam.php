@@ -135,6 +135,11 @@ class Exam extends Model
         return $this->type->name;
     }
 
+    public function amount(): int
+    {
+        return $this->type->amount;
+    }
+
     public function timeZone(): string
     {
         return CenterData::timeZone();
