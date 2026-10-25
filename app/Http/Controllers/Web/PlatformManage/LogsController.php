@@ -71,10 +71,26 @@ class LogsController
         $logPath = '/var/www/tigr/git.log';
 
         if (!file_exists($logPath)) {
-            Log::critical('Git log file not found');
+            Log::warning('Git log file not found');
             abort(400, 'Файл не найден');
         }
 
         return response()->download($logPath, 'git_log_' . now()->format('Y-m-d_His') . '.txt');
+    }
+
+    public function deleteDeployLog()
+    {
+        $logPath = '/var/www/tigr/git.log';
+
+        if (!file_exists($logPath)) {
+            Log::warning('Git log file not found');
+            abort(400, 'Файл не найден');
+        }
+
+        file_put_contents($logPath, '');
+
+        Log::info('Deploy logs succesfully cleared');
+        
+        return response()->noContent();
     }
 }

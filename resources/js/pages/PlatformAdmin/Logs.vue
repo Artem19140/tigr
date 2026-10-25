@@ -211,6 +211,10 @@ const audit = () => {
                     </v-btn>
                 </section>
             </v-card-text>
+
+            <v-card-text>
+                <v-btn @click="http.delete('/admin/logs/deploy')">Очистить лог деплоя</v-btn>
+            </v-card-text>
         </v-card>
 
         <!-- Параметры времени -->

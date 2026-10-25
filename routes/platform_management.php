@@ -31,4 +31,6 @@ Route::prefix('/admin')
         Route::get('logs/available', [LogsController::class, 'available']);
 
         Route::get('logs/git', [LogsController::class, 'downloadGitLog']);
+
+        Route::delete('logs/deploy', [LogsController::class, 'deleteDeployLog']);
     });

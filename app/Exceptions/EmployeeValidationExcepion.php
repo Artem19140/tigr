@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions\Employee;
+namespace App\Exceptions;
 
 use App\Exceptions\BaseException;
 use Illuminate\Support\Facades\Log;
