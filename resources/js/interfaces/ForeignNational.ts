@@ -68,8 +68,8 @@ export interface ForeignNationalCreate extends Omit<ForeignNational,
   citizenship:string | null
   hasPayment:boolean 
   examId: number | null
-  passportTranslate: File | null
-  passport: File | null
+  passportTranslate: File | undefined
+  passport: File | undefined
   noPatronymic: boolean
   noPassportNumber: boolean
   noPassportSeries: boolean

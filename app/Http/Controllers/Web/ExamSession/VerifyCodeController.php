@@ -17,6 +17,17 @@ class VerifyCodeController
             $request->validated('code')
         );
 
+        if($enrollment->attempt?->isActive()){
+            Auth::guard('foreignNationals')
+                ->login($enrollment->foreignNational);
+                
+            $enrollment->makeExamCodeUsed();
+
+            return redirect()->route('attempts.show', [
+                'attempt' => $enrollment->attempt->id
+            ]);
+        }
+
         session([
             'enrollment_id' => $enrollment->id
         ]);
@@ -30,4 +41,5 @@ class VerifyCodeController
 
         return redirect()->route('exams-sessions.confirmation.show');
     }
+    
 }

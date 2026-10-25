@@ -31,41 +31,45 @@ const loading = ref<boolean>(false)
     <title>Экзамены</title>
   </Head>
   <v-container>
-    <BasePaginatedTable
-      :headers="headers"
-      :elements="exams"
-      title="Экзамены"
-      :loading="loading"
-      @row-click="(item) => router.visit(item.showUrl)"
+    <div
+      class="max-w-4xl m-auto"
     >
-      <template #header-left>
-        <ExamTableFilter 
-          v-model="loading"
-        />
-      </template>
-      
-      <template #header-actions>
-        <v-btn
-          color="create"
-          @click="() => router.visit(createUrl)"
-          v-if="createUrl"
-        >Добавить</v-btn>
-      </template>
+      <BasePaginatedTable
+        :headers="headers"
+        :elements="exams"
+        title="Экзамены"
+        :loading="loading"
+        @row-click="(item) => router.visit(item.showUrl)"
+      >
+        <template #header-left>
+          <ExamTableFilter 
+            v-model="loading"
+          />
+        </template>
+        
+        <template #header-actions>
+          <v-btn
+            color="create"
+            @click="() => router.visit(createUrl)"
+            v-if="createUrl"
+          >Добавить</v-btn>
+        </template>
 
-      <template #item.enrollmentsCount="{ item }">
-        <span
-          :class="item?.enrollmentsCount >= item?.capacity
-            ? 'text-red-500 px-2 py-1'
-            : ''"
-        >
-          {{ `${item?.enrollmentsCount} / ${item?.capacity}` }}
-        </span>
-      </template>
+        <template #item.enrollmentsCount="{ item }">
+          <span
+            :class="item?.enrollmentsCount >= item?.capacity
+              ? 'text-red-500 px-2 py-1'
+              : ''"
+          >
+            {{ `${item?.enrollmentsCount} / ${item?.capacity}` }}
+          </span>
+        </template>
 
-      <template #item.beginTime="{ item }">
-          {{ new DateFormatter(item.beginTime).format('H:i • d M Y') }}
-      </template>
+        <template #item.beginTime="{ item }">
+            {{ new DateFormatter(item.beginTime).format('H:i • d M Y') }}
+        </template>
 
-    </BasePaginatedTable>
+      </BasePaginatedTable>
+    </div>
   </v-container>
 </template>
