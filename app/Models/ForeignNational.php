@@ -91,6 +91,13 @@ class ForeignNational extends Authenticatable
         return $this->attempts()->one()->latestOfMany();
     }
 
+    public function latestEnrollment(): HasOne
+    {
+        return $this->enrollments()->one()->latestOfMany();
+    }
+
+    
+
     protected function fullPassport(): Attribute
     {
         return Attribute::get(function () {

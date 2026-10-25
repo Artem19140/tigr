@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Web\ExamSession;
 
 use App\Http\Requests\Exam\VerifyCodeRequest;
 use App\Modules\ExamSession\ExamCodeVerifier;
-use Illuminate\Support\Facades\Auth;
+use App\Support\Audit;
 
 class VerifyCodeController
 {
     public function verify(
         VerifyCodeRequest $request,
-        ExamCodeVerifier $examCodeVerifier
+        ExamCodeVerifier $examCodeVerifier,
+        Audit $audit
     ) {
         $enrollment = $examCodeVerifier->execute(
             $request->validated('code')
@@ -31,7 +32,14 @@ class VerifyCodeController
             'enrollment_id' => $enrollment->id
         ]);
 
-        return redirect()->route('exams-sessions.confirmation');
+        $audit->log(
+            'Session enrollment_id set', 
+            'enrollment', 
+            [
+                'enrollment_id' => $enrollment->id
+            ]);
+
+        return redirect()->route('exams-sessions.confirmation.show');
     }
     
 }

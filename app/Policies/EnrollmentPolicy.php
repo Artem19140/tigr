@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Enums\EmployeeRole;
 use App\Models\Employee;
 use App\Models\Enrollment;
+use App\Models\ForeignNational;
 
 class EnrollmentPolicy
 {
@@ -20,6 +21,15 @@ class EnrollmentPolicy
 
         return false;
     }
+
+    public function examSession(
+        ForeignNational $foreignNational, 
+        Enrollment $enrollment
+    ): bool 
+    {   
+        return $enrollment->foreign_national_id === $foreignNational->id;
+    }
+    
 
     public function create(Employee $employee): bool
     {

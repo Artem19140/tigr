@@ -7,8 +7,6 @@ use App\Models\Exam;
 use App\Modules\ExamSession\StartExamSession;
 use App\Modules\Shared\ExamSettings;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
@@ -18,27 +16,29 @@ class ExamSessionController
     public function startInfo(
         Enrollment $enrollment
     ) {
-        $this->authorize($enrollment);
-
         $exam = Exam::with([
             'type',
         ])->find($enrollment->exam_id);
 
         if($enrollment->attempt()->exists()){
+            Log::info('Redirecting to attempt from start info exam session', [
+                'enrollment_id' => $enrollment->id,
+                'attempt_id' => $enrollment->attempt->id,
+                'attempt_status' => $enrollment->attempt->status
+            ]);
+
             return redirect()->route('attempts.show', [
                 'attempt' => $enrollment->attempt?->id,
             ]);
         }
 
         if(!$exam){
-            Log::critical('exam_not_found',[
+            Log::warning('exam_not_found',[
                 'enrollment_id' => $enrollment->id
             ]);
 
             throw new ModelNotFoundException();
         }
-
-        
 
         return Inertia::render('ExamSession/StartInfo', [
             'exam' => [
@@ -55,53 +55,27 @@ class ExamSessionController
         ]);
     }
     public function start(
-        StartExamSession $createAttempt,
         Enrollment $enrollment,
-        Request $request
+        StartExamSession $startExamSession
     ) {
-        $this->authorize($enrollment);
-
         if($enrollment->attempt()->exists()){
+            Log::info('Redirecting to attempt from starting exam session', [
+                'enrollment_id' => $enrollment->id,
+                'attempt_id' => $enrollment->attempt->id,
+                'attempt_status' => $enrollment->attempt->status
+            ]);
             return redirect()->route('attempts.show', [
                 'attempt' => $enrollment->attempt?->id,
             ]);
         }
 
-        $attempt = $createAttempt->execute(
+        $attempt = $startExamSession->execute(
             $enrollment
         );
-
-        Auth::guard('foreignNationals')
-            ->login($attempt->foreignNational);
-
-        $request->session()->regenerate();
-
-        session()->forget('enrollment_id');
 
         return redirect()->route('attempts.show', [
             'attempt' => $attempt->id,
         ]);
-    }
-
-    protected function authorize(
-        Enrollment $enrollment
-    ) {
-        $sessionEnrollmentId = session('enrollment_id');
-
-        if(! $sessionEnrollmentId){
-            return to_route('login');
-        }
-
-        if($sessionEnrollmentId === $enrollment->id){
-            return ;
-        }
-
-        Log::warning('Enrollment session mismatch',[
-            'enrollment_id' => $enrollment->id,
-            'session_enrollment_id' => session('enrollment_id')
-        ]);
-
-        abort(404);
     }
     
 }

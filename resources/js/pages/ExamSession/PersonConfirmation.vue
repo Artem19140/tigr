@@ -6,7 +6,7 @@ import {
     mdiCheckCircleOutline, 
     mdiCloseCircleOutline
 } from '@mdi/js';
-import { useForm } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 
 const props = defineProps<{
     fullName: string,
@@ -20,6 +20,7 @@ const reject = useForm()
 </script>
 
 <template>
+    <Head title="Подтверждение" />
     <v-container
         fluid
         class="min-h-screen flex items-center justify-center bg-slate-50 px-4 py-8"
@@ -104,7 +105,7 @@ const reject = useForm()
                             color="primary"
                             variant="flat"
                             class="!h-14 !rounded-xl !text-base !font-semibold sm:!text-lg"
-                            @click="confirm.get(confirmUrl)"
+                            @click="confirm.post(confirmUrl)"
                             :loading="confirm.processing"
                             :disabled="confirm.processing || reject.processing"
                         >
