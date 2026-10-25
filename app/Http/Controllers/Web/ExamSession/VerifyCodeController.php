@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\ExamSession;
 use App\Http\Requests\Exam\VerifyCodeRequest;
 use App\Modules\ExamSession\ExamCodeVerifier;
 use App\Support\Audit;
+use Illuminate\Support\Facades\Auth;
 
 class VerifyCodeController
 {
