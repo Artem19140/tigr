@@ -26,7 +26,7 @@ class CountryProvider
         return  Cache::rememberForever('countries', function () {
             return collect(
                 json_decode(
-                    file_get_contents($this->getPath()),
+                    file_get_contents(self::getPath()),
                     true
                 )
             );
