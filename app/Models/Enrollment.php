@@ -28,6 +28,7 @@ class Enrollment extends Model
         'cancelled_at',
         'rescheduled_at',
         'exam_code_used_at',
+        'cancelled_by'
     ];
 
     protected $casts = [
@@ -82,4 +83,14 @@ class Enrollment extends Model
     {
         return Number::spell($this->exam->amount(), 'ru');
     }
+
+    public function isCancelled(): bool 
+    {
+        return $this->cancelled_at !== null;
+    }
+
+    public function hasPayment(): bool {
+        return $this->has_payment;
+    }
+    
 }

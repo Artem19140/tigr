@@ -10,17 +10,13 @@ export interface Enrollment{
     attempt:Attempt | null,
     examResult:ExamStatus,
     regNumber: string,
+    cancelledAt: string | null
     actions:{
-        payment:{
-            url: string | null
-            disabled: boolean
-        }
-        statement:{
-            url: string | null
-        },
-        changeRegNumber:{
-            url: string | null
-        }
+        payment: Action | undefined
+        statement: Action | undefined,
+        approval: Action | undefined,
+        changeRegNumber: Action,
+        delete: Action | undefined
     }
 }
 
@@ -36,4 +32,9 @@ export interface EnrollmentConduct{
             url: string | null
         }
     }
+}
+
+interface Action{
+    url: string,
+    disabled: boolean | undefined
 }

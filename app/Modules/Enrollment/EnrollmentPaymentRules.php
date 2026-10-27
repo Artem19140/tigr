@@ -12,15 +12,15 @@ class EnrollmentPaymentRules
     {
         $exam = $enrollment->exam;
 
-        if($enrollment->attempt){
-            return RuleResult::fail(
-                BusinessCode::AttemptExists
-            );
-        }
-
         if($exam->isCancelled()){
             return RuleResult::fail(
                 BusinessCode::ExamCancelled
+            );
+        }
+
+        if($enrollment->attempt){
+            return RuleResult::fail(
+                BusinessCode::AttemptExists
             );
         }
 

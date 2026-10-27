@@ -82,4 +82,9 @@ class EnrollmentPolicy
     {
         return $employee->hasAnyRole(EmployeeRole::Operator);
     }
+
+    public function delete(Employee $employee): bool
+    {
+        return $employee->hasAnyRole(EmployeeRole::Operator);
+    }
 }

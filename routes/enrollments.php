@@ -17,9 +17,23 @@ Route::put('enrollments/{enrollment}/payment', [EnrollmentController::class, 'ch
     ->middleware('can:payment,enrollment')
     ->name('enrollments.payment-change');
 
+Route::get('enrollments/{enrollment}/full-documents', [EnrollmentController::class, 'fullDocuments'])
+    ->middleware('can:statement,enrollment')
+    ->name('enrollments.full-documents');
+
 Route::get('enrollments/{enrollment}/statements', [EnrollmentController::class, 'statement'])
     ->middleware('can:statement,enrollment')
     ->name('enrollments.statements');
+
+Route::get('enrollments/{enrollment}/approvals', [EnrollmentController::class, 'approval'])
+    ->middleware('can:statement,enrollment')
+    ->name('enrollments.approvals');
+
+
+Route::delete('exams/{exam}/enrollments/{enrollment}', [EnrollmentController::class, 'destroy'])
+    ->scopeBindings()
+    ->name('enrollments.destroy')
+    ->can('delete', Enrollment::class);
 
 Route::put('enrollments/{enrollment}/reg-number', function(
     Enrollment $enrollment, 

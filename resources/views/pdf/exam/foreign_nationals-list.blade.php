@@ -7,13 +7,13 @@
 
 <h3 class="text-center"> {{ $exam->shortName() }} • {{ $exam->beginTimeLocal()->format('H:i, d.m.Y') }}</h3>
 @php
-$headers = [
-    'ФИО',
-    'ФИО (лат.)',
-    'Паспорт',
-    'Дата рождения',
-    'Гражданство'
-];
+
+$leftAlign = [
+    'fullName',
+    'fullNameLatin',
+    'fullPassport'
+]
+
 @endphp
 <table class="table text-center border-black">
     <tr>
@@ -23,13 +23,21 @@ $headers = [
     </tr>
 
 
-    @foreach ($foreignNationals as $f)
+    @foreach ($rows as $key => $row)
         <tr>
-            <td class="text-center border-black" style="text-align: left; padding-left: 5px;">{{ $f->full_name }}</td>
-            <td class="text-center border-black" style="text-align: left; padding-left: 5px;">{{ $f->full_name_latin }}</td>
-            <td class="text-center border-black" style="text-align: left; padding-left: 5px;">{{ $f->full_passport }}</td>
-            <td class="text-center border-black">{{ $f->formattedDateBirth() }}</td>
-            <td class="text-center border-black">{{ $f->citizenship }}</td>
+            @foreach ($row as $key => $data)
+            <td 
+                class="text-center border-black" 
+                style="
+                    {{  in_array( $key, $leftAlign ) 
+                        ? 'text-align: left; padding-left: 5px;' 
+                        : '' 
+                    }}
+                "
+            >
+                {{ $data }}
+            </td>
+            @endforeach
         </tr>
     @endforeach
 

@@ -80,7 +80,7 @@ export interface ForeignNationalCreate extends Omit<ForeignNational,
 export interface ForeignNationalEnrollment{
   id:number
   fullName:string
-  fullPassport:string
+  dateBirth:string
 }
 
 export interface ForeignNationalIndex{
