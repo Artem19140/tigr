@@ -58,13 +58,14 @@ const create = async () => {
 }
 
 const cancel = async () => {
-  const {confirmOpen} = useConfirm()
-  if (form.isDirty) {
-		const ok = await confirmOpen('Отменить добавление ИГ?')
-		if(!ok) return
-  }
-  form.cancel()
-  router.visit(props.backUrl)
+    const {confirmOpen} = useConfirm()
+    if (form.isDirty) {
+        const ok = await confirmOpen('Отменить добавление ИГ?')
+        if(!ok) return
+
+    }
+    form.cancel()
+    router.visit(props.backUrl)
 }
 </script>
 
@@ -74,7 +75,7 @@ const cancel = async () => {
     <v-container>
         <div class="mx-auto max-w-4xl space-y-5">
 
-            <v-card class="overflow-hidden rounded-xl">
+            <v-card>
                 <v-card-text class="px-6 pt-6">
                     <div class="text-xl font-semibold text-gray-900">
                         Экзамен
@@ -100,7 +101,7 @@ const cancel = async () => {
                 :errors="form.errors"
             />
 
-            <v-card class="overflow-hidden rounded-xl">
+            <v-card>
                 <v-card-text class="px-6 pt-6">
                     <div class="text-xl font-semibold text-gray-900">
                         Документы

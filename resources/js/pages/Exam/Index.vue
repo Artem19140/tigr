@@ -5,7 +5,7 @@ import { Paginated } from '@/interfaces/Interfaces';
 import { Head, router } from '@inertiajs/vue3';
 import { DateFormatter } from '@/helpers/DateFormatter.js';
 import BasePaginatedTable from '@/components/BaseComponents/BasePaginatedTable/BasePaginatedTable.vue';
-import ExamTableFilter from './Components/ExamTableFilter.vue';
+import TableFilters from './Components/TableFilters.vue';
 import { ref } from 'vue';
 
 defineOptions({
@@ -14,7 +14,8 @@ defineOptions({
 
 const props = defineProps<{
   exams: Paginated<ExamIndex>,
-  createUrl: string
+  createUrl: string,
+  indexUrl:string
 }>()
 
 const headers = [
@@ -42,8 +43,9 @@ const loading = ref<boolean>(false)
         @row-click="(item) => router.visit(item.showUrl)"
       >
         <template #header-left>
-          <ExamTableFilter 
+          <TableFilters
             v-model="loading"
+            :url="indexUrl"
           />
         </template>
         

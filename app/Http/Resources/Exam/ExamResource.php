@@ -27,7 +27,7 @@ class ExamResource extends JsonResource
             'capacity' => $this->capacity,
             'comment' => $this->comment,
             'group' => $this->group,
-            'examiners' => EmployeeResource::collection($this->whenLoaded('examiners')),
+            'examiners' =>$this->whenLoaded('examiners', $this->examiners->implode('full_name',  ', ')),
             'name' => $this->whenLoaded('type', fn () => $this->fullName()),
             'shortName' => $this->whenLoaded('type', fn () => $this->shortName()),
             'address' => $this->whenLoaded('address', fn () => $this->addressName()),

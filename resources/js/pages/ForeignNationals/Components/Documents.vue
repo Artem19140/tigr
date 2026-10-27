@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import BaseThreeDotDropdown from '@/components/BaseComponents/BaseThreeDotDropdown/BaseThreeDotDropdown.vue';
+import { useFileViewer } from '@/composables/useFileViewer';
 import { ForeignNationalDocument } from '@/interfaces/ForeignNational';
 import { useForm } from '@inertiajs/vue3';
 import { mdiFileDocumentOutline } from '@mdi/js';
@@ -22,8 +23,11 @@ const getLabel = (type: string) => {
 
 const updatedId = ref<number | null>(null)
 
+const fileViewer = useFileViewer()
+
 const open = (url: string) => {
-    window.open(url)
+    //window.open(url)
+    fileViewer.open(url)
 }
 
 const form = useForm<{document : File | undefined}>({

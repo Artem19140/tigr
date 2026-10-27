@@ -4,6 +4,7 @@ import ExamEnrollment from '@components/Exam/ExamEnrollment.vue';
 import {  RedirectUrl } from '@interfaces/Interfaces';
 import { router, useHttp } from '@inertiajs/vue3';
 import { useConfirm } from '@composables/useConfirm';
+import { useFileViewer } from '@/composables/useFileViewer';
 
 const props = defineProps<{
     foreignNationalId: number,
@@ -12,12 +13,14 @@ const props = defineProps<{
 
 const isOpen = defineModel<boolean>()
 
+const fileViewer = useFileViewer()
+
 const enroll = async () => {
     http.post(props.enrollUrl,{
         onSuccess: (response) => {
             if(response.redirectUrl){
                 isOpen.value = false
-                window.open(String(response.redirectUrl))
+                fileViewer.open(response.redirectUrl)
                 http.resetAndClearErrors()
                 router.reload()
             }
@@ -57,7 +60,7 @@ const close  = async () => {
         max-width="500"
         persistent
     >
-        <v-card class="overflow-hidden rounded-xl">
+        <v-card>
             <v-card-text class="px-6 pt-6">
                 <div class="text-xl font-semibold text-gray-900">
                     Запись на экзамен

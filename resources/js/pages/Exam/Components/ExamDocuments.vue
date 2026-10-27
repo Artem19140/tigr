@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useFileViewer } from '@/composables/useFileViewer';
 import { ExamDocument } from '@/interfaces/Exam';
 import { RedirectUrl } from '@/interfaces/Interfaces';
 import { useHttp } from '@inertiajs/vue3';
@@ -10,6 +11,7 @@ const props = defineProps<{
 
 const documentDownloading = ref<string | null>(null)
 const http = useHttp<{},RedirectUrl>()
+const fileViewer = useFileViewer()
 
 const download = (url :string) => {
     documentDownloading.value = url
@@ -17,7 +19,8 @@ const download = (url :string) => {
     http.get(url,{
         onSuccess:(response) => {
             if(response.redirectUrl){
-                window.open(response.redirectUrl)
+                //window.open(response.redirectUrl)
+                fileViewer.open(response.redirectUrl)
             }
         },
         onFinish:() => documentDownloading.value = null

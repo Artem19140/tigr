@@ -4,6 +4,9 @@ import BaseFilter from '@components/BaseComponents/BaseFilter/BaseFilter.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
+const props = defineProps<{
+    url: string
+}>()
 const page = usePage<{
     flash:{
         filters:ForeignNationalFilters
@@ -35,7 +38,7 @@ const loading = defineModel<boolean>({default:false})
 
 <template>
     <BaseFilter
-        :url="'/foreign-nationals'"
+        :url="url"
         :form="form"
         v-model="loading"
         :filters="page.flash.filters"

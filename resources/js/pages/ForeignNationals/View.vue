@@ -2,8 +2,8 @@
 import { DateFormatter } from '@/helpers/DateFormatter';
 import { ForeignNationalView } from '@/interfaces/ForeignNational';
 import countries from '@data/countries.json'
-import ForeignNationalEnrollments from './Components/ForeignNationalEnrollments.vue';
-import ForeignNationalsDocuments from './Components/ForeignNationalsDocuments.vue';
+import EnrollmentsList from './Components/EnrollmentsList.vue';
+import Documents from './Components/Documents.vue';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import EnrollmentModal from './Components/EnrollmentModal.vue';
 import { computed, ref } from 'vue';
@@ -153,7 +153,7 @@ const personalData = computed(() => [
                 </v-card-text>
 
                 <v-card-text class="px-6 pb-6">
-                    <ForeignNationalsDocuments
+                    <Documents
                         :documents="foreignNational.data.documents"
                         :allowed-mimes="documentConstraints.mimes"
                         :max-size-mb="documentConstraints.maxSizeMb"
@@ -178,7 +178,7 @@ const personalData = computed(() => [
                 </v-card-text>
 
                 <v-card-text class="px-6 pb-6">
-                    <ForeignNationalEnrollments
+                    <EnrollmentsList
                         :enrollments="foreignNational.data.enrollments"
                     />
                 </v-card-text>

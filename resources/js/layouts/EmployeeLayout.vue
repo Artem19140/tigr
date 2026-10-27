@@ -4,7 +4,7 @@ import { computed, ref, watch } from 'vue'
 import { router, usePage } from '@inertiajs/vue3'
 import { useDisplay } from 'vuetify'
 import { useConfirm } from '@/composables/useConfirm'
-
+import FileViewModal from '@/components/Modals/FileViewModal.vue'
 import BaseThreeDotDropdown from '@/components/BaseComponents/BaseThreeDotDropdown/BaseThreeDotDropdown.vue'
 import BaseLayout from './BaseLayout.vue'
 import LogoutAllDevicesModal from './LogoutAllDevicesModal.vue'
@@ -224,4 +224,6 @@ type MenuKey = keyof typeof menuProps
         v-model="logoutAll"
         :url="navigation.auth.logoutAll.url"
     />
+
+    <FileViewModal />
 </template>

@@ -54,7 +54,8 @@ class ExamController
             'createUrl' => $employee->can('create', Exam::class)
                 ? route('exams.create', [], false)
                 : null,
-            'exams' => ExamIndexResource::collection($exams)
+            'exams' => ExamIndexResource::collection($exams),
+            'indexUrl' => route('exams.index', [], false)
         ]);
     }
 

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Exam } from '@/interfaces/Exam';
-import { computed } from 'vue';
 import { mdiAlertCircleOutline, mdiPound, 
   mdiMapMarkerOutline, mdiAccountGroupOutline, mdiMessageTextOutline } from '@mdi/js'
 import SessionAndGroupChange from './Counters.vue';
@@ -10,9 +9,6 @@ const props = defineProps<{
   updateCountersUrl: string | null
 }>()
 
-const examiners = computed(() =>{
-  return props.exam?.examiners.map(s => s.fullName).join(', ');
-})
 </script>
 
 <template>
@@ -79,7 +75,7 @@ const examiners = computed(() =>{
             </div>
 
             <div class="break-words text-sm font-medium leading-relaxed text-gray-900">
-                {{ examiners || '—' }}
+                {{ exam.examiners || '—' }}
             </div>
         </div>
 
