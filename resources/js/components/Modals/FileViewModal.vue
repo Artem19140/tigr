@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useFileViewer } from '@/composables/useFileViewer';
-import { mdiClose, mdiFileDocumentOutline, mdiOpenInNew } from '@mdi/js';
+import { mdiClose, mdiDownload, mdiFileDocumentOutline, mdiOpenInNew } from '@mdi/js';
 
 const {isOpen, getUrl, close} = useFileViewer()
 </script>
@@ -50,6 +50,21 @@ const {isOpen, getUrl, close} = useFileViewer()
                 rel="noopener noreferrer"
                 :disabled="!getUrl()"
                 aria-label="Открыть файл в новой вкладке"
+              />
+            </template>
+          </v-tooltip>
+
+           <v-tooltip text="Скачать файл">
+            <template #activator="{ props: tooltipProps }">
+              <v-btn
+                v-bind="tooltipProps"
+                :icon="mdiDownload"
+                variant="text"
+                density="comfortable"
+                :href="getUrl()"
+                :download="true"
+                :disabled="!getUrl()"
+                aria-label="Скачать файл"
               />
             </template>
           </v-tooltip>

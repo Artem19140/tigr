@@ -50,7 +50,18 @@ const props = defineProps<{
             >
                 <ExamResultStatus
                     :status="enrollment.examResult"
+                    v-if="! enrollment.cancelledAt"
                 />
+
+                <span
+                    v-if="enrollment.cancelledAt"
+                    class="inline-flex items-center gap-1.5 text-[13px]"
+                >
+                    <span
+                        class="size-1.5 rounded-full bg-red"
+                    />
+                    Отказался
+                </span>
 
                 <EnrollmentDropDown
                     :enrollment="enrollment"

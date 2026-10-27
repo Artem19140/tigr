@@ -27,6 +27,7 @@ return [
     BusinessCode::EnrollmentFull->value => 'Запись на экзамен полная',
     BusinessCode::EnrollmentAlreadyExists->value => 'Запись на экзамен уже сущестует',
     BusinessCode::EnrollmentsConflict->value => 'ИГ имеет парралельные записи на экзамен',
+    BusinessCode::EnrollmentCancelled->value => 'Запись отменена',
 
 
     BusinessCode::AttemptsNotExists->value => 'Нет попыток экзамена',

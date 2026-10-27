@@ -23,6 +23,7 @@ enum BusinessCode: string
     case EnrollmentWindowClosed = 'enrollment_window_closed';
     case EnrollmentsConflict = 'enrollments_conflict';
     case EnrollmentFull = 'enrollment_full';
+    case EnrollmentCancelled = 'enrollment_cancelled';
     
     
     case AttemptExists = 'attempt_exists';

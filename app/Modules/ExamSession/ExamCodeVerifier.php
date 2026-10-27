@@ -12,9 +12,10 @@ class ExamCodeVerifier
     public function execute(string $code): Enrollment
     {
         $enrollment = $this->findOrFailEnrollmentByCode($code);
+        $this->ensureNotCancelled($enrollment);
         $this->ensureCodeNotExpired($enrollment->exam_code_expired_at);
         $this->ensureCodeNotUsed($enrollment);
-        $this->ensureHasPayment($enrollment->has_payment);
+        $this->ensureHasPayment($enrollment->hasPayment());
 
         return $enrollment;
     }
@@ -54,11 +55,24 @@ class ExamCodeVerifier
     protected function ensureCodeNotUsed(Enrollment $enrollment): void
     {
         if ($enrollment->exam_code_used_at !== null) {
-            Log::warning('exam code repeat used', [
+            Log::warning('Exam code repeat used', [
                 'enrollment' => $enrollment->id,
             ]);
             throw ValidationException::withMessages([
                 'code' => 'Код использован',
+            ]);
+        }
+    }
+
+    protected function ensureNotCancelled(Enrollment $enrollment): void
+    {
+        if($enrollment->isCancelled()){
+            Log::warning('Enrollment cancelled, but code is in use', [
+                'enrollment' => $enrollment->id,
+            ]);
+            
+            throw ValidationException::withMessages([
+                'code' => 'Запись отменена',
             ]);
         }
     }

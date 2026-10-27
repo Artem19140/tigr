@@ -4,8 +4,7 @@ namespace App\Http\Resources\Enrollment;
 
 use App\Http\Resources\Exam\ExamShortResource;
 use App\Http\Resources\ForeignNational\ForeignNationalResource;
-use App\Models\Enrollment;
-use App\Modules\Enrollment\EnrollmentPaymentRules;
+use App\Modules\Enrollment\EnrollmentActionsBuilder;
 use App\Modules\Exam\ExamResultResolver;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -21,39 +20,23 @@ class EnrollmentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'hasPayment' => $this->has_payment,
-            'exam' => $this->when($request->routeIs('foreign-nationals.show'), new ExamShortResource($this->whenLoaded('exam'))) ,
+            'hasPayment' => $this->hasPayment(),
+            'exam' => $this->when(
+                $request->routeIs('foreign-nationals.show'), 
+                new ExamShortResource($this->whenLoaded('exam'))
+            ) ,
             'foreignNational' => new ForeignNationalResource($this->whenLoaded('foreignNational')),
             'regNumber' => $this->reg_number,
+            'cancelledAt' => $this->isCancelled(),
             'examResult' => app(ExamResultResolver::class)->execute(
                 $this->resource->attempt,
                 $this->resource->exam
             ),
-            'actions' => [
-                'payment' => [
-                    'disabled' => ! app(EnrollmentPaymentRules::class)->check($this->resource)->available,
-                    'url' => $request->user()->can('paymentAny', Enrollment::class)
-                        ? route('enrollments.payment-change', [
-                            'enrollment' => $this->resource,
-                            'status' => ! $this->resource->has_payment
-                        ], false)
-                        : null
-                ],
-                'statement' => [
-                    'url' => $request->user()->can('statementAny', Enrollment::class)
-                        ? route('enrollments.statements', [
-                            'enrollment' => $this->resource
-                        ], false)
-                        : null
-                ],
-                'changeRegNumber' => [
-                    'url' => $request->user()->can('update', Enrollment::class)
-                        ?   route('enrollments.update.reg-number',[
-                            'enrollment' => $this->resource
-                        ])
-                        :   null
-                ]
-            ],
+            'actions' => app(EnrollmentActionsBuilder::class)->build(
+                $this->resource,
+                $this->resource->exam,
+                $request->user()
+            )
         ];
     }
 }

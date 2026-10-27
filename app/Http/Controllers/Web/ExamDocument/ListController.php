@@ -7,6 +7,7 @@ use App\Events\ExamDocumentGenerated;
 use App\Exceptions\BusinessException;
 use App\Models\Exam;
 use App\Modules\ExamDocument\ExamDocumentRules;
+use App\Modules\ExamDocument\ExamListDataBuilder;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -14,23 +15,27 @@ use Illuminate\Http\Response;
 class ListController
 {
     public function __construct(
-        protected ExamDocumentRules $examDocumentRules
+        protected ExamDocumentRules $examDocumentRules,
+        protected ExamListDataBuilder $builder
     ) {}
     public function generate(Exam $exam): Response
     {
         $exam->loadExists('enrollments');
 
         $this->ensureGenerationAvailable($exam);
-
+        
         $exam->load([
-            'foreignNationals' => function($query){
-                $query->orderBy('surname_normalized');
+            'enrollments.foreignNational' => function($query){
+                $query->orderBy('foreign_nationals.surname_normalized');
             }, 
             'type'
         ]);
 
+        $build = $this->builder->build($exam);
+
         $pdf = Pdf::loadView(ExamDocument::List->templatePath(), [
-            'foreignNationals' => $exam->foreignNationals,
+            'headers' => $build['headers'],
+            'rows' => $build['rows'],
             'exam' => $exam,
         ])->setPaper('a4', 'landscape');
 

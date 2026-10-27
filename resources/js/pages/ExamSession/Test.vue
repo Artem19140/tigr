@@ -5,7 +5,7 @@ import { Head } from '@inertiajs/vue3';
 import { useAttempt } from '@/composables/useAttempt';
 import { Attempt } from '@/interfaces/Attempt';
 import { useTimer } from '@/composables/useTimer.js';
-import { onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import FinishModal from './Components/FinishModal.vue';
 
 const props = defineProps<{
@@ -25,7 +25,24 @@ startTimer()
 
 const isOpen = ref<boolean>(false)
 
+// const fullscreen = async () => {
+//     if (!document.fullscreenElement) {
+//         await document.documentElement.requestFullscreen()
+//     } 
+// }
+
 onUnmounted(() => stopTimer())
+
+// onMounted(() => {
+//     try{
+//         fullscreen()
+//     }catch(e){
+//         alert(1)
+//         console.error(e)
+        
+//     }
+    
+// })
 </script>
 
 <template>

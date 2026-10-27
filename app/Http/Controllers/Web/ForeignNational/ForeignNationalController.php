@@ -77,9 +77,9 @@ class ForeignNationalController
             );
 
         return response()->json([
-            'redirectUrl' => route('enrollments.statements', [
+            'redirectUrl' => route('enrollments.full-documents', [
                 'enrollment' => $enrollement
-            ]),
+            ])
         ]);
     }
 

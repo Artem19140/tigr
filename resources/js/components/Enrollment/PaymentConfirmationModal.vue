@@ -25,12 +25,7 @@ const change = () => {
             isOpen.value = false
             confirmation.value=false
             router.reload()
-        },
-        // onHttpException:(response) => {
-        //     if(response.status === 400){
-        //         error.value = JSON.parse(response.data)?.message
-        //     }
-        // }
+        }
     })
 }
 
@@ -43,7 +38,7 @@ const back = () => {
 <template>
     <v-dialog
         v-model="isOpen"
-        max-width="600"
+        max-width="500"
         persistent
     >
         <v-card class="overflow-hidden rounded-xl">
@@ -57,7 +52,7 @@ const back = () => {
                 </p>
             </div>
 
-            <v-card-text class="!p-6">
+            <v-card-text class="space-y-4">
                 <div
                     class="divide-y divide-gray-200 rounded-lg border border-gray-200 bg-gray-50"
                 >
@@ -108,16 +103,16 @@ const back = () => {
                         class="grid grid-cols-[120px_minmax(0,1fr)] items-center gap-4 px-4 py-3"
                     >
                         <span class="text-sm text-gray-500">
-                            Паспорт
+                            Дата рождения
                         </span>
 
                         <span class="min-w-0 text-right text-sm font-medium text-gray-900">
-                            {{ foreignNational.fullPassport }}
+                            {{ foreignNational.dateBirth }}
                         </span>
                     </div>
                 </div>
 
-                <div class="mt-4">
+                <div>
                     <v-checkbox
                         v-model="confirmation"
                         :label="`Подтверждаю ${hasPayment ? 'отмену' : 'оплату'}`"

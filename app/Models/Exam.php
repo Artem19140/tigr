@@ -54,7 +54,12 @@ class Exam extends Model
 
     public function examiners(): BelongsToMany
     {
-        return $this->belongsToMany(Employee::class, 'exam_examiner', 'exam_id', 'examiner_id');
+        return $this->belongsToMany(
+            Employee::class, 
+            'exam_examiner', 
+            'exam_id', 
+            'examiner_id'
+        );
     }
 
     public function scopeExaminer(Builder $query, Employee $employee): Builder
@@ -69,12 +74,14 @@ class Exam extends Model
 
     public function foreignNationals(): BelongsToMany
     {
-        return $this->belongsToMany(ForeignNational::class, 'enrollments')->withPivot('reg_number', 'has_payment');
+        return $this->belongsToMany(ForeignNational::class, 'enrollments')
+            ->withPivot('reg_number', 'has_payment');
     }
 
     public function enrollments(): HasMany
     {
-        return $this->hasMany(Enrollment::class);
+        return $this->hasMany(Enrollment::class)
+            ->whereNull('cancelled_at');
     }
 
     public function attempts(): HasMany

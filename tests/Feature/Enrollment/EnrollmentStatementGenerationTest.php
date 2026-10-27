@@ -39,7 +39,7 @@ class EnrollmentStatementGenerationTest extends TestCase
             ->create();
 
         $response = $this->actingAs($this->actor)
-            ->getJson(route('enrollments.statements', [
+            ->getJson(route('enrollments.full-documents', [
                 'enrollment' => $enrollment
             ]));
 

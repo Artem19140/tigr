@@ -4,39 +4,22 @@ const props = defineProps<{
 }>()
 
 const statuses = {
-  absent: { text: 'н/я', class: 'status--grey' },
-  annulled: { text: 'Снят', class: 'status--orange' },
-  failed: { text: 'Не сдан', class: 'status--error' },
-  passed: { text: 'Сдан', class: 'status--success' },
+  absent: { text: 'н/я', class: 'bg-[#9e9e9e]' },
+  annulled: { text: 'Снят', class: 'bg-orange-600' },
+  failed: { text: 'Не сдан', class: 'bg-red-500' },
+  passed: { text: 'Сдан', class: 'bg-green-500' },
 } as const
 </script>
 
 <template>
-  <span v-if="props.status" class="status">
+  <span
+    v-if="props.status"
+    class="inline-flex items-center gap-1.5 text-[13px]"
+  >
     <span
-      class="status__dot"
+      class="size-1.5 rounded-full"
       :class="statuses[props.status].class"
     />
     {{ statuses[props.status].text }}
   </span>
 </template>
-
-<style scoped>
-.status {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-}
-
-.status__dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-}
-
-.status--grey { background: #9e9e9e; }
-.status--orange { background: #fb8c00; }
-.status--error { background: #f44336; }
-.status--success { background: #4caf50; }
-</style>

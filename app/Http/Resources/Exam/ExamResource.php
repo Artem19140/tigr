@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Exam;
 
-use App\Http\Resources\Employee\EmployeeResource;
 use App\Http\Resources\Enrollment\EnrollmentResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;

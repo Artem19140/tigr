@@ -6,6 +6,7 @@ import { router, useHttp } from '@inertiajs/vue3';
 import { useConfirm } from '@composables/useConfirm';
 import { useFileViewer } from '@/composables/useFileViewer';
 
+
 const props = defineProps<{
     foreignNationalId: number,
     enrollUrl: string
