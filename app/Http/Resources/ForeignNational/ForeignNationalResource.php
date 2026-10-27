@@ -17,8 +17,8 @@ class ForeignNationalResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
-            'fullName' => $this->full_name_short,
-            'fullPassport' => $this->full_passport,
+            'fullName' => $this->resource->surname . ' ' . $this->resource->name,
+            'dateBirth' => $this->resource->formattedDateBirth(),
             'enrollments' => EnrollmentResource::collection($this->whenLoaded('enrollments')),
         ];
     }

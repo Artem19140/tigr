@@ -37,7 +37,7 @@ const { start, stop } = usePoll(pollFrequency, {}, {
 
 const headers = [
     {title:'ФИО', key:"foreignNational.fullName",sortable: true},
-    {title:'Паспорт', key:"foreignNational.fullPassport",sortable: false},
+    {title:'Дата рождения', key:"foreignNational.dateBirth",sortable: false},
     {
         title:'Время',
         align:'center',

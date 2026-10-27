@@ -12,7 +12,7 @@ const props = defineProps<{
 
 const headers = [
     {title : "ФИО",sortable: false, key: 'foreignNational.fullName', align: 'start' },
-    {title : "Паспорт",sortable: false, key: 'foreignNational.fullPassport', align: 'start' },
+    {title : "Дата рождения",sortable: false, key: 'foreignNational.dateBirth', align: 'start' },
     {title : "Рег номер",sortable: false, key: 'regNumber', align: 'center' },
     {title : "Оплата",sortable: false, key: 'hasPayment', align: 'center' },
     {title : "Результаты",sortable: false, key: 'results', align: 'center' },

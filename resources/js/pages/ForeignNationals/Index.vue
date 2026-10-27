@@ -17,9 +17,8 @@ const props = defineProps<{
 }>()
 
 const headers = [
-	{title : "ID",sortable: false, key: 'id', align: 'center' },
 	{title : "ФИО",sortable: false, key: 'fullName', align: 'start' },
-	{title : "Паспорт",sortable: false, key: 'fullPassport', align: 'start' },
+	{title : "Дата рождения",sortable: false, key: 'dateBirth', align: 'start' },
 ]
 
 const loading = ref<boolean>(false)

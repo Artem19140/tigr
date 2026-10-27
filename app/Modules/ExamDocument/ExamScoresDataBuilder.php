@@ -41,11 +41,8 @@ class ExamScoresDataBuilder
     protected function getHeaders(Exam $exam): array
     {
         $headers = [
-            'ФИО',
-            'Общий балл'
-            //'ФИО латиница',
-            //'Паспортные данные',
-            //'Гражданство'
+            'fullName' => 'ФИО',
+            'totalMark' => 'Общий балл'
         ];
         for($i = 1; $i <= $exam->tasksCount(); $i++){
             $headers[] = $i;
@@ -58,11 +55,8 @@ class ExamScoresDataBuilder
     {
         return $exam->enrollments->map(function ($enrollment) use($exam) {
             $row = [
-                $enrollment->foreignNational->full_name,
+                'fullName' => $enrollment->foreignNational->full_name,
                 $enrollment->attempt?->total_mark ?? ''
-                //$enrollment->foreignNational->full_name_latin,
-                //$enrollment->foreignNational->full_passport,
-                //$enrollment->foreignNational->citizenship
             ];
 
             $marks = $enrollment->attempt?->attemptAnswers

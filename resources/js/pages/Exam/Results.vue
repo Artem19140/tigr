@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { DateFormatter } from '@/helpers/DateFormatter';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
+import ExamLayout from '@/layouts/ExamLayout.vue';
 import { Head, router, setLayoutProps } from '@inertiajs/vue3';
 import { mdiAccountSearchOutline, mdiArrowLeft, mdiFileSearchOutline } from '@mdi/js';
 import { computed, ref } from 'vue';
@@ -70,38 +71,38 @@ interface Row{
     <div class="space-y-4 max-w-6xl m-auto md:mt-16">
         
         
-    <div class="mb-4 flex flex-wrap items-center gap-3 sm:gap-4">
-        <v-btn
-            :icon="mdiArrowLeft"
-            variant="tonal"
-            size="small"
-            aria-label="Назад"
-            class="shrink-0"
-            @click="router.visit(backUrl, { replace: true })"
-        />
-
-        <div class="min-w-0 flex-1">
-            <h1 class="text-lg font-semibold leading-tight sm:text-xl">
-                {{ exam.data.shortName }}
-            </h1>
-
-            <p class="mt-1 text-sm text-medium-emphasis">
-                Результаты экзамена ·
-                {{ new DateFormatter(exam?.data.beginTime).format('d.m.Y') }}
-            </p>
-        </div>
-
-        <div class="w-full sm:w-52 sm:shrink-0">
-            <v-select
-                v-model="selected"
-                :items="results"
-                variant="outlined"
-                density="comfortable"
-                hide-details
-                :disabled="!availability.available"
+        <div class="mb-4 flex flex-wrap items-center gap-3 sm:gap-4">
+            <v-btn
+                :icon="mdiArrowLeft"
+                variant="tonal"
+                size="small"
+                aria-label="Назад"
+                class="shrink-0"
+                @click="router.visit(backUrl, { replace: true })"
             />
+
+            <div class="min-w-0 flex-1">
+                <h1 class="text-lg font-semibold leading-tight sm:text-xl">
+                    {{ exam.data.shortName }}
+                </h1>
+
+                <p class="mt-1 text-sm text-medium-emphasis">
+                    Результаты экзамена ·
+                    {{ new DateFormatter(exam?.data.beginTime).format('d.m.Y') }}
+                </p>
+            </div>
+
+            <div class="w-full sm:w-52 sm:shrink-0">
+                <v-select
+                    v-model="selected"
+                    :items="results"
+                    variant="outlined"
+                    density="comfortable"
+                    hide-details
+                    :disabled="!availability.available"
+                />
+            </div>
         </div>
-    </div>
 
 
         <div 
