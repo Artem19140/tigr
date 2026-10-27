@@ -86,7 +86,7 @@ export interface ForeignNationalEnrollment{
 export interface ForeignNationalIndex{
   id:number,
   fullName:string,
-  fullPassport:string,
+  dateBirth:string,
   showUrl: string
 }
 

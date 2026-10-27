@@ -16,11 +16,11 @@ class ForeignNationalIndexResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
-            'fullName' => $this->full_name_short,
-            'fullPassport' => $this->full_passport,
+            'fullName' => $this->resource->surname . ' ' . $this->resource->name,
             'showUrl' => route('foreign-nationals.show', [
                 'foreign_national' => $this->resource
-            ], false)
+            ], false),
+            'dateBirth' => $this->resource->formattedDateBirth(),
         ];
     }
 }

@@ -25,8 +25,7 @@ class GetForeignNationals
                 'surname',
                 'name',
                 'patronymic',
-                'passport_series',
-                'passport_number'
+                'date_birth',
             ])
             ->when($surname, function (Builder $query) use ($surname) {
                 $surname = mb_strtolower(trim($surname), 'UTF-8');

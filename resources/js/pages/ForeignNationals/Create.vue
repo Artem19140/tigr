@@ -2,7 +2,6 @@
 import ExamEnrollment from '@/components/Exam/ExamEnrollment.vue';
 import { ForeignNationalCreate } from '@/interfaces/ForeignNational';
 import { Head, router, useHttp } from '@inertiajs/vue3';
-import { ref } from 'vue';
 import ForeignNationalForm from './Components/ForeignNationalForm.vue';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import { useConfirm } from '@/composables/useConfirm.js';
@@ -49,19 +48,7 @@ const form = useHttp<ForeignNationalCreate, RedirectUrl>({
   noPhone:false
 })
 
-const validation = ref()
-
 const create = async () => {
-  form.hasErrors = false
-  const { valid } = await validation.value.validate()
-  if(!form.examId){
-    form.errors.examId = 'Выберите экзамен'
-  }
-  if(!valid || !form.examId) {
-    form.hasErrors = true
-    return
-  }
-
   form.post(props.storeUrl, {
     onSuccess:(response) => {
       window.open(response.redirectUrl)
@@ -107,13 +94,11 @@ const cancel = async () => {
                 </v-card-text>
             </v-card>
 
-            <v-form ref="validation">
-                <ForeignNationalForm
-                    v-model:form="form"
-                    :loading="form.processing"
-                    :errors="form.errors"
-                />
-            </v-form>
+            <ForeignNationalForm
+                v-model:form="form"
+                :loading="form.processing"
+                :errors="form.errors"
+            />
 
             <v-card class="overflow-hidden rounded-xl">
                 <v-card-text class="px-6 pt-6">

@@ -118,7 +118,6 @@ const personalData = computed(() => [
                 </div>
             </div>
 
-            <!-- Personal data -->
             <v-card class="overflow-hidden rounded-xl">
                 <v-card-text class="px-6 py-2">
                     <div

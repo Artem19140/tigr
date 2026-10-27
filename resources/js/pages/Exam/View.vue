@@ -77,7 +77,7 @@ const isOpen = ref<boolean>(false)
 
         <v-container>
             <div class="space-y-5">
-                <v-card class="overflow-hidden rounded-xl">
+                <v-card>
                     <v-card-text class="px-6 pt-6">
                         <div class="text-lg font-semibold text-gray-900">
                             Информация
@@ -96,7 +96,7 @@ const isOpen = ref<boolean>(false)
                     </v-card-text>
                 </v-card>
 
-                <v-card class="overflow-hidden rounded-xl">
+                <v-card>
                     <v-card-text class="px-6 pt-6">
                         <div class="text-lg font-semibold text-gray-900">
                             Документы
@@ -118,9 +118,7 @@ const isOpen = ref<boolean>(false)
                     </v-card-text>
                 </v-card>
 
-                <v-card
-                    class="overflow-hidden rounded-xl"
-                >
+                <v-card>
                     <v-card-text class="px-6 pt-6">
                         <div class="text-lg font-semibold text-gray-900">
                             Запись

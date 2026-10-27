@@ -19,7 +19,8 @@
 @php
     $leftAlign = [
         'fullName',
-        'fullNameLatin'
+        'fullNameLatin',
+        'fullPassport'
     ]
 @endphp
 

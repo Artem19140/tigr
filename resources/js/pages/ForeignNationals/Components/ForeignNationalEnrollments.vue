@@ -28,14 +28,6 @@ const props = defineProps<{
                     >
                         Отменён
                     </span>
-
-                    <v-progress-circular
-                        v-if="enrollment.isLoading"
-                        indeterminate
-                        size="14"
-                        width="2"
-                        color="primary"
-                    />
                 </div>
 
                 <div class="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500">

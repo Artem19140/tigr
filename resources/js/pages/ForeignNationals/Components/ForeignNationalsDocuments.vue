@@ -26,8 +26,8 @@ const open = (url: string) => {
     window.open(url)
 }
 
-const form = useForm<{document : File | null}>({
-  	document:  null
+const form = useForm<{document : File | undefined}>({
+  	document:  undefined
 })
 
 const update = (url: string) => {
@@ -36,7 +36,7 @@ const update = (url: string) => {
         preserveState: true,
         onSuccess: (page)=> {
             if(page.flash.success){
-                form.document = null
+                form.document = undefined
                 form.resetAndClearErrors()
             }
         }
@@ -45,7 +45,7 @@ const update = (url: string) => {
 
 const clear = () => {
 	updatedId.value = null
-	form.document = null
+	form.document = undefined
 }
 </script>
 
@@ -78,7 +78,7 @@ const clear = () => {
                     <BaseThreeDotDropdown nav>
                         <v-list-item
                             @click="() => open(doc.actions.downloadUrl)"
-                            title="Скачать"
+                            title="Открыть"
                         />
 
                         <v-list-item

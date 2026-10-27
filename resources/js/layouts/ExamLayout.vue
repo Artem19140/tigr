@@ -16,7 +16,7 @@ const activeItem = ref(page.url ?? '')
 
 <template>
     <v-container>
-        <div class="mx-auto max-w-5xl">
+        <div>
             <div class="border-b border-gray-200">
                 <div class="flex items-start justify-between gap-6 py-4 max-sm:flex-col">
                     <div class="min-w-0">

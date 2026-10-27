@@ -30,8 +30,16 @@
 
         @foreach ($rows as $row)
         <tr>
-            @foreach ($row as $data)
-                <td class="text-xs">{{ $data }}</td>
+            @foreach ($row as $key =>  $data)
+                <td 
+                    style="
+                        {{  $key === 'fullName' 
+                            ? 'text-align: left; padding-left:10px' 
+                            : '' 
+                        }}
+                    "
+                    class="text-xs"
+                >{{ $data }} </td>
             @endforeach
         </tr>
         @endforeach

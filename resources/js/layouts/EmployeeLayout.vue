@@ -99,7 +99,6 @@ type MenuKey = keyof typeof menuProps
 
 <template>
     <BaseLayout>
-        <!-- Верхняя панель только для мобильных -->
         <v-app-bar
             v-if="mobile"
             density="comfortable"
@@ -123,10 +122,7 @@ type MenuKey = keyof typeof menuProps
             :temporary="mobile"
             :rail="!mobile"
             :expand-on-hover="!mobile"
-            :scrim="mobile"
-            :width="280"
-            :rail-width="72"
-            class="border-r border-gray-200"
+            :scrim="mobile"  
         >
             <div class="flex h-full flex-col">
   
