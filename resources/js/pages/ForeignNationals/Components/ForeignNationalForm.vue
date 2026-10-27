@@ -245,11 +245,6 @@ watch(() => form.value.noPhone, () => {
                         :error-messages="errors.noPhone"
                         density="comfortable"
                         hide-details="auto"
-                        @click="() => {
-                            if (form.noPhone) {
-                                form.phone = null
-                            }
-                        }"
                     />
                 </div>
             </v-card-text>

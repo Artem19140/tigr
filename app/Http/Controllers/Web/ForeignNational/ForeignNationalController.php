@@ -42,7 +42,8 @@ class ForeignNationalController
             'foreignNationals' => ForeignNationalIndexResource::collection($foreignNationals),
             'createUrl' =>  $employee->can('create', ForeignNational::class)
                 ? route('foreign-nationals.create', [], false)
-                : null
+                : null,
+            'indexUrl' => route('foreign-nationals.index', [], false)
         ]);
     }
 

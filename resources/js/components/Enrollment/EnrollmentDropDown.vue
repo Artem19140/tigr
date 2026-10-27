@@ -3,14 +3,17 @@ import BaseThreeDotDropdown from '@components/BaseComponents/BaseThreeDotDropdow
 import { Enrollment } from '@/interfaces/Enrollment';
 import PaymentConfirmationModal from './PaymentConfirmationModal.vue';
 import { ref } from 'vue';
+import { useFileViewer } from '@/composables/useFileViewer.js';
 
 const props = defineProps<{
     enrollment: Enrollment
 }>()
 
-const download = () => {
+const fileViewer = useFileViewer()
+
+const open = () => {
     if(! props.enrollment.actions.statement.url) return
-    window.open(props.enrollment.actions.statement.url)
+    fileViewer.open(props.enrollment.actions.statement.url)
 }
 
 const isOpen = ref<boolean>(false)
@@ -29,7 +32,7 @@ const isOpen = ref<boolean>(false)
         <v-list-item 
             title="Заявление" 
             v-if="enrollment.actions.statement.url"
-            @click="download"
+            @click="open"
         />
     </BaseThreeDotDropdown>
 

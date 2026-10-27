@@ -5,6 +5,10 @@ import AppPeriodDate from '@components/UI/AppPeriodDate/AppPeriodDate.vue';
 import { computed, onMounted, ref} from 'vue';
 import { ExamFilters, ExamType } from '@/interfaces/Exam';
 
+const props = defineProps<{
+    url: string
+}>()
+
 const page = usePage<{
     flash:{
         filters: ExamFilters
@@ -40,7 +44,7 @@ onMounted(() => {
 
 <template>
     <BaseFilter
-        :url="'/exams'"
+        :url="url"
         :form="form"
         v-model="loading"
         :filters="filters"

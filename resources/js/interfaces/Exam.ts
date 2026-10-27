@@ -10,7 +10,7 @@ export interface Exam{
     group:number | null,
     sessionNumber:number | null,
     comment:string,
-    examiners:Array<Employee>,
+    examiners: string,
     address:string,
     createdAt:string | null,
     cancelledReason:string | null,

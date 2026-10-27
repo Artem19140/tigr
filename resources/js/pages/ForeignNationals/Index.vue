@@ -5,7 +5,7 @@ import { ForeignNationalIndex } from '@/interfaces/ForeignNational';
 import { Head, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import BasePaginatedTable from '@/components/BaseComponents/BasePaginatedTable/BasePaginatedTable.vue';
-import ForeignNationalTableFilters from './Components/ForeignNationalTableFilters.vue';
+import TableFilters from './Components/TableFilters.vue';
 
 defineOptions({
   layout: [EmployeeLayout]
@@ -13,7 +13,8 @@ defineOptions({
 
 const props = defineProps<{
 	foreignNationals: Paginated<ForeignNationalIndex>,
-	createUrl:string
+	createUrl:string,
+	indexUrl: string
 }>()
 
 const headers = [
@@ -41,8 +42,9 @@ const loading = ref<boolean>(false)
 			@row-click="(item) => router.visit(item.showUrl)"
 		>
 			<template #header-left>
-				<ForeignNationalTableFilters  
+				<TableFilters  
 					v-model="loading"
+					:url="indexUrl"
 				/>
 			</template>
 			<template #header-actions>
