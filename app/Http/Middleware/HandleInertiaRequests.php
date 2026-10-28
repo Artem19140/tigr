@@ -55,9 +55,14 @@ class HandleInertiaRequests extends Middleware
                 'error' => session('error'),
             ],
 
-            'auth.user' => fn () => $user ?  $this->resolveUser($user) : null,
+            'auth.user' => fn () => $user 
+                ?  $this->resolveUser($user) 
+                : null,
 
-            'auth.navigation' => fn () => $user ? $this->resolveNavigation($user) : null
+            'auth.navigation' => fn () => $user 
+                ? $this->resolveNavigation($user) 
+                : null,
+            'warningIsProduction' => app()->isProduction() && auth()->user()?->isPlatformAdmin()
         ]);
     }
 
