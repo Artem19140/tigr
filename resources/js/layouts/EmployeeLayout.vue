@@ -20,6 +20,7 @@ import {
     mdiFileSign,
     mdiMenu,
 } from '@mdi/js'
+import ProductionBadge from '@/components/ProductionBadge.vue'
 
 const page = usePage<any>()
 const { mobile } = useDisplay()
@@ -217,6 +218,9 @@ type MenuKey = keyof typeof menuProps
             </div>
         </v-navigation-drawer>
 
+        <ProductionBadge
+            v-if="page.props.warningIsProduction"
+        />
         <slot />
     </BaseLayout>
 
