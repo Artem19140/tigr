@@ -38,15 +38,6 @@ class AuthorizationServiceProvider extends ServiceProvider
                 :   Response::denyAsNotFound();
         });
 
-        Gate::define('viewLogViewer', function (Employee | ForeignNational $user) {
-            if($user instanceof ForeignNational){
-                return false;
-            }
-            return $user->isPlatformAdmin()
-                ?   Response::allow()
-                :   Response::denyAsNotFound();
-        });
-
         Gate::define('reports.frdo', function (Employee $employee) {
             return $employee->hasAnyRole(EmployeeRole::Director, EmployeeRole::Operator);
         });
