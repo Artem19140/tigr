@@ -45,7 +45,12 @@ export interface ExamIndex{
 
 export interface ExamType{
     id:number,
-    name:string
+    name:string,
+    amount: string,
+    amountInWords: string,
+    tasksCount: number,
+    minMark: number,
+    blocksUrl: string
 }
 
 export interface ExamReview{

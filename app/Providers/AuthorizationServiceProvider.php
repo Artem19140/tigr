@@ -11,6 +11,7 @@ use App\Models\Employee;
 use App\Models\ForeignNational;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Auth\Access\Response;
 
 class AuthorizationServiceProvider extends ServiceProvider
 {
@@ -32,7 +33,18 @@ class AuthorizationServiceProvider extends ServiceProvider
             if($user instanceof ForeignNational){
                 return false;
             }
-            return $user->isPlatformAdmin();
+            return $user->isPlatformAdmin()
+                ?   Response::allow()
+                :   Response::denyAsNotFound();
+        });
+
+        Gate::define('viewLogViewer', function (Employee | ForeignNational $user) {
+            if($user instanceof ForeignNational){
+                return false;
+            }
+            return $user->isPlatformAdmin()
+                ?   Response::allow()
+                :   Response::denyAsNotFound();
         });
 
         Gate::define('reports.frdo', function (Employee $employee) {

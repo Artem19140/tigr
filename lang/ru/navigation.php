@@ -8,6 +8,7 @@ return [
         'reports' => 'Отчеты',
         'center' => 'Центр',
         'admin' => 'Админ панель',
+        'examTypes' => 'Виды экзаменов'
     ],
 
     'reports' => [

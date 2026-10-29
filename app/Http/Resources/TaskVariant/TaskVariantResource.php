@@ -23,19 +23,13 @@ class TaskVariantResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            // 'content' => $this->transformContent(
-            //     $this->content,
-            //     $this->attemptAnswers,
-            //     $request->user()
-            // ),
-
-            'content' =>app(ContentTransformer::class)
-                ->transform(
-                    $this->content,
-                    $this->attemptAnswers,
-                    $request->user()
-                ),
-
+            // 'content' => app(ContentTransformer::class)
+            //     ->transform(
+            //         $this->content,
+            //         $this->attemptAnswers,
+            //         $request->user()
+            //     ),
+            'content' =>$this->content,
             'order' => $this->whenLoaded('task', fn () => $this->task->order),
             'type' => $this->whenLoaded('task', fn () => $this->task->type),
             'mark' => $this->whenLoaded('task', fn () => $this->task->mark),

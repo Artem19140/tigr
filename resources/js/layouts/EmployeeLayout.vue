@@ -19,6 +19,7 @@ import {
     mdiClipboardText,
     mdiFileSign,
     mdiMenu,
+    mdiClipboardList,
 } from '@mdi/js'
 import ProductionBadge from '@/components/ProductionBadge.vue'
 
@@ -93,6 +94,9 @@ const menuProps = {
     admin: {
         icon: mdiCog,
     },
+    examTypes: {
+        icon: mdiClipboardList,
+    }
 }
 
 type MenuKey = keyof typeof menuProps

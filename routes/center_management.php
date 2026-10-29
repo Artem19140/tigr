@@ -9,8 +9,6 @@ use App\Models\Address;
 use App\Models\Center;
 use App\Models\Counter;
 use App\Models\Employee;
-use App\Navigation\CenterManageNavigation;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -76,22 +74,4 @@ Route::middleware([
     Route::put('centers/{center}', [CenterController::class, 'update'])
         ->can('edit', Center::class)
         ->name('centers.update');
-
-    Route::get('center-manage/resolver', function(
-        Request $request,
-        CenterManageNavigation $navigation
-    ){
-        $employee = $request->user();
-        $allowedRoutes = $navigation->resolve($employee);
-
-        if($allowedRoutes->isEmpty()){
-            Log::warning('UNEXPECTED: reports route not resolved ', [
-                'employee' => $employee->id,
-                'route' => $request->route()
-            ]);
-            abort(403);
-        }
-        return redirect($allowedRoutes->first()['url']);
-    })->name('center-manage.resolver');
-    
 });

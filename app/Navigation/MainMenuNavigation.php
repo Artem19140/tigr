@@ -43,6 +43,11 @@ class MainMenuNavigation
                 'submenu' => $this->centerManageNavigation->resolve($employee)
             ],
 
+            'examTypes' => [
+                'url' => route('exams-types.index'),
+                'can' => $employee->can('platform-manage')
+            ],
+
             'admin' => [
                 'url' => null,
                 'can' => $employee->can('platform-manage'),
@@ -54,9 +59,6 @@ class MainMenuNavigation
                     'commands' => [
                         'url' => route('platform-admin.commands', [], false),
                         'label' => 'Команды'
-                    ],
-                    'templates' => [
-                        ''
                     ]
                 ]
             ]
