@@ -21,7 +21,7 @@ class TaskResource extends JsonResource
             'variants' => TaskVariantResource::collection($this->whenLoaded('variants')),
             'postscriptum' => $this->postscriptum,
             'description' => $this->description,
-            //'showUrl' => route('tasks.show', ['task' => $this->resource->id])
+            'showUrl' => route('tasks.show', ['task' => $this->resource->id])
         ];
     }
 }

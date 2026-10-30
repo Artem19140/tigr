@@ -76,7 +76,7 @@ class PersonConfirmationController
             ]
         );
 
-        return to_route('exams-sessions.start-info', [
+        return to_route('exams-sessions.sound-setting', [
             'enrollment' => $enrollment
         ]);
     }

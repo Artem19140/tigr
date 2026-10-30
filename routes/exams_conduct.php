@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Web\ExamConduct\GenerateAttemptRecoveryCodeController;
+use App\Http\Controllers\Web\ExamConduct\GenerateRecoveryCodeController;
 use App\Http\Controllers\Web\ExamConduct\AttemptManagementController;
 use App\Http\Controllers\Web\ExamConduct\ExamConductController;
 use App\Http\Controllers\Web\ExamConduct\SpeakingController;
@@ -38,11 +38,11 @@ Route::prefix('exams')->middleware([
     Route::put('{exam}/monitoring/protocol-comments', [ExamConductController::class, 'protocolCommentUpdate'])
         ->name('exams.protocol-comments.update');
 
-    Route::get('{exam}/enrollments/{enrollment}/recovery-code', [GenerateAttemptRecoveryCodeController::class, 'show'])
+    Route::get('{exam}/enrollments/{enrollment}/recovery-code', [GenerateRecoveryCodeController::class, 'show'])
         ->scopeBindings()
         ->name('enrollments.show.recovery-codes');
 
-    Route::post('{exam}/enrollments/{enrollment}/recovery-code', [GenerateAttemptRecoveryCodeController::class, 'generation'])
+    Route::post('{exam}/enrollments/{enrollment}/recovery-code', [GenerateRecoveryCodeController::class, 'generation'])
         ->scopeBindings()
         ->name('enrollments.recovery-codes');
 });

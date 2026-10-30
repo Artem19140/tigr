@@ -8,9 +8,6 @@ use App\Models\Center;
 use App\Models\Counter;
 use App\Models\Employee;
 use App\Models\Role;
-use Database\Seeders\ExamTypes\PATENT\PatentSeeder;
-use Database\Seeders\ExamTypes\RVP\RvpSeeder;
-use Database\Seeders\ExamTypes\VNZH\VnzhSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -23,9 +20,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RolesSeeder::class,
-            PatentSeeder::class,
-            RvpSeeder::class,
-            VnzhSeeder::class,
+            ExamTypeSeeder::class
         ]);
 
         Center::firstOrCreate(

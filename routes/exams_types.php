@@ -27,7 +27,9 @@ Route::prefix('exams-types')
     });
 
     Route::get('tasks/{task}/variants', function(Task $task){
-        $task->load('variants.answers');
+        $task->load([
+            'variants' => ['answers', 'task']
+        ]);
         return Inertia::render('ExamTypes/TaskView', [
             'task' => TaskVariantResource::collection($task->variants)
         ]);

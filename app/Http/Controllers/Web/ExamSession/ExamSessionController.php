@@ -13,7 +13,7 @@ use Inertia\Inertia;
 class ExamSessionController
 {
 
-    public function startInfo(
+    public function info(
         Enrollment $enrollment
     ) {
         $exam = Exam::with([
@@ -40,7 +40,7 @@ class ExamSessionController
             throw new ModelNotFoundException();
         }
 
-        return Inertia::render('ExamSession/StartInfo', [
+        return Inertia::render('ExamSession/Info', [
             'exam' => [
                 'duration' => $exam->duration(),
                 'minMark' => $exam->type->min_mark,
@@ -50,6 +50,9 @@ class ExamSessionController
             ],
             'fullName' => $enrollment->foreignNational->full_name_short,
             'startUrl' => route('exams-sessions.start', [
+                'enrollment' => $enrollment
+            ], false),
+            'soundSettingUrl' => route('exams-sessions.sound-setting',[
                 'enrollment' => $enrollment
             ], false)
         ]);
@@ -75,6 +78,17 @@ class ExamSessionController
 
         return redirect()->route('attempts.show', [
             'attempt' => $attempt->id,
+        ]);
+    }
+
+    public function soundSetting(
+        Enrollment $enrollment
+    ){
+        return Inertia::render('ExamSession/SoundSetting', [
+            'fullName' => $enrollment->foreignNational->full_name_short,
+            'infoUrl' => route('exams-sessions.info', [
+                'enrollment' => $enrollment
+            ], false)
         ]);
     }
     

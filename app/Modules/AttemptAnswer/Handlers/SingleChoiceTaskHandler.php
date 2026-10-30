@@ -7,14 +7,10 @@ use App\Exceptions\AttemptAnswerValidationException;
 use App\Models\Answer;
 use App\Models\AttemptAnswer;
 use App\Models\TaskVariant;
+use Illuminate\Support\Facades\DB;
 
-class SingleChoiceTaskHandler
+class SingleChoiceTaskHandler implements AnswerHandlerInterface
 {
-    public function for($task): bool
-    {
-        return $task->type === TaskType::SingleChoice;
-    }
-
     public function validate(
         mixed $answerId,
         AttemptAnswer $attemptAnswer
@@ -49,4 +45,50 @@ class SingleChoiceTaskHandler
     ): int {
         return $answer->is_correct ? $taskVariant->task->mark : 0;
     }
+
+    public function handle(
+        mixed $foreignNationalAnswer,
+        AttemptAnswer $attemptAnswer
+    ): void {
+        $answer = $this->validate(
+            $foreignNationalAnswer,
+            $attemptAnswer
+        );
+
+        $mark = $this->calculateMark(
+            $answer,
+            $attemptAnswer->taskVariant
+        );
+
+        $attemptAnswer->update([
+            'answer' => [
+                'id' =>  $answer->id,
+                'order' => $answer->order
+            ],
+            'answer_id' => $answer->id,
+            'mark' => $mark
+        ]);
+    }
+
+    protected function fd()
+    {
+        DB::transaction(function(){
+            AttemptAnswer::query()
+                ->whereHas('taskVariant.task',function($query){
+                    $query->where('type', TaskType::SingleChoice);
+                })
+                ->chunkById(200, function($answers){
+                    foreach($answers as $answer){
+
+                        if($answer->answer){
+                            $answer->update([
+                                'answer_id' => $answer->answer['id']
+                            ]);
+                        }
+                        
+                    }
+                });
+        });
+    }
+    
 }

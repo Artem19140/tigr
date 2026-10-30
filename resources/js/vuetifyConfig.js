@@ -16,13 +16,20 @@ export const vuetify = createVuetify({
     },
   },
   theme: {
-    defaultTheme: 'light', // 'system' | 'light' | 'dark'
+    defaultTheme: 'light', // 'system' | 'light' | 'dark' primary:'#0176ff', 
     themes: {
       light: {
         colors: {
-          background: '#f5f5f5',
-          surface: '#ffffff',
-          primary:'#0176ff', 
+          background: '#F7F9FC',
+          surface: '#FFFFFF',
+
+          primary: '#2563EB',
+          secondary: '#64748B',
+
+          success: '#16A36A',
+          warning: '#D97706',
+          error: '#DC4C4C',
+          info: '#0284C7',
           'on-surface': '#1e293b',
           'on-background': '#1e293b',
           'create' : '#10b767'

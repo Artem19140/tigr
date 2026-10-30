@@ -4,7 +4,6 @@ import EssayTask from './EssayTask.vue';
 import SingleInputTask from './SingleInputTask.vue';
 import { TaskTypes } from '@/constants/TaskTypes';
 import { Answer, AttemptAnswer, Task } from '@/interfaces/Task';
-import { Attempt, AttemptReview, AttemptConduct } from '@/interfaces/Attempt';
 import { useAttempt } from '@/composables/useAttempt';
 import { useHttp } from '@inertiajs/vue3';
 import MultynputTask from './MultyInputTask.vue';
@@ -15,7 +14,7 @@ import { mdiClipboardTextOffOutline } from '@mdi/js'
 import TaskHeader from './TaskHeader.vue';
 
 const props = defineProps<{
-    attempt: Attempt | AttemptConduct | AttemptReview,
+    tasks: Task[]
     checking?:boolean,
 }>()
 
@@ -70,7 +69,7 @@ provide<boolean>('checking', props.checking)
 
 const groupedTasks =  computed(() =>{
     const groups = new Map()
-    props.attempt.tasks.forEach(task => {
+    props.tasks.forEach(task => {
         const groupKey = task.groupNumber ?? task.fipiNumber
         if(! groups.has(groupKey)){
             groups.set(groupKey, [])
@@ -86,7 +85,7 @@ const updatingId = ref<number | null>(null)
 <template>
     <div 
         class="flex flex-column gap-10"
-        v-if="attempt.tasks?.length > 0"
+        v-if="tasks?.length > 0"
     >
         <div
             v-for="(tasks, index) in groupedTasks"
@@ -114,7 +113,7 @@ const updatingId = ref<number | null>(null)
                         
                         <task-rating-block
                             :task="task"
-                            :readonly="Boolean(attempt.reviewedAt)"
+                            :readonly="false"
                         />
                     </v-card-text>
 

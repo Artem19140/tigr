@@ -6,8 +6,8 @@ const props = defineProps<{
   url: string
 }>()
 
-const form = useForm<{code:string | null}>({
-  code: null,
+const form = useForm<{code:string | undefined}>({
+  code: undefined,
 })
 
 const submit = () => {

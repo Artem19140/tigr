@@ -5,7 +5,7 @@ import { Head } from '@inertiajs/vue3';
 import { useAttempt } from '@/composables/useAttempt';
 import { Attempt } from '@/interfaces/Attempt';
 import { useTimer } from '@/composables/useTimer.js';
-import { onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import FinishModal from './Components/FinishModal.vue';
 
 const props = defineProps<{
@@ -24,8 +24,44 @@ const { startTimer, canFinish, stopTimer} = useTimer()
 startTimer()
 
 const isOpen = ref<boolean>(false)
+const fullscreenDialog = ref<boolean>(false)
+const isFullscreen = ref(false)
 
-onUnmounted(() => stopTimer())
+onMounted(() => {
+    fullscreenDialog.value = true
+})
+
+async function enterFullscreen() {
+    try {
+        await document.documentElement.requestFullscreen()
+    } catch (error) {
+        console.error('Fullscreen error:', error)
+    }
+    fullscreenDialog.value = false
+}
+
+function handleFullscreenChange(){
+    isFullscreen.value = !!document.fullscreenElement
+
+    if (!isFullscreen.value) {
+        fullscreenDialog.value = true
+    } else {
+        fullscreenDialog.value = false
+    }
+}
+
+document.addEventListener(
+    'fullscreenchange',
+    handleFullscreenChange
+)
+
+onUnmounted(() => {
+    stopTimer()
+     document.removeEventListener(
+        'fullscreenchange',
+        handleFullscreenChange
+    )
+})
 </script>
 
 <template>
@@ -40,7 +76,7 @@ onUnmounted(() => stopTimer())
                 <main class="min-w-0 flex-1">
                     <v-card-text class="px-2 py-4 sm:px-6 sm:py-6">
                         <TasksList 
-                            :attempt="examAttempt" 
+                            :tasks="examAttempt.tasks" 
                             :checking="false"
                         />
                     </v-card-text>
@@ -76,4 +112,26 @@ onUnmounted(() => stopTimer())
         :url="finishUrl"
         v-model="isOpen"
     />
+
+    <v-dialog
+        v-model="fullscreenDialog"
+        persistent
+    >
+        <v-card
+            title="Полноэкранный режим"
+            subtitle="Для продолжения экзамена нажмите кнопку"
+            max-width="400"
+            class="m-auto"
+        >
+            <v-card-text>
+                <v-btn
+                    color="primary"
+                    class="w-100"
+                    @click="enterFullscreen"
+                >
+                    Полноэкранный режим
+                </v-btn>
+            </v-card-text>
+        </v-card>
+    </v-dialog>
 </template>

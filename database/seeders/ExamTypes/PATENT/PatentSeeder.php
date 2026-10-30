@@ -15,7 +15,7 @@ class PatentSeeder extends Seeder
     private string $path = 'resources/data/PATENT/';
     public function run(): void
     {
-        $examType = ExamType::firstOrCreate(
+        $examType = ExamType::updateOrCreate(
             ['level' => 1],
             [
                 'name' => 'Разрешение на работу (патент)',

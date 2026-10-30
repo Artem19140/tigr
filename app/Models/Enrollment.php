@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Number;
 
@@ -59,6 +60,27 @@ class Enrollment extends Model
         return $this->hasOne(Attempt::class, 'enrollment_id')->latest();
     }
 
+    public function examCode(): HasOne
+    {
+        return $this->hasOne(ExamAccessCode::class)
+            ->where('type', 'initial')
+            ->latest();
+    }
+
+    public function recoveryCode(): HasOne
+    {
+        return $this->hasOne(ExamAccessCode::class)
+            ->where('type', 'recovery')
+            ->latest();
+    }
+
+    public function recoveryCodes():HasMany
+    {
+        return $this->hasMany(ExamAccessCode::class)
+            ->where('type', 'recovery');
+    }
+    
+
     public function scopeVisibleFor(Builder $query, Employee $employee): Builder
     {
         return $query->whereHas('exam', function ($q) use ($employee) {
@@ -68,16 +90,13 @@ class Enrollment extends Model
 
     public function makeExamCodeUsed()
     {
-        $this->update([
-            'exam_code' => null,
-            'exam_code_used_at' => Carbon::now()
-        ]);
+        $this->examCode->makeUsed();
     }
 
-    public function examCode(): string | null
-    {
-        return $this->exam_code;
-    }
+    // public function examCode(): string | null
+    // {
+    //     return $this->exam_code;
+    // }
 
     public function amountInWords():string
     {

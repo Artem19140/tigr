@@ -45,7 +45,7 @@ class RedirectResolver
                 'enrollment_id' => $enrollment->id
             ]);
 
-            return  route('exams-sessions.start-info', [
+            return  route('exams-sessions.sound-setting', [
                 'enrollment' => $enrollment
             ]);
         }

@@ -6,12 +6,18 @@ use App\Enums\BusinessCode;
 use App\Exceptions\BusinessException;
 use App\Models\Enrollment;
 use App\Models\Exam;
-use App\Modules\ExamDocument\ExamCodesGenerator;
+use App\Models\ExamAccessCode;
+use App\Modules\Enrollment\ExamCodeSaver;
 use App\Support\Audit;
-use Carbon\Carbon;
+use App\Support\CodeGenerator;
 
-class GenerateAttemptRecoveryCodeController
+class GenerateRecoveryCodeController
 {
+    public function __construct(
+        protected ExamCodeSaver $examCodeSaver,
+        protected CodeGenerator $codeGenerator
+    ){}
+    
     public function show(
         Exam $exam,
         Enrollment $enrollment
@@ -29,14 +35,13 @@ class GenerateAttemptRecoveryCodeController
         }
 
         return response()->json([
-            'code' => $enrollment->examCode()
+            'code' => $enrollment->recoveryCode->code
         ]);
 
     }
     public function generation(
         Exam $exam,
         Enrollment $enrollment,
-        ExamCodesGenerator $codesGenerator,
         Audit $audit
     ){
         $attempt = $enrollment->attempt;
@@ -51,22 +56,18 @@ class GenerateAttemptRecoveryCodeController
             abort(400, 'Нет активной попытки экзамена');
         }
 
-        if($enrollment->exam_code_expired_at?->isFuture() && $enrollment->exam_code){
+        if($enrollment->recoveryCode){
             return response()->json([
                 'code' => $enrollment->examCode()
             ]);
         }
         
-        $enrollment->update([
-            'exam_code_expired_at' => null,
-            'exam_code_used_at'=> null
-        ]);
-
-        $codesGenerator->execute($exam);
-
-        $enrollment->update([
-            'exam_code_expired_at' => Carbon::now()->addMinutes(10)
-        ]);
+        $this->examCodeSaver->save(
+            $enrollment,
+            $this->codeGenerator->generate(),
+            now()->addMinutes(ExamAccessCode::RECOVERY_CODE_TTL_MINUTES),
+            ExamAccessCode::RECOVERY_TYPE
+        );
         
         $audit->log(
             'regenerated_exam_code', 

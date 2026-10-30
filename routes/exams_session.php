@@ -51,10 +51,11 @@ Route::prefix('attempts')
 
     });
 
-    Route::prefix('exams-sessions')
+Route::prefix('exams-sessions')
     ->middleware([
         'meta'
-    ])->group(function () {
+    ])
+    ->group(function () {
         Route::get(
             'confirmation', 
             [PersonConfirmationController::class, 'confirmationView']
@@ -73,30 +74,27 @@ Route::prefix('attempts')
         )
             ->name('exams-sessions.confirmation-rejection');
         
-        Route::get(
-            'enrollments/{enrollment}/start-info', 
-            [ExamSessionController::class, 'startInfo']
-        )
-            ->middleware([
-                'auth:foreignNationals',
-                'can:examSession,enrollment'
-            ])
-            ->name('exams-sessions.start-info');
-
-        Route::post(
-            'enrollments/{enrollment}/attempts', 
-            [ExamSessionController::class, 'start']
-        )
-            ->middleware([
-                'auth:foreignNationals',
-                'can:examSession,enrollment'
-            ])
-            ->name('exams-sessions.start');
     });
 
+Route::prefix('exams-sessions/enrollments/{enrollment}')
+    ->middleware([
+        'auth:foreignNationals',
+        'can:examSession,enrollment'
+    ])
 
-    
+    ->group( function() {
+        Route::get(
+            'info', 
+            [ExamSessionController::class, 'info']
+        )->name('exams-sessions.info');
 
+         Route::get(
+            'sound-setting', 
+            [ExamSessionController::class, 'soundSetting']
+        )->name('exams-sessions.sound-setting');
 
-
-      
+        Route::post(
+            'attempts', 
+            [ExamSessionController::class, 'start']
+        )->name('exams-sessions.start');
+}); 

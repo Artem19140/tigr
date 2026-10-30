@@ -29,20 +29,19 @@ class HandleAttemptAnswer
 
         $handler = $this->taskHandlerResolver->resolve($task);
 
-        $validatedAnswer = $handler->validate($answer, $attemptAnswer);
-        if ($task->autoReview()) {
-            $mark = $handler->calculateMark($validatedAnswer, $taskVariant);
-            $attemptAnswer->mark = $mark;
-        }
-
-        $attemptAnswer->answer = $validatedAnswer;
-        $attemptAnswer->save();
+        $handler->handle(
+            $answer, 
+            $attemptAnswer
+        );
 
         app()->terminating(
             function() use( $attemptAnswer ){
                 $this->audit->log(
                     'updated_attempt_answer',
-                    $attemptAnswer
+                    $attemptAnswer,
+                    [
+                        'changes' => $this->changesBuilder->build($attemptAnswer)
+                    ]
                 );
             }
         );

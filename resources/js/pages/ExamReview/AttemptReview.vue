@@ -50,7 +50,7 @@ const finishChecking = async () => {
             <div class="flex items-start gap-5">
                 <main class="min-w-0 flex-1">
                     <TasksList
-                        :attempt="attempt.data"
+                        :tasks="attempt.data.tasks"
                         :checking="true"
                         class="mb-5"
                     />

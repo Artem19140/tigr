@@ -148,7 +148,7 @@ const cancel = async () => {
         </div>
     </v-container>
 
-    <div class="sticky bottom-0 z-10 border-t border-gray-200 bg-[#F7F9FC]/90 px-4 py-3 backdrop-blur-md">
+    <div class="sticky bottom-0 z-10 border-t border-gray-200 bg-background px-4 py-3 backdrop-blur-md">
         <div class="mx-auto max-w-4xl">
             <div class="flex items-center justify-between gap-4">
                 <div

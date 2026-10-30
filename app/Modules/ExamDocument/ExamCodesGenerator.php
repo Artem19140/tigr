@@ -4,24 +4,36 @@ namespace App\Modules\ExamDocument;
 
 use App\Enums\ExamDocument;
 use App\Events\ExamDocumentGenerated;
-use App\Models\Enrollment;
 use App\Models\Exam;
+use App\Models\ExamAccessCode;
+use App\Modules\Enrollment\ExamCodeSaver;
 use App\Modules\Shared\ExamSettings;
+use App\Support\CodeGenerator;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Carbon\Carbon;
-use Illuminate\Database\UniqueConstraintViolationException;
-use Illuminate\Support\Facades\Log;
 
 final class ExamCodesGenerator
 {
+    public function __construct(
+        protected ExamCodeSaver $codeSaver,
+        protected CodeGenerator $codeGenerator
+    ){}
     public function execute(Exam $exam)
     {
-        $exam->load(['enrollments.foreignNational']);
+        $exam->load([
+            'enrollments.examCode'
+        ]);
         
+        $this->generateCodesForExam($exam);
+       
+        $exam->load([
+            'enrollments' => [
+                'foreignNational',
+                'examCode'
+            ]
+        ]);
+
         $exam->enrollments = $exam->enrollments
             ->sortBy('foreignNational.surname_normalized');
-
-        $this->generateCodesForExam($exam);
 
         $pdf = Pdf::loadView(ExamDocument::Codes->templatePath(), [
             'exam' => $exam,
@@ -34,61 +46,21 @@ final class ExamCodesGenerator
 
     protected function generateCodesForExam(Exam $exam): void
     {
-        foreach ($exam->enrollments as $enrollment) {
-            if ($this->codeWasGenerated($enrollment)) {
-                continue;
-            }
-            $this->generateAndSaveUniqueCode($enrollment, $exam);
-        }
-    }
-
-    protected function generateAndSaveUniqueCode(
-        Enrollment $enrollment,
-        Exam $exam
-    ): void {
         $expiredTime = $exam->begin_time->copy()->addMinutes(
             ExamSettings::codesTtlMinutes()
         );
-        while (true) {
-            try {
-                $this->saveCode(
-                    $enrollment, 
-                    $this->generateCode(), 
-                    $expiredTime
-                );
 
-                return;
-            } catch (UniqueConstraintViolationException $e) {
-                Log::info('Unique query exception during exam codes generation', [
-                    'exam_id' => $exam->id
-                ]);
+        foreach ($exam->enrollments as $enrollment) {
+            if ($enrollment->examCode) {
+                continue;
             }
+
+            $this->codeSaver->save(
+                $enrollment,
+                $this->codeGenerator->generate(), 
+                $expiredTime,
+                ExamAccessCode::INITIAL_TYPE
+            );
         }
-    }
-
-    protected function codeWasGenerated(Enrollment $enrollment): bool
-    {
-        return $enrollment->exam_code_used_at || $enrollment->exam_code_expired_at;
-    }
-
-    protected function generateCode(): string
-    {
-        $length = ExamSettings::codesLength();
-        $max = (10 ** $length) - 1;
-        $rnd = random_int(0, $max);
-        $code = str_pad($rnd, $length, '0', STR_PAD_LEFT);
-
-        return $code;
-    }
-
-    protected function saveCode(
-        Enrollment $enrollment,
-        string $code,
-        Carbon $expiredTime
-    ): void {
-        $enrollment->update([
-            'exam_code_expired_at' => $expiredTime,
-            'exam_code' => $code
-        ]);
     }
 }

@@ -10,7 +10,7 @@ class EmployeePolicy
     public function viewAny(Employee $employee): bool
     {
         if($employee->hasAnyRole(
-            //EmployeeRole::Director, 
+            EmployeeRole::Director, 
             EmployeeRole::CenterAdmin
         )){
             return true;
@@ -21,7 +21,7 @@ class EmployeePolicy
     public function create(Employee $employee): bool
     {
         if($employee->hasAnyRole(
-            //EmployeeRole::Director, 
+            EmployeeRole::Director, 
             EmployeeRole::CenterAdmin
         )){
             return true;
@@ -44,7 +44,7 @@ class EmployeePolicy
         }
 
         if($actor->hasAnyRole(
-            //EmployeeRole::Director, 
+            EmployeeRole::Director, 
             EmployeeRole::CenterAdmin
         )){
             return true;
@@ -69,7 +69,7 @@ class EmployeePolicy
         }
 
         if($actor->hasAnyRole(
-            //EmployeeRole::Director, 
+            EmployeeRole::Director, 
             EmployeeRole::CenterAdmin
         )){
             return true;

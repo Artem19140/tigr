@@ -37,13 +37,13 @@ const recoveryCodeModalIsOpen = ref<boolean>(false)
             @click="() => router.visit(enrollment.attempt?.actions.speaking.url ?? '')"
         />
 
-        <!-- <v-list-item
+        <v-list-item
             color="red"
             variant="text"
             title="Восстановить доступ к попытке"
            @click="recoveryCodeModalIsOpen = true"
             
-        /> -->
+        />
 
         <v-list-item
             class="text-red"
@@ -61,10 +61,10 @@ const recoveryCodeModalIsOpen = ref<boolean>(false)
         :foreign-national="enrollment.foreignNational"
     />
 
-    <!-- <RecoveryCodeModal 
+    <RecoveryCodeModal 
         v-model="recoveryCodeModalIsOpen"
         v-if="enrollment.actions.recoveryCode.url"
         :url="enrollment.actions.recoveryCode.url"
         :foreign-national="enrollment.foreignNational"
-    /> -->
+    />
 </template>
