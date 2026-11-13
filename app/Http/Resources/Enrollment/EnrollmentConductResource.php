@@ -4,6 +4,7 @@ namespace App\Http\Resources\Enrollment;
 
 use App\Http\Resources\Attempt\AttemptConductResource;
 use App\Http\Resources\ForeignNational\ForeignNationalResource;
+use App\Modules\Attempt\ActiveAttemptRules;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,16 +17,21 @@ class EnrollmentConductResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $hasActiveAttempt = app(ActiveAttemptRules::class)
+            ->check($this->attempt)->available;
+
         return [
             'id' => $this->resource->id,
             'foreignNational' => new ForeignNationalResource($this->whenLoaded('foreignNational')),
             'attempt' => new AttemptConductResource($this->whenLoaded('attempt')),
             'actions' => [
                 'recoveryCode' => [
-                    'url' => route('enrollments.show.recovery-codes',[
-                        'enrollment' => $this->resource,
-                        'exam' => $this->resource->exam_id
-                    ])
+                    'url' => $hasActiveAttempt 
+                        ? route('enrollments.show.recovery-codes',[
+                            'enrollment' => $this->resource,
+                            'exam' => $this->resource->exam_id
+                        ])
+                        : null
                 ]
             ]
         ];

@@ -6,8 +6,9 @@ import EnrollmentsList from './Components/EnrollmentsList.vue';
 import Documents from './Components/Documents.vue';
 import EmployeeLayout from '@/layouts/EmployeeLayout.vue';
 import EnrollmentModal from './Components/EnrollmentModal.vue';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { Head, router } from '@inertiajs/vue3';
+import { useFileViewer } from '@/composables/useFileViewer.js';
 
 const props = defineProps<{
 	foreignNational:{
@@ -18,7 +19,8 @@ const props = defineProps<{
     documentConstraints: {
         mimes: Array<string>,
         maxSizeMb: number
-    }
+    },
+    redirectUrl: string | undefined
 }>()
 
 defineOptions({
@@ -78,6 +80,12 @@ const personalData = computed(() => [
         value: props.foreignNational.data.creatorFullName,
     },
 ])
+
+onMounted(() => {
+    if(props.redirectUrl){
+        useFileViewer().open(props.redirectUrl)
+    }
+})
 </script>
 
 <template>

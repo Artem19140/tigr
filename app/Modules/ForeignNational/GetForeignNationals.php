@@ -5,11 +5,10 @@ namespace App\Modules\ForeignNational;
 use App\Http\Dto\ForeignNationalIndexDto;
 use App\Models\ForeignNational;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Pagination\Paginator;
 
 class GetForeignNationals
 {
-    public function execute(ForeignNationalIndexDto $dto): Paginator
+    public function execute(ForeignNationalIndexDto $dto)
     {
         $surname = $dto->surname ?? false;
         $name = $dto->name  ?? false;
@@ -17,15 +16,14 @@ class GetForeignNationals
         $passportSeries = $dto->passportSeries  ?? false;
         $passportNumber = $dto->passportNumber  ?? false;
         $id = $dto->id  ?? false;
-        $perPage =$dto->perPage  ?? 10;
-
+        
         return ForeignNational::query()
             ->select([
                 'id',
                 'surname',
                 'name',
                 'patronymic',
-                'date_birth',
+                'date_birth'
             ])
             ->when($surname, function (Builder $query) use ($surname) {
                 $surname = mb_strtolower(trim($surname), 'UTF-8');
@@ -50,8 +48,6 @@ class GetForeignNationals
             ->when($id, function (Builder $query) use ($id) {
                 $query->where('id', trim($id));
             })
-            ->latest('id')
-            ->simplePaginate($perPage)
-            ->withQueryString();
+            ->latest('id');
     }
 }

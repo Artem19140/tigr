@@ -19,7 +19,6 @@ const download = (url :string) => {
     http.get(url,{
         onSuccess:(response) => {
             if(response.redirectUrl){
-                //window.open(response.redirectUrl)
                 fileViewer.open(response.redirectUrl)
             }
         },

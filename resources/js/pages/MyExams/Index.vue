@@ -2,7 +2,7 @@
 import { Head, router } from '@inertiajs/vue3';
 import EmployeeLayout from '@layouts/EmployeeLayout.vue';
 import { DateFormatter } from '@helpers/DateFormatter';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { Paginated } from '@/interfaces/Interfaces';
 import { ExamIndex } from '@/interfaces/Exam';
 import BaseTable from '@/components/BaseComponents/BaseTable/BaseTable.vue';
@@ -29,6 +29,8 @@ const headers = [
 
 const loading=ref<boolean>(false)
 
+const currentDate = ref<string>(props.current)
+
 const visit = (url :string) => {
     loading.value = true
     router.visit(url, {
@@ -39,37 +41,53 @@ const visit = (url :string) => {
         preserveState:true
     })
 }
+
+watch(() => currentDate.value, () => {
+    router.reload({
+        data: {
+            date: currentDate.value
+        }
+    })
+})
+watch(() => props.current, 
+    () => currentDate.value = props.current
+)
 </script>
 
 <template>
     <Head>
         <title>Мои экзамены</title>
     </Head>
-    <v-container>   
+    <v-container> 
         <BaseTable
             :elements="exams.data"
             :headers="headers"
             title="Мои экзамены"
-            @row-click="(item) =>  router.visit(`/exams/${item.id}`)"
+            @row-click="(item) => router.visit(item.showUrl)"
         >
             <template #header-left>
-                <v-btn
-                    variant="text"
-                    :icon="mdiChevronLeft"
-                    :disabled="loading"
-                    @click="() => visit(props.links.prev)"
-                >
+                <div class="grid grid-cols-[40px_minmax(0,1fr)_40px] gap-2 items-center">
+                    <v-btn
+                        variant="text"
+                        :icon="mdiChevronLeft"
+                        :disabled="loading"
+                        @click="visit(props.links.prev)"
+                      
+                    />
 
-                </v-btn>
+                    <v-date-input
+                        v-model="currentDate"
+                        hide-details
+                        width="140"
+                    />
 
-                <span class="border p-2 rounded-lg"> {{ current }} </span>
-
-                <v-btn
-                    variant="text"
-                    :icon="mdiChevronRight"
-                    :disabled="loading"
-                    @click="() => visit(props.links.next)"
-                />
+                    <v-btn
+                        variant="text"
+                        :icon="mdiChevronRight"
+                        :disabled="loading"
+                        @click="visit(props.links.next)"
+                    />
+                </div>
             </template>
 
             <template #item.capacity="{ item }">

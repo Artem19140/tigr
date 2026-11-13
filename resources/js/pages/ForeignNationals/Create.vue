@@ -13,46 +13,74 @@ const props = defineProps<{
     documentConstraints: {
         mimes: Array<string>,
         maxSizeMb: number
-    }
+    },
+    findMatchesUrl: string
 }>()
 
 defineOptions({
   layout: [EmployeeLayout]
 })
 
+// const form = useHttp<ForeignNationalCreate, RedirectUrl>({
+//   surname: '', 
+//   name:'',
+//   patronymic:"",
+//   noPatronymic:false,
+//   surnameLatin:'',
+//   nameLatin:'',
+//   patronymicLatin:"",
+//   noPatronymicLatin:false,
+//   passportNumber:"",
+//   passportSeries:"",
+//   noPassportNumber:false,
+//   noPassportSeries:false,
+//   issuedBy:null,
+//   issuedDate:null,
+//   citizenship: null,
+//   phone:null,
+//   dateBirth:null,
+//   passport:undefined,
+//   passportTranslate:undefined,
+//   examId:null,
+//   gender:"",
+//   hasPayment:false,
+//   comment:null,
+//   addressReg:'',
+//   noPhone:false
+// })
+
 const form = useHttp<ForeignNationalCreate, RedirectUrl>({
-  surname: '', 
-  name:'',
-  patronymic:"",
-  noPatronymic:false,
-  surnameLatin:'',
-  nameLatin:'',
-  patronymicLatin:"",
-  noPatronymicLatin:false,
-  passportNumber:"",
-  passportSeries:"",
-  noPassportNumber:false,
-  noPassportSeries:false,
-  issuedBy:null,
-  issuedDate:null,
-  citizenship: null,
-  phone:null,
-  dateBirth:null,
-  passport:undefined,
-  passportTranslate:undefined,
-  examId:null,
-  gender:"",
-  hasPayment:false,
-  comment:null,
-  addressReg:'',
-  noPhone:false
+  surname: 'Иванов',
+  name: 'Алексей',
+  patronymic: 'Петрович',
+  noPatronymic: false,
+  surnameLatin: 'Ivanov',
+  nameLatin: 'Alex',
+  patronymicLatin: 'Petrovich',
+  noPatronymicLatin: false,
+  passportNumber: String(Math.floor(Math.random() * 999999)),
+  passportSeries: 'AB',
+  noPassportNumber: false,
+  noPassportSeries: false,
+  issuedBy: 'Department of Internal Affairs',
+  issuedDate: '2020-05-15',
+  citizenship: "AZ",
+  phone: '9991234567',
+  dateBirth: '1995-08-21',
+  passport: undefined,
+  passportTranslate: undefined,
+  examId: undefined,
+  gender: 'M',
+  hasPayment: false,
+  comment: 'Test foreign national',
+  addressReg: 'Moscow, Lenina Street, 10, Apt. 25',
+  noPhone: false
 })
 
 const create = async () => {
   form.post(props.storeUrl, {
     onSuccess:(response) => {
-      window.open(response.redirectUrl)
-      router.visit(props.backUrl)
+      router.visit(response.redirectUrl)
     }
   })
 }
@@ -74,7 +102,6 @@ const cancel = async () => {
 
     <v-container>
         <div class="mx-auto max-w-4xl space-y-5">
-
             <v-card>
                 <v-card-text class="px-6 pt-6">
                     <div class="text-xl font-semibold text-gray-900">
@@ -99,6 +126,7 @@ const cancel = async () => {
                 v-model:form="form"
                 :loading="form.processing"
                 :errors="form.errors"
+                :findMatchesUrl="findMatchesUrl"
             />
 
             <v-card>
@@ -162,7 +190,6 @@ const cancel = async () => {
                     v-else
                     class="flex-1"
                 />
-
                 <div class="flex shrink-0 items-center gap-2">
                     <v-btn
                         variant="text"

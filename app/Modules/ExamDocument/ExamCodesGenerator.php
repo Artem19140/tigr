@@ -8,14 +8,12 @@ use App\Models\Exam;
 use App\Models\ExamAccessCode;
 use App\Modules\Enrollment\ExamCodeSaver;
 use App\Modules\Shared\ExamSettings;
-use App\Support\CodeGenerator;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 final class ExamCodesGenerator
 {
     public function __construct(
-        protected ExamCodeSaver $codeSaver,
-        protected CodeGenerator $codeGenerator
+        protected ExamCodeSaver $codeSaver
     ){}
     public function execute(Exam $exam)
     {
@@ -57,7 +55,6 @@ final class ExamCodesGenerator
 
             $this->codeSaver->save(
                 $enrollment,
-                $this->codeGenerator->generate(), 
                 $expiredTime,
                 ExamAccessCode::INITIAL_TYPE
             );

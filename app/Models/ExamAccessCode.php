@@ -10,6 +10,7 @@ class ExamAccessCode extends Model
     public const string INITIAL_TYPE = 'initial';
     public const string RECOVERY_TYPE = 'recovery';
     public const int RECOVERY_CODE_TTL_MINUTES = 5;
+    public const int MAX_RETRIES_GENERATION_COUNT = 10;
     protected $fillable = [
         'code',
         'code_snapshot',
@@ -17,7 +18,9 @@ class ExamAccessCode extends Model
         'recovery_reason',
         'generated_by',
         'expires_at',
-        'used_at'
+        'used_at',
+        'enrollment_id',
+        'reason'
     ];
 
     protected $casts = [
@@ -43,6 +46,11 @@ class ExamAccessCode extends Model
     public function enrollment(): BelongsTo
     {
         return $this->belongsTo(Enrollment::class);
+    }
+
+    public function isValid(): bool 
+    {
+        return ! $this->isUsed() && ! $this->isExpired();
     }
     
 }

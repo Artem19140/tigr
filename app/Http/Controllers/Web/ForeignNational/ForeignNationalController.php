@@ -32,7 +32,9 @@ class ForeignNationalController
         Gate::authorize('viewAny', ForeignNational::class);
 
         $dto = $request->toDto();
-        $foreignNationals = $getForeignNationals->execute($dto);
+        $foreignNationals = $getForeignNationals->execute($dto)
+            ->simplePaginate($dto->perPage ?? 10)
+            ->withQueryString();
 
         Inertia::flash([ 'filters' => $dto->toFilters()]);
 
@@ -57,7 +59,8 @@ class ForeignNationalController
             'documentConstraints' => [
                 'mimes' => ForeignNationalDocument::allowedMimes(),
                 'maxSizeMb' => ForeignNationalDocument::MAX_SIZE_MB
-            ]
+            ],
+            'findMatchesUrl' => route('foreign-nationals.matches', [], false)
         ]);
     }
 
@@ -77,8 +80,14 @@ class ForeignNationalController
             );
 
         return response()->json([
-            'redirectUrl' => route('enrollments.full-documents', [
-                'enrollment' => $enrollement
+            // 'redirectUrl' => route('enrollments.full-documents', [
+            //     'enrollment' => $enrollement
+            // ])
+            'redirectUrl' => route('foreign-nationals.show', [
+                'foreign_national' => $enrollement->foreign_national_id,
+                'redirectUrl' => route('enrollments.full-documents', [
+                    'enrollment' => $enrollement
+                ])
             ])
         ]);
     }
@@ -110,7 +119,8 @@ class ForeignNationalController
             'documentConstraints' => [
                 'mimes' => ForeignNationalDocument::allowedMimes(),
                 'maxSizeMb' => ForeignNationalDocument::MAX_SIZE_MB
-            ]
+            ],
+            'redirectUrl' => $request->input('redirectUrl')
         ]);
     }
 

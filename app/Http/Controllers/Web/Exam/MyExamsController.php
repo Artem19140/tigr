@@ -34,7 +34,7 @@ class MyExamsController
 
         return Inertia::render('MyExams/Index', [
             'exams' => ExamIndexResource::collection($exams),
-            'current' => $now->copy()->format('d.m.Y'),
+            'current' => $now->copy()->format('Y-m-d'),//->format('d.m.Y'),
             'links' => [
                 'prev' => route($route, [
                     'date' => $now->copy()->subDay()->format('Y-m-d')

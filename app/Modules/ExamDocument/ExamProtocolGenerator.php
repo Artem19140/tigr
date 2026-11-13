@@ -5,6 +5,7 @@ namespace App\Modules\ExamDocument;
 use App\Enums\ExamDocument;
 use App\Events\ExamDocumentGenerated;
 use App\Models\Attempt;
+use App\Models\Enrollment;
 use App\Models\Exam;
 use App\Modules\Shared\CenterData;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -15,16 +16,23 @@ class ExamProtocolGenerator
 {
     public function execute(Exam $exam)
     {   
+        $exam->load([
+            'type',
+            'address'
+        ]);
+
         $annulledAttempts = $this->getAnnulledAttempts($exam);
         $beginTimeReal = $this->getBeginTimeReal($exam);
         $endTimeReal = $this->getEndTimeReal($exam);
+        $enrollmentsWithRecoveryCodes = $this->getEnrollmentsWithRecoveryCodes($exam);
 
         $pdf = Pdf::loadView(ExamDocument::Protocol->templatePath(), [
             'exam' => $exam,
             'center' => new CenterData(),
             'annulledAttempts' => $annulledAttempts,
             'beginTimeReal' => $beginTimeReal,
-            'endTimeReal' => $endTimeReal
+            'endTimeReal' => $endTimeReal,
+            'enrollmentsWithRecoveryCodes' => $enrollmentsWithRecoveryCodes
         ]);
         
         event(new ExamDocumentGenerated($exam, ExamDocument::Protocol,[
@@ -60,4 +68,15 @@ class ExamProtocolGenerator
         return $max ? Carbon::parse($max, 'UTC')
             ->setTimezone($exam->timeZone()) : null;
     }
+
+    protected function getEnrollmentsWithRecoveryCodes(
+        Exam $exam
+    ): Collection {
+        return Enrollment::query()  
+            ->with(['recoveryCodes', 'foreignNational'])
+            ->where('exam_id', $exam->id)
+            ->has('recoveryCodes')
+            ->get();
+    }
+    
 }

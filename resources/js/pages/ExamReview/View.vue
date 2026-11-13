@@ -40,25 +40,29 @@ const openAttempt =  (item : Enrollment) => {
     </Head>
 
     <v-container>
-        <BaseTable 
-            :elements="exam.data.enrollments"
-            :headers="headers"
-            @row-click="openAttempt"
-        >
-            <template #item.index="{ index }">
-                {{ index + 1 }}
-            </template>
-            <template #item.name="{ item }">
-                {{ item.regNum }}
-            </template>
+        <div class="max-w-6xl m-auto">
+            
+        
+            <BaseTable 
+                :elements="exam.data.enrollments"
+                :headers="headers"
+                @row-click="openAttempt"
+            >
+                <template #item.index="{ index }">
+                    {{ index + 1 }}
+                </template>
+                <template #item.name="{ item }">
+                    {{ item.regNum }}
+                </template>
 
-            <template #item.status="{ item }">
-                <v-chip 
-                    v-if="item.attempt?.reviewedAt"
-                    color="green"
-                    text="Проверено"
-                />
-            </template>
-        </BaseTable>
+                <template #item.status="{ item }">
+                    <v-chip 
+                        v-if="item.attempt?.reviewedAt"
+                        color="green"
+                        text="Проверено"
+                    />
+                </template>
+            </BaseTable>
+        </div>
     </v-container>
 </template>

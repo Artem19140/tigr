@@ -13,7 +13,7 @@ export interface ForeignNational{
   issuedBy:string | null
   issuedDate:string | null
   phone: string | null
-  citizenship:string | null
+  citizenship:string | undefined
   dateBirth:string | null
   comment:string | null
   gender:string | null
@@ -44,7 +44,7 @@ export interface ForeignNationalEdit extends ForeignNational{
   issuedDate:string | null
   phone: string | null
   dateBirth:string | null
-  citizenship:string | null
+  citizenship:string | undefined
   noPatronymic: boolean
   noPassportNumber: boolean
   noPassportSeries: boolean
@@ -65,9 +65,9 @@ export interface ForeignNationalCreate extends Omit<ForeignNational,
   issuedDate:string | null
   phone: string | null
   dateBirth:string | null
-  citizenship:string | null
+  citizenship:string | undefined
   hasPayment:boolean 
-  examId: number | null
+  examId: number | undefined
   passportTranslate: File | undefined
   passport: File | undefined
   noPatronymic: boolean

@@ -76,7 +76,7 @@ const isOpen = ref<boolean>(false)
         </template>
 
         <v-container>
-            <div class="space-y-5">
+            <div class="space-y-5 max-w-6xl m-auto">
                 <v-card>
                     <v-card-text class="px-6 pt-6">
                         <div class="text-lg font-semibold text-gray-900">

@@ -22,7 +22,8 @@ class VerifyCodeController
             Auth::guard('foreignNationals')
                 ->login($enrollment->foreignNational);
                 
-            $enrollment->makeExamCodeUsed();
+            $enrollment->recoveryCode
+                ->makeUsed();
 
             return redirect()->route('attempts.show', [
                 'attempt' => $enrollment->attempt->id

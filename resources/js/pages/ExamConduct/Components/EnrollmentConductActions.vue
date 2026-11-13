@@ -42,6 +42,7 @@ const recoveryCodeModalIsOpen = ref<boolean>(false)
             variant="text"
             title="Восстановить доступ к попытке"
            @click="recoveryCodeModalIsOpen = true"
+           :disabled="! enrollment.actions.recoveryCode.url"
             
         />
 
@@ -63,7 +64,7 @@ const recoveryCodeModalIsOpen = ref<boolean>(false)
 
     <RecoveryCodeModal 
         v-model="recoveryCodeModalIsOpen"
-        v-if="enrollment.actions.recoveryCode.url"
+        v-if="recoveryCodeModalIsOpen && enrollment.actions.recoveryCode.url"
         :url="enrollment.actions.recoveryCode.url"
         :foreign-national="enrollment.foreignNational"
     />
