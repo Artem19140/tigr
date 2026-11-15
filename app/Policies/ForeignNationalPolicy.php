@@ -50,8 +50,8 @@ class ForeignNationalPolicy
         return $employee->hasAnyRole(EmployeeRole::Operator);
     }
 
-    public function export(Employee $employee): bool
+    public function findMatches(Employee $employee): bool
     {
-        return $employee->hasAnyRole(EmployeeRole::Director);
+        return $employee->hasAnyRole(EmployeeRole::Operator);
     }
 }

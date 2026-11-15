@@ -40,7 +40,9 @@ const loading = ref<boolean>(false)
         :elements="exams"
         title="Экзамены"
         :loading="loading"
-        @row-click="(item) => router.visit(item.showUrl)"
+        @row-click="(item) => router.visit(item.show.url, {
+          method:item.show.method
+        })"
       >
         <template #header-left>
           <TableFilters

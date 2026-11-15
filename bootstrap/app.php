@@ -24,15 +24,12 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
             HandleInertiaRequests::class,
+            EnsureEmployeeActive::class,
+            LogContext::class
         ]);
 
         $middleware->alias([
-            'employee.active' => EnsureEmployeeActive::class,
             AppMiddleware::ENSURE_ATTEMPT_VALID_STATUS => EnsureValidAttemptStatus::class,
-        ]);
-
-        $middleware->appendToGroup('meta', [
-            LogContext::class
         ]);
 
         $middleware->trustProxies(

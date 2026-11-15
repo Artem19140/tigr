@@ -7,7 +7,6 @@ use App\Http\Controllers\Web\ExamConduct\SpeakingController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('attempts')->middleware([
-    'meta',
     'can:attempts.employee-access,attempt'
 ])
 ->group(function () {
@@ -25,7 +24,6 @@ Route::prefix('attempts')->middleware([
 });
 
 Route::prefix('exams')->middleware([
-    'meta',
     'can:conduct,exam'
 ])
 ->group(function () {

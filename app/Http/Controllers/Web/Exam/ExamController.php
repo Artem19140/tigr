@@ -27,16 +27,27 @@ use App\Support\ModelAuditChangesBuilder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Inertia\Inertia;
+use Spatie\RouteAttributes\Attributes\Delete;
+use Spatie\RouteAttributes\Attributes\Get;
+use Spatie\RouteAttributes\Attributes\Post;
+use Spatie\RouteAttributes\Attributes\Put;
+use Spatie\RouteAttributes\Attributes\Where;
+
+
+#[Middleware('auth:web')]
+#[Where('exam', '[0-9]+')]
 
 class ExamController
 {
+    #[Get('exams', 'exams.index')]
+    #[Authorize('viewAny', Exam::class)]
     public function index(
         ExamIndexRequest $request,
         GetExams $getExams
     ): \Inertia\Response {
-        Gate::authorize('viewAny', Exam::class);
 
         $employee = $request->user();
         $dto = $request->toDto();
@@ -59,6 +70,8 @@ class ExamController
         ]);
     }
 
+    #[Authorize('view', 'exam')]
+    #[Get('exams/{exam}', 'exams.show')]
     public function show(
         Request $request,
         Exam $exam,
@@ -100,12 +113,13 @@ class ExamController
         
     }
 
+    #[Authorize('create', Exam::class)]
+    #[Post('exams', 'exams.store')]
     public function store(
         ExamPostRequest $request,
         CreateExam $createExam
     ): JsonResponse {
         
-        Gate::authorize('create', Exam::class);
         $createExam->execute(
             $request->toDto(), 
             $request->user()
@@ -114,10 +128,11 @@ class ExamController
         return response()->json();
     }
 
+    #[Get('exams/create', 'exams.create')]
+    #[Authorize('create', Exam::class)]    
     public function create(
         ExamCreateData $builder
     ): \Inertia\Response {
-        Gate::authorize('create', Exam::class);
 
         $createData = $builder->execute();
         return Inertia::render('Exam/Create', [
@@ -129,12 +144,13 @@ class ExamController
         ]);
     }
 
+    #[Get('exams/{exam}/edit', 'exams.edit')]
+    #[Authorize('update', 'exam')]
     public function edit(
         Exam $exam,
         ExamCreateData $builder
     ): \Inertia\Response {
 
-        Gate::authorize('update', $exam);
         $createData = $builder->execute();
         $exam->load('examiners');
 
@@ -152,12 +168,13 @@ class ExamController
         ]);
     }
 
+    #[Put('exams/{exam}', 'exams.update')]
+    #[Authorize('update', 'exam')]
     public function update(
         ExamPostRequest $request,
         Exam $exam,
         UpdateExam $updateExam
     ):RedirectResponse {
-        Gate::authorize('update', $exam);
 
         $updateExam->execute($exam, $request->toDto());
 
@@ -166,12 +183,13 @@ class ExamController
         ]);
     }
 
+    #[Delete('exams/{exam}', 'exams.destroy')]
+    #[Authorize('delete', 'exam')]
     public function destroy(
         Request $request,
         Exam $exam,
         CancelExam $cancelExam
     ): RedirectResponse {
-        Gate::authorize('delete', $exam);
 
         $request->validate([
             'reason' => ['required', 'string'],
@@ -187,6 +205,8 @@ class ExamController
         ]);
     }
 
+    #[Put('exams/{exam}/counters', 'exams.update.counters')]
+    #[Authorize('view', 'exam')]
     public function updateCounters(
         Request $request,
         Exam $exam,

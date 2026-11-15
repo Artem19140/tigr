@@ -19,11 +19,23 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
+use Spatie\RouteAttributes\Attributes\Delete;
+use Spatie\RouteAttributes\Attributes\Get;
+use Spatie\RouteAttributes\Attributes\Post;
+use Spatie\RouteAttributes\Attributes\Put;
+use Spatie\RouteAttributes\Attributes\Where;
+
+#[Middleware('auth:web')]
+#[Where('employee', '[0-9]+')]
 
 class EmployeeController
 {
+    #[Get('center-manage/employees', 'employees.index')]
+    #[Authorize('viewAny', Employee::class)]
     public function index(
         Request $request
     ): \Inertia\Response {
@@ -44,6 +56,8 @@ class EmployeeController
         ]);
     }
 
+    #[Get('employees/create', 'employees.create')]
+    #[Authorize('create', Employee::class)]
     public function create() {
         Gate::authorize('create', Employee::class);
         return Inertia::render('CenterManage/EmployeeCreate', [
@@ -52,6 +66,8 @@ class EmployeeController
         ]);
     }
 
+    #[Post('employees', 'employees.store')]
+    #[Authorize('create', Employee::class)]
     public function store(
         EmployeePostRequest $request,
         CreateEmployee $createEmployee
@@ -66,6 +82,8 @@ class EmployeeController
         return redirect()->route('employees.index');
     }
 
+    #[Get('employees/{employee}/edit', 'employees.edit')]
+    #[Authorize('update', 'employee')]
     public function edit(Employee $employee) {
         Gate::authorize('update', $employee);
         $employee->load('roles');
@@ -78,7 +96,8 @@ class EmployeeController
         ]);
     }
     
-
+    #[Put('employees/{employee}', 'employees.update')]
+    #[Authorize('update', 'employee')]
     public function update(
         EmployeeUpdateRequest $request,
         Employee $employee,
@@ -93,6 +112,8 @@ class EmployeeController
         return redirect()->route('employees.index');
     }
 
+    #[Delete('employees/{employee}', 'employees.destroy')]
+    #[Authorize('delete', 'employee')]
     public function destroy(
         Employee $employee,
         Audit $audit
@@ -111,6 +132,8 @@ class EmployeeController
         return redirect()->route('employees.index');
     }
 
+    #[Get('roles', 'roles.index')]
+    #[Authorize('center-manage')]
     public function rolesShow(Request $request): AnonymousResourceCollection
     {
         return RoleResource::collection(

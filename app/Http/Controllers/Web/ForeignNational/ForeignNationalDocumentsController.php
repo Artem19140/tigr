@@ -7,13 +7,25 @@ use App\Support\Audit;
 use DB;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Validation\Rules\File;
+use Spatie\RouteAttributes\Attributes\Get;
+use Spatie\RouteAttributes\Attributes\Prefix;
+use Spatie\RouteAttributes\Attributes\Put;
+use Spatie\RouteAttributes\Attributes\Where;
+
+#[Middleware('auth:web')]
+#[Where('foreign_national_document', '[0-9]+')]
+#[Prefix('foreign-nationals/documents')]
 
 class ForeignNationalDocumentsController
 {
+    #[Get('{foreign_national_document}', 'foreign-nationals.documents.show')]
+    #[Authorize('view', 'foreign_national_document')]
     public function show(
         ForeignNationalDocument $foreignNationalDocument,
         Audit $audit
@@ -25,6 +37,8 @@ class ForeignNationalDocumentsController
             ->response($foreignNationalDocument->path);
     }
 
+    #[Put('{foreign_national_document}', 'foreign-nationals.documents.update')]
+    #[Authorize('update', 'foreign_national_document')]
     public function update(
         Request $request, 
         ForeignNationalDocument $foreignNationalDocument,

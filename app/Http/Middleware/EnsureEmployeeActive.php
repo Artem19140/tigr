@@ -16,13 +16,17 @@ class EnsureEmployeeActive
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (! $request->user()) {
+            return $next($request);
+        }
+        
         if($request->user()->isPlatformAdmin()){
             return $next($request);
         }
 
         if (! $request->user()->isActive()) {
             Auth::guard('web')->logout();
-            return redirect()->route('login');
+            return to_route('login');
         }
 
         return $next($request);

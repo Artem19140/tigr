@@ -11,6 +11,16 @@ use App\Modules\ExamDocument\ExamListDataBuilder;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
+use Livewire\Attributes\Authorize;
+use Spatie\RouteAttributes\Attributes\Get;
+use Spatie\RouteAttributes\Attributes\Prefix;
+use Spatie\RouteAttributes\Attributes\Where;
+
+#[Middleware('auth:web')]
+#[Prefix('exams/{exam}/documents')]
+#[Where('exam', '[0-9]+')]
+#[Authorize('list', 'exam')]
 
 class ListController
 {
@@ -18,6 +28,8 @@ class ListController
         protected ExamDocumentRules $examDocumentRules,
         protected ExamListDataBuilder $builder
     ) {}
+
+    #[Get('list', 'exams.documents.list')]
     public function generate(Exam $exam): Response
     {
         $exam->loadExists('enrollments');
@@ -49,6 +61,7 @@ class ListController
         ));
     }
 
+    #[Get('list/availability', 'exams.documents.list.availability')]
     public function availability(Exam $exam): JsonResponse
     {
         $exam->loadExists('enrollments');

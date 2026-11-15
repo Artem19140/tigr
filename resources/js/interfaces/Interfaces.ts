@@ -1,3 +1,4 @@
+import { Method } from '@inertiajs/core';
 
 export interface RedirectUrl{
     redirectUrl:string
@@ -28,4 +29,9 @@ export interface Action{
     url: string,
     method: string,
     disabled?: boolean
+}
+
+export interface HttpUrl{
+    url: string
+    method: Method
 }

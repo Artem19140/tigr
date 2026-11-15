@@ -6,11 +6,19 @@ use App\Http\Resources\Center\CenterResource;
 use App\Models\Center;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
+use Spatie\RouteAttributes\Attributes\Get;
+use Spatie\RouteAttributes\Attributes\Put;
+
+#[Middleware('auth:web')]
 
 class CenterController
 {
+    #[Get('center-manage', 'centers.show')]
+    #[Authorize('view', Center::class)]
     public function show(): \Inertia\Response
     {
         $center = Center::firstOrFail();
@@ -20,6 +28,8 @@ class CenterController
         ]);
     }
 
+    #[Get('center-manage/edit', 'centers.edit')]
+    #[Authorize('edit', Center::class)]
     public function edit(): \Inertia\Response
     {
         $center = Center::firstOrFail();
@@ -36,11 +46,12 @@ class CenterController
         ]);
     }
 
+    #[Put('centers/{center}', 'centers.update')]
+    #[Authorize('edit', Center::class)]
     public function update(
         Request $request, 
         Center $center
-    ): RedirectResponse
-    {
+    ): RedirectResponse {
         $request->validate([
             'name' => ['required', 'string'],
             'shortName' => ['required', 'string'],

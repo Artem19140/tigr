@@ -7,13 +7,25 @@ use App\Modules\Report\EnsureMinistryEducationAvailable;
 use App\Modules\Report\MinistryEducationReportGenerator;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
+use Inertia\Inertia;
+use Spatie\RouteAttributes\Attributes\Get;
+use Spatie\RouteAttributes\Attributes\Prefix;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+
+#[Middleware('web')]
+#[Prefix('reports')]
+#[Authorize('reports.ministry-education')]
 
 class MinistryEducationController
 {
     public function __construct(
         protected EnsureMinistryEducationAvailable $ensureGenerationAvailable
     ){}
+
+    #[Get('ministry-education/download', 'reports.ministry-education.download')]
+    #[Authorize('reports.ministry-education')]
     public function download(
         MinistryEducationReportRequest $request,
         MinistryEducationReportGenerator $ministryEducationReportGenerator
@@ -52,6 +64,8 @@ class MinistryEducationController
         );
     }
 
+    #[Get('ministry-education/availability', 'reports.ministry-education.availability')]
+    #[Authorize('reports.ministry-education')]
     public function availability(
         MinistryEducationReportRequest $request
     ): JsonResponse {
@@ -77,6 +91,14 @@ class MinistryEducationController
                 'dateFrom' => $request->validated('dateFrom'),
                 'dateTo' => $request->validated('dateTo'),
             ]),
+        ]);
+    }
+
+    #[Get('ministry-education', 'reports.ministry-education')]
+    #[Authorize('reports.ministry-education')]
+    public function view() :\Inertia\Response{
+        return  Inertia::render('Report/MinistryEducation', [
+            'availabilityUrl' => route('reports.ministry-education.availability')
         ]);
     }
 }

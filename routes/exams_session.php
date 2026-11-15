@@ -9,7 +9,6 @@ use App\Support\AppMiddleware;
 use Inertia\Inertia;
 
 Route::middleware([
-        'meta',
         'guest:web,foreignNationals'
     ])->group(function () {
         
@@ -26,7 +25,6 @@ Route::middleware([
     
 Route::prefix('attempts')
     ->middleware([
-        'meta',
         'auth:foreignNationals',
         'can:attempts.foreign-national-access,attempt',
         AppMiddleware::ENSURE_ATTEMPT_VALID_STATUS,
@@ -52,9 +50,6 @@ Route::prefix('attempts')
     });
 
 Route::prefix('exams-sessions')
-    ->middleware([
-        'meta'
-    ])
     ->group(function () {
         Route::get(
             'confirmation', 

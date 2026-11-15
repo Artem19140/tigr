@@ -63,7 +63,9 @@ watch(() => props.current,
             :elements="exams.data"
             :headers="headers"
             title="Мои экзамены"
-            @row-click="(item) => router.visit(item.showUrl)"
+            @row-click="( item:ExamIndex ) => router.visit(item.show.url, {
+                method:item.show.method
+            })"
         >
             <template #header-left>
                 <div class="grid grid-cols-[40px_minmax(0,1fr)_40px] gap-2 items-center">

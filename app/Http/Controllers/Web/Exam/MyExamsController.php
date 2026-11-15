@@ -6,11 +6,18 @@ use App\Modules\Shared\CenterData;
 use Illuminate\Http\Request;
 use App\Http\Resources\Exam\ExamIndexResource;
 use App\Models\Exam;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Carbon;
 use Inertia\Inertia;
+use Spatie\RouteAttributes\Attributes\Get;
+
+#[Middleware('auth:web')]
 
 class MyExamsController
 {
+    #[Get('my-exams', 'my-exams.index')]
+    #[Authorize('conductAny', Exam::class)]
     public function index(Request $request): \Inertia\Response
     {
         $now = Carbon::parse($request->input('date')) ?? Carbon::now();

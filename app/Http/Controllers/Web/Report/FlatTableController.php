@@ -7,14 +7,23 @@ use App\Modules\Report\EnsureFlatTableAvailable;
 use App\Modules\Report\FlatTableGenerator;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
+use Inertia\Inertia;
+use Livewire\Attributes\Authorize;
+use Spatie\RouteAttributes\Attributes\Get;
+use Spatie\RouteAttributes\Attributes\Prefix;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
+#[Middleware('web')]
+#[Prefix('reports')]
+#[Authorize('reports.flat-table')]
 class FlatTableController
 {
     public function __construct(
         protected EnsureFlatTableAvailable $ensureGenerationAvailable
     ){}
-    
+
+    #[Get('flat-table/download', 'reports.flat-table.download')]
     public function download(
         FlatTableRequest $request,
         FlatTableGenerator $flatTableGenerator
@@ -45,10 +54,10 @@ class FlatTableController
             ]);
     }
 
+    #[Get('flat-table/availability', 'reports.flat-table.availability')]
     public function availability(
         FlatTableRequest $request
     ): JsonResponse {
-
         $this->ensureGenerationAvailable->execute(
             Carbon::parse($request->input('dateFrom')), 
             Carbon::parse($request->input('dateTo'))
@@ -61,4 +70,12 @@ class FlatTableController
             ]),
         ]);
     }
+
+    #[Get('flat-table', 'reports.flat-table')]
+    public function view(): \Inertia\Response {
+        return  Inertia::render('Report/FlatTable', [
+            'availabilityUrl' => route('reports.flat-table.availability')
+        ]);
+    }
+    
 }

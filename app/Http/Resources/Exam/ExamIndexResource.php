@@ -20,9 +20,12 @@ class ExamIndexResource extends JsonResource
             'capacity' => $this->capacity,
             'shortName' => $this->whenLoaded('type', fn () => $this->shortName()),
             'enrollmentsCount' => $this->whenCounted('enrollments_count'),
-            'showUrl' => route('exams.show', [
-                'exam' => $this->resource
-            ], false)
+            'show' => [
+                'url' => route('exams.show', [
+                    'exam' => $this->resource
+                ], false),
+                'method' => 'get'
+            ]
         ];
     }
 }

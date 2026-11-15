@@ -7,13 +7,24 @@ use App\Modules\Report\EnsureFrdoGenerationAvailable;
 use App\Modules\Report\FRDOReportsGenerator;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
+use Inertia\Inertia;
+use Spatie\RouteAttributes\Attributes\Get;
+use Spatie\RouteAttributes\Attributes\Prefix;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+
+#[Middleware('web')]
+#[Prefix('reports')]
+#[Authorize('reports.frdo')]
 
 class FrdoController
 {
     public function __construct(
         protected EnsureFrdoGenerationAvailable $ensureGenerationAvailable,
     ){}
+
+    #[Get('frdo/download', 'reports.frdo.download')]
     public function download(
         FrdoReportRequest $request,
         FRDOReportsGenerator $frdoGenerator
@@ -47,6 +58,7 @@ class FrdoController
         }, 200, $headers);
     }
 
+    #[Get('frdo/availability', 'reports.frdo.availability')]
     public function availability(
         FrdoReportRequest $request
     ): JsonResponse {
@@ -62,4 +74,12 @@ class FrdoController
             ]),
         ]);
     }
+
+    #[Get('frdo', 'reports.frdo')]
+    public function view() :\Inertia\Response{
+        return  Inertia::render('Report/Frdo', [
+            'availabilityUrl' => route('reports.frdo.availability')
+        ]);
+    }
+    
 }

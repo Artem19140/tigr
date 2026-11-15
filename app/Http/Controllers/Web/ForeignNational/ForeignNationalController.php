@@ -18,19 +18,28 @@ use App\Models\ForeignNational;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
+use Spatie\RouteAttributes\Attributes\Get;
+use Spatie\RouteAttributes\Attributes\Post;
+use Spatie\RouteAttributes\Attributes\Put;
+use Spatie\RouteAttributes\Attributes\Where;
+
+#[Middleware('auth:web')]
+#[Where('foreign_national', '[0-9]+')]
 
 class ForeignNationalController
 {
+    #[Get('foreign-nationals', 'foreign-nationals.index')]
+    #[Authorize('viewAny', ForeignNational::class)]
     public function index(
         ForeignNationalIndexRequest $request,
         GetForeignNationals $getForeignNationals
     ): Response 
     {
-        Gate::authorize('viewAny', ForeignNational::class);
-
         $dto = $request->toDto();
         $foreignNationals = $getForeignNationals->execute($dto)
             ->simplePaginate($dto->perPage ?? 10)
@@ -49,9 +58,10 @@ class ForeignNationalController
         ]);
     }
 
+    #[Get('foreign-nationals/create', 'foreign-nationals.create')]
+    #[Authorize('create', ForeignNational::class)]
     public function create(): Response 
     {
-        Gate::authorize('create', ForeignNational::class);
         $indexUrl = route('foreign-nationals.index', [], false);
         return Inertia::render('ForeignNationals/Create', [
             'backUrl' => url()->previous($indexUrl),
@@ -64,6 +74,8 @@ class ForeignNationalController
         ]);
     }
 
+    #[Post('foreign-nationals', 'foreign-nationals.store')]
+    #[Authorize('create', ForeignNational::class)]
     public function store(
         ForeignNationalPostRequest $request,
         CreateForeignNationalWithEnrollment $createForeignNationalWithEnrollment
@@ -92,13 +104,13 @@ class ForeignNationalController
         ]);
     }
 
+    #[Get('foreign-nationals/{foreign_national}',  'foreign-nationals.show')]
+    #[Authorize('view', 'foreign_national')]
     public function show(
         Request $request,
         ForeignNational $foreignNational,
         ForeignNationalViewBuilder $builder
     ): Response {
-
-        Gate::authorize('view', $foreignNational);
 
         $buildedForeignNational = $builder->build(
             $foreignNational, 
@@ -124,12 +136,12 @@ class ForeignNationalController
         ]);
     }
 
+    #[Get('foreign-nationals/{foreign_national}/edit', 'foreign-nationals.edit')]
+    #[Authorize('update', 'foreign_national')]
     public function edit(
         ForeignNational $foreignNational
     ): Response 
     {
-        Gate::authorize('update', $foreignNational);
-
         return Inertia::render('ForeignNationals/Edit', [
             'foreignNational' => new ForeignNationalEditResource($foreignNational),
             'updateUrl' => route('foreign-nationals.update', [
@@ -141,6 +153,9 @@ class ForeignNationalController
         ]);
     }
 
+    
+    #[Put('foreign-nationals/{foreign_national}', 'foreign-nationals.update')]
+    #[Authorize('update', 'foreign_national')]
     public function update(
         ForeignNationalUpdateRequest $request,
         ForeignNational $foreignNational,

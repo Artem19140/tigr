@@ -55,7 +55,7 @@ final class UpdateExam
     protected function log(
         Exam $exam, 
         array $relations
-    ){
+    ): void{
         $this->audit->log(
             'update',
             $exam,
