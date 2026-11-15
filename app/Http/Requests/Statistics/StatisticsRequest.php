@@ -23,8 +23,8 @@ class StatisticsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'dateFrom' => ['required', 'date'],
-            'dateTo' => ['required', 'date'],
+            'dateFrom' => ['required_with:dateTo', 'date'],
+            'dateTo' => ['required_with:dateFrom', 'date'],
         ];
     }
 }

@@ -22,6 +22,7 @@ return [
         'employees' => 'Сотрудники',
         'addresses' => 'Адреса',
         'counters' => 'Счетчики',
+        'statistics' => 'Статистика'
     ],
 
     'exams' => [

@@ -59,6 +59,10 @@ class MainMenuNavigation
                     'commands' => [
                         'url' => route('platform-admin.commands', [], false),
                         'label' => 'Команды'
+                    ],
+                    'healthCheck' => [
+                        'url' => route('platform-admin.health-check', [], false),
+                        'label' => 'Проверка'
                     ]
                 ]
             ]

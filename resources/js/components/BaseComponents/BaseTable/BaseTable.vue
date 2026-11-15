@@ -13,9 +13,8 @@ const emit = defineEmits<{
 
 <template>
     <v-card>
-        <div class="p-4">
-            <div class="d-flex align-center flex-wrap ga-3">
-
+        <div class="p-4 flex ">
+            <div class="d-flex justify-between align-center flex-wrap ga-3">
                 <div class="text-subtitle-1 font-weight-medium text-truncate">
                     {{ title }}
                 </div>

@@ -62,6 +62,10 @@ class AuthorizationServiceProvider extends ServiceProvider
             return $employee->hasAnyRole(EmployeeRole::PlatformAdmin);
         });
 
+        Gate::define('statistics', function (Employee $employee) {
+            return $employee->hasAnyRole(EmployeeRole::Director);
+        });
+
         Gate::define('center-manage', function (Employee $employee) {
             return 
                 $employee->can('view', Center::class) ||
