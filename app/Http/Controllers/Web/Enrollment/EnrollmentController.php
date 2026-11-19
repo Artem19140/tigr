@@ -12,8 +12,6 @@ use App\Http\Requests\Enrollment\EnrollmentStoreRequest;
 use App\Models\Enrollment;
 use App\Modules\Enrollment\EnrollmentCancelledRules;
 use App\Modules\Shared\CenterData;
-use App\Support\Audit;
-use App\Support\ModelAuditChangesBuilder;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -164,9 +162,7 @@ class EnrollmentController
     #[Authorize('create', Enrollment::class)]
     public function changeRegNumber(
         Enrollment $enrollment, 
-        Request $request,
-        Audit $audit,
-        ModelAuditChangesBuilder $builder
+        Request $request
     ): Response {
         $request->validate([
             'newRegNumber' => [
@@ -179,15 +175,6 @@ class EnrollmentController
         $enrollment->update([
             'reg_number' => $request->input('newRegNumber')
         ]);
-
-        $audit->log(
-            'update',
-            $enrollment,
-            [
-                'changes' => $builder->build($enrollment)
-            ]
-        );
-
         return response()->noContent();
     }
 }

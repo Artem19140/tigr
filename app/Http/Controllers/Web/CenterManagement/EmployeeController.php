@@ -14,7 +14,6 @@ use App\Http\Requests\Employee\EmployeeUpdateRequest;
 use App\Http\Resources\Role\RoleResource;
 use App\Models\Employee;
 use App\Models\Role;
-use App\Support\Audit;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -115,8 +114,7 @@ class EmployeeController
     #[Delete('employees/{employee}', 'employees.destroy')]
     #[Authorize('delete', 'employee')]
     public function destroy(
-        Employee $employee,
-        Audit $audit
+        Employee $employee
     ) : RedirectResponse {
         if (! $employee->isActive()) {
             throw new BusinessException(
@@ -128,7 +126,6 @@ class EmployeeController
             'is_active' => false
         ]);
 
-        $audit->log('employee_fired', $employee);
         return redirect()->route('employees.index');
     }
 

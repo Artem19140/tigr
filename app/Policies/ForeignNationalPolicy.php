@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Enums\EmployeeRole;
+use App\Enums\Permission;
 use App\Models\Employee;
 use App\Models\ForeignNational;
 
@@ -12,34 +13,24 @@ class ForeignNationalPolicy
     public function view(
         Employee $employee, 
         ForeignNational $foreignNational
-    ): bool
-    {
-        if ($employee->hasAnyRole(
-            EmployeeRole::Operator,
-            EmployeeRole::Director
-        )) 
-        {
-            return true;
-        }
-        
-        return false;
+    ): bool {
+        return $employee->hasPermission(
+            Permission::ForeignNationalsView
+        );
     }
 
     public function viewAny(Employee $employee): bool
     {
-        if ($employee->hasAnyRole(
-            EmployeeRole::Operator,
-            EmployeeRole::Director
-        )) {
-            return true;
-        }
-
-        return false;
+        return $employee->hasPermission(
+            Permission::ForeignNationalsViewAny
+        );
     }
 
     public function create(Employee $employee): bool
     {
-        return $employee->hasAnyRole(EmployeeRole::Operator);
+        return $employee->hasPermission(
+            Permission::ForeignNationalsCreate
+        );
     }
 
     public function update(
@@ -47,11 +38,15 @@ class ForeignNationalPolicy
         ForeignNational $foreignNational
     ): bool
     {
-        return $employee->hasAnyRole(EmployeeRole::Operator);
+        return $employee->hasPermission(
+            Permission::ForeignNationalsUpdate
+        );
     }
 
     public function findMatches(Employee $employee): bool
     {
-        return $employee->hasAnyRole(EmployeeRole::Operator);
+        return $employee->hasPermission(
+            Permission::ForeignNationalsFindMatches
+        );
     }
 }

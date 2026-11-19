@@ -16,7 +16,7 @@ class CommandsController
 
         $commandNumber = $request->input('command');
         
-        match($commandNumber){
+        app()->terminating(fn() => match($commandNumber){
             1 => Artisan::call('migrate --force'),
             2 => Artisan::call('optimize:clear'),
             3 => Artisan::call('optimize'),
@@ -25,11 +25,8 @@ class CommandsController
             default => Log::critical('command not found', [
                 'command' => $commandNumber
             ])
-        };
-
-        Log::info('command executed', [
-            'command' => $commandNumber
-        ]);
+            
+        });
 
         return response()->noContent();
     }

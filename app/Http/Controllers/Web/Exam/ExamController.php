@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Exam;
 
 use App\Enums\BusinessCode;
+use App\Enums\Permission;
 use App\Exceptions\BusinessException;
 use App\Http\Resources\Exam\ExamEditResource;
 use App\Http\Resources\Exam\ExamResource;
@@ -22,8 +23,6 @@ use App\Http\Resources\Exam\ExamIndexResource;
 use App\Http\Resources\ExamType\ExamTypeResource;
 use App\Models\Exam;
 use App\Modules\ExamDocument\ExamDocumentBuilder;
-use App\Support\Audit;
-use App\Support\ModelAuditChangesBuilder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -48,7 +47,6 @@ class ExamController
         ExamIndexRequest $request,
         GetExams $getExams
     ): \Inertia\Response {
-
         $employee = $request->user();
         $dto = $request->toDto();
 
@@ -210,8 +208,6 @@ class ExamController
     public function updateCounters(
         Request $request,
         Exam $exam,
-        Audit $audit,
-        ModelAuditChangesBuilder $builder
     ){
         $request->validate([
             'session' => ['required', 'integer', 'min:1'],
@@ -228,15 +224,6 @@ class ExamController
             'session' => $request->input('session'),
             'group' => $request->input('group')
         ]);
-
-        $audit->log(
-            'update',
-            $exam,
-            $builder->build(
-                $exam
-            )
-        );
-
         return response()->noContent();
     }
 }

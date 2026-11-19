@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Web\CenterManagement;
 
 use App\Http\Resources\Counter\CounterResource;
 use App\Models\Counter;
-use App\Support\Audit;
-use App\Support\ModelAuditChangesBuilder;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -21,12 +19,7 @@ use Spatie\RouteAttributes\Attributes\Where;
 #[Where('counter', '[0-9]+')]
 
 class CounterController
-{
-    public function __construct(
-        protected Audit $audit,
-        protected ModelAuditChangesBuilder $builder
-    ){}
-    
+{   
     #[Get('center-manage/counters', 'counters.index')]
     #[Authorize('viewAny', Counter::class)]
     public function index(): \Inertia\Response
@@ -61,14 +54,6 @@ class CounterController
             'value' => $request->input('value'),
             'last_increment_at' => $inctementedAt
         ]);
-
-        $this->audit->log(
-            'update',
-            $counter,
-            $this->builder->build(
-                $counter
-            )
-        );
 
         return redirect()->route('counters.index');
     }

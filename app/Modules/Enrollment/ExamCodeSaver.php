@@ -18,7 +18,8 @@ class ExamCodeSaver
     public function save(
         Enrollment $enrollment,
         Carbon $expiresAt,
-        string $type
+        string $type,
+        string | null $recoveryReason = null
     ) {
         $retries = 0;
 
@@ -31,7 +32,8 @@ class ExamCodeSaver
                     'code' => $code,
                     'code_snapshot' => $code,
                     'expires_at' => $expiresAt,
-                    'type' => $type
+                    'type' => $type,
+                    'recovery_reason' => $recoveryReason
                 ]);
 
                 return;

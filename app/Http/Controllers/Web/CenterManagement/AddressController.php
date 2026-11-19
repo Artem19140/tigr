@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Web\CenterManagement;
 use App\Http\Resources\Address\AddressIndexResource;
 use App\Http\Resources\Address\AddressResource;
 use App\Models\Address;
-use App\Support\Audit;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Attributes\Controllers\Authorize;
@@ -22,10 +21,6 @@ use Spatie\RouteAttributes\Attributes\Where;
 
 class AddressController
 {
-    public function __construct(
-        protected Audit $audit
-    ){}
-
     #[Get('center-manage/addresses', 'addresses.index')]
     #[Authorize('viewAny', Address::class)]
     public function index(
@@ -65,13 +60,11 @@ class AddressController
             'capacity' => ['required', 'integer', 'min:1'],
         ]);
 
-        $address = Address::create([
+        Address::create([
             'address' => $request->input('address'),
             'capacity' => $request->input('capacity'),
             'creator_id' => $request->user()->id,
         ]);
-
-        $this->audit->log('create', $address);
 
         return redirect()->route('addresses.index');
     }
@@ -104,16 +97,9 @@ class AddressController
             $address->address = $request->input('address');
         }
 
-        $address->capacity = $request->input('capacity');
-
         $address->update([
             'capacity' => $request->input('capacity')
         ]);
-
-        $this->audit->log(
-            'update',
-            $address
-        );
 
         return redirect()->route('addresses.index');
     }
@@ -127,8 +113,6 @@ class AddressController
         $address->update([
             'is_active' => false
         ]);
-
-        $this->audit->log('delete', $address);
 
         return redirect()->route('addresses.index');
     }

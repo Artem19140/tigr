@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Enums\EmployeeRole;
+use App\Enums\Permission;
 use App\Models\Employee;
 use App\Models\Exam;
 
@@ -10,15 +11,9 @@ class ExamPolicy
 {
     public function viewAny(Employee $employee): bool
     {
-        if ($employee->hasAnyRole(
-            EmployeeRole::Operator,
-            EmployeeRole::Director,
-            EmployeeRole::Examiner,
-        )) {
-            return true;
-        }
-
-        return false;
+        return $employee->hasPermission(
+            Permission::ExamsViewAny
+        );
     }
 
     public function view(Employee $employee, Exam $exam): bool

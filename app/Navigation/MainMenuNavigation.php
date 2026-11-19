@@ -63,12 +63,18 @@ class MainMenuNavigation
                     'healthCheck' => [
                         'url' => route('platform-admin.health-check', [], false),
                         'label' => 'Проверка'
+                    ],
+                    'rolesMatrix' => [
+                        'url' => route('platform-admin.roles-matrix', [], false),
+                        'label' => 'Матрица ролей'
                     ]
                 ]
             ]
-        ])->filter(function($item){
-            return $item['can'];
-        })->map(function(array $item, $key){
+        ])
+        
+        ->filter( fn($item) =>  $item['can'])
+
+        ->map(function(array $item, $key){
             unset($item['can']);
 
             $item['label'] = __("navigation.menu.$key");

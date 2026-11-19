@@ -4,14 +4,12 @@ namespace App\Modules\Employee;
 
 use App\Http\Dto\EmployeeDto;
 use App\Models\Employee;
-use App\Support\Audit;
 use Illuminate\Support\Facades\DB;
 
 class CreateEmployee
 {
     public function __construct(
-        protected EmployeeBeforeSaveValidator $validator,
-        protected Audit $audit
+        protected EmployeeBeforeSaveValidator $validator
     ){}
     
     public function execute(
@@ -25,17 +23,14 @@ class CreateEmployee
 
         return DB::transaction(function () use ($dto) {
             $employee = Employee::create([
-                ...$dto->toArray()
+                'surname' => $dto->surname,
+                'name' => $dto->name,
+                'patronymic' => $dto->patronymic,
+                'email' => $dto->email
             ]);
 
             $roles = $employee->roles()->sync($dto->rolesIds);
 
-            $this->audit->log(
-                'create',
-                $employee,
-                ['roles' => $roles]
-            );
-            
             return $employee;
         });
         

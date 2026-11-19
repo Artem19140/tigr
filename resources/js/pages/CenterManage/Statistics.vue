@@ -102,7 +102,7 @@ const formatNumber = (value: number) =>
 
 <template>
   <Head title="Статистика"></Head>
-  <v-container fluid class="py-6">
+  <v-container  class="py-6">
     <div class="d-flex flex-wrap align-center justify-space-between ga-3 mb-6">
       <div>
         <div class="text-h4 font-weight-bold">

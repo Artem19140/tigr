@@ -9,10 +9,19 @@ use App\Models\Exam;
 use App\Models\ExamAccessCode;
 use App\Modules\Attempt\ActiveAttemptRules;
 use App\Modules\Enrollment\ExamCodeSaver;
-use App\Support\Audit;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
+use Spatie\RouteAttributes\Attributes\Get;
+use Spatie\RouteAttributes\Attributes\Post;
+use Spatie\RouteAttributes\Attributes\Prefix;
+use Spatie\RouteAttributes\Attributes\ScopeBindings;
+
+#[Middleware('auth:web')]
+#[Authorize('conduct', 'exam')]
+#[Prefix('exams')]
 
 class RecoveryCodeController
 {
@@ -20,7 +29,9 @@ class RecoveryCodeController
         protected ExamCodeSaver $examCodeSaver,
         protected ActiveAttemptRules $rules
     ){}
-    
+
+    #[Get('{exam}/enrollments/{enrollment}/recovery-code', 'enrollments.show.recovery-codes')]
+    #[ScopeBindings()]
     public function show(
         Exam $exam,
         Enrollment $enrollment
@@ -47,11 +58,13 @@ class RecoveryCodeController
         ]);
 
     }
+
+    #[Post('{exam}/enrollments/{enrollment}/recovery-code', 'enrollments.recovery-codes')]
+    #[ScopeBindings()]
     public function generation(
         Request $request,
         Exam $exam,
-        Enrollment $enrollment,
-        Audit $audit
+        Enrollment $enrollment
     ): JsonResponse {
 
         $request->validate([
@@ -72,27 +85,16 @@ class RecoveryCodeController
             $this->examCodeSaver->save(
                 $enrollment,
                 now()->addMinutes(ExamAccessCode::RECOVERY_CODE_TTL_MINUTES),
-                ExamAccessCode::RECOVERY_TYPE
+                ExamAccessCode::RECOVERY_TYPE,
+                $request->input('reason')
             );
 
             $enrollment->refresh();
 
             $recoveryCode = $enrollment->recoveryCode;
 
-            $recoveryCode->update([
-                'recovery_reason' => $request->input('reason')
-            ]);
-
             return $recoveryCode;
         });
-
-        $audit->log(
-            'Recovery code was generated', 
-            $enrollment,
-            [
-                'code' => $newRecoveryCode->code
-            ]
-        );
 
         return response()->json([
             'code' => $newRecoveryCode->code

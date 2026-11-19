@@ -2,31 +2,23 @@
 
 namespace App\Policies;
 
-use App\Enums\EmployeeRole;
+use App\Enums\Permission;
 use App\Models\Employee;
 
 class EmployeePolicy
 {
     public function viewAny(Employee $employee): bool
     {
-        if($employee->hasAnyRole(
-            EmployeeRole::Director, 
-            EmployeeRole::CenterAdmin
-        )){
-            return true;
-        }
-        return false;
+        return $employee->hasPermission(
+            Permission::EmployeesViewAny
+        );
     }
 
     public function create(Employee $employee): bool
     {
-        if($employee->hasAnyRole(
-            EmployeeRole::Director, 
-            EmployeeRole::CenterAdmin
-        )){
-            return true;
-        }
-        return false;
+        return $employee->hasPermission(
+            Permission::EmployeesCreate
+        );
     }
 
     public function update(Employee $actor, Employee $employee ): bool
@@ -35,46 +27,27 @@ class EmployeePolicy
             return false;
         }
 
-        if(
-            $employee->hasAnyRole(EmployeeRole::CenterAdmin) 
-                && 
-            ! $actor->isPlatformAdmin()
-        ){
+        if($actor->id === $employee->id){
             return false;
         }
 
-        if($actor->hasAnyRole(
-            EmployeeRole::Director, 
-            EmployeeRole::CenterAdmin
-        )){
-            return true;
-        }
-
-        return false;
+        return $employee->hasPermission(
+            Permission::EmployeesUpdate
+        );
     }
 
     public function delete(Employee $actor, Employee $employee): bool
     {
         if($employee->isPlatformAdmin()){
-            
-            return false;
-        }
-        
-        if(
-            $employee->hasAnyRole(EmployeeRole::CenterAdmin) 
-                && 
-            ! $actor->isPlatformAdmin()
-        ){
             return false;
         }
 
-        if($actor->hasAnyRole(
-            EmployeeRole::Director, 
-            EmployeeRole::CenterAdmin
-        )){
-            return true;
+        if($actor->id === $employee->id){
+            return false;
         }
 
-        return false;
+        return $employee->hasPermission(
+            Permission::EmployeesDelete
+        );
     }
 }

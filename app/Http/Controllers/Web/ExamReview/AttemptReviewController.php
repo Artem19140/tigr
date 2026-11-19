@@ -12,10 +12,21 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Inertia\Inertia;
+use Spatie\RouteAttributes\Attributes\Get;
+use Spatie\RouteAttributes\Attributes\Post;
+use Spatie\RouteAttributes\Attributes\Prefix;
+use Spatie\RouteAttributes\Attributes\Put;
+use Spatie\RouteAttributes\Attributes\ScopeBindings;
 
+#[Middleware('auth:web')]
+#[Authorize('attempts.employee-access', 'attempt')]
+#[Prefix('attempts')]
 class AttemptReviewController
-{
+{ 
+    #[Get('{attempt}/review', 'attempts.review')]
     public function show(Attempt $attempt)
     {
         $attempt->load([
@@ -48,7 +59,7 @@ class AttemptReviewController
         ]);
     }
     
-
+    #[Post('{attempt}/review/finish', 'attempts.review.finish')]
     public function finish(
         Attempt $attempt,
         FinishManualReview $finishManualReview
@@ -62,6 +73,8 @@ class AttemptReviewController
         ]);
     }
 
+    #[Put('{attempt}/answers/{attempt_answer}/rate', 'attempts.answers.rate')]
+    #[ScopeBindings()]
     public function rateAnswer(
         Request $request,
         Attempt $attempt,

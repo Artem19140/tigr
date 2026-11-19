@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Web\ExamSession;
 
 use App\Models\Enrollment;
-use App\Support\Audit;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +11,6 @@ use Inertia\Inertia;
 
 class PersonConfirmationController
 {
-
     public function confirmationView() 
     {
         $enrollmentId = session('enrollment_id');
@@ -41,8 +39,7 @@ class PersonConfirmationController
     }
     
     public function confirmation(
-        Request $request,
-        Audit $audit
+        Request $request
     ) {
         $enrollmentId = session('enrollment_id');
 
@@ -68,36 +65,28 @@ class PersonConfirmationController
 
         $request->session()->regenerate();
 
-        $audit->log('Person confirmation', 
-            'enrollment',
-            [
-                'enrollment_id' => $enrollment->id,
+        activity('person_confirmation')
+            ->performedOn($enrollment)
+            ->withProperties([
                 'code' => $enrollment->exam_code
-            ]
-        );
+            ]);
 
         return to_route('exams-sessions.sound-setting', [
             'enrollment' => $enrollment
         ]);
     }
 
-    public function rejection(
-        Audit $audit
-    ): RedirectResponse{
+    public function rejection(): RedirectResponse{
         $enrollmentId = session('enrollment_id');
 
         if(! $enrollmentId){
             return to_route('login');
         }
 
-
-        $audit->log(
-            'Confirmation rejection',
-            'enrollment',
-            [
-                'enrollment_id' => $enrollmentId,
-            ]
-        );
+        activity('person_confirmation_rejection')
+            ->withProperties([
+                'code' => $enrollmentId
+            ]);
 
         session()->forget('enrollment_id');
 

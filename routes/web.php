@@ -4,19 +4,13 @@ use App\Models\ExamType;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([
-    'web'
+    'auth:web'
 ])
-    ->group(function () {
-        require __DIR__.'/exams_review.php';
+->group(function () {
+    require __DIR__.'/exams_types.php';
 
-        require __DIR__.'/exams_conduct.php';
-
-        require __DIR__.'/exams_types.php';
-
-        Route::get('exams/types', function () {
-            return ExamType::cached();
-        });
-    });
+    Route::get('exams/types', fn () => ExamType::cached());
+});
 
 require __DIR__.'/auth.php';
 require __DIR__.'/exams_session.php';
@@ -26,6 +20,6 @@ Route::redirect('', 'login');
 
 Route::middleware([
     'auth:web,foreignNationals'
-])->get('me', function (RedirectResolver $resolver) {
-    return redirect($resolver->execute());
-})->name('me');
+])
+->get('me', fn (RedirectResolver $resolver) => redirect($resolver->execute()))
+->name('me');

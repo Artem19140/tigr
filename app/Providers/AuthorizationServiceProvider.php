@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Enums\EmployeeRole;
+use App\Enums\Permission;
 use App\Models\Address;
 use App\Models\Attempt;
 use App\Models\Center;
@@ -39,15 +40,21 @@ class AuthorizationServiceProvider extends ServiceProvider
         });
 
         Gate::define('reports.frdo', function (Employee $employee) {
-            return $employee->hasAnyRole(EmployeeRole::Director, EmployeeRole::Operator);
+            return $employee->hasPermission(
+                Permission::ReportsFrdo
+            );
         });
 
         Gate::define('reports.ministry-education', function (Employee $employee) {
-            return $employee->hasAnyRole(EmployeeRole::Director);
+            return $employee->hasPermission(
+                Permission::ReportsMinistryEducation
+            );
         });
 
         Gate::define('reports.flat-table', function (Employee $employee) {
-            return $employee->hasAnyRole(EmployeeRole::Director);
+            return $employee->hasPermission(
+                Permission::ReportsFlatTable
+            );
         });
 
         Gate::define('reports.viewAny', function (Employee $employee) {
@@ -63,7 +70,9 @@ class AuthorizationServiceProvider extends ServiceProvider
         });
 
         Gate::define('statistics', function (Employee $employee) {
-            return $employee->hasAnyRole(EmployeeRole::Director);
+            return $employee->hasPermission(
+                Permission::Statistics
+            );
         });
 
         Gate::define('center-manage', function (Employee $employee) {

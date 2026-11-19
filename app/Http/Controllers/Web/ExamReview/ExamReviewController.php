@@ -6,11 +6,17 @@ use App\Http\Resources\Exam\ExamReviewResource;
 use App\Models\Exam;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
+use Spatie\RouteAttributes\Attributes\Get;
 
+#[Middleware('auth:web')]
 class ExamReviewController
 {
+    #[Get('exams/{exam}/review', 'exams.review')]
+    #[Authorize('review', 'exam')]
     public function show(
         Exam $exam
     ): \Inertia\Response | RedirectResponse {

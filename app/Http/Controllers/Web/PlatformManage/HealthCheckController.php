@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Web\PlatformManage;
 
-use Illuminate\Http\Request;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Spatie\RouteAttributes\Attributes\Get;
 
+#[Middleware('auth:web')]
+#[Authorize('platform-manage')]
 class HealthCheckController
 {
     #[Get('admin/health-check', 'platform-admin.health-check')]
@@ -43,8 +46,8 @@ class HealthCheckController
                     'items' => [
                         [
                             'title' => 'Страны',
-                            'description' => 'contries.json',
-                            'status' => $disk->exists('contries.json'),
+                            'description' => 'countries.json',
+                            'status' => $disk->exists('./countries.json'),
                             'icon' => 'earth',
                         ],
                         [

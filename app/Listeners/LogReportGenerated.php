@@ -3,21 +3,15 @@
 namespace App\Listeners;
 
 use App\Events\ReportGenerated;
-use App\Support\Audit;
 
 class LogReportGenerated
 {
-    public function __construct(protected Audit $audit)
-    {
-        
-    }
+    public function __construct(){}
 
     public function handle(ReportGenerated $event): void
     {
-        $this->audit->log(
-            'report_generated',
-            $event->type->value, 
-            $event->context
-        );
+        activity()
+            ->event('report_generated')
+            ->log('frdo');
     }
 }

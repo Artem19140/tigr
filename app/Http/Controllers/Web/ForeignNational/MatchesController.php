@@ -10,11 +10,11 @@ use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Spatie\RouteAttributes\Attributes\Get;
 
 #[Middleware('auth:web')]
+#[Authorize('findMatches', ForeignNational::class)]
 
 class MatchesController
 {
-    #[Get('foreign-nationals/matches', 'foreign-nationals.matches')]
-    #[Authorize('findMatches', ForeignNational::class)]
+    #[Get('foreign-nationals/matches', 'foreign-nationals.matches')]    
     public function index(
         ForeignNationalIndexRequest $request,
         GetForeignNationals $getForeignNationals
