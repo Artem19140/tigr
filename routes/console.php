@@ -6,7 +6,7 @@ use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Process;
-
+use function Illuminate\Support\minutes;
 
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
@@ -21,7 +21,9 @@ Schedule::call(function () {
 })->everyFiveMinutes();
 
 Artisan::command('deploy', function(){
-    $result = Process::run('cd /var/www/tigr && /var/www/tigr/up.bash >> /var/www/tigr/git.log 2>&1');
+    $result = Process::timeout(minutes(5))
+        ->run('cd /var/www/tigr && /var/www/tigr/up.bash >> /var/www/tigr/git.log 2>&1');
+
     if($result->failed()){
         Log::warning('deploy fails', [
             'errors' => $result->errorOutput()

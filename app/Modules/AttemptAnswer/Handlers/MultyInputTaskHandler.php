@@ -6,13 +6,8 @@ use App\Enums\TaskType;
 use App\Exceptions\AttemptAnswerValidationException;
 use App\Models\AttemptAnswer;
 
-class MultyInputTaskHandler
+class MultyInputTaskHandler implements AnswerHandlerInterface
 {
-    public function for($task): bool
-    {
-        return $task->type === TaskType::MultyInput;
-    }
-
     public function validate(
         mixed $foreignNationalAnswer,
         AttemptAnswer $attemptAnswer
@@ -85,5 +80,19 @@ class MultyInputTaskHandler
                 'attempt_answer_id' => $attemptAnswer->id
             ]);
         }
+    }
+
+    public function handle(
+        mixed $foreignNationalAnswer,
+        AttemptAnswer $attemptAnswer
+    ): void {
+        $answer = $this->validate(
+            $foreignNationalAnswer,
+            $attemptAnswer
+        );
+
+        $attemptAnswer->update([
+            'answer' => $answer
+        ]);
     }
 }

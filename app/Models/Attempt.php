@@ -12,12 +12,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 class Attempt extends Model
 {
 
     /** @use HasFactory<AttemptFactory> */
     use HasFactory;
+    use LogsActivity;
     protected $fillable = [
         'foreign_national_id',
         'exam_id',
@@ -48,6 +51,28 @@ class Attempt extends Model
         'speaking_finished_at' => 'datetime',
         'speaking_started_at' => 'datetime',
     ];
+
+    protected static $doNotRecordEvents = ['created'];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly([
+                'annulled_at',
+                'reviewed_at',
+                'speaking_finished_at',
+                'speaking_started_at',
+                'total_mark',
+                'started_at',
+                'annulled_reason',
+                'annulled_by_id',
+                'finished_at',
+                'expired_at',
+                'is_passed',
+            ])
+            ->logOnlyDirty()
+            ->dontLogEmptyChanges();
+    }
 
     public function isExpired(): bool
     {

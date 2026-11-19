@@ -6,15 +6,11 @@ use App\Modules\AttemptAnswer\TaskHandlerResolver;
 use App\Exceptions\TaskAnswersNotAllowedException;
 use App\Models\AttemptAnswer;
 use App\Models\Task;
-use App\Support\Audit;
-use App\Support\ModelAuditChangesBuilder;
 
 class HandleAttemptAnswer
 {
     public function __construct(
-        protected TaskHandlerResolver $taskHandlerResolver,
-        protected Audit $audit,
-        protected ModelAuditChangesBuilder $changesBuilder
+        protected TaskHandlerResolver $taskHandlerResolver
     ) {}
 
     public function execute(
@@ -29,22 +25,9 @@ class HandleAttemptAnswer
 
         $handler = $this->taskHandlerResolver->resolve($task);
 
-        $validatedAnswer = $handler->validate($answer, $attemptAnswer);
-        if ($task->autoReview()) {
-            $mark = $handler->calculateMark($validatedAnswer, $taskVariant);
-            $attemptAnswer->mark = $mark;
-        }
-
-        $attemptAnswer->answer = $validatedAnswer;
-        $attemptAnswer->save();
-
-        app()->terminating(
-            function() use( $attemptAnswer ){
-                $this->audit->log(
-                    'updated_attempt_answer',
-                    $attemptAnswer
-                );
-            }
+        $handler->handle(
+            $answer, 
+            $attemptAnswer
         );
 
         return $attemptAnswer;

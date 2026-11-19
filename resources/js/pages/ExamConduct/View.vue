@@ -74,8 +74,8 @@ const search = ref<string>('')
     </Head>
 
     <v-container>
-        <v-card>
-            <v-card-text class="d-flex justify-space-between align-center py-4">
+        <v-card class="max-w-6xl m-auto">
+            <v-card-text class="d-flex justify-space-between align-center py-4 ">
                 <div class="min-w-0">
                     <div class="d-flex align-center ga-2 flex-wrap">
                         <v-chip 
@@ -89,7 +89,7 @@ const search = ref<string>('')
                     <div class="text-caption text-medium-emphasis mt-1">
 
                         <span v-if="isPolling" class="ml-2">
-                            · автообновление {{ pollFrequency / 1000 }}с
+                            · автообновление каждые {{ pollFrequency / 1000 }} с
                         </span>
                     </div>
                 </div>
@@ -100,7 +100,7 @@ const search = ref<string>('')
                     @click="router.visit(comment.url)"
                     :disabled="comment.availability.disabled"
                 >
-                    Комментарий
+                    Комментарий 
                 </v-btn>
             </v-card-text>
 

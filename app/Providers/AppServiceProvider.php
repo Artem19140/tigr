@@ -3,11 +3,15 @@
 namespace App\Providers;
 
 use App\Models\Address;
+use App\Models\Attempt;
+use App\Models\AttemptAnswer;
+use App\Models\Center;
 use App\Models\Counter;
 use App\Models\Employee;
 use App\Models\Enrollment;
 use App\Models\Exam;
 use App\Models\ForeignNational;
+use App\Models\ForeignNationalDocument;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
@@ -32,7 +36,11 @@ class AppServiceProvider extends ServiceProvider
             'exam' => Exam::class,
             'enrollment' => Enrollment::class,
             'address' => Address::class,
-            'counter' => Counter::class
+            'counter' => Counter::class,
+            'attempt' => Attempt::class,
+            'attempt_answer' => AttemptAnswer::class,
+            'foreign_national_document' => ForeignNationalDocument::class,
+            'center' => Center::class
         ]);
 
         Model::shouldBeStrict(! app()->isProduction());

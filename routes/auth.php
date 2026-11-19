@@ -1,28 +1,11 @@
 <?php
 
-use App\Http\Controllers\Web\Auth\LoginController;
-use App\Http\Controllers\Web\Auth\LogoutController;
 use App\Http\Controllers\Web\Auth\PasswordController;
-use App\Modules\Shared\ExamSettings;
 use Inertia\Inertia;
 
 Route::middleware([
-    'meta',
     'guest:web,foreignNationals'
 ])->group(function () {
-
-    Route::get('login', function(){
-        return Inertia::render('Auth/Login', [
-            'loginUrl' => route('employees.login', [], false),
-            'codesVerificationUrl' => route('exams-codes.verification', [], false),
-            'codesLength' => ExamSettings::codesLength()
-        ]);
-    })->name('login');
-
-    Route::post('login', [LoginController::class, 'login'])
-        ->name('employees.login')
-        ->middleware(['throttle:5']);
-
     Route::get('/reset-password/{token}', fn ($token) => Inertia::render('Auth/ChangePassword', [
         'token' => $token,
         'email' => request()->query('email'),
@@ -41,15 +24,4 @@ Route::middleware([
 
     Route::post('password/reset', [PasswordController::class, 'change'])
         ->name('password.reset.post');
-});
-
-Route::middleware([
-    'meta',
-    'auth'
-])->group(function(){
-    Route::post('logout', [LogoutController::class, 'logout'])
-        ->name('logout');
-        
-    Route::post('logout/all', [LogoutController::class, 'logoutAll'])
-        ->name('logout.all');
 });

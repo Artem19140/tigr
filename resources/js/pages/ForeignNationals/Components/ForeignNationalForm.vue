@@ -3,10 +3,12 @@ import { computed, watch } from 'vue';
 import countries from '@data/countries.json'
 import AppOptionalInput from '@/components/UI/AppOptionalInput/AppOptionalInput.vue';
 import { ForeignNationalCreate, ForeignNationalEditForm } from '@/interfaces/ForeignNational';
+import Matches from './Matches.vue';
 
 const props = defineProps<{
     errors:any,
-    loading:boolean
+    loading:boolean,
+    findMatchesUrl?: string
 }>()
 
 const form = defineModel<ForeignNationalEditForm| ForeignNationalCreate>('form',{
@@ -79,6 +81,12 @@ watch(() => form.value.noPhone, () => {
                         }"
                     />
                 </div>
+
+                <Matches
+                    v-if="findMatchesUrl" 
+                    :findMatchesUrl="findMatchesUrl"
+                    :form="form"
+                />
             </v-card-text>
 
             <v-card-text class="px-6">

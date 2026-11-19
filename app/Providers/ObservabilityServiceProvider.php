@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Http\Kernel as HttpKernel;
+use Illuminate\Console\Events\CommandFinished;
+use Illuminate\Support\Facades\Event;
 
 class ObservabilityServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,13 @@ class ObservabilityServiceProvider extends ServiceProvider
                     'time' => $query->time,
                 ]);
             }
+        });
+
+        Event::listen(CommandFinished::class, function (CommandFinished $event) {
+            Log::info('Artisan command finished', [
+                'command' => $event->command,
+                'exit_code' => $event->exitCode,
+            ]);
         });
 
         $this->app[HttpKernel::class]->whenRequestLifecycleIsLongerThan(

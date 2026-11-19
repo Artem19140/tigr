@@ -11,13 +11,23 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\RedirectResponse;
 use App\Modules\ExamConduct\AttemptSpeakingRules;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Inertia\Inertia;
+use Spatie\RouteAttributes\Attributes\Get;
+use Spatie\RouteAttributes\Attributes\Post;
+use Spatie\RouteAttributes\Attributes\Prefix;
 
+#[Middleware('auth:web')]
+#[Authorize('attempts.employee-access', 'attempt')]
+#[Prefix('attempts')]
 class SpeakingController
 {
     public function __construct(
         protected AttemptSpeakingRules $attemptSpeakingRules
     ){}
+
+    #[Get('{attempt}/speaking', 'attempts.speaking.show')]
     public function show(
         Attempt $attempt
     ) {
@@ -62,6 +72,7 @@ class SpeakingController
         ]);
     }
 
+    #[Post('{attempt}/speaking/start', 'attempts.speaking.start')]
     public function start(Attempt $attempt)
     {
         $result = $this->attemptSpeakingRules->start($attempt);
@@ -80,6 +91,7 @@ class SpeakingController
 
     }
 
+    #[Post('{attempt}/speaking/finish', 'attempts.speaking.finish')]
     public function finish(Attempt $attempt): RedirectResponse
     {
         $result = $this->attemptSpeakingRules->finish($attempt);
@@ -113,7 +125,8 @@ class SpeakingController
             },
         ]);
 
-        $attempt->taskVariants = $attempt->taskVariants->sortBy('task.order');
+        $attempt->taskVariants = $attempt->taskVariants
+            ->sortBy('task.order');
 
         return $attempt;
     }

@@ -4,7 +4,6 @@ const props = defineProps<{
     headers: Array<any>,
     title?:string
     loading?:boolean,
-    
 }>()
 
 const emit = defineEmits<{
@@ -13,21 +12,18 @@ const emit = defineEmits<{
 </script>
 
 <template>
-    <v-card
-        class="base-table"
-    >
-        <div class="table-header">
-            <div class="d-flex align-center justify-space-between flex-wrap ga-3">
+    <v-card>
+        <div class="p-4 flex ">
+            <div class="d-flex justify-between align-center flex-wrap ga-3">
+                <div class="text-subtitle-1 font-weight-medium text-truncate">
+                    {{ title }}
+                </div>
 
-                <div class="d-flex align-center ga-3 min-w-0">
-                    <div class="text-subtitle-1 font-weight-medium text-truncate">
-                        {{ title }}
-                    </div>
-
+                <div class="d-flex align-center min-w-0">
                     <slot name="header-left" />
                 </div>
 
-                <div class="d-flex align-center ga-2">
+                <div class="flex align-center ga-2 ">
                     <slot name="header-actions" />
                 </div>
 
@@ -37,7 +33,6 @@ const emit = defineEmits<{
         <v-divider />
 
         <v-data-table
-            class="modern-table"
             :items="elements"
             :headers="headers"
             :loading="loading"
@@ -56,28 +51,3 @@ const emit = defineEmits<{
         </v-data-table>
     </v-card>
 </template>
-
-<style lang="css" scoped>
-.base-table {
-    overflow: hidden;
-    background: rgba(var(--v-theme-surface), 0.9);
-    backdrop-filter: blur(6px);
-}
-
-.table-header {
-    padding: 14px 16px;
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    backdrop-filter: blur(10px);
-}
-
-.modern-table {
-    background: transparent;
-}
-
-.modern-table :deep(tbody tr:hover) {
-    cursor: pointer;
-    background: rgba(var(--v-theme-on-surface), 0.04);
-}
-</style>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\ForeignNational;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,13 +17,21 @@ class EnsureEmployeeActive
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (! $request->user()) {
+            return $next($request);
+        }
+
+        if($request->user() instanceof ForeignNational){
+            return $next($request);
+        }
+        
         if($request->user()->isPlatformAdmin()){
             return $next($request);
         }
 
         if (! $request->user()->isActive()) {
             Auth::guard('web')->logout();
-            return redirect()->route('login');
+            return to_route('login');
         }
 
         return $next($request);

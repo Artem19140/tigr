@@ -20,7 +20,7 @@
         
         <td class="text-center border-black" style="font-size: large;">
             <strong>
-                {{ substr($enrollment?->exam_code, 0, 3) . "  " .  substr($enrollment?->exam_code, 3, 3) }}
+                {{ substr($enrollment->examCode?->code, 0, 3) . "  " .  substr($enrollment->examCode?->code, 3, 3) }}
             </strong>
         </td>
     </tr>

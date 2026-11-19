@@ -16,7 +16,7 @@ class VnzhSeeder extends Seeder
 
     public function run(): void
     {
-        $examType = ExamType::firstOrCreate(
+        $examType = ExamType::updateOrCreate(
             ['level' => 3],
             [
                 'name' => 'Вид на жительство',

@@ -4,16 +4,15 @@ namespace App\Http\Controllers\Web\ExamSession;
 
 use App\Http\Requests\Exam\VerifyCodeRequest;
 use App\Modules\ExamSession\ExamCodeVerifier;
-use App\Support\Audit;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
 class VerifyCodeController
 {
     public function verify(
         VerifyCodeRequest $request,
-        ExamCodeVerifier $examCodeVerifier,
-        Audit $audit
-    ) {
+        ExamCodeVerifier $examCodeVerifier
+    ): RedirectResponse {
         $enrollment = $examCodeVerifier->execute(
             $request->validated('code')
         );
@@ -22,7 +21,8 @@ class VerifyCodeController
             Auth::guard('foreignNationals')
                 ->login($enrollment->foreignNational);
                 
-            $enrollment->makeExamCodeUsed();
+            $enrollment->recoveryCode
+                ->makeUsed();
 
             return redirect()->route('attempts.show', [
                 'attempt' => $enrollment->attempt->id
@@ -32,13 +32,6 @@ class VerifyCodeController
         session([
             'enrollment_id' => $enrollment->id
         ]);
-
-        $audit->log(
-            'Session enrollment_id set', 
-            'enrollment', 
-            [
-                'enrollment_id' => $enrollment->id
-            ]);
 
         return redirect()->route('exams-sessions.confirmation.show');
     }

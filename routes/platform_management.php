@@ -8,7 +8,6 @@ use Inertia\Inertia;
 
 Route::prefix('/admin')
     ->middleware([
-        'meta',
         'auth:web',
         'can:platform-manage',
     ])

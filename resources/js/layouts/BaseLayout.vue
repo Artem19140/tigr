@@ -11,7 +11,7 @@ import AppNoNetworkBanner from '@/components/UI/AppNoNetworkBanner/AppNoNetworkB
     <v-app>
         <slot name="navigation" />
 
-        <v-main class="app-main">
+        <v-main class="app-main bg-background">
             <div class="app-bg" />
             <slot />
         </v-main>
@@ -28,6 +28,5 @@ import AppNoNetworkBanner from '@/components/UI/AppNoNetworkBanner/AppNoNetworkB
 .app-main {
     min-height: 100vh;
     position: relative;
-    background-color: #F7F9FC;
 }
 </style>

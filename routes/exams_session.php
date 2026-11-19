@@ -9,7 +9,6 @@ use App\Support\AppMiddleware;
 use Inertia\Inertia;
 
 Route::middleware([
-        'meta',
         'guest:web,foreignNationals'
     ])->group(function () {
         
@@ -26,7 +25,6 @@ Route::middleware([
     
 Route::prefix('attempts')
     ->middleware([
-        'meta',
         'auth:foreignNationals',
         'can:attempts.foreign-national-access,attempt',
         AppMiddleware::ENSURE_ATTEMPT_VALID_STATUS,
@@ -51,10 +49,8 @@ Route::prefix('attempts')
 
     });
 
-    Route::prefix('exams-sessions')
-    ->middleware([
-        'meta'
-    ])->group(function () {
+Route::prefix('exams-sessions')
+    ->group(function () {
         Route::get(
             'confirmation', 
             [PersonConfirmationController::class, 'confirmationView']
@@ -73,30 +69,27 @@ Route::prefix('attempts')
         )
             ->name('exams-sessions.confirmation-rejection');
         
-        Route::get(
-            'enrollments/{enrollment}/start-info', 
-            [ExamSessionController::class, 'startInfo']
-        )
-            ->middleware([
-                'auth:foreignNationals',
-                'can:examSession,enrollment'
-            ])
-            ->name('exams-sessions.start-info');
-
-        Route::post(
-            'enrollments/{enrollment}/attempts', 
-            [ExamSessionController::class, 'start']
-        )
-            ->middleware([
-                'auth:foreignNationals',
-                'can:examSession,enrollment'
-            ])
-            ->name('exams-sessions.start');
     });
 
+Route::prefix('exams-sessions/enrollments/{enrollment}')
+    ->middleware([
+        'auth:foreignNationals',
+        'can:examSession,enrollment'
+    ])
 
-    
+    ->group( function() {
+        Route::get(
+            'info', 
+            [ExamSessionController::class, 'info']
+        )->name('exams-sessions.info');
 
+         Route::get(
+            'sound-setting', 
+            [ExamSessionController::class, 'soundSetting']
+        )->name('exams-sessions.sound-setting');
 
-
-      
+        Route::post(
+            'attempts', 
+            [ExamSessionController::class, 'start']
+        )->name('exams-sessions.start');
+}); 

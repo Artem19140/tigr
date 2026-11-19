@@ -3,6 +3,6 @@
 return [
     App\Providers\AppServiceProvider::class,
     App\Providers\AuthorizationServiceProvider::class,
+    App\Providers\LogServiceProvider::class,
     App\Providers\ObservabilityServiceProvider::class,
-    //App\Providers\TelescopeServiceProvider::class,
 ];

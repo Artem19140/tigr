@@ -77,6 +77,28 @@
                 </div>
                 @endif
             </div>
+
+            <div>
+                @if($enrollmentsWithRecoveryCodes->isNotEmpty())
+                    <div style="margin-left:20px;">
+                        @foreach ($enrollmentsWithRecoveryCodes as $enrollment)
+                            <div>
+                                Сдающему {{ $enrollment->foreignNational->full_name_short }}
+                                (паспорт: {{ $enrollment->foreignNational->full_passport }})
+                                были выданы повторные коды восстановления экзамена:
+
+                                @foreach ($enrollment->recoveryCodes as $recoveryCode)
+                                    <div style="margin-left:10px;">
+                                        Код: {{ $recoveryCode->code_snapshot }}
+                                        Причина: {{ $recoveryCode->recovery_reason }}
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+
         </div>
         <div>{{ !$exam->protocol_comment && $annulledAttempts->isEmpty() ?  'Нарушения отсутствуют' : '' }}</div>
     </div>

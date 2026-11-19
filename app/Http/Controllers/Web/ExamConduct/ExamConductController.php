@@ -9,10 +9,20 @@ use App\Modules\ExamConduct\ProtocolCommentRules;
 use App\Modules\ExamConduct\UpdateProtocolComment;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Inertia\Inertia;
+use Spatie\RouteAttributes\Attributes\Get;
+use Spatie\RouteAttributes\Attributes\Prefix;
+use Spatie\RouteAttributes\Attributes\Put;
+
+#[Middleware('auth:web')]
+#[Authorize('conduct', 'exam')]
+#[Prefix('exams')]
 
 class ExamConductController
 {
+    #[Get('{exam}/conduct', 'exams.conduct')]
     public function show(
         Exam $exam
     ): \Inertia\Response {
@@ -63,6 +73,7 @@ class ExamConductController
         ]); 
     }
 
+    #[Get('{exam}/protocol-comments/edit', 'exams.protocol-comments.edit')]
     public function protocolCommentEdit(Exam $exam)
     {
         return Inertia::render('ExamConduct/ProtocolComment', [
@@ -84,6 +95,7 @@ class ExamConductController
         ]);
     }
 
+    #[Put('{exam}/protocol-comments', 'exams.protocol-comments.update')]
     public function protocolCommentUpdate(
         Request $request,
         Exam $exam,

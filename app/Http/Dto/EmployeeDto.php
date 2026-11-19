@@ -11,14 +11,4 @@ class EmployeeDto
         public ?string $patronymic,
         public string $email
     ){}
-
-    public function toArray(): array
-    {
-        return [
-            'surname' => $this->surname,
-            'name' => $this->name,
-            'patronymic' => $this->patronymic,
-            'email' => $this->email
-        ];
-    }
 }

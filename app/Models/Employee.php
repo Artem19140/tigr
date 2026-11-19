@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\EmployeeRole;
+use App\Enums\Permission;
 use App\Modules\Shared\CenterData;
 use Database\Factories\EmployeeFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -127,4 +128,23 @@ class Employee extends Authenticatable
             default => abort(403)
         };
     }
+
+    public function hasPermission(
+        Permission $permission
+    ): bool {
+
+        if($this->isPlatformAdmin()){
+            return true;
+        }
+
+        $permissions = config('roles_matrix');
+        
+        return $this->roles->contains(
+            fn (Role $role) => \in_array(
+                $permission->value,
+                $permissions[$role->name->value]
+            )
+        );
+    }
+    
 }

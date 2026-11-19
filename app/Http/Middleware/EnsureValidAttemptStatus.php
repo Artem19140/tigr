@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\BusinessCode;
+use App\Modules\Attempt\ActiveAttemptRules;
 use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -13,6 +15,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EnsureValidAttemptStatus
 {
+    public function __construct(
+        protected ActiveAttemptRules $rules
+    ){}
+    
     /**
      * Handle an incoming request.
      *
@@ -22,17 +28,19 @@ class EnsureValidAttemptStatus
     {
         $attempt = $request->route('attempt');
 
-        if ($attempt->isAnnulled()) {
-            $this->log('Попытка аннулирована', $attempt->id);
-            return $this->deny('Попытка аннулирована', $request);
-        }
-        if ($attempt->isFinished()) {
-            $this->log('Попытка завершена', $attempt->id);
-            return $this->deny('Попытка завершена', $request);
-        }
-        if ($attempt->isExpired()) {
-            $this->log('Время попытки истекло', $attempt->id);
-            return $this->deny('Время попытки истекло', $request);
+        $result = $this->rules->check($attempt);
+
+        if($result->isNotAvailable()){
+
+            $this->log(
+                $result->code() ?? '',
+                $attempt->id
+            );
+
+            return $this->deny(
+                $result->message() ?? '',
+                $request
+            );
         }
 
         return $next($request);
@@ -48,16 +56,18 @@ class EnsureValidAttemptStatus
                 'message' => $message,
             ], 400);
         }
+
         Inertia::flash(['error' => $message]);
         Auth::logout();
+
         return redirect()->route('login');
     }
 
     protected function log(
-        string $message,
+        BusinessCode $code,
         int $attemptId
     ){
-        Log::info($message, [
+        Log::info($code->value, [
             'attempt_id' => $attemptId
         ]);
     }

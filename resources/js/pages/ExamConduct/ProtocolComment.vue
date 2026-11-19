@@ -24,7 +24,7 @@ const form = useForm({
 })
 
 const cancel = async () => {
-     if(form.isDirty){
+    if(form.isDirty){
             const {confirmOpen} = useConfirm()
             const ok = await confirmOpen('Отменить редактирование?')
             if(!ok) return
@@ -36,7 +36,7 @@ const cancel = async () => {
 
 <template>
     <v-container max-width="700">
-        <v-card class="overflow-hidden rounded-xl">
+        <v-card>
             <v-card-text class="px-6 pt-6">
                 <div class="text-xl font-semibold text-gray-900">
                     {{ exam.shortName }}
@@ -47,7 +47,6 @@ const cancel = async () => {
                 </div>
             </v-card-text>
 
-            <!-- Form -->
             <v-card-text class="px-6">
                 <v-textarea
                     v-model="form.protocolComment"

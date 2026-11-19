@@ -26,6 +26,10 @@ class CenterManageNavigation
             'counters' => [
                 'url' => route('counters.index', [], false),
                 'can' => $employee->can('viewAny', Counter::class)
+            ],
+            'statistics' => [
+                'url' => route('statistics.index', [], false),
+                'can' => $employee->can('statistics')
             ]
         ])->filter(function($item){
             return $item['can'];

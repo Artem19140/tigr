@@ -45,7 +45,9 @@ const finish = async () => {
                 </v-btn>
             </div>
 
-            <TasksList :attempt="attempt.data" />
+            <TasksList 
+                :tasks="attempt.data.tasks" 
+            />
 
             <div class="mt-5 flex justify-end pb-6">
                 <v-btn

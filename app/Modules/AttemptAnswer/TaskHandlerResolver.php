@@ -2,6 +2,7 @@
 
 namespace App\Modules\AttemptAnswer;
 
+use App\Modules\AttemptAnswer\Handlers\AnswerHandlerInterface;
 use App\Modules\AttemptAnswer\Handlers\EssayTaskHandler;
 use App\Modules\AttemptAnswer\Handlers\MultyInputTaskHandler;
 use App\Modules\AttemptAnswer\Handlers\SingleChoiceTaskHandler;
@@ -13,7 +14,7 @@ use App\Models\Task;
 class TaskHandlerResolver
 {
     public function resolve(Task $task)
-    : EssayTaskHandler | MultyInputTaskHandler| SingleChoiceTaskHandler|SingleInputTaskHandler
+    : AnswerHandlerInterface
     {
         return match ($task->type) {
             TaskType::SingleChoice => new SingleChoiceTaskHandler,

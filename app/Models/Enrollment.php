@@ -2,20 +2,21 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Number;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 class Enrollment extends Model
 {
     use HasFactory;
-
+    use LogsActivity;
     public const int CLOSE_BEFORE_START_MINUTES = 10;
-
     protected $fillable = [
         'exam_id',
         'foreign_national_id',
@@ -26,18 +27,26 @@ class Enrollment extends Model
         'exam_code',
         'exam_code_expired_at',
         'cancelled_at',
-        'rescheduled_at',
         'exam_code_used_at',
         'cancelled_by'
     ];
-
     protected $casts = [
         'has_payment' => 'boolean',
         'exam_code_expired_at' => 'datetime',
         'cancelled_at' => 'datetime',
-        'rescheduled_at' => 'datetime',
         'exam_code_used_at' => 'datetime',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly([
+                'has_payment', 
+                'cancelled_at'
+            ])
+            ->logOnlyDirty()
+            ->dontLogEmptyChanges();
+    }
 
     public function exam(): BelongsTo
     {
@@ -59,6 +68,27 @@ class Enrollment extends Model
         return $this->hasOne(Attempt::class, 'enrollment_id')->latest();
     }
 
+    public function examCode(): HasOne
+    {
+        return $this->hasOne(ExamAccessCode::class)
+            ->where('type', 'initial')
+            ->latest();
+    }
+
+    public function recoveryCode(): HasOne
+    {
+        return $this->hasOne(ExamAccessCode::class)
+            ->where('type', 'recovery')
+            ->latest();
+    }
+
+    public function recoveryCodes():HasMany
+    {
+        return $this->hasMany(ExamAccessCode::class)
+            ->where('type', 'recovery');
+    }
+    
+
     public function scopeVisibleFor(Builder $query, Employee $employee): Builder
     {
         return $query->whereHas('exam', function ($q) use ($employee) {
@@ -68,16 +98,13 @@ class Enrollment extends Model
 
     public function makeExamCodeUsed()
     {
-        $this->update([
-            'exam_code' => null,
-            'exam_code_used_at' => Carbon::now()
-        ]);
+        $this->examCode->makeUsed();
     }
 
-    public function examCode(): string | null
-    {
-        return $this->exam_code;
-    }
+    // public function examCode(): string | null
+    // {
+    //     return $this->exam_code;
+    // }
 
     public function amountInWords():string
     {

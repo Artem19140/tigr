@@ -48,7 +48,7 @@ const cancellWindowIsOpen = ref<boolean>(false)
         <v-divider />
 
         <v-list-item 
-            title="Отменить" 
+            title="Отменить запись" 
             class="text-red"
             :disabled="enrollment.actions.delete?.disabled"
             v-if="enrollment.actions.delete?.url"

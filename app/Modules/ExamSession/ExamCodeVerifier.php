@@ -3,42 +3,72 @@
 namespace App\Modules\ExamSession;
 
 use App\Models\Enrollment;
-use Carbon\Carbon;
+use App\Models\Exam;
+use App\Models\ExamAccessCode;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class ExamCodeVerifier
 {
-    public function execute(string $code): Enrollment
+    public function execute(string $codeString): Enrollment
     {
-        $enrollment = $this->findOrFailEnrollmentByCode($code);
+        $code = $this->findCode($codeString);
+        $enrollment = $code->enrollment;
+        
         $this->ensureNotCancelled($enrollment);
-        $this->ensureCodeNotExpired($enrollment->exam_code_expired_at);
-        $this->ensureCodeNotUsed($enrollment);
+        $this->ensureExamInValidState($enrollment->exam);
+        $this->ensureCodeNotExpired($code);
+        $this->ensureCodeNotUsed($code);
         $this->ensureHasPayment($enrollment->hasPayment());
 
         return $enrollment;
     }
 
-    protected function findOrFailEnrollmentByCode(string $code): Enrollment
-    {
-        $enrollment = Enrollment::where('exam_code', $code)
-            ->first();
+    protected function ensureExamInValidState(
+        Exam $exam
+    ): void{
+        if($exam->isCancelled()){
+            throw ValidationException::withMessages([
+                'code' => 'Экзамен отменен'
+            ]);
+        }
 
-        if (! $enrollment) {
+        if ($exam->begin_time->isFuture()) {
+            throw ValidationException::withMessages([
+                'code' => 'Экзамен еще не начался'
+            ]);
+        }
+    }
+
+    protected function findCode(string $code): ExamAccessCode
+    {
+        $code = ExamAccessCode::query()
+            ->with('enrollment.exam')
+            ->firstWhere('code', $code);
+
+        if (! $code) {
             throw ValidationException::withMessages([
                 'code' => 'Код не найден',
             ]);
         }
 
-        return $enrollment;
+        return $code;
     }
 
-    protected function ensureCodeNotExpired(Carbon $expiredAt): void
+    protected function ensureCodeNotExpired(ExamAccessCode $code): void
     {
-        if ($expiredAt < Carbon::now()) {
+        if ($code->isExpired()) {
             throw ValidationException::withMessages([
                 'code' => 'Истек срок действия кода',
+            ]);
+        }
+    }
+
+    protected function ensureCodeNotUsed(ExamAccessCode $code): void
+    {
+        if ($code->isUsed()) {
+            throw ValidationException::withMessages([
+                'code' => 'Код использован',
             ]);
         }
     }
@@ -48,18 +78,6 @@ class ExamCodeVerifier
         if (! $hasPayment) {
             throw ValidationException::withMessages([
                 'code' => 'Экзамен не оплачен',
-            ]);
-        }
-    }
-
-    protected function ensureCodeNotUsed(Enrollment $enrollment): void
-    {
-        if ($enrollment->exam_code_used_at !== null) {
-            Log::warning('Exam code repeat used', [
-                'enrollment' => $enrollment->id,
-            ]);
-            throw ValidationException::withMessages([
-                'code' => 'Код использован',
             ]);
         }
     }

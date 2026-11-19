@@ -3,17 +3,14 @@
 namespace App\Modules\ForeignNational;
 
 use App\Models\ForeignNational;
-use App\Support\Audit;
 use App\Support\CsvWriter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Str;
 
 class ExportForeignNational
 {
     public function __construct(
-        protected CsvWriter $csvWriter,
-        protected Audit $audit
+        protected CsvWriter $csvWriter
     ){}
     public function execute(
         Carbon $dateFrom,
@@ -43,19 +40,6 @@ class ExportForeignNational
                 ]);
                 $count++;
             });  
-
-        $this->audit->log(
-            'export',
-            Str::snake(basename(ForeignNational::class)),
-            [
-                'period' => [
-                    'from' => $dateFrom->format('d.m.Y'),
-                    'to' => $dateTo->format('d.m.Y'),
-                ],
-                'citizenship' => $citizenship,
-                'count' => $count,
-            ]
-        );
     }
 
     protected function headers(): array

@@ -1,5 +1,6 @@
 import { Employee } from "./Employee"
 import { Enrollment } from "./Enrollment"
+import { HttpUrl } from "./Interfaces"
 
 export interface Exam{
     id:number,
@@ -40,7 +41,7 @@ export interface ExamIndex{
     beginTime: string,
     status: string
     enrollmentsCount: number,
-    showUrl: string
+    show: HttpUrl
 }
 
 export interface ExamType{

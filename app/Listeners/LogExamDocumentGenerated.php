@@ -3,24 +3,20 @@
 namespace App\Listeners;
 
 use App\Events\ExamDocumentGenerated;
-use App\Support\Audit;
 
 class LogExamDocumentGenerated
 {
-    public function __construct(protected Audit $audit)
+    public function __construct()
     {
         //
     }
 
     public function handle(ExamDocumentGenerated $event): void
     {
-        $this->audit->log(
-            'document_generated',
-            $event->exam, 
-            [
-                'document' => $event->type->value,
-                'context' => $event->context
-            ]
-        );
+        activity()
+            ->performedOn($event->exam)
+            ->event('document_generated')
+            ->withProperties($event->context)
+            ->log($event->type->value);
     }
 }

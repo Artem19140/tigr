@@ -4,12 +4,21 @@ namespace App\Http\Controllers\Web\Auth;
 
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Employee;
+use App\Modules\Shared\ExamSettings;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Inertia\Inertia;
+use Spatie\RouteAttributes\Attributes\Get;
+use Spatie\RouteAttributes\Attributes\Post;
+
+#[Middleware('guest:web,foreignNationals')]
 
 class LoginController
 {
+    #[Post('login', 'employees.login')]
+    #[Middleware('throttle:5')]
     public function login(LoginRequest $request): RedirectResponse
     {
         $this->verifyCredentials(
@@ -21,11 +30,21 @@ class LoginController
         $employee = Auth::user();
         
         $this->ensureHasAccess($employee);
-
+    
         $request->session()->regenerate();
 
         return redirect()->to($employee->resolveRedirect());
     }
+    
+    #[Get('login', 'login')]
+    public function view(): \Inertia\Response {
+        return Inertia::render('Auth/Login', [
+            'loginUrl' => route('employees.login', [], false),
+            'codesVerificationUrl' => route('exams-codes.verification', [], false),
+            'codesLength' => ExamSettings::codesLength()
+        ]);
+    }
+    
 
     protected function verifyCredentials(
         string $email,

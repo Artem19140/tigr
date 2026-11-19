@@ -9,12 +9,24 @@ use App\Modules\ExamDocument\ExamCodesGenerator;
 use App\Modules\ExamDocument\ExamDocumentRules;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
+use Spatie\RouteAttributes\Attributes\Get;
+use Spatie\RouteAttributes\Attributes\Prefix;
+use Spatie\RouteAttributes\Attributes\Where;
+
+#[Middleware('auth:web')]
+#[Prefix('exams/{exam}/documents')]
+#[Where('exam', '[0-9]+')]
+#[Authorize('codes', 'exam')]
 
 class CodesController
 {
     public function __construct(
         protected ExamDocumentRules $examDocumentRules
     ) {}
+    
+    #[Get('codes', 'exams.documents.codes')]
     public function generate(
         Exam $exam,
         ExamCodesGenerator $examCodesGenerator
@@ -30,7 +42,8 @@ class CodesController
             $exam->beginTimeLocal()
         ));
     }
-
+    
+    #[Get('codes/availability', 'exams.documents.codes.availability')]
     public function availability(Exam $exam): JsonResponse
     {
         $exam->loadExists('enrollments');

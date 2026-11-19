@@ -5,13 +5,22 @@ namespace App\Modules\AttemptAnswer\Handlers;
 use App\Enums\TaskType;
 use App\Exceptions\AttemptAnswerValidationException;
 use App\Models\AttemptAnswer;
-use App\Models\Task;
 
-class EssayTaskHandler
+class EssayTaskHandler implements AnswerHandlerInterface
 {
-    public function for(Task $task): bool
-    {
-        return $task->type === TaskType::Essay;
+
+    public function handle(
+        mixed $foreignNationalAnswer,
+        AttemptAnswer $attemptAnswer
+    ): void {
+        $answer = $this->validate(
+            $foreignNationalAnswer,
+            $attemptAnswer
+        );
+
+        $attemptAnswer->update([
+            'answer' => $answer
+        ]);
     }
 
     public function validate(

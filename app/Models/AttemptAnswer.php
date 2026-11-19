@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 class AttemptAnswer extends Model
 {
+    use LogsActivity;
     protected $table = 'attempt_answers';
 
     protected $fillable = [
@@ -26,6 +29,21 @@ class AttemptAnswer extends Model
         'reviewed_at' => 'datetime',
         'audio_played_at' => 'datetime',
     ];
+
+    protected static $doNotRecordEvents = ['created'];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly([
+                'answer', 
+                'answer_id', 
+                'reviewed_at', 
+                'audio_played_at'
+            ])
+            ->logOnlyDirty()
+            ->dontLogEmptyChanges();
+    }
 
     public function answer(): BelongsTo
     {

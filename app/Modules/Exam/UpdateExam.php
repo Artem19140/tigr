@@ -7,18 +7,15 @@ use App\Modules\Exam\ExamBeforeSaveValidator;
 use App\Exceptions\BusinessException;
 use App\Http\Dto\ExamDto;
 use App\Models\Exam;
-use App\Support\Audit;
-use App\Support\ModelAuditChangesBuilder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use Spatie\Activitylog\Enums\ActivityEvent;
 
 final class UpdateExam
 {
     public function __construct(
         protected ExamEditRules $examEditRules,
         protected ExamBeforeSaveValidator $examBeforeSaveValidator,
-        protected Audit $audit,
-        protected ModelAuditChangesBuilder $builder
     ) {}
 
     public function execute(
@@ -36,7 +33,7 @@ final class UpdateExam
         $this->examBeforeSaveValidator->execute($examDto, $exam->id);
 
         $exam = DB::transaction(function () use ($examDto, $exam) {
-
+            
             $exam->update(
                 $this->getAttributes($exam, $examDto)
             );
@@ -44,28 +41,22 @@ final class UpdateExam
             $examinersChanges = $exam->examiners()
                 ->sync($examDto->examiners);
 
-            $this->log($exam, [
-                'examiners' => $examinersChanges
-            ]);
+            $onlyDirty = array_filter($examinersChanges, 
+                fn(array $item) => ! empty($item)
+            );
+
+            activity()
+                ->setEvent(ActivityEvent::Updated)
+                ->performedOn($exam)
+                ->withProperties([
+                    'examiners' => $onlyDirty
+                ])
+                ->withChanges($exam->getDirty())
+                ->log('');
 
             return $exam;
         });
     }
-
-    protected function log(
-        Exam $exam, 
-        array $relations
-    ){
-        $this->audit->log(
-            'update',
-            $exam,
-            $this->builder->build(
-                $exam,
-                $relations
-            )
-        );
-    }
-
     protected function getAttributes(Exam $exam, ExamDto $examDto): array
     {
         $attributes = [];

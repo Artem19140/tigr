@@ -5,16 +5,10 @@ namespace App\Modules\AttemptAnswer\Handlers;
 use App\Enums\TaskType;
 use App\Exceptions\AttemptAnswerValidationException;
 use App\Models\AttemptAnswer;
-use App\Models\Task;
 use App\Models\TaskVariant;
 
-class SingleInputTaskHandler
+class SingleInputTaskHandler implements AnswerHandlerInterface
 {
-    public function for(Task $task): bool
-    {
-        return $task->type === TaskType::SingleInput;
-    }
-
     public function validate(
         mixed $foreignNationalAnswer,
         AttemptAnswer $attemptAnswer
@@ -26,7 +20,7 @@ class SingleInputTaskHandler
             throw new AttemptAnswerValidationException([
                 'attempt_answer_id' => $attemptAnswer->id,
                 'type' => TaskType::SingleInput,
-                'message' => 'not_valid_format',
+                'message' => 'Not valid format',
                 'answer' => $foreignNationalAnswer
             ]);
         }
@@ -55,5 +49,25 @@ class SingleInputTaskHandler
     protected function normalize(string $value): string
     {
         return mb_strtolower(trim($value), 'UTF-8');
+    }
+
+    public function handle(
+        mixed $foreignNationalAnswer,
+        AttemptAnswer $attemptAnswer
+    ): void {
+        $answer = $this->validate(
+            $foreignNationalAnswer,
+            $attemptAnswer
+        );
+
+        $mark = $this->calculateMark(
+            $answer,
+            $attemptAnswer->taskVariant
+        );
+
+        $attemptAnswer->update([
+            'answer' => $answer,
+            'mark' => $mark
+        ]);
     }
 }

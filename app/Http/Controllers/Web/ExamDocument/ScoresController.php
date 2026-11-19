@@ -11,6 +11,16 @@ use App\Modules\Shared\CenterData;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
+use Spatie\RouteAttributes\Attributes\Get;
+use Spatie\RouteAttributes\Attributes\Prefix;
+use Spatie\RouteAttributes\Attributes\Where;
+
+#[Middleware('auth:web')]
+#[Prefix('exams/{exam}/documents')]
+#[Where('exam', '[0-9]+')]
+#[Authorize('results', 'exam')]
 
 class ScoresController
 {
@@ -18,6 +28,7 @@ class ScoresController
         protected ExamDocumentRules $examDocumentRules
     ) {}
 
+    #[Get('scores', 'exams.documents.scores')]
     public function generate(
         Exam $exam,
         ExamScoresDataBuilder $builder
@@ -43,6 +54,7 @@ class ScoresController
             ));
     }
 
+    #[Get('scores/availability', 'exams.documents.scores.availability')]
     public function availability(
         Exam $exam
     ): JsonResponse {

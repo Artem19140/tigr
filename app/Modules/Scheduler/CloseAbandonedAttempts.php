@@ -4,7 +4,6 @@ namespace App\Modules\Scheduler;
 
 use App\Models\Attempt;
 use App\Modules\ExamReview\FinilizeAttemptReview;
-use App\Support\Audit;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Log;
@@ -12,8 +11,7 @@ use Illuminate\Support\Facades\Log;
 class CloseAbandonedAttempts
 {
     public function __construct(
-        protected FinilizeAttemptReview $finilizeAttemptReview,
-        protected Audit $audit
+        protected FinilizeAttemptReview $finilizeAttemptReview
     ) {}
 
     public function execute(): void
@@ -51,10 +49,5 @@ class CloseAbandonedAttempts
         }
 
         $attempt->save();
-
-        $this->audit->log(
-            'attempt_closed_by_cron',
-            $attempt,
-        );
     }
 }

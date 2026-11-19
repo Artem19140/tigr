@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Web\Enrollment;
 
+use App\Enums\CounterKey;
 use App\Exceptions\BusinessException;
+use App\Models\Counter;
 use App\Models\Exam;
 use App\Modules\Enrollment\ChangePaymentStatus;
 use App\Modules\Enrollment\CreateEnrollment;
@@ -14,9 +16,22 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
+use Spatie\RouteAttributes\Attributes\Delete;
+use Spatie\RouteAttributes\Attributes\Get;
+use Spatie\RouteAttributes\Attributes\Post;
+use Spatie\RouteAttributes\Attributes\Put;
+use Spatie\RouteAttributes\Attributes\ScopeBindings;
+use Spatie\RouteAttributes\Attributes\Where;
+
+#[Middleware('auth:web')]
+#[Where('enrollment', '[0-9]+')]
 
 class EnrollmentController
 {
+    #[Post('enrollments', 'enrollments.store')]
+    #[Authorize('create', Enrollment::class)]
     public function store(
         EnrollmentStoreRequest $request,
         CreateEnrollment $createEnrollment,
@@ -35,6 +50,8 @@ class EnrollmentController
         ]);
     }
 
+    #[Put('enrollments/{enrollment}/payment', 'enrollments.payment-change')]
+    #[Authorize('payment', 'enrollment')]
     public function changePayment(
         Request $request,
         Enrollment $enrollment,
@@ -51,6 +68,8 @@ class EnrollmentController
         return response()->noContent();
     }
 
+    #[Get('enrollments/{enrollment}/full-documents', 'enrollments.full-documents')]
+    #[Authorize('statement', 'enrollment')]
     public function fullDocuments(
         Enrollment $enrollment,
     ): Response {
@@ -71,6 +90,8 @@ class EnrollmentController
         return $statementPdf->stream($fileName);
     }
 
+    #[Get('enrollments/{enrollment}/statements', 'enrollments.statements')]
+    #[Authorize('statement', 'enrollment')]
     public function statement(
         Enrollment $enrollment
     ): Response {
@@ -90,6 +111,8 @@ class EnrollmentController
         return $statementPdf->stream($fileName);
     }
 
+    #[Get('enrollments/{enrollment}/approvals', 'enrollments.approvals')]
+    #[Authorize('statement', 'enrollment')]
     public function approval(
         Enrollment $enrollment
     ): Response {
@@ -109,9 +132,10 @@ class EnrollmentController
         return $statementPdf->stream($fileName);
     }
     
-
+    #[Delete('exams/{exam}/enrollments/{enrollment}','enrollments.destroy')]
+    #[ScopeBindings()]
+    #[Authorize('delete', Enrollment::class)]
     public function destroy(
-        Request $request,
         Exam $exam,
         Enrollment $enrollment,
         EnrollmentCancelledRules $rules
@@ -130,6 +154,26 @@ class EnrollmentController
 
         $enrollment->update([
             'cancelled_at' => now()
+        ]);
+        return response()->noContent();
+    }
+    
+    #[Put('enrollments/{enrollment}/reg-number', 'enrollments.update.reg-number')]
+    #[Authorize('create', Enrollment::class)]
+    public function changeRegNumber(
+        Enrollment $enrollment, 
+        Request $request
+    ): Response {
+        $request->validate([
+            'newRegNumber' => [
+                'required', 
+                'integer', 
+                'regex:' . Counter::firstWhere(['key' => CounterKey::RegNum])->regexValidaton()
+            ]
+        ]);
+
+        $enrollment->update([
+            'reg_number' => $request->input('newRegNumber')
         ]);
         return response()->noContent();
     }

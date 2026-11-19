@@ -41,6 +41,7 @@ return [
     BusinessCode::AttemptEarlyFinish->value => 'Попытку возможно завершить минимум через :min минут после начала',
     BusinessCode::AttemptAlreadyReviwed->value => 'Попытка уже проверена',
     BusinessCode::UnreviewedAnswersExists->value => 'Существуют непроверенные ответы',
+    BusinessCode::AttemptExpired->value => 'Время прохождения истекло',
     
 
     BusinessCode::SpeakingAlreadyStarted->value => 'Говорение уже начато',

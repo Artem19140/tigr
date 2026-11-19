@@ -11,10 +11,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 class ForeignNational extends Authenticatable
 {
     use HasFactory, Notifiable;
+    use LogsActivity;
 
     public function getRememberTokenName()
     {
@@ -36,10 +39,6 @@ class ForeignNational extends Authenticatable
         'citizenship',
         'phone',
         'creator_id',
-        'photo',
-        'passport',
-        'passport_translate',
-        'document_type',
         'gender',
         'comment',
         'surname_normalized',
@@ -55,6 +54,14 @@ class ForeignNational extends Authenticatable
         'date_birth' => 'date',
         'issued_date' => 'date',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable()
+            ->logOnlyDirty()
+            ->dontLogEmptyChanges();
+    }
 
     public function getAuthPassword(): string
     {

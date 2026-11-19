@@ -13,7 +13,17 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
+use Spatie\RouteAttributes\Attributes\Get;
+use Spatie\RouteAttributes\Attributes\Prefix;
+use Spatie\RouteAttributes\Attributes\Where;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+
+#[Middleware('auth:web')]
+#[Prefix('exams/{exam}/documents')]
+#[Where('exam', '[0-9]+')]
+#[Authorize('results', 'exam')]
 
 class StatementController
 {
@@ -21,6 +31,7 @@ class StatementController
         protected ExamDocumentRules $examDocumentRules
     ) {}
 
+    #[Get('statement', 'exams.documents.statement')]
     public function generate(
         Request $request,
         Exam $exam,
@@ -67,6 +78,7 @@ class StatementController
             ));
     }
 
+    #[Get('statement/availability', 'exams.documents.statement.availability')]
     public function availability(
         Request $request,
         Exam $exam

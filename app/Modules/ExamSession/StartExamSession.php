@@ -45,7 +45,7 @@ final class StartExamSession
 
             $this->examAttributesInitializer->execute($exam);
 
-            $enrollment->makeExamCodeUsed();
+            $enrollment->examCode->makeUsed();
 
             $attempt->start();
             $attempt->save();

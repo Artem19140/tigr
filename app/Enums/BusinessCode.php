@@ -27,6 +27,7 @@ enum BusinessCode: string
     
     
     case AttemptExists = 'attempt_exists';
+    case AttemptExpired = 'attempt_expired';
     case AttemptsNotExists = 'attempts_not_exists';
     case ActiveAttemptsExists = 'active_attemtps_exists';
     case AttemptAnnulled = 'attempt_annulled';

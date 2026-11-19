@@ -15,7 +15,7 @@ class RvpSeeder extends Seeder
     protected string $path = 'resources/data/RVP/';
     public function run(): void
     {
-        $examType = ExamType::firstOrCreate(
+        $examType = ExamType::updateOrCreate(
             ['level' => 2],
             [
                 'name' => 'Разрешение на временное проживание в РФ',

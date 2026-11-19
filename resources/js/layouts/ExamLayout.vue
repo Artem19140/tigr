@@ -17,7 +17,7 @@ const activeItem = ref(page.url ?? '')
 <template>
     <v-container>
         <div>
-            <div class="border-b border-gray-200">
+            <div class="border-b border-gray-200 max-w-6xl m-auto">
                 <div class="flex items-start justify-between gap-6 py-4 max-sm:flex-col">
                     <div class="min-w-0">
                         <div class="flex items-center gap-2">
@@ -61,10 +61,11 @@ const activeItem = ref(page.url ?? '')
                     </v-tab>
                 </v-tabs>
             </div>
-
-            <div class="pt-5">
-                <slot />
-            </div>
         </div>
     </v-container>
+
+    <div>
+        <slot />
+    </div>
+        
 </template>

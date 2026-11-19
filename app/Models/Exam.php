@@ -13,10 +13,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 class Exam extends Model
 {
     use HasFactory, Notifiable;
+    use LogsActivity;
     public const int PROTOCOL_COMMENT_EDIT_TTL_DAYS = 7;
 
     protected $fillable = [
@@ -29,7 +32,6 @@ class Exam extends Model
         'comment',
         'group',
         'address_id',
-        'date',
         'cancelled_reason',
         'end_time',
         'protocol_comment',
@@ -41,6 +43,20 @@ class Exam extends Model
         'begin_time' => 'datetime',
         'cancelled_at' => 'datetime',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly([
+                'protocol_comment',
+                'cancelled_at',
+                'cancelled_reason',
+                'session',
+                'group'
+            ])
+            ->logOnlyDirty()
+            ->dontLogEmptyChanges();
+    }
 
     public function type(): BelongsTo
     {
